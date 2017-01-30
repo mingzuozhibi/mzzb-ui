@@ -1,0 +1,8 @@
+# app files
+node_modules
+build
+*.log
+
+# ide files
+.idea
+*.iml
