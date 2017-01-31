@@ -57,6 +57,7 @@ export default class AppActionBar extends React.Component {
     return (
       <AppBar
         title="Home"
+        style={{position: 'fixed', top: 0}}
         onLeftIconButtonTouchTap={handleShowDrawer}
         showMenuIconButton={showMenuIcon}
         iconElementRight={isLogged ? loggedElement : loginElement}

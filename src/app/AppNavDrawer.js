@@ -48,7 +48,7 @@ export default class AppNavDrawer extends React.Component {
     };
 
     const handleRedirect = (event, value) => {
-      document.open(value);
+      window.open(value);
     };
 
     return (

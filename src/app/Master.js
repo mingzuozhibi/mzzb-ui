@@ -3,7 +3,8 @@ import getMuiTheme from "material-ui/styles/getMuiTheme";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import darkBaseTheme from "material-ui/styles/baseThemes/darkBaseTheme";
 import lightBaseTheme from "material-ui/styles/baseThemes/lightBaseTheme";
-import withWidth, {LARGE} from "material-ui/utils/withWidth";
+import withWidth, {MEDIUM, LARGE} from "material-ui/utils/withWidth";
+import spacing from "material-ui/styles/spacing";
 import AppActionBar from "./AppActionBar";
 import AppNavDrawer from "./AppNavDrawer";
 import AppLoginForm from "./AppLoginForm";
@@ -93,11 +94,37 @@ class Master extends React.Component {
     })
   }
 
+  getStyles() {
+    const styles = {
+      root: {
+        paddingTop: spacing.desktopKeylineIncrement,
+        minHeight: 400,
+      },
+      content: {
+        margin: spacing.desktopGutter,
+      },
+      contentWhenMedium: {
+        margin: `${spacing.desktopGutter * 2}px ${spacing.desktopGutter * 3}px`,
+      },
+    };
+
+    if (this.props.width === MEDIUM || this.props.width === LARGE) {
+      styles.content = Object.assign(styles.content, styles.contentWhenMedium);
+    }
+
+    return styles;
+  }
+
   render() {
     const muiTheme = getMuiTheme(this.baseTheme());
     const {width} = this.props;
     const {drawerOpen, loginOpen, alertOpen, alertText} = this.state;
+
+    const styles = this.getStyles();
     const isLarge = (width === LARGE);
+    if (isLarge) {
+      styles.root.paddingLeft = 256;
+    }
 
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
@@ -121,8 +148,8 @@ class Master extends React.Component {
             open={alertOpen}
             message={alertText}
           />
-          <div className="root">
-            <div className="content">
+          <div style={styles.root}>
+            <div style={styles.content}>
               {this.props.children}
             </div>
           </div>
