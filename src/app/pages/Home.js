@@ -1,6 +1,6 @@
 import React, {PropTypes} from "react";
 
-class Home extends React.Component {
+export default class Home extends React.Component {
 
   static contextTypes = {
     isLogged: PropTypes.bool.isRequired,
@@ -13,7 +13,5 @@ class Home extends React.Component {
       <h3>Hello, {isLogged ? userName : 'Guest'}.</h3>
     )
   }
-  
-}
 
-export default Home;
+}

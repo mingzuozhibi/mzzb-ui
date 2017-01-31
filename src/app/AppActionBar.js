@@ -7,7 +7,7 @@ import IconButton from "material-ui/IconButton";
 import MoreVertIcon from "material-ui/svg-icons/navigation/more-vert";
 import Ajax from "./components/Ajax";
 
-class AppActionBar extends React.Component {
+export default class AppActionBar extends React.Component {
 
   static propTypes = {
     handleNeedLogin: PropTypes.func.isRequired,
@@ -60,5 +60,3 @@ class AppActionBar extends React.Component {
     )
   }
 }
-
-export default AppActionBar;

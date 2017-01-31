@@ -2,7 +2,7 @@ import React, {PropTypes} from "react";
 import Dialog from "material-ui/Dialog";
 import FlatButton from "material-ui/FlatButton";
 
-class AppAlertDialog extends React.Component {
+export default class AppAlertDialog extends React.Component {
 
   static propTypes = {
     open: PropTypes.bool.isRequired,
@@ -37,5 +37,3 @@ class AppAlertDialog extends React.Component {
     )
   }
 }
-
-export default AppAlertDialog;

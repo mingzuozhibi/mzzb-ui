@@ -4,7 +4,7 @@ import TextField from "material-ui/TextField";
 import FlatButton from "material-ui/FlatButton";
 import Ajax from "./components/Ajax";
 
-class AppLoginForm extends React.Component {
+export default class AppLoginForm extends React.Component {
 
   static propTypes = {
     open: PropTypes.bool.isRequired,
@@ -99,5 +99,3 @@ class AppLoginForm extends React.Component {
     )
   }
 }
-
-export default AppLoginForm;
