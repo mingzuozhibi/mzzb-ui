@@ -25,7 +25,7 @@ class AppActionBar extends React.Component {
     const loginElement = (
       <FlatButton
         label="Login"
-        onClick={handleNeedLogin}
+        onTouchTap={handleNeedLogin}
       />
     );
 
@@ -45,7 +45,7 @@ class AppActionBar extends React.Component {
       >
         <MenuItem primaryText="Refresh"/>
         <MenuItem primaryText="Help"/>
-        <MenuItem primaryText="Sign out" onClick={handleLogout}/>
+        <MenuItem primaryText="Sign out" onTouchTap={handleLogout}/>
       </IconMenu>
     );
     return (

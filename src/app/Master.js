@@ -81,9 +81,14 @@ class Master extends React.Component {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div className="master">
-          <AppActionBar handleNeedLogin={() => this.handleLoginForm(true)}/>
+          <AppActionBar
+            handleNeedLogin={() => this.handleLoginForm(true)}
+          />
           <AppNavDrawer />
-          <AppLoginForm handleClose={() => this.handleLoginForm(false)} open={loginOpen}/>
+          <AppLoginForm
+            handleClose={() => this.handleLoginForm(false)}
+            open={loginOpen}
+          />
           <div className="root">
             <div className="content">
               {this.props.children}
