@@ -32,14 +32,15 @@ class Master extends React.Component {
     useLightTheme: true,
     isLogged: false,
     userName: null,
+    loginOpen: false,
   };
 
   getChildContext() {
     return {
       isLogged: this.state.isLogged,
       userName: this.state.userName,
-      handleChangeLogin: this.handleChangeLogin,
-      handleChangeTheme: this.handleChangeTheme,
+      handleChangeLogin: this.handleChangeLogin.bind(this),
+      handleChangeTheme: this.handleChangeTheme.bind(this),
     }
   }
 
@@ -67,14 +68,22 @@ class Master extends React.Component {
       })
   }
 
+  handleLoginForm(open) {
+    this.setState({
+      loginOpen: open,
+    })
+  }
+
   render() {
     const muiTheme = getMuiTheme(this.baseTheme());
+    const {loginOpen} = this.state;
+
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div className="master">
-          <AppActionBar />
+          <AppActionBar handleNeedLogin={() => this.handleLoginForm(true)}/>
           <AppNavDrawer />
-          <AppLoginForm />
+          <AppLoginForm handleClose={() => this.handleLoginForm(false)} open={loginOpen}/>
           <div className="root">
             <div className="content">
               {this.props.children}

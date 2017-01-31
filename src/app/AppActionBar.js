@@ -5,23 +5,39 @@ import IconMenu from "material-ui/IconMenu";
 import FlatButton from "material-ui/FlatButton";
 import IconButton from "material-ui/IconButton";
 import MoreVertIcon from "material-ui/svg-icons/navigation/more-vert";
+import Ajax from "./components/Ajax";
 
 class AppActionBar extends React.Component {
 
+  static propTypes = {
+    handleNeedLogin: PropTypes.func.isRequired,
+  };
+
   static contextTypes = {
     isLogged: PropTypes.bool.isRequired,
+    handleChangeLogin: PropTypes.func.isRequired,
   };
 
   render() {
-    const {isLogged} = this.context;
-    const loggedElement = (
+    const {handleNeedLogin} = this.props;
+    const {isLogged, handleChangeLogin} = this.context;
+
+    const loginElement = (
       <FlatButton
         label="Login"
+        onClick={handleNeedLogin}
       />
     );
+
+    const handleLogout = () => {
+      Ajax.session.logout()
+        .then(() => {
+          handleChangeLogin()
+        })
+    };
     const iconButton = <IconButton><MoreVertIcon /></IconButton>;
     const origin = {horizontal: 'right', vertical: 'top'};
-    const loginElement = (
+    const loggedElement = (
       <IconMenu
         iconButtonElement={iconButton}
         targetOrigin={origin}
@@ -29,7 +45,7 @@ class AppActionBar extends React.Component {
       >
         <MenuItem primaryText="Refresh"/>
         <MenuItem primaryText="Help"/>
-        <MenuItem primaryText="Sign out"/>
+        <MenuItem primaryText="Sign out" onClick={handleLogout}/>
       </IconMenu>
     );
     return (
