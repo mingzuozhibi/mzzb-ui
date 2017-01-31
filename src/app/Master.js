@@ -7,6 +7,7 @@ import withWidth from "material-ui/utils/withWidth";
 import AppActionBar from "./AppActionBar";
 import AppNavDrawer from "./AppNavDrawer";
 import AppLoginForm from "./AppLoginForm";
+import Ajax from "./components/Ajax";
 
 class Master extends React.Component {
 
@@ -21,18 +22,30 @@ class Master extends React.Component {
   };
 
   static childContextTypes = {
+    isLogged: PropTypes.bool.isRequired,
+    userName: PropTypes.string,
+    handleChangeLogin: PropTypes.func.isRequired,
     handleChangeTheme: PropTypes.func.isRequired,
+  };
+
+  state = {
+    useLightTheme: true,
+    isLogged: false,
+    userName: null,
   };
 
   getChildContext() {
     return {
+      isLogged: this.state.isLogged,
+      userName: this.state.userName,
+      handleChangeLogin: this.handleChangeLogin,
       handleChangeTheme: this.handleChangeTheme,
     }
   }
 
-  state = {
-    useLightTheme: true,
-  };
+  componentWillMount() {
+    this.handleChangeLogin();
+  }
 
   baseTheme() {
     return this.state.useLightTheme ? lightBaseTheme : darkBaseTheme;
@@ -42,6 +55,16 @@ class Master extends React.Component {
     this.setState({
       useLightTheme: useLightTheme,
     })
+  }
+
+  handleChangeLogin() {
+    Ajax.session.check()
+      .then(json => {
+        this.setState({
+          isLogged: json.success,
+          userName: json.username,
+        })
+      })
   }
 
   render() {
