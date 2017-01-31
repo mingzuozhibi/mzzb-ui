@@ -16,11 +16,12 @@ class AppActionBar extends React.Component {
   static contextTypes = {
     isLogged: PropTypes.bool.isRequired,
     handleChangeLogin: PropTypes.func.isRequired,
+    handleChangeAlert: PropTypes.func.isRequired,
   };
 
   render() {
     const {handleNeedLogin} = this.props;
-    const {isLogged, handleChangeLogin} = this.context;
+    const {isLogged, handleChangeLogin, handleChangeAlert} = this.context;
 
     const loginElement = (
       <FlatButton
@@ -35,6 +36,9 @@ class AppActionBar extends React.Component {
           handleChangeLogin()
         })
     };
+    const handleNotSupport = () => {
+      handleChangeAlert(true, 'Operation not supported');
+    };
     const iconButton = <IconButton><MoreVertIcon /></IconButton>;
     const origin = {horizontal: 'right', vertical: 'top'};
     const loggedElement = (
@@ -43,8 +47,8 @@ class AppActionBar extends React.Component {
         targetOrigin={origin}
         anchorOrigin={origin}
       >
-        <MenuItem primaryText="Refresh"/>
-        <MenuItem primaryText="Help"/>
+        <MenuItem primaryText="Refresh" onTouchTap={handleNotSupport}/>
+        <MenuItem primaryText="Help" onTouchTap={handleNotSupport}/>
         <MenuItem primaryText="Sign out" onTouchTap={handleLogout}/>
       </IconMenu>
     );

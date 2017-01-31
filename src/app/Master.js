@@ -7,6 +7,7 @@ import withWidth from "material-ui/utils/withWidth";
 import AppActionBar from "./AppActionBar";
 import AppNavDrawer from "./AppNavDrawer";
 import AppLoginForm from "./AppLoginForm";
+import AppAlertDialog from "./AppAlertDialog";
 import Ajax from "./components/Ajax";
 
 class Master extends React.Component {
@@ -26,6 +27,7 @@ class Master extends React.Component {
     userName: PropTypes.string,
     handleChangeLogin: PropTypes.func.isRequired,
     handleChangeTheme: PropTypes.func.isRequired,
+    handleChangeAlert: PropTypes.func.isRequired,
   };
 
   state = {
@@ -33,6 +35,8 @@ class Master extends React.Component {
     isLogged: false,
     userName: null,
     loginOpen: false,
+    alertOpen: false,
+    alertText: null,
   };
 
   getChildContext() {
@@ -41,6 +45,7 @@ class Master extends React.Component {
       userName: this.state.userName,
       handleChangeLogin: this.handleChangeLogin.bind(this),
       handleChangeTheme: this.handleChangeTheme.bind(this),
+      handleChangeAlert: this.handleAlertDialog.bind(this),
     }
   }
 
@@ -74,9 +79,16 @@ class Master extends React.Component {
     })
   }
 
+  handleAlertDialog(open, text) {
+    this.setState({
+      alertOpen: open,
+      alertText: text,
+    })
+  }
+
   render() {
     const muiTheme = getMuiTheme(this.baseTheme());
-    const {loginOpen} = this.state;
+    const {loginOpen, alertOpen, alertText} = this.state;
 
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
@@ -88,6 +100,11 @@ class Master extends React.Component {
           <AppLoginForm
             handleClose={() => this.handleLoginForm(false)}
             open={loginOpen}
+          />
+          <AppAlertDialog
+            handleClose={() => this.handleAlertDialog(false)}
+            open={alertOpen}
+            message={alertText}
           />
           <div className="root">
             <div className="content">
