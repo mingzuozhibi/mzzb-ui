@@ -53,6 +53,12 @@ class AppLoginForm extends React.Component {
       });
     };
 
+    const handleEnter = (event) => {
+      if (event.keyCode === 13) {
+        handleSubmit();
+      }
+    };
+
     const actions = [
       <FlatButton
         label="Cancel"
@@ -84,6 +90,7 @@ class AppLoginForm extends React.Component {
           hintText="Enter Password"
           floatingLabelText="Password"
           onChange={(e, v)=>password = v}
+          onKeyUp={handleEnter}
         /><br />
         <div style={{color: 'red'}}>
           {this.state.message}
