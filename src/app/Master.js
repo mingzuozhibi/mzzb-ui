@@ -3,7 +3,7 @@ import getMuiTheme from "material-ui/styles/getMuiTheme";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import darkBaseTheme from "material-ui/styles/baseThemes/darkBaseTheme";
 import lightBaseTheme from "material-ui/styles/baseThemes/lightBaseTheme";
-import withWidth from "material-ui/utils/withWidth";
+import withWidth, {LARGE} from "material-ui/utils/withWidth";
 import AppActionBar from "./AppActionBar";
 import AppNavDrawer from "./AppNavDrawer";
 import AppLoginForm from "./AppLoginForm";
@@ -34,6 +34,7 @@ class Master extends React.Component {
     useLightTheme: true,
     isLogged: false,
     userName: null,
+    drawerOpen: false,
     loginOpen: false,
     alertOpen: false,
     alertText: null,
@@ -63,6 +64,12 @@ class Master extends React.Component {
     })
   }
 
+  handleChangeDrawer(open) {
+    this.setState({
+      drawerOpen: open,
+    })
+  }
+
   handleChangeLogin() {
     Ajax.session.check()
       .then(json => {
@@ -88,15 +95,23 @@ class Master extends React.Component {
 
   render() {
     const muiTheme = getMuiTheme(this.baseTheme());
-    const {loginOpen, alertOpen, alertText} = this.state;
+    const {width} = this.props;
+    const {drawerOpen, loginOpen, alertOpen, alertText} = this.state;
+    const isLarge = (width === LARGE);
 
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div className="master">
           <AppActionBar
-            handleNeedLogin={() => this.handleLoginForm(true)}
+            showMenuIcon={!isLarge}
+            handleShowLogin={() => this.handleLoginForm(true)}
+            handleShowDrawer={() => this.handleChangeDrawer(true)}
           />
-          <AppNavDrawer />
+          <AppNavDrawer
+            handleClose={() => this.handleChangeDrawer(false)}
+            docked={isLarge}
+            open={drawerOpen}
+          />
           <AppLoginForm
             handleClose={() => this.handleLoginForm(false)}
             open={loginOpen}

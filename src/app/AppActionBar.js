@@ -10,7 +10,9 @@ import Ajax from "./components/Ajax";
 export default class AppActionBar extends React.Component {
 
   static propTypes = {
-    handleNeedLogin: PropTypes.func.isRequired,
+    showMenuIcon: PropTypes.bool.isRequired,
+    handleShowLogin: PropTypes.func.isRequired,
+    handleShowDrawer: PropTypes.func.isRequired,
   };
 
   static contextTypes = {
@@ -20,13 +22,13 @@ export default class AppActionBar extends React.Component {
   };
 
   render() {
-    const {handleNeedLogin} = this.props;
+    const {showMenuIcon, handleShowLogin, handleShowDrawer} = this.props;
     const {isLogged, handleChangeLogin, handleChangeAlert} = this.context;
 
     const loginElement = (
       <FlatButton
         label="Login"
-        onTouchTap={handleNeedLogin}
+        onTouchTap={handleShowLogin}
       />
     );
 
@@ -55,6 +57,8 @@ export default class AppActionBar extends React.Component {
     return (
       <AppBar
         title="Home"
+        onLeftIconButtonTouchTap={handleShowDrawer}
+        showMenuIconButton={showMenuIcon}
         iconElementRight={isLogged ? loggedElement : loginElement}
       />
     )
