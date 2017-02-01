@@ -4,7 +4,7 @@ import TextField from "material-ui/TextField";
 import FlatButton from "material-ui/FlatButton";
 import Ajax from "./Ajax";
 
-export default class AppLoginForm extends React.Component {
+export default class AppLoginDialog extends React.Component {
 
   static propTypes = {
     open: PropTypes.bool.isRequired,

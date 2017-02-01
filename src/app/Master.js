@@ -7,7 +7,7 @@ import lightBaseTheme from "material-ui/styles/baseThemes/lightBaseTheme";
 import spacing from "material-ui/styles/spacing";
 import AppActionBar from "./components/AppActionBar";
 import AppNavDrawer from "./components/AppNavDrawer";
-import AppLoginForm from "./components/AppLoginForm";
+import AppLoginDialog from "./components/AppLoginDialog";
 import AppAlertDialog from "./components/AppAlertDialog";
 import Ajax from "./components/Ajax";
 
@@ -24,39 +24,39 @@ class Master extends React.Component {
   };
 
   static childContextTypes = {
+    isLight: PropTypes.bool.isRequired,
     isLogged: PropTypes.bool.isRequired,
     userName: PropTypes.string,
     muiTheme: PropTypes.object.isRequired,
-    useLightTheme: PropTypes.bool.isRequired,
     handleChangeLogin: PropTypes.func.isRequired,
     handleChangeTheme: PropTypes.func.isRequired,
     handleChangeAlert: PropTypes.func.isRequired,
   };
 
   state = {
+    isLight: true,
     isLogged: false,
     userName: null,
     loginOpen: false,
     alertOpen: false,
     alertText: null,
     drawerOpen: false,
-    useLightTheme: true,
   };
 
   getChildContext() {
     return {
+      isLight: this.state.isLight,
       isLogged: this.state.isLogged,
       userName: this.state.userName,
       muiTheme: this.state.muiTheme,
-      useLightTheme: this.state.useLightTheme,
       handleChangeLogin: this.handleChangeLogin.bind(this),
       handleChangeTheme: this.handleChangeTheme.bind(this),
       handleChangeAlert: this.handleAlertDialog.bind(this),
     }
   }
 
-  baseTheme(useLightTheme) {
-    if (useLightTheme) {
+  baseTheme(isLight) {
+    if (isLight) {
       return lightBaseTheme;
     } else {
       return drakBaseTheme;
@@ -64,8 +64,7 @@ class Master extends React.Component {
   }
 
   componentWillMount() {
-    const useLightTheme = this.state.useLightTheme;
-    const baseTheme = this.baseTheme(useLightTheme);
+    const baseTheme = this.baseTheme(this.state.isLight);
     this.setState({
       muiTheme: getMuiTheme(baseTheme),
     });
@@ -82,15 +81,15 @@ class Master extends React.Component {
       })
   }
 
-  handleChangeTheme(useLightTheme) {
-    const baseTheme = this.baseTheme(useLightTheme);
+  handleChangeTheme(isLight) {
+    const baseTheme = this.baseTheme(isLight);
     this.setState({
-      useLightTheme: useLightTheme,
+      isLight: isLight,
       muiTheme: getMuiTheme(baseTheme),
     });
   }
 
-  handleLoginForm(open) {
+  handleLoginDialog(open) {
     this.setState({
       loginOpen: open,
     })
@@ -158,7 +157,7 @@ class Master extends React.Component {
         <div className="master">
           <AppActionBar
             showMenuIcon={!isLarge}
-            handleShowLogin={() => this.handleLoginForm(true)}
+            handleShowLogin={() => this.handleLoginDialog(true)}
             handleShowDrawer={() => this.handleChangeDrawer(true)}
           />
           <AppNavDrawer
@@ -167,8 +166,8 @@ class Master extends React.Component {
             docked={isLarge}
             open={drawerOpen}
           />
-          <AppLoginForm
-            handleClose={() => this.handleLoginForm(false)}
+          <AppLoginDialog
+            handleClose={() => this.handleLoginDialog(false)}
             open={loginOpen}
           />
           <AppAlertDialog

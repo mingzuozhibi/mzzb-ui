@@ -4,12 +4,12 @@ import Toggle from "material-ui/Toggle";
 export default class Configuration extends React.Component {
 
   static contextTypes = {
-    useLightTheme: PropTypes.bool.isRequired,
+    isLight: PropTypes.bool.isRequired,
     handleChangeTheme: PropTypes.func.isRequired,
   };
 
   render() {
-    const {useLightTheme, handleChangeTheme} = this.context;
+    const {isLight, handleChangeTheme} = this.context;
     const styles = {
       toggle: {
         marginBottom: 16,
@@ -19,7 +19,7 @@ export default class Configuration extends React.Component {
       <Toggle
         label="Simple"
         style={styles.toggle}
-        defaultToggled={useLightTheme}
+        defaultToggled={isLight}
         onToggle={(e,v)=>handleChangeTheme(v)}
       />
     )
