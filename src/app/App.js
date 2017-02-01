@@ -6,8 +6,9 @@ import Master from "./Master";
 import Home from "./pages/Home";
 import Sakura from "./pages/Sakura";
 import DiscList from "./pages/DiscList";
-import Favourite from "./pages/Favourite";
-import Configuration from "./pages/Configuration";
+import MyStared from "./pages/MyStared";
+import Setting from "./pages/Setting";
+import About from "./pages/About";
 
 injectTapEventPlugin();
 
@@ -18,8 +19,9 @@ render((
       <Route path="home" component={Home}/>
       <Route path="sakura" component={Sakura}/>
       <Route path="disclist" component={DiscList}/>
-      <Route path="favourite" component={Favourite}/>
-      <Route path="configuration" component={Configuration}/>
+      <Route path="mystared" component={MyStared}/>
+      <Route path="setting" component={Setting}/>
+      <Route path="about" component={About}/>
     </Route>
   </Router>
 ), document.getElementById('app'));

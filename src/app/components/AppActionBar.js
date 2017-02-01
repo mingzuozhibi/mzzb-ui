@@ -5,11 +5,12 @@ import IconMenu from "material-ui/IconMenu";
 import FlatButton from "material-ui/FlatButton";
 import IconButton from "material-ui/IconButton";
 import MoreVertIcon from "material-ui/svg-icons/navigation/more-vert";
-import Ajax from "./Ajax";
+import Ajax from "../utils/Ajax";
 
 export default class AppActionBar extends React.Component {
 
   static propTypes = {
+    barTitle: PropTypes.string.isRequired,
     showMenuIcon: PropTypes.bool.isRequired,
     handleShowLogin: PropTypes.func.isRequired,
     handleShowDrawer: PropTypes.func.isRequired,
@@ -22,7 +23,7 @@ export default class AppActionBar extends React.Component {
   };
 
   render() {
-    const {showMenuIcon, handleShowLogin, handleShowDrawer} = this.props;
+    const {barTitle, showMenuIcon, handleShowLogin, handleShowDrawer} = this.props;
     const {isLogged, handleChangeLogin, handleChangeAlert} = this.context;
 
     const loginElement = (
@@ -56,7 +57,7 @@ export default class AppActionBar extends React.Component {
     );
     return (
       <AppBar
-        title="Home"
+        title={barTitle}
         style={{position: 'fixed', top: 0}}
         onLeftIconButtonTouchTap={handleShowDrawer}
         showMenuIconButton={showMenuIcon}

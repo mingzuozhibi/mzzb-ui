@@ -2,7 +2,7 @@ import React, {PropTypes} from "react";
 import Paper from "material-ui/Paper";
 import Toggle from "material-ui/Toggle";
 
-export default class Configuration extends React.Component {
+export default class Setting extends React.Component {
 
   static contextTypes = {
     isLight: PropTypes.bool.isRequired,
