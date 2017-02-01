@@ -4,6 +4,6 @@ export default class DiscList extends React.Component {
   render() {
     return (
       <h3>DiscList Page</h3>
-    )
+    );
   }
 }

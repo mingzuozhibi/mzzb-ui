@@ -1,15 +1,16 @@
 import React, {PropTypes} from "react";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import darkBaseTheme from "material-ui/styles/baseThemes/darkBaseTheme";
-import lightBaseTheme from "material-ui/styles/baseThemes/lightBaseTheme";
 import withWidth, {MEDIUM, LARGE} from "material-ui/utils/withWidth";
+import drakBaseTheme from "material-ui/styles/baseThemes/darkBaseTheme";
+import lightBaseTheme from "material-ui/styles/baseThemes/lightBaseTheme";
 import spacing from "material-ui/styles/spacing";
-import AppActionBar from "./AppActionBar";
-import AppNavDrawer from "./AppNavDrawer";
-import AppLoginForm from "./AppLoginForm";
-import AppAlertDialog from "./AppAlertDialog";
-import Ajax from "./components/Ajax";
+import AppActionBar from "./components/AppActionBar.jsx";
+import AppNavDrawer from "./components/AppNavDrawer.jsx";
+import AppLoginDialog from "./components/AppLoginDialog.jsx";
+import AppAlertDialog from "./components/AppAlertDialog.jsx";
+import {getCurrentTitle} from "./utils/Page";
+import Ajax from "./utils/Ajax";
 
 class Master extends React.Component {
 
@@ -24,51 +25,54 @@ class Master extends React.Component {
   };
 
   static childContextTypes = {
+    isLight: PropTypes.bool.isRequired,
     isLogged: PropTypes.bool.isRequired,
     userName: PropTypes.string,
+    muiTheme: PropTypes.object.isRequired,
     handleChangeLogin: PropTypes.func.isRequired,
     handleChangeTheme: PropTypes.func.isRequired,
     handleChangeAlert: PropTypes.func.isRequired,
   };
 
-  state = {
-    useLightTheme: true,
-    isLogged: false,
-    userName: null,
-    drawerOpen: false,
-    loginOpen: false,
-    alertOpen: false,
-    alertText: null,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLight: true,
+      isLogged: false,
+      userName: null,
+      loginOpen: false,
+      alertOpen: false,
+      alertText: null,
+      drawerOpen: false,
+    };
+  }
 
   getChildContext() {
     return {
+      isLight: this.state.isLight,
       isLogged: this.state.isLogged,
       userName: this.state.userName,
+      muiTheme: this.state.muiTheme,
       handleChangeLogin: this.handleChangeLogin.bind(this),
       handleChangeTheme: this.handleChangeTheme.bind(this),
       handleChangeAlert: this.handleAlertDialog.bind(this),
     }
   }
 
+  baseTheme(isLight) {
+    if (isLight) {
+      return lightBaseTheme;
+    } else {
+      return drakBaseTheme;
+    }
+  }
+
   componentWillMount() {
+    const baseTheme = this.baseTheme(this.state.isLight);
+    this.setState({
+      muiTheme: getMuiTheme(baseTheme),
+    });
     this.handleChangeLogin();
-  }
-
-  baseTheme() {
-    return this.state.useLightTheme ? lightBaseTheme : darkBaseTheme;
-  }
-
-  handleChangeTheme(useLightTheme) {
-    this.setState({
-      useLightTheme: useLightTheme,
-    })
-  }
-
-  handleChangeDrawer(open) {
-    this.setState({
-      drawerOpen: open,
-    })
   }
 
   handleChangeLogin() {
@@ -81,7 +85,15 @@ class Master extends React.Component {
       })
   }
 
-  handleLoginForm(open) {
+  handleChangeTheme(isLight) {
+    const baseTheme = this.baseTheme(isLight);
+    this.setState({
+      isLight: isLight,
+      muiTheme: getMuiTheme(baseTheme),
+    });
+  }
+
+  handleLoginDialog(open) {
     this.setState({
       loginOpen: open,
     })
@@ -94,7 +106,13 @@ class Master extends React.Component {
     })
   }
 
-  getStyles() {
+  handleChangeDrawer(open) {
+    this.setState({
+      drawerOpen: open,
+    })
+  }
+
+  static getStyles(isMedium, isLarge) {
     const styles = {
       root: {
         paddingTop: spacing.desktopKeylineIncrement,
@@ -107,40 +125,55 @@ class Master extends React.Component {
         margin: `${spacing.desktopGutter * 2}px ${spacing.desktopGutter * 3}px`,
       },
     };
-
-    if (this.props.width === MEDIUM || this.props.width === LARGE) {
-      styles.content = Object.assign(styles.content, styles.contentWhenMedium);
+    if (isMedium || isLarge) {
+      styles.content = {...styles.content, ...styles.contentWhenMedium}
     }
-
+    if (isLarge) {
+      styles.root.paddingLeft = 256;
+    }
     return styles;
   }
 
   render() {
-    const muiTheme = getMuiTheme(this.baseTheme());
-    const {width} = this.props;
-    const {drawerOpen, loginOpen, alertOpen, alertText} = this.state;
+    // load props
+    const {
+      children,
+      location,
+      width
+    } = this.props;
 
-    const styles = this.getStyles();
+    // load state
+    const {
+      muiTheme,
+      loginOpen,
+      alertOpen,
+      alertText,
+      drawerOpen,
+    } = this.state;
+
+    // load computed
+    const isMedium = (width === MEDIUM);
     const isLarge = (width === LARGE);
-    if (isLarge) {
-      styles.root.paddingLeft = 256;
-    }
+    const styles = Master.getStyles(isMedium, isLarge);
+    const barTitle = getCurrentTitle(this.context.router);
 
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div className="master">
           <AppActionBar
+            barTitle={barTitle}
             showMenuIcon={!isLarge}
-            handleShowLogin={() => this.handleLoginForm(true)}
+            handleShowLogin={() => this.handleLoginDialog(true)}
             handleShowDrawer={() => this.handleChangeDrawer(true)}
           />
           <AppNavDrawer
             handleClose={() => this.handleChangeDrawer(false)}
+            location={location}
             docked={isLarge}
             open={drawerOpen}
           />
-          <AppLoginForm
-            handleClose={() => this.handleLoginForm(false)}
+          <AppLoginDialog
+            handleClose={() => this.handleLoginDialog(false)}
             open={loginOpen}
           />
           <AppAlertDialog
@@ -148,9 +181,9 @@ class Master extends React.Component {
             open={alertOpen}
             message={alertText}
           />
-          <div style={styles.root}>
-            <div style={styles.content}>
-              {this.props.children}
+          <div className="root" style={styles.root}>
+            <div className="content" style={styles.content}>
+              {children}
             </div>
           </div>
         </div>
