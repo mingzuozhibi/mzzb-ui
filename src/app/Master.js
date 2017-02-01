@@ -5,10 +5,10 @@ import withWidth, {MEDIUM, LARGE} from "material-ui/utils/withWidth";
 import drakBaseTheme from "material-ui/styles/baseThemes/darkBaseTheme";
 import lightBaseTheme from "material-ui/styles/baseThemes/lightBaseTheme";
 import spacing from "material-ui/styles/spacing";
-import AppActionBar from "./AppActionBar";
-import AppNavDrawer from "./AppNavDrawer";
-import AppLoginForm from "./AppLoginForm";
-import AppAlertDialog from "./AppAlertDialog";
+import AppActionBar from "./components/AppActionBar";
+import AppNavDrawer from "./components/AppNavDrawer";
+import AppLoginForm from "./components/AppLoginForm";
+import AppAlertDialog from "./components/AppAlertDialog";
 import Ajax from "./components/Ajax";
 
 class Master extends React.Component {

@@ -2,7 +2,7 @@ import React, {PropTypes} from "react";
 import Dialog from "material-ui/Dialog";
 import TextField from "material-ui/TextField";
 import FlatButton from "material-ui/FlatButton";
-import Ajax from "./components/Ajax";
+import Ajax from "./Ajax";
 
 export default class AppLoginForm extends React.Component {
 

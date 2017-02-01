@@ -5,7 +5,7 @@ import IconMenu from "material-ui/IconMenu";
 import FlatButton from "material-ui/FlatButton";
 import IconButton from "material-ui/IconButton";
 import MoreVertIcon from "material-ui/svg-icons/navigation/more-vert";
-import Ajax from "./components/Ajax";
+import Ajax from "./Ajax";
 
 export default class AppActionBar extends React.Component {
 
