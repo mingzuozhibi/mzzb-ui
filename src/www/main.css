@@ -4,11 +4,17 @@
 }
 
 html {
+  height: 100%;
   font-family: 'Roboto', sans-serif;
 }
 
 body {
+  height: 100%;
   margin: 0;
   font-size: 13px;
   line-height: 20px;
+}
+
+body > div#app,div.master,div.root,div.content {
+  height: 100%;
 }

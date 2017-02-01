@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import Sakura from "./pages/Sakura";
 import DiscList from "./pages/DiscList";
 import Favourite from "./pages/Favourite";
+import Configuration from "./pages/Configuration";
 
 injectTapEventPlugin();
 
@@ -18,6 +19,7 @@ render((
       <Route path="sakura" component={Sakura}/>
       <Route path="disclist" component={DiscList}/>
       <Route path="favourite" component={Favourite}/>
+      <Route path="configuration" component={Configuration}/>
     </Route>
   </Router>
 ), document.getElementById('app'));

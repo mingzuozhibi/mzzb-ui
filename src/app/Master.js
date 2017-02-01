@@ -1,9 +1,9 @@
 import React, {PropTypes} from "react";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import darkBaseTheme from "material-ui/styles/baseThemes/darkBaseTheme";
-import lightBaseTheme from "material-ui/styles/baseThemes/lightBaseTheme";
 import withWidth, {MEDIUM, LARGE} from "material-ui/utils/withWidth";
+import drakBaseTheme from "material-ui/styles/baseThemes/darkBaseTheme";
+import lightBaseTheme from "material-ui/styles/baseThemes/lightBaseTheme";
 import spacing from "material-ui/styles/spacing";
 import AppActionBar from "./AppActionBar";
 import AppNavDrawer from "./AppNavDrawer";
@@ -26,49 +26,50 @@ class Master extends React.Component {
   static childContextTypes = {
     isLogged: PropTypes.bool.isRequired,
     userName: PropTypes.string,
+    muiTheme: PropTypes.object.isRequired,
+    useLightTheme: PropTypes.bool.isRequired,
     handleChangeLogin: PropTypes.func.isRequired,
     handleChangeTheme: PropTypes.func.isRequired,
     handleChangeAlert: PropTypes.func.isRequired,
   };
 
   state = {
-    useLightTheme: true,
     isLogged: false,
     userName: null,
-    drawerOpen: false,
     loginOpen: false,
     alertOpen: false,
     alertText: null,
+    drawerOpen: false,
+    useLightTheme: true,
   };
 
   getChildContext() {
     return {
       isLogged: this.state.isLogged,
       userName: this.state.userName,
+      muiTheme: this.state.muiTheme,
+      useLightTheme: this.state.useLightTheme,
       handleChangeLogin: this.handleChangeLogin.bind(this),
       handleChangeTheme: this.handleChangeTheme.bind(this),
       handleChangeAlert: this.handleAlertDialog.bind(this),
     }
   }
 
+  baseTheme(useLightTheme) {
+    if (useLightTheme) {
+      return lightBaseTheme;
+    } else {
+      return drakBaseTheme;
+    }
+  }
+
   componentWillMount() {
+    const useLightTheme = this.state.useLightTheme;
+    const baseTheme = this.baseTheme(useLightTheme);
+    this.setState({
+      muiTheme: getMuiTheme(baseTheme),
+    });
     this.handleChangeLogin();
-  }
-
-  baseTheme() {
-    return this.state.useLightTheme ? lightBaseTheme : darkBaseTheme;
-  }
-
-  handleChangeTheme(useLightTheme) {
-    this.setState({
-      useLightTheme: useLightTheme,
-    })
-  }
-
-  handleChangeDrawer(open) {
-    this.setState({
-      drawerOpen: open,
-    })
   }
 
   handleChangeLogin() {
@@ -79,6 +80,14 @@ class Master extends React.Component {
           userName: json.username,
         })
       })
+  }
+
+  handleChangeTheme(useLightTheme) {
+    const baseTheme = this.baseTheme(useLightTheme);
+    this.setState({
+      useLightTheme: useLightTheme,
+      muiTheme: getMuiTheme(baseTheme),
+    });
   }
 
   handleLoginForm(open) {
@@ -94,7 +103,13 @@ class Master extends React.Component {
     })
   }
 
-  getStyles() {
+  handleChangeDrawer(open) {
+    this.setState({
+      drawerOpen: open,
+    })
+  }
+
+  static getStyles(isMedium, isLarge) {
     const styles = {
       root: {
         paddingTop: spacing.desktopKeylineIncrement,
@@ -107,24 +122,36 @@ class Master extends React.Component {
         margin: `${spacing.desktopGutter * 2}px ${spacing.desktopGutter * 3}px`,
       },
     };
-
-    if (this.props.width === MEDIUM || this.props.width === LARGE) {
-      styles.content = Object.assign(styles.content, styles.contentWhenMedium);
+    if (isMedium || isLarge) {
+      styles.content = {...styles.content, ...styles.contentWhenMedium}
     }
-
+    if (isLarge) {
+      styles.root.paddingLeft = 256;
+    }
     return styles;
   }
 
   render() {
-    const muiTheme = getMuiTheme(this.baseTheme());
-    const {children, location, width} = this.props;
-    const {drawerOpen, loginOpen, alertOpen, alertText} = this.state;
+    // load props
+    const {
+      children,
+      location,
+      width
+    } = this.props;
 
-    const styles = this.getStyles();
+    // load state
+    const {
+      muiTheme,
+      loginOpen,
+      alertOpen,
+      alertText,
+      drawerOpen,
+    } = this.state;
+
+    // load computed
+    const isMedium = (width === MEDIUM);
     const isLarge = (width === LARGE);
-    if (isLarge) {
-      styles.root.paddingLeft = 256;
-    }
+    const styles = Master.getStyles(isMedium, isLarge);
 
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
@@ -149,8 +176,8 @@ class Master extends React.Component {
             open={alertOpen}
             message={alertText}
           />
-          <div style={styles.root}>
-            <div style={styles.content}>
+          <div className="root" style={styles.root}>
+            <div className="content" style={styles.content}>
               {children}
             </div>
           </div>

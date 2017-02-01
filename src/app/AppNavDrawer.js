@@ -68,6 +68,7 @@ export default class AppNavDrawer extends React.Component {
           <ListItem value="/sakura" primaryText="Sakura"/>
           <ListItem value="/disclist" primaryText="DiscList"/>
           <ListItem value="/favourite" primaryText="Favourite"/>
+          <ListItem value="/configuration" primaryText="Configuration"/>
         </SelectableList>
         <Divider />
         <SelectableList value="" onChange={handleRedirect}>
