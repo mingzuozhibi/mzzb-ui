@@ -117,7 +117,7 @@ class Master extends React.Component {
 
   render() {
     const muiTheme = getMuiTheme(this.baseTheme());
-    const {width} = this.props;
+    const {children, location, width} = this.props;
     const {drawerOpen, loginOpen, alertOpen, alertText} = this.state;
 
     const styles = this.getStyles();
@@ -136,6 +136,7 @@ class Master extends React.Component {
           />
           <AppNavDrawer
             handleClose={() => this.handleChangeDrawer(false)}
+            location={location}
             docked={isLarge}
             open={drawerOpen}
           />
@@ -150,7 +151,7 @@ class Master extends React.Component {
           />
           <div style={styles.root}>
             <div style={styles.content}>
-              {this.props.children}
+              {children}
             </div>
           </div>
         </div>

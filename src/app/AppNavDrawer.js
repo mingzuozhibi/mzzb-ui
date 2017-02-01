@@ -13,6 +13,7 @@ export default class AppNavDrawer extends React.Component {
   static propTypes = {
     open: PropTypes.bool.isRequired,
     docked: PropTypes.bool.isRequired,
+    location: PropTypes.object.isRequired,
     handleClose: PropTypes.func.isRequired,
   };
 
@@ -21,7 +22,7 @@ export default class AppNavDrawer extends React.Component {
   };
 
   render() {
-    const {open, docked, handleClose} = this.props;
+    const {open, docked, location, handleClose} = this.props;
     const {router} = this.context;
 
     const styles = {
@@ -62,7 +63,7 @@ export default class AppNavDrawer extends React.Component {
         <div style={styles.logo} onTouchTap={handleHeader}>
           名作之壁吧
         </div>
-        <SelectableList onChange={handleSelect}>
+        <SelectableList value={location.pathname} onChange={handleSelect}>
           <ListItem value="/home" primaryText="Home"/>
           <ListItem value="/sakura" primaryText="Sakura"/>
           <ListItem value="/disclist" primaryText="DiscList"/>
