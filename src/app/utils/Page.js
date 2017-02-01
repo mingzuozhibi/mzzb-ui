@@ -1,19 +1,19 @@
 const contentPages = {
-  '/home': 'Home',
-  '/sakura': 'Sakura',
-  '/disclist': 'DiscList',
-  '/mystared': 'MyStared',
-  '/setting': 'Setting',
-  '/about': 'About',
+  "/home": "Home",
+  "/sakura": "Sakura",
+  "/disclist": "DiscList",
+  "/mystared": "MyStared",
+  "/setting": "Setting",
+  "/about": "About",
 };
 
 function getCurrentTitle(router) {
-  for (let pathname in contentPages) {
-    if (router.isActive(pathname)) {
-      return contentPages[pathname]
+  for (const [pathName, pageTitle] of Object.entries(contentPages)) {
+    if (router.isActive(pathName)) {
+      return pageTitle;
     }
   }
-  return 'Home';
+  return "Home";
 }
 
 exports.contentPages = contentPages;

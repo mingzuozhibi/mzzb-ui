@@ -10,7 +10,7 @@ const config = {
   entry: [
     'webpack/hot/dev-server',
     'webpack/hot/only-dev-server',
-    path.join(__dirname, '/src/app/App.js'),
+    path.join(__dirname, '/src/app/App.jsx'),
   ],
   // Server Configuration options
   devServer: {
@@ -39,7 +39,7 @@ const config = {
   module: {
     loaders: [
       {
-        test: /\.js$/, // All .js files
+        test: /\.js[x]?$/, // All .js files
         loaders: ['babel-loader'],
         exclude: [nodeModulesPath],
       },

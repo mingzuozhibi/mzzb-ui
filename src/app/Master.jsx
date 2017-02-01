@@ -5,10 +5,10 @@ import withWidth, {MEDIUM, LARGE} from "material-ui/utils/withWidth";
 import drakBaseTheme from "material-ui/styles/baseThemes/darkBaseTheme";
 import lightBaseTheme from "material-ui/styles/baseThemes/lightBaseTheme";
 import spacing from "material-ui/styles/spacing";
-import AppActionBar from "./components/AppActionBar";
-import AppNavDrawer from "./components/AppNavDrawer";
-import AppLoginDialog from "./components/AppLoginDialog";
-import AppAlertDialog from "./components/AppAlertDialog";
+import AppActionBar from "./components/AppActionBar.jsx";
+import AppNavDrawer from "./components/AppNavDrawer.jsx";
+import AppLoginDialog from "./components/AppLoginDialog.jsx";
+import AppAlertDialog from "./components/AppAlertDialog.jsx";
 import {getCurrentTitle} from "./utils/Page";
 import Ajax from "./utils/Ajax";
 
