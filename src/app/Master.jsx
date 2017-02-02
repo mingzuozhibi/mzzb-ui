@@ -75,14 +75,12 @@ class Master extends React.Component {
     this.handleChangeLogin();
   }
 
-  handleChangeLogin() {
-    Ajax.session.check()
-      .then(json => {
-        this.setState({
-          isLogged: json.success,
-          userName: json.username,
-        })
-      })
+  async handleChangeLogin() {
+    const json = await Ajax.session.check();
+    this.setState({
+      isLogged: json.success,
+      userName: json.username,
+    });
   }
 
   handleChangeTheme(isLight) {

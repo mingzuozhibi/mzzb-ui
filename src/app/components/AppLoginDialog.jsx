@@ -38,19 +38,18 @@ export default class AppLoginDialog extends React.Component {
     let username = null;
     let password = null;
 
-    const handleSubmit = () => {
+    const handleSubmit = async() => {
       if (!username || !password) {
         this.handleStatus('You must input username and password');
         return;
       }
-      Ajax.session.login(username, password).then(json => {
-        if (json.success) {
-          handleClose();
-          handleChangeLogin();
-        } else {
-          this.handleStatus('Login failed! Check username and password');
-        }
-      });
+      const json = await Ajax.session.login(username, password);
+      if (json.success) {
+        handleClose();
+        handleChangeLogin();
+      } else {
+        this.handleStatus('Login failed! Check username and password');
+      }
     };
 
     const handleEnter = (event) => {

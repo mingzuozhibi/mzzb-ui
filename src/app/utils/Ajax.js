@@ -4,12 +4,28 @@ const Ajax = {
   session: {},
 };
 
-function ajax(url, {credentials = "include", headers = {}, body, ...props} = {}) {
-  if (body) {
-    body = JSON.stringify(body);
-    headers = {"Content-Type": "application/json", ...headers};
+function checkStatus(response) {
+  if (response.status >= 200 && response.status < 300) {
+    return response;
+  } else {
+    var error = new Error(response.statusText);
+    error.response = response;
+    throw error;
   }
-  return fetch(url, {credentials, headers, body, ...props}).then(res => res.json());
+}
+
+function prepareProps({credentials = "include", headers = {}, body, ...props}) {
+  if (body) {
+    headers = {"Content-Type": "application/json", ...headers};
+    body = JSON.stringify(body);
+  }
+  return {credentials, headers, body, ...props};
+}
+
+function ajax(url, props = {}) {
+  return fetch(url, prepareProps(props))
+    .then(checkStatus)
+    .then(response => response.json());
 }
 
 Ajax.session.check = function check() {
