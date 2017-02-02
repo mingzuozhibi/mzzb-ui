@@ -34,8 +34,12 @@ export default class AppActionBar extends React.Component {
     );
 
     const handleLogout = async() => {
-      await Ajax.session.logout();
-      handleChangeLogin();
+      try {
+        await Ajax.session.logout();
+        handleChangeLogin();
+      } catch (error) {
+        handleChangeAlert(true, `Logout Error: ${error.message}`);
+      }
     };
     const handleNotSupport = () => {
       handleChangeAlert(true, 'Operation not supported');

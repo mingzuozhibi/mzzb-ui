@@ -13,6 +13,7 @@ export default class AppLoginDialog extends React.Component {
 
   static contextTypes = {
     handleChangeLogin: PropTypes.func.isRequired,
+    handleChangeAlert: PropTypes.func.isRequired,
   };
 
   state = {
@@ -33,22 +34,25 @@ export default class AppLoginDialog extends React.Component {
 
   render() {
     const {open, handleClose} = this.props;
-    const {handleChangeLogin} = this.context;
+    const {handleChangeAlert, handleChangeLogin} = this.context;
 
     let username = null;
     let password = null;
 
     const handleSubmit = async() => {
-      if (!username || !password) {
-        this.handleStatus('You must input username and password');
-        return;
-      }
-      const json = await Ajax.session.login(username, password);
-      if (json.success) {
-        handleClose();
-        handleChangeLogin();
-      } else {
-        this.handleStatus('Login failed! Check username and password');
+      try {
+        if (!username || !password) {
+          this.handleStatus('You must input username and password');
+        }
+        const json = await Ajax.session.login(username, password);
+        if (json.success) {
+          handleClose();
+          handleChangeLogin();
+        } else {
+          this.handleStatus('Login failed! Check username and password');
+        }
+      } catch (error) {
+        handleChangeAlert(true, `Login Error: ${error.message}`);
       }
     };
 
@@ -82,13 +86,13 @@ export default class AppLoginDialog extends React.Component {
         <TextField
           hintText="Enter Username"
           floatingLabelText="Username"
-          onChange={(e, v)=>username = v}
+          onChange={(e, v) => username = v}
         /><br />
         <TextField
           type="password"
           hintText="Enter Password"
           floatingLabelText="Password"
-          onChange={(e, v)=>password = v}
+          onChange={(e, v) => password = v}
           onKeyUp={handleEnter}
         /><br />
         <div style={{color: 'red'}}>

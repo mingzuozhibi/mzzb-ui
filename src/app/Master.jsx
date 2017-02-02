@@ -1,9 +1,8 @@
 import React, {PropTypes} from "react";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import darkTheme from "material-ui/styles/baseThemes/darkBaseTheme";
 import withWidth, {MEDIUM, LARGE} from "material-ui/utils/withWidth";
-import drakBaseTheme from "material-ui/styles/baseThemes/darkBaseTheme";
-import lightBaseTheme from "material-ui/styles/baseThemes/lightBaseTheme";
 import spacing from "material-ui/styles/spacing";
 import AppActionBar from "./components/AppActionBar.jsx";
 import AppNavDrawer from "./components/AppNavDrawer.jsx";
@@ -45,6 +44,7 @@ class Master extends React.Component {
       alertText: null,
       drawerOpen: false,
     };
+    this.handleChangeLogin();
   }
 
   getChildContext() {
@@ -59,35 +59,26 @@ class Master extends React.Component {
     }
   }
 
-  baseTheme(isLight) {
-    if (isLight) {
-      return lightBaseTheme;
-    } else {
-      return drakBaseTheme;
-    }
-  }
-
   componentWillMount() {
-    const baseTheme = this.baseTheme(this.state.isLight);
-    this.setState({
-      muiTheme: getMuiTheme(baseTheme),
-    });
-    this.handleChangeLogin();
+    this.handleChangeTheme(this.state.isLight);
   }
 
   async handleChangeLogin() {
-    const json = await Ajax.session.check();
-    this.setState({
-      isLogged: json.success,
-      userName: json.username,
-    });
+    try {
+      const json = await Ajax.session.check();
+      this.setState({
+        isLogged: json.success,
+        userName: json.username,
+      });
+    } catch (error) {
+      this.handleAlertDialog(true, `Login Error: ${error.message}`);
+    }
   }
 
   handleChangeTheme(isLight) {
-    const baseTheme = this.baseTheme(isLight);
     this.setState({
       isLight: isLight,
-      muiTheme: getMuiTheme(baseTheme),
+      muiTheme: isLight ? getMuiTheme() : getMuiTheme(darkTheme),
     });
   }
 
@@ -110,7 +101,7 @@ class Master extends React.Component {
     })
   }
 
-  static getStyles(isMedium, isLarge) {
+  getStyles(isMedium, isLarge) {
     const styles = {
       root: {
         paddingTop: spacing.desktopKeylineIncrement,
@@ -152,7 +143,7 @@ class Master extends React.Component {
     // load computed
     const isMedium = (width === MEDIUM);
     const isLarge = (width === LARGE);
-    const styles = Master.getStyles(isMedium, isLarge);
+    const styles = this.getStyles(isMedium, isLarge);
     const barTitle = getCurrentTitle(this.context.router);
 
     return (
