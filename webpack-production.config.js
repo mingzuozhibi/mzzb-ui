@@ -9,6 +9,11 @@ const config = {
     "babel-polyfill",
     path.join(__dirname, "/src/app/App.jsx")
   ],
+  devServer: {
+    contentBase: "src/www", // Relative directory for base of server
+    port: 8080, // Port Number
+    host: "localhost", // Change to '0.0.0.0' for external facing server
+  },
   // Render source-map file for final build
   devtool: "source-map",
   // output config
