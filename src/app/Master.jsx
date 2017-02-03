@@ -44,7 +44,6 @@ class Master extends React.Component {
       alertText: null,
       drawerOpen: false,
     };
-    this.handleChangeLogin();
   }
 
   getChildContext() {
@@ -60,6 +59,7 @@ class Master extends React.Component {
   }
 
   componentWillMount() {
+    this.handleChangeLogin();
     this.handleChangeTheme(this.state.isLight);
   }
 
