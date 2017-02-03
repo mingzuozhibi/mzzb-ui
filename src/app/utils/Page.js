@@ -13,7 +13,7 @@ function allPages() {
     new Page("/mystared", "MyStared"),
     new Page("/setting", "Setting"),
     new Page("/about", "About"),
-  ]
+  ];
 }
 
 function activePage(router) {

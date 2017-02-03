@@ -2,7 +2,7 @@ import React, {PropTypes} from "react";
 import Dialog from "material-ui/Dialog";
 import TextField from "material-ui/TextField";
 import FlatButton from "material-ui/FlatButton";
-import Ajax from "../utils/Ajax";
+import {sessionManager} from "../Api";
 
 export default class AppLoginDialog extends React.Component {
 
@@ -44,7 +44,7 @@ export default class AppLoginDialog extends React.Component {
         if (!username || !password) {
           this.handleStatus('You must input username and password');
         }
-        const json = await Ajax.session.login(username, password);
+        const json = await sessionManager.login(username, password);
         if (json.success) {
           handleClose();
           handleChangeLogin();

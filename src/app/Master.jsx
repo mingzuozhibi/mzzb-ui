@@ -9,7 +9,7 @@ import AppNavDrawer from "./components/AppNavDrawer.jsx";
 import AppLoginDialog from "./components/AppLoginDialog.jsx";
 import AppAlertDialog from "./components/AppAlertDialog.jsx";
 import {activePage} from "./utils/Page";
-import Ajax from "./utils/Ajax";
+import {sessionManager} from "./Api";
 
 class Master extends React.Component {
 
@@ -65,7 +65,7 @@ class Master extends React.Component {
 
   async handleChangeLogin() {
     try {
-      const json = await Ajax.session.check();
+      const json = await sessionManager.check();
       this.setState({
         isLogged: json.success,
         userName: json.username,
