@@ -1,20 +1,29 @@
-const contentPages = {
-  "/home": "Home",
-  "/sakura": "Sakura",
-  "/disclist": "DiscList",
-  "/mystared": "MyStared",
-  "/setting": "Setting",
-  "/about": "About",
-};
-
-function getCurrentTitle(router) {
-  for (const [pathName, pageTitle] of Object.entries(contentPages)) {
-    if (router.isActive(pathName)) {
-      return pageTitle;
-    }
+class Page {
+  constructor(href, name) {
+    this.href = href;
+    this.name = name;
   }
-  return "Home";
 }
 
-exports.contentPages = contentPages;
-exports.getCurrentTitle = getCurrentTitle;
+function allPages() {
+  return [
+    new Page("/home", "Home"),
+    new Page("/sakura", "Sakura"),
+    new Page("/disclist", "DiscList"),
+    new Page("/mystared", "MyStared"),
+    new Page("/setting", "Setting"),
+    new Page("/about", "About"),
+  ]
+}
+
+function activePage(router) {
+  const pageArray = allPages();
+  for (const page of pageArray) {
+    if (router.isActive(page.href)) {
+      return page;
+    }
+  }
+  return pageArray[0];
+}
+
+export {allPages, activePage};

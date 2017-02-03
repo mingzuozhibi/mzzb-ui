@@ -8,7 +8,7 @@ import AppActionBar from "./components/AppActionBar.jsx";
 import AppNavDrawer from "./components/AppNavDrawer.jsx";
 import AppLoginDialog from "./components/AppLoginDialog.jsx";
 import AppAlertDialog from "./components/AppAlertDialog.jsx";
-import {getCurrentTitle} from "./utils/Page";
+import {activePage} from "./utils/Page";
 import Ajax from "./utils/Ajax";
 
 class Master extends React.Component {
@@ -124,33 +124,20 @@ class Master extends React.Component {
   }
 
   render() {
-    // load props
-    const {
-      children,
-      location,
-      width
-    } = this.props;
+    const {children, location, width} = this.props;
+    const {router} = this.context;
+    const {muiTheme, loginOpen, alertOpen, alertText, drawerOpen} = this.state;
 
-    // load state
-    const {
-      muiTheme,
-      loginOpen,
-      alertOpen,
-      alertText,
-      drawerOpen,
-    } = this.state;
-
-    // load computed
     const isMedium = (width === MEDIUM);
     const isLarge = (width === LARGE);
     const styles = this.getStyles(isMedium, isLarge);
-    const barTitle = getCurrentTitle(this.context.router);
+    const page = activePage(router);
 
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div className="master">
           <AppActionBar
-            barTitle={barTitle}
+            barTitle={page.name}
             showMenuIcon={!isLarge}
             handleShowLogin={() => this.handleLoginDialog(true)}
             handleShowDrawer={() => this.handleChangeDrawer(true)}
