@@ -5,7 +5,7 @@ import Subheader from "material-ui/Subheader";
 import {cyan500} from "material-ui/styles/colors";
 import {spacing, typography, zIndex} from "material-ui/styles";
 import {List, ListItem, makeSelectable} from "material-ui/List";
-import {contentPages} from "../utils/Page";
+import {allPages} from "../utils/Page";
 
 const SelectableList = makeSelectable(List);
 
@@ -66,8 +66,8 @@ export default class AppNavDrawer extends React.Component {
         </div>
         <SelectableList value={location.pathname} onChange={handleSelect}>
           {
-            Object.keys(contentPages).map(pathname =>
-              <ListItem key value={pathname} primaryText={contentPages[pathname]}/>
+            allPages().map(page =>
+              <ListItem key value={page.href} primaryText={page.name}/>
             )
           }
         </SelectableList>

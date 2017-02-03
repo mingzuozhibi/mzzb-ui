@@ -1,16 +1,15 @@
 import React, {PropTypes} from "react";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import darkTheme from "material-ui/styles/baseThemes/darkBaseTheme";
 import withWidth, {MEDIUM, LARGE} from "material-ui/utils/withWidth";
-import drakBaseTheme from "material-ui/styles/baseThemes/darkBaseTheme";
-import lightBaseTheme from "material-ui/styles/baseThemes/lightBaseTheme";
 import spacing from "material-ui/styles/spacing";
 import AppActionBar from "./components/AppActionBar.jsx";
 import AppNavDrawer from "./components/AppNavDrawer.jsx";
 import AppLoginDialog from "./components/AppLoginDialog.jsx";
 import AppAlertDialog from "./components/AppAlertDialog.jsx";
-import {getCurrentTitle} from "./utils/Page";
-import Ajax from "./utils/Ajax";
+import {activePage} from "./utils/Page";
+import {sessionManager} from "./Api";
 
 class Master extends React.Component {
 
@@ -59,37 +58,27 @@ class Master extends React.Component {
     }
   }
 
-  baseTheme(isLight) {
-    if (isLight) {
-      return lightBaseTheme;
-    } else {
-      return drakBaseTheme;
+  componentWillMount() {
+    this.handleChangeLogin();
+    this.handleChangeTheme(this.state.isLight);
+  }
+
+  async handleChangeLogin() {
+    try {
+      const json = await sessionManager.check();
+      this.setState({
+        isLogged: json.success,
+        userName: json.username,
+      });
+    } catch (error) {
+      this.handleAlertDialog(true, `Check Error: ${error.message}`);
     }
   }
 
-  componentWillMount() {
-    const baseTheme = this.baseTheme(this.state.isLight);
-    this.setState({
-      muiTheme: getMuiTheme(baseTheme),
-    });
-    this.handleChangeLogin();
-  }
-
-  handleChangeLogin() {
-    Ajax.session.check()
-      .then(json => {
-        this.setState({
-          isLogged: json.success,
-          userName: json.username,
-        })
-      })
-  }
-
   handleChangeTheme(isLight) {
-    const baseTheme = this.baseTheme(isLight);
     this.setState({
       isLight: isLight,
-      muiTheme: getMuiTheme(baseTheme),
+      muiTheme: isLight ? getMuiTheme() : getMuiTheme(darkTheme),
     });
   }
 
@@ -112,7 +101,7 @@ class Master extends React.Component {
     })
   }
 
-  static getStyles(isMedium, isLarge) {
+  getStyles(isMedium, isLarge) {
     const styles = {
       root: {
         paddingTop: spacing.desktopKeylineIncrement,
@@ -135,33 +124,20 @@ class Master extends React.Component {
   }
 
   render() {
-    // load props
-    const {
-      children,
-      location,
-      width
-    } = this.props;
+    const {children, location, width} = this.props;
+    const {router} = this.context;
+    const {muiTheme, loginOpen, alertOpen, alertText, drawerOpen} = this.state;
 
-    // load state
-    const {
-      muiTheme,
-      loginOpen,
-      alertOpen,
-      alertText,
-      drawerOpen,
-    } = this.state;
-
-    // load computed
     const isMedium = (width === MEDIUM);
     const isLarge = (width === LARGE);
-    const styles = Master.getStyles(isMedium, isLarge);
-    const barTitle = getCurrentTitle(this.context.router);
+    const styles = this.getStyles(isMedium, isLarge);
+    const page = activePage(router);
 
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div className="master">
           <AppActionBar
-            barTitle={barTitle}
+            barTitle={page.name}
             showMenuIcon={!isLarge}
             handleShowLogin={() => this.handleLoginDialog(true)}
             handleShowDrawer={() => this.handleChangeDrawer(true)}

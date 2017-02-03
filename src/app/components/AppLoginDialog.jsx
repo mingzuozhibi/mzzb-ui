@@ -2,7 +2,7 @@ import React, {PropTypes} from "react";
 import Dialog from "material-ui/Dialog";
 import TextField from "material-ui/TextField";
 import FlatButton from "material-ui/FlatButton";
-import Ajax from "../utils/Ajax";
+import {sessionManager} from "../Api";
 
 export default class AppLoginDialog extends React.Component {
 
@@ -13,6 +13,7 @@ export default class AppLoginDialog extends React.Component {
 
   static contextTypes = {
     handleChangeLogin: PropTypes.func.isRequired,
+    handleChangeAlert: PropTypes.func.isRequired,
   };
 
   state = {
@@ -33,24 +34,26 @@ export default class AppLoginDialog extends React.Component {
 
   render() {
     const {open, handleClose} = this.props;
-    const {handleChangeLogin} = this.context;
+    const {handleChangeAlert, handleChangeLogin} = this.context;
 
     let username = null;
     let password = null;
 
-    const handleSubmit = () => {
-      if (!username || !password) {
-        this.handleStatus('You must input username and password');
-        return;
-      }
-      Ajax.session.login(username, password).then(json => {
+    const handleSubmit = async() => {
+      try {
+        if (!username || !password) {
+          this.handleStatus('You must input username and password');
+        }
+        const json = await sessionManager.login(username, password);
         if (json.success) {
           handleClose();
           handleChangeLogin();
         } else {
           this.handleStatus('Login failed! Check username and password');
         }
-      });
+      } catch (error) {
+        handleChangeAlert(true, `Login Error: ${error.message}`);
+      }
     };
 
     const handleEnter = (event) => {
@@ -83,13 +86,13 @@ export default class AppLoginDialog extends React.Component {
         <TextField
           hintText="Enter Username"
           floatingLabelText="Username"
-          onChange={(e, v)=>username = v}
+          onChange={(e, v) => username = v}
         /><br />
         <TextField
           type="password"
           hintText="Enter Password"
           floatingLabelText="Password"
-          onChange={(e, v)=>password = v}
+          onChange={(e, v) => password = v}
           onKeyUp={handleEnter}
         /><br />
         <div style={{color: 'red'}}>

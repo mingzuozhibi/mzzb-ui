@@ -1,30 +1,73 @@
 import "whatwg-fetch";
 
-const Ajax = {
-  session: {},
-};
+const CONTENT_TYPE_NAME = "Content-Type";
+const CONTENT_TYPE_VALUE = "application/json;charset=UTF-8";
 
-function ajax(url, {credentials = "include", headers = {}, body, ...props} = {}) {
-  if (body) {
-    body = JSON.stringify(body);
-    headers = {"Content-Type": "application/json", ...headers};
+const CSRF_HEADER_KEY = "X-CSRF-HEADER";
+const CSRF_PARAM_KEY = "X-CSRF-PARAM";
+const CSRF_TOKEN_KEY = "X-CSRF-TOKEN";
+
+function prepareSession({credentials, ...props}) {
+  if (!credentials) {
+    credentials = "include";
   }
-  return fetch(url, {credentials, headers, body, ...props}).then(res => res.json());
+  return {credentials, ...props};
 }
 
-Ajax.session.check = function check() {
-  return ajax("/api/session");
-};
-Ajax.session.login = function login(username, password) {
-  return ajax("/api/session", {
-    method: "post",
-    body: {username, password},
-  });
-};
-Ajax.session.logout = function logout() {
-  return ajax("/api/session", {
-    method: "delete",
-  });
-};
+function prepareBodyData({body, headers = {}, ...props}) {
+  if (body) {
+    headers[CONTENT_TYPE_NAME] = CONTENT_TYPE_VALUE;
+    body = JSON.stringify(body);
+  }
+  return {body, headers, ...props};
+}
 
-export default Ajax;
+function prepareCsrfToken({method = "get", headers = {}, ...prors}) {
+  if (method.toLowerCase() != "get") {
+    const headerName = sessionStorage[CSRF_HEADER_KEY];
+    const headerValue = sessionStorage[CSRF_TOKEN_KEY];
+    if (headerName && headerValue) {
+      headers[headerName] = headerValue;
+    } else {
+      throw new Error("Abnormal Login Status");
+    }
+  }
+  return {method, headers, ...prors};
+}
+
+function checkStatus(response) {
+  if (response.status < 200 || response.status > 300) {
+    throw new Error(`${response.status}: ${response.statusText}`);
+  }
+  return response;
+}
+
+function saveCsrfToken(response) {
+  const headers = response.headers;
+  sessionStorage[CSRF_HEADER_KEY] = headers.get(CSRF_HEADER_KEY);
+  sessionStorage[CSRF_PARAM_KEY] = headers.get(CSRF_PARAM_KEY);
+  sessionStorage[CSRF_TOKEN_KEY] = headers.get(CSRF_TOKEN_KEY);
+  return response;
+}
+
+function parseToJSON(response) {
+  const headers = response.headers;
+  const contentType = headers.get(CONTENT_TYPE_NAME);
+  try {
+    return response.json();
+  } catch (error) {
+    throw new Error(`Parse JSON: ContentType=${contentType} Message: ${error.message}`);
+  }
+}
+
+function ajax(url, props = {}) {
+  props = prepareSession(props);
+  props = prepareBodyData(props);
+  props = prepareCsrfToken(props);
+  return fetch(url, props)
+    .then(checkStatus)
+    .then(saveCsrfToken)
+    .then(parseToJSON);
+}
+
+export default ajax;

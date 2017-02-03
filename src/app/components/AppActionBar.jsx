@@ -5,7 +5,7 @@ import IconMenu from "material-ui/IconMenu";
 import FlatButton from "material-ui/FlatButton";
 import IconButton from "material-ui/IconButton";
 import MoreVertIcon from "material-ui/svg-icons/navigation/more-vert";
-import Ajax from "../utils/Ajax";
+import {sessionManager} from "../Api";
 
 export default class AppActionBar extends React.Component {
 
@@ -33,11 +33,13 @@ export default class AppActionBar extends React.Component {
       />
     );
 
-    const handleLogout = () => {
-      Ajax.session.logout()
-        .then(() => {
-          handleChangeLogin()
-        })
+    const handleLogout = async() => {
+      try {
+        await sessionManager.logout();
+        handleChangeLogin();
+      } catch (error) {
+        handleChangeAlert(true, `Logout Error: ${error.message}`);
+      }
     };
     const handleNotSupport = () => {
       handleChangeAlert(true, 'Operation not supported');

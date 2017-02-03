@@ -27,7 +27,7 @@ export default class Setting extends React.Component {
           label={isLight ? 'Light Theme' : 'Dark Theme'}
           style={styles.toggle}
           defaultToggled={isLight}
-          onToggle={(e, v)=>handleChangeTheme(v)}
+          onToggle={(e, v) => handleChangeTheme(v)}
         />
       </Paper>
     )
