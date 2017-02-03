@@ -71,7 +71,7 @@ class Master extends React.Component {
         userName: json.username,
       });
     } catch (error) {
-      this.handleAlertDialog(true, `Login Error: ${error.message}`);
+      this.handleAlertDialog(true, `Check Error: ${error.message}`);
     }
   }
 
