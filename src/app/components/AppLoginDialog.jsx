@@ -36,10 +36,10 @@ export default class AppLoginDialog extends React.Component {
     const {open, handleClose} = this.props;
     const {handleChangeAlert, handleChangeLogin} = this.context;
 
-    let username = null;
-    let password = null;
-
     const handleSubmit = async() => {
+      const username = document.querySelector("#username").value;
+      const password = document.querySelector("#password").value;
+
       try {
         if (!username || !password) {
           this.handleStatus('You must input username and password');
@@ -84,15 +84,15 @@ export default class AppLoginDialog extends React.Component {
         actions={actions}
       >
         <TextField
+          id="username"
           hintText="Enter Username"
           floatingLabelText="Username"
-          onChange={(e, v) => username = v}
         /><br />
         <TextField
+          id="password"
           type="password"
           hintText="Enter Password"
           floatingLabelText="Password"
-          onChange={(e, v) => password = v}
           onKeyUp={handleEnter}
         /><br />
         <div style={{color: 'red'}}>

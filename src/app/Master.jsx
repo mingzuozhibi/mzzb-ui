@@ -1,9 +1,10 @@
 import React, {PropTypes} from "react";
-import getMuiTheme from "material-ui/styles/getMuiTheme";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import Paper from "material-ui/Paper";
+import getMuiTheme from "material-ui/styles/getMuiTheme";
+import spacing from "material-ui/styles/spacing";
 import darkTheme from "material-ui/styles/baseThemes/darkBaseTheme";
 import withWidth, {MEDIUM, LARGE} from "material-ui/utils/withWidth";
-import spacing from "material-ui/styles/spacing";
 import AppActionBar from "./components/AppActionBar.jsx";
 import AppNavDrawer from "./components/AppNavDrawer.jsx";
 import AppLoginDialog from "./components/AppLoginDialog.jsx";
@@ -36,7 +37,6 @@ class Master extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLight: true,
       isLogged: false,
       userName: null,
       loginOpen: false,
@@ -59,8 +59,9 @@ class Master extends React.Component {
   }
 
   componentWillMount() {
+    const isLight = localStorage.isLight !== "false";
+    this.handleChangeTheme(isLight);
     this.handleChangeLogin();
-    this.handleChangeTheme(this.state.isLight);
   }
 
   async handleChangeLogin() {
@@ -76,6 +77,7 @@ class Master extends React.Component {
   }
 
   handleChangeTheme(isLight) {
+    localStorage.isLight = isLight;
     this.setState({
       isLight: isLight,
       muiTheme: isLight ? getMuiTheme() : getMuiTheme(darkTheme),
@@ -135,7 +137,7 @@ class Master extends React.Component {
 
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
-        <div className="master">
+        <Paper className="master">
           <AppActionBar
             barTitle={page.name}
             showMenuIcon={!isLarge}
@@ -162,7 +164,7 @@ class Master extends React.Component {
               {children}
             </div>
           </div>
-        </div>
+        </Paper>
       </MuiThemeProvider>
     );
   }
