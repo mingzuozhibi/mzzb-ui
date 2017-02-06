@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-#!/usr/bin/env bash
-
 # 项目根目录
 basepath=$(cd `dirname $0`; pwd)/..
 
