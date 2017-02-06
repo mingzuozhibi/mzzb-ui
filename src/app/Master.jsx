@@ -5,10 +5,10 @@ import getMuiTheme from "material-ui/styles/getMuiTheme";
 import spacing from "material-ui/styles/spacing";
 import darkTheme from "material-ui/styles/baseThemes/darkBaseTheme";
 import withWidth, {MEDIUM, LARGE} from "material-ui/utils/withWidth";
-import AppActionBar from "./components/AppActionBar.jsx";
-import AppNavDrawer from "./components/AppNavDrawer.jsx";
-import AppLoginDialog from "./components/AppLoginDialog.jsx";
-import AppAlertDialog from "./components/AppAlertDialog.jsx";
+import AppActionBar from "./styles/AppActionBar.jsx";
+import AppNavDrawer from "./styles/AppNavDrawer.jsx";
+import AppLoginDialog from "./styles/AppLoginDialog.jsx";
+import AppAlertDialog from "./styles/AppAlertDialog.jsx";
 import {activePage} from "./utils/Page";
 import {sessionManager} from "./Api";
 

@@ -8,7 +8,6 @@ const TransferWebpackPlugin = require("transfer-webpack-plugin");
 const config = {
   // Entry points to the project
   entry: [
-    "babel-polyfill",
     "webpack/hot/dev-server",
     "webpack/hot/only-dev-server",
     path.join(__dirname, "/src/app/App.jsx"),

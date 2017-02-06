@@ -6,8 +6,7 @@ const TransferWebpackPlugin = require("transfer-webpack-plugin");
 
 const config = {
   entry: [
-    "babel-polyfill",
-    path.join(__dirname, "/src/app/App.jsx")
+    path.join(__dirname, "/src/app/App.jsx"),
   ],
   devServer: {
     contentBase: "src/www", // Relative directory for base of server
