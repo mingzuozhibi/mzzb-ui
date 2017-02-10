@@ -22,7 +22,7 @@ export default class AppLoginDialog extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.open == true) {
-      this.handleStatus('');
+      this.handleStatus("");
     }
   }
 
@@ -42,14 +42,14 @@ export default class AppLoginDialog extends React.Component {
 
       try {
         if (!username || !password) {
-          this.handleStatus('You must input username and password');
+          this.handleStatus("You must input username and password");
         }
         const json = await sessionManager.login(username, password);
         if (json.success) {
           handleClose();
           handleChangeLogin();
         } else {
-          this.handleStatus('Login failed! Check username and password');
+          this.handleStatus("Login failed! Check username and password");
         }
       } catch (error) {
         handleChangeAlert(true, `Login Error: ${error.message}`);
@@ -95,10 +95,10 @@ export default class AppLoginDialog extends React.Component {
           floatingLabelText="Password"
           onKeyUp={handleEnter}
         /><br />
-        <div style={{color: 'red'}}>
+        <div style={{color: "red"}}>
           {this.state.message}
         </div>
       </Dialog>
-    )
+    );
   }
 }

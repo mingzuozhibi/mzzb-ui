@@ -34,6 +34,6 @@ export default class AppAlertDialog extends React.Component {
       >
         {message}
       </Dialog>
-    )
+    );
   }
 }

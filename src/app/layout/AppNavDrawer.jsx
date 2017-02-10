@@ -28,7 +28,7 @@ export default class AppNavDrawer extends React.Component {
 
     const styles = {
       logo: {
-        cursor: 'pointer',
+        cursor: "pointer",
         fontSize: 24,
         color: typography.textFullWhite,
         lineHeight: `${spacing.desktopKeylineIncrement}px`,

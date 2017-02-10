@@ -7,10 +7,11 @@
     "url": "https://github.com/mingzuozhibi/mzzb-ui.git"
   },
   "scripts": {
-    "check": "eslint ./src --fix",
     "build": "webpack --config webpack-production.config.js --progress --colors",
     "start": "webpack-dev-server --config webpack-dev-server.config.js --progress --colors",
-    "server": "webpack-dev-server --config webpack-production.config.js --progress --colors"
+    "server": "webpack-dev-server --config webpack-production.config.js --progress --colors",
+    "eslint": "eslint --ext .jsx,.js ./src/**",
+    "eslint:fix": "eslint --ext .jsx,.js ./src/** --fix"
   },
   "private": true,
   "devDependencies": {
