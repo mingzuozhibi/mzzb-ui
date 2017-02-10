@@ -42,10 +42,10 @@ export default class AppActionBar extends React.Component {
       }
     };
     const handleNotSupport = () => {
-      handleChangeAlert(true, 'Operation not supported');
+      handleChangeAlert(true, "Operation not supported");
     };
     const iconButton = <IconButton><MoreVertIcon /></IconButton>;
-    const origin = {horizontal: 'right', vertical: 'top'};
+    const origin = {horizontal: "right", vertical: "top"};
     const loggedElement = (
       <IconMenu
         iconButtonElement={iconButton}
@@ -60,11 +60,11 @@ export default class AppActionBar extends React.Component {
     return (
       <AppBar
         title={barTitle}
-        style={{position: 'fixed', top: 0}}
+        style={{position: "fixed", top: 0}}
         onLeftIconButtonTouchTap={handleShowDrawer}
         showMenuIconButton={showMenuIcon}
         iconElementRight={isLogged ? loggedElement : loginElement}
       />
-    )
+    );
   }
 }

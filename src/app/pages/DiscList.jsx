@@ -1,4 +1,4 @@
-import React, {PropTypes} from "react";
+import React from "react";
 
 export default class DiscList extends React.Component {
   render() {

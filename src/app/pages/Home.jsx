@@ -10,8 +10,8 @@ export default class Home extends React.Component {
   render() {
     const {isLogged, userName} = this.context;
     return (
-      <h3>Hello, {isLogged ? userName : 'Guest'}.</h3>
-    )
+      <h3>Hello, {isLogged ? userName : "Guest"}.</h3>
+    );
   }
 
 }

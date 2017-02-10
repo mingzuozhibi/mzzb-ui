@@ -14,7 +14,7 @@ export default class Setting extends React.Component {
     const {isLight, handleChangeTheme} = this.context;
     const styles = {
       block: {
-        padding: '20px 18px 4px 18px',
+        padding: "20px 18px 4px 18px",
         maxWidth: 250,
       },
       toggle: {
@@ -24,13 +24,13 @@ export default class Setting extends React.Component {
     return (
       <Paper style={styles.block}>
         <Toggle
-          label={isLight ? 'Light Theme' : 'Dark Theme'}
+          label={isLight ? "Light Theme" : "Dark Theme"}
           style={styles.toggle}
           defaultToggled={isLight}
           onToggle={(e, v) => handleChangeTheme(v)}
         />
       </Paper>
-    )
+    );
   }
 
 }

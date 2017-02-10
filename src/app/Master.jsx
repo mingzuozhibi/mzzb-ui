@@ -55,7 +55,7 @@ class Master extends React.Component {
       handleChangeLogin: this.handleChangeLogin.bind(this),
       handleChangeTheme: this.handleChangeTheme.bind(this),
       handleChangeAlert: this.handleAlertDialog.bind(this),
-    }
+    };
   }
 
   componentWillMount() {
@@ -87,20 +87,20 @@ class Master extends React.Component {
   handleLoginDialog(open) {
     this.setState({
       loginOpen: open,
-    })
+    });
   }
 
   handleAlertDialog(open, text) {
     this.setState({
       alertOpen: open,
       alertText: text,
-    })
+    });
   }
 
   handleChangeDrawer(open) {
     this.setState({
       drawerOpen: open,
-    })
+    });
   }
 
   getStyles(isMedium, isLarge) {
@@ -117,7 +117,7 @@ class Master extends React.Component {
       },
     };
     if (isMedium || isLarge) {
-      styles.content = {...styles.content, ...styles.contentWhenMedium}
+      styles.content = {...styles.content, ...styles.contentWhenMedium};
     }
     if (isLarge) {
       styles.root.paddingLeft = 256;
