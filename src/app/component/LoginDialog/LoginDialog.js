@@ -8,8 +8,8 @@ function LoginDialog({state, action}) {
   const {doHideLogin, doSubmit} = action
 
   function handleSubmit() {
-    const username = document.querySelector("#username").value;
-    const password = document.querySelector("#password").value;
+    const username = document.querySelector('#username').value
+    const password = document.querySelector('#password').value
 
     doSubmit(username, password)
   }
@@ -52,7 +52,7 @@ function LoginDialog({state, action}) {
         onKeyUp={handleEnter}
       /><br />
     </Dialog>
-  );
+  )
 }
 
 export default LoginDialog

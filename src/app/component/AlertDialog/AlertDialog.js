@@ -26,7 +26,7 @@ function AlertDialog({state, action}) {
     >
       {message}
     </Dialog>
-  );
+  )
 }
 
 export default AlertDialog

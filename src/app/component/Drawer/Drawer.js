@@ -1,11 +1,11 @@
 import React from 'react'
-import MdDrawer from 'material-ui/Drawer'
 import Divider from 'material-ui/Divider'
 import Subheader from 'material-ui/Subheader'
+import NativeDrawer from 'material-ui/Drawer'
 import { List, ListItem, makeSelectable } from 'material-ui/List'
 import './Drawer.css'
 
-const SelectableList = makeSelectable(List);
+const SelectableList = makeSelectable(List)
 
 function Drawer({state, props, action, pages}) {
   const {isOpened} = state
@@ -20,7 +20,7 @@ function Drawer({state, props, action, pages}) {
   }
 
   return (
-    <MdDrawer
+    <NativeDrawer
       docked={isDocked}
       width={200}
       open={isOpened || isDocked}
@@ -38,7 +38,7 @@ function Drawer({state, props, action, pages}) {
         <ListItem primaryText="GitHub" value="https://github.com/mingzuozhibi/mzzb-ui"/>
         <ListItem primaryText="名作之壁吧" value="http://tieba.baidu.com/f?kw=名作之壁&ie=utf-8"/>
       </SelectableList>
-    </MdDrawer>
+    </NativeDrawer>
   )
 }
 
