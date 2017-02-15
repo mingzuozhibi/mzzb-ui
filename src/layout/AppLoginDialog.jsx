@@ -21,7 +21,7 @@ export default class AppLoginDialog extends React.Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.open == true) {
+    if (nextProps.open === true) {
       this.handleStatus("");
     }
   }

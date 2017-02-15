@@ -23,7 +23,7 @@ function prepareBodyData({body, headers = {}, ...props}) {
 }
 
 function prepareCsrfToken({method = "get", headers = {}, ...prors}) {
-  if (method.toLowerCase() != "get") {
+  if (method.toLowerCase() !== "get") {
     const headerName = sessionStorage[CSRF_HEADER_KEY];
     const headerValue = sessionStorage[CSRF_TOKEN_KEY];
     if (headerName && headerValue) {
