@@ -12,9 +12,9 @@ function getTitle(path) {
   return pages[path] || 'Home'
 }
 
-function mapStateToProps(state, props) {
+function mapStateToProps(state) {
   return {
-    state: state.drawer, props, pages
+    state: state.drawer, pages
   }
 }
 

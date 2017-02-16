@@ -7,9 +7,9 @@ import './Drawer.css'
 
 const SelectableList = makeSelectable(List)
 
-function Drawer({state, props, action, pages}) {
+function Drawer({state, action, ...props}) {
   const {isOpened} = state
-  const {location, isDocked} = props
+  const {pages, location, isDocked} = props
   const {doHideDrawer, doSelectItem, doRedirect} = action
 
   const selectItems = Object.keys(pages).map(path =>

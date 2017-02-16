@@ -8,7 +8,7 @@ import LoginDialog from '../component/LoginDialog'
 
 class App extends React.Component {
 
-  getStyles(isMedium, isLarge) {
+  getStyles(width) {
     const styles = {
       root: {
         minHeight: '400px',
@@ -18,10 +18,10 @@ class App extends React.Component {
         margin: '24px',
       }
     }
-    if (isLarge || isMedium) {
+    if (width >= MEDIUM) {
       styles.content.margin = '48px 72px'
     }
-    if (isLarge) {
+    if (width >= LARGE) {
       styles.root.paddingLeft = '256px'
     }
     return styles
@@ -29,15 +29,13 @@ class App extends React.Component {
 
   render() {
     const {children, location, width} = this.props
-    const isMedium = width === MEDIUM
-    const isLarge = width === LARGE
-    const styles = this.getStyles(isMedium, isLarge)
+    const styles = this.getStyles(width)
     return (
       <MuiThemeProvider>
         <div className="app__page">
           <div className="app__header">
             <AppBar/>
-            <Drawer location={location} isDocked={isLarge}/>
+            <Drawer location={location} isDocked={width >= LARGE}/>
             <AlertDialog/>
             <LoginDialog/>
           </div>
