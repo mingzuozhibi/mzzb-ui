@@ -9,7 +9,7 @@ const SelectableList = makeSelectable(List)
 
 function Drawer({state, action, ...props}) {
   const {isOpened} = state
-  const {pages, location, isDocked} = props
+  const {pages, pathname, isDocked} = props
   const {doHideDrawer, doSelectItem, doRedirect} = action
 
   const selectItems = Object.keys(pages).map(path =>
@@ -29,7 +29,7 @@ function Drawer({state, action, ...props}) {
       <div className="drawer__header" onTouchTap={doTouchHeader}>
         名作之壁
       </div>
-      <SelectableList value={location.pathname} onChange={doSelectItem}>
+      <SelectableList value={pathname} onChange={doSelectItem}>
         {selectItems}
       </SelectableList>
       <Divider />

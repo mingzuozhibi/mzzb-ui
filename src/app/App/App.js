@@ -28,14 +28,15 @@ class App extends React.Component {
   }
 
   render() {
-    const {children, location, width} = this.props
+    const {children, width} = this.props
     const styles = this.getStyles(width)
+    const isDocked = width >= LARGE
     return (
       <MuiThemeProvider>
         <div className="app__page">
           <div className="app__header">
             <AppBar/>
-            <Drawer location={location} isDocked={width >= LARGE}/>
+            <Drawer isDocked={isDocked}/>
             <AlertDialog/>
             <LoginDialog/>
           </div>

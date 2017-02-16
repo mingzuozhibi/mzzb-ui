@@ -13,8 +13,9 @@ function getTitle(path) {
 }
 
 function mapStateToProps(state) {
+  const pathname = state.router.pathname
   return {
-    state: state.drawer, pages
+    state: state.drawer, pages, pathname
   }
 }
 
