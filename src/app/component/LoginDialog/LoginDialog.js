@@ -3,8 +3,8 @@ import Dialog from 'material-ui/Dialog'
 import TextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
 
-function LoginDialog({state, action}) {
-  const {isOpened} = state
+function LoginDialog({login, action}) {
+  const {isOpened} = login
   const {doHideLogin, doSubmit} = action
 
   function handleSubmit() {

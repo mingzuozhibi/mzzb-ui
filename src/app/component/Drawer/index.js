@@ -1,4 +1,4 @@
-import { connect } from 'react-redux'
+import { connect } from '../../connect'
 import { push as pushPath } from 'react-router-redux'
 import Drawer from './Drawer'
 import { showDrawer, hideDrawer } from './module/action'
@@ -8,15 +8,8 @@ const pages = {
   '/sakura': 'Sakura',
 }
 
-function getTitle(path) {
-  return pages[path] || 'Home'
-}
-
-function mapStateToProps(state) {
-  const pathname = state.router.pathname
-  return {
-    state: state.drawer, pages, pathname
-  }
+const extraProps = {
+  pages
 }
 
 function mapDispatchToProps(dispatch) {
@@ -36,10 +29,13 @@ function mapDispatchToProps(dispatch) {
 }
 
 const DrawerContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps, extraProps
 )(Drawer)
 
 export default DrawerContainer
+
+function getTitle(path) {
+  return pages[path] || 'Home'
+}
 
 export { showDrawer, getTitle, pushPath }

@@ -1,14 +1,8 @@
-import { connect } from 'react-redux'
+import { connect } from '../../connect'
 import LoginDialog from './LoginDialog'
 import { showLogin, hideLogin } from './module/action'
 import { submitLogin } from '../action'
 import { showAlert } from '../AlertDialog/'
-
-function mapStateToProps(state) {
-  return {
-    state: state.login
-  }
-}
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -32,7 +26,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 const LoginDialogContainer = connect(
-  mapStateToProps,
   mapDispatchToProps
 )(LoginDialog)
 

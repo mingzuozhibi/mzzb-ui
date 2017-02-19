@@ -1,12 +1,6 @@
-import { connect } from 'react-redux'
+import { connect } from '../../connect'
 import AlertDialog from './AlertDialog'
 import { showAlert, hideAlert } from './module/action'
-
-function mapStateToProps(state) {
-  return {
-    state: state.alert
-  }
-}
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -19,7 +13,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 const AlertDialogContainer = connect(
-  mapStateToProps,
   mapDispatchToProps
 )(AlertDialog)
 

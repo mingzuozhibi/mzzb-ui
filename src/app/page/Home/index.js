@@ -1,19 +1,11 @@
-import { connect } from 'react-redux'
+import { connect } from '../../connect'
 import Home from './Home'
-
-function mapStateToProps(state) {
-  return {
-    isLogged: state.session.isLogged,
-    userName: state.session.userName,
-  }
-}
 
 function mapDispatchToProps(dispatch) {
   return {}
 }
 
 const HomeContainer = connect(
-  mapStateToProps,
   mapDispatchToProps
 )(Home)
 
