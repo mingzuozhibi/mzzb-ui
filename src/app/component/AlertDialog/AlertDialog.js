@@ -2,8 +2,8 @@ import React from 'react'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 
-function AlertDialog({state, action}) {
-  const {isOpened, message} = state
+function AlertDialog({alert, action}) {
+  const {isOpened, message} = alert
   const {doHideAlert} = action
 
   return (
@@ -26,7 +26,7 @@ function AlertDialog({state, action}) {
     >
       {message}
     </Dialog>
-  );
+  )
 }
 
 export default AlertDialog

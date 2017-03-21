@@ -1,16 +1,11 @@
-import { connect } from 'react-redux'
+import { connect } from '../../connect'
 import Sakura from './Sakura'
-
-function mapStateToProps(state) {
-  return {}
-}
 
 function mapDispatchToProps(dispatch) {
   return {}
 }
 
 const SakuraContainer = connect(
-  mapStateToProps,
   mapDispatchToProps
 )(Sakura)
 

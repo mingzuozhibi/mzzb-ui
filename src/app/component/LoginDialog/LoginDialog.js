@@ -3,13 +3,13 @@ import Dialog from 'material-ui/Dialog'
 import TextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
 
-function LoginDialog({state, action}) {
-  const {isOpened} = state
+function LoginDialog({login, action}) {
+  const {isOpened} = login
   const {doHideLogin, doSubmit} = action
 
   function handleSubmit() {
-    const username = document.querySelector("#username").value;
-    const password = document.querySelector("#password").value;
+    const username = document.querySelector('#username').value
+    const password = document.querySelector('#password').value
 
     doSubmit(username, password)
   }
@@ -52,7 +52,7 @@ function LoginDialog({state, action}) {
         onKeyUp={handleEnter}
       /><br />
     </Dialog>
-  );
+  )
 }
 
 export default LoginDialog

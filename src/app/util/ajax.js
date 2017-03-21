@@ -1,13 +1,13 @@
-const CONTENT_TYPE_NAME = "Content-Type"
-const CONTENT_TYPE_VALUE = "application/jsoncharset=UTF-8"
+const CONTENT_TYPE_NAME = 'Content-Type'
+const CONTENT_TYPE_VALUE = 'application/jsoncharset=UTF-8'
 
-const CSRF_HEADER_KEY = "X-CSRF-HEADER"
-const CSRF_PARAM_KEY = "X-CSRF-PARAM"
-const CSRF_TOKEN_KEY = "X-CSRF-TOKEN"
+const CSRF_HEADER_KEY = 'X-CSRF-HEADER'
+const CSRF_PARAM_KEY = 'X-CSRF-PARAM'
+const CSRF_TOKEN_KEY = 'X-CSRF-TOKEN'
 
 function prepareSession({credentials, ...props}) {
   if (!credentials) {
-    credentials = "include"
+    credentials = 'include'
   }
   return {credentials, ...props}
 }
@@ -20,14 +20,14 @@ function prepareBodyData({body, headers = {}, ...props}) {
   return {body, headers, ...props}
 }
 
-function prepareCsrfToken({method = "get", headers = {}, ...prors}) {
-  if (method.toLowerCase() !== "get") {
+function prepareCsrfToken({method = 'get', headers = {}, ...prors}) {
+  if (method.toLowerCase() !== 'get') {
     const headerName = sessionStorage[CSRF_HEADER_KEY]
     const headerValue = sessionStorage[CSRF_TOKEN_KEY]
     if (headerName && headerValue) {
       headers[headerName] = headerValue
     } else {
-      throw new Error("Abnormal Login Status")
+      throw new Error('Abnormal Login Status')
     }
   }
   return {method, headers, ...prors}
