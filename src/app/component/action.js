@@ -52,4 +52,4 @@ function submitLogout() {
   }
 }
 
-export { submitCheck, submitLogin, submitLogout }
+export { submitCheck, submitLogin, submitLogout, showAlert }

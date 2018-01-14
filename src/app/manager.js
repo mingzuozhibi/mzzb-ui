@@ -16,3 +16,9 @@ export const sessionManager = {
     })
   },
 }
+
+export const discManager = {
+  sakuraLists() {
+    return ajax('/api/sakura')
+  }
+}

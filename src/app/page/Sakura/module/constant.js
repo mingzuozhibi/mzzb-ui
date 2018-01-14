@@ -1,0 +1,3 @@
+const UPDATE_SAKURA_DATA = '@@sakura/UPDATE_SAKURA_DATA'
+
+export { UPDATE_SAKURA_DATA }
