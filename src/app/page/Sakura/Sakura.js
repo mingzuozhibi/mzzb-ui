@@ -3,6 +3,9 @@ import Button from 'material-ui/FloatingActionButton'
 import UpdateIcon from 'material-ui/svg-icons/action/update'
 
 function Sakura({doFetchSakuraData, sakuraLists}) {
+  sakuraLists.map(list => list.discs).forEach(discs => {
+    discs.sort((a, b) => a.this_rank - b.this_rank)
+  })
   const style = {
     position: 'fixed',
     bottom: '30px',
