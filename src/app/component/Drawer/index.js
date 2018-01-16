@@ -1,7 +1,7 @@
 import {connect} from 'react-redux'
 import {push as pushPath} from 'react-router-redux'
+import {hideSideDrawer} from '../../module/appbar'
 import Drawer from './Drawer'
-import {showDrawer, hideDrawer} from './module/action'
 
 const pages = {
   '/home': 'Home',
@@ -10,8 +10,8 @@ const pages = {
 
 function mapStateToProps(state) {
   return {
-    isOpened: state.appbar.drawer.isOpened,
-    pathname: state.router.pathname,
+    isOpened: state.appbar.sideDrawerOpen,
+    pathname: state.routing.pathname,
     pages: pages
   }
 }
@@ -20,7 +20,7 @@ function mapDispatchToProps(dispatch) {
   return {
     action: {
       doHideDrawer() {
-        dispatch(hideDrawer())
+        dispatch(hideSideDrawer())
       },
       doSelectItem(event, path) {
         dispatch(pushPath(path))
@@ -43,4 +43,4 @@ function getTitle(path) {
   return pages[path] || pages['/home']
 }
 
-export {showDrawer, getTitle, pushPath}
+export {getTitle, pushPath}

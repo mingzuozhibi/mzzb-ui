@@ -1,18 +1,6 @@
-import {ACTION_SESSION_LOGIN, ACTION_SESSION_LOGOUT} from './constant'
-import {showAlert} from './AlertDialog'
+import {sessionLogin, sessionLogout} from '../module/session'
+import {showAlertFrame} from '../module/appbar'
 import {sessionManager} from '../manager'
-
-function sessionLogin(userName, authRole) {
-  return {
-    type: ACTION_SESSION_LOGIN, userName, authRole
-  }
-}
-
-function sessionLogout() {
-  return {
-    type: ACTION_SESSION_LOGOUT
-  }
-}
 
 function submitCheck() {
   return async (dispatch) => {
@@ -24,7 +12,7 @@ function submitCheck() {
         dispatch(sessionLogout())
       }
     } catch (err) {
-      dispatch(showAlert(`Error: ${err.message}`))
+      dispatch(showAlertFrame(`Error: ${err.message}`))
     }
   }
 }
@@ -36,7 +24,7 @@ function submitLogin(username, password, action) {
       dispatch(action)
       dispatch(submitCheck())
     } else {
-      dispatch(showAlert('Login failed! Check username and password'))
+      dispatch(showAlertFrame('Login failed! Check username and password'))
     }
   }
 }
@@ -47,9 +35,9 @@ function submitLogout() {
       await sessionManager.logout()
       dispatch(submitCheck())
     } catch (err) {
-      dispatch(showAlert(`Error: ${err.message}`))
+      dispatch(showAlertFrame(`Error: ${err.message}`))
     }
   }
 }
 
-export {submitCheck, submitLogin, submitLogout, showAlert}
+export {submitCheck, submitLogin, submitLogout}

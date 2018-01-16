@@ -1,3 +1,0 @@
-const ACTION_UPDATE_SAKURA = '@@sakura/UPDATE_SAKURA'
-
-export {ACTION_UPDATE_SAKURA}

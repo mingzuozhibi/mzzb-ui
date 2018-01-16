@@ -1,14 +1,12 @@
 import {connect} from 'react-redux'
-import {showDrawer} from '../Drawer'
-import {showAlert} from '../AlertDialog'
-import {showLogin} from '../LoginDialog'
 import {submitCheck, submitLogout} from '../action'
+import * as appbar from '../../module/appbar'
 import AppBar from './AppBar'
 
 function mapStateToProps(state) {
   return {
     isLogged: state.session.isLogged,
-    title: state.router.title
+    title: state.routing.title
   }
 }
 
@@ -17,13 +15,13 @@ function mapDispatchToProps(dispatch) {
   return {
     action: {
       doShowDrawer() {
-        dispatch(showDrawer())
+        dispatch(appbar.showSideDrawer())
       },
       noSupport() {
-        dispatch(showAlert('Unsupported Operation'))
+        dispatch(appbar.showAlertFrame('Unsupported Operation'))
       },
       doShowLogin() {
-        dispatch(showLogin())
+        dispatch(appbar.showLoginFrame())
       },
       doLogout() {
         dispatch(submitLogout())

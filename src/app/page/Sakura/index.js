@@ -1,8 +1,8 @@
 import {connect} from 'react-redux'
 import Sakura from './Sakura'
 import {discManager} from '../../manager'
-import {showAlert} from '../../component/action'
-import {updateSakura} from './module/action'
+import {updateSakura} from '../../module/sakura'
+import {showAlertFrame} from '../../module/appbar'
 
 function mapStateToProps(state) {
   return {
@@ -15,7 +15,7 @@ function fetchSakuraData(dispatch) {
     if (json.success) {
       dispatch(updateSakura(json.data))
     } else {
-      showAlert(json.message)
+      showAlertFrame(json.message)
     }
   })
 }

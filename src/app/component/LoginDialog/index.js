@@ -1,29 +1,28 @@
 import {connect} from 'react-redux'
-import LoginDialog from './LoginDialog'
-import {showLogin, hideLogin} from './module/action'
+import {showAlertFrame, hideLoginFrame} from '../../module/appbar'
 import {submitLogin} from '../action'
-import {showAlert} from '../AlertDialog/'
+import LoginDialog from './LoginDialog'
 
 function mapStateToProps(state) {
   return {
-    isOpened: state.appbar.login.isOpened
+    isOpened: state.appbar.loginFrameOpen
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     doHideLogin() {
-      dispatch(hideLogin())
+      dispatch(hideLoginFrame())
     },
     doSubmit(username, password) {
       try {
         if (!username || !password) {
-          dispatch(showAlert('You must input username and password'))
+          dispatch(showAlertFrame('You must input username and password'))
         } else {
-          dispatch(submitLogin(username, password, hideLogin()))
+          dispatch(submitLogin(username, password, hideLoginFrame()))
         }
       } catch (error) {
-        dispatch(showAlert(`Error: ${error.message}`))
+        dispatch(showAlertFrame(`Error: ${error.message}`))
       }
     }
   }
@@ -35,5 +34,3 @@ const LoginDialogContainer = connect(
 )(LoginDialog)
 
 export default LoginDialogContainer
-
-export {showLogin}
