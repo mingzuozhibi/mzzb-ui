@@ -1,4 +1,4 @@
-import { ACTION_SHOW_ALERT, ACTION_HIDE_ALERT } from './constant'
+import {ACTION_SHOW_ALERT, ACTION_HIDE_ALERT} from './constant'
 
 export function showAlert(message) {
   return {

@@ -1,21 +1,27 @@
-import { connect } from '../../connect'
+import {connect} from 'react-redux'
+import {showAlert, hideAlert} from './module/action'
 import AlertDialog from './AlertDialog'
-import { showAlert, hideAlert } from './module/action'
+
+function mapStateToProps(state) {
+  return {
+    alertOpen: state.alert.isOpened,
+    alertText: state.alert.message
+  }
+}
 
 function mapDispatchToProps(dispatch) {
   return {
-    action: {
-      doHideAlert() {
-        dispatch(hideAlert())
-      }
+    doHideAlert() {
+      dispatch(hideAlert())
     }
   }
 }
 
 const AlertDialogContainer = connect(
+  mapStateToProps,
   mapDispatchToProps
 )(AlertDialog)
 
 export default AlertDialogContainer
 
-export { showAlert }
+export {showAlert}

@@ -2,29 +2,27 @@ import React from 'react'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 
-function AlertDialog({alert, action}) {
-  const {isOpened, message} = alert
-  const {doHideAlert} = action
-
+function AlertDialog({alertOpen, alertText, doHideAlert}) {
+  const buttons = [
+    <FlatButton
+      label="Cancel"
+      primary={true}
+      onTouchTap={doHideAlert}
+    />,
+    <FlatButton
+      label="Discard"
+      primary={true}
+      onTouchTap={doHideAlert}
+    />,
+  ];
   return (
     <Dialog
-      open={isOpened}
+      open={alertOpen}
       style={{zIndex: 2000}}
-      actions={[
-        <FlatButton
-          label="Cancel"
-          primary={true}
-          onTouchTap={doHideAlert}
-        />,
-        <FlatButton
-          label="Discard"
-          primary={true}
-          onTouchTap={doHideAlert}
-        />,
-      ]}
+      actions={buttons}
       onRequestClose={doHideAlert}
     >
-      {message}
+      {alertText}
     </Dialog>
   )
 }

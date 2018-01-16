@@ -1,4 +1,4 @@
-import { ACTION_SHOW_LOGIN, ACTION_HIDE_LOGIN } from './constant'
+import {ACTION_SHOW_LOGIN, ACTION_HIDE_LOGIN} from './constant'
 
 export function showLogin() {
   return {

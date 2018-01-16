@@ -1,6 +1,6 @@
-import { ACTION_SESSION_LOGIN, ACTION_SESSION_LOGOUT } from './constant'
-import { showAlert } from './AlertDialog'
-import { sessionManager } from '../manager'
+import {ACTION_SESSION_LOGIN, ACTION_SESSION_LOGOUT} from './constant'
+import {showAlert} from './AlertDialog'
+import {sessionManager} from '../manager'
 
 function sessionLogin(userName, authRole) {
   return {
@@ -15,7 +15,7 @@ function sessionLogout() {
 }
 
 function submitCheck() {
-  return async(dispatch) => {
+  return async (dispatch) => {
     try {
       const json = await sessionManager.check()
       if (json.success) {
@@ -30,7 +30,7 @@ function submitCheck() {
 }
 
 function submitLogin(username, password, action) {
-  return async(dispatch) => {
+  return async (dispatch) => {
     const json = await sessionManager.login(username, password)
     if (json.success) {
       dispatch(action)
@@ -42,7 +42,7 @@ function submitLogin(username, password, action) {
 }
 
 function submitLogout() {
-  return async(dispatch) => {
+  return async (dispatch) => {
     try {
       await sessionManager.logout()
       dispatch(submitCheck())
@@ -52,4 +52,4 @@ function submitLogout() {
   }
 }
 
-export { submitCheck, submitLogin, submitLogout, showAlert }
+export {submitCheck, submitLogin, submitLogout, showAlert}

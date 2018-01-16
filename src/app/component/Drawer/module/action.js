@@ -1,4 +1,4 @@
-import { ACTION_SHOW_DRAWER, ACTION_HIDE_DRAWER } from './constant'
+import {ACTION_SHOW_DRAWER, ACTION_HIDE_DRAWER} from './constant'
 
 export function showDrawer() {
   return {
