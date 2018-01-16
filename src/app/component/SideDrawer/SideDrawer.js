@@ -2,19 +2,17 @@ import React from 'react'
 import Divider from 'material-ui/Divider'
 import Subheader from 'material-ui/Subheader'
 import NativeDrawer from 'material-ui/Drawer'
-import { List, ListItem, makeSelectable } from 'material-ui/List'
+import {List, ListItem, makeSelectable} from 'material-ui/List'
+import {pages} from '../../constant'
 import './Drawer.css'
 
 const SelectableList = makeSelectable(List)
 
-function Drawer({drawer, router, action, ...extra}) {
-  const {isOpened} = drawer
-  const {pathname} = router
-  const {pages, isDocked} = extra
+function Drawer({isDocked, isOpened, pathname, action}) {
   const {doHideDrawer, doSelectItem, doRedirect} = action
 
-  const selectItems = Object.keys(pages).map(path =>
-    <ListItem key={path} value={path} primaryText={pages[path]}/>
+  const SelectItems = pages.map(page =>
+    <ListItem key={page.path} value={page.path} primaryText={page.title}/>
   )
   const doTouchHeader = (event) => {
     doSelectItem(event, '/')
@@ -31,9 +29,9 @@ function Drawer({drawer, router, action, ...extra}) {
         名作之壁
       </div>
       <SelectableList value={pathname} onChange={doSelectItem}>
-        {selectItems}
+        {SelectItems}
       </SelectableList>
-      <Divider />
+      <Divider/>
       <SelectableList value="" onChange={doRedirect}>
         <Subheader>Resources</Subheader>
         <ListItem primaryText="GitHub" value="https://github.com/mingzuozhibi/mzzb-ui"/>

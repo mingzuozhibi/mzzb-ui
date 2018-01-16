@@ -1,7 +1,6 @@
 import React from 'react'
 
-function Home({session}) {
-  const {isLogged, userName} = session
+function Home({isLogged, userName}) {
   const helloMsg = isLogged
     ? `Hello ${userName}, You are logged.`
     : 'Hello guest, Please login.'

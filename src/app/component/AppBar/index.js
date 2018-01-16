@@ -1,22 +1,27 @@
-import { connect } from '../../connect'
+import {connect} from 'react-redux'
+import {submitCheck, submitLogout} from '../action'
+import * as appbar from '../../module/appbar'
 import AppBar from './AppBar'
-import { showDrawer } from '../Drawer'
-import { showAlert } from '../AlertDialog'
-import { showLogin } from '../LoginDialog'
-import { submitCheck, submitLogout } from '../action'
+
+function mapStateToProps(state) {
+  return {
+    barTitle: state.routing.title,
+    isLogged: state.session.isLogged,
+  }
+}
 
 function mapDispatchToProps(dispatch) {
   dispatch(submitCheck())
   return {
     action: {
       doShowDrawer() {
-        dispatch(showDrawer())
+        dispatch(appbar.showSideDrawer())
       },
       noSupport() {
-        dispatch(showAlert('Unsupported Operation'))
+        dispatch(appbar.showAlertFrame('Unsupported Operation'))
       },
       doShowLogin() {
-        dispatch(showLogin())
+        dispatch(appbar.showLoginFrame())
       },
       doLogout() {
         dispatch(submitLogout())
@@ -25,8 +30,7 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-const AppBarContainer = connect(
+export default connect(
+  mapStateToProps,
   mapDispatchToProps
 )(AppBar)
-
-export default AppBarContainer
