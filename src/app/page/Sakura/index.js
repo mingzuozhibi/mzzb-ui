@@ -2,7 +2,7 @@ import {connect} from 'react-redux'
 import Sakura from './Sakura'
 import {discManager} from '../../manager'
 import {showAlert} from '../../component/action'
-import {updateSakura} from "./module/action";
+import {updateSakura} from './module/action'
 
 function mapStateToProps(state) {
   return {
@@ -24,7 +24,7 @@ function mapDispatchToProps(dispatch) {
   fetchSakuraData(dispatch)
   return {
     doFetchSakuraData() {
-      fetchSakuraData(dispatch);
+      fetchSakuraData(dispatch)
     }
   }
 }

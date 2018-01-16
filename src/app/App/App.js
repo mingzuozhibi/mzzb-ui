@@ -1,5 +1,5 @@
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import withWidth, { MEDIUM, LARGE } from 'material-ui/utils/withWidth'
+import withWidth, {MEDIUM, LARGE} from 'material-ui/utils/withWidth'
 import React from 'react'
 import AppBar from '../component/AppBar'
 import Drawer from '../component/Drawer'

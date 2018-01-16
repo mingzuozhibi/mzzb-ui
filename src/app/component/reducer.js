@@ -1,6 +1,10 @@
 import {LOCATION_CHANGE} from 'react-router-redux'
 import {ACTION_SESSION_LOGIN, ACTION_SESSION_LOGOUT} from './constant'
 import {getTitle} from './Drawer'
+import {combineReducers} from 'redux'
+import drawerReducer from './Drawer/module/reducer'
+import alertReducer from './AlertDialog/module/reducer'
+import loginReducer from './LoginDialog/module/reducer'
 
 function sessionState(isLogged, userName, authRole) {
   return {isLogged, userName, authRole}
@@ -29,4 +33,10 @@ function routerReducer(state = {}, action) {
   }
 }
 
-export {sessionReducer, routerReducer}
+const appbarReducer = combineReducers({
+  drawer: drawerReducer,
+  alert: alertReducer,
+  login: loginReducer
+})
+
+export {sessionReducer, routerReducer, appbarReducer}

@@ -14,7 +14,7 @@ function AlertDialog({alertOpen, alertText, doHideAlert}) {
       primary={true}
       onTouchTap={doHideAlert}
     />,
-  ];
+  ]
   return (
     <Dialog
       open={alertOpen}

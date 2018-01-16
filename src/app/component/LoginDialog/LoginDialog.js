@@ -30,7 +30,7 @@ function LoginDialog({isOpened, doHideLogin, doSubmit}) {
       keyboardFocused={true}
       onTouchTap={handleSubmit}
     />,
-  ];
+  ]
   return (
     <Dialog
       open={isOpened}

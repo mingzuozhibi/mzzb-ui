@@ -4,8 +4,8 @@ import AlertDialog from './AlertDialog'
 
 function mapStateToProps(state) {
   return {
-    alertOpen: state.alert.isOpened,
-    alertText: state.alert.message
+    alertOpen: state.appbar.alert.isOpened,
+    alertText: state.appbar.alert.message
   }
 }
 

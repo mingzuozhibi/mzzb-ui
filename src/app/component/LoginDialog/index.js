@@ -6,7 +6,7 @@ import {showAlert} from '../AlertDialog/'
 
 function mapStateToProps(state) {
   return {
-    isOpened: state.login.isOpened
+    isOpened: state.appbar.login.isOpened
   }
 }
 

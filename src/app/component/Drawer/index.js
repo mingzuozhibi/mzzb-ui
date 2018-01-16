@@ -10,7 +10,7 @@ const pages = {
 
 function mapStateToProps(state) {
   return {
-    isOpened: state.drawer.isOpened,
+    isOpened: state.appbar.drawer.isOpened,
     pathname: state.router.pathname,
     pages: pages
   }
