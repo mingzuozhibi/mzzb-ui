@@ -3,15 +3,16 @@ import Divider from 'material-ui/Divider'
 import Subheader from 'material-ui/Subheader'
 import NativeDrawer from 'material-ui/Drawer'
 import {List, ListItem, makeSelectable} from 'material-ui/List'
+import {pages} from '../../constant'
 import './Drawer.css'
 
 const SelectableList = makeSelectable(List)
 
-function Drawer({pages, isDocked, isOpened, pathname, action}) {
+function Drawer({isDocked, isOpened, pathname, action}) {
   const {doHideDrawer, doSelectItem, doRedirect} = action
 
-  const SelectItems = Object.keys(pages).map(path =>
-    <ListItem key={path} value={path} primaryText={pages[path]}/>
+  const SelectItems = pages.map(page =>
+    <ListItem key={page.path} value={page.path} primaryText={page.title}/>
   )
   const doTouchHeader = (event) => {
     doSelectItem(event, '/')

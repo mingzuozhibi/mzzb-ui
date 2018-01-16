@@ -1,5 +1,5 @@
 import {routerReducer, LOCATION_CHANGE} from 'react-router-redux'
-import {getTitle} from '../../component/Drawer'
+import {getTitle} from '../../constant'
 
 function routingReducer(state = {}, action) {
   state = routerReducer(state, action)

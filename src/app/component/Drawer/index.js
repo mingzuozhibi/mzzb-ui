@@ -3,16 +3,10 @@ import {push as pushPath} from 'react-router-redux'
 import {hideSideDrawer} from '../../module/appbar'
 import Drawer from './Drawer'
 
-const pages = {
-  '/home': 'Home',
-  '/sakura': 'Sakura',
-}
-
 function mapStateToProps(state) {
   return {
     isOpened: state.appbar.sideDrawerOpen,
     pathname: state.routing.pathname,
-    pages: pages
   }
 }
 
@@ -39,8 +33,4 @@ const DrawerContainer = connect(
 
 export default DrawerContainer
 
-function getTitle(path) {
-  return pages[path] || pages['/home']
-}
-
-export {getTitle, pushPath}
+export {pushPath}
