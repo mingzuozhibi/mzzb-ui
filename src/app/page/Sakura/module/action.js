@@ -1,8 +1,8 @@
-import { UPDATE_SAKURA_DATA } from './constant'
+import {ACTION_UPDATE_SAKURA} from './constant'
 
-export function updateSakuraData(sakuraLists) {
+export function updateSakura(data) {
   return {
-    type: UPDATE_SAKURA_DATA,
-    data: sakuraLists
+    type: ACTION_UPDATE_SAKURA,
+    data: data
   }
 }

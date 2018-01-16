@@ -2,7 +2,7 @@ import React from 'react'
 import Button from 'material-ui/FloatingActionButton'
 import UpdateIcon from 'material-ui/svg-icons/action/update'
 
-function Sakura({doFetchSakuraData, sakura}) {
+function Sakura({doFetchSakuraData, sakuraLists}) {
   const style = {
     position: 'fixed',
     bottom: '30px',
@@ -13,7 +13,7 @@ function Sakura({doFetchSakuraData, sakura}) {
       <Button style={style} onTouchTap={doFetchSakuraData}>
         <UpdateIcon/>
       </Button>
-      {sakura.sakuraLists.map(sakuraList => (
+      {sakuraLists.map(sakuraList => (
         <table key={sakuraList.name} border="1">
           <caption>{sakuraList.title}</caption>
           <thead>
