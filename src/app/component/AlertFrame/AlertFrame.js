@@ -2,7 +2,7 @@ import React from 'react'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 
-function AlertDialog({alertOpen, alertText, doHideAlert}) {
+function AlertFrame({frameOpen, alertText, doHideAlert}) {
   const buttons = [
     <FlatButton
       label="Cancel"
@@ -17,7 +17,7 @@ function AlertDialog({alertOpen, alertText, doHideAlert}) {
   ]
   return (
     <Dialog
-      open={alertOpen}
+      open={frameOpen}
       style={{zIndex: 2000}}
       actions={buttons}
       onRequestClose={doHideAlert}
@@ -27,4 +27,4 @@ function AlertDialog({alertOpen, alertText, doHideAlert}) {
   )
 }
 
-export default AlertDialog
+export default AlertFrame

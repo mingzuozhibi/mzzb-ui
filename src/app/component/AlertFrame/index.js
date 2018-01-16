@@ -1,10 +1,10 @@
 import {connect} from 'react-redux'
 import {hideAlertFrame} from '../../module/appbar'
-import AlertDialog from './AlertDialog'
+import AlertFrame from './AlertFrame'
 
 function mapStateToProps(state) {
   return {
-    alertOpen: state.appbar.alertFrameOpen,
+    frameOpen: state.appbar.alertFrameOpen,
     alertText: state.appbar.alertText
   }
 }
@@ -17,9 +17,7 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-const AlertDialogContainer = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AlertDialog)
-
-export default AlertDialogContainer
+)(AlertFrame)

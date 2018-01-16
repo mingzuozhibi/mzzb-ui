@@ -2,9 +2,9 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import withWidth, {MEDIUM, LARGE} from 'material-ui/utils/withWidth'
 import React from 'react'
 import AppBar from '../component/AppBar'
-import Drawer from '../component/Drawer'
-import AlertDialog from '../component/AlertDialog'
-import LoginDialog from '../component/LoginDialog'
+import SideDrawer from '../component/SideDrawer'
+import LoginFrame from '../component/LoginFrame'
+import AlertFrame from '../component/AlertFrame'
 
 class App extends React.Component {
 
@@ -36,9 +36,9 @@ class App extends React.Component {
         <div className="app__page">
           <div className="app__header">
             <AppBar/>
-            <Drawer isDocked={isDocked}/>
-            <AlertDialog/>
-            <LoginDialog/>
+            <SideDrawer isDocked={isDocked}/>
+            <AlertFrame/>
+            <LoginFrame/>
           </div>
           <div className="app__root" style={styles.root}>
             <div className="app__content" style={styles.content}>

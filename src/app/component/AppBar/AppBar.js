@@ -6,7 +6,7 @@ import FlatButton from 'material-ui/FlatButton'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 import NativeAppBar from 'material-ui/AppBar'
 
-function AppBar({title, isLogged, action}) {
+function AppBar({barTitle, isLogged, action}) {
   const {noSupport, doLogout, doShowLogin, doShowDrawer} = action
   const Logged = (
     <IconMenu
@@ -27,7 +27,7 @@ function AppBar({title, isLogged, action}) {
   )
   return (
     <NativeAppBar
-      title={title}
+      title={barTitle}
       style={{position: 'fixed', top: 0}}
       onLeftIconButtonTouchTap={doShowDrawer}
       iconElementRight={isLogged ? Logged : NoLog}

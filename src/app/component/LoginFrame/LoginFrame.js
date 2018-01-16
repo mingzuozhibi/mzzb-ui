@@ -3,7 +3,7 @@ import Dialog from 'material-ui/Dialog'
 import TextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
 
-function LoginDialog({isOpened, doHideLogin, doSubmit}) {
+function LoginFrame({isOpened, doHideLogin, doSubmit}) {
 
   function handleSubmit() {
     const username = document.querySelector('#username').value
@@ -54,4 +54,4 @@ function LoginDialog({isOpened, doHideLogin, doSubmit}) {
   )
 }
 
-export default LoginDialog
+export default LoginFrame

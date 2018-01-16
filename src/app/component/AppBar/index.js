@@ -5,8 +5,8 @@ import AppBar from './AppBar'
 
 function mapStateToProps(state) {
   return {
+    barTitle: state.routing.title,
     isLogged: state.session.isLogged,
-    title: state.routing.title
   }
 }
 
@@ -30,9 +30,7 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-const AppBarContainer = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(AppBar)
-
-export default AppBarContainer

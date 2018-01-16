@@ -1,7 +1,7 @@
 import {connect} from 'react-redux'
-import {push as pushPath} from 'react-router-redux'
 import {hideSideDrawer} from '../../module/appbar'
-import Drawer from './Drawer'
+import {redirectTo} from '../../module/routing'
+import SideDrawer from './SideDrawer'
 
 function mapStateToProps(state) {
   return {
@@ -17,7 +17,7 @@ function mapDispatchToProps(dispatch) {
         dispatch(hideSideDrawer())
       },
       doSelectItem(event, path) {
-        dispatch(pushPath(path))
+        dispatch(redirectTo(path))
       },
       doRedirect(event, path) {
         window.open(path)
@@ -26,11 +26,7 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-const DrawerContainer = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Drawer)
-
-export default DrawerContainer
-
-export {pushPath}
+)(SideDrawer)

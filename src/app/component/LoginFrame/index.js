@@ -1,7 +1,7 @@
 import {connect} from 'react-redux'
 import {showAlertFrame, hideLoginFrame} from '../../module/appbar'
 import {submitLogin} from '../action'
-import LoginDialog from './LoginDialog'
+import LoginFrame from './LoginFrame'
 
 function mapStateToProps(state) {
   return {
@@ -28,9 +28,7 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-const LoginDialogContainer = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(LoginDialog)
-
-export default LoginDialogContainer
+)(LoginFrame)

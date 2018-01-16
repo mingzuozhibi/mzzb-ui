@@ -1,5 +1,9 @@
-import {routerReducer, LOCATION_CHANGE} from 'react-router-redux'
+import {push, routerReducer, LOCATION_CHANGE} from 'react-router-redux'
 import {getTitle} from '../../constant'
+
+function redirectTo(path) {
+  return push(path)
+}
 
 function routingReducer(state = {}, action) {
   state = routerReducer(state, action)
@@ -13,4 +17,4 @@ function routingReducer(state = {}, action) {
   }
 }
 
-export {routingReducer}
+export {redirectTo, routingReducer}
