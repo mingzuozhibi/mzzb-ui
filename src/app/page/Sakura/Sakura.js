@@ -22,6 +22,7 @@ function Sakura({doFetchSakuraData, sakuraLists}) {
           <thead>
           <tr>
             <th>rank</th>
+            <th>prev</th>
             <th>title</th>
           </tr>
           </thead>
@@ -29,6 +30,7 @@ function Sakura({doFetchSakuraData, sakuraLists}) {
           {sakuraList.discs.map(disc => (
             <tr key={disc.asin}>
               <td>{disc.this_rank}</td>
+              <td>{disc.prev_rank}</td>
               <td>{disc.title}</td>
             </tr>
           ))}
