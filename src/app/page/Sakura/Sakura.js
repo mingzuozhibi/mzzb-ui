@@ -12,7 +12,7 @@ function Sakura({doFetchSakuraData, sakuraLists}) {
     right: '10px'
   }
   return (
-    <div id="home">
+    <div id="sakura">
       <Button style={style} onTouchTap={doFetchSakuraData}>
         <UpdateIcon/>
       </Button>
