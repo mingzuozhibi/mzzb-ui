@@ -57,7 +57,7 @@ function Sakura({doFetchSakuraData, data}) {
   }
   return (
     <div id="sakura">
-      <Button style={updateStyle} onTouchTap={doFetchSakuraData}>
+      <Button style={updateStyle} onClick={doFetchSakuraData}>
         <UpdateIcon/>
       </Button>
       {data.map(list =>

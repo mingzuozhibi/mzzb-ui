@@ -22,13 +22,13 @@ function LoginFrame({isOpened, doHideLogin, doSubmit}) {
     <FlatButton
       label="Cancel"
       primary={true}
-      onTouchTap={doHideLogin}
+      onClick={doHideLogin}
     />,
     <FlatButton
       label="Login"
       primary={true}
       keyboardFocused={true}
-      onTouchTap={handleSubmit}
+      onClick={handleSubmit}
     />,
   ]
   return (

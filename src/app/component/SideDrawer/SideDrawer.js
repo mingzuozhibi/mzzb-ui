@@ -26,7 +26,7 @@ function Drawer({isDocked, isOpened, pathname, action}) {
         open={isOpened || isDocked}
         onRequestChange={doHideDrawer}
       >
-        <div className="drawer__header" onTouchTap={doTouchHeader}>
+        <div className="drawer__header" onClick={doTouchHeader}>
           名作之壁
         </div>
         <SelectableList value={pathname} onChange={doSelectItem}>

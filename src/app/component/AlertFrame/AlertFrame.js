@@ -7,12 +7,12 @@ function AlertFrame({frameOpen, alertText, doHideAlert}) {
     <FlatButton
       label="Cancel"
       primary={true}
-      onTouchTap={doHideAlert}
+      onClick={doHideAlert}
     />,
     <FlatButton
       label="Discard"
       primary={true}
-      onTouchTap={doHideAlert}
+      onClick={doHideAlert}
     />,
   ]
   return (
