@@ -16,14 +16,16 @@ function AlertFrame({frameOpen, alertText, doHideAlert}) {
     />,
   ]
   return (
-    <Dialog
-      open={frameOpen}
-      style={{zIndex: 2000}}
-      actions={buttons}
-      onRequestClose={doHideAlert}
-    >
-      {alertText}
-    </Dialog>
+    <div id="alert_frame">
+      <Dialog
+        open={frameOpen}
+        style={{zIndex: 2000}}
+        actions={buttons}
+        onRequestClose={doHideAlert}
+      >
+        {alertText}
+      </Dialog>
+    </div>
   )
 }
 

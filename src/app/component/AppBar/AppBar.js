@@ -26,12 +26,14 @@ function AppBar({barTitle, isLogged, action}) {
     />
   )
   return (
-    <NativeAppBar
-      title={barTitle}
-      style={{position: 'fixed', top: 0}}
-      onLeftIconButtonTouchTap={doShowDrawer}
-      iconElementRight={isLogged ? Logged : NoLog}
-    />
+    <div id="appbar">
+      <NativeAppBar
+        title={barTitle}
+        style={{position: 'fixed', top: 0}}
+        onLeftIconButtonTouchTap={doShowDrawer}
+        iconElementRight={isLogged ? Logged : NoLog}
+      />
+    </div>
   )
 }
 
