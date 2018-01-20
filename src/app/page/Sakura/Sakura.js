@@ -1,17 +1,26 @@
 import React from 'react'
 import Button from 'material-ui/FloatingActionButton'
 import UpdateIcon from 'material-ui/svg-icons/action/update'
-import './bootstrap.min.css'
+import Table, {Column} from '../../component/Table'
 
-class Column {
-  constructor({className, compare, format, style = {}, title}) {
-    this.className = className
-    this.compare = compare
-    this.format = format
-    this.style = style
-    this.title = title
+function compareFactory({compare, empty = () => false}) {
+  return (a, b) => {
+    const is_empty_a = empty(a)
+    const is_empty_b = empty(b)
+    if (is_empty_a && is_empty_b) {
+      return 0
+    }
+    if (is_empty_a || is_empty_b) {
+      return is_empty_a ? 1 : -1
+    }
+    return compare(a, b)
   }
 }
+
+const rankCompare = compareFactory({
+  compare: (a, b) => a['this_rank'] - b['this_rank'],
+  empty: n => n['this_rank'] === 0,
+})
 
 const columns = [
   new Column({
@@ -40,41 +49,21 @@ const columns = [
 ]
 
 function Sakura({doFetchSakuraData, data}) {
-  data.map(list => list['discs']).forEach(discs => {
-    discs.sort((a, b) => a['this_rank'] - b['this_rank'])
-  })
+  data.forEach(list => list['discs'].sort(rankCompare))
   const updateStyle = {
     position: 'fixed',
     bottom: '30px',
     right: '10px'
   }
-  const tableClass = 'table table-striped table-bordered'
   return (
     <div id="sakura">
       <Button style={updateStyle} onTouchTap={doFetchSakuraData}>
         <UpdateIcon/>
       </Button>
-      {data.map(list => (
-        <table className={tableClass} key={list['name']}>
-          <caption>{list['title']}</caption>
-          <thead>
-          <tr>
-            {columns.map(c => (
-              <th className={c.className} style={c.style}>{c.title}</th>
-            ))}
-          </tr>
-          </thead>
-          <tbody>
-          {list['discs'].map(disc => (
-            <tr key={disc['asin']}>
-              {columns.map(c =>
-                (<td className={c.className}>{c.format(disc)}</td>)
-              )}
-            </tr>
-          ))}
-          </tbody>
-        </table>
-      ))}
+      {data.map(list =>
+        <Table key={list['name']} title={list['title']}
+               rows={list['discs']} columns={columns}/>
+      )}
     </div>
   )
 }
