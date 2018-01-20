@@ -19,25 +19,27 @@ function Drawer({isDocked, isOpened, pathname, action}) {
   }
 
   return (
-    <NativeDrawer
-      docked={isDocked}
-      width={200}
-      open={isOpened || isDocked}
-      onRequestChange={doHideDrawer}
-    >
-      <div className="drawer__header" onTouchTap={doTouchHeader}>
-        名作之壁
-      </div>
-      <SelectableList value={pathname} onChange={doSelectItem}>
-        {SelectItems}
-      </SelectableList>
-      <Divider/>
-      <SelectableList value="" onChange={doRedirect}>
-        <Subheader>Resources</Subheader>
-        <ListItem primaryText="GitHub" value="https://github.com/mingzuozhibi/mzzb-ui"/>
-        <ListItem primaryText="名作之壁吧" value="http://tieba.baidu.com/f?kw=名作之壁&ie=utf-8"/>
-      </SelectableList>
-    </NativeDrawer>
+    <div id="side_drawer">
+      <NativeDrawer
+        docked={isDocked}
+        width={200}
+        open={isOpened || isDocked}
+        onRequestChange={doHideDrawer}
+      >
+        <div className="drawer__header" onClick={doTouchHeader}>
+          名作之壁
+        </div>
+        <SelectableList value={pathname} onChange={doSelectItem}>
+          {SelectItems}
+        </SelectableList>
+        <Divider/>
+        <SelectableList value="" onChange={doRedirect}>
+          <Subheader>Resources</Subheader>
+          <ListItem primaryText="GitHub" value="https://github.com/mingzuozhibi/mzzb-ui"/>
+          <ListItem primaryText="名作之壁吧" value="http://tieba.baidu.com/f?kw=名作之壁&ie=utf-8"/>
+        </SelectableList>
+      </NativeDrawer>
+    </div>
   )
 }
 

@@ -6,7 +6,7 @@ import {showAlertFrame} from '../../module/appbar'
 
 function mapStateToProps(state) {
   return {
-    sakuraLists: state.sakura.sakuraLists
+    data: state.sakura.data
   }
 }
 

@@ -8,13 +8,13 @@ function updateSakura(data) {
 }
 
 const initState = {
-  sakuraLists: []
+  data: []
 }
 
 function sakuraReducer(state = initState, action) {
   switch (action.type) {
     case ACTION_UPDATE_SAKURA:
-      return {...state, sakuraLists: action.data}
+      return {...state, data: action.data}
     default:
       return state
   }

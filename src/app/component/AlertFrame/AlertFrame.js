@@ -7,23 +7,25 @@ function AlertFrame({frameOpen, alertText, doHideAlert}) {
     <FlatButton
       label="Cancel"
       primary={true}
-      onTouchTap={doHideAlert}
+      onClick={doHideAlert}
     />,
     <FlatButton
       label="Discard"
       primary={true}
-      onTouchTap={doHideAlert}
+      onClick={doHideAlert}
     />,
   ]
   return (
-    <Dialog
-      open={frameOpen}
-      style={{zIndex: 2000}}
-      actions={buttons}
-      onRequestClose={doHideAlert}
-    >
-      {alertText}
-    </Dialog>
+    <div id="alert_frame">
+      <Dialog
+        open={frameOpen}
+        style={{zIndex: 2000}}
+        actions={buttons}
+        onRequestClose={doHideAlert}
+      >
+        {alertText}
+      </Dialog>
+    </div>
   )
 }
 

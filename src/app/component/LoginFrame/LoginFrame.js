@@ -22,35 +22,37 @@ function LoginFrame({isOpened, doHideLogin, doSubmit}) {
     <FlatButton
       label="Cancel"
       primary={true}
-      onTouchTap={doHideLogin}
+      onClick={doHideLogin}
     />,
     <FlatButton
       label="Login"
       primary={true}
       keyboardFocused={true}
-      onTouchTap={handleSubmit}
+      onClick={handleSubmit}
     />,
   ]
   return (
-    <Dialog
-      open={isOpened}
-      onRequestClose={doHideLogin}
-      title="Login Form"
-      actions={buttons}
-    >
-      <TextField
-        id="username"
-        hintText="Enter Username"
-        floatingLabelText="Username"
-      /><br/>
-      <TextField
-        id="password"
-        type="password"
-        hintText="Enter Password"
-        floatingLabelText="Password"
-        onKeyUp={handleEnter}
-      /><br/>
-    </Dialog>
+    <div id="login_frame">
+      <Dialog
+        open={isOpened}
+        onRequestClose={doHideLogin}
+        title="Login Form"
+        actions={buttons}
+      >
+        <TextField
+          id="username"
+          hintText="Enter Username"
+          floatingLabelText="Username"
+        /><br/>
+        <TextField
+          id="password"
+          type="password"
+          hintText="Enter Password"
+          floatingLabelText="Password"
+          onKeyUp={handleEnter}
+        /><br/>
+      </Dialog>
+    </div>
   )
 }
 

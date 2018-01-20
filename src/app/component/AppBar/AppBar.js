@@ -14,24 +14,26 @@ function AppBar({barTitle, isLogged, action}) {
       targetOrigin={{horizontal: 'right', vertical: 'top'}}
       anchorOrigin={{horizontal: 'right', vertical: 'top'}}
     >
-      <MenuItem primaryText="Refresh" onTouchTap={noSupport}/>
-      <MenuItem primaryText="Help" onTouchTap={noSupport}/>
-      <MenuItem primaryText="Sign out" onTouchTap={doLogout}/>
+      <MenuItem primaryText="Refresh" onClick={noSupport}/>
+      <MenuItem primaryText="Help" onClick={noSupport}/>
+      <MenuItem primaryText="Sign out" onClick={doLogout}/>
     </IconMenu>
   )
   const NoLog = (
     <FlatButton
       label="Login"
-      onTouchTap={doShowLogin}
+      onClick={doShowLogin}
     />
   )
   return (
-    <NativeAppBar
-      title={barTitle}
-      style={{position: 'fixed', top: 0}}
-      onLeftIconButtonTouchTap={doShowDrawer}
-      iconElementRight={isLogged ? Logged : NoLog}
-    />
+    <div id="appbar">
+      <NativeAppBar
+        title={barTitle}
+        style={{position: 'fixed', top: 0}}
+        onLeftIconButtonClick={doShowDrawer}
+        iconElementRight={isLogged ? Logged : NoLog}
+      />
+    </div>
   )
 }
 
