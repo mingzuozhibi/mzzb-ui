@@ -26,19 +26,19 @@ const columns = [
   new Column({
     className: 'rank',
     title: '日亚排名',
-    style: {width: '165px'},
+    style: {width: '145px'},
     format: disc => `${disc['this_rank']}位/${disc['prev_rank']}位`,
   }),
   new Column({
     className: 'sumpt',
     title: '累积PT',
-    style: {width: '105px'},
+    style: {width: '75px'},
     format: disc => `${disc['total_point']} pt`,
   }),
   new Column({
     className: 'sday',
     title: '剩余天数',
-    style: {width: '95px'},
+    style: {width: '80px'},
     format: disc => `${disc['surplus_days']}天`,
   }),
   new Column({
@@ -61,8 +61,9 @@ function Sakura({doFetchSakuraData, data}) {
         <UpdateIcon/>
       </Button>
       {data.map(list =>
-        <Table key={list['name']} title={list['title']}
-               rows={list['discs']} columns={columns}/>
+        <div key={list['name']} style={{width: '2000px'}}>
+          <Table title={list['title']} rows={list['discs']} columns={columns}/>
+        </div>
       )}
     </div>
   )

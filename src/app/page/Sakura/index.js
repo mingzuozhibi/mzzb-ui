@@ -29,9 +29,7 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-const SakuraContainer = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Sakura)
-
-export default SakuraContainer

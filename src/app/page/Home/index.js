@@ -12,9 +12,7 @@ function mapDispatchToProps(dispatch) {
   return {}
 }
 
-const HomeContainer = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Home)
-
-export default HomeContainer
