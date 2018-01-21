@@ -1,11 +1,9 @@
 import {push, routerReducer, LOCATION_CHANGE} from 'react-router-redux'
 import {getTitle} from '../../constant'
 
-function redirectTo(path) {
-  return push(path)
-}
+const initState = {}
 
-function routingReducer(state = {}, action) {
+export default function routingReducer(state = initState, action) {
   state = routerReducer(state, action)
   switch (action.type) {
     case LOCATION_CHANGE:
@@ -17,4 +15,6 @@ function routingReducer(state = {}, action) {
   }
 }
 
-export {redirectTo, routingReducer}
+export function redirectTo(path) {
+  return push(path)
+}
