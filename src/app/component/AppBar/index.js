@@ -1,5 +1,5 @@
 import {connect} from 'react-redux'
-import {submitCheck, submitLogout} from '../action'
+import {submitCheck, submitLogout} from '../../action'
 import * as appbar from '../../module/appbar'
 import AppBar from './AppBar'
 

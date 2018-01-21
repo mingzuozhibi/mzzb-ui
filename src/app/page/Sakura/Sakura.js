@@ -63,7 +63,7 @@ const columns = [
   }),
 ]
 
-function Sakura({doFetchSakuraData, data}) {
+function Sakura({doFetchData, data}) {
   data.forEach(list => list['discs'].sort(rankCompare))
   const updateStyle = {
     position: 'fixed',
@@ -72,7 +72,7 @@ function Sakura({doFetchSakuraData, data}) {
   }
   return (
     <div id="sakura">
-      <Button style={updateStyle} onClick={doFetchSakuraData}>
+      <Button style={updateStyle} onClick={doFetchData}>
         <UpdateIcon/>
       </Button>
       {data.map(list =>
