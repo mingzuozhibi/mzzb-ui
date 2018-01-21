@@ -2,9 +2,10 @@ import React from 'react'
 import './bootstrap.min.css'
 
 function Table({title, rows, columns}) {
+  const spanStyle = {fontSize: '24px', marginRight: '10px'}
   return (
     <table className={'table table-striped table-bordered'}>
-      <caption>{title}</caption>
+      <caption><span style={spanStyle}>{title}</span></caption>
       <thead>
       <tr>
         {columns.map(c => (
