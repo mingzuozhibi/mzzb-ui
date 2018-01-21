@@ -6,50 +6,28 @@ import SideDrawer from '../component/SideDrawer'
 import LoginFrame from '../component/LoginFrame'
 import AlertFrame from '../component/AlertFrame'
 
-class App extends React.Component {
-
-  getStyles(width) {
-    const styles = {
-      root: {
-        minHeight: '400px',
-        paddingTop: '64px',
-      },
-      content: {
-        margin: '24px',
-      }
-    }
-    if (width >= MEDIUM) {
-      styles.content.margin = '48px 72px'
-    }
-    if (width >= LARGE) {
-      styles.root.paddingLeft = '256px'
-    }
-    return styles
+function App({width, children}) {
+  const contentStyle = {
+    minHeight: '400px',
+    paddingTop: '64px',
+    paddingLeft: width < LARGE ? 0 : '256px',
+    margin: width < MEDIUM ? '24px' : '48px 72px',
   }
-
-  render() {
-    const {children, width} = this.props
-    const styles = this.getStyles(width)
-    const isDocked = width >= LARGE
-    return (
-      <MuiThemeProvider>
-        <div className="app__page">
-          <div className="app__header">
-            <AppBar/>
-            <SideDrawer isDocked={isDocked}/>
-            <AlertFrame/>
-            <LoginFrame/>
-          </div>
-          <div className="app__root" style={styles.root}>
-            <div className="app__content" style={styles.content}>
-              {children}
-            </div>
-          </div>
+  return (
+    <MuiThemeProvider>
+      <div id="app">
+        <div id="header">
+          <AppBar/>
+          <SideDrawer isDocked={width >= LARGE}/>
+          <AlertFrame/>
+          <LoginFrame/>
         </div>
-      </MuiThemeProvider>
-    )
-  }
-
+        <div id="content" style={contentStyle}>
+          {children}
+        </div>
+      </div>
+    </MuiThemeProvider>
+  )
 }
 
 export default withWidth()(App)
