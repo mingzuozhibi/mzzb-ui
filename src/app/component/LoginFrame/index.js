@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
-import {showAlertFrame, hideLoginFrame} from '../../module/appbar'
-import {submitLogin} from '../../action'
+import {hideLoginFrame, showAlertFrame} from '../../module/appbar'
+import {submitLogin} from '../../module/session'
 import LoginFrame from './LoginFrame'
 
 function mapStateToProps(state) {

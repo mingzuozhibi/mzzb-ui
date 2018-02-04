@@ -1,9 +1,8 @@
 import {connect} from 'react-redux'
 import Sakura from './Sakura'
-import {discManager} from '../../manager'
+import {discManager, fetchHandler} from '../../manager'
 import {updateSakura} from '../../module/sakura'
 import {showAlertFrame} from '../../module/appbar'
-import {fetchHandlerFactory} from '../../action'
 
 function mapStateToProps(state) {
   return {
@@ -12,7 +11,7 @@ function mapStateToProps(state) {
 }
 
 function fetchSakuraData() {
-  return fetchHandlerFactory({
+  return fetchHandler({
     fetchCall: () => discManager.sakuraLists(),
     fetchDone: (json, dispatch) => {
       if (json.success) {

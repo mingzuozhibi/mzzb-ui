@@ -1,4 +1,6 @@
 import produce from 'immer'
+import {fetchHandler, sessionManager} from '../../manager'
+import {hideLoginFrame, showAlertFrame} from '../appbar'
 
 const ACTION_SESSION_LOGIN = '@@session/SESSION_LOGIN'
 const ACTION_SESSION_LOGOUT = '@@session/SESSION_LOGOUT'
@@ -24,14 +26,50 @@ export default function sessionReducer(state = initState, action) {
   })
 }
 
-export function sessionLogin(userName, authRole) {
+function sessionLogin(userName, authRole) {
   return {
     type: ACTION_SESSION_LOGIN, userName, authRole
   }
 }
 
-export function sessionLogout() {
+function sessionLogout() {
   return {
     type: ACTION_SESSION_LOGOUT
   }
+}
+
+export function submitCheck() {
+  return fetchHandler({
+    fetchCall: () => sessionManager.check(),
+    fetchDone: (json, dispatch) => {
+      if (json.success) {
+        dispatch(sessionLogin(json['username'], json['roles']))
+      } else {
+        dispatch(sessionLogout())
+      }
+    }
+  })
+}
+
+export function submitLogin(username, password) {
+  return fetchHandler({
+    fetchCall: () => sessionManager.login(username, password),
+    fetchDone: (json, dispatch) => {
+      if (json.success) {
+        dispatch(hideLoginFrame())
+        dispatch(submitCheck())
+      } else {
+        dispatch(showAlertFrame('Login failed! Check username and password'))
+      }
+    }
+  })
+}
+
+export function submitLogout() {
+  return fetchHandler({
+    fetchCall: () => sessionManager.logout(),
+    fetchDone: (json, dispatch) => {
+      dispatch(submitCheck())
+    }
+  })
 }
