@@ -1,3 +1,5 @@
+import produce from 'immer'
+
 const ACTION_SESSION_LOGIN = '@@session/SESSION_LOGIN'
 const ACTION_SESSION_LOGOUT = '@@session/SESSION_LOGOUT'
 
@@ -6,15 +8,20 @@ const initState = {
 }
 
 export default function sessionReducer(state = initState, action) {
-  switch (action.type) {
-    case ACTION_SESSION_LOGIN:
-      const {userName, authRole} = action
-      return {isLogged: true, userName, authRole}
-    case ACTION_SESSION_LOGOUT:
-      return {isLogged: false}
-    default:
-      return state
-  }
+  return produce(state, draft => {
+    switch (action.type) {
+      case ACTION_SESSION_LOGIN:
+        draft.isLogged = true
+        draft.userName = action.userName
+        draft.authRole = action.authRole
+        break
+      case ACTION_SESSION_LOGOUT:
+        draft.isLogged = false
+        draft.userName = undefined
+        draft.authRole = undefined
+        break
+    }
+  })
 }
 
 export function sessionLogin(userName, authRole) {

@@ -1,11 +1,10 @@
+import produce from 'immer'
+
 const ACTION_LOAD_CONFIG = '@@config/LOAD_CONFIG'
 const ACTION_SAVE_CONFIG = '@@config/SAVE_CONFIG'
-const ACTION_UPDATE_GLOBAL_CONFIG = '@@config/UPDATE_GLOBAL_CONFIG'
-const ACTION_UPDATE_LOCALS_CONFIG = '@@config/UPDATE_LOCALS_CONFIG'
+const ACTION_UPDATE_CONFIG = '@@config/UPDATE_CONFIG'
 
-const initState = {
-  global: {}, locals: {}
-}
+const initState = {}
 
 function configReducer(state = initState, action) {
   switch (action.type) {
@@ -13,13 +12,10 @@ function configReducer(state = initState, action) {
       return {...state, ...loadConfigFromStorage()}
     case ACTION_SAVE_CONFIG:
       return saveConfigToStorage(state)
-    case ACTION_UPDATE_GLOBAL_CONFIG:
-      return {...state, global: mergeConfig(state.global, action.name, action.data)}
-    case ACTION_UPDATE_LOCALS_CONFIG:
-      const config = state.locals
-      const name = action.local
-      const data = mergeConfig(config[name], action.name, action.data)
-      return {...state, locals: mergeConfig(config, name, data)}
+    case ACTION_UPDATE_CONFIG:
+      return produce(state, draft => {
+        draft[action.name] = action.data
+      })
     default:
       return state
   }
@@ -39,18 +35,9 @@ export function saveConfig() {
   }
 }
 
-export function updateGlobalConfig(name, data) {
+export function updateConfig(name, data) {
   return {
-    type: ACTION_UPDATE_GLOBAL_CONFIG,
-    name: name,
-    data: data,
-  }
-}
-
-export function updateLocalsConfig(local, name, data) {
-  return {
-    type: ACTION_UPDATE_LOCALS_CONFIG,
-    local: local,
+    type: ACTION_UPDATE_CONFIG,
     name: name,
     data: data,
   }
@@ -68,8 +55,3 @@ function saveConfigToStorage(config) {
   localStorage[__CONFIG_KEY__] = JSON.stringify(toSave)
   return toSave
 }
-
-function mergeConfig(config = {}, name, data) {
-  return {...config, [name]: data}
-}
-

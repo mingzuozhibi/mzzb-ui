@@ -1,3 +1,5 @@
+import produce from 'immer'
+
 const ACTION_SHOW_SIDE_DRAWER = '@@appbar/SHOW_SIDE_DRAWER'
 const ACTION_HIDE_SIDE_DRAWER = '@@appbar/HIDE_SIDE_DRAWER'
 
@@ -14,22 +16,30 @@ const initState = {
 }
 
 export default function appbarReducer(state = initState, action) {
-  switch (action.type) {
-    case ACTION_SHOW_SIDE_DRAWER:
-      return {...state, sideDrawerOpen: true}
-    case ACTION_HIDE_SIDE_DRAWER:
-      return {...state, sideDrawerOpen: false}
-    case ACTION_SHOW_LOGIN_FRAME:
-      return {...state, loginFrameOpen: true}
-    case ACTION_HIDE_LOGIN_FRAME:
-      return {...state, loginFrameOpen: false}
-    case ACTION_SHOW_ALERT_FRAME:
-      return {...state, alertFrameOpen: true, alertText: action.alertText}
-    case ACTION_HIDE_ALERT_FRAME:
-      return {...state, alertFrameOpen: false}
-    default:
-      return state
-  }
+  return produce(state, draft => {
+    switch (action.type) {
+      case ACTION_SHOW_SIDE_DRAWER:
+        draft.sideDrawerOpen = true
+        break
+      case ACTION_HIDE_SIDE_DRAWER:
+        draft.sideDrawerOpen = false
+        break
+      case ACTION_SHOW_LOGIN_FRAME:
+        draft.loginFrameOpen = true
+        break
+      case ACTION_HIDE_LOGIN_FRAME:
+        draft.loginFrameOpen = false
+        break
+      case ACTION_SHOW_ALERT_FRAME:
+        draft.alertFrameOpen = true
+        draft.alertText = action.alertText
+        break
+      case ACTION_HIDE_ALERT_FRAME:
+        draft.alertFrameOpen = false
+        draft.alertText = undefined
+        break
+    }
+  })
 }
 
 export function showSideDrawer() {

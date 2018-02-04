@@ -1,3 +1,5 @@
+import produce from 'immer'
+
 const ACTION_UPDATE_SAKURA = '@@sakura/UPDATE_SAKURA'
 
 const initState = {
@@ -5,12 +7,12 @@ const initState = {
 }
 
 export default function sakuraReducer(state = initState, action) {
-  switch (action.type) {
-    case ACTION_UPDATE_SAKURA:
-      return {...state, data: action.data}
-    default:
-      return state
-  }
+  return produce(state, draft => {
+    switch (action.type) {
+      case ACTION_UPDATE_SAKURA:
+        draft.data = action.data
+    }
+  })
 }
 
 export function updateSakura(data) {

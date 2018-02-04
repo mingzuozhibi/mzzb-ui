@@ -1,4 +1,4 @@
-import {push, routerReducer, LOCATION_CHANGE} from 'react-router-redux'
+import {LOCATION_CHANGE, push, routerReducer} from 'react-router-redux'
 import {getTitle} from '../../constant'
 
 const initState = {}
