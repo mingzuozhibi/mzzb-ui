@@ -30,11 +30,8 @@ const columns = [
     format: disc => {
       const this_rank = disc['this_rank']
       const prev_rank = disc['prev_rank']
-      if (this_rank > 9999 || prev_rank > 9999) {
-        return `${this_rank}位`
-      } else {
-        return `${this_rank}位/${prev_rank}位`
-      }
+      const text = `${this_rank}位/${prev_rank}位`
+      return text.length <= 11 ? text : text.substr(0, 11) + '...'
     },
   }),
   new Column({
