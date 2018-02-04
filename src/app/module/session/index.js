@@ -1,5 +1,30 @@
+import produce from 'immer'
+import {fetchHandler, sessionManager} from '../../manager'
+import {hideLoginFrame, showAlertFrame} from '../appbar'
+
 const ACTION_SESSION_LOGIN = '@@session/SESSION_LOGIN'
 const ACTION_SESSION_LOGOUT = '@@session/SESSION_LOGOUT'
+
+const initState = {
+  isLogged: false
+}
+
+export default function sessionReducer(state = initState, action) {
+  return produce(state, draft => {
+    switch (action.type) {
+      case ACTION_SESSION_LOGIN:
+        draft.isLogged = true
+        draft.userName = action.userName
+        draft.authRole = action.authRole
+        break
+      case ACTION_SESSION_LOGOUT:
+        draft.isLogged = false
+        draft.userName = undefined
+        draft.authRole = undefined
+        break
+    }
+  })
+}
 
 function sessionLogin(userName, authRole) {
   return {
@@ -13,20 +38,38 @@ function sessionLogout() {
   }
 }
 
-const initState = {
-  isLogged: false
+export function submitCheck() {
+  return fetchHandler({
+    fetchCall: () => sessionManager.check(),
+    fetchDone: (json, dispatch) => {
+      if (json.success) {
+        dispatch(sessionLogin(json['username'], json['roles']))
+      } else {
+        dispatch(sessionLogout())
+      }
+    }
+  })
 }
 
-function sessionReducer(state = initState, action) {
-  switch (action.type) {
-    case ACTION_SESSION_LOGIN:
-      const {userName, authRole} = action
-      return {isLogged: true, userName, authRole}
-    case ACTION_SESSION_LOGOUT:
-      return {isLogged: false}
-    default:
-      return state
-  }
+export function submitLogin(username, password) {
+  return fetchHandler({
+    fetchCall: () => sessionManager.login(username, password),
+    fetchDone: (json, dispatch) => {
+      if (json.success) {
+        dispatch(hideLoginFrame())
+        dispatch(submitCheck())
+      } else {
+        dispatch(showAlertFrame('Login failed! Check username and password'))
+      }
+    }
+  })
 }
 
-export {sessionLogin, sessionLogout, sessionReducer}
+export function submitLogout() {
+  return fetchHandler({
+    fetchCall: () => sessionManager.logout(),
+    fetchDone: (json, dispatch) => {
+      dispatch(submitCheck())
+    }
+  })
+}

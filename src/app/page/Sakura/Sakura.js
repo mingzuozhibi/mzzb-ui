@@ -26,8 +26,13 @@ const columns = [
   new Column({
     className: 'rank',
     title: '日亚排名',
-    style: {width: '145px'},
-    format: disc => `${disc['this_rank']}位/${disc['prev_rank']}位`,
+    style: {width: '120px'},
+    format: disc => {
+      const this_rank = disc['this_rank']
+      const prev_rank = disc['prev_rank']
+      const text = `${this_rank}位/${prev_rank}位`
+      return text.length <= 11 ? text : text.substr(0, 11) + '...'
+    },
   }),
   new Column({
     className: 'sumpt',
@@ -37,9 +42,16 @@ const columns = [
   }),
   new Column({
     className: 'sday',
-    title: '剩余天数',
-    style: {width: '80px'},
-    format: disc => `${disc['surplus_days']}天`,
+    title: '发售日',
+    style: {width: '90px'},
+    format: disc => {
+      const sday = disc['surplus_days']
+      if (sday > 0) {
+        return `还有${sday}天`
+      } else {
+        return '已经发售'
+      }
+    },
   }),
   new Column({
     className: 'title',
@@ -48,7 +60,7 @@ const columns = [
   }),
 ]
 
-function Sakura({doFetchSakuraData, data}) {
+function Sakura({doFetchData, data}) {
   data.forEach(list => list['discs'].sort(rankCompare))
   const updateStyle = {
     position: 'fixed',
@@ -57,11 +69,11 @@ function Sakura({doFetchSakuraData, data}) {
   }
   return (
     <div id="sakura">
-      <Button style={updateStyle} onClick={doFetchSakuraData}>
+      <Button style={updateStyle} onClick={doFetchData}>
         <UpdateIcon/>
       </Button>
       {data.map(list =>
-        <div key={list['name']} style={{width: '2000px'}}>
+        <div key={list['name']} style={{width: '650px'}}>
           <Table title={list['title']} rows={list['discs']} columns={columns}/>
         </div>
       )}

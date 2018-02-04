@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
-import {showAlertFrame, hideLoginFrame} from '../../module/appbar'
-import {submitLogin} from '../action'
+import {hideLoginFrame, showAlertFrame} from '../../module/appbar'
+import {submitLogin} from '../../module/session'
 import LoginFrame from './LoginFrame'
 
 function mapStateToProps(state) {
@@ -19,7 +19,7 @@ function mapDispatchToProps(dispatch) {
         if (!username || !password) {
           dispatch(showAlertFrame('You must input username and password'))
         } else {
-          dispatch(submitLogin(username, password, hideLoginFrame()))
+          dispatch(submitLogin(username, password))
         }
       } catch (error) {
         dispatch(showAlertFrame(`Error: ${error.message}`))

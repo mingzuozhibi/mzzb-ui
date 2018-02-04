@@ -1,6 +1,6 @@
 {
   "name": "mzzb-ui",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "ui for mingzuozhibi",
   "scripts": {
     "start": "react-scripts start",
@@ -11,6 +11,7 @@
     "react-scripts": "^1.1.0"
   },
   "dependencies": {
+    "immer": "^1.0.1",
     "material-ui": "^0.20.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
