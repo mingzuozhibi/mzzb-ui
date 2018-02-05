@@ -1,10 +1,9 @@
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import withWidth, {MEDIUM, LARGE} from 'material-ui/utils/withWidth'
+import withWidth, {LARGE, MEDIUM} from 'material-ui/utils/withWidth'
 import React from 'react'
 import AppBar from '../component/AppBar'
 import SideDrawer from '../component/SideDrawer'
 import LoginFrame from '../component/LoginFrame'
-import AlertFrame from '../component/AlertFrame'
 
 function App({width, children}) {
   const contentStyle = {
@@ -19,7 +18,6 @@ function App({width, children}) {
         <div id="header">
           <AppBar/>
           <SideDrawer isDocked={width >= LARGE}/>
-          <AlertFrame/>
           <LoginFrame/>
         </div>
         <div id="content" style={contentStyle}>

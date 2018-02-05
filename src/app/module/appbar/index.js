@@ -1,4 +1,5 @@
 import produce from 'immer'
+import {Modal} from 'antd'
 
 const ACTION_SHOW_SIDE_DRAWER = '@@appbar/SHOW_SIDE_DRAWER'
 const ACTION_HIDE_SIDE_DRAWER = '@@appbar/HIDE_SIDE_DRAWER'
@@ -6,13 +7,14 @@ const ACTION_HIDE_SIDE_DRAWER = '@@appbar/HIDE_SIDE_DRAWER'
 const ACTION_SHOW_LOGIN_FRAME = '@@appbar/SHOW_LOGIN_FRAME'
 const ACTION_HIDE_LOGIN_FRAME = '@@appbar/HIDE_LOGIN_FRAME'
 
-const ACTION_SHOW_ALERT_FRAME = '@@appbar/SHOW_ALERT_FRAME'
-const ACTION_HIDE_ALERT_FRAME = '@@appbar/HIDE_ALERT_FRAME'
+const ACTION_ALERT_INFO = '@@appbar/ALERT_INFO'
+const ACTION_ALERT_ERROR = '@@appbar/ALERT_ERROR'
+const ACTION_ALERT_WARNING = '@@appbar/ALERT_WARNING'
+const ACTION_ALERT_SUCCESS = '@@appbar/ALERT_SUCCESS'
 
 const initState = {
   sideDrawerOpen: false,
   loginFrameOpen: false,
-  alertFrameOpen: false,
 }
 
 export default function appbarReducer(state = initState, action) {
@@ -30,13 +32,17 @@ export default function appbarReducer(state = initState, action) {
       case ACTION_HIDE_LOGIN_FRAME:
         draft.loginFrameOpen = false
         break
-      case ACTION_SHOW_ALERT_FRAME:
-        draft.alertFrameOpen = true
-        draft.alertText = action.alertText
+      case ACTION_ALERT_INFO:
+        Modal.info({title: action.title, content: action.content})
         break
-      case ACTION_HIDE_ALERT_FRAME:
-        draft.alertFrameOpen = false
-        draft.alertText = undefined
+      case ACTION_ALERT_ERROR:
+        Modal.error({title: action.title, content: action.content})
+        break
+      case ACTION_ALERT_WARNING:
+        Modal.warning({title: action.title, content: action.content})
+        break
+      case ACTION_ALERT_SUCCESS:
+        Modal.success({title: action.title, content: action.content})
         break
       default:
     }
@@ -67,14 +73,26 @@ export function hideLoginFrame() {
   }
 }
 
-export function showAlertFrame(alertText) {
+export function alertInfo({title = '信息', content}) {
   return {
-    type: ACTION_SHOW_ALERT_FRAME, alertText
+    type: ACTION_ALERT_INFO, title, content
   }
 }
 
-export function hideAlertFrame() {
+export function alertError({title = '错误', content}) {
   return {
-    type: ACTION_HIDE_ALERT_FRAME
+    type: ACTION_ALERT_ERROR, title, content
+  }
+}
+
+export function alertWarning({title = '警告', content}) {
+  return {
+    type: ACTION_ALERT_WARNING, title, content
+  }
+}
+
+export function alertSuccess({title = '成功', content}) {
+  return {
+    type: ACTION_ALERT_SUCCESS, title, content
   }
 }
