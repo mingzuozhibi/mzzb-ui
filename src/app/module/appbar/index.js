@@ -38,6 +38,7 @@ export default function appbarReducer(state = initState, action) {
         draft.alertFrameOpen = false
         draft.alertText = undefined
         break
+      default:
     }
   })
 }

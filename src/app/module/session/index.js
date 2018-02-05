@@ -22,6 +22,7 @@ export default function sessionReducer(state = initState, action) {
         draft.userName = undefined
         draft.authRole = undefined
         break
+      default:
     }
   })
 }

@@ -11,6 +11,8 @@ export default function sakuraReducer(state = initState, action) {
     switch (action.type) {
       case ACTION_UPDATE_SAKURA:
         draft.data = action.data
+        break
+      default:
     }
   })
 }
