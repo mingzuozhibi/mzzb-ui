@@ -1,4 +1,4 @@
-import {createStore, applyMiddleware} from 'redux'
+import {applyMiddleware, createStore} from 'redux'
 import {composeWithDevTools} from 'redux-devtools-extension'
 import {browserHistory} from 'react-router'
 import {routerMiddleware} from 'react-router-redux'

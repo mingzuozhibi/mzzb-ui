@@ -1,5 +1,4 @@
 import React from 'react'
-import './bootstrap.min.css'
 
 function Table({title, rows, columns}) {
   const spanStyle = {fontSize: '24px', marginRight: '10px'}
