@@ -3,11 +3,13 @@
   "version": "0.4.2",
   "description": "ui for mingzuozhibi",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "babel-plugin-import": "^1.6.3",
+    "react-app-rewired": "^1.4.1",
     "react-scripts": "^1.1.0"
   },
   "dependencies": {
