@@ -1,6 +1,6 @@
 {
   "name": "mzzb-ui",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "ui for mingzuozhibi",
   "scripts": {
     "start": "react-app-rewired start",
