@@ -24,12 +24,14 @@ function LoginFrame({isOpened, doHideLogin, doSubmit}) {
           id="username"
           prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
           placeholder="请输入用户名"
+          onPressEnter={() => document.querySelector('#password').focus()}
         />
         <Input
           id="password"
           type="password"
           prefix={<Icon type="key" style={{color: 'rgba(0,0,0,.25)'}}/>}
           placeholder="请输入密码"
+          onPressEnter={handleSubmit}
         />
       </Modal>
     </div>
