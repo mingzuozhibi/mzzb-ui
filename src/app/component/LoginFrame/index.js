@@ -1,5 +1,5 @@
 import {connect} from 'react-redux'
-import {hideLoginFrame, showAlertFrame} from '../../module/appbar'
+import {alertWarning, hideLoginFrame, showAlertFrame} from '../../module/appbar'
 import {submitLogin} from '../../module/session'
 import LoginFrame from './LoginFrame'
 
@@ -15,14 +15,10 @@ function mapDispatchToProps(dispatch) {
       dispatch(hideLoginFrame())
     },
     doSubmit(username, password) {
-      try {
-        if (!username || !password) {
-          dispatch(showAlertFrame('You must input username and password'))
-        } else {
-          dispatch(submitLogin(username, password))
-        }
-      } catch (error) {
-        dispatch(showAlertFrame(`Error: ${error.message}`))
+      if (!username || !password) {
+        dispatch(alertWarning({title: '请检查输入项', content: '你必须输入用户名和密码'}))
+      } else {
+        dispatch(submitLogin(username, password))
       }
     }
   }

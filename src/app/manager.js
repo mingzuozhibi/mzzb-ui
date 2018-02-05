@@ -1,5 +1,5 @@
 import ajax from './util/ajax'
-import {showAlertFrame} from './module/appbar'
+import {alertError} from './module/appbar'
 
 export const sessionManager = {
   check() {
@@ -29,7 +29,7 @@ export function fetchHandler({fetchCall, fetchDone}) {
     try {
       fetchDone(await fetchCall(), dispatch)
     } catch (err) {
-      dispatch(showAlertFrame(`Error: ${err.message}`))
+      dispatch(alertError({title: '服务器错误', content: `Error: ${err.message}`}))
     }
   }
 }

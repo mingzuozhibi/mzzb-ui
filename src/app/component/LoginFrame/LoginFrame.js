@@ -1,7 +1,5 @@
 import React from 'react'
-import Dialog from 'material-ui/Dialog'
-import TextField from 'material-ui/TextField'
-import FlatButton from 'material-ui/FlatButton'
+import {Icon, Input, Modal} from 'antd'
 
 function LoginFrame({isOpened, doHideLogin, doSubmit}) {
 
@@ -12,46 +10,30 @@ function LoginFrame({isOpened, doHideLogin, doSubmit}) {
     doSubmit(username, password)
   }
 
-  function handleEnter(event) {
-    if (event.keyCode === 13) {
-      handleSubmit()
-    }
-  }
-
-  const buttons = [
-    <FlatButton
-      label="Cancel"
-      primary={true}
-      onClick={doHideLogin}
-    />,
-    <FlatButton
-      label="Login"
-      primary={true}
-      keyboardFocused={true}
-      onClick={handleSubmit}
-    />,
-  ]
   return (
     <div id="login_frame">
-      <Dialog
-        open={isOpened}
-        onRequestClose={doHideLogin}
-        title="Login Form"
-        actions={buttons}
+      <Modal
+        title="用户登入"
+        okText="登入"
+        cancelText="取消"
+        visible={isOpened}
+        onOk={handleSubmit}
+        onCancel={doHideLogin}
       >
-        <TextField
+        <Input
           id="username"
-          hintText="Enter Username"
-          floatingLabelText="Username"
-        /><br/>
-        <TextField
+          prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
+          placeholder="请输入用户名"
+          onPressEnter={() => document.querySelector('#password').focus()}
+        />
+        <Input
           id="password"
           type="password"
-          hintText="Enter Password"
-          floatingLabelText="Password"
-          onKeyUp={handleEnter}
-        /><br/>
-      </Dialog>
+          prefix={<Icon type="key" style={{color: 'rgba(0,0,0,.25)'}}/>}
+          placeholder="请输入密码"
+          onPressEnter={handleSubmit}
+        />
+      </Modal>
     </div>
   )
 }

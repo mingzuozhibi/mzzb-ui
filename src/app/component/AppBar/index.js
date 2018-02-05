@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
 import {submitCheck, submitLogout} from '../../module/session'
-import * as appbar from '../../module/appbar'
+import {alertError, showLoginFrame, showSideDrawer} from '../../module/appbar'
 import AppBar from './AppBar'
 
 function mapStateToProps(state) {
@@ -15,13 +15,13 @@ function mapDispatchToProps(dispatch) {
   return {
     action: {
       doShowDrawer() {
-        dispatch(appbar.showSideDrawer())
+        dispatch(showSideDrawer())
       },
       noSupport() {
-        dispatch(appbar.showAlertFrame('Unsupported Operation'))
+        dispatch(alertError({title: '不支持的操作', content: '该操作暂未实现，敬请期待'}))
       },
       doShowLogin() {
-        dispatch(appbar.showLoginFrame())
+        dispatch(showLoginFrame())
       },
       doLogout() {
         dispatch(submitLogout())

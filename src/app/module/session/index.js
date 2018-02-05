@@ -1,6 +1,6 @@
 import produce from 'immer'
 import {fetchHandler, sessionManager} from '../../manager'
-import {hideLoginFrame, showAlertFrame} from '../appbar'
+import {alertError, hideLoginFrame, showAlertFrame} from '../appbar'
 
 const ACTION_SESSION_LOGIN = '@@session/SESSION_LOGIN'
 const ACTION_SESSION_LOGOUT = '@@session/SESSION_LOGOUT'
@@ -60,7 +60,7 @@ export function submitLogin(username, password) {
         dispatch(hideLoginFrame())
         dispatch(submitCheck())
       } else {
-        dispatch(showAlertFrame('Login failed! Check username and password'))
+        dispatch(alertError({title: '登入失败', content: '请检查用户名和密码是否正确'}))
       }
     }
   })
