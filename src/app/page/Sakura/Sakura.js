@@ -1,6 +1,4 @@
 import React from 'react'
-import Button from 'material-ui/FloatingActionButton'
-import UpdateIcon from 'material-ui/svg-icons/action/update'
 import Table, {Column} from '../../component/Table'
 
 function compareFactory({compare, empty = () => false}) {
@@ -62,18 +60,10 @@ const columns = [
 
 function Sakura({doFetchData, data}) {
   data.forEach(list => list['discs'].sort(rankCompare))
-  const updateStyle = {
-    position: 'fixed',
-    bottom: '30px',
-    right: '10px'
-  }
   return (
     <div id="sakura">
-      <Button style={updateStyle} onClick={doFetchData}>
-        <UpdateIcon/>
-      </Button>
       {data.map(list =>
-        <div key={list['name']} style={{width: '650px'}}>
+        <div key={list['name']}>
           <Table title={list['title']} rows={list['discs']} columns={columns}/>
         </div>
       )}

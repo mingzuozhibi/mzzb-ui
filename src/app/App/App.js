@@ -1,31 +1,53 @@
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import withWidth, {LARGE, MEDIUM} from 'material-ui/utils/withWidth'
 import React from 'react'
-import AppBar from '../component/AppBar'
-import SideDrawer from '../component/SideDrawer'
-import LoginFrame from '../component/LoginFrame'
+import {Icon, Layout, Menu} from 'antd'
+import IconFont from '../component/IconFont'
+import './App.css'
 
-function App({width, children}) {
-  const contentStyle = {
-    minHeight: '400px',
-    paddingTop: '64px',
-    paddingLeft: width < LARGE ? 0 : '256px',
-    margin: width < MEDIUM ? '24px' : '48px 72px',
-  }
+const {Header, Content, Sider} = Layout
+
+function App({children, showSider, doHideSider, doShowSider, pathname, doSelectItem}) {
   return (
-    <MuiThemeProvider>
-      <div id="app">
-        <div id="header">
-          <AppBar/>
-          <SideDrawer isDocked={width >= LARGE}/>
-          <LoginFrame/>
+    <Layout>
+      <Sider
+        width={200}
+        trigger={null}
+        collapsible={true}
+        collapsedWidth={0}
+        collapsed={!showSider}
+        style={{background: '#fff'}}>
+        <div className="logo">
+          <h2>名作之壁</h2>
         </div>
-        <div id="content" style={contentStyle}>
+        <Menu
+          mode="inline"
+          defaultSelectedKeys={[pathname]}
+          style={{height: '100%'}}
+          onSelect={({key}) => doSelectItem(key)}
+        >
+          <Menu.Item key="/home">
+            <Icon type="home"/>
+            <span>Home</span>
+          </Menu.Item>
+          <Menu.Item key="/sakura">
+            <IconFont type="icon-yinghua"/>
+            <span>Sakura</span>
+          </Menu.Item>
+        </Menu>
+      </Sider>
+      <Layout>
+        <Header style={{background: '#fff', padding: 0}}>
+          <Icon
+            className="trigger"
+            type={showSider ? 'menu-fold' : 'menu-unfold'}
+            onClick={showSider ? doHideSider : doShowSider}
+          />
+        </Header>
+        <Content style={{background: '#fff', margin: 12, padding: 12, minHeight: '1000px'}}>
           {children}
-        </div>
-      </div>
-    </MuiThemeProvider>
+        </Content>
+      </Layout>
+    </Layout>
   )
 }
 
-export default withWidth()(App)
+export default App
