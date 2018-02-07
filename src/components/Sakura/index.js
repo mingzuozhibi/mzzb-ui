@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {Spin} from 'antd'
 import Table, {Column} from '../../libraries/Table'
 import {requestHandler} from '../../utils/handler'
 import {compareFactory} from '../../utils/factory'
@@ -54,11 +55,11 @@ function Sakura({doFetchData, data}) {
   data.forEach(list => list['discs'].sort(rankCompare))
   return (
     <div id="sakura">
-      {data.map(list =>
+      {data.length > 0 ? data.map(list =>
         <div key={list['name']}>
           <Table title={list['title']} rows={list['discs']} columns={columns}/>
         </div>
-      )}
+      ) : <Spin size="large">正在载入数据</Spin>}
     </div>
   )
 }
