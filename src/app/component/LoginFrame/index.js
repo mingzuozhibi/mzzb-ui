@@ -1,5 +1,5 @@
 import {connect} from 'react-redux'
-import {alertWarning, hideLoginFrame, showAlertFrame} from '../../module/appbar'
+import {alertWarning, hideLoginFrame} from '../../module/appbar'
 import {submitLogin} from '../../module/session'
 import LoginFrame from './LoginFrame'
 

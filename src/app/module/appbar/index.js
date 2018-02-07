@@ -13,7 +13,7 @@ const ACTION_ALERT_WARNING = '@@appbar/ALERT_WARNING'
 const ACTION_ALERT_SUCCESS = '@@appbar/ALERT_SUCCESS'
 
 const initState = {
-  sideDrawerOpen: false,
+  sideDrawerOpen: true,
   loginFrameOpen: false,
 }
 

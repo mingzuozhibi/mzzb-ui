@@ -1,6 +1,6 @@
 import produce from 'immer'
 import {fetchHandler, sessionManager} from '../../manager'
-import {alertError, hideLoginFrame, showAlertFrame} from '../appbar'
+import {alertError, hideLoginFrame} from '../appbar'
 
 const ACTION_SESSION_LOGIN = '@@session/SESSION_LOGIN'
 const ACTION_SESSION_LOGOUT = '@@session/SESSION_LOGOUT'
