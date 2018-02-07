@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {Redirect, Route, Switch} from 'react-router'
+import {Spin} from 'antd'
 import Home from './components/Home'
 
 export default (
@@ -31,7 +32,7 @@ function asyncComponent(importComponent) {
     render() {
       const C = this.state.component
 
-      return C ? <C {...this.props} /> : <h3>Loading...</h3>
+      return C ? <C {...this.props} /> : <Spin size="large">正在加载组件</Spin>
     }
   }
 

@@ -6,42 +6,37 @@ import {compareFactory} from '../../utils/factory'
 import sakuraManager from '../../services/sakuraManager'
 import {updateSakura} from '../../reducers/sakuraReducer'
 import {showSuccess} from '../../utils/window'
+import {Affix, Anchor, Card} from 'antd'
+
+const {Link} = Anchor
 
 const rankCompare = compareFactory({
-  compare: (a, b) => a['this_rank'] - b['this_rank'],
-  isEmpty: disc => disc['this_rank'] === 0,
+  compare: (a, b) => a['thisRank'] - b['thisRank'],
+  isEmpty: disc => disc['thisRank'] === 0,
 })
+
+const defaultColumns = ['id', 'asin', 'title', 'thisRank', 'prevRank', 'totalPt', 'surplusDays']
 
 const columns = [
   new Column({
     className: 'rank',
     title: '日亚排名',
     style: {width: '120px'},
-    format: disc => {
-      const this_rank = disc['this_rank']
-      const prev_rank = disc['prev_rank']
-      const text = `${this_rank}位/${prev_rank}位`
-      return text.length <= 11 ? text : text.substr(0, 11) + '...'
-    },
+    format: disc => `${disc['thisRank']}位/${disc['prevRank']}位`,
   }),
   new Column({
-    className: 'sumpt',
+    className: 'totalPt',
+    hide: true,
     title: '累积PT',
     style: {width: '75px'},
-    format: disc => `${disc['total_point']} pt`,
+    format: disc => `${disc['totalPt']} pt`,
   }),
   new Column({
-    className: 'sday',
+    className: 'surplusDays',
+    hide: true,
     title: '发售日',
     style: {width: '90px'},
-    format: disc => {
-      const sday = disc['surplus_days']
-      if (sday > 0) {
-        return `还有${sday}天`
-      } else {
-        return '已经发售'
-      }
-    },
+    format: disc => `还有${disc['surplusDays']}天`,
   }),
   new Column({
     className: 'title',
@@ -51,14 +46,23 @@ const columns = [
 ]
 
 function Sakura({doFetchData, data}) {
-  data.forEach(list => list['discs'].sort(rankCompare))
+  data.forEach(s => s['discs'].sort(rankCompare))
   return (
     <div id="sakura">
-      {data.map(list =>
-        <div key={list['name']}>
-          <Table title={list['title']} rows={list['discs']} columns={columns}/>
+      {data.map(s =>
+        <div id={s['key']} key={s['key']}>
+          <Table title={s['title']} rows={s['discs']} columns={columns}/>
         </div>
       )}
+      <Affix offsetBottom={24}>
+        <Card style={{width: 200}}>
+          <Anchor>
+            {data.map(s => (
+              <Link key={s['key']} href={'#' + s['key']} title={s['title']}/>
+            ))}
+          </Anchor>
+        </Card>
+      </Affix>
     </div>
   )
 }
@@ -69,9 +73,9 @@ function mapStateToProps(state) {
   }
 }
 
-function fetchSakuraData() {
+function fetchSakuraData(discColumns) {
   return requestHandler({
-    fetchCall: () => sakuraManager.lists(),
+    fetchCall: () => sakuraManager.lists(discColumns),
     fetchDone: (json, dispatch) => {
       showSuccess('更新Sakura数据成功')
       dispatch(updateSakura(json.data))
@@ -80,10 +84,10 @@ function fetchSakuraData() {
 }
 
 function mapDispatchToProps(dispatch) {
-  dispatch(fetchSakuraData())
+  dispatch(fetchSakuraData(defaultColumns))
   return {
-    doFetchData() {
-      dispatch(fetchSakuraData())
+    doFetchData(discColumns) {
+      dispatch(fetchSakuraData(discColumns))
     }
   }
 }

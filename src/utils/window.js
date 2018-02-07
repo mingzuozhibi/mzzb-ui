@@ -11,3 +11,8 @@ export function alertError(title, content) {
 export function alertWarning(title, content) {
   Modal.warning({title, content})
 }
+
+export function isMobile() {
+  return document.body.clientWidth < 500
+
+}

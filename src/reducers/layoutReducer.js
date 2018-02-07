@@ -1,4 +1,5 @@
 import produce from 'immer'
+import {isMobile} from '../utils/window'
 
 const ACTION_SHOW_SIDER = '@@layout/SHOW_SIDER'
 const ACTION_HIDE_SIDER = '@@layout/HIDE_SIDER'
@@ -7,7 +8,7 @@ const ACTION_SHOW_LOGIN = '@@layout/SHOW_LOGIN'
 const ACTION_HIDE_LOGIN = '@@layout/HIDE_LOGIN'
 
 const initState = {
-  showSider: true,
+  showSider: !isMobile(),
   showLogin: false,
 }
 

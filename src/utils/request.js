@@ -27,7 +27,7 @@ function prepareCsrfToken({method = 'get', headers = {}, ...prors}) {
     if (headerName && headerValue) {
       headers[headerName] = headerValue
     } else {
-      throw new Error('Abnormal Login Status')
+      throw new Error('登入状态不正常，请刷新页面')
     }
   }
   return {method, headers, ...prors}
