@@ -21,18 +21,19 @@ const columns = [
     format: disc => {
       const this_rank = disc['this_rank']
       const prev_rank = disc['prev_rank']
-      const text = `${this_rank}位/${prev_rank}位`
-      return text.length <= 11 ? text : text.substr(0, 11) + '...'
+      return `${this_rank}位/${prev_rank}位`
     },
   }),
   new Column({
     className: 'sumpt',
+    hide: true,
     title: '累积PT',
     style: {width: '75px'},
     format: disc => `${disc['total_point']} pt`,
   }),
   new Column({
-    className: 'sday',
+    className: 'release',
+    hide: true,
     title: '发售日',
     style: {width: '90px'},
     format: disc => {

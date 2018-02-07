@@ -1,7 +1,11 @@
 import React from 'react'
+import {isMobile} from '../../utils/window'
 
 export default function Table({title, rows, columns}) {
   const titleStyle = {fontSize: '24px', marginRight: '10px', marginBottom: '5px'}
+  if (isMobile()) {
+    columns = columns.filter(c => !c.hide)
+  }
   return (
     <div>
       <div style={titleStyle}>{title}</div>
@@ -28,11 +32,11 @@ export default function Table({title, rows, columns}) {
 }
 
 export class Column {
-  constructor({className, compare, format, style = {}, title}) {
+  constructor({className, format, style = {}, title, hide = false}) {
     this.className = className
-    this.compare = compare
     this.format = format
     this.style = style
     this.title = title
+    this.hide = hide
   }
 }
