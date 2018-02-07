@@ -1,0 +1,14 @@
+import {combineReducers} from 'redux'
+import {routerReducer} from 'react-router-redux'
+import sessionReducer from './reducers/sessionReducer'
+import sakuraReducer from './reducers/sakuraReducer'
+import layoutReducer from './reducers/layoutReducer'
+import configReducer from './reducers/configReducer'
+
+export default combineReducers({
+  router: routerReducer,
+  layout: layoutReducer,
+  sakura: sakuraReducer,
+  config: configReducer,
+  session: sessionReducer,
+})
