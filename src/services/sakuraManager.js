@@ -1,7 +1,7 @@
 import request from '../utils/request'
 
 export default {
-  lists() {
-    return request('/api/sakura')
+  lists(discColumns) {
+    return request(`/api/sakura?discColumns=${discColumns.join(',')}`)
   }
 }

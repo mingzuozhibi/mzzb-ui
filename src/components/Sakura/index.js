@@ -13,37 +13,28 @@ const rankCompare = compareFactory({
   isEmpty: disc => disc['this_rank'] === 0,
 })
 
+const defaultColumns = ['id', 'asin', 'title', 'thisRank', 'prevRank', 'totalPt', 'surplusDays']
+
 const columns = [
   new Column({
     className: 'rank',
     title: '日亚排名',
     style: {width: '120px'},
-    format: disc => {
-      const this_rank = disc['this_rank']
-      const prev_rank = disc['prev_rank']
-      return `${this_rank}位/${prev_rank}位`
-    },
+    format: disc => `${disc['thisRank']}位/${disc['prevRank']}位`,
   }),
   new Column({
-    className: 'sumpt',
+    className: 'totalPt',
     hide: true,
     title: '累积PT',
     style: {width: '75px'},
-    format: disc => `${disc['total_point']} pt`,
+    format: disc => `${disc['totalPt']} pt`,
   }),
   new Column({
-    className: 'release',
+    className: 'surplusDays',
     hide: true,
     title: '发售日',
     style: {width: '90px'},
-    format: disc => {
-      const sday = disc['surplus_days']
-      if (sday > 0) {
-        return `还有${sday}天`
-      } else {
-        return '已经发售'
-      }
-    },
+    format: disc => `还有${disc['surplusDays']}天`,
   }),
   new Column({
     className: 'title',
@@ -57,7 +48,7 @@ function Sakura({doFetchData, data}) {
   return (
     <div id="sakura">
       {data.length > 0 ? data.map(list =>
-        <div key={list['name']}>
+        <div key={list['key']}>
           <Table title={list['title']} rows={list['discs']} columns={columns}/>
         </div>
       ) : <Spin size="large">正在载入数据</Spin>}
@@ -71,9 +62,9 @@ function mapStateToProps(state) {
   }
 }
 
-function fetchSakuraData() {
+function fetchSakuraData(discColumns) {
   return requestHandler({
-    fetchCall: () => sakuraManager.lists(),
+    fetchCall: () => sakuraManager.lists(discColumns),
     fetchDone: (json, dispatch) => {
       showSuccess('更新Sakura数据成功')
       dispatch(updateSakura(json.data))
@@ -82,10 +73,10 @@ function fetchSakuraData() {
 }
 
 function mapDispatchToProps(dispatch) {
-  dispatch(fetchSakuraData())
+  dispatch(fetchSakuraData(defaultColumns))
   return {
-    doFetchData() {
-      dispatch(fetchSakuraData())
+    doFetchData(discColumns) {
+      dispatch(fetchSakuraData(discColumns))
     }
   }
 }
