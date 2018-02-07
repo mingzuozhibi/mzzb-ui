@@ -1,16 +1,18 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Spin} from 'antd'
 import Table, {Column} from '../../libraries/Table'
 import {requestHandler} from '../../utils/handler'
 import {compareFactory} from '../../utils/factory'
 import sakuraManager from '../../services/sakuraManager'
 import {updateSakura} from '../../reducers/sakuraReducer'
 import {showSuccess} from '../../utils/window'
+import {Affix, Anchor, Card} from 'antd'
+
+const {Link} = Anchor
 
 const rankCompare = compareFactory({
-  compare: (a, b) => a['this_rank'] - b['this_rank'],
-  isEmpty: disc => disc['this_rank'] === 0,
+  compare: (a, b) => a['thisRank'] - b['thisRank'],
+  isEmpty: disc => disc['thisRank'] === 0,
 })
 
 const defaultColumns = ['id', 'asin', 'title', 'thisRank', 'prevRank', 'totalPt', 'surplusDays']
@@ -44,14 +46,23 @@ const columns = [
 ]
 
 function Sakura({doFetchData, data}) {
-  data.forEach(list => list['discs'].sort(rankCompare))
+  data.forEach(s => s['discs'].sort(rankCompare))
   return (
     <div id="sakura">
-      {data.length > 0 ? data.map(list =>
-        <div key={list['key']}>
-          <Table title={list['title']} rows={list['discs']} columns={columns}/>
+      {data.map(s =>
+        <div id={s['key']} key={s['key']}>
+          <Table title={s['title']} rows={s['discs']} columns={columns}/>
         </div>
-      ) : <Spin size="large">正在载入数据</Spin>}
+      )}
+      <Affix offsetBottom={24}>
+        <Card style={{width: 200}}>
+          <Anchor>
+            {data.map(s => (
+              <Link key={s['key']} href={'#' + s['key']} title={s['title']}/>
+            ))}
+          </Anchor>
+        </Card>
+      </Affix>
     </div>
   )
 }

@@ -2,7 +2,7 @@ import React from 'react'
 import {isMobile} from '../../utils/window'
 
 export default function Table({title, rows, columns}) {
-  const titleStyle = {fontSize: '24px', marginRight: '10px', marginBottom: '5px'}
+  const titleStyle = {fontSize: '24px', padding: '12px'}
   if (isMobile()) {
     columns = columns.filter(c => !c.hide)
   }
