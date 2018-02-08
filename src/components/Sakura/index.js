@@ -36,7 +36,14 @@ const columns = [
     hide: true,
     title: '发售日',
     style: {width: '90px'},
-    format: disc => `还有${disc['surplusDays']}天`,
+    format: disc => {
+      const surplusDays = disc['surplusDays']
+      if (surplusDays >= 0) {
+        return `还有${surplusDays}天`
+      } else {
+        return `已售${-surplusDays}天`
+      }
+    },
   }),
   new Column({
     className: 'title',
