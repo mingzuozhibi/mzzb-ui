@@ -4,7 +4,8 @@ const ACTION_SESSION_LOGIN = '@@session/SESSION_LOGIN'
 const ACTION_SESSION_LOGOUT = '@@session/SESSION_LOGOUT'
 
 const initState = {
-  isLogged: false
+  isLogged: false,
+  isAdmin: false,
 }
 
 export default function sessionReducer(state = initState, action) {
@@ -14,11 +15,13 @@ export default function sessionReducer(state = initState, action) {
         draft.isLogged = true
         draft.userName = action.userName
         draft.authRole = action.authRole
+        draft.isAdmin = action.authRole.indexOf('ROLE_ADMIN') !== -1
         break
       case ACTION_SESSION_LOGOUT:
         draft.isLogged = false
         draft.userName = undefined
         draft.authRole = undefined
+        draft.isAdmin = false
         break
       default:
     }
