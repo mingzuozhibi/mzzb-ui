@@ -5,8 +5,14 @@ import menu from './common/menu'
 export default (
   <Switch>
     <Redirect exact path='/' to='/home'/>
-    {menu.map(m => (
-      <Route key={m.path} path={m.path} component={m.component}/>
+    {menu.map(item => (
+      item.hasSub ? item.subItems.map(renderRoute) : renderRoute(item)
     ))}
   </Switch>
 )
+
+function renderRoute(item) {
+  return (
+    <Route key={item.path} path={item.path} component={item.component}/>
+  )
+}

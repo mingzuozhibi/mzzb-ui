@@ -3,10 +3,13 @@ import {connect} from 'react-redux'
 import {push} from 'react-router-redux'
 import {Layout, Menu} from 'antd'
 import menu, {link} from '../../common/menu'
+import {isMobile} from '../../utils/window'
+import {hideSider} from '../../reducers/layoutReducer'
 
 const {Sider} = Layout
+const {SubMenu, Item} = Menu
 
-function SiderLayout({pathname, showSider, doSelectItem, doRedirectTo}) {
+function SiderLayout({isAdmin, pathname, showSider, doSelectItem}) {
   return (
     <Sider
       width={200}
@@ -22,30 +25,38 @@ function SiderLayout({pathname, showSider, doSelectItem, doRedirectTo}) {
         mode="inline"
         selectedKeys={[pathname]}
         style={{height: '100%'}}
-        onSelect={({key}) => {
-          if (key[0] === '/')
-            doSelectItem(key)
-          else
-            doRedirectTo(key)
-        }}
+        onSelect={doSelectItem}
       >
-        {menu.map(m => (
-          <Menu.Item key={m.path}>
-            {m.icon}<span>{m.title}</span>
-          </Menu.Item>
+        {menu.map(item => (isAdmin || !item.isAdmin) && (
+          item.hasSub ? renderSubMenu(item) : renderItem(item)
         ))}
-        {link.map(m => (
-          <Menu.Item key={m.path}>
-            {m.icon}<span>{m.title}</span>
-          </Menu.Item>
+        {link.map(item => (
+          renderItem(item)
         ))}
       </Menu>
     </Sider>
   )
 }
 
+function renderSubMenu(menu) {
+  return (
+    <SubMenu key={menu.path} title={<span>{menu.icon}<span>{menu.title}</span></span>}>
+      {menu.subItems.map(renderItem)}
+    </SubMenu>
+  )
+}
+
+function renderItem(item) {
+  return (
+    <Item key={item.path}>
+      <span>{item.icon}<span>{item.title}</span></span>
+    </Item>
+  )
+}
+
 function mapStateToProps(state) {
   return {
+    isAdmin: state.session.isAdmin,
     pathname: state.router.location.pathname,
     showSider: state.layout.showSider,
   }
@@ -53,12 +64,16 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    doSelectItem(path) {
-      dispatch(push(path))
-    },
-    doRedirectTo(path) {
-      window.open(path)
-    },
+    doSelectItem({key}) {
+      if (key[0] === '/') {
+        dispatch(push(key))
+        if (isMobile()) {
+          dispatch(hideSider())
+        }
+      } else {
+        window.open(key)
+      }
+    }
   }
 }
 

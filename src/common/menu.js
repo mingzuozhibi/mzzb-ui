@@ -16,6 +16,27 @@ export default [
     component: asyncComponent(() => import('../components/Sakura')),
     icon: <IconFont type="icon-yinghua"/>,
   },
+  {
+    hasSub: true,
+    isAdmin: true,
+    path: '/admin',
+    title: '后台管理',
+    icon: <Icon type="profile"/>,
+    subItems: [
+      {
+        path: '/admin/user',
+        title: '用户管理',
+        component: asyncComponent(() => import('../components/AdminUser')),
+        icon: <IconFont type="icon-yinghua"/>,
+      },
+      {
+        path: '/admin/sakura',
+        title: 'Sakura管理',
+        component: asyncComponent(() => import('../components/AdminSakura')),
+        icon: <IconFont type="icon-yinghua"/>,
+      },
+    ]
+  }
 ]
 
 export const link = [
