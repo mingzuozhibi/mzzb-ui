@@ -13,7 +13,7 @@ export default function Table({title, rows, columns}) {
         <thead>
         <tr>
           {columns.map(c => (
-            <th key={c.className} className={c.className} style={c.style}>{c.title}</th>
+            <th key={c.className} className={c.className} style={c.style}>{c.text}</th>
           ))}
         </tr>
         </thead>
@@ -36,7 +36,7 @@ export class Column {
     this.className = className
     this.format = format
     this.style = style
-    this.title = title
+    this.text = title
     this.hide = hide
   }
 }

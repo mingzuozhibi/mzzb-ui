@@ -2,16 +2,11 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {push} from 'react-router-redux'
 import {Layout, Menu} from 'antd'
-import menu, {link} from '../../common/menu'
 import {isMobile} from '../../utils/window'
 import {hideSider} from '../../reducers/layoutReducer'
+import menu from '../../common/menu'
 
 const {Sider} = Layout
-const {SubMenu, Item} = Menu
-
-function isActive(item, isAdmin) {
-  return !item.notItem && (isAdmin || !item.isAdmin)
-}
 
 function SiderLayout({isAdmin, pathname, showSider, doSelectItem}) {
   return (
@@ -31,30 +26,9 @@ function SiderLayout({isAdmin, pathname, showSider, doSelectItem}) {
         style={{height: '100%'}}
         onSelect={doSelectItem}
       >
-        {menu.map(item => isActive(item, isAdmin) && (
-          item.hasSub ? renderSubMenu(item) : renderItem(item)
-        ))}
-        {link.map(item => (
-          renderItem(item)
-        ))}
+        {menu.map(item => item.renderMenu(isAdmin))}
       </Menu>
     </Sider>
-  )
-}
-
-function renderSubMenu(menu) {
-  return (
-    <SubMenu key={menu.path} title={<span>{menu.icon}<span>{menu.title}</span></span>}>
-      {menu.subItems.map(renderItem)}
-    </SubMenu>
-  )
-}
-
-function renderItem(item) {
-  return (
-    <Item key={item.path}>
-      <span>{item.icon}<span>{item.title}</span></span>
-    </Item>
   )
 }
 

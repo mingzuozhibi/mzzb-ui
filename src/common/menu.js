@@ -1,87 +1,41 @@
-import React, {Component} from 'react'
-import {Icon, Spin} from 'antd'
+import React from 'react'
+import {Icon} from 'antd'
 import IconFont from '../libraries/IconFont'
-import Home from '../components/Home'
+import Item from '../libraries/Item'
 
 export default [
-  {
-    path: '/home',
-    title: 'Home',
-    component: Home,
+  new Item('/home', 'Home', {
     icon: <Icon type="home"/>,
-  },
-  {
-    notItem: true,
-    path: '/404',
-    title: '404 Not Found',
-    component: asyncComponent(() => import('../components/PageNotFound')),
-  },
-  {
-    path: '/sakura',
-    title: 'Sakura',
-    component: asyncComponent(() => import('../components/Sakura')),
+    component: () => import('../components/Home'),
+  }),
+  new Item('/sakura', 'Sakura', {
     icon: <IconFont type="icon-yinghua"/>,
-  },
-  {
-    hasSub: true,
-    isAdmin: true,
-    path: '/admin',
-    title: '后台管理',
+    component: () => import('../components/Sakura'),
+  }),
+  new Item('/admin', '后台管理', {
+    active: 'admin',
     icon: <Icon type="profile"/>,
-    subItems: [
-      {
-        path: '/admin/user',
-        title: '用户管理',
-        component: asyncComponent(() => import('../components/AdminUser')),
+    items: [
+      new Item('/admin/user', '用户管理', {
+        icon: <IconFont type="icon-user"/>,
+        component: () => import('../components/AdminUser'),
+      }),
+      new Item('/admin/sakura', 'Sakura管理', {
         icon: <IconFont type="icon-yinghua"/>,
-      },
-      {
-        path: '/admin/sakura',
-        title: 'Sakura管理',
-        component: asyncComponent(() => import('../components/AdminSakura')),
-        icon: <IconFont type="icon-yinghua"/>,
-      },
-    ]
-  }
-]
-
-export const link = [
-  {
-    path: 'https://tieba.baidu.com/f?kw=%E5%90%8D%E4%BD%9C%E4%B9%8B%E5%A3%81',
-    title: '名作之壁',
+        component: () => import('../components/AdminSakura'),
+      }),
+    ],
+  }),
+  new Item('/404', '404 Not Found', {
+    active: 'route',
+    component: '../components/NotFound',
+  }),
+  new Item('https://tieba.baidu.com/f?kw=%E5%90%8D%E4%BD%9C%E4%B9%8B%E5%A3%81', '名作之壁', {
+    active: 'link',
     icon: <IconFont type="icon-social-tieba"/>,
-  },
-  {
-    path: 'https://github.com/mingzuozhibi/mzzb-ui',
-    title: 'GitHub',
+  }),
+  new Item('https://github.com/mingzuozhibi/mzzb-ui', 'GitHub', {
+    active: 'link',
     icon: <Icon type="github"/>,
-  },
+  }),
 ]
-
-function asyncComponent(importComponent) {
-  class AsyncComponent extends Component {
-    constructor() {
-      super()
-
-      this.state = {
-        component: null
-      }
-    }
-
-    async componentDidMount() {
-      const {default: component} = await importComponent()
-
-      this.setState({
-        component: component
-      })
-    }
-
-    render() {
-      const C = this.state.component
-
-      return C ? <C {...this.props} /> : <Spin size="large">正在加载组件</Spin>
-    }
-  }
-
-  return AsyncComponent
-}

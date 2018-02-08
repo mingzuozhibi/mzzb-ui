@@ -1,9 +1,10 @@
 import React from 'react'
+import {Redirect, Switch} from 'react-router'
 import {BackTop, Layout} from 'antd'
+import LoginModal from './LoginModal'
 import SiderLayout from './SiderLayout'
 import HeaderLayout from './HeaderLayout'
-import LoginModal from './LoginModal'
-import routes from '../routes'
+import menu from '../common/menu'
 import './CoreLayout.css'
 
 const {Content, Footer} = Layout
@@ -18,7 +19,13 @@ export default function CoreLayout() {
       <Layout>
         <HeaderLayout/>
         <Content style={contentStyle}>
-          {routes}
+          <Switch>
+            <Redirect exact path='/' to='/home'/>
+            {
+              menu.map(item => item.renderRoute())
+            }
+            <Redirect exact path='*' to='/404'/>
+          </Switch>
         </Content>
         <Footer style={footerStyle}>
           <LoginModal/>
