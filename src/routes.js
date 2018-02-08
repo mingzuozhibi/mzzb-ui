@@ -8,6 +8,7 @@ export default (
     {menu.map(item => (
       item.hasSub ? item.subItems.map(renderRoute) : renderRoute(item)
     ))}
+    <Redirect exact path='*' to='/404'/>
   </Switch>
 )
 

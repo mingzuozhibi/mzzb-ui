@@ -9,6 +9,10 @@ import {hideSider} from '../../reducers/layoutReducer'
 const {Sider} = Layout
 const {SubMenu, Item} = Menu
 
+function isActive(item, isAdmin) {
+  return !item.notItem && (isAdmin || !item.isAdmin)
+}
+
 function SiderLayout({isAdmin, pathname, showSider, doSelectItem}) {
   return (
     <Sider
@@ -27,7 +31,7 @@ function SiderLayout({isAdmin, pathname, showSider, doSelectItem}) {
         style={{height: '100%'}}
         onSelect={doSelectItem}
       >
-        {menu.map(item => (isAdmin || !item.isAdmin) && (
+        {menu.map(item => isActive(item, isAdmin) && (
           item.hasSub ? renderSubMenu(item) : renderItem(item)
         ))}
         {link.map(item => (

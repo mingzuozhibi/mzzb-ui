@@ -11,6 +11,12 @@ export default [
     icon: <Icon type="home"/>,
   },
   {
+    notItem: true,
+    path: '/404',
+    title: '404 Not Found',
+    component: asyncComponent(() => import('../components/PageNotFound')),
+  },
+  {
     path: '/sakura',
     title: 'Sakura',
     component: asyncComponent(() => import('../components/Sakura')),
