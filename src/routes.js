@@ -1,40 +1,12 @@
-import React, {Component} from 'react'
+import React from 'react'
 import {Redirect, Route, Switch} from 'react-router'
-import {Spin} from 'antd'
-import Home from './components/Home'
+import menu from './common/menu'
 
 export default (
   <Switch>
     <Redirect exact path='/' to='/home'/>
-    <Route path='/home' component={Home}/>
-    <Route path='/sakura' component={asyncComponent(() => import('./components/Sakura'))}/>
+    {menu.map(m => (
+      <Route key={m.path} path={m.path} component={m.component}/>
+    ))}
   </Switch>
 )
-
-function asyncComponent(importComponent) {
-  class AsyncComponent extends Component {
-    constructor() {
-      super()
-
-      this.state = {
-        component: null
-      }
-    }
-
-    async componentDidMount() {
-      const {default: component} = await importComponent()
-
-      this.setState({
-        component: component
-      })
-    }
-
-    render() {
-      const C = this.state.component
-
-      return C ? <C {...this.props} /> : <Spin size="large">正在加载组件</Spin>
-    }
-  }
-
-  return AsyncComponent
-}
