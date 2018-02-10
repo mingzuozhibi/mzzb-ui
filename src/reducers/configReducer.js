@@ -1,32 +1,24 @@
 import produce from 'immer'
 
-const ACTION_LOAD_CONFIG = '@@config/LOAD_CONFIG'
-const ACTION_SAVE_CONFIG = '@@config/SAVE_CONFIG'
+const ACTION_SET_CONFIG = '@@config/SET_CONFIG'
 
-const initState = {}
+const loadState = loadConfig()
+const initState = {...loadState}
 
 export default function configReducer(state = initState, action) {
   switch (action.type) {
-    case ACTION_LOAD_CONFIG:
-      return loadConfigFromStorage()
-    case ACTION_SAVE_CONFIG:
-      return saveConfigToStorage(produce(state, draft => {
-        draft[action.name] = draft[action.data]
+    case ACTION_SET_CONFIG:
+      return saveConfig(produce(state, draft => {
+        draft[action.name] = action.data
       }))
     default:
       return state
   }
 }
 
-export function loadConfig() {
+export function setConfig(name, data) {
   return {
-    type: ACTION_LOAD_CONFIG
-  }
-}
-
-export function saveConfig(name, data) {
-  return {
-    type: ACTION_SAVE_CONFIG,
+    type: ACTION_SET_CONFIG,
     name: name,
     data: data,
   }
@@ -34,12 +26,12 @@ export function saveConfig(name, data) {
 
 const __CONFIG_KEY__ = '__config__'
 
-function loadConfigFromStorage() {
+function loadConfig() {
   const config = localStorage[__CONFIG_KEY__]
   return config ? JSON.parse(config) : initState
 }
 
-function saveConfigToStorage(config) {
+function saveConfig(config) {
   localStorage[__CONFIG_KEY__] = JSON.stringify(config)
   return config
 }
