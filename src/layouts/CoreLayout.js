@@ -5,20 +5,34 @@ import LoginModal from './LoginModal'
 import SiderLayout from './SiderLayout'
 import HeaderLayout from './HeaderLayout'
 import menu from '../common/menu'
+import {isMobile} from '../utils/window'
 import './CoreLayout.css'
 
 const {Content, Footer} = Layout
 
-const contentStyle = {background: '#fff', margin: 12, padding: 12, minHeight: '1000px'}
-const footerStyle = {background: '#fff', padding: 0}
+function getStyles(mobile) {
+  return {
+    content: {
+      background: '#fff',
+      margin: mobile ? '0px' : '12px',
+      padding: mobile ? '4px' : '12px',
+      minHeight: '1000px',
+    },
+    footer: {
+      background: '#fff',
+      padding: '0px',
+    }
+  }
+}
 
 export default function CoreLayout() {
+  const styles = getStyles(isMobile())
   return (
     <Layout>
       <SiderLayout/>
       <Layout>
         <HeaderLayout/>
-        <Content style={contentStyle}>
+        <Content style={styles.content}>
           <Switch>
             <Redirect exact path='/' to='/home'/>
             {
@@ -27,7 +41,7 @@ export default function CoreLayout() {
             <Redirect exact path='*' to='/404'/>
           </Switch>
         </Content>
-        <Footer style={footerStyle}>
+        <Footer style={styles.footer}>
           <LoginModal/>
           <BackTop/>
         </Footer>
