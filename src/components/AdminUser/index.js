@@ -1,9 +1,10 @@
 import React from 'react'
-import {Alert} from 'antd'
+import {Alert, Button, Icon, Input, Tabs} from 'antd'
 import Table, {Column} from '../../libraries/Table'
 import Reload from '../../libraries/Reload'
-import {requestUsers} from '../../reducers/userReducer'
+import {requestAddUser, requestListUser} from '../../reducers/userReducer'
 import {connect} from 'react-redux'
+import {alertWarning} from '../../utils/window'
 
 interface User {
   id: number;
@@ -41,18 +42,47 @@ const columns = [
   }),
 ]
 
-function AdminUser({users, pending, message, doRequestUsers}) {
+function AdminUser({users, pending, message, handlers}) {
+
+  const {doRequestListUser, doRequestAddUser} = handlers
 
   if (!users && !pending && !message) {
-    doRequestUsers()
+    doRequestListUser()
+  }
+
+  function handleSubmit() {
+    const username = document.querySelector('#add-username').value
+    const password = document.querySelector('#add-password').value
+
+    doRequestAddUser(username, password)
   }
 
   return (
     <div id="admin-user">
       {message && <Alert message={message} type="error"/>}
-      {users && users.length > 0 && (
-        <Table title="用户列表" rows={users} columns={columns}/>
-      )}
+      <Tabs>
+        <Tabs.TabPane tab="用户列表" key="1">
+          {users && users.length > 0 && (
+            <Table title="用户列表" rows={users} columns={columns}/>
+          )}
+        </Tabs.TabPane>
+        <Tabs.TabPane tab="添加用户" key="2">
+          <Input
+            id="add-username"
+            prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
+            placeholder="请输入用户名"
+            onPressEnter={() => document.querySelector('#add-password').focus()}
+          />
+          <Input
+            id="add-password"
+            type="password"
+            prefix={<Icon type="key" style={{color: 'rgba(0,0,0,.25)'}}/>}
+            placeholder="请输入密码"
+            onPressEnter={handleSubmit}
+          />
+          <Button type="primary" onClick={handleSubmit}>添加用户</Button>
+        </Tabs.TabPane>
+      </Tabs>
     </div>
   )
 }
@@ -67,8 +97,17 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    doRequestUsers() {
-      dispatch(requestUsers())
+    handlers: {
+      doRequestListUser() {
+        dispatch(requestListUser())
+      },
+      doRequestAddUser(username, password) {
+        if (!username || !password) {
+          alertWarning('请检查输入项', '你必须输入用户名和密码')
+        } else {
+          dispatch(requestAddUser(username, password))
+        }
+      },
     }
   }
 }
@@ -81,7 +120,7 @@ export default connect(
 export const adminUserIcons = [
   <Reload
     key="reload"
-    action={requestUsers()}
+    action={requestListUser()}
     isPending={(state) => state.user.pending}
   />,
 ]
