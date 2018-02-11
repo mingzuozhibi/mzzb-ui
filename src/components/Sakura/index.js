@@ -1,20 +1,19 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import Table from '../../libraries/Table'
-import {requestHandler} from '../../utils/handler'
+import {Alert, Collapse} from 'antd'
+import {Disc, DiscColumn, discColumns} from '../../common/disc'
+import {requestSakura} from '../../reducers/sakuraReducer'
 import {compareFactory} from '../../utils/factory'
-import sakuraManager from '../../services/sakuraManager'
-import {updateSakura} from '../../reducers/sakuraReducer'
-import {isMobile, showSuccess} from '../../utils/window'
-import {rank, surplusDays, title, totalPt} from '../../common/disc'
-import {Collapse} from 'antd'
-
-const {Panel} = Collapse
+import {isMobile} from '../../utils/window'
+import Table from '../../libraries/Table'
+import Reload from '../../libraries/Reload'
 
 const rankCompare = compareFactory({
-  compare: (a, b) => a['thisRank'] - b['thisRank'],
-  isEmpty: disc => disc['thisRank'] === 0,
+  compare: (a: Disc, b: Disc) => a.thisRank - b.thisRank,
+  isEmpty: (disc: Disc) => disc.thisRank === 0,
 })
+
+const {rank, totalPt, surplusDays, title} = discColumns
 
 const columnsOfPc = [
   rank, totalPt, surplusDays, title
@@ -24,57 +23,66 @@ const columnsOfMo = [
   rank, title
 ]
 
-const requestOfPc = [
+const requestOfPc: DiscColumn[] = [
   'id', 'asin', 'title', 'thisRank', 'prevRank', 'totalPt', 'surplusDays'
 ]
 
-const requestOfMo = [
+const requestOfMo: DiscColumn[] = [
   'id', 'asin', 'title', 'thisRank', 'prevRank'
 ]
 
-function Sakura({doFetchData, data}) {
-  const columns = isMobile() ? columnsOfMo : columnsOfPc
-  const request = isMobile() ? requestOfMo : requestOfPc
-  const style = isMobile() ? {marginLeft: -9, marginRight: -9} : {}
+const columns = isMobile() ? columnsOfMo : columnsOfPc
+const request = isMobile() ? requestOfMo : requestOfPc
+const style = isMobile() ? {marginLeft: -9, marginRight: -9} : {}
 
-  if (data.length === 0) doFetchData(request)
+interface SakuraData {
+  id: number;
+  key: string;
+  title: string;
+  enabled: boolean;
+  sakuraUpdateDate: string;
+  discs: Disc[];
+}
 
-  data.forEach(s => s['discs'].sort(rankCompare))
+function Sakura({sakuras, pending, message, doRequestSakura}) {
+  if (!sakuras && !pending && !message) {
+    doRequestSakura(request)
+  }
+
+  if (sakuras) {
+    sakuras.forEach((s: SakuraData) => s.discs.sort(rankCompare))
+  }
+
   return (
     <div id="sakura">
-      <Collapse accordion defaultActiveKey="9999-99">
-        {data.map(s =>
-          <Panel header={`点击展开或收起：${s['title']}`} key={s['key']}>
-            <div style={style}>
-              <Table title={s['title']} rows={s['discs']} columns={columns}/>
-            </div>
-          </Panel>
-        )}
-      </Collapse>
+      {message && <Alert message={message} type="error"/>}
+      {sakuras && sakuras.length > 0 && (
+        <Collapse accordion defaultActiveKey='9999-99'>
+          {sakuras.map((s: SakuraData) =>
+            <Collapse.Panel header={`点击展开或收起：${s.title}`} key={s.key}>
+              <div style={style}>
+                <Table title={s.title} rows={s.discs} columns={columns}/>
+              </div>
+            </Collapse.Panel>
+          )}
+        </Collapse>
+      )}
     </div>
   )
 }
 
 function mapStateToProps(state) {
   return {
-    data: state.sakura.data
+    sakuras: state.sakura.sakuras,
+    pending: state.sakura.pending,
+    message: state.sakura.message,
   }
-}
-
-function fetchSakuraData(discColumns) {
-  return requestHandler({
-    fetchCall: () => sakuraManager.lists(discColumns),
-    fetchDone: (json, dispatch) => {
-      showSuccess('更新Sakura数据成功')
-      dispatch(updateSakura(json.data))
-    }
-  })
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    doFetchData(discColumns) {
-      dispatch(fetchSakuraData(discColumns))
+    doRequestSakura(request) {
+      dispatch(requestSakura(request))
     }
   }
 }
@@ -83,3 +91,10 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Sakura)
+
+export const sakuraIcons = [
+  <Reload
+    action={requestSakura(request)}
+    isPending={(state) => state.sakura.pending}
+  />
+]
