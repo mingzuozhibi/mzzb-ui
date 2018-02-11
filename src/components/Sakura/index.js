@@ -45,10 +45,10 @@ interface SakuraData {
   discs: Disc[];
 }
 
-const timerRender = ({hour, minute, second}) => {
+const timerRender = ({hour, minute}) => {
   return (
     <span className="header-icon">
-      {hour === 0 ? `${minute}分${second}秒` : `${hour}时${minute}分`}
+      {`${hour}时${minute}分前`}
     </span>
   )
 }
@@ -57,7 +57,7 @@ function titleAndTimer(sakura) {
   return (
     <span>
       <span>{sakura.title}</span>
-      <Timer render={timerRender} timeout={1000} time={sakura.sakuraUpdateDate}/>
+      <Timer render={timerRender} timeout={20000} time={sakura.sakuraUpdateDate}/>
     </span>
   )
 }
@@ -75,7 +75,7 @@ function Sakura({sakuras, pending, message, doRequestSakura}) {
     <div id="sakura">
       {message && <Alert message={message} type="error"/>}
       {sakuras && sakuras.length > 0 && (
-        <Collapse accordion defaultActiveKey='9999-99'>
+        <Collapse defaultActiveKey='9999-99'>
           {sakuras.map((s: SakuraData) =>
             <Collapse.Panel header={`点击展开或收起：${s.title}`} key={s.key}>
               <div style={style}>

@@ -32,7 +32,6 @@ class Timer extends React.Component {
   }
 
   render() {
-    console.info(JSON.stringify(this.state))
     return this.props.render(this.state)
   }
 
