@@ -1,6 +1,7 @@
 import {call, put} from 'redux-saga/effects'
 import sakuraManager from '../services/sakuraManager'
 import produce from 'immer'
+import {showSuccess} from '../utils/window'
 
 const SAKURA_FETCH_REQUESTED = 'SAKURA_FETCH_REQUESTED'
 const SAKURA_FETCH_SUCCEEDED = 'SAKURA_FETCH_SUCCEEDED'
@@ -20,6 +21,7 @@ export default function sakuraReducer(state = initState, action) {
       case SAKURA_FETCH_SUCCEEDED:
         draft.pending = false
         draft.sakuras = action.sakuras
+        showSuccess('sakura数据更新成功')
         break
       case SAKURA_FETCH_FAILED:
         draft.pending = false

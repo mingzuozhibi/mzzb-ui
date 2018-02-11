@@ -1,13 +1,13 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Dropdown, Icon, Layout, Popconfirm} from 'antd'
+import {Icon, Layout, Popconfirm} from 'antd'
 import {hideSider, showLogin, showSider} from '../../reducers/layoutReducer'
 import {submitCheck, submitLogout} from '../../handlers/sessionHandler'
 import IconFont from '../../libraries/IconFont'
 
 const {Header} = Layout
 
-function HeaderLayout({showSider, showLogin, isLogged, handlers, menu}) {
+function HeaderLayout({showSider, showLogin, isLogged, handlers, icons}) {
   const {doHideSider, doShowSider, doShowLogin, doSubmitLogout} = handlers
   const LoginIcon = (
     <IconFont
@@ -41,13 +41,7 @@ function HeaderLayout({showSider, showLogin, isLogged, handlers, menu}) {
         type={showSider ? 'menu-fold' : 'menu-unfold'}
         onClick={showSider ? doHideSider : doShowSider}
       />
-      {menu && (
-        <span className="header-icon">
-          <Dropdown overlay={menu} placement="bottomCenter">
-            <Icon type="profile"/>
-          </Dropdown>
-        </span>
-      )}
+      {icons}
       {isLogged ? ConfirmLogout : LoginIcon}
     </Header>
   )
@@ -58,7 +52,7 @@ function mapStateToProps(state) {
     showSider: state.layout.showSider,
     showLogin: state.layout.showLogin,
     isLogged: state.session.isLogged,
-    menu: state.layout.menu,
+    icons: state.layout.icons,
   }
 }
 

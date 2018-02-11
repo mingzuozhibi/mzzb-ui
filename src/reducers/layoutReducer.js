@@ -1,7 +1,7 @@
 import produce from 'immer'
 import {isMobile} from '../utils/window'
 import {LOCATION_CHANGE} from 'react-router-redux'
-import {menu} from '../components/Sakura'
+import {sakuraIcons} from '../components/Sakura'
 
 const ACTION_SHOW_SIDER = '@@layout/SHOW_SIDER'
 const ACTION_HIDE_SIDER = '@@layout/HIDE_SIDER'
@@ -32,10 +32,10 @@ export default function appbarReducer(state = initState, action) {
       case LOCATION_CHANGE:
         switch (action.payload.pathname) {
           case '/sakura':
-            draft.menu = menu
+            draft.icons = sakuraIcons
             break
           default:
-            draft.menu = undefined
+            draft.icons = undefined
         }
         break
       default:

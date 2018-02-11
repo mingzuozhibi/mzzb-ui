@@ -15,6 +15,7 @@ import mySage from './sagas'
 const history = createHistory()
 const sagaMiddleware = createSagaMiddleware()
 const middlewares = [routerMiddleware(history), thunkMiddleware, sagaMiddleware]
+
 const store = createStore(
   rootReducer, composeWithDevTools(applyMiddleware(...middlewares))
 )

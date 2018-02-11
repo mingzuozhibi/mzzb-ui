@@ -1,11 +1,12 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Alert, Collapse, Menu, Spin} from 'antd'
+import {Alert, Collapse} from 'antd'
 import {Disc, DiscColumn, discColumns} from '../../common/disc'
-import {isMobile} from '../../utils/window'
 import {requestSakura} from '../../reducers/sakuraReducer'
 import {compareFactory} from '../../utils/factory'
+import {isMobile} from '../../utils/window'
 import Table from '../../libraries/Table'
+import Reload from '../../libraries/Reload'
 
 const rankCompare = compareFactory({
   compare: (a: Disc, b: Disc) => a.thisRank - b.thisRank,
@@ -54,7 +55,6 @@ function Sakura({sakuras, pending, message, doRequestSakura}) {
 
   return (
     <div id="sakura">
-      {pending && <Spin size="large"/>}
       {message && <Alert message={message} type="error"/>}
       {sakuras && sakuras.length > 0 && (
         <Collapse accordion defaultActiveKey='9999-99'>
@@ -92,10 +92,9 @@ export default connect(
   mapDispatchToProps
 )(Sakura)
 
-export const menu = (
-  <Menu>
-    <Menu.Item>
-      <a style={{cursor: 'pointer'}}>更新Sakura数据</a>
-    </Menu.Item>
-  </Menu>
-)
+export const sakuraIcons = [
+  <Reload
+    action={requestSakura(request)}
+    isPending={(state) => state.sakura.pending}
+  />
+]
