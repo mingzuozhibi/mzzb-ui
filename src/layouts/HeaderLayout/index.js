@@ -1,33 +1,28 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Icon, Layout, Popconfirm} from 'antd'
+import {Dropdown, Icon, Layout, Popconfirm} from 'antd'
 import {hideSider, showLogin, showSider} from '../../reducers/layoutReducer'
 import {submitCheck, submitLogout} from '../../handlers/sessionHandler'
 import IconFont from '../../libraries/IconFont'
 
 const {Header} = Layout
 
-const sessionStyle = {
-  fontSize: '18px',
-  lineHeight: '64px',
-  padding: '0 24px',
-  cursor: 'pointer',
-  float: 'right',
-  transition: 'color .3s',
-}
-
-function HeaderLayout({showSider, showLogin, isLogged, handlers}) {
+function HeaderLayout({showSider, showLogin, isLogged, handlers, menu}) {
   const {doHideSider, doShowSider, doShowLogin, doSubmitLogout} = handlers
   const LoginIcon = (
     <IconFont
-      style={sessionStyle}
-      type="icon-login"
-      onClick={doShowLogin}/>
+      name="icon-login"
+      type="header"
+      className="float-right"
+      onClick={doShowLogin}
+    />
   )
   const LogoutIcon = (
     <IconFont
-      style={sessionStyle}
-      type="icon-user"/>
+      name="icon-user"
+      type="header"
+      className="float-right"
+    />
   )
   const ConfirmLogout = (
     <Popconfirm
@@ -42,10 +37,17 @@ function HeaderLayout({showSider, showLogin, isLogged, handlers}) {
   return (
     <Header style={{background: '#fff', padding: 0}}>
       <Icon
-        className="trigger"
+        className="header-icon"
         type={showSider ? 'menu-fold' : 'menu-unfold'}
         onClick={showSider ? doHideSider : doShowSider}
       />
+      {menu && (
+        <span className="header-icon">
+          <Dropdown overlay={menu} placement="bottomCenter">
+            <Icon type="profile"/>
+          </Dropdown>
+        </span>
+      )}
       {isLogged ? ConfirmLogout : LoginIcon}
     </Header>
   )
@@ -56,6 +58,7 @@ function mapStateToProps(state) {
     showSider: state.layout.showSider,
     showLogin: state.layout.showLogin,
     isLogged: state.session.isLogged,
+    menu: state.layout.menu,
   }
 }
 

@@ -17,7 +17,7 @@ function SiderLayout({isAdmin, pathname, showSider, doSelectItem}) {
       collapsedWidth={0}
       collapsed={!showSider}
       style={{background: '#fff'}}>
-      <div className="logo">
+      <div className="sider-logo">
         <h2>名作之壁</h2>
       </div>
       <Menu

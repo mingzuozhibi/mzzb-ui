@@ -7,7 +7,7 @@ import sakuraManager from '../../services/sakuraManager'
 import {updateSakura} from '../../reducers/sakuraReducer'
 import {isMobile, showSuccess} from '../../utils/window'
 import {Disc, DiscColumn, rank, surplusDays, title, totalPt} from '../../common/disc'
-import {Collapse} from 'antd'
+import {Collapse, Menu} from 'antd'
 
 const {Panel} = Collapse
 
@@ -52,6 +52,7 @@ function Sakura({doFetchData, data}) {
 
   return (
     <div id="sakura">
+
       <Collapse accordion defaultActiveKey="9999-99">
         {data.map((s: SakuraData) =>
           <Panel header={`点击展开或收起：${s.title}`} key={s.key}>
@@ -93,3 +94,11 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Sakura)
+
+export const menu = (
+  <Menu>
+    <Menu.Item>
+      <a style={{cursor: 'pointer'}}>更新数据</a>
+    </Menu.Item>
+  </Menu>
+)

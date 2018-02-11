@@ -1,12 +1,25 @@
-.trigger {
+.menu-icon {
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+.header-icon {
   font-size: 18px;
   line-height: 64px;
-  padding: 0 24px;
   cursor: pointer;
   transition: color .3s;
 }
 
-.logo {
+.header-icon:not(.float-right) {
+  padding-left: 24px;
+}
+
+.float-right {
+  padding-right: 24px;
+  float: right;
+}
+
+.sider-logo {
   height: 32px;
   text-align: center;
   background: rgba(255, 255, 255, .2);
