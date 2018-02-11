@@ -6,14 +6,14 @@ import {compareFactory} from '../../utils/factory'
 import sakuraManager from '../../services/sakuraManager'
 import {updateSakura} from '../../reducers/sakuraReducer'
 import {isMobile, showSuccess} from '../../utils/window'
-import {rank, surplusDays, title, totalPt} from '../../common/disc'
+import {Disc, DiscColumn, rank, surplusDays, title, totalPt} from '../../common/disc'
 import {Collapse} from 'antd'
 
 const {Panel} = Collapse
 
 const rankCompare = compareFactory({
-  compare: (a, b) => a['thisRank'] - b['thisRank'],
-  isEmpty: disc => disc['thisRank'] === 0,
+  compare: (a: Disc, b: Disc) => a.thisRank - b.thisRank,
+  isEmpty: (disc: Disc) => disc.thisRank === 0,
 })
 
 const columnsOfPc = [
@@ -24,13 +24,22 @@ const columnsOfMo = [
   rank, title
 ]
 
-const requestOfPc = [
+const requestOfPc: DiscColumn[] = [
   'id', 'asin', 'title', 'thisRank', 'prevRank', 'totalPt', 'surplusDays'
 ]
 
-const requestOfMo = [
+const requestOfMo: DiscColumn[] = [
   'id', 'asin', 'title', 'thisRank', 'prevRank'
 ]
+
+interface SakuraData {
+  id: number;
+  key: string;
+  title: string;
+  enabled: boolean;
+  sakuraUpdateDate: string;
+  discs: Disc[];
+}
 
 function Sakura({doFetchData, data}) {
   const columns = isMobile() ? columnsOfMo : columnsOfPc
@@ -39,14 +48,15 @@ function Sakura({doFetchData, data}) {
 
   if (data.length === 0) doFetchData(request)
 
-  data.forEach(s => s['discs'].sort(rankCompare))
+  data.forEach((s: SakuraData) => s.discs.sort(rankCompare))
+
   return (
     <div id="sakura">
       <Collapse accordion defaultActiveKey="9999-99">
-        {data.map(s =>
-          <Panel header={`点击展开或收起：${s['title']}`} key={s['key']}>
+        {data.map((s: SakuraData) =>
+          <Panel header={`点击展开或收起：${s.title}`} key={s.key}>
             <div style={style}>
-              <Table title={s['title']} rows={s['discs']} columns={columns}/>
+              <Table title={s.title} rows={s.discs} columns={columns}/>
             </div>
           </Panel>
         )}
