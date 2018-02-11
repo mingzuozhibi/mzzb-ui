@@ -59,4 +59,4 @@ const title = new Column({
   format: (disc: Disc) => disc.title,
 })
 
-export {rank, totalPt, surplusDays, title}
+export const discColumns = {rank, totalPt, surplusDays, title}

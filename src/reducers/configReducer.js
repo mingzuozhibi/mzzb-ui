@@ -9,7 +9,7 @@ export default function configReducer(state = initState, action) {
   switch (action.type) {
     case ACTION_SET_CONFIG:
       return saveConfig(produce(state, draft => {
-        draft[action.name] = action.data
+        draft[action.name] = action.sakuras
       }))
     default:
       return state
