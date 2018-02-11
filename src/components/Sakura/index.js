@@ -6,6 +6,7 @@ import {requestSakura} from '../../reducers/sakuraReducer'
 import {compareFactory} from '../../utils/factory'
 import {isMobile} from '../../utils/window'
 import Table from '../../libraries/Table'
+import Timer from '../../libraries/Timer'
 import Reload from '../../libraries/Reload'
 
 const rankCompare = compareFactory({
@@ -40,8 +41,25 @@ interface SakuraData {
   key: string;
   title: string;
   enabled: boolean;
-  sakuraUpdateDate: string;
+  sakuraUpdateDate: number;
   discs: Disc[];
+}
+
+const timerRender = ({hour, minute, second}) => {
+  return (
+    <span className="header-icon">
+      {hour === 0 ? `${minute}分${second}秒` : `${hour}时${minute}分`}
+    </span>
+  )
+}
+
+function titleAndTimer(sakura) {
+  return (
+    <span>
+      <span>{sakura.title}</span>
+      <Timer render={timerRender} timeout={1000} time={sakura.sakuraUpdateDate}/>
+    </span>
+  )
 }
 
 function Sakura({sakuras, pending, message, doRequestSakura}) {
@@ -61,7 +79,7 @@ function Sakura({sakuras, pending, message, doRequestSakura}) {
           {sakuras.map((s: SakuraData) =>
             <Collapse.Panel header={`点击展开或收起：${s.title}`} key={s.key}>
               <div style={style}>
-                <Table title={s.title} rows={s.discs} columns={columns}/>
+                <Table title={titleAndTimer(s)} rows={s.discs} columns={columns}/>
               </div>
             </Collapse.Panel>
           )}
@@ -94,7 +112,8 @@ export default connect(
 
 export const sakuraIcons = [
   <Reload
+    key="reload"
     action={requestSakura(request)}
     isPending={(state) => state.sakura.pending}
-  />
+  />,
 ]
