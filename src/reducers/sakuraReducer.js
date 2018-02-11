@@ -38,7 +38,7 @@ export function requestSakura(columns) {
 
 export function* fetchSakura(action) {
   try {
-    const data = yield call(sakuraManager.sakuras, action.columns)
+    const data = yield call(sakuraManager.findAll, action.columns)
     if (data.success) {
       yield put({type: SAKURA_FETCH_SUCCEEDED, sakuras: data.data})
     } else {

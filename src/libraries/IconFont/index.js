@@ -8,6 +8,5 @@ export default function IconFont({name, type = 'menu', className, ...props}) {
       return <i {...props} className={`iconfont ${name} ${className} header-icon`}/>
     default:
       return <i {...props} className={`iconfont ${name} ${className}`}/>
-
   }
 }
