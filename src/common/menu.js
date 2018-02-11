@@ -28,7 +28,7 @@ export default [
   }),
   new Item('/404', '404 Not Found', {
     active: 'route',
-    component: '../components/NotFound',
+    component: () => import('../components/NotFound'),
   }),
   new Item('https://tieba.baidu.com/f?kw=%E5%90%8D%E4%BD%9C%E4%B9%8B%E5%A3%81', '名作之壁', {
     active: 'link',

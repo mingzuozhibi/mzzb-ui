@@ -14,5 +14,4 @@ export function alertWarning(title, content) {
 
 export function isMobile() {
   return document.body.clientWidth < 500
-
 }
