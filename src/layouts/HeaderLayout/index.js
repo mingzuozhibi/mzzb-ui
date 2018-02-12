@@ -1,9 +1,9 @@
 import React from 'react'
 import {Icon, Layout, Popconfirm} from 'antd'
+import Reload from '../Reload'
+import {Font} from '../../libraries'
 import {hideSider, showLogin, showSider} from '../../reducers/layoutReducer'
 import {logout, query} from '../../handlers/sessionHandler'
-import Font from '../../libraries/Font'
-import Reload from '../../libraries/Reload'
 import connect from '../../utils/connect'
 
 const {Header} = Layout

@@ -1,11 +1,12 @@
 import React from 'react'
 import {Alert, Button, Checkbox, Icon, Input, Modal, Tabs} from 'antd'
-import Table, {Column} from '../../libraries/Table'
-import Link from '../../libraries/Link'
+import {Link, Table} from '../../libraries'
 import {editUser, listUser, saveUser} from '../../reducers/userReducer'
 import {alertWarning} from '../../utils/window'
 import {regReload} from '../../reducers/layoutReducer'
 import connect from '../../utils/connect'
+
+const {Column} = Table
 
 interface User {
   id: number;

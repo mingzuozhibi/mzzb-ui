@@ -1,4 +1,6 @@
-import {Column} from '../libraries/Table'
+import {Table} from '../libraries'
+
+const {Column} = Table
 
 export type DiscColumn = 'id' | 'asin' | 'title' | 'thisRank' | 'prevRank' | 'totalPt' | 'surplusDays'
 

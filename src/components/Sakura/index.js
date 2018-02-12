@@ -1,11 +1,10 @@
 import React from 'react'
 import {Alert, Collapse} from 'antd'
+import {Table, Timer} from '../../libraries'
 import {Disc, DiscColumn, discColumns} from '../../common/disc'
 import {listSakura} from '../../reducers/sakuraReducer'
 import {compareFactory} from '../../utils/factory'
 import {isMobile} from '../../utils/window'
-import Table from '../../libraries/Table'
-import Timer from '../../libraries/Timer'
 import {regReload} from '../../reducers/layoutReducer'
 import connect from '../../utils/connect'
 

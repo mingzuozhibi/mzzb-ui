@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Table({title, rows, columns}) {
+export function Table({title, rows, columns}) {
   const titleStyle = {fontSize: '24px', padding: '12px'}
   return (
     <div>
@@ -27,7 +27,7 @@ export default function Table({title, rows, columns}) {
   )
 }
 
-export class Column {
+Table.Column = class Column {
   constructor({className, format, style = {}, title}) {
     this.className = className
     this.format = format

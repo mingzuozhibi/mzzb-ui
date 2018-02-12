@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {Route} from 'react-router'
 import {Menu, Spin} from 'antd'
 
-export default class Item {
+export class Page {
 
   constructor(path, text, {icon, items, active, component}) {
     this.path = path
@@ -57,10 +57,10 @@ export default class Item {
 }
 
 function asyncComponent(importComponent) {
+
   class AsyncComponent extends Component {
     constructor() {
       super()
-
       this.state = {
         component: null
       }
@@ -68,7 +68,6 @@ function asyncComponent(importComponent) {
 
     async componentDidMount() {
       const {default: component} = await importComponent()
-
       this.setState({
         component: component
       })
@@ -76,7 +75,6 @@ function asyncComponent(importComponent) {
 
     render() {
       const C = this.state.component
-
       return C ? <C {...this.props} /> : <Spin size="large">正在加载组件</Spin>
     }
   }
