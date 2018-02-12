@@ -2,11 +2,8 @@ import {Table} from '../libraries'
 
 const {Column} = Table
 
-export type DiscColumn = 'id' | 'asin' | 'title' | 'thisRank' | 'prevRank' | 'totalPt' | 'surplusDays'
-
-export type DiscType = 'Cd' | 'Dvd' | 'Bluray' | 'Box' | 'Other'
-
-export type UpdateType = 'Sakura' | 'Amazon' | 'Both' | 'None'
+export type DiscColumn =
+  'id' | 'asin' | 'title' | 'thisRank' | 'prevRank' | 'totalPt' | 'surplusDays'
 
 export interface Disc {
   id?: number;
@@ -18,8 +15,8 @@ export interface Disc {
   prevRank?: number;
   nicoBook?: number;
   totalPt?: number;
-  discType?: DiscType;
-  updateType?: UpdateType;
+  discType?: 'Cd' | 'Dvd' | 'Bluray' | 'Box' | 'Other';
+  updateType?: 'Sakura' | 'Amazon' | 'Both' | 'None';
   releaseDate?: string;
   createDate?: string;
   modifyDate?: string;

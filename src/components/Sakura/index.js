@@ -8,32 +8,37 @@ import {isMobile} from '../../utils/window'
 import {regReload} from '../../reducers/layoutReducer'
 import connect from '../../utils/connect'
 
-const rankCompare = compareFactory({
-  compare: (a: Disc, b: Disc) => a.thisRank - b.thisRank,
-  isEmpty: (disc: Disc) => disc.thisRank === 0,
-})
-
-const {rank, totalPt, surplusDays, title} = discColumns
-
-const columnsOfPc = [
-  rank, totalPt, surplusDays, title
+const discColumnsOfPc = [
+  discColumns.rank,
+  discColumns.totalPt,
+  discColumns.surplusDays,
+  discColumns.title,
 ]
 
-const columnsOfMo = [
-  rank, title
+const discColumnsOfMo = [
+  discColumns.rank,
+  discColumns.title,
 ]
 
-const requestOfPc: DiscColumn[] = [
-  'id', 'asin', 'title', 'thisRank', 'prevRank', 'totalPt', 'surplusDays'
+const discRequestOfPc: DiscColumn[] = [
+  'id', 'title', 'thisRank', 'prevRank', 'totalPt', 'surplusDays'
 ]
 
-const requestOfMo: DiscColumn[] = [
-  'id', 'asin', 'title', 'thisRank', 'prevRank'
+const discRequestOfMo: DiscColumn[] = [
+  'id', 'title', 'thisRank', 'prevRank'
 ]
 
-const columns = isMobile() ? columnsOfMo : columnsOfPc
-const request = isMobile() ? requestOfMo : requestOfPc
-const style = isMobile() ? {marginLeft: -9, marginRight: -9} : {}
+function getColumns() {
+  return isMobile() ? discColumnsOfMo : discColumnsOfPc
+}
+
+function getRequest() {
+  return isMobile() ? discRequestOfMo : discRequestOfPc
+}
+
+function getStyles() {
+  return isMobile() ? {marginLeft: -9, marginRight: -9} : {}
+}
 
 interface SakuraData {
   id: number;
@@ -63,10 +68,15 @@ function titleAndTimer(sakura) {
 
 function Sakura({sakuras, pending, message, dispatch}) {
   if (!sakuras && !pending && !message) {
-    dispatch(listSakura(request))
+    dispatch(listSakura(getRequest()))
   }
 
   if (sakuras) {
+    const rankCompare = compareFactory({
+      compare: (a: Disc, b: Disc) => a.thisRank - b.thisRank,
+      isEmpty: (disc: Disc) => disc.thisRank === 0,
+    })
+
     sakuras.forEach((s: SakuraData) => s.discs.sort(rankCompare))
   }
 
@@ -77,8 +87,8 @@ function Sakura({sakuras, pending, message, dispatch}) {
         <Collapse defaultActiveKey='9999-99'>
           {sakuras.map((s: SakuraData) =>
             <Collapse.Panel header={`点击展开或收起：${s.title}`} key={s.key}>
-              <div style={style}>
-                <Table title={titleAndTimer(s)} rows={s.discs} columns={columns}/>
+              <div style={getStyles()}>
+                <Table title={titleAndTimer(s)} rows={s.discs} columns={getColumns()}/>
               </div>
             </Collapse.Panel>
           )}
@@ -97,5 +107,5 @@ function mapState(state) {
 }
 
 export default connect(mapState, (dispatch) => {
-  dispatch(regReload(listSakura(request), (state) => state.sakura.pending))
+  dispatch(regReload(listSakura(getRequest()), (state) => state.sakura.pending))
 }, Sakura)
