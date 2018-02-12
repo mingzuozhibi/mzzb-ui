@@ -1,6 +1,6 @@
 import React from 'react'
 import {Icon} from 'antd'
-import IconFont from '../libraries/IconFont'
+import Font from '../libraries/Font'
 import Item from '../libraries/Item'
 
 export default [
@@ -9,7 +9,7 @@ export default [
     component: () => import('../components/Home'),
   }),
   new Item('/sakura', 'Sakura', {
-    icon: <IconFont name="icon-yinghua"/>,
+    icon: <Font name="icon-yinghua"/>,
     component: () => import('../components/Sakura'),
   }),
   new Item('/admin', '后台管理', {
@@ -17,11 +17,11 @@ export default [
     icon: <Icon type="profile"/>,
     items: [
       new Item('/admin/user', '用户管理', {
-        icon: <IconFont name="icon-user"/>,
+        icon: <Font name="icon-user"/>,
         component: () => import('../components/AdminUser'),
       }),
       new Item('/admin/sakura', 'Sakura管理', {
-        icon: <IconFont name="icon-yinghua"/>,
+        icon: <Font name="icon-yinghua"/>,
         component: () => import('../components/AdminSakura'),
       }),
     ],
@@ -32,7 +32,7 @@ export default [
   }),
   new Item('https://tieba.baidu.com/f?kw=%E5%90%8D%E4%BD%9C%E4%B9%8B%E5%A3%81', '名作之壁', {
     active: 'link',
-    icon: <IconFont name="icon-social-tieba"/>,
+    icon: <Font name="icon-social-tieba"/>,
   }),
   new Item('https://github.com/mingzuozhibi/mzzb-ui', 'GitHub', {
     active: 'link',

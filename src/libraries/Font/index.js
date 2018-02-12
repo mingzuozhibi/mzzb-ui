@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function IconFont({name, type = 'menu', className, ...props}) {
+export default function Font({name, type = 'menu', className, ...props}) {
   switch (type) {
     case 'menu':
       return <i {...props} className={`iconfont ${name} ${className} menu-icon`}/>

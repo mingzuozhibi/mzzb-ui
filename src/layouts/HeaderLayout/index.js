@@ -2,7 +2,7 @@ import React from 'react'
 import {Icon, Layout, Popconfirm} from 'antd'
 import {hideSider, showLogin, showSider} from '../../reducers/layoutReducer'
 import {logout, query} from '../../handlers/sessionHandler'
-import IconFont from '../../libraries/IconFont'
+import Font from '../../libraries/Font'
 import Reload from '../../libraries/Reload'
 import connect from '../../utils/connect'
 
@@ -10,7 +10,7 @@ const {Header} = Layout
 
 function loginIcon(handle) {
   return (
-    <IconFont
+    <Font
       name="icon-login"
       type="header"
       className="float-right"
@@ -27,7 +27,7 @@ function logoutIcon(handle) {
       onConfirm={handle}
       okText="Yes"
       cancelText="No">
-      <IconFont
+      <Font
         name="icon-user"
         type="header"
         className="float-right"
