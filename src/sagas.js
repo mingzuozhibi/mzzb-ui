@@ -1,9 +1,12 @@
 import {takeLatest} from 'redux-saga/effects'
-import {fetchListSakura, requestListSakura} from './reducers/sakuraReducer'
-import {fetchSaveUser, fetchListUser, requestSaveUser, requestListUser} from './reducers/userReducer'
+
+import {sakuraSagas} from './reducers/sakuraReducer'
+import {userSagas} from './reducers/userReducer'
 
 export default function* mySage() {
-  yield takeLatest(requestListSakura().type, fetchListSakura)
-  yield takeLatest(requestListUser().type, fetchListUser)
-  yield takeLatest(requestSaveUser().type, fetchSaveUser)
+  const sagas = [...sakuraSagas, ...userSagas]
+  for (let i = 0; i < sagas.length; i++) {
+    const [action, fetcher] = sagas[i]
+    yield takeLatest(action, fetcher)
+  }
 }

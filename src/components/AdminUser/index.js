@@ -1,8 +1,9 @@
 import React from 'react'
-import {Alert, Button, Icon, Input, Tabs} from 'antd'
+import {Alert, Button, Checkbox, Icon, Input, Modal, Tabs} from 'antd'
 import Table, {Column} from '../../libraries/Table'
 import Reload from '../../libraries/Reload'
-import {requestSaveUser, requestListUser} from '../../reducers/userReducer'
+import Link from '../../libraries/Link'
+import {requestEditUser, requestListUser, requestSaveUser} from '../../reducers/userReducer'
 import {connect} from 'react-redux'
 import {alertWarning} from '../../utils/window'
 
@@ -42,20 +43,69 @@ const columns = [
   }),
 ]
 
+function showEditConfirm(user, handleEditUser) {
+  Modal.confirm({
+    title: '编辑用户',
+    okText: '保存',
+    okType: 'primary',
+    onOk: () => handleEditUser(user.id),
+    cancelText: '取消',
+    content: (
+      <div>
+        <div style={{padding: 10}}>
+          <Input
+            id="edit-user-name"
+            defaultValue={user.username}
+            prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
+            placeholder="请输入用户名"
+          />
+        </div>
+        <div style={{padding: 10}}>
+          <Input
+            id="edit-user-pass"
+            type="password"
+            prefix={<Icon type="key" style={{color: 'rgba(0,0,0,.25)'}}/>}
+            placeholder="如不需修改密码可留空"
+          />
+        </div>
+        <div id="edit-enabled" style={{padding: 10}}>
+          <Checkbox defaultChecked={user.enabled}>启用</Checkbox>
+        </div>
+      </div>
+    ),
+  })
+}
+
 function AdminUser({users, pending, message, handlers}) {
 
-  const {doRequestListUser, doRequestSaveUser} = handlers
+  const {doListUser, doSaveUser, doEditUser} = handlers
 
   if (!users && !pending && !message) {
-    doRequestListUser()
+    doListUser()
   }
 
   function handleSaveUser() {
     const username = document.querySelector('#save-user-name').value
     const password = document.querySelector('#save-user-pass').value
 
-    doRequestSaveUser(username, password)
+    doSaveUser(username, password)
   }
+
+  function handleEditUser(id) {
+    const username = document.querySelector('#edit-user-name').value
+    const password = document.querySelector('#edit-user-pass').value
+    const enabled = document.querySelector('#edit-enabled input').checked
+
+    doEditUser({id, username, password, enabled})
+  }
+
+  const finalColumns = [...columns, new Column({
+    className: 'control',
+    title: '功能',
+    format: (user: User) => (
+      <Link onClick={() => showEditConfirm(user, handleEditUser)}>编辑</Link>
+    ),
+  })]
 
   return (
     <div id="admin-user">
@@ -63,7 +113,7 @@ function AdminUser({users, pending, message, handlers}) {
       <Tabs>
         <Tabs.TabPane tab="用户列表" key="1">
           {users && users.length > 0 && (
-            <Table title="用户列表" rows={users} columns={columns}/>
+            <Table title="用户列表" rows={users} columns={finalColumns}/>
           )}
         </Tabs.TabPane>
         <Tabs.TabPane tab="添加用户" key="2">
@@ -104,14 +154,21 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     handlers: {
-      doRequestListUser() {
+      doListUser() {
         dispatch(requestListUser())
       },
-      doRequestSaveUser(username, password) {
+      doSaveUser(username, password) {
         if (!username || !password) {
           alertWarning('请检查输入项', '你必须输入用户名和密码')
         } else {
           dispatch(requestSaveUser(username, password))
+        }
+      },
+      doEditUser(user) {
+        if (!user.username) {
+          alertWarning('请检查输入项', '你必须输入用户名')
+        } else {
+          dispatch(requestEditUser(user))
         }
       },
     }

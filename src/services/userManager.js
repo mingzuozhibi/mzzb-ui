@@ -12,4 +12,12 @@ export default {
       body: {username, password},
     })
   },
+  editUser({id, ...user}) {
+    if (user.password)
+      user.password = md5(user.username + md5(user.password))
+    return request(`/api/users/${id}`, {
+      method: 'post',
+      body: {...user},
+    })
+  },
 }
