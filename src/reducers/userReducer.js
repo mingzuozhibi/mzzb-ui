@@ -1,4 +1,4 @@
-import {put} from 'redux-saga/effects'
+import {call, put} from 'redux-saga/effects'
 import produce from 'immer'
 import {alertError, showSuccess} from '../utils/window'
 import userManager from '../services/userManager'
@@ -37,7 +37,7 @@ export default function sakuraReducer(state = initState, action) {
         showSuccess('用户添加成功')
         break
       case USER_ADD_FAILED:
-        alertError(`用户添加失败:${action.message}`)
+        alertError(`用户添加失败: ${action.message}`)
         break
       default:
     }
@@ -50,7 +50,7 @@ export function requestListUser() {
 
 export function* fetchListUser() {
   try {
-    const data = yield userManager.findAll()
+    const data = yield call(userManager.findAll)
     if (data.success) {
       yield put({type: USER_LIST_SUCCEEDED, users: data.data})
     } else {
@@ -67,7 +67,7 @@ export function requestAddUser(username, password) {
 
 export function* fetchAddUser(action) {
   try {
-    const data = yield userManager.addUser(action.username, action.password)
+    const data = yield call(userManager.addUser, action.username, action.password)
     if (data.success) {
       yield put({type: USER_ADD_SUCCEEDED, user: data.data})
     } else {
