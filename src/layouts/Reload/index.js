@@ -1,6 +1,6 @@
 import React from 'react'
 import {Icon} from 'antd'
-import {connect} from 'react-redux'
+import connect from '../../utils/connect'
 
 function Reload({state, dispatch, action, isPending}) {
   return (
@@ -13,19 +13,10 @@ function Reload({state, dispatch, action, isPending}) {
   )
 }
 
-function mapStateToProps(state) {
+function mapState(state) {
   return {
     state
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    dispatch
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Reload)
+export default connect(mapState, undefined, Reload)

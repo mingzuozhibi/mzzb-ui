@@ -1,40 +1,44 @@
 import React from 'react'
-import {connect} from 'react-redux'
 import {Alert, Collapse} from 'antd'
+import {Table, Timer} from '../../libraries'
 import {Disc, DiscColumn, discColumns} from '../../common/disc'
-import {requestListSakura} from '../../reducers/sakuraReducer'
+import {listSakura} from '../../reducers/sakuraReducer'
 import {compareFactory} from '../../utils/factory'
 import {isMobile} from '../../utils/window'
-import Table from '../../libraries/Table'
-import Timer from '../../libraries/Timer'
-import Reload from '../../libraries/Reload'
+import {regReload} from '../../reducers/layoutReducer'
+import connect from '../../utils/connect'
 
-const rankCompare = compareFactory({
-  compare: (a: Disc, b: Disc) => a.thisRank - b.thisRank,
-  isEmpty: (disc: Disc) => disc.thisRank === 0,
-})
-
-const {rank, totalPt, surplusDays, title} = discColumns
-
-const columnsOfPc = [
-  rank, totalPt, surplusDays, title
+const discColumnsOfPc = [
+  discColumns.rank,
+  discColumns.totalPt,
+  discColumns.surplusDays,
+  discColumns.title,
 ]
 
-const columnsOfMo = [
-  rank, title
+const discColumnsOfMo = [
+  discColumns.rank,
+  discColumns.title,
 ]
 
-const requestOfPc: DiscColumn[] = [
-  'id', 'asin', 'title', 'thisRank', 'prevRank', 'totalPt', 'surplusDays'
+const discRequestOfPc: DiscColumn[] = [
+  'id', 'title', 'thisRank', 'prevRank', 'totalPt', 'surplusDays'
 ]
 
-const requestOfMo: DiscColumn[] = [
-  'id', 'asin', 'title', 'thisRank', 'prevRank'
+const discRequestOfMo: DiscColumn[] = [
+  'id', 'title', 'thisRank', 'prevRank'
 ]
 
-const columns = isMobile() ? columnsOfMo : columnsOfPc
-const request = isMobile() ? requestOfMo : requestOfPc
-const style = isMobile() ? {marginLeft: -9, marginRight: -9} : {}
+function getColumns() {
+  return isMobile() ? discColumnsOfMo : discColumnsOfPc
+}
+
+function getRequest() {
+  return isMobile() ? discRequestOfMo : discRequestOfPc
+}
+
+function getStyles() {
+  return isMobile() ? {marginLeft: -9, marginRight: -9} : {}
+}
 
 interface SakuraData {
   id: number;
@@ -62,12 +66,17 @@ function titleAndTimer(sakura) {
   )
 }
 
-function Sakura({sakuras, pending, message, doRequestSakura}) {
+function Sakura({sakuras, pending, message, dispatch}) {
   if (!sakuras && !pending && !message) {
-    doRequestSakura(request)
+    dispatch(listSakura(getRequest()))
   }
 
   if (sakuras) {
+    const rankCompare = compareFactory({
+      compare: (a: Disc, b: Disc) => a.thisRank - b.thisRank,
+      isEmpty: (disc: Disc) => disc.thisRank === 0,
+    })
+
     sakuras.forEach((s: SakuraData) => s.discs.sort(rankCompare))
   }
 
@@ -78,8 +87,8 @@ function Sakura({sakuras, pending, message, doRequestSakura}) {
         <Collapse defaultActiveKey='9999-99'>
           {sakuras.map((s: SakuraData) =>
             <Collapse.Panel header={`点击展开或收起：${s.title}`} key={s.key}>
-              <div style={style}>
-                <Table title={titleAndTimer(s)} rows={s.discs} columns={columns}/>
+              <div style={getStyles()}>
+                <Table title={titleAndTimer(s)} rows={s.discs} columns={getColumns()}/>
               </div>
             </Collapse.Panel>
           )}
@@ -89,7 +98,7 @@ function Sakura({sakuras, pending, message, doRequestSakura}) {
   )
 }
 
-function mapStateToProps(state) {
+function mapState(state) {
   return {
     sakuras: state.sakura.sakuras,
     pending: state.sakura.pending,
@@ -97,23 +106,6 @@ function mapStateToProps(state) {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    doRequestSakura(request) {
-      dispatch(requestListSakura(request))
-    }
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Sakura)
-
-export const sakuraIcons = [
-  <Reload
-    key="reload"
-    action={requestListSakura(request)}
-    isPending={(state) => state.sakura.pending}
-  />,
-]
+export default connect(mapState, (dispatch) => {
+  dispatch(regReload(listSakura(getRequest()), (state) => state.sakura.pending))
+}, Sakura)

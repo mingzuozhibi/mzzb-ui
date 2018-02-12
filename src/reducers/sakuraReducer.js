@@ -34,7 +34,7 @@ export default function (state = initState, action) {
 
 function* fetchListSakura(action) {
   try {
-    const data = yield call(sakuraManager.listSakura, action.columns)
+    const data = yield call(sakuraManager.listSakura, action.discColumns)
     if (data.success) {
       yield put({type: SAKURA_FETCH_SUCCEEDED, sakuras: data.data})
     } else {
@@ -45,8 +45,8 @@ function* fetchListSakura(action) {
   }
 }
 
-export function requestListSakura(columns) {
-  return {type: SAKURA_FETCH_REQUESTED, columns}
+export function listSakura(discColumns) {
+  return {type: SAKURA_FETCH_REQUESTED, discColumns}
 }
 
 export const sakuraSagas = [

@@ -11,6 +11,7 @@ import rootReducer from './reducers'
 import setupConfig from './common/setup.js'
 import CoreLayout from './layouts/CoreLayout'
 import mySage from './sagas'
+import registerServiceWorker from './utils/register'
 
 const history = createHistory()
 const sagaMiddleware = createSagaMiddleware()
@@ -32,3 +33,4 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 )
+registerServiceWorker()

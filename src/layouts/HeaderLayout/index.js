@@ -1,82 +1,70 @@
 import React from 'react'
-import {connect} from 'react-redux'
 import {Icon, Layout, Popconfirm} from 'antd'
+import Reload from '../Reload'
+import {Font} from '../../libraries'
 import {hideSider, showLogin, showSider} from '../../reducers/layoutReducer'
-import {submitCheck, submitLogout} from '../../handlers/sessionHandler'
-import IconFont from '../../libraries/IconFont'
+import {logout, query} from '../../handlers/sessionHandler'
+import connect from '../../utils/connect'
 
 const {Header} = Layout
 
-function HeaderLayout({showSider, showLogin, isLogged, handlers, icons}) {
-  const {doHideSider, doShowSider, doShowLogin, doSubmitLogout} = handlers
-  const LoginIcon = (
-    <IconFont
+function loginIcon(handle) {
+  return (
+    <Font
       name="icon-login"
       type="header"
       className="float-right"
-      onClick={doShowLogin}
+      onClick={handle}
     />
   )
-  const LogoutIcon = (
-    <IconFont
-      name="icon-user"
-      type="header"
-      className="float-right"
-    />
-  )
-  const ConfirmLogout = (
+}
+
+function logoutIcon(handle) {
+  return (
     <Popconfirm
       title="你确定要登出吗？"
       placement="bottomRight"
-      onConfirm={doSubmitLogout}
+      onConfirm={handle}
       okText="Yes"
       cancelText="No">
-      {LogoutIcon}
+      <Font
+        name="icon-user"
+        type="header"
+        className="float-right"
+      />
     </Popconfirm>
   )
+}
+
+function HeaderLayout({viewSider, isLogged, reload, dispatch}) {
+
   return (
     <Header style={{background: '#fff', padding: 0}}>
       <Icon
         className="header-icon"
-        type={showSider ? 'menu-fold' : 'menu-unfold'}
-        onClick={showSider ? doHideSider : doShowSider}
+        type={viewSider ? 'menu-fold' : 'menu-unfold'}
+        onClick={viewSider ? () => dispatch(hideSider()) : () => dispatch(showSider())}
       />
-      {icons}
-      {isLogged ? ConfirmLogout : LoginIcon}
+      {reload && (
+        <Reload
+          key="reload"
+          action={reload.action}
+          isPending={reload.isPending}
+        />
+      )}
+      {isLogged ? logoutIcon(() => dispatch(logout())) : loginIcon(() => dispatch(showLogin()))}
     </Header>
   )
 }
 
-function mapStateToProps(state) {
+function mapState(state) {
   return {
-    showSider: state.layout.showSider,
-    showLogin: state.layout.showLogin,
+    viewSider: state.layout.showSider,
     isLogged: state.session.isLogged,
-    icons: state.layout.icons,
+    reload: state.layout.reload,
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  dispatch(submitCheck())
-  return {
-    handlers: {
-      doHideSider() {
-        dispatch(hideSider())
-      },
-      doShowSider() {
-        dispatch(showSider())
-      },
-      doShowLogin() {
-        dispatch(showLogin())
-      },
-      doSubmitLogout() {
-        dispatch(submitLogout())
-      }
-    }
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(HeaderLayout)
+export default connect(mapState, (dispatch) => {
+  dispatch(query())
+}, HeaderLayout)

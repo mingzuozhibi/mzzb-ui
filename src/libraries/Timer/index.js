@@ -1,6 +1,6 @@
 import React from 'react'
 
-class Timer extends React.Component {
+export class Timer extends React.Component {
   constructor(props) {
     super(props)
 
@@ -34,7 +34,4 @@ class Timer extends React.Component {
   render() {
     return this.props.render(this.state)
   }
-
 }
-
-export default Timer
