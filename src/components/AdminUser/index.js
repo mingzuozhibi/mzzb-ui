@@ -5,46 +5,17 @@ import {editUser, listUser, saveUser} from '../../reducers/userReducer'
 import {alertWarning} from '../../utils/window'
 import {regReload} from '../../reducers/layoutReducer'
 import connect from '../../utils/connect'
-
-const {Column} = Table
-
-interface User {
-  id: number;
-  username: string;
-  enabled: boolean;
-  registerDate: string;
-  lastLoggedIn: string;
-}
+import {User, userColumns} from '../../common/user'
 
 const columns = [
-  new Column({
-    className: 'id',
-    title: 'ID',
-    format: (user: User) => user.id,
-  }),
-  new Column({
-    className: 'username',
-    title: '用户名',
-    format: (user: User) => user.username,
-  }),
-  new Column({
-    className: 'enabled',
-    title: '启用',
-    format: (user: User) => user.enabled ? '是' : '否',
-  }),
-  new Column({
-    className: 'registerDate',
-    title: '注册时间',
-    format: (user: User) => user.registerDate,
-  }),
-  new Column({
-    className: 'lastLoggedIn',
-    title: '最后登入',
-    format: (user: User) => user.lastLoggedIn,
-  }),
+  userColumns.id,
+  userColumns.username,
+  userColumns.enabled,
+  userColumns.registerDate,
+  userColumns.lastLoggedIn,
 ]
 
-function showEditConfirm(user, handleEditUser) {
+function showEditConfirm(user: User, handleEditUser) {
   Modal.confirm({
     title: '编辑用户',
     okText: '保存',
@@ -73,6 +44,16 @@ function showEditConfirm(user, handleEditUser) {
           <Checkbox defaultChecked={user.enabled}>启用</Checkbox>
         </div>
       </div>
+    ),
+  })
+}
+
+function getControlColumn(handleEditUser) {
+  return new Table.Column({
+    className: 'control',
+    title: '功能',
+    format: (user: User) => (
+      <Link onClick={() => showEditConfirm(user, handleEditUser)}>编辑</Link>
     ),
   })
 }
@@ -106,13 +87,7 @@ function AdminUser({users, pending, message, dispatch}) {
     }
   }
 
-  const finalColumns = [...columns, new Column({
-    className: 'control',
-    title: '功能',
-    format: (user: User) => (
-      <Link onClick={() => showEditConfirm(user, handleEditUser)}>编辑</Link>
-    ),
-  })]
+  const finalColumns = [...columns, getControlColumn(handleEditUser)]
 
   return (
     <div id="admin-user">
