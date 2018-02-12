@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Alert, Collapse} from 'antd'
 import {Disc, DiscColumn, discColumns} from '../../common/disc'
-import {requestSakura} from '../../reducers/sakuraReducer'
+import {requestListSakura} from '../../reducers/sakuraReducer'
 import {compareFactory} from '../../utils/factory'
 import {isMobile} from '../../utils/window'
 import Table from '../../libraries/Table'
@@ -100,7 +100,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     doRequestSakura(request) {
-      dispatch(requestSakura(request))
+      dispatch(requestListSakura(request))
     }
   }
 }
@@ -113,7 +113,7 @@ export default connect(
 export const sakuraIcons = [
   <Reload
     key="reload"
-    action={requestSakura(request)}
+    action={requestListSakura(request)}
     isPending={(state) => state.sakura.pending}
   />,
 ]

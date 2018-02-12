@@ -32,13 +32,13 @@ export default function sakuraReducer(state = initState, action) {
   })
 }
 
-export function requestSakura(columns) {
+export function requestListSakura(columns) {
   return {type: SAKURA_FETCH_REQUESTED, columns}
 }
 
-export function* fetchSakura(action) {
+export function* fetchListSakura(action) {
   try {
-    const data = yield call(sakuraManager.findAll, action.columns)
+    const data = yield call(sakuraManager.listSakura, action.columns)
     if (data.success) {
       yield put({type: SAKURA_FETCH_SUCCEEDED, sakuras: data.data})
     } else {

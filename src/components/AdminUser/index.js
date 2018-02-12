@@ -2,7 +2,7 @@ import React from 'react'
 import {Alert, Button, Icon, Input, Tabs} from 'antd'
 import Table, {Column} from '../../libraries/Table'
 import Reload from '../../libraries/Reload'
-import {requestAddUser, requestListUser} from '../../reducers/userReducer'
+import {requestSaveUser, requestListUser} from '../../reducers/userReducer'
 import {connect} from 'react-redux'
 import {alertWarning} from '../../utils/window'
 
@@ -44,7 +44,7 @@ const columns = [
 
 function AdminUser({users, pending, message, handlers}) {
 
-  const {doRequestListUser, doRequestAddUser} = handlers
+  const {doRequestListUser, doRequestSaveUser} = handlers
 
   if (!users && !pending && !message) {
     doRequestListUser()
@@ -54,7 +54,7 @@ function AdminUser({users, pending, message, handlers}) {
     const username = document.querySelector('#add-username').value
     const password = document.querySelector('#add-password').value
 
-    doRequestAddUser(username, password)
+    doRequestSaveUser(username, password)
   }
 
   return (
@@ -101,11 +101,11 @@ function mapDispatchToProps(dispatch) {
       doRequestListUser() {
         dispatch(requestListUser())
       },
-      doRequestAddUser(username, password) {
+      doRequestSaveUser(username, password) {
         if (!username || !password) {
           alertWarning('请检查输入项', '你必须输入用户名和密码')
         } else {
-          dispatch(requestAddUser(username, password))
+          dispatch(requestSaveUser(username, password))
         }
       },
     }
