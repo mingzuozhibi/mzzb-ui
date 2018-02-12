@@ -50,9 +50,9 @@ function AdminUser({users, pending, message, handlers}) {
     doRequestListUser()
   }
 
-  function handleSubmit() {
-    const username = document.querySelector('#add-username').value
-    const password = document.querySelector('#add-password').value
+  function handleSaveUser() {
+    const username = document.querySelector('#save-user-name').value
+    const password = document.querySelector('#save-user-pass').value
 
     doRequestSaveUser(username, password)
   }
@@ -67,20 +67,26 @@ function AdminUser({users, pending, message, handlers}) {
           )}
         </Tabs.TabPane>
         <Tabs.TabPane tab="添加用户" key="2">
-          <Input
-            id="add-username"
-            prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
-            placeholder="请输入用户名"
-            onPressEnter={() => document.querySelector('#add-password').focus()}
-          />
-          <Input
-            id="add-password"
-            type="password"
-            prefix={<Icon type="key" style={{color: 'rgba(0,0,0,.25)'}}/>}
-            placeholder="请输入密码"
-            onPressEnter={handleSubmit}
-          />
-          <Button type="primary" onClick={handleSubmit}>添加用户</Button>
+          <div style={{padding: 10}}>
+            <Input
+              id="save-user-name"
+              prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
+              placeholder="请输入用户名"
+              onPressEnter={() => document.querySelector('#save-user-pass').focus()}
+            />
+          </div>
+          <div style={{padding: 10}}>
+            <Input
+              id="save-user-pass"
+              type="password"
+              prefix={<Icon type="key" style={{color: 'rgba(0,0,0,.25)'}}/>}
+              placeholder="请输入密码"
+              onPressEnter={handleSaveUser}
+            />
+          </div>
+          <div style={{padding: '5px 10px'}}>
+            <Button type="primary" onClick={handleSaveUser}>添加用户</Button>
+          </div>
         </Tabs.TabPane>
       </Tabs>
     </div>
