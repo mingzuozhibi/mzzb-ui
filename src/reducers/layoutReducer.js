@@ -15,7 +15,7 @@ const initState = {
   showLogin: false,
 }
 
-export default function appbarReducer(state = initState, action) {
+export default function (state = initState, action) {
   return produce(state, draft => {
     switch (action.type) {
       case ACTION_SHOW_SIDER:

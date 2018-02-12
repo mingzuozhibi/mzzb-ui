@@ -1,7 +1,7 @@
 import {call, put} from 'redux-saga/effects'
-import sakuraManager from '../services/sakuraManager'
 import produce from 'immer'
 import {showSuccess} from '../utils/window'
+import sakuraManager from '../services/sakuraManager'
 
 const SAKURA_FETCH_REQUESTED = 'SAKURA_FETCH_REQUESTED'
 const SAKURA_FETCH_SUCCEEDED = 'SAKURA_FETCH_SUCCEEDED'
@@ -11,7 +11,7 @@ const initState = {
   pending: false
 }
 
-export default function sakuraReducer(state = initState, action) {
+export default function (state = initState, action) {
   return produce(state, draft => {
     switch (action.type) {
       case SAKURA_FETCH_REQUESTED:
@@ -32,13 +32,9 @@ export default function sakuraReducer(state = initState, action) {
   })
 }
 
-export function requestSakura(columns) {
-  return {type: SAKURA_FETCH_REQUESTED, columns}
-}
-
-export function* fetchSakura(action) {
+function* fetchListSakura(action) {
   try {
-    const data = yield call(sakuraManager.findAll, action.columns)
+    const data = yield call(sakuraManager.listSakura, action.columns)
     if (data.success) {
       yield put({type: SAKURA_FETCH_SUCCEEDED, sakuras: data.data})
     } else {
@@ -48,3 +44,11 @@ export function* fetchSakura(action) {
     yield put({type: SAKURA_FETCH_FAILED, message: err.message})
   }
 }
+
+export function requestListSakura(columns) {
+  return {type: SAKURA_FETCH_REQUESTED, columns}
+}
+
+export const sakuraSagas = [
+  [SAKURA_FETCH_REQUESTED, fetchListSakura]
+]

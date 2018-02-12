@@ -8,7 +8,7 @@ const initState = {
   isAdmin: false,
 }
 
-export default function sessionReducer(state = initState, action) {
+export default function (state = initState, action) {
   return produce(state, draft => {
     switch (action.type) {
       case ACTION_SESSION_LOGIN:
