@@ -5,7 +5,7 @@ const ACTION_SET_CONFIG = '@@config/SET_CONFIG'
 const loadState = loadConfig()
 const initState = {...loadState}
 
-export default function configReducer(state = initState, action) {
+export default function (state = initState, action) {
   switch (action.type) {
     case ACTION_SET_CONFIG:
       return saveConfig(produce(state, draft => {

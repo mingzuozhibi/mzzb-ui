@@ -11,7 +11,7 @@ const initState = {
   pending: false
 }
 
-export default function sakuraReducer(state = initState, action) {
+export default function (state = initState, action) {
   return produce(state, draft => {
     switch (action.type) {
       case SAKURA_FETCH_REQUESTED:
