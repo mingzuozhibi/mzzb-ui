@@ -1,11 +1,11 @@
 import React from 'react'
 import {Alert, Button, Checkbox, Icon, Input, Modal, Tabs} from 'antd'
 import Table, {Column} from '../../libraries/Table'
-import Reload from '../../libraries/Reload'
 import Link from '../../libraries/Link'
-import {requestEditUser, requestListUser, requestSaveUser} from '../../reducers/userReducer'
-import {connect} from 'react-redux'
+import {editUser, listUser, saveUser} from '../../reducers/userReducer'
 import {alertWarning} from '../../utils/window'
+import {regReload} from '../../reducers/layoutReducer'
+import connect from '../../utils/connect'
 
 interface User {
   id: number;
@@ -76,19 +76,21 @@ function showEditConfirm(user, handleEditUser) {
   })
 }
 
-function AdminUser({users, pending, message, handlers}) {
-
-  const {doListUser, doSaveUser, doEditUser} = handlers
+function AdminUser({users, pending, message, dispatch}) {
 
   if (!users && !pending && !message) {
-    doListUser()
+    dispatch(listUser())
   }
 
   function handleSaveUser() {
     const username = document.querySelector('#save-user-name').value
     const password = document.querySelector('#save-user-pass').value
 
-    doSaveUser(username, password)
+    if (!username || !password) {
+      alertWarning('请检查输入项', '你必须输入用户名和密码')
+    } else {
+      dispatch(saveUser(username, password))
+    }
   }
 
   function handleEditUser(id) {
@@ -96,7 +98,11 @@ function AdminUser({users, pending, message, handlers}) {
     const password = document.querySelector('#edit-user-pass').value
     const enabled = document.querySelector('#edit-enabled input').checked
 
-    doEditUser({id, username, password, enabled})
+    if (!username) {
+      alertWarning('请检查输入项', '你必须输入用户名')
+    } else {
+      dispatch(editUser({id, username, password, enabled}))
+    }
   }
 
   const finalColumns = [...columns, new Column({
@@ -143,7 +149,7 @@ function AdminUser({users, pending, message, handlers}) {
   )
 }
 
-function mapStateToProps(state) {
+function mapState(state) {
   return {
     users: state.user.users,
     pending: state.user.pending,
@@ -151,39 +157,6 @@ function mapStateToProps(state) {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    handlers: {
-      doListUser() {
-        dispatch(requestListUser())
-      },
-      doSaveUser(username, password) {
-        if (!username || !password) {
-          alertWarning('请检查输入项', '你必须输入用户名和密码')
-        } else {
-          dispatch(requestSaveUser(username, password))
-        }
-      },
-      doEditUser(user) {
-        if (!user.username) {
-          alertWarning('请检查输入项', '你必须输入用户名')
-        } else {
-          dispatch(requestEditUser(user))
-        }
-      },
-    }
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AdminUser)
-
-export const adminUserIcons = [
-  <Reload
-    key="reload"
-    action={requestListUser()}
-    isPending={(state) => state.user.pending}
-  />,
-]
+export default connect(mapState, (dispatch) => {
+  dispatch(regReload(listUser(), (state) => state.user.pending))
+}, AdminUser)

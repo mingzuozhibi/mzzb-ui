@@ -4,7 +4,7 @@ import {sessionLogin, sessionLogout} from '../reducers/sessionReducer'
 import {alertError} from '../utils/window'
 import {hideLogin} from '../reducers/layoutReducer'
 
-export function submitCheck() {
+export function requestCheck() {
   return requestHandler({
     fetchCall: () => sessionManager.check(),
     fetchDone: (json, dispatch) => {
@@ -17,13 +17,13 @@ export function submitCheck() {
   })
 }
 
-export function submitLogin(username, password) {
+export function requestLogin(username, password) {
   return requestHandler({
     fetchCall: () => sessionManager.login(username, password),
     fetchDone: (json, dispatch) => {
       if (json.success) {
         dispatch(hideLogin())
-        dispatch(submitCheck())
+        dispatch(requestCheck())
       } else {
         alertError('登入失败', '请检查用户名和密码是否正确')
       }
@@ -31,11 +31,11 @@ export function submitLogin(username, password) {
   })
 }
 
-export function submitLogout() {
+export function requestLogout() {
   return requestHandler({
     fetchCall: () => sessionManager.logout(),
     fetchDone: (json, dispatch) => {
-      dispatch(submitCheck())
+      dispatch(requestCheck())
     }
   })
 }

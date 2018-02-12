@@ -1,13 +1,13 @@
 import React from 'react'
-import {connect} from 'react-redux'
 import {Alert, Collapse} from 'antd'
 import {Disc, DiscColumn, discColumns} from '../../common/disc'
-import {requestListSakura} from '../../reducers/sakuraReducer'
+import {listSakura} from '../../reducers/sakuraReducer'
 import {compareFactory} from '../../utils/factory'
 import {isMobile} from '../../utils/window'
 import Table from '../../libraries/Table'
 import Timer from '../../libraries/Timer'
-import Reload from '../../libraries/Reload'
+import {regReload} from '../../reducers/layoutReducer'
+import connect from '../../utils/connect'
 
 const rankCompare = compareFactory({
   compare: (a: Disc, b: Disc) => a.thisRank - b.thisRank,
@@ -62,9 +62,9 @@ function titleAndTimer(sakura) {
   )
 }
 
-function Sakura({sakuras, pending, message, doRequestSakura}) {
+function Sakura({sakuras, pending, message, dispatch}) {
   if (!sakuras && !pending && !message) {
-    doRequestSakura(request)
+    dispatch(listSakura(request))
   }
 
   if (sakuras) {
@@ -89,7 +89,7 @@ function Sakura({sakuras, pending, message, doRequestSakura}) {
   )
 }
 
-function mapStateToProps(state) {
+function mapState(state) {
   return {
     sakuras: state.sakura.sakuras,
     pending: state.sakura.pending,
@@ -97,23 +97,6 @@ function mapStateToProps(state) {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    doRequestSakura(request) {
-      dispatch(requestListSakura(request))
-    }
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Sakura)
-
-export const sakuraIcons = [
-  <Reload
-    key="reload"
-    action={requestListSakura(request)}
-    isPending={(state) => state.sakura.pending}
-  />,
-]
+export default connect(mapState, (dispatch) => {
+  dispatch(regReload(listSakura(request), (state) => state.sakura.pending))
+}, Sakura)

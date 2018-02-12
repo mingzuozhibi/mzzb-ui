@@ -45,7 +45,7 @@ function* fetchListSakura(action) {
   }
 }
 
-export function requestListSakura(columns) {
+export function listSakura(columns) {
   return {type: SAKURA_FETCH_REQUESTED, columns}
 }
 

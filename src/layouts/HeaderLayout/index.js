@@ -2,38 +2,44 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Icon, Layout, Popconfirm} from 'antd'
 import {hideSider, showLogin, showSider} from '../../reducers/layoutReducer'
-import {submitCheck, submitLogout} from '../../handlers/sessionHandler'
+import {requestCheck, requestLogout} from '../../handlers/sessionHandler'
 import IconFont from '../../libraries/IconFont'
+import Reload from '../../libraries/Reload'
 
 const {Header} = Layout
 
-function HeaderLayout({showSider, showLogin, isLogged, handlers, icons}) {
-  const {doHideSider, doShowSider, doShowLogin, doSubmitLogout} = handlers
-  const LoginIcon = (
+function loginIcon(handle) {
+  return (
     <IconFont
       name="icon-login"
       type="header"
       className="float-right"
-      onClick={doShowLogin}
+      onClick={handle}
     />
   )
-  const LogoutIcon = (
-    <IconFont
-      name="icon-user"
-      type="header"
-      className="float-right"
-    />
-  )
-  const ConfirmLogout = (
+}
+
+function logoutIcon(handle) {
+  return (
     <Popconfirm
       title="你确定要登出吗？"
       placement="bottomRight"
-      onConfirm={doSubmitLogout}
+      onConfirm={handle}
       okText="Yes"
       cancelText="No">
-      {LogoutIcon}
+      <IconFont
+        name="icon-user"
+        type="header"
+        className="float-right"
+      />
     </Popconfirm>
   )
+}
+
+function HeaderLayout({showSider, showLogin, isLogged, reload, handlers}) {
+
+  const {doHideSider, doShowSider, doShowLogin, doLogout} = handlers
+
   return (
     <Header style={{background: '#fff', padding: 0}}>
       <Icon
@@ -41,8 +47,14 @@ function HeaderLayout({showSider, showLogin, isLogged, handlers, icons}) {
         type={showSider ? 'menu-fold' : 'menu-unfold'}
         onClick={showSider ? doHideSider : doShowSider}
       />
-      {icons}
-      {isLogged ? ConfirmLogout : LoginIcon}
+      {reload && (
+        <Reload
+          key="reload"
+          action={reload.action}
+          isPending={reload.isPending}
+        />
+      )}
+      {isLogged ? logoutIcon(doLogout) : loginIcon(doShowLogin)}
     </Header>
   )
 }
@@ -52,12 +64,12 @@ function mapStateToProps(state) {
     showSider: state.layout.showSider,
     showLogin: state.layout.showLogin,
     isLogged: state.session.isLogged,
-    icons: state.layout.icons,
+    reload: state.layout.reload,
   }
 }
 
 function mapDispatchToProps(dispatch) {
-  dispatch(submitCheck())
+  dispatch(requestCheck())
   return {
     handlers: {
       doHideSider() {
@@ -69,8 +81,8 @@ function mapDispatchToProps(dispatch) {
       doShowLogin() {
         dispatch(showLogin())
       },
-      doSubmitLogout() {
-        dispatch(submitLogout())
+      doLogout() {
+        dispatch(requestLogout())
       }
     }
   }

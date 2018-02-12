@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Icon, Input, Modal} from 'antd'
 import {hideLogin} from '../../reducers/layoutReducer'
-import {submitLogin} from '../../handlers/sessionHandler'
+import {requestLogin} from '../../handlers/sessionHandler'
 import {alertWarning} from '../../utils/window'
 
 function LoginModal({showLogin, doHideLogin, doSubmitLogin}) {
@@ -55,7 +55,7 @@ function mapDispatchToProps(dispatch) {
       if (!username || !password) {
         alertWarning('请检查输入项', '你必须输入用户名和密码')
       } else {
-        dispatch(submitLogin(username, password))
+        dispatch(requestLogin(username, password))
       }
     }
   }

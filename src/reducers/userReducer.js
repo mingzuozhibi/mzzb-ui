@@ -96,15 +96,15 @@ function* fetchEditUser(action) {
   }
 }
 
-export function requestListUser() {
+export function listUser() {
   return {type: USER_LIST_REQUESTED}
 }
 
-export function requestSaveUser(username, password) {
+export function saveUser(username, password) {
   return {type: USER_SAVE_REQUESTED, username, password}
 }
 
-export function requestEditUser(user) {
+export function editUser(user) {
   return {type: USER_EDIT_REQUESTED, user}
 }
 
