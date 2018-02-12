@@ -1,17 +1,21 @@
 import React from 'react'
-import {connect} from 'react-redux'
 import {Icon, Input, Modal} from 'antd'
 import {hideLogin} from '../../reducers/layoutReducer'
-import {requestLogin} from '../../handlers/sessionHandler'
+import {login} from '../../handlers/sessionHandler'
 import {alertWarning} from '../../utils/window'
+import connect from '../../utils/connect'
 
-function LoginModal({showLogin, doHideLogin, doSubmitLogin}) {
+function LoginModal({showLogin, dispatch}) {
 
-  function handleSubmit() {
+  function handleLogin() {
     const username = document.querySelector('#username').value
     const password = document.querySelector('#password').value
 
-    doSubmitLogin(username, password)
+    if (!username || !password) {
+      alertWarning('请检查输入项', '你必须输入用户名和密码')
+    } else {
+      dispatch(login(username, password))
+    }
   }
 
   return (
@@ -20,8 +24,8 @@ function LoginModal({showLogin, doHideLogin, doSubmitLogin}) {
       okText="登入"
       cancelText="取消"
       visible={showLogin}
-      onOk={handleSubmit}
-      onCancel={doHideLogin}
+      onOk={handleLogin}
+      onCancel={() => dispatch(hideLogin())}
     >
       <Input
         id="username"
@@ -34,34 +38,16 @@ function LoginModal({showLogin, doHideLogin, doSubmitLogin}) {
         type="password"
         prefix={<Icon type="key" style={{color: 'rgba(0,0,0,.25)'}}/>}
         placeholder="请输入密码"
-        onPressEnter={handleSubmit}
+        onPressEnter={handleLogin}
       />
     </Modal>
   )
 }
 
-function mapStateToProps(state) {
+function mapState(state) {
   return {
     showLogin: state.layout.showLogin,
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    doHideLogin() {
-      dispatch(hideLogin())
-    },
-    doSubmitLogin(username, password) {
-      if (!username || !password) {
-        alertWarning('请检查输入项', '你必须输入用户名和密码')
-      } else {
-        dispatch(requestLogin(username, password))
-      }
-    }
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(LoginModal)
+export default connect(mapState, undefined, LoginModal)

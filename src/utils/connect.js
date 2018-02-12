@@ -1,8 +1,8 @@
 import {connect} from 'react-redux'
 
-function mapDispatch(onEnter) {
+function mapDispatch(onLoad) {
   return (dispatch) => {
-    onEnter(dispatch)
+    if (onLoad) onLoad(dispatch)
     return {dispatch}
   }
 }

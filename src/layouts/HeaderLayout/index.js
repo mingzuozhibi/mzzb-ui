@@ -1,10 +1,10 @@
 import React from 'react'
-import {connect} from 'react-redux'
 import {Icon, Layout, Popconfirm} from 'antd'
 import {hideSider, showLogin, showSider} from '../../reducers/layoutReducer'
-import {requestCheck, requestLogout} from '../../handlers/sessionHandler'
+import {logout, query} from '../../handlers/sessionHandler'
 import IconFont from '../../libraries/IconFont'
 import Reload from '../../libraries/Reload'
+import connect from '../../utils/connect'
 
 const {Header} = Layout
 
@@ -36,16 +36,14 @@ function logoutIcon(handle) {
   )
 }
 
-function HeaderLayout({showSider, showLogin, isLogged, reload, handlers}) {
-
-  const {doHideSider, doShowSider, doShowLogin, doLogout} = handlers
+function HeaderLayout({viewSider, isLogged, reload, dispatch}) {
 
   return (
     <Header style={{background: '#fff', padding: 0}}>
       <Icon
         className="header-icon"
-        type={showSider ? 'menu-fold' : 'menu-unfold'}
-        onClick={showSider ? doHideSider : doShowSider}
+        type={viewSider ? 'menu-fold' : 'menu-unfold'}
+        onClick={viewSider ? () => dispatch(hideSider()) : () => dispatch(showSider())}
       />
       {reload && (
         <Reload
@@ -54,41 +52,19 @@ function HeaderLayout({showSider, showLogin, isLogged, reload, handlers}) {
           isPending={reload.isPending}
         />
       )}
-      {isLogged ? logoutIcon(doLogout) : loginIcon(doShowLogin)}
+      {isLogged ? logoutIcon(() => dispatch(logout())) : loginIcon(() => dispatch(showLogin()))}
     </Header>
   )
 }
 
-function mapStateToProps(state) {
+function mapState(state) {
   return {
-    showSider: state.layout.showSider,
-    showLogin: state.layout.showLogin,
+    viewSider: state.layout.showSider,
     isLogged: state.session.isLogged,
     reload: state.layout.reload,
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  dispatch(requestCheck())
-  return {
-    handlers: {
-      doHideSider() {
-        dispatch(hideSider())
-      },
-      doShowSider() {
-        dispatch(showSider())
-      },
-      doShowLogin() {
-        dispatch(showLogin())
-      },
-      doLogout() {
-        dispatch(requestLogout())
-      }
-    }
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(HeaderLayout)
+export default connect(mapState, (dispatch) => {
+  dispatch(query())
+}, HeaderLayout)

@@ -1,5 +1,5 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import connect from '../../utils/connect'
 
 function Home({isLogged, userName}) {
   const helloMsg = isLogged
@@ -12,18 +12,11 @@ function Home({isLogged, userName}) {
   )
 }
 
-function mapStateToProps(state) {
+function mapState(state) {
   return {
     isLogged: state.session.isLogged,
     userName: state.session.userName
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {}
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Home)
+export default connect(mapState, undefined, Home)

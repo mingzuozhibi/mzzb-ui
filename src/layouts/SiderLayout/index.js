@@ -1,14 +1,25 @@
 import React from 'react'
-import {connect} from 'react-redux'
 import {push} from 'react-router-redux'
 import {Layout, Menu} from 'antd'
 import {isMobile} from '../../utils/window'
 import {hideSider} from '../../reducers/layoutReducer'
 import menu from '../../common/menu'
+import connect from '../../utils/connect'
 
 const {Sider} = Layout
 
-function SiderLayout({isAdmin, pathname, showSider, doSelectItem}) {
+function SiderLayout({isAdmin, pathname, showSider, dispatch}) {
+
+  function handleClick({key}) {
+    if (key[0] === '/') {
+      dispatch(push(key))
+    } else {
+      window.open(key)
+    }
+    if (isMobile())
+      dispatch(hideSider())
+  }
+
   return (
     <Sider
       width={200}
@@ -24,7 +35,7 @@ function SiderLayout({isAdmin, pathname, showSider, doSelectItem}) {
         mode="inline"
         selectedKeys={[pathname]}
         style={{height: '100%'}}
-        onSelect={doSelectItem}
+        onSelect={handleClick}
       >
         {menu.map(item => item.renderMenu(isAdmin))}
       </Menu>
@@ -32,7 +43,7 @@ function SiderLayout({isAdmin, pathname, showSider, doSelectItem}) {
   )
 }
 
-function mapStateToProps(state) {
+function mapState(state) {
   return {
     isAdmin: state.session.isAdmin,
     pathname: state.router.location.pathname,
@@ -40,22 +51,4 @@ function mapStateToProps(state) {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    doSelectItem({key}) {
-      if (key[0] === '/') {
-        dispatch(push(key))
-        if (isMobile()) {
-          dispatch(hideSider())
-        }
-      } else {
-        window.open(key)
-      }
-    }
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SiderLayout)
+export default connect(mapState, undefined, SiderLayout)
