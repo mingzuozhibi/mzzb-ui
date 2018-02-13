@@ -1,11 +1,12 @@
 import {alertError} from './window'
 
-export function requestHandler({fetchCall, fetchDone}) {
+export function requestHandler(workName, {fetchCall, fetchDone}) {
   return async (dispatch) => {
-    try {
-      fetchDone(await fetchCall(), dispatch)
-    } catch (err) {
-      alertError('网络请求失败', err.message)
+    let result = await fetchCall()
+    if (result.success) {
+      fetchDone(result.data, dispatch)
+    } else {
+      alertError(`${workName}异常`, result.message)
     }
   }
 }

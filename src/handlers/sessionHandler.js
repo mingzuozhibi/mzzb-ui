@@ -1,41 +1,32 @@
 import {requestHandler} from '../utils/handler'
 import sessionManager from '../services/sessionManager'
-import {sessionLogin, sessionLogout} from '../reducers/sessionReducer'
-import {alertError} from '../utils/window'
+import {updateSession} from '../reducers/sessionReducer'
 import {hideLogin} from '../reducers/layoutReducer'
 
 export function query() {
-  return requestHandler({
+  return requestHandler('获取当前用户状态', {
     fetchCall: () => sessionManager.check(),
-    fetchDone: (json, dispatch) => {
-      if (json.success) {
-        dispatch(sessionLogin(json['username'], json['roles']))
-      } else {
-        dispatch(sessionLogout())
-      }
+    fetchDone: (session, dispatch) => {
+      dispatch(updateSession(session))
     }
   })
 }
 
 export function login(username, password) {
-  return requestHandler({
+  return requestHandler('登入', {
     fetchCall: () => sessionManager.login(username, password),
-    fetchDone: (json, dispatch) => {
-      if (json.success) {
-        dispatch(hideLogin())
-        dispatch(query())
-      } else {
-        alertError('登入失败', '请检查用户名和密码是否正确')
-      }
+    fetchDone: (session, dispatch) => {
+      dispatch(hideLogin())
+      dispatch(updateSession(session))
     }
   })
 }
 
 export function logout() {
-  return requestHandler({
+  return requestHandler('登出', {
     fetchCall: () => sessionManager.logout(),
-    fetchDone: (json, dispatch) => {
-      dispatch(query())
+    fetchDone: (session, dispatch) => {
+      dispatch(updateSession(session))
     }
   })
 }
