@@ -1,7 +1,6 @@
 import produce from 'immer'
 
-const ACTION_SESSION_LOGIN = '@@session/SESSION_LOGIN'
-const ACTION_SESSION_LOGOUT = '@@session/SESSION_LOGOUT'
+const ACTION_UPDATE_SESSION = '@@session/UPDATE_SESSION'
 
 const initState = {
   isLogged: false,
@@ -11,31 +10,19 @@ const initState = {
 export default function (state = initState, action) {
   return produce(state, draft => {
     switch (action.type) {
-      case ACTION_SESSION_LOGIN:
-        draft.isLogged = true
-        draft.userName = action.userName
-        draft.authRole = action.authRole
-        draft.isAdmin = action.authRole.indexOf('ROLE_ADMIN') !== -1
-        break
-      case ACTION_SESSION_LOGOUT:
-        draft.isLogged = false
-        draft.userName = undefined
-        draft.authRole = undefined
-        draft.isAdmin = false
+      case ACTION_UPDATE_SESSION:
+        draft.isLogged = action.session.isLogged
+        draft.userName = action.session.userName
+        draft.userRoles = action.session.userRoles
+        draft.isAdmin = action.session.userRoles.filter(role => role === 'ROLE_ADMIN').length > 0
         break
       default:
     }
   })
 }
 
-export function sessionLogin(userName, authRole) {
+export function updateSession(session) {
   return {
-    type: ACTION_SESSION_LOGIN, userName, authRole
-  }
-}
-
-export function sessionLogout() {
-  return {
-    type: ACTION_SESSION_LOGOUT
+    type: ACTION_UPDATE_SESSION, session
   }
 }

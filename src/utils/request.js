@@ -64,4 +64,7 @@ export default function request(url, props = {}) {
     .then(checkStatus)
     .then(saveCsrfToken)
     .then(parseToJSON)
+    .catch(err => {
+      return {success: false, message: err.message}
+    })
 }
