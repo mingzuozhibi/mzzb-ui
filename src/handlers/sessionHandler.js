@@ -5,7 +5,7 @@ import {hideLogin} from '../reducers/layoutReducer'
 
 export function query() {
   return requestHandler('获取当前用户状态', {
-    fetchCall: () => sessionManager.check(),
+    fetchCall: () => sessionManager.current(),
     fetchDone: (session, dispatch) => {
       dispatch(updateSession(session))
     }
