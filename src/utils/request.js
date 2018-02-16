@@ -1,5 +1,5 @@
 const CONTENT_TYPE_NAME = 'Content-Type'
-const CONTENT_TYPE_VALUE = 'application/jsoncharset=UTF-8'
+const CONTENT_TYPE_VALUE = 'application/json;charset=UTF-8'
 
 const CSRF_HEADER_KEY = 'X-CSRF-HEADER'
 const CSRF_PARAM_KEY = 'X-CSRF-PARAM'
