@@ -25,7 +25,7 @@ const renderRoute = (route: RouteInfo, key: number): React.ReactNode => {
       return route.routes.map(renderRoute)
     case 'Route':
       return (
-        <Route key={key} path={route.matchPath} component={async(route.component)}/>
+        <Route key={key} path={route.path} component={async(route.component)}/>
       )
     default:
       return null

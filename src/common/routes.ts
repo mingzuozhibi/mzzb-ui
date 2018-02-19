@@ -3,8 +3,9 @@ export type RouteInfo = HasRoutes | NotRoutes | SiteLink
 interface RouteCommon {
   icon: string
   text: string
-  role?: 'ROLE_ADMIN' | 'ROLE_BASIC'
+  path: string
   type: 'Routes' | 'Route' | 'Link'
+  role?: 'ROLE_ADMIN' | 'ROLE_BASIC'
 }
 
 interface HasRoutes extends RouteCommon {
@@ -14,50 +15,49 @@ interface HasRoutes extends RouteCommon {
 
 interface NotRoutes extends RouteCommon {
   type: 'Route'
-  matchPath: string
   component: () => any
 }
 
 interface SiteLink extends RouteCommon {
   type: 'Link'
-  matchPath: string
 }
 
 const routes: RouteInfo[] = [
   {
     icon: 'home',
     text: '首页',
+    path: '/home',
     type: 'Route',
-    matchPath: '/home',
     component: () => import('../components/home')
   },
   {
     icon: 'icon-yinghua',
     text: 'Sakura',
+    path: '/sakura',
     type: 'Route',
-    matchPath: '/sakura',
     component: () => import('../components/sakura')
   },
   {
     icon: 'profile',
     text: '后台管理',
-    role: 'ROLE_BASIC',
+    path: '/admin',
     type: 'Routes',
+    role: 'ROLE_BASIC',
     routes: [
       {
         icon: 'icon-user',
         text: '用户管理',
-        role: 'ROLE_ADMIN',
+        path: '/admin/user',
         type: 'Route',
-        matchPath: '/admin/user',
+        role: 'ROLE_ADMIN',
         component: () => import('../components/admin-user')
       },
       {
         icon: 'icon-yinghua',
         text: 'Sakura管理',
-        role: 'ROLE_BASIC',
+        path: '/basic/sakura',
         type: 'Route',
-        matchPath: '/basic/sakura',
+        role: 'ROLE_BASIC',
         component: () => import('../components/basic-sakura')
       },
     ]
@@ -66,18 +66,18 @@ const routes: RouteInfo[] = [
     icon: 'icon-social-tieba',
     text: '名作之壁吧',
     type: 'Link',
-    matchPath: 'https://tieba.baidu.com/f?kw=%E5%90%8D%E4%BD%9C%E4%B9%8B%E5%A3%81'
+    path: 'https://tieba.baidu.com/f?kw=%E5%90%8D%E4%BD%9C%E4%B9%8B%E5%A3%81'
   },
   {
     icon: 'github',
     text: 'Github - UI',
     type: 'Link',
-    matchPath: 'https://github.com/mingzuozhibi/mzzb-ui'
+    path: 'https://github.com/mingzuozhibi/mzzb-ui'
   }, {
     icon: 'github',
     text: 'Github - Server',
     type: 'Link',
-    matchPath: 'https://github.com/mingzuozhibi/mzzb-server'
+    path: 'https://github.com/mingzuozhibi/mzzb-server'
   },
 ]
 
