@@ -1,6 +1,6 @@
 {
-  "short_name": "壁吧",
-  "name": "名作之壁吧",
+  "short_name": "React App",
+  "name": "Create React App Sample",
   "icons": [
     {
       "src": "favicon.ico",

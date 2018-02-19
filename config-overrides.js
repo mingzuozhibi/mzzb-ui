@@ -1,10 +1,24 @@
-// noinspection JSUnresolvedFunction
-const {injectBabelPlugin} = require('react-app-rewired')
+const tsImportPluginFactory = require('ts-import-plugin')
+const {getLoader} = require('react-app-rewired')
 
-// noinspection JSUnresolvedVariable
 module.exports = function override(config, env) {
-  const pluginName = ['import', {
-    libraryName: 'antd', libraryDirectory: 'es', style: 'css'
-  }]
-  return injectBabelPlugin(pluginName, config)
+  const tsLoader = getLoader(
+    config.module.rules,
+    rule =>
+      rule.loader &&
+      typeof rule.loader === 'string' &&
+      rule.loader.includes('ts-loader')
+  )
+
+  tsLoader.options = {
+    getCustomTransformers: () => ({
+      before: [tsImportPluginFactory({
+        libraryName: 'antd',
+        libraryDirectory: 'es',
+        style: 'css',
+      })]
+    })
+  }
+
+  return config
 }

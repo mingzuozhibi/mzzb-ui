@@ -1,0 +1,38 @@
+@import '../../global';
+
+.sakura-root {
+  table {
+    table-layout: fixed;
+    td, th {
+      &.rank {
+        width: 120px;
+        @media screen and (max-width: $mobile-max-width) {
+          width: 110px;
+        }
+      }
+      &.totalPt {
+        width: 75px;
+        @media screen and (max-width: $mobile-max-width) {
+          width: 65px;
+        }
+      }
+    }
+    td {
+      &.rank {
+        word-break: keep-all;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        text-align: center;
+      }
+      &.totalPt {
+        word-break: keep-all;
+        white-space: nowrap;
+        text-align: right;
+      }
+      &.title {
+        text-align: left;
+      }
+    }
+  }
+}

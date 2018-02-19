@@ -1,0 +1,18 @@
+@import "../../global";
+
+.table-root {
+  .table-title {
+    font-size: 24px;
+    padding: 12px;
+  }
+  @media screen and (max-width: $mobile-max-width) {
+    .table > thead > tr > th,
+    .table > tbody > tr > th,
+    .table > tfoot > tr > th,
+    .table > thead > tr > td,
+    .table > tbody > tr > td,
+    .table > tfoot > tr > td {
+      padding: 5px;
+    }
+  }
+}
