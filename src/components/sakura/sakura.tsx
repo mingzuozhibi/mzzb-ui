@@ -2,9 +2,8 @@ import * as React from 'react'
 import { Column, Table } from '../../lib/table'
 import './sakura.css'
 
-import { BasicSakuraModel } from '../basic-sakura/basic-sakura'
 import { Manager, Model } from '../../utils/manager'
-import { AppState, default as App } from '../../App'
+import { AppContext, AppState, default as App } from '../../App'
 import format from '../../utils/format'
 import produce from 'immer'
 
@@ -15,20 +14,26 @@ interface DiscModel extends Model {
   title: string
 }
 
-interface SakuraModel extends BasicSakuraModel {
+interface SakuraModel extends Model {
+  key: string
+  title: string
+  enabled: boolean
+  sakuraUpdateDate: number
   discs: DiscModel[]
 }
 
-interface SakuraState {
+interface State {
   sakuras?: SakuraModel[]
   message?: string
 }
 
-export class Sakura extends React.Component<{}, SakuraState> {
+export class Sakura extends React.Component {
 
   static contextTypes = App.childContextTypes
 
-  state: SakuraState = {}
+  context: AppContext
+
+  state: State = {}
 
   manager = new Manager<SakuraModel>('/api/sakuras')
 
@@ -72,7 +77,7 @@ export class Sakura extends React.Component<{}, SakuraState> {
     })
   }
 
-  update = (reducer: (draft: SakuraState) => void) => {
+  update = (reducer: (draft: State) => void) => {
     this.setState((prevState => produce(prevState, reducer)))
   }
 
