@@ -86,11 +86,12 @@ class App extends React.Component<{}, AppState> {
       }
     })
 
-    window.onresize = debounce(() => {
+    const handleResize = () => {
       this.update(draft => {
         draft.bodyWidth = window.innerWidth
       })
-    })
+    }
+    window.onresize = debounce(handleResize, 200)
   }
 
   render() {
