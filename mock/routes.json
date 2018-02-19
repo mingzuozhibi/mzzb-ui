@@ -1,0 +1,5 @@
+{
+  "/api/basic/*": "/basic-$1",
+  "/api/admin/*": "/admin-$1",
+  "/api/*": "/$1"
+}

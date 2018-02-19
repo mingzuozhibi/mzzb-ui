@@ -4,7 +4,7 @@ import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
 import './index.css'
 
 import App from './App'
-import Loading from './lib/loading'
+import { Load } from './lib/load'
 import NotFound from './components/not-found'
 import * as Loadable from 'react-loadable'
 import routes, { RouteInfo } from './common/routes'
@@ -13,7 +13,7 @@ import registerServiceWorker from './registerServiceWorker'
 export const async = (loader: () => any) => {
   return Loadable({
     loader: loader,
-    loading: Loading,
+    loading: Load,
     delay: 300,
     timeout: 5000,
   })
@@ -25,7 +25,7 @@ const renderRoute = (route: RouteInfo, key: number): React.ReactNode => {
       return route.routes.map(renderRoute)
     case 'Route':
       return (
-        <Route key={key} path={route.matchPath} component={async(route.component)}/>
+        <Route key={key} path={route.path} component={async(route.component)}/>
       )
     default:
       return null

@@ -28,6 +28,11 @@ export interface AppState {
   reload?: Reload
 }
 
+export interface AppContext {
+  state: AppState
+  update: (reducer: (draft: AppState) => void) => void
+}
+
 const async = (loader: () => any) => {
   return Loadable({
     loader: loader,
@@ -48,24 +53,16 @@ class App extends React.Component<{}, AppState> {
     update: PropTypes.func.isRequired,
   }
 
-  constructor(props: {}) {
-    super(props)
-
-    this.state = {
-      hideSider: false,
-      viewModal: false,
-      submiting: false,
-      bodyWidth: window.innerWidth,
-      session: {
-        userName: 'Guest',
-        isLogged: false,
-        userRoles: [],
-      },
-    }
-  }
-
-  update = (reducer: (draft: AppState) => void) => {
-    this.setState((prevState => produce(prevState, reducer)))
+  state: AppState = {
+    hideSider: false,
+    viewModal: false,
+    submiting: false,
+    bodyWidth: window.innerWidth,
+    session: {
+      userName: 'Guest',
+      isLogged: false,
+      userRoles: [],
+    },
   }
 
   getChildContext() {
@@ -75,15 +72,8 @@ class App extends React.Component<{}, AppState> {
     }
   }
 
-  throttle = (delay: number, action: (...props: any[]) => void) => {
-    let timestamp = 0
-    return (...props: any[]) => {
-      const current = new Date().getTime()
-      if (current - timestamp > delay) {
-        action.apply(this, props)
-        timestamp = current
-      }
-    }
+  update = (reducer: (draft: AppState) => void) => {
+    this.setState((prevState => produce(prevState, reducer)))
   }
 
   async componentDidMount() {
@@ -96,11 +86,12 @@ class App extends React.Component<{}, AppState> {
       }
     })
 
-    window.onresize = debounce(() => {
+    const handleResize = () => {
       this.update(draft => {
         draft.bodyWidth = window.innerWidth
       })
-    })
+    }
+    window.onresize = debounce(handleResize, 200)
   }
 
   render() {

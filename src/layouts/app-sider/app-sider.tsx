@@ -3,20 +3,16 @@ import { RouteComponentProps } from 'react-router-dom'
 import { Layout, Menu } from 'antd'
 import { CollapseType } from 'antd/lib/layout/Sider'
 import { ClickParam } from 'antd/lib/menu'
-import Icon from '../../lib/icon'
+import { Icon } from '../../lib/icon'
 
 import { AppState, default as App } from '../../App'
 import { default as routes, RouteInfo } from '../../common/routes'
 
-const renderTitle = (route: RouteInfo) => {
-  return (
-    <span><Icon className="sider-icon" type={route.icon}/>{route.text}</span>
-  )
-}
-
 export class AppSider extends React.Component<RouteComponentProps<{}>, {}> {
 
   static contextTypes = App.childContextTypes
+
+  userRoles: string[]
 
   onCollapse = (hideSider: boolean, type: CollapseType) => {
     if (type === 'responsive') {
@@ -40,36 +36,40 @@ export class AppSider extends React.Component<RouteComponentProps<{}>, {}> {
     }
   }
 
-  render() {
-    const userRoles: string[] = this.context.state.session.userRoles
+  renderTitle = (route: RouteInfo) => {
+    return (
+      <span><Icon className="sider-icon" type={route.icon}/>{route.text}</span>
+    )
+  }
 
-    let subMenuIndex = 0
-
-    const renderMenu = (route: RouteInfo): React.ReactNode => {
-      if (route.role && !userRoles.some(role => role === route.role)) {
-        return null
-      }
-      switch (route.type) {
-        case 'Routes':
-          return (
-            <Menu.SubMenu key={`sub${++subMenuIndex}`} title={renderTitle(route)}>
-              {route.routes.map(renderMenu)}
-            </Menu.SubMenu>
-          )
-        case 'Route':
-          return (
-            <Menu.Item key={route.matchPath}>
-              {renderTitle(route)}
-            </Menu.Item>
-          )
-        default:
-          return (
-            <Menu.Item key={route.matchPath}>
-              {renderTitle(route)}
-            </Menu.Item>
-          )
-      }
+  renderMenu = (route: RouteInfo): React.ReactNode => {
+    if (route.role && !this.userRoles.some(role => role === route.role)) {
+      return null
     }
+    switch (route.type) {
+      case 'Routes':
+        return (
+          <Menu.SubMenu key={route.path} title={this.renderTitle(route)}>
+            {route.routes.map(this.renderMenu)}
+          </Menu.SubMenu>
+        )
+      case 'Route':
+        return (
+          <Menu.Item key={route.path}>
+            {this.renderTitle(route)}
+          </Menu.Item>
+        )
+      default:
+        return (
+          <Menu.Item key={route.path}>
+            {this.renderTitle(route)}
+          </Menu.Item>
+        )
+    }
+  }
+
+  render() {
+    this.userRoles = this.context.state.session.userRoles
 
     return (
       <Layout.Sider
@@ -86,11 +86,10 @@ export class AppSider extends React.Component<RouteComponentProps<{}>, {}> {
         <Menu
           mode="inline"
           selectedKeys={[this.props.location.pathname]}
-          defaultOpenKeys={['sub1']}
           style={{height: '100%'}}
           onClick={this.onClickItem}
         >
-          {routes.map(renderMenu)}
+          {routes.map(this.renderMenu)}
 
         </Menu>
       </Layout.Sider>
