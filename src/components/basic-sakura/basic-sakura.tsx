@@ -4,8 +4,8 @@ import { Column, Table } from '../../lib/table'
 import { Icon } from '../../lib/icon'
 
 import { Manager, Model } from '../../utils/manager'
-import { AppContext, AppState, default as App } from '../../App'
-import produce from 'immer'
+import { AppState } from '../../App'
+import { BaseComponent } from '../BaseComponent'
 
 interface SakuraModel extends Model {
   key: string
@@ -20,11 +20,7 @@ interface State {
   formTitle?: string
 }
 
-export class BasicSakura extends React.Component {
-
-  static contextTypes = App.childContextTypes
-
-  context: AppContext
+export class BasicSakura extends BaseComponent<State> {
 
   state: State = {}
 
@@ -102,16 +98,8 @@ export class BasicSakura extends React.Component {
     this.formKey = exec ? value : undefined
   }
 
-  update = (reducer: (draft: State) => void) => {
-    this.setState((prevState => produce(prevState, reducer)))
-  }
-
-  async componentDidMount() {
-    this.context.update((draft: AppState) => {
-      draft.reload = {pending: true, handle: this.listSakura}
-    })
-
-    await this.listSakura()
+  componentWillMount() {
+    this.listModels = this.listSakura
   }
 
   render() {

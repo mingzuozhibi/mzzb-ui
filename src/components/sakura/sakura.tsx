@@ -1,11 +1,11 @@
 import * as React from 'react'
+import { BaseComponent } from '../BaseComponent'
 import { Column, Table } from '../../lib/table'
 import './sakura.css'
 
 import { Manager, Model } from '../../utils/manager'
-import { AppContext, AppState, default as App } from '../../App'
+import { AppState } from '../../App'
 import format from '../../utils/format'
-import produce from 'immer'
 
 interface DiscModel extends Model {
   thisRank: number
@@ -27,11 +27,7 @@ interface State {
   message?: string
 }
 
-export class Sakura extends React.Component {
-
-  static contextTypes = App.childContextTypes
-
-  context: AppContext
+export class Sakura extends BaseComponent<State> {
 
   state: State = {}
 
@@ -60,7 +56,7 @@ export class Sakura extends React.Component {
       draft.reload!.pending = true
     })
 
-    let query = 'discColumns=id,thisRank,prevRank,totalPt,title'
+    const query = 'discColumns=id,thisRank,prevRank,totalPt,title'
     const result = await this.manager.findAll(query)
 
     this.update(draft => {
@@ -77,16 +73,8 @@ export class Sakura extends React.Component {
     })
   }
 
-  update = (reducer: (draft: State) => void) => {
-    this.setState((prevState => produce(prevState, reducer)))
-  }
-
-  async componentDidMount() {
-    this.context.update((draft: AppState) => {
-      draft.reload = {pending: true, handle: this.listSakura}
-    })
-
-    await this.listSakura()
+  componentWillMount() {
+    this.listModels = this.listSakura
   }
 
   render() {

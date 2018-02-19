@@ -5,8 +5,8 @@ import { Link } from '../../lib/link'
 import { Icon } from '../../lib/icon'
 
 import { Manager, md5Password, Model } from '../../utils/manager'
-import { AppState, default as App } from '../../App'
-import produce from 'immer'
+import { AppState } from '../../App'
+import { BaseComponent } from '../BaseComponent'
 
 interface UserModel extends Model {
   username: string
@@ -20,9 +20,7 @@ interface State {
   message?: string
 }
 
-export class AdminUser extends React.Component<{}, State> {
-
-  static contextTypes = App.childContextTypes
+export class AdminUser extends BaseComponent<State> {
 
   state: State = {}
 
@@ -134,16 +132,8 @@ export class AdminUser extends React.Component<{}, State> {
     }
   }
 
-  update = (reducer: (draft: State) => void) => {
-    this.setState((prevState => produce(prevState, reducer)))
-  }
-
-  async componentDidMount() {
-    this.context.update((draft: AppState) => {
-      draft.reload = {pending: true, handle: this.listUser}
-    })
-
-    await this.listUser()
+  componentWillMount() {
+    this.listModels = this.listUser
   }
 
   render() {
