@@ -1,9 +1,8 @@
 import * as React from 'react'
 import { Alert, Button, Checkbox, Input, Modal, Tabs } from 'antd'
-import Table, { Column } from '../../lib/table'
-import Icon from '../../lib/icon'
-import Link from '../../lib/link'
-import './admin-user.css'
+import { Column, Table } from '../../lib/table'
+import { Link } from '../../lib/link'
+import { Icon } from '../../lib/icon'
 
 import { Manager, md5Password, Model, Result } from '../../utils/manager'
 import { AppState, default as App } from '../../App'

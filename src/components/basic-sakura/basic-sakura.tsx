@@ -1,8 +1,7 @@
 import * as React from 'react'
 import { Alert, Button, Input, Modal, Tabs } from 'antd'
-import Table, { Column } from '../../lib/table'
-import Icon from '../../lib/icon'
-import './basic-sakura.css'
+import { Column, Table } from '../../lib/table'
+import { Icon } from '../../lib/icon'
 
 import { Manager, Model, Result } from '../../utils/manager'
 import { AppState, default as App } from '../../App'

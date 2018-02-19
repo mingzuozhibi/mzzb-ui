@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Table, { Column } from '../../lib/table'
+import { Column, Table } from '../../lib/table'
 import './sakura.css'
 
 import { BasicSakuraModel } from '../basic-sakura/basic-sakura'

@@ -25,4 +25,4 @@ const Icon = ({type, className, ...props}: IconProps) => {
   }
 }
 
-export default Icon
+export { Icon }

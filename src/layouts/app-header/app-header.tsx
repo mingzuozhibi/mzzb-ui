@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Layout, Modal, Popconfirm } from 'antd'
-import Icon from '../../lib/icon'
+import { Icon } from '../../lib/icon'
 
 import { AppState, default as App } from '../../App'
 import { loginManager } from '../../utils/manager'
