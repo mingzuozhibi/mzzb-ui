@@ -4,8 +4,7 @@ import { Column, Table } from '../../lib/table'
 import { Icon } from '../../lib/icon'
 
 import { Manager, Model } from '../../utils/manager'
-import { AppState } from '../../App'
-import { BaseComponent } from '../BaseComponent'
+import { BaseComponent, State } from '../BaseComponent'
 
 interface SakuraModel extends Model {
   key: string
@@ -14,19 +13,52 @@ interface SakuraModel extends Model {
   sakuraUpdateDate: number
 }
 
-interface State {
-  sakuras?: SakuraModel[]
-  message?: string
+interface SakuraState extends State<SakuraModel> {
   formTitle?: string
 }
 
-export class BasicSakura extends BaseComponent<State> {
+export class BasicSakura extends BaseComponent<SakuraModel, SakuraState> {
 
-  state: State = {}
+  state: SakuraState = {}
 
   manager: Manager<SakuraModel> = new Manager('/api/basic/sakuras')
 
   formKey?: string
+
+  saveSakura = async () => {
+    if (!this.formKey) {
+      Modal.warning({title: '请检查输入项', content: 'Key的格式必须为(yyyy-mm)'})
+      return
+    }
+
+    const result = await this.manager.addOne({
+      key: this.formKey, title: this.state.formTitle
+    })
+
+    if (result.success) {
+      this.update(draft => draft.models!.push(result.data))
+    } else {
+      Modal.error({title: '添加Sakura错误', content: result.message})
+    }
+  }
+
+  checkKey = (value: string) => {
+    const exec = /^(\d{4})-(\d{2})$/.exec(value)
+    this.update(draft => {
+      if (exec) {
+        draft.formTitle = `${exec[1]}年${exec[2]}月新番`
+      } else {
+        draft.formTitle = `请在上方输入Key (类似: 2018-04)`
+      }
+    })
+    this.formKey = exec ? value : undefined
+  }
+
+  componentWillMount() {
+    this.listModelSupport(() => {
+      return this.manager.findAll()
+    })
+  }
 
   columns: Column<SakuraModel>[] = [
     {key: 'id', title: '#', format: (t) => t.id},
@@ -48,70 +80,16 @@ export class BasicSakura extends BaseComponent<State> {
     }
   }
 
-  listSakura = async () => {
-    this.context.update((draft: AppState) => {
-      draft.reload!.pending = true
-    })
-
-    const result = await this.manager.findAll()
-
-    this.update(draft => {
-      if (result.success) {
-        draft.sakuras = result.data
-        draft.message = undefined
-      } else {
-        draft.message = result.message
-      }
-    })
-
-    this.context.update((draft: AppState) => {
-      draft.reload!.pending = false
-    })
-  }
-
-  saveSakura = async () => {
-    if (!this.formKey) {
-      Modal.warning({title: '请检查输入项', content: 'Key的格式必须为(yyyy-mm)'})
-      return
-    }
-
-    const result = await this.manager.addOne({
-      key: this.formKey, title: this.state.formTitle
-    })
-
-    if (result.success) {
-      this.update(draft => draft.sakuras!.push(result.data))
-    } else {
-      Modal.error({title: '添加Sakura错误', content: result.message})
-    }
-  }
-
-  checkKey = (value: string) => {
-    const exec = /^(\d{4})-(\d{2})$/.exec(value)
-    this.update(draft => {
-      if (exec) {
-        draft.formTitle = `${exec[1]}年${exec[2]}月新番`
-      } else {
-        draft.formTitle = `请在上方输入Key (类似: 2018-04)`
-      }
-    })
-    this.formKey = exec ? value : undefined
-  }
-
-  componentWillMount() {
-    this.listModels = this.listSakura
-  }
-
   render() {
     return (
       <div className="basic-sakura">
         <Tabs>
           <Tabs.TabPane tab="Sakura列表" key="1">
-            {this.state.message && (
-              <Alert message={this.state.message} type="error"/>
+            {this.state.errors && (
+              <Alert message={this.state.errors} type="error"/>
             )}
-            {this.state.sakuras && (
-              <Table rows={this.state.sakuras} columns={this.columns}/>
+            {this.state.models && (
+              <Table rows={this.state.models} columns={this.columns}/>
             )}
           </Tabs.TabPane>
           <Tabs.TabPane tab="添加Sakura" key="2">

@@ -1,10 +1,10 @@
 import * as React from 'react'
-import { BaseComponent } from '../BaseComponent'
+import { Alert } from 'antd'
 import { Column, Table } from '../../lib/table'
 import './sakura.css'
 
 import { Manager, Model } from '../../utils/manager'
-import { AppState } from '../../App'
+import { BaseComponent, State } from '../BaseComponent'
 import format from '../../utils/format'
 
 interface DiscModel extends Model {
@@ -22,16 +22,20 @@ interface SakuraModel extends Model {
   discs: DiscModel[]
 }
 
-interface State {
-  sakuras?: SakuraModel[]
-  message?: string
+interface SakuraState extends State<SakuraModel> {
 }
 
-export class Sakura extends BaseComponent<State> {
+export class Sakura extends BaseComponent<SakuraModel, SakuraState> {
 
-  state: State = {}
+  state: SakuraState = {}
 
   manager = new Manager<SakuraModel>('/api/sakuras')
+
+  componentWillMount() {
+    this.listModelSupport(() => {
+      return this.manager.findAll('discColumns=id,thisRank,prevRank,totalPt,title')
+    })
+  }
 
   columns: Column<DiscModel>[] = [
     {
@@ -51,36 +55,13 @@ export class Sakura extends BaseComponent<State> {
     },
   ]
 
-  listSakura = async () => {
-    this.context.update((draft: AppState) => {
-      draft.reload!.pending = true
-    })
-
-    const query = 'discColumns=id,thisRank,prevRank,totalPt,title'
-    const result = await this.manager.findAll(query)
-
-    this.update(draft => {
-      if (result.success) {
-        draft.sakuras = result.data
-        draft.message = undefined
-      } else {
-        draft.message = result.message
-      }
-    })
-
-    this.context.update((draft: AppState) => {
-      draft.reload!.pending = false
-    })
-  }
-
-  componentWillMount() {
-    this.listModels = this.listSakura
-  }
-
   render() {
     return (
       <div className="sakura-root">
-        {this.state.sakuras && this.state.sakuras.map(sakura => (
+        {this.state.errors && (
+          <Alert message={this.state.errors} type="error"/>
+        )}
+        {this.state.models && this.state.models.map(sakura => (
           <div key={sakura.id}>
             <Table title={sakura.title} rows={sakura.discs} columns={this.columns}/>
           </div>
