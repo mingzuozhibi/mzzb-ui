@@ -58,7 +58,7 @@ const routes: RouteInfo[] = [
         path: '/basic/sakura',
         type: 'Route',
         role: 'ROLE_BASIC',
-        component: () => import('../components/basic-sakura')
+        component: () => import('../components/admin-sakura')
       },
     ]
   },

@@ -5,7 +5,6 @@ import './index.css'
 
 import App from './App'
 import { Load } from './lib/load'
-import NotFound from './components/not-found'
 import * as Loadable from 'react-loadable'
 import routes, { RouteInfo } from './common/routes'
 import registerServiceWorker from './registerServiceWorker'
@@ -38,8 +37,7 @@ ReactDOM.render(
       <Switch>
         <Redirect exact={true} path="/" to="/home"/>
         {routes.map(renderRoute)}
-        <Route path="/not-found" component={NotFound}/>
-        <Redirect exact={true} path="*" to="/not-found"/>
+        <Redirect exact={true} path="*" to="/home?not-found"/>
       </Switch>
     </App>
   </BrowserRouter>,

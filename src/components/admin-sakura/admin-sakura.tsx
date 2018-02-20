@@ -17,7 +17,7 @@ interface SakuraState extends State<SakuraModel> {
   formTitle?: string
 }
 
-export class BasicSakura extends BaseComponent<SakuraModel, SakuraState> {
+export class AdminSakura extends BaseComponent<SakuraModel, SakuraState> {
 
   state: SakuraState = {}
 
