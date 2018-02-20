@@ -5,8 +5,7 @@ import { Link } from '../../lib/link'
 import { Icon } from '../../lib/icon'
 
 import { Manager, md5Password, Model } from '../../utils/manager'
-import { AppState } from '../../App'
-import { BaseComponent } from '../BaseComponent'
+import { BaseComponent, State } from '../BaseComponent'
 
 interface UserModel extends Model {
   username: string
@@ -15,19 +14,56 @@ interface UserModel extends Model {
   lastLoggedIn: string
 }
 
-interface State {
-  users?: UserModel[]
-  message?: string
+interface UserState extends State<UserModel> {
 }
 
-export class AdminUser extends BaseComponent<State> {
+export class AdminUser extends BaseComponent<UserModel, UserState> {
 
-  state: State = {}
+  state: UserState = {}
 
   manager: Manager<UserModel> = new Manager('/api/admin/users')
 
   formSave: any = {}
   formEdit: any = {}
+
+  saveUser = async () => {
+    const username = this.formSave.username
+    const password = this.formSave.password
+
+    if (!username || !password) {
+      Modal.warning({title: '请检查输入项', content: '你必须输入用户名和密码'})
+      return
+    }
+
+    const encode = md5Password(username, password)
+    const result = await this.manager.addOne({username, password: encode})
+
+    this.saveModel('添加用户错误', result)
+  }
+
+  editUser = async (id: number) => {
+    const username = this.formEdit.username
+    const password = this.formEdit.password
+    const enabled = this.formEdit.enabled
+
+    if (!username) {
+      Modal.warning({title: '请检查输入项', content: '你必须输入用户名'})
+      return
+    }
+
+    const encode = password ? md5Password(username, password) : ''
+    const result = await this.manager.update({
+      id, username, password: encode, enabled
+    })
+
+    this.editModel('编辑用户错误', result)
+  }
+
+  componentWillMount() {
+    this.listModelSupport(() => {
+      return this.manager.findAll()
+    })
+  }
 
   columns: Column<UserModel>[] = [
     {
@@ -66,86 +102,16 @@ export class AdminUser extends BaseComponent<State> {
     return this.context.state.bodyWidth <= 600 ? text.substr(start, length) : text
   }
 
-  listUser = async () => {
-    this.context.update((draft: AppState) => {
-      draft.reload!.pending = true
-    })
-
-    const result = await this.manager.findAll()
-
-    this.update(draft => {
-      if (result.success) {
-        draft.users = result.data
-        draft.message = undefined
-      } else {
-        draft.message = result.message
-      }
-    })
-
-    this.context.update((draft: AppState) => {
-      draft.reload!.pending = false
-    })
-  }
-
-  saveUser = async () => {
-    const username = this.formSave.username
-    const password = this.formSave.password
-
-    if (!username || !password) {
-      Modal.warning({title: '请检查输入项', content: '你必须输入用户名和密码'})
-      return
-    }
-
-    const encode = md5Password(username, password)
-    const result = await this.manager.addOne({username, password: encode})
-
-    if (result.success) {
-      const user = result.data
-      this.update(draft => draft.users!.push(user))
-    } else {
-      Modal.error({title: '添加用户错误', content: result.message})
-    }
-  }
-
-  editUser = async (id: number) => {
-    const username = this.formEdit.username
-    const password = this.formEdit.password
-    const enabled = this.formEdit.enabled
-
-    if (!username) {
-      Modal.warning({title: '请检查输入项', content: '你必须输入用户名'})
-      return
-    }
-
-    const encode = password ? md5Password(username, password) : ''
-    const result = await this.manager.update({
-      id, username, password: encode, enabled
-    })
-
-    if (result.success) {
-      const user = result.data
-      this.update(draft => {
-        draft.users = draft.users!.map(u => u.id === user.id ? user : u)
-      })
-    } else {
-      Modal.error({title: '编辑用户错误', content: result.message})
-    }
-  }
-
-  componentWillMount() {
-    this.listModels = this.listUser
-  }
-
   render() {
     return (
       <div className="admin-users">
         <Tabs>
           <Tabs.TabPane tab="用户列表" key="1">
-            {this.state.message && (
-              <Alert message={this.state.message} type="error"/>
+            {this.state.errors && (
+              <Alert message={this.state.errors} type="error"/>
             )}
-            {this.state.users && (
-              <Table rows={this.state.users} columns={this.columns}/>
+            {this.state.models && (
+              <Table rows={this.state.models} columns={this.columns}/>
             )}
           </Tabs.TabPane>
           <Tabs.TabPane tab="添加用户" key="2">
