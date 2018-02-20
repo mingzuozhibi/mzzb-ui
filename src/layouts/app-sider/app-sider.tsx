@@ -69,14 +69,11 @@ export class AppSider extends React.Component {
   }
 
   render() {
-    const appState = this.context.state
-
-    this.userRoles = appState.session.userRoles
-
+    this.userRoles = this.context.state.session.userRoles
     return (
       <Layout.Sider
         className="app-sider"
-        collapsed={appState.hideSider}
+        collapsed={this.context.state.hideSider}
         onCollapse={this.onCollapse}
         collapsedWidth={0}
         breakpoint="md"

@@ -35,22 +35,21 @@ export class AppHeader extends React.Component<{}, {}> {
   }
 
   render() {
-    const appState = this.context.state
     return (
       <Layout.Header className="app-header">
         <Icon
           className="header-icon"
           onClick={this.toggleSider}
-          type={appState.hideSider ? 'menu-unfold' : 'menu-fold'}
+          type={this.context.state.hideSider ? 'menu-unfold' : 'menu-fold'}
         />
-        {appState.reload && (
+        {this.context.state.reload && (
           <Icon
             className="header-icon"
-            type={appState.reload.pending ? 'loading' : 'reload'}
-            onClick={appState.reload.handle}
+            type={this.context.state.reload.pending ? 'loading' : 'reload'}
+            onClick={this.context.state.reload.handle}
           />
         )}
-        {appState.session.isLogged ? (
+        {this.context.state.session.isLogged ? (
           <Popconfirm
             title="你确定要登出吗？"
             placement="bottomRight"

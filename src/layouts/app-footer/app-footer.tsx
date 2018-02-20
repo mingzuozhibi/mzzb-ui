@@ -40,9 +40,8 @@ export class AppFooter extends React.Component {
         draft.session = result.data
       })
 
-      const appState = this.context.state
-      if (appState.reload) {
-        setTimeout(appState.reload.handle)
+      if (this.context.state.reload) {
+        setTimeout(this.context.state.reload.handle)
       }
     } else {
       Modal.error({title: '登入异常', content: result.message})
@@ -60,15 +59,14 @@ export class AppFooter extends React.Component {
   }
 
   render() {
-    const appState = this.context.state
     return (
       <Layout.Footer className="app-footer">
-        {appState.viewModal && (
+        {this.context.state.viewModal && (
           <Modal
             title="用户登入"
             okText="登入"
             cancelText="取消"
-            visible={appState.viewModal}
+            visible={this.context.state.viewModal}
             confirmLoading={this.state.submiting}
             onOk={this.submitLogin}
             onCancel={this.hideLogin}

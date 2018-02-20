@@ -15,8 +15,6 @@ export class BaseComponent<M extends Model, S extends State<M>> extends React.Co
 
   context: AppContext
 
-  appState: AppState = this.context.state
-
   listModel: () => void
 
   listModelSupport = (fetch: () => Promise<Result<M[]>>) => {
@@ -71,10 +69,6 @@ export class BaseComponent<M extends Model, S extends State<M>> extends React.Co
     })
 
     this.listModel()
-  }
-
-  componentWillUpdate() {
-    this.appState = this.context.state
   }
 
 }
