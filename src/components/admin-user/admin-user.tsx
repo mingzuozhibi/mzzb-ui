@@ -56,14 +56,7 @@ export class AdminUser extends BaseComponent<UserModel, UserState> {
       id, username, password: encode, enabled
     })
 
-    if (result.success) {
-      const user = result.data
-      this.update(draft => {
-        draft.models = draft.models!.map(u => u.id === user.id ? user : u)
-      })
-    } else {
-      Modal.error({title: '编辑用户错误', content: result.message})
-    }
+    this.editModel('编辑用户错误', result)
   }
 
   componentWillMount() {

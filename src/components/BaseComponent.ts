@@ -50,6 +50,17 @@ export class BaseComponent<M extends Model, S extends State<M>> extends React.Co
     }
   }
 
+  editModel = (message: string, result: Result<M>) => {
+    if (result.success) {
+      const model = result.data
+      this.update(draft => {
+        draft.models = draft.models!.map(u => u.id === model.id ? model : u)
+      })
+    } else {
+      Modal.error({title: message, content: result.message})
+    }
+  }
+
   update = (reducer: (draft: S) => void) => {
     this.setState((prevState => produce(prevState, reducer)))
   }
