@@ -60,16 +60,6 @@ export class Sakura extends BaseComponent<SakuraModel, SakuraState> {
     return `${formatNumber(t.thisRank, '****')}位/${formatNumber(t.prevRank, '****')}位`
   }
 
-  timeout = (time: number) => {
-    return (
-      <Timer
-        time={time}
-        timeout={1000}
-        render={(state => `${state.hour}时${state.minute}分${state.second}秒前`)}
-      />
-    )
-  }
-
   render() {
     return (
       <div className="sakura-root">
@@ -87,6 +77,16 @@ export class Sakura extends BaseComponent<SakuraModel, SakuraState> {
           </div>
         ))}
       </div>
+    )
+  }
+
+  timeout = (time: number) => {
+    return (
+      <Timer
+        time={time}
+        timeout={1000}
+        render={(state => `${state.hour}时${state.minute}分${state.second}秒前`)}
+      />
     )
   }
 }
