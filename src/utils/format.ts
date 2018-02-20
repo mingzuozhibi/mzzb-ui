@@ -1,4 +1,4 @@
-export default (numbez: number, format: string) => {
+export const formatNumber = (numbez: number, format: string) => {
   const numstr = numbez.toString()
   let result = ''
   let indexFormat = format.length - 1
@@ -24,4 +24,16 @@ export default (numbez: number, format: string) => {
     indexFormat--
   }
   return /^,.*/.test(result) ? result.substr(1, result.length - 1) : result
+}
+
+export const formatTimeout = (timestamp: number, message?: string) => {
+  if (timestamp === 0) {
+    return message
+  } else {
+    const millis = new Date().getTime() - timestamp
+    const minutes = Math.floor(millis / 60000)
+    const hour = Math.floor(minutes / 60)
+    const minute = Math.floor(minutes % 60)
+    return `${hour}时${minute}分前`
+  }
 }

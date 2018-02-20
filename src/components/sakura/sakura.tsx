@@ -1,11 +1,12 @@
 import * as React from 'react'
 import { Alert } from 'antd'
 import { Column, Table } from '../../lib/table'
+import { Timer } from '../../lib/timer'
 import './sakura.css'
 
 import { Manager, Model } from '../../utils/manager'
 import { BaseComponent, State } from '../BaseComponent'
-import format from '../../utils/format'
+import { formatNumber } from '../../utils/format'
 
 interface DiscModel extends Model {
   thisRank: number
@@ -18,7 +19,7 @@ interface SakuraModel extends Model {
   key: string
   title: string
   enabled: boolean
-  sakuraUpdateDate: number
+  modifyTime: number
   discs: DiscModel[]
 }
 
@@ -40,20 +41,31 @@ export class Sakura extends BaseComponent<SakuraModel, SakuraState> {
   columns: Column<DiscModel>[] = [
     {
       key: 'rank',
-      title: 'Rank',
-      format: (t) => `${format(t.thisRank, '****')}位/${format(t.prevRank, '****')}位`
+      title: '日亚排名',
+      format: (t) => this.formatRank(t)
     },
     {
       key: 'totalPt',
-      title: 'TotalPt',
-      format: (t) => `${t.totalPt} pt`
+      title: '累积PT',
+      format: (t) => this.formatTotalPt(t)
     },
     {
       key: 'title',
-      title: 'Title',
+      title: '碟片标题',
       format: (t) => t.title
     },
   ]
+
+  formatRank = (t: DiscModel) => {
+    const thisRank = t.thisRank ? formatNumber(t.thisRank, '****') : '----'
+    const prevRank = t.prevRank ? formatNumber(t.prevRank, '****') : '----'
+    return `${thisRank}位/${prevRank}位`
+  }
+
+  formatTotalPt = (t: DiscModel) => {
+    const totalPt = t.totalPt || '----'
+    return `${totalPt} pt`
+  }
 
   render() {
     return (
@@ -63,10 +75,25 @@ export class Sakura extends BaseComponent<SakuraModel, SakuraState> {
         )}
         {this.state.models && this.state.models.map(sakura => (
           <div key={sakura.id}>
-            <Table title={sakura.title} rows={sakura.discs} columns={this.columns}/>
+            <Table
+              title={sakura.title}
+              subtitle={this.timeout(sakura.modifyTime)}
+              rows={sakura.discs}
+              columns={this.columns}
+            />
           </div>
         ))}
       </div>
+    )
+  }
+
+  timeout = (time: number) => {
+    return (
+      <Timer
+        time={time}
+        timeout={1000}
+        render={(state => `${state.hour}时${state.minute}分${state.second}秒前`)}
+      />
     )
   }
 }

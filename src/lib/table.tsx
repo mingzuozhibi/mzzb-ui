@@ -2,24 +2,25 @@ import * as React from 'react'
 import './table.css'
 import { Model } from '../utils/manager'
 
-interface Column<T> {
+interface Column<M> {
   key: string
   title: string
-  format: (t: T) => React.ReactNode
+  format: (m: M) => React.ReactNode
 }
 
-interface TableProps<T> {
+interface TableProps<M> {
   title?: string
-  rows: T[]
-  columns: Column<T>[]
+  subtitle?: React.ReactNode
+  rows: M[]
+  columns: Column<M>[]
 }
 
-const Table = <T extends Model>({title, rows, columns}: TableProps<T>) => {
+const Table = <M extends Model>({title, subtitle, rows, columns}: TableProps<M>) => {
   return (
     <div className="table-root">
       {title && (
         <div className="table-title">
-          {title}
+          {title} {subtitle && <span>{subtitle}</span>}
         </div>
       )}
       <table className="table table-striped table-bordered table-hover">
@@ -31,10 +32,10 @@ const Table = <T extends Model>({title, rows, columns}: TableProps<T>) => {
         </tr>
         </thead>
         <tbody>
-        {rows.map(t => (
-          <tr key={t.id}>
+        {rows.map(m => (
+          <tr key={m.id}>
             {columns.map(c => (
-              <td key={c.key} className={c.key}>{c.format(t)}</td>
+              <td key={c.key} className={c.key}>{c.format(m)}</td>
             ))}
           </tr>
         ))}
