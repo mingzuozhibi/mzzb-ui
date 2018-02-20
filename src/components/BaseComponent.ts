@@ -2,6 +2,7 @@ import * as React from 'react'
 import { AppContext, AppState, default as App } from '../App'
 import produce from 'immer'
 import { Model, Result } from '../utils/manager'
+import { Modal } from 'antd'
 
 export interface State<M extends Model> {
   models?: M[]
@@ -38,6 +39,14 @@ export class BaseComponent<M extends Model, S extends State<M>> extends React.Co
       this.context.update((draft: AppState) => {
         draft.reload!.pending = false
       })
+    }
+  }
+
+  saveModel = (message: string, result: Result<M>) => {
+    if (result.success) {
+      this.update(draft => draft.models!.push(result.data))
+    } else {
+      Modal.error({title: message, content: result.message})
     }
   }
 

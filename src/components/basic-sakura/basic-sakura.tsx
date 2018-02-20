@@ -35,11 +35,7 @@ export class BasicSakura extends BaseComponent<SakuraModel, SakuraState> {
       key: this.formKey, title: this.state.formTitle
     })
 
-    if (result.success) {
-      this.update(draft => draft.models!.push(result.data))
-    } else {
-      Modal.error({title: '添加Sakura错误', content: result.message})
-    }
+    this.saveModel('添加Sakura错误', result)
   }
 
   checkKey = (value: string) => {

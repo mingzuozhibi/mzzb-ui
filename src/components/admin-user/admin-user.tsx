@@ -38,12 +38,7 @@ export class AdminUser extends BaseComponent<UserModel, UserState> {
     const encode = md5Password(username, password)
     const result = await this.manager.addOne({username, password: encode})
 
-    if (result.success) {
-      const user = result.data
-      this.update(draft => draft.models!.push(user))
-    } else {
-      Modal.error({title: '添加用户错误', content: result.message})
-    }
+    this.saveModel('添加用户错误', result)
   }
 
   editUser = async (id: number) => {
