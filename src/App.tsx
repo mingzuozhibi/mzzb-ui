@@ -22,7 +22,6 @@ export interface Reload {
 export interface AppState {
   hideSider: boolean
   viewModal: boolean
-  submiting: boolean
   bodyWidth: number
   session: Session
   reload?: Reload
@@ -56,7 +55,6 @@ class App extends React.Component<{}, AppState> {
   state: AppState = {
     hideSider: false,
     viewModal: false,
-    submiting: false,
     bodyWidth: window.innerWidth,
     session: {
       userName: 'Guest',

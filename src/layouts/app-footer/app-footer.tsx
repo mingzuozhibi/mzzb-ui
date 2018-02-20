@@ -2,12 +2,21 @@ import * as React from 'react'
 import { Input, Layout, message, Modal } from 'antd'
 import { Icon } from '../../lib/icon'
 
-import { AppState, default as App } from '../../App'
+import { AppContext, AppState, default as App } from '../../App'
 import { loginManager } from '../../utils/manager'
+import produce from 'immer'
 
-export class AppFooter extends React.Component<{}, {}> {
+interface FooterState {
+  submiting: boolean
+}
+
+export class AppFooter extends React.Component {
 
   static contextTypes = App.childContextTypes
+
+  context: AppContext
+
+  state: FooterState = {submiting: false}
 
   submitLogin = async () => {
     const username = (document.querySelector('#login-username') as HTMLInputElement).value
@@ -18,28 +27,26 @@ export class AppFooter extends React.Component<{}, {}> {
       return
     }
 
-    this.context.update((draft: AppState) => {
-      draft.submiting = true
-    })
+    this.update(draft => draft.submiting = true)
 
     const result = await loginManager.login(username, password)
 
-    this.context.update((draft: AppState) => {
-      if (result.success) {
-        draft.session = result.data
-        draft.submiting = false
+    this.update(draft => draft.submiting = false)
+
+    if (result.success) {
+      message.success(`您已成功登入`)
+      this.context.update((draft: AppState) => {
         draft.viewModal = false
-        if (draft.session.isLogged) {
-          message.success(`您已成功登入`)
-        }
-        if (draft.reload) {
-          setTimeout(this.context.state.reload.handle)
-        }
-      } else {
-        draft.submiting = false
-        Modal.error({title: '登入异常', content: result.message})
+        draft.session = result.data
+      })
+
+      const appState = this.context.state
+      if (appState.reload) {
+        setTimeout(appState.reload.handle)
       }
-    })
+    } else {
+      Modal.error({title: '登入异常', content: result.message})
+    }
   }
 
   hideLogin = () => {
@@ -48,16 +55,21 @@ export class AppFooter extends React.Component<{}, {}> {
     })
   }
 
+  update = (reducer: (draft: FooterState) => void) => {
+    this.setState((prevState => produce(prevState, reducer)))
+  }
+
   render() {
+    const appState = this.context.state
     return (
       <Layout.Footer className="app-footer">
-        {this.context.state.viewModal && (
+        {appState.viewModal && (
           <Modal
             title="用户登入"
             okText="登入"
             cancelText="取消"
-            visible={this.context.state.viewModal}
-            confirmLoading={this.context.state.submiting}
+            visible={appState.viewModal}
+            confirmLoading={this.state.submiting}
             onOk={this.submitLogin}
             onCancel={this.hideLogin}
           >

@@ -2,12 +2,14 @@ import * as React from 'react'
 import { Layout, Modal, Popconfirm } from 'antd'
 import { Icon } from '../../lib/icon'
 
-import { AppState, default as App } from '../../App'
+import { AppContext, AppState, default as App } from '../../App'
 import { loginManager } from '../../utils/manager'
 
 export class AppHeader extends React.Component<{}, {}> {
 
   static contextTypes = App.childContextTypes
+
+  context: AppContext
 
   toggleSider = () => {
     this.context.update((draft: AppState) => {
@@ -33,21 +35,22 @@ export class AppHeader extends React.Component<{}, {}> {
   }
 
   render() {
+    const appState = this.context.state
     return (
       <Layout.Header className="app-header">
         <Icon
           className="header-icon"
           onClick={this.toggleSider}
-          type={this.context.state.hideSider ? 'menu-unfold' : 'menu-fold'}
+          type={appState.hideSider ? 'menu-unfold' : 'menu-fold'}
         />
-        {this.context.state.reload && (
+        {appState.reload && (
           <Icon
             className="header-icon"
-            type={this.context.state.reload.pending ? 'loading' : 'reload'}
-            onClick={this.context.state.reload.handle}
+            type={appState.reload.pending ? 'loading' : 'reload'}
+            onClick={appState.reload.handle}
           />
         )}
-        {this.context.state.session.isLogged ? (
+        {appState.session.isLogged ? (
           <Popconfirm
             title="你确定要登出吗？"
             placement="bottomRight"
