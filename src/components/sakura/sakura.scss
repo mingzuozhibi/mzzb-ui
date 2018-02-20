@@ -5,15 +5,18 @@
     table-layout: fixed;
     td, th {
       &.rank {
-        width: 120px;
+        width: 130px;
         @media screen and (max-width: $mobile-max-width) {
-          width: 110px;
+          width: 115px;
         }
       }
       &.totalPt {
         width: 75px;
         @media screen and (max-width: $mobile-max-width) {
-          width: 65px;
+          width: 68px;
+        }
+        @media screen and (max-width: 400px) {
+          display: none;
         }
       }
     }

@@ -41,23 +41,30 @@ export class Sakura extends BaseComponent<SakuraModel, SakuraState> {
   columns: Column<DiscModel>[] = [
     {
       key: 'rank',
-      title: 'Rank',
+      title: '日亚排名',
       format: (t) => this.formatRank(t)
     },
     {
       key: 'totalPt',
-      title: 'TotalPt',
-      format: (t) => `${t.totalPt} pt`
+      title: '累积PT',
+      format: (t) => this.formatTotalPt(t)
     },
     {
       key: 'title',
-      title: 'Title',
+      title: '碟片标题',
       format: (t) => t.title
     },
   ]
 
   formatRank = (t: DiscModel) => {
-    return `${formatNumber(t.thisRank, '****')}位/${formatNumber(t.prevRank, '****')}位`
+    const thisRank = t.thisRank ? formatNumber(t.thisRank, '****') : '----'
+    const prevRank = t.prevRank ? formatNumber(t.prevRank, '****') : '----'
+    return `${thisRank}位/${prevRank}位`
+  }
+
+  formatTotalPt = (t: DiscModel) => {
+    const totalPt = t.totalPt || '----'
+    return `${totalPt} pt`
   }
 
   render() {
