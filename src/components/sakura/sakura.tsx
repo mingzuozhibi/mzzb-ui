@@ -1,11 +1,12 @@
 import * as React from 'react'
 import { Alert } from 'antd'
 import { Column, Table } from '../../lib/table'
+import { Timer } from '../../lib/timer'
 import './sakura.css'
 
 import { Manager, Model } from '../../utils/manager'
 import { BaseComponent, State } from '../BaseComponent'
-import format from '../../utils/format'
+import { formatNumber } from '../../utils/format'
 
 interface DiscModel extends Model {
   thisRank: number
@@ -18,7 +19,7 @@ interface SakuraModel extends Model {
   key: string
   title: string
   enabled: boolean
-  sakuraUpdateDate: number
+  modifyTime: number
   discs: DiscModel[]
 }
 
@@ -41,7 +42,7 @@ export class Sakura extends BaseComponent<SakuraModel, SakuraState> {
     {
       key: 'rank',
       title: 'Rank',
-      format: (t) => `${format(t.thisRank, '****')}位/${format(t.prevRank, '****')}位`
+      format: (t) => this.formatRank(t)
     },
     {
       key: 'totalPt',
@@ -55,6 +56,20 @@ export class Sakura extends BaseComponent<SakuraModel, SakuraState> {
     },
   ]
 
+  formatRank = (t: DiscModel) => {
+    return `${formatNumber(t.thisRank, '****')}位/${formatNumber(t.prevRank, '****')}位`
+  }
+
+  timeout = (time: number) => {
+    return (
+      <Timer
+        time={time}
+        timeout={1000}
+        render={(state => `${state.hour}时${state.minute}分${state.second}秒前`)}
+      />
+    )
+  }
+
   render() {
     return (
       <div className="sakura-root">
@@ -63,7 +78,12 @@ export class Sakura extends BaseComponent<SakuraModel, SakuraState> {
         )}
         {this.state.models && this.state.models.map(sakura => (
           <div key={sakura.id}>
-            <Table title={sakura.title} rows={sakura.discs} columns={this.columns}/>
+            <Table
+              title={sakura.title}
+              subtitle={this.timeout(sakura.modifyTime)}
+              rows={sakura.discs}
+              columns={this.columns}
+            />
           </div>
         ))}
       </div>

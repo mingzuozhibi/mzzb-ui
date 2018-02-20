@@ -4,6 +4,10 @@
   .table-title {
     font-size: 24px;
     padding: 12px;
+    span {
+      font-size: 18px;
+      padding-left: 12px;
+    }
   }
   @media screen and (max-width: $mobile-max-width) {
     .table > thead > tr > th,

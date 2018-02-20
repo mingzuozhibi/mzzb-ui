@@ -5,12 +5,13 @@ import { Icon } from '../../lib/icon'
 
 import { Manager, Model } from '../../utils/manager'
 import { BaseComponent, State } from '../BaseComponent'
+import { formatTimeout } from '../../utils/format'
 
 interface SakuraModel extends Model {
   key: string
   title: string
   enabled: boolean
-  sakuraUpdateDate: number
+  modifyTime: number
 }
 
 interface SakuraState extends State<SakuraModel> {
@@ -61,20 +62,8 @@ export class AdminSakura extends BaseComponent<SakuraModel, SakuraState> {
     {key: 'key', title: 'Key', format: (t) => t.key},
     {key: 'title', title: '标题', format: (t) => t.title},
     {key: 'enabled', title: '启用', format: (t) => t.enabled ? '是' : '否'},
-    {key: 'sakuraUpdateDate', title: '上次更新', format: (t) => this.formatTime(t)},
+    {key: 'modifyTime', title: '上次更新', format: (t) => formatTimeout(t.modifyTime)},
   ]
-
-  formatTime = (sakura: SakuraModel) => {
-    if (sakura.sakuraUpdateDate === 0) {
-      return '从未更新'
-    } else {
-      const millis = new Date().getTime() - sakura.sakuraUpdateDate
-      const minutes = Math.floor(millis / 60000)
-      const hour = Math.floor(minutes / 60)
-      const minute = Math.floor(minutes % 60)
-      return `${hour}时${minute}分前`
-    }
-  }
 
   render() {
     return (

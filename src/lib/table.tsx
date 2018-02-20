@@ -10,16 +10,17 @@ interface Column<T> {
 
 interface TableProps<T> {
   title?: string
+  subtitle?: React.ReactNode
   rows: T[]
   columns: Column<T>[]
 }
 
-const Table = <T extends Model>({title, rows, columns}: TableProps<T>) => {
+const Table = <T extends Model>({title, subtitle, rows, columns}: TableProps<T>) => {
   return (
     <div className="table-root">
       {title && (
         <div className="table-title">
-          {title}
+          {title} {subtitle && <span>{subtitle}</span>}
         </div>
       )}
       <table className="table table-striped table-bordered table-hover">
