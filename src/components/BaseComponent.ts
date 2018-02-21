@@ -1,15 +1,15 @@
 import * as React from 'react'
 import { AppContext, AppState, default as App } from '../App'
 import produce from 'immer'
-import { Model, Result } from '../utils/manager'
+import { BaseModel, Result } from '../utils/manager'
 import { Modal } from 'antd'
 
-export interface State<M extends Model> {
+export interface State<M extends BaseModel> {
   models?: M[]
   errors?: string
 }
 
-export class BaseComponent<M extends Model, S extends State<M>> extends React.Component {
+export class BaseComponent<M extends BaseModel, S extends State<M>> extends React.Component {
 
   static contextTypes = App.childContextTypes
 

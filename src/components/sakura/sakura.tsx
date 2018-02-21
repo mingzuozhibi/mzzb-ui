@@ -4,108 +4,82 @@ import { Column, Table } from '../../lib/table'
 import { Timer } from '../../lib/timer'
 import './sakura.css'
 
-import { Manager, Model } from '../../utils/manager'
-import { BaseComponent, State } from '../BaseComponent'
 import { formatNumber } from '../../utils/format'
 import { compareFactory } from '../../utils/compare'
+import { DiscModel, SakuraModel, SakuraState } from './reducer'
 
-interface DiscModel extends Model {
-  thisRank: number
-  prevRank: number
-  totalPt: number
-  title: string
+const compareRank = compareFactory({
+  apply: (disc: DiscModel) => disc.thisRank,
+  check: (rank: number) => rank === undefined,
+  compare: (rankA: number, rankB: number) => rankA - rankB
+})
+
+export interface SakuraProps extends SakuraState {
+
 }
 
-interface SakuraModel extends Model {
-  key: string
-  title: string
-  enabled: boolean
-  modifyTime: number
-  discs: DiscModel[]
-}
+export function Sakura(props: SakuraProps) {
 
-interface SakuraState extends State<SakuraModel> {
-}
-
-export class Sakura extends BaseComponent<SakuraModel, SakuraState> {
-
-  state: SakuraState = {}
-
-  manager = new Manager<SakuraModel>('/api/sakuras')
-
-  componentWillMount() {
-    this.listModelSupport(() => {
-      return this.manager.findAll('discColumns=id,thisRank,prevRank,totalPt,title')
-    })
+  function getColumns(): Column<DiscModel>[] {
+    return [
+      {
+        key: 'rank',
+        title: '日亚排名',
+        format: (t) => formatRank(t)
+      },
+      {
+        key: 'totalPt',
+        title: '累积PT',
+        format: (t) => formatTotalPt(t)
+      },
+      {
+        key: 'title',
+        title: '碟片标题',
+        format: (t) => t.title
+      },
+    ]
   }
 
-  columns: Column<DiscModel>[] = [
-    {
-      key: 'rank',
-      title: '日亚排名',
-      format: (t) => this.formatRank(t)
-    },
-    {
-      key: 'totalPt',
-      title: '累积PT',
-      format: (t) => this.formatTotalPt(t)
-    },
-    {
-      key: 'title',
-      title: '碟片标题',
-      format: (t) => t.title
-    },
-  ]
-
-  formatRank = (t: DiscModel) => {
+  function formatRank(t: DiscModel) {
     const thisRank = t.thisRank ? formatNumber(t.thisRank, '****') : '----'
     const prevRank = t.prevRank ? formatNumber(t.prevRank, '****') : '----'
     return `${thisRank}位/${prevRank}位`
   }
 
-  formatTotalPt = (t: DiscModel) => {
+  function formatTotalPt(t: DiscModel) {
     const totalPt = t.totalPt || '----'
     return `${totalPt} pt`
   }
 
-  compareRank = compareFactory({
-    apply: (disc: DiscModel) => disc.thisRank,
-    check: (rank: number) => rank === undefined,
-    compare: (rankA: number, rankB: number) => rankA - rankB
-  })
-
-  render() {
-    if (this.state.models) {
-      this.state.models.forEach(sakura => {
-        sakura.discs.sort(this.compareRank)
+  function withModels(render: (models: SakuraModel[]) => React.ReactNode) {
+    if (props.models) {
+      props.models.forEach(sakura => {
+        sakura.discs.sort(compareRank)
       })
+      return render(props.models)
     }
-    return (
-      <div className="sakura-root">
-        {this.state.errors && (
-          <Alert message={this.state.errors} type="error"/>
-        )}
-        {this.state.models && this.state.models.map(sakura => (
-          <div key={sakura.id}>
-            <Table
-              title={sakura.title}
-              subtitle={this.timeout(sakura.modifyTime)}
-              rows={sakura.discs}
-              columns={this.columns}
-            />
-          </div>
-        ))}
-      </div>
-    )
+    return undefined
   }
 
-  timeout = (time: number) => {
-    return (
-      <Timer
-        time={time}
-        timeout={1000}
-        render={(state => `${state.hour}时${state.minute}分${state.second}秒前`)}
-      />
-    )
-  }
+  return (
+    <div className="sakura-root">
+      {props.errors && <Alert message={props.errors} type="error"/>}
+      {withModels(models => models.map(sakura => (
+        <div key={sakura.id}>
+          <Table
+            title={sakura.title}
+            subtitle={
+              <Timer
+                time={sakura.modifyTime}
+                timeout={20000}
+                render={(state => `${state.hour}时${state.minute}分前`)}
+              />
+            }
+            rows={sakura.discs}
+            columns={getColumns()}
+          />
+        </div>
+      )))}
+    </div>
+  )
 }

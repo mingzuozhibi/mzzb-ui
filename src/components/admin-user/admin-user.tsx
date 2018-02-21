@@ -4,10 +4,10 @@ import { Column, Table } from '../../lib/table'
 import { Link } from '../../lib/link'
 import { Icon } from '../../lib/icon'
 
-import { Manager, md5Password, Model } from '../../utils/manager'
+import { Manager, md5Password, BaseModel } from '../../utils/manager'
 import { BaseComponent, State } from '../BaseComponent'
 
-interface UserModel extends Model {
+interface UserModel extends BaseModel {
   username: string
   enabled: boolean
   registerDate: string

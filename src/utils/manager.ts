@@ -1,23 +1,23 @@
 import request from './request'
 import * as md5 from 'md5'
 
-export interface Model {
+export interface BaseModel {
   id: number
 }
 
-type Success<T> = {
+type Result1<T> = {
   success: true
   data: T
 }
 
-type Error = {
+type Result2 = {
   success: false
   message: string
 }
 
-export type Result<T> = Success<T> | Error
+export type Result<T> = Result1<T> | Result2
 
-export class Manager<T extends Model> {
+export class Manager<T extends BaseModel> {
 
   private path: string
 
@@ -25,7 +25,7 @@ export class Manager<T extends Model> {
     this.path = path
   }
 
-  findAll(query?: string): Promise<Result<T[]>> {
+  findAll = (query?: string): Promise<Result<T[]>> => {
     if (query) {
       return request(`${this.path}?${query}`)
     } else {
@@ -33,19 +33,19 @@ export class Manager<T extends Model> {
     }
   }
 
-  getOne(id: number): Promise<Result<T>> {
+  getOne = (id: number): Promise<Result<T>> => {
     return request(`${this.path}/${id}`)
   }
 
-  addOne(t: any): Promise<Result<T>> {
+  addOne = (t: any): Promise<Result<T>> => {
     return request(this.path, {method: 'post', body: JSON.stringify(t)})
   }
 
-  delOne(id: number): Promise<Result<T>> {
+  delOne = (id: number): Promise<Result<T>> => {
     return request(`${this.path}/${id}`, {method: 'delete'})
   }
 
-  update(t: any): Promise<Result<T>> {
+  update = (t: any): Promise<Result<T>> => {
     return request(`${this.path}/${t.id}`, {method: 'post', body: JSON.stringify(t)})
   }
 
@@ -56,17 +56,17 @@ export const md5Password = (username: string, password: string) => {
 }
 
 export const loginManager = {
-  current() {
+  current: () => {
     return request('/api/session')
   },
-  login(username: string, password: string) {
+  login: (username: string, password: string) => {
     password = md5Password(username, password)
     return request('/api/session/login', {
       method: 'post',
       body: JSON.stringify({username, password}),
     })
   },
-  logout() {
+  logout: () => {
     return request('/api/session/logout', {
       method: 'post',
     })

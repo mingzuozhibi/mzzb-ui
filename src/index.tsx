@@ -13,8 +13,9 @@ import createSagaMiddleware from 'redux-saga'
 import App from './App'
 import { Load } from './lib/load'
 import * as Loadable from 'react-loadable'
+import { rootSagas } from './common/root-sagas'
 import { rootReducer } from './common/root-reducer'
-import { RouteInfo, routeInfos } from './common/route-info'
+import { RouteInfo, routeInfos } from './common/route-infos'
 import registerServiceWorker from './registerServiceWorker'
 
 const history = createHistory()
@@ -46,6 +47,8 @@ const renderRoute = (route: RouteInfo, key: number): React.ReactNode => {
       return null
   }
 }
+
+sagaMid.run(rootSagas)
 
 ReactDOM.render(
   <Provider store={store}>

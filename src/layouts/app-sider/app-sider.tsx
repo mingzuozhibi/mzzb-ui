@@ -6,7 +6,7 @@ import { ClickParam } from 'antd/lib/menu'
 import { Icon } from '../../lib/icon'
 
 import { AppContext, AppState, default as App } from '../../App'
-import { RouteInfo, routeInfos } from '../../common/route-info'
+import { RouteInfo, routeInfos } from '../../common/route-infos'
 
 export class AppSider extends React.Component {
 

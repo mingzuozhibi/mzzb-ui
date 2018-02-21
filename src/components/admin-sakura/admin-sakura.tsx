@@ -3,11 +3,11 @@ import { Alert, Button, Input, Modal, Tabs } from 'antd'
 import { Column, Table } from '../../lib/table'
 import { Icon } from '../../lib/icon'
 
-import { Manager, Model } from '../../utils/manager'
+import { Manager, BaseModel } from '../../utils/manager'
 import { BaseComponent, State } from '../BaseComponent'
 import { formatTimeout } from '../../utils/format'
 
-interface SakuraModel extends Model {
+interface SakuraModel extends BaseModel {
   key: string
   title: string
   enabled: boolean
