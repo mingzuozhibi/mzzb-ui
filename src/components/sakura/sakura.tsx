@@ -7,6 +7,7 @@ import './sakura.css'
 import { Manager, Model } from '../../utils/manager'
 import { BaseComponent, State } from '../BaseComponent'
 import { formatNumber } from '../../utils/format'
+import { compareFactory } from '../../utils/compare'
 
 interface DiscModel extends Model {
   thisRank: number
@@ -67,7 +68,18 @@ export class Sakura extends BaseComponent<SakuraModel, SakuraState> {
     return `${totalPt} pt`
   }
 
+  compareRank = compareFactory({
+    apply: (disc: DiscModel) => disc.thisRank,
+    check: (rank: number) => rank === undefined,
+    compare: (rankA: number, rankB: number) => rankA - rankB
+  })
+
   render() {
+    if (this.state.models) {
+      this.state.models.forEach(sakura => {
+        sakura.discs.sort(this.compareRank)
+      })
+    }
     return (
       <div className="sakura-root">
         {this.state.errors && (
