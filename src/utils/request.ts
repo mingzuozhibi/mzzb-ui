@@ -20,7 +20,14 @@ function prepareHeaders({headers = {}, ...prors}: RequestInit) {
   return {headers, ...prors}
 }
 
-function saveCsrfToken(response: Response) {
+function checkStatus(response: Response) {
+  if (!response.ok) {
+    throw new Error(`服务器未正确响应: ${response.status}: ${response.statusText}`)
+  }
+  return response
+}
+
+function saveOfToken(response: Response) {
   const headers = response.headers
   sessionStorage[header] = headers.get(header)
   sessionStorage[token] = headers.get(token)
@@ -30,18 +37,21 @@ function saveCsrfToken(response: Response) {
 function parseToJSON(response: Response) {
   try {
     return response.json()
-  } catch (error) {
-    throw new Error(`服务器未正确响应: ${response.status}: ${response.statusText}`)
+  } catch (err) {
+    throw new Error(`错误的JSON格式, error=${err.message}, text=${response.text()}`)
   }
+}
+
+function handleError(error: Error) {
+  return {success: false, message: error.message}
 }
 
 export default function request(url: string, props: RequestInit = {}) {
   props = prepareCookies(props)
   props = prepareHeaders(props)
   return fetch(url, props)
-    .then(saveCsrfToken)
+    .then(checkStatus)
+    .then(saveOfToken)
     .then(parseToJSON)
-    .catch(err => {
-      return {success: false, message: err.message}
-    })
+    .catch(handleError)
 }
