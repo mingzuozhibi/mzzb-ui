@@ -1,15 +1,31 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
+import { Provider } from 'react-redux'
+import { Redirect, Route, Switch } from 'react-router'
+import { ConnectedRouter, routerMiddleware } from 'react-router-redux'
 import './index.css'
+
+import { applyMiddleware, createStore } from 'redux'
+import { composeWithDevTools } from 'redux-devtools-extension'
+import createHistory from 'history/createBrowserHistory'
+import createSagaMiddleware from 'redux-saga'
 
 import App from './App'
 import { Load } from './lib/load'
 import * as Loadable from 'react-loadable'
-import routes, { RouteInfo } from './common/routes'
+import { rootReducer } from './common/root-reducer'
+import { RouteInfo, routeInfos } from './common/route-info'
 import registerServiceWorker from './registerServiceWorker'
 
-export const async = (loader: () => any) => {
+const history = createHistory()
+const routerMid = routerMiddleware(history)
+const sagaMid = createSagaMiddleware()
+
+const store = createStore(
+  rootReducer, composeWithDevTools(applyMiddleware(routerMid, sagaMid))
+)
+
+const async = (loader: () => any) => {
   return Loadable({
     loader: loader,
     loading: Load,
@@ -32,15 +48,17 @@ const renderRoute = (route: RouteInfo, key: number): React.ReactNode => {
 }
 
 ReactDOM.render(
-  <BrowserRouter>
-    <App>
-      <Switch>
-        <Redirect exact={true} path="/" to="/home"/>
-        {routes.map(renderRoute)}
-        <Redirect exact={true} path="*" to="/home?not-found"/>
-      </Switch>
-    </App>
-  </BrowserRouter>,
+  <Provider store={store}>
+    <ConnectedRouter history={history}>
+      <App>
+        <Switch>
+          <Redirect exact={true} path="/" to="/home"/>
+          {routeInfos.map(renderRoute)}
+          <Redirect exact={true} path="*" to="/home?not-found"/>
+        </Switch>
+      </App>
+    </ConnectedRouter>
+  </Provider>,
   document.getElementById('root') as HTMLElement
 )
 

@@ -22,7 +22,7 @@ interface SiteLink extends RouteCommon {
   type: 'Link'
 }
 
-const routes: RouteInfo[] = [
+export const routeInfos: RouteInfo[] = [
   {
     icon: 'home',
     text: '首页',
@@ -80,5 +80,3 @@ const routes: RouteInfo[] = [
     path: 'https://github.com/mingzuozhibi/mzzb-server'
   },
 ]
-
-export default routes

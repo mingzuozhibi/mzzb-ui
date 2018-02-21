@@ -13,7 +13,12 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-loadable": "^5.3.1",
-    "react-router-dom": "^4.2.2"
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.2.2",
+    "react-router-redux": "^5.0.0-alpha.9",
+    "redux": "^3.7.2",
+    "redux-devtools-extension": "^2.13.2",
+    "redux-saga": "^0.16.0"
   },
   "scripts": {
     "build-css": "node-sass-chokidar src/ -o src/",
@@ -35,7 +40,11 @@
     "@types/react": "^16.0.36",
     "@types/react-dom": "^16.0.3",
     "@types/react-loadable": "^5.3.3",
+    "@types/react-redux": "^5.0.15",
     "@types/react-router-dom": "^4.2.4",
+    "@types/react-router-redux": "^5.0.12",
+    "@types/redux-devtools-extension": "^2.13.2",
+    "@types/redux-saga": "^0.10.5",
     "json-server": "^0.12.1",
     "node-sass-chokidar": "^0.0.3",
     "npm-run-all": "^4.1.2",
