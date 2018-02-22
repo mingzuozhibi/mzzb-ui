@@ -41,7 +41,7 @@ export const sakuraReducer = (state: SakuraState = initState, action: AnyAction)
 
 const manager = new Manager<SakuraModel>('/api/sakuras')
 
-export function* listSakura() {
+function* listModel() {
   const result = yield call(manager.findAll, 'discColumns=id,thisRank,prevRank,totalPt,title')
   if (result.success) {
     yield put({type: 'listSakuraSucceed', models: result.data})
@@ -49,3 +49,5 @@ export function* listSakura() {
     yield put({type: 'listSakuraFailed', errors: result.message})
   }
 }
+
+export const sakuraFetcher = {listModel}

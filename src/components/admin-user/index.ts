@@ -1,7 +1,6 @@
-import { AdminUser } from './admin-user'
-
 import { connect, Dispatch } from 'react-redux'
 import { RootState } from '../../common/root-reducer'
+import { AdminUser } from './admin-user'
 
 function mapStateToProps(state: RootState) {
   return {
@@ -14,11 +13,11 @@ function mapStateToProps(state: RootState) {
 function mapDispatchToProps(dispatch: Dispatch<any>) {
   dispatch({type: 'listAdminUserRequest'})
   return {
-    saveUser(user: {}) {
-      dispatch({type: 'saveAdminUserRequest', user})
+    saveModel(model: {}) {
+      dispatch({type: 'saveAdminUserRequest', model})
     },
-    editUser(user: {}) {
-      dispatch({type: 'editAdminUserRequest', user})
+    editModel(model: {}) {
+      dispatch({type: 'editAdminUserRequest', model})
     },
   }
 }

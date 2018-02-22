@@ -1,6 +1,6 @@
-import { Sakura } from './sakura'
 import { connect, Dispatch } from 'react-redux'
 import { RootState } from '../../common/root-reducer'
+import { Sakura } from './sakura'
 
 function mapStateToProps(state: RootState) {
   return {

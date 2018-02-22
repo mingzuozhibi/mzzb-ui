@@ -1,13 +1,11 @@
-import { AdminSakura } from './admin-sakura'
-
 import { connect, Dispatch } from 'react-redux'
 import { RootState } from '../../common/root-reducer'
+import { AdminSakura } from './admin-sakura'
 
 function mapStateToProps(state: RootState) {
   return {
     models: state.adminSakura.models,
     errors: state.adminSakura.errors,
-    bodyWidth: 600
   }
 }
 

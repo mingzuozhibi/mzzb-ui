@@ -52,7 +52,7 @@ export const adminUserReducer = (state: AdminUserState = initState, action: AnyA
 
 const manager = new Manager<AdminUserModel>('/api/admin/users')
 
-export function* listAdminUser() {
+function* listModel() {
   const result = yield call(manager.findAll)
   if (result.success) {
     yield put({type: 'listAdminUserSucceed', models: result.data})
@@ -61,8 +61,8 @@ export function* listAdminUser() {
   }
 }
 
-export function* saveAdminUser(action: AnyAction) {
-  const result = yield call(manager.addOne, action.user)
+function* saveModel(action: AnyAction) {
+  const result = yield call(manager.addOne, action.model)
   if (result.success) {
     yield put({type: 'saveAdminUserSucceed', model: result.data})
   } else {
@@ -70,11 +70,13 @@ export function* saveAdminUser(action: AnyAction) {
   }
 }
 
-export function* editAdminUser(action: AnyAction) {
-  const result = yield call(manager.update, action.user)
+function* editModel(action: AnyAction) {
+  const result = yield call(manager.update, action.model)
   if (result.success) {
     yield put({type: 'editAdminUserSucceed', model: result.data})
   } else {
     yield put({type: 'editAdminUserFailed', errors: result.message})
   }
 }
+
+export const adminUserFetcher = {listModel, saveModel, editModel}

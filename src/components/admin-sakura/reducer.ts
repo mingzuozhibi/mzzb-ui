@@ -53,7 +53,7 @@ export const adminSakuraReducer = (state: AdminSakuraState = initState, action: 
 
 const manager = new Manager<AdminSakuraModel>('/api/basic/sakuras')
 
-export function* listAdminSakura() {
+function* listModel() {
   const result = yield call(manager.findAll)
   if (result.success) {
     yield put({type: 'listAdminSakuraSucceed', models: result.data})
@@ -62,7 +62,7 @@ export function* listAdminSakura() {
   }
 }
 
-export function* saveAdminSakura(action: AnyAction) {
+function* saveModel(action: AnyAction) {
   const result = yield call(manager.addOne, action.model)
   if (result.success) {
     yield put({type: 'saveAdminSakuraSucceed', model: result.data})
@@ -71,7 +71,7 @@ export function* saveAdminSakura(action: AnyAction) {
   }
 }
 
-export function* editAdminSakura(action: AnyAction) {
+function* editModel(action: AnyAction) {
   const result = yield call(manager.update, action.model)
   if (result.success) {
     yield put({type: 'editAdminSakuraSucceed', model: result.data})
@@ -79,3 +79,5 @@ export function* editAdminSakura(action: AnyAction) {
     yield put({type: 'editAdminSakuraFailed', errors: result.message})
   }
 }
+
+export const adminSakuraFetcher = {listModel, saveModel, editModel}

@@ -23,8 +23,8 @@ const formEdit: FormEdit = {}
 
 interface AdminUserProps extends AdminUserState {
   bodyWidth: number
-  saveUser: (user: {}) => void
-  editUser: (user: {}) => void
+  saveModel: (model: {}) => void
+  editModel: (model: {}) => void
 }
 
 export function AdminUser(props: AdminUserProps) {
@@ -65,7 +65,7 @@ export function AdminUser(props: AdminUserProps) {
   }
 
   function formatRegisterDate(t: AdminUserModel) {
-    return formatLong(t.lastLoggedIn, 5, 11)
+    return formatLong(t.registerDate, 0, 10)
   }
 
   function formatLastLoggedIn(t: AdminUserModel) {
@@ -87,7 +87,7 @@ export function AdminUser(props: AdminUserProps) {
     }
 
     const encode = md5Password(username, password)
-    props.saveUser({username, password: encode})
+    props.saveModel({username, password: encode})
   }
 
   function editUser(id: number) {
@@ -101,7 +101,7 @@ export function AdminUser(props: AdminUserProps) {
     }
 
     const encode = password ? md5Password(username, password) : ''
-    props.editUser({id, username, password: encode, enabled})
+    props.editModel({id, username, password: encode, enabled})
   }
 
   return (
