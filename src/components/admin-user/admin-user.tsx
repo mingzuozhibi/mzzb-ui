@@ -81,8 +81,13 @@ export function AdminUser(props: AdminUserProps) {
     const username = formSave.username
     const password = formSave.password
 
-    if (!username || !password) {
-      Modal.warning({title: '请检查输入项', content: '你必须输入账户名称和密码'})
+    if (!username) {
+      Modal.warning({title: '请检查输入项', content: '你必须输入用户名称'})
+      return
+    }
+
+    if (!password) {
+      Modal.warning({title: '请检查输入项', content: '你必须输入用户密码'})
       return
     }
 
@@ -96,7 +101,7 @@ export function AdminUser(props: AdminUserProps) {
     const enabled = formEdit.enabled
 
     if (!username) {
-      Modal.warning({title: '请检查输入项', content: '你必须输入账户名称'})
+      Modal.warning({title: '请检查输入项', content: '你必须输入用户名称'})
       return
     }
 
@@ -121,7 +126,7 @@ export function AdminUser(props: AdminUserProps) {
               prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
               defaultValue={formSave.username}
               onChange={e => formSave.username = e.target.value}
-              placeholder="请输入账户名称"
+              placeholder="请输入用户名称"
             />
           </div>
           <div style={{padding: 10}}>
@@ -130,7 +135,7 @@ export function AdminUser(props: AdminUserProps) {
               prefix={<Icon type="key" style={{color: 'rgba(0,0,0,.25)'}}/>}
               defaultValue={formSave.password}
               onChange={e => formSave.password = e.target.value}
-              placeholder="请输入账户密码"
+              placeholder="请输入用户密码"
             />
           </div>
           <div style={{padding: '5px 10px'}}>
@@ -159,7 +164,7 @@ export function AdminUser(props: AdminUserProps) {
               prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
               defaultValue={formEdit.username}
               onChange={e => formEdit.username = e.target.value}
-              placeholder="请输入账户名称"
+              placeholder="请输入用户名称"
             />
           </div>
           <div style={{padding: 10}}>
@@ -167,7 +172,7 @@ export function AdminUser(props: AdminUserProps) {
               type="password"
               prefix={<Icon type="key" style={{color: 'rgba(0,0,0,.25)'}}/>}
               onChange={e => formEdit.password = e.target.value}
-              placeholder="如不需修改账户密码可留空"
+              placeholder="如不需修改用户密码可留空"
             />
           </div>
           <div style={{padding: 10}}>
