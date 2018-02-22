@@ -15,7 +15,6 @@ const compareRank = compareFactory({
 })
 
 export interface SakuraProps extends SakuraState {
-
 }
 
 export function Sakura(props: SakuraProps) {
@@ -75,6 +74,8 @@ export function Sakura(props: SakuraProps) {
       return '从未更新'
     }
   }
+
+  console.log(`render sakura with models: ${props.models !== undefined}`)
 
   return (
     <div className="sakura-root">

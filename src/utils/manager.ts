@@ -55,8 +55,8 @@ export const md5Password = (username: string, password: string) => {
   return md5(username + md5(password))
 }
 
-export const loginManager = {
-  current: () => {
+export const sessionManager = {
+  query: () => {
     return request('/api/session')
   },
   login: (username: string, password: string) => {
