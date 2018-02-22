@@ -6,7 +6,7 @@ import { ClickParam } from 'antd/lib/menu'
 import { Icon } from '../../lib/icon'
 
 import { AppContext, AppState, default as App } from '../../App'
-import { default as routes, RouteInfo } from '../../common/routes'
+import { RouteInfo, routeInfos } from '../../common/route-infos'
 
 export class AppSider extends React.Component {
 
@@ -88,7 +88,7 @@ export class AppSider extends React.Component {
           style={{height: '100%'}}
           onClick={this.onClickItem}
         >
-          {routes.map(this.renderMenu)}
+          {routeInfos.map(this.renderMenu)}
 
         </Menu>
       </Layout.Sider>

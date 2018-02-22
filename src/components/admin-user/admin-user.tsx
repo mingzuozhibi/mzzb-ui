@@ -4,173 +4,176 @@ import { Column, Table } from '../../lib/table'
 import { Link } from '../../lib/link'
 import { Icon } from '../../lib/icon'
 
-import { Manager, md5Password, Model } from '../../utils/manager'
-import { BaseComponent, State } from '../BaseComponent'
+import { md5Password } from '../../utils/manager'
+import { AdminUserModel, AdminUserState } from './reducer'
 
-interface UserModel extends Model {
-  username: string
-  enabled: boolean
-  registerDate: string
-  lastLoggedIn: string
+interface FormSave {
+  username?: string
+  password?: string
 }
 
-interface UserState extends State<UserModel> {
+interface FormEdit {
+  username?: string
+  password?: string
+  enabled?: boolean
 }
 
-export class AdminUser extends BaseComponent<UserModel, UserState> {
+const formSave: FormSave = {}
+const formEdit: FormEdit = {}
 
-  state: UserState = {}
+interface AdminUserProps extends AdminUserState {
+  bodyWidth: number
+  saveModel: (model: {}) => void
+  editModel: (model: {}) => void
+}
 
-  manager: Manager<UserModel> = new Manager('/api/admin/users')
+export function AdminUser(props: AdminUserProps) {
 
-  formSave: any = {}
-  formEdit: any = {}
+  function getColumns(): Column<AdminUserModel>[] {
+    return [
+      {
+        key: 'id',
+        title: '#',
+        format: (t) => t.id
+      },
+      {
+        key: 'username',
+        title: '用户名',
+        format: (t) => t.username
+      },
+      {
+        key: 'enabled',
+        title: '启用',
+        format: (t) => t.enabled ? '是' : '否'
+      },
+      {
+        key: 'registerDate',
+        title: '注册时间',
+        format: (t) => formatRegisterDate(t)
+      },
+      {
+        key: 'lastLoggedIn',
+        title: '最后登入',
+        format: (t) => formatLastLoggedIn(t)
+      },
+      {
+        key: 'control',
+        title: '功能',
+        format: (t) => <Link onClick={() => showEditModal(t)}>编辑</Link>
+      }
+    ]
+  }
 
-  saveUser = async () => {
-    const username = this.formSave.username
-    const password = this.formSave.password
+  function formatRegisterDate(t: AdminUserModel) {
+    return formatLong(t.registerDate, 0, 10)
+  }
+
+  function formatLastLoggedIn(t: AdminUserModel) {
+    const text = t.lastLoggedIn
+    return text ? formatLong(text, 5, 11) : '从未登入'
+  }
+
+  function formatLong(text: string, start: number, length: number) {
+    return props.bodyWidth <= 600 ? text.substr(start, length) : text
+  }
+
+  function saveUser() {
+    const username = formSave.username
+    const password = formSave.password
 
     if (!username || !password) {
-      Modal.warning({title: '请检查输入项', content: '你必须输入用户名和密码'})
+      Modal.warning({title: '请检查输入项', content: '你必须输入账户名称和密码'})
       return
     }
 
     const encode = md5Password(username, password)
-    const result = await this.manager.addOne({username, password: encode})
-
-    this.saveModel('添加用户错误', result)
+    props.saveModel({username, password: encode})
   }
 
-  editUser = async (id: number) => {
-    const username = this.formEdit.username
-    const password = this.formEdit.password
-    const enabled = this.formEdit.enabled
+  function editUser(id: number) {
+    const username = formEdit.username
+    const password = formEdit.password
+    const enabled = formEdit.enabled
 
     if (!username) {
-      Modal.warning({title: '请检查输入项', content: '你必须输入用户名'})
+      Modal.warning({title: '请检查输入项', content: '你必须输入账户名称'})
       return
     }
 
     const encode = password ? md5Password(username, password) : ''
-    const result = await this.manager.update({
-      id, username, password: encode, enabled
-    })
-
-    this.editModel('编辑用户错误', result)
+    props.editModel({id, username, password: encode, enabled})
   }
 
-  componentWillMount() {
-    this.listModelSupport(() => {
-      return this.manager.findAll()
-    })
-  }
-
-  columns: Column<UserModel>[] = [
-    {
-      key: 'id',
-      title: '#',
-      format: (t) => t.id
-    },
-    {
-      key: 'username',
-      title: '用户名',
-      format: (t) => t.username
-    },
-    {
-      key: 'enabled',
-      title: '启用',
-      format: (t) => t.enabled ? '是' : '否'
-    },
-    {
-      key: 'registerDate',
-      title: '注册时间',
-      format: (t) => this.formatLong(t.registerDate, 0, 10)
-    },
-    {
-      key: 'lastLoggedIn',
-      title: '最后登入',
-      format: (t) => this.formatLong(t.lastLoggedIn, 5, 11)
-    },
-    {
-      key: 'extra-control',
-      title: '功能',
-      format: (t) => <Link onClick={() => this.showEditModal(t)}>编辑</Link>
-    }
-  ]
-
-  formatLong = (text: string, start: number, length: number) => {
-    return this.context.state.bodyWidth <= 600 ? text.substr(start, length) : text
-  }
-
-  render() {
-    return (
-      <div className="admin-users">
-        <Tabs>
-          <Tabs.TabPane tab="用户列表" key="1">
-            {this.state.errors && (
-              <Alert message={this.state.errors} type="error"/>
-            )}
-            {this.state.models && (
-              <Table rows={this.state.models} columns={this.columns}/>
-            )}
-          </Tabs.TabPane>
-          <Tabs.TabPane tab="添加用户" key="2">
-            <div style={{padding: 10}}>
-              <Input
-                prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                onChange={e => this.formSave.username = e.target.value}
-                placeholder="请输入用户名"
-              />
-            </div>
-            <div style={{padding: 10}}>
-              <Input
-                type="password"
-                onChange={e => this.formSave.password = e.target.value}
-                prefix={<Icon type="key" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                placeholder="请输入密码"
-              />
-            </div>
-            <div style={{padding: '5px 10px'}}>
-              <Button type="primary" onClick={this.saveUser}>添加用户</Button>
-            </div>
-          </Tabs.TabPane>
-        </Tabs>
-      </div>
-    )
-  }
-
-  showEditModal(user: UserModel) {
-    this.formEdit.username = user.username
-    this.formEdit.enabled = user.enabled
-
-    Modal.confirm({
-      title: '编辑用户',
-      okText: '保存',
-      okType: 'primary',
-      onOk: () => this.editUser(user.id),
-      cancelText: '取消',
-      content: (
-        <div>
+  return (
+    <div className="admin-users">
+      <Tabs>
+        <Tabs.TabPane tab="用户列表" key="1">
+          {props.errors && (
+            <Alert message={props.errors} type="error"/>
+          )}
+          {props.models && (
+            <Table rows={props.models} columns={getColumns()}/>
+          )}
+        </Tabs.TabPane>
+        <Tabs.TabPane tab="添加用户" key="2">
           <div style={{padding: 10}}>
             <Input
               prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
-              defaultValue={user.username}
-              onChange={e => this.formEdit.username = e.target.value}
-              placeholder="请输入用户名"
+              defaultValue={formSave.username}
+              onChange={e => formSave.username = e.target.value}
+              placeholder="请输入账户名称"
             />
           </div>
           <div style={{padding: 10}}>
             <Input
               type="password"
               prefix={<Icon type="key" style={{color: 'rgba(0,0,0,.25)'}}/>}
-              onChange={e => this.formEdit.password = e.target.value}
-              placeholder="如不需修改密码可留空"
+              defaultValue={formSave.password}
+              onChange={e => formSave.password = e.target.value}
+              placeholder="请输入账户密码"
+            />
+          </div>
+          <div style={{padding: '5px 10px'}}>
+            <Button type="primary" onClick={saveUser}>添加用户</Button>
+          </div>
+        </Tabs.TabPane>
+      </Tabs>
+    </div>
+  )
+
+  function showEditModal(user: AdminUserModel) {
+    formEdit.username = user.username
+    formEdit.enabled = user.enabled
+    formEdit.password = undefined
+
+    Modal.confirm({
+      title: '编辑用户',
+      okText: '保存',
+      okType: 'primary',
+      onOk: () => editUser(user.id),
+      cancelText: '取消',
+      content: (
+        <div>
+          <div style={{padding: 10}}>
+            <Input
+              prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
+              defaultValue={formEdit.username}
+              onChange={e => formEdit.username = e.target.value}
+              placeholder="请输入账户名称"
+            />
+          </div>
+          <div style={{padding: 10}}>
+            <Input
+              type="password"
+              prefix={<Icon type="key" style={{color: 'rgba(0,0,0,.25)'}}/>}
+              onChange={e => formEdit.password = e.target.value}
+              placeholder="如不需修改账户密码可留空"
             />
           </div>
           <div style={{padding: 10}}>
             <Checkbox
-              defaultChecked={user.enabled}
-              onChange={e => this.formEdit.enabled = e.target.checked}
+              defaultChecked={formEdit.enabled}
+              onChange={e => formEdit.enabled = e.target.checked}
             >
               启用
             </Checkbox>

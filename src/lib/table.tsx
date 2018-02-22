@@ -1,6 +1,6 @@
 import * as React from 'react'
 import './table.css'
-import { Model } from '../utils/manager'
+import { BaseModel } from '../utils/manager'
 
 interface Column<M> {
   key: string
@@ -15,7 +15,7 @@ interface TableProps<M> {
   columns: Column<M>[]
 }
 
-const Table = <M extends Model>({title, subtitle, rows, columns}: TableProps<M>) => {
+const Table = <M extends BaseModel>({title, subtitle, rows, columns}: TableProps<M>) => {
   return (
     <div className="table-root">
       {title && (

@@ -1,103 +1,102 @@
 import * as React from 'react'
-import { Alert, Button, Input, Modal, Tabs } from 'antd'
+import { Alert, Button, Input, Modal, Radio, Tabs } from 'antd'
 import { Column, Table } from '../../lib/table'
 import { Icon } from '../../lib/icon'
 
-import { Manager, Model } from '../../utils/manager'
-import { BaseComponent, State } from '../BaseComponent'
 import { formatTimeout } from '../../utils/format'
+import { AdminSakuraModel, AdminSakuraState } from './reducer'
 
-interface SakuraModel extends Model {
-  key: string
-  title: string
-  enabled: boolean
-  modifyTime: number
+interface FormSave {
+  key?: string
+  title?: string
+  viewType?: string
 }
 
-interface SakuraState extends State<SakuraModel> {
-  formTitle?: string
+const formSave: FormSave = {}
+
+interface AdminSakuraProps extends AdminSakuraState {
+  saveModel: (model: {}) => void
+  editModel: (model: {}) => void
 }
 
-export class AdminSakura extends BaseComponent<SakuraModel, SakuraState> {
+export function AdminSakura(props: AdminSakuraProps) {
 
-  state: SakuraState = {}
+  function saveModel() {
+    const key = formSave.key
+    const title = formSave.title
+    const viewType = formSave.viewType
 
-  manager: Manager<SakuraModel> = new Manager('/api/basic/sakuras')
-
-  formKey?: string
-
-  saveSakura = async () => {
-    if (!this.formKey) {
-      Modal.warning({title: '请检查输入项', content: 'Key的格式必须为(yyyy-mm)'})
+    if (!key) {
+      Modal.warning({title: '请检查输入项', content: 'Sakura\'Key必须输入'})
       return
     }
 
-    const result = await this.manager.addOne({
-      key: this.formKey, title: this.state.formTitle
-    })
+    if (!title) {
+      Modal.warning({title: '请检查输入项', content: 'Sakura标题必须输入'})
+      return
+    }
 
-    this.saveModel('添加Sakura错误', result)
+    if (!viewType) {
+      Modal.warning({title: '请检查输入项', content: '你必须选择一个显示类型'})
+      return
+    }
+
+    props.saveModel({key, title, viewType})
   }
 
-  checkKey = (value: string) => {
-    const exec = /^(\d{4})-(\d{2})$/.exec(value)
-    this.update(draft => {
-      if (exec) {
-        draft.formTitle = `${exec[1]}年${exec[2]}月新番`
-      } else {
-        draft.formTitle = `请在上方输入Key (类似: 2018-04)`
-      }
-    })
-    this.formKey = exec ? value : undefined
+  function getColumns(): Column<AdminSakuraModel>[] {
+    return [
+      {key: 'id', title: '#', format: (t) => t.id},
+      {key: 'key', title: 'Key', format: (t) => t.key},
+      {key: 'title', title: '标题', format: (t) => t.title},
+      {key: 'enabled', title: '启用', format: (t) => t.enabled ? '是' : '否'},
+      {key: 'viewType', title: '显示类型', format: (t) => t.viewType},
+      {key: 'modifyTime', title: '上次更新', format: (t) => formatModifyTime(t)},
+    ]
   }
 
-  componentWillMount() {
-    this.listModelSupport(() => {
-      return this.manager.findAll()
-    })
+  function formatModifyTime(t: AdminSakuraModel) {
+    return t.modifyTime == null ? '从未更新' : formatTimeout(t.modifyTime)
   }
 
-  columns: Column<SakuraModel>[] = [
-    {key: 'id', title: '#', format: (t) => t.id},
-    {key: 'key', title: 'Key', format: (t) => t.key},
-    {key: 'title', title: '标题', format: (t) => t.title},
-    {key: 'enabled', title: '启用', format: (t) => t.enabled ? '是' : '否'},
-    {key: 'modifyTime', title: '上次更新', format: (t) => formatTimeout(t.modifyTime)},
-  ]
-
-  render() {
-    return (
-      <div className="basic-sakura">
-        <Tabs>
-          <Tabs.TabPane tab="Sakura列表" key="1">
-            {this.state.errors && (
-              <Alert message={this.state.errors} type="error"/>
-            )}
-            {this.state.models && (
-              <Table rows={this.state.models} columns={this.columns}/>
-            )}
-          </Tabs.TabPane>
-          <Tabs.TabPane tab="添加Sakura" key="2">
-            <div style={{padding: 10}}>
-              <Input
-                prefix={<Icon type="key" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                onChange={(e) => this.checkKey(e.target.value)}
-                placeholder="请输入Key (类似: 2018-04)"
-              />
-            </div>
-            <div style={{padding: 10}}>
-              <Input
-                disabled={true}
-                value={this.state.formTitle}
-                prefix={<Icon type="tag-o" style={{color: 'rgba(0,0,0,.25)'}}/>}
-              />
-            </div>
-            <div style={{padding: '5px 10px'}}>
-              <Button type="primary" onClick={this.saveSakura}>添加Sakura</Button>
-            </div>
-          </Tabs.TabPane>
-        </Tabs>
-      </div>
-    )
-  }
+  return (
+    <div className="basic-sakura">
+      <Tabs>
+        <Tabs.TabPane tab="Sakura列表" key="1">
+          {props.errors && (
+            <Alert message={props.errors} type="error"/>
+          )}
+          {props.models && (
+            <Table rows={props.models} columns={getColumns()}/>
+          )}
+        </Tabs.TabPane>
+        <Tabs.TabPane tab="添加Sakura" key="2">
+          <div style={{padding: 10}}>
+            <Input
+              prefix={<Icon type="key" style={{color: 'rgba(0,0,0,.25)'}}/>}
+              onChange={(e) => formSave.key = e.target.value}
+              placeholder="请输入Sakura'Key"
+            />
+          </div>
+          <div style={{padding: 10}}>
+            <Input
+              prefix={<Icon type="tag-o" style={{color: 'rgba(0,0,0,.25)'}}/>}
+              onChange={(e) => formSave.title = e.target.value}
+              placeholder="请输入Sakura标题"
+            />
+          </div>
+          <div style={{padding: 10}}>
+            <span style={{paddingRight: 10}}>显示类型</span>
+            <Radio.Group
+              options={['SakuraList', 'PublicList', 'PrivateList']}
+              onChange={e => formSave.viewType = e.target.value}
+            />
+          </div>
+          <div style={{padding: '5px 10px'}}>
+            <Button type="primary" onClick={saveModel}>添加Sakura</Button>
+          </div>
+        </Tabs.TabPane>
+      </Tabs>
+    </div>
+  )
 }
