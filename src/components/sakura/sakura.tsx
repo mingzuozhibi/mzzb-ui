@@ -56,6 +56,7 @@ export function Sakura(props: SakuraProps) {
       props.models.forEach(sakura => {
         sakura.discs.sort(compareRank)
       })
+      props.models.sort((a, b) => b.key.localeCompare(a.key))
       return render(props.models)
     }
     return undefined
