@@ -1,6 +1,7 @@
 import * as React from 'react'
-import { Alert, Button, Input, Modal, Radio, Tabs } from 'antd'
+import { Alert, Button, Checkbox, Input, Modal, Radio, Tabs } from 'antd'
 import { Column, Table } from '../../lib/table'
+import { Link } from '../../lib/link'
 import { Icon } from '../../lib/icon'
 
 import { formatTimeout } from '../../utils/format'
@@ -12,7 +13,12 @@ interface FormSave {
   viewType?: string
 }
 
+interface FormEdit extends FormSave {
+  enabled?: boolean
+}
+
 const formSave: FormSave = {}
+const formEdit: FormEdit = {}
 
 interface AdminSakuraProps extends AdminSakuraState {
   saveModel: (model: {}) => void
@@ -44,14 +50,62 @@ export function AdminSakura(props: AdminSakuraProps) {
     props.saveModel({key, title, viewType})
   }
 
+  function editModel(id: number) {
+    const key = formEdit.key
+    const title = formEdit.title
+    const viewType = formEdit.viewType
+    const enabled = formEdit.enabled
+
+    if (!key) {
+      Modal.warning({title: '请检查输入项', content: '你必须输入Sakura\'Key'})
+      return
+    }
+
+    if (!title) {
+      Modal.warning({title: '请检查输入项', content: '你必须输入Sakura标题'})
+      return
+    }
+
+    props.editModel({id, key, title, viewType, enabled})
+  }
+
   function getColumns(): Column<AdminSakuraModel>[] {
     return [
-      {key: 'id', title: '#', format: (t) => t.id},
-      {key: 'key', title: 'Key', format: (t) => t.key},
-      {key: 'title', title: '标题', format: (t) => t.title},
-      {key: 'enabled', title: '启用', format: (t) => t.enabled ? '是' : '否'},
-      {key: 'viewType', title: '显示类型', format: (t) => t.viewType},
-      {key: 'modifyTime', title: '上次更新', format: (t) => formatModifyTime(t)},
+      {
+        key: 'id',
+        title: '#',
+        format: (t) => t.id
+      },
+      {
+        key: 'key',
+        title: 'Key',
+        format: (t) => t.key
+      },
+      {
+        key: 'title',
+        title: '标题',
+        format: (t) => t.title
+      },
+      {
+        key: 'enabled',
+        title: '启用',
+        format: (t) => t.enabled ? '是' : '否'
+      },
+      {
+        key: 'viewType',
+        title: '显示类型',
+        format: (t) => t.viewType
+      },
+      {
+        key: 'modifyTime',
+        title: '上次更新',
+        format: (t) => formatModifyTime(t)
+      },
+      {
+        key: 'control',
+        title: '功能',
+        format: (t) => <Link onClick={() => showEditModal(t)}>编辑</Link>
+      },
     ]
   }
 
@@ -99,4 +153,55 @@ export function AdminSakura(props: AdminSakuraProps) {
       </Tabs>
     </div>
   )
+
+  function showEditModal(model: AdminSakuraModel) {
+    formEdit.key = model.key
+    formEdit.title = model.title
+    formEdit.viewType = model.viewType
+    formEdit.enabled = model.enabled
+
+    Modal.confirm({
+      title: '编辑Sakura',
+      okText: '保存',
+      okType: 'primary',
+      onOk: () => editModel(model.id),
+      cancelText: '取消',
+      content: (
+        <div>
+          <div style={{padding: 10}}>
+            <Input
+              prefix={<Icon type="key" style={{color: 'rgba(0,0,0,.25)'}}/>}
+              defaultValue={formEdit.key}
+              onChange={e => formEdit.key = e.target.value}
+              placeholder="请输入Sakura'key"
+            />
+          </div>
+          <div style={{padding: 10}}>
+            <Input
+              prefix={<Icon type="tag-o" style={{color: 'rgba(0,0,0,.25)'}}/>}
+              defaultValue={formEdit.title}
+              onChange={e => formEdit.title = e.target.value}
+              placeholder="请输入Sakura标题"
+            />
+          </div>
+          <div style={{padding: 10}}>
+            <span style={{paddingRight: 10}}>显示类型</span>
+            <Radio.Group
+              options={['SakuraList', 'PublicList', 'PrivateList']}
+              defaultValue={formEdit.viewType}
+              onChange={e => formEdit.viewType = e.target.value}
+            />
+          </div>
+          <div style={{padding: 10}}>
+            <Checkbox
+              defaultChecked={formEdit.enabled}
+              onChange={e => formEdit.enabled = e.target.checked}
+            >
+              启用
+            </Checkbox>
+          </div>
+        </div>
+      ),
+    })
+  }
 }

@@ -77,12 +77,17 @@ export function AdminUser(props: AdminUserProps) {
     return props.bodyWidth <= 600 ? text.substr(start, length) : text
   }
 
-  function saveUser() {
+  function saveModel() {
     const username = formSave.username
     const password = formSave.password
 
-    if (!username || !password) {
-      Modal.warning({title: '请检查输入项', content: '你必须输入账户名称和密码'})
+    if (!username) {
+      Modal.warning({title: '请检查输入项', content: '你必须输入用户名称'})
+      return
+    }
+
+    if (!password) {
+      Modal.warning({title: '请检查输入项', content: '你必须输入用户密码'})
       return
     }
 
@@ -90,13 +95,13 @@ export function AdminUser(props: AdminUserProps) {
     props.saveModel({username, password: encode})
   }
 
-  function editUser(id: number) {
+  function editModel(id: number) {
     const username = formEdit.username
     const password = formEdit.password
     const enabled = formEdit.enabled
 
     if (!username) {
-      Modal.warning({title: '请检查输入项', content: '你必须输入账户名称'})
+      Modal.warning({title: '请检查输入项', content: '你必须输入用户名称'})
       return
     }
 
@@ -121,7 +126,7 @@ export function AdminUser(props: AdminUserProps) {
               prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
               defaultValue={formSave.username}
               onChange={e => formSave.username = e.target.value}
-              placeholder="请输入账户名称"
+              placeholder="请输入用户名称"
             />
           </div>
           <div style={{padding: 10}}>
@@ -130,27 +135,27 @@ export function AdminUser(props: AdminUserProps) {
               prefix={<Icon type="key" style={{color: 'rgba(0,0,0,.25)'}}/>}
               defaultValue={formSave.password}
               onChange={e => formSave.password = e.target.value}
-              placeholder="请输入账户密码"
+              placeholder="请输入用户密码"
             />
           </div>
           <div style={{padding: '5px 10px'}}>
-            <Button type="primary" onClick={saveUser}>添加用户</Button>
+            <Button type="primary" onClick={saveModel}>添加用户</Button>
           </div>
         </Tabs.TabPane>
       </Tabs>
     </div>
   )
 
-  function showEditModal(user: AdminUserModel) {
-    formEdit.username = user.username
-    formEdit.enabled = user.enabled
+  function showEditModal(model: AdminUserModel) {
+    formEdit.username = model.username
+    formEdit.enabled = model.enabled
     formEdit.password = undefined
 
     Modal.confirm({
       title: '编辑用户',
       okText: '保存',
       okType: 'primary',
-      onOk: () => editUser(user.id),
+      onOk: () => editModel(model.id),
       cancelText: '取消',
       content: (
         <div>
@@ -159,7 +164,7 @@ export function AdminUser(props: AdminUserProps) {
               prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
               defaultValue={formEdit.username}
               onChange={e => formEdit.username = e.target.value}
-              placeholder="请输入账户名称"
+              placeholder="请输入用户名称"
             />
           </div>
           <div style={{padding: 10}}>
@@ -167,7 +172,7 @@ export function AdminUser(props: AdminUserProps) {
               type="password"
               prefix={<Icon type="key" style={{color: 'rgba(0,0,0,.25)'}}/>}
               onChange={e => formEdit.password = e.target.value}
-              placeholder="如不需修改账户密码可留空"
+              placeholder="如不需修改用户密码可留空"
             />
           </div>
           <div style={{padding: 10}}>
