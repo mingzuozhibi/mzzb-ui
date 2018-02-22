@@ -10,7 +10,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import createHistory from 'history/createBrowserHistory'
 import createSagaMiddleware from 'redux-saga'
 
-import App from './App'
+import App from './App/App'
 import { Load } from './lib/load'
 import * as Loadable from 'react-loadable'
 import { rootSagas } from './common/root-sagas'
