@@ -61,6 +61,20 @@ export function Sakura(props: SakuraProps) {
     return undefined
   }
 
+  function formatModifyTime(sakura: SakuraModel) {
+    if (sakura.modifyTime) {
+      return (
+        <Timer
+          time={sakura.modifyTime}
+          timeout={1000}
+          render={(state => `${state.hour}时${state.minute}分${state.second}秒前`)}
+        />
+      )
+    } else {
+      return '从未更新'
+    }
+  }
+
   return (
     <div className="sakura-root">
       {props.errors && <Alert message={props.errors} type="error"/>}
@@ -68,13 +82,7 @@ export function Sakura(props: SakuraProps) {
         <div key={sakura.id}>
           <Table
             title={sakura.title}
-            subtitle={
-              <Timer
-                time={sakura.modifyTime}
-                timeout={20000}
-                render={(state => `${state.hour}时${state.minute}分前`)}
-              />
-            }
+            subtitle={formatModifyTime(sakura)}
             rows={sakura.discs}
             columns={getColumns()}
           />
