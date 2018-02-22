@@ -1,14 +1,14 @@
 import * as React from 'react'
-import { RouteComponentProps } from 'react-router-dom'
 import { Layout, Menu } from 'antd'
 import { Icon } from '../../lib/icon'
 
 import { RouteInfo, routeInfos } from '../../common/route-infos'
+import { RouteComponentProps } from 'react-router-dom'
 import { CollapseType } from 'antd/lib/layout/Sider'
 import { ClickParam } from 'antd/lib/menu'
+import { ViewportState } from '../../hoc/Viewport'
 
-interface AppSiderProps extends RouteComponentProps<{}> {
-  bodyWidth: number
+interface AppSiderProps extends RouteComponentProps<{}>, ViewportState {
   viewSider: boolean
   userRoles: string[]
   clearReload: () => void
@@ -27,7 +27,7 @@ export function AppSider(props: AppSiderProps) {
     if (key === props.location.pathname) {
       return
     }
-    if (props.bodyWidth <= 768) {
+    if (props.viewport!.width <= 768) {
       props.setViewSider(false)
     }
     if (key.charAt(0) === '/') {

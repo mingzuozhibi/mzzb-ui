@@ -6,6 +6,7 @@ import { Icon } from '../../lib/icon'
 
 import { md5Password } from '../../utils/manager'
 import { AdminUserModel, AdminUserState } from './reducer'
+import { ViewportState } from '../../hoc/Viewport'
 
 interface FormSave {
   username?: string
@@ -21,8 +22,7 @@ interface FormEdit {
 const formSave: FormSave = {}
 const formEdit: FormEdit = {}
 
-interface AdminUserProps extends AdminUserState {
-  bodyWidth: number
+interface AdminUserProps extends AdminUserState, ViewportState {
   saveModel: (model: {}) => void
   editModel: (model: {}) => void
 }
@@ -74,7 +74,7 @@ export function AdminUser(props: AdminUserProps) {
   }
 
   function formatLong(text: string, start: number, length: number) {
-    return props.bodyWidth <= 600 ? text.substr(start, length) : text
+    return props.viewport!.width <= 600 ? text.substr(start, length) : text
   }
 
   function saveModel() {

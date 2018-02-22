@@ -1,11 +1,11 @@
 import { connect, Dispatch } from 'react-redux'
-import { withRouter } from 'react-router-dom'
 import { RootState } from '../../common/root-reducer'
 import { AppSider } from './app-sider'
+import { withRouter } from 'react-router-dom'
+import { withViewport } from '../../hoc/Viewport'
 
 function mapStateToProps(state: RootState) {
   return {
-    bodyWidth: 600,
     viewSider: state.app.viewSider,
     userRoles: state.app.session.userRoles,
   }
@@ -27,4 +27,4 @@ const Connected = connect(
   mapDispatchToProps
 )(AppSider)
 
-export default withRouter<any>(Connected)
+export default withRouter<any>(withViewport(Connected))
