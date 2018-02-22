@@ -77,7 +77,7 @@ export function AdminUser(props: AdminUserProps) {
     return props.bodyWidth <= 600 ? text.substr(start, length) : text
   }
 
-  function saveUser() {
+  function saveModel() {
     const username = formSave.username
     const password = formSave.password
 
@@ -95,7 +95,7 @@ export function AdminUser(props: AdminUserProps) {
     props.saveModel({username, password: encode})
   }
 
-  function editUser(id: number) {
+  function editModel(id: number) {
     const username = formEdit.username
     const password = formEdit.password
     const enabled = formEdit.enabled
@@ -139,23 +139,23 @@ export function AdminUser(props: AdminUserProps) {
             />
           </div>
           <div style={{padding: '5px 10px'}}>
-            <Button type="primary" onClick={saveUser}>添加用户</Button>
+            <Button type="primary" onClick={saveModel}>添加用户</Button>
           </div>
         </Tabs.TabPane>
       </Tabs>
     </div>
   )
 
-  function showEditModal(user: AdminUserModel) {
-    formEdit.username = user.username
-    formEdit.enabled = user.enabled
+  function showEditModal(model: AdminUserModel) {
+    formEdit.username = model.username
+    formEdit.enabled = model.enabled
     formEdit.password = undefined
 
     Modal.confirm({
       title: '编辑用户',
       okText: '保存',
       okType: 'primary',
-      onOk: () => editUser(user.id),
+      onOk: () => editModel(model.id),
       cancelText: '取消',
       content: (
         <div>
