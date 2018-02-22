@@ -51,8 +51,12 @@ export function AdminSakura(props: AdminSakuraProps) {
       {key: 'title', title: '标题', format: (t) => t.title},
       {key: 'enabled', title: '启用', format: (t) => t.enabled ? '是' : '否'},
       {key: 'viewType', title: '显示类型', format: (t) => t.viewType},
-      {key: 'modifyTime', title: '上次更新', format: (t) => formatTimeout(t.modifyTime)},
+      {key: 'modifyTime', title: '上次更新', format: (t) => formatModifyTime(t)},
     ]
+  }
+
+  function formatModifyTime(t: AdminSakuraModel) {
+    return t.modifyTime == null ? '从未更新' : formatTimeout(t.modifyTime)
   }
 
   return (
