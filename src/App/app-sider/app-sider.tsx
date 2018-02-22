@@ -6,9 +6,9 @@ import { RouteInfo, routeInfos } from '../../common/route-infos'
 import { RouteComponentProps } from 'react-router-dom'
 import { CollapseType } from 'antd/lib/layout/Sider'
 import { ClickParam } from 'antd/lib/menu'
-import { ViewportState } from '../../hoc/Viewport'
+import { ViewportProps } from '../../hoc/Viewport'
 
-interface AppSiderProps extends RouteComponentProps<{}>, ViewportState {
+interface AppSiderProps extends RouteComponentProps<{}>, ViewportProps {
   viewSider: boolean
   userRoles: string[]
   clearReload: () => void
