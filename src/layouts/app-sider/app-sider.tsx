@@ -31,7 +31,7 @@ export class AppSider extends React.Component {
       return
     }
     this.context.update(draft => {
-      if (draft.bodyWidth <= 600) {
+      if (draft.bodyWidth <= 768) {
         draft.hideSider = true
       }
       if (key.charAt(0) === '/') {
