@@ -13,1231 +13,1254 @@
   "sakuras": {
     "data": [
       {
-        "sakuraUpdateDate": 1519023613000,
+        "modifyTime": 1519381744000,
+        "viewType": "SakuraList",
         "id": 1,
         "title": "日亚实时TOP100",
         "discs": [
           {
-            "thisRank": "4",
-            "totalPt": "44584",
-            "prevRank": "3",
+            "thisRank": 2,
+            "totalPt": 8237,
+            "prevRank": 2,
+            "id": 3,
+            "title": "映画「 ノーゲーム・ノーライフ ゼロ 」限定版( イベントチケット優先販売申込券 ) [Blu-ray]"
+          },
+          {
+            "thisRank": 5,
+            "totalPt": 10071,
+            "prevRank": 3,
+            "id": 2,
+            "title": "ラブライブ! サンシャイン!! 2nd Season Blu-ray 3 (特装限定版)"
+          },
+          {
+            "thisRank": 8,
+            "totalPt": 45923,
+            "prevRank": 8,
             "id": 1,
             "title": "【Amazon.co.jp限定】 ガールズ&パンツァー 最終章 第1話 (特装限定版) (「中村桜の アヒルさんでも分かる! 総火演の楽しみ方講座」BD付) [Blu-ray]"
           },
           {
-            "thisRank": "12",
-            "totalPt": "9250",
-            "prevRank": "13",
-            "id": 6,
-            "title": "ラブライブ! サンシャイン!! 2nd Season Blu-ray 3 (特装限定版)"
-          },
-          {
-            "thisRank": "18",
-            "totalPt": "5765",
-            "prevRank": "18",
-            "id": 18,
-            "title": "コードギアス 反逆のルルーシュ I 興道 (特装限定版) [Blu-ray]"
-          },
-          {
-            "thisRank": "19",
-            "totalPt": "2829",
-            "prevRank": "19",
-            "id": 4,
-            "title": "ゆるキャン△ 1 [Blu-ray]"
-          },
-          {
-            "thisRank": "20",
-            "totalPt": "1026",
-            "prevRank": "20",
-            "id": 3,
-            "title": "【Amazon.co.jp限定】ご注文はうさぎですか?? ~Dear My Sister~ (初回限定生産)(アニメ描きおろしB2布ポスター付き) [Blu-ray]"
-          },
-          {
-            "thisRank": "22",
-            "totalPt": "13354",
-            "prevRank": "22",
-            "id": 12,
-            "title": "宇宙戦艦ヤマト2202 愛の戦士たち 4 [Blu-ray]"
-          },
-          {
-            "thisRank": "23",
-            "totalPt": "7410",
-            "prevRank": "24",
-            "id": 11,
-            "title": "映画「 ノーゲーム・ノーライフ ゼロ 」限定版( イベントチケット優先販売申込券 ) [Blu-ray]"
-          },
-          {
-            "thisRank": "26",
-            "totalPt": "15648",
-            "prevRank": "25",
-            "id": 8,
-            "title": "ガールズ&パンツァー 最終章 第1話 (特装限定版) [Blu-ray]"
-          },
-          {
-            "thisRank": "27",
-            "totalPt": "943",
-            "prevRank": "26",
-            "id": 5,
-            "title": "ご注文はうさぎですか?? ~Dear My Sister~ (初回限定生産) [Blu-ray]"
-          },
-          {
-            "thisRank": "29",
-            "totalPt": "9284",
-            "prevRank": "27",
-            "id": 21,
+            "thisRank": 9,
+            "totalPt": 10090,
+            "prevRank": 9,
+            "id": 7,
             "title": "アイドリッシュセブン 1 (特装限定版) (1st LIVE Day.1 最速先行抽選申込券付) [DVD]"
           },
           {
-            "thisRank": "32",
-            "totalPt": "9519",
-            "prevRank": "33",
-            "id": 7,
-            "title": "【Amazon.co.jp限定】劇場版「Fate/stay night [Heaven's Feel] I.presage flower」(メーカー特典:「ジャケットイラスト使用A3クリアポスター」付)(オリジナル特典:「アニメ描き下ろしB2布ポスター」付)(完全生産限定版) [Blu-ray]"
+            "thisRank": 10,
+            "totalPt": 5318,
+            "prevRank": 11,
+            "id": 15,
+            "title": "映画「 ノーゲーム・ノーライフ ゼロ 」通常版( イベントチケット優先販売申込券 ) [Blu-ray]"
           },
           {
-            "thisRank": "33",
-            "totalPt": "9653",
-            "prevRank": "35",
-            "id": 9,
+            "thisRank": 12,
+            "totalPt": 10092,
+            "prevRank": 12,
+            "id": 8,
             "title": "【Amazon.co.jp限定】 映画「 ノーゲーム・ノーライフ ゼロ 」限定版( 早期予約特典:榎宮祐描き下ろしイラスト使用A3サイズ3Dポスター付)( 購入特典:アニメ描き下ろしイラスト使用B1布ポスター&ブックカバー )( イベントチケット優先販売申込券 ) [Blu-ray]"
           },
           {
-            "thisRank": "36",
-            "totalPt": "7917",
-            "prevRank": "32",
-            "id": 14,
-            "title": "劇場版「Fate/stay night [Heaven's Feel] I.presage flower」(完全生産限定版) [Blu-ray]"
+            "thisRank": 16,
+            "totalPt": 6376,
+            "prevRank": 16,
+            "id": 4,
+            "title": "コードギアス 反逆のルルーシュ I 興道 (特装限定版) [Blu-ray]"
           },
           {
-            "thisRank": "37",
-            "totalPt": "5639",
-            "prevRank": "39",
-            "id": 25,
+            "thisRank": 17,
+            "totalPt": 6071,
+            "prevRank": 17,
+            "id": 12,
             "title": "アイドリッシュセブン 1 (特装限定版) (1st LIVE Day.1 最速先行抽選申込券付) [Blu-ray]"
           },
           {
-            "thisRank": "39",
-            "totalPt": "1995",
-            "prevRank": "38",
+            "thisRank": 18,
+            "totalPt": 13310,
+            "prevRank": 19,
+            "id": 18,
+            "title": "ガールズ＆パンツァー 第63回戦車道全国高校生大会 総集編 [Blu-ray]"
+          },
+          {
+            "thisRank": 20,
+            "totalPt": 2395,
+            "prevRank": 20,
             "id": 13,
             "title": "ゆるキャン△ 2 [Blu-ray]"
           },
           {
-            "thisRank": "42",
-            "totalPt": "1955",
-            "prevRank": "41",
-            "id": 15,
-            "title": "ゆるキャン△ 3 [Blu-ray]"
+            "thisRank": 21,
+            "totalPt": 3160,
+            "prevRank": 66,
+            "id": 5,
+            "title": "ゆるキャン△ 1 [Blu-ray]"
           },
           {
-            "thisRank": "44",
-            "totalPt": "0",
-            "prevRank": "45",
-            "id": 16,
-            "title": "ラブライブ! サンシャイン!! 2nd Season Blu-ray 2 (特装限定版)"
+            "thisRank": 24,
+            "totalPt": 13828,
+            "prevRank": 18,
+            "id": 6,
+            "title": "宇宙戦艦ヤマト2202 愛の戦士たち 4 [Blu-ray]"
           },
           {
-            "thisRank": "45",
-            "totalPt": "10625",
-            "prevRank": "46",
-            "id": 10,
-            "title": "舞台『刀剣乱舞』ジョ伝 三つら星刀語り（初回生産限定版） [Blu-ray]"
-          },
-          {
-            "thisRank": "46",
-            "totalPt": "12976",
-            "prevRank": "47",
-            "id": 23,
-            "title": "ガールズ＆パンツァー 第63回戦車道全国高校生大会 総集編 [Blu-ray]"
-          },
-          {
-            "thisRank": "48",
-            "totalPt": "12346",
-            "prevRank": "45",
-            "id": 2,
-            "title": "傾福さん [DVD]"
-          },
-          {
-            "thisRank": "49",
-            "totalPt": "6102",
-            "prevRank": "49",
-            "id": 17,
-            "title": "アイドルマスター SideM 3(イベントチケット優先販売申込券付)(完全生産限定版) [Blu-ray]"
-          },
-          {
-            "thisRank": "51",
-            "totalPt": "4944",
-            "prevRank": "51",
-            "id": 20,
-            "title": "映画「 ノーゲーム・ノーライフ ゼロ 」通常版( イベントチケット優先販売申込券 ) [Blu-ray]"
-          },
-          {
-            "thisRank": "57",
-            "totalPt": "4963",
-            "prevRank": "56",
-            "id": 26,
-            "title": "機動戦士ガンダム THE ORIGIN VI 誕生 赤い彗星 [Blu-ray]"
-          },
-          {
-            "thisRank": "59",
-            "totalPt": "11739",
-            "prevRank": "54",
-            "id": 28,
-            "title": "魔法少女リリカルなのは Reflection【超特装版】 [Blu-ray]"
-          },
-          {
-            "thisRank": "62",
-            "totalPt": "3469",
-            "prevRank": "60",
-            "id": 22,
+            "thisRank": 28,
+            "totalPt": 3923,
+            "prevRank": 24,
+            "id": 25,
             "title": "宇宙戦艦ヤマト2202 愛の戦士たち 5 [Blu-ray]"
           },
           {
-            "thisRank": "69",
-            "totalPt": "4376",
-            "prevRank": "75",
-            "id": 172,
+            "thisRank": 29,
+            "totalPt": 2351,
+            "prevRank": 29,
+            "id": 16,
+            "title": "ゆるキャン△ 3 [Blu-ray]"
+          },
+          {
+            "thisRank": 38,
+            "prevRank": 36,
+            "id": 21,
+            "title": "ラブライブ! サンシャイン!! 2nd Season Blu-ray 2 (特装限定版)"
+          },
+          {
+            "thisRank": 41,
+            "totalPt": 16150,
+            "prevRank": 38,
+            "id": 9,
+            "title": "ガールズ&パンツァー 最終章 第1話 (特装限定版) [Blu-ray]"
+          },
+          {
+            "thisRank": 49,
+            "totalPt": 9971,
+            "prevRank": 45,
+            "id": 10,
+            "title": "【Amazon.co.jp限定】劇場版「Fate/stay night [Heaven's Feel] I.presage flower」(メーカー特典:「ジャケットイラスト使用A3クリアポスター」付)(オリジナル特典:「アニメ描き下ろしB2布ポスター」付)(完全生産限定版) [Blu-ray]"
+          },
+          {
+            "thisRank": 50,
+            "totalPt": 4597,
+            "prevRank": 39,
+            "id": 167,
             "title": "【Amazon.co.jp限定】 コードギアス 反逆のルルーシュ I 興道 (特装限定版) (新規描き下ろしスチールブックケース付) [Steelbook] [Blu-ray]"
           },
           {
-            "thisRank": "71",
-            "totalPt": "2265",
-            "prevRank": "72",
-            "id": 169,
-            "title": "ポプテピピック vol.2(Blu-ray)"
+            "thisRank": 53,
+            "totalPt": 3145,
+            "prevRank": 49,
+            "id": 165,
+            "title": "映画「 ノーゲーム・ノーライフ ゼロ 」通常版( イベントチケット優先販売申込券 ) [DVD]"
           },
           {
-            "thisRank": "75",
-            "totalPt": "9669",
-            "prevRank": "78",
-            "id": 24,
-            "title": "【早期購入特典あり】 機動戦士ガンダム THE ORIGIN VI 誕生 赤い彗星 (オリジナルクリアファイル付) [Blu-ray]"
+            "thisRank": 57,
+            "totalPt": 8335,
+            "prevRank": 54,
+            "id": 19,
+            "title": "劇場版「Fate/stay night [Heaven's Feel] I.presage flower」(完全生産限定版) [Blu-ray]"
           },
           {
-            "thisRank": "76",
-            "totalPt": "8643",
-            "prevRank": "77",
-            "id": 164,
+            "thisRank": 58,
+            "totalPt": 6170,
+            "prevRank": 55,
+            "id": 172,
+            "title": "ラブライブ! サンシャイン!! 2nd Season Blu-ray 4 (特装限定版)"
+          },
+          {
+            "thisRank": 59,
+            "totalPt": 8872,
+            "prevRank": 57,
+            "id": 27,
             "title": "【Amazon.co.jp限定】 ラブライブ! サンシャイン!! 2nd Season Blu-ray 3 (特装限定版) (全巻購入特典:録り下ろしドラマCD引換シリアルコード付)"
           },
           {
-            "thisRank": "78",
-            "totalPt": "3627",
-            "prevRank": "76",
-            "id": 165,
+            "thisRank": 60,
+            "totalPt": 6523,
+            "prevRank": 62,
+            "id": 20,
+            "title": "アイドルマスター SideM 3(イベントチケット優先販売申込券付)(完全生産限定版) [Blu-ray]"
+          },
+          {
+            "thisRank": 61,
+            "totalPt": 5417,
+            "prevRank": 50,
+            "id": 169,
+            "title": "プリンセス・プリンシパル VI (特装限定版) [Blu-ray]"
+          },
+          {
+            "thisRank": 67,
+            "totalPt": 1464,
+            "prevRank": 63,
+            "id": 14,
+            "title": "【Amazon.co.jp限定】ご注文はうさぎですか?? ~Dear My Sister~ (初回限定生産)(アニメ描きおろしB2布ポスター付き) [Blu-ray]"
+          },
+          {
+            "thisRank": 68,
+            "totalPt": 4648,
+            "prevRank": 59,
+            "id": 174,
+            "title": "アイドリッシュセブン 2 (特装限定版) (1st LIVE Day.2 最速先行抽選申込券付) [DVD]"
+          },
+          {
+            "thisRank": 69,
+            "totalPt": 3804,
+            "prevRank": 65,
+            "id": 26,
             "title": "機動戦士ガンダム00 10th Anniversary COMPLETE BOX (初回限定生産) (特典なし) [Blu-ray]"
           },
           {
-            "thisRank": "90",
-            "totalPt": "3007",
-            "prevRank": "81",
-            "id": 173,
+            "thisRank": 74,
+            "totalPt": 9255,
+            "prevRank": 69,
+            "id": 168,
+            "title": "機動戦士ガンダム Twilight AXIS 赤き残影 Blu-ray Disc"
+          },
+          {
+            "thisRank": 75,
+            "totalPt": 6028,
+            "prevRank": 102,
+            "id": 171,
+            "title": "戦姫絶唱シンフォギアAXZ 6【期間限定版】 [Blu-ray]"
+          },
+          {
+            "thisRank": 76,
+            "totalPt": 3296,
+            "prevRank": 75,
+            "id": 29,
             "title": "アイドリッシュセブン 2 (特装限定版) (1st LIVE Day.2 最速先行抽選申込券付) [Blu-ray]"
           },
           {
-            "thisRank": "92",
-            "totalPt": "3651",
-            "prevRank": "92",
-            "id": 170,
-            "title": "劇場版 響け! ユーフォニアム ~届けたいメロディ~ [Blu-ray]"
+            "thisRank": 78,
+            "totalPt": 5298,
+            "prevRank": 78,
+            "id": 24,
+            "title": "機動戦士ガンダム THE ORIGIN VI 誕生 赤い彗星 [Blu-ray]"
           },
           {
-            "thisRank": "97",
-            "totalPt": "10849",
-            "prevRank": "97",
-            "id": 19,
-            "title": "舞台『刀剣乱舞』ジョ伝 三つら星刀語り（初回生産限定版） [DVD]"
+            "thisRank": 79,
+            "totalPt": 5797,
+            "prevRank": 77,
+            "id": 173,
+            "title": "宇宙戦艦ヤマト2202 愛の戦士たち 4 [DVD]"
           },
           {
-            "thisRank": "97",
-            "totalPt": "1178",
-            "prevRank": "89",
-            "id": 167,
-            "title": "ユーリ!!! on CONCERT BD [Blu-ray]"
+            "thisRank": 82,
+            "totalPt": 10924,
+            "prevRank": 86,
+            "id": 22,
+            "title": "舞台『刀剣乱舞』ジョ伝 三つら星刀語り（初回生産限定版） [Blu-ray]"
+          },
+          {
+            "thisRank": 83,
+            "totalPt": 1330,
+            "prevRank": 80,
+            "id": 17,
+            "title": "ご注文はうさぎですか?? ~Dear My Sister~ (初回限定生産) [Blu-ray]"
+          },
+          {
+            "thisRank": 85,
+            "totalPt": 9966,
+            "prevRank": 83,
+            "id": 28,
+            "title": "【早期購入特典あり】 機動戦士ガンダム THE ORIGIN VI 誕生 赤い彗星 (オリジナルクリアファイル付) [Blu-ray]"
+          },
+          {
+            "thisRank": 89,
+            "totalPt": 2546,
+            "prevRank": 86,
+            "id": 166,
+            "title": "ポプテピピック vol.2(Blu-ray)"
+          },
+          {
+            "thisRank": 100,
+            "totalPt": 1724,
+            "prevRank": 96,
+            "id": 175,
+            "title": "宇宙戦艦ヤマト2202 愛の戦士たち 5 [DVD]"
           }
         ],
         "key": "9999-99",
         "enabled": true
       },
       {
-        "sakuraUpdateDate": 1519023869000,
+        "modifyTime": 1519376190000,
+        "viewType": "SakuraList",
         "id": 2,
         "title": "2018年01月新番",
         "discs": [
           {
-            "thisRank": "19",
-            "totalPt": "2829",
-            "prevRank": "19",
-            "id": 4,
+            "thisRank": 21,
+            "totalPt": 3160,
+            "prevRank": 66,
+            "id": 5,
             "title": "ゆるキャン△ 1 [Blu-ray]"
           },
           {
-            "thisRank": "29",
-            "totalPt": "9284",
-            "prevRank": "27",
-            "id": 21,
+            "thisRank": 9,
+            "totalPt": 10090,
+            "prevRank": 9,
+            "id": 7,
             "title": "アイドリッシュセブン 1 (特装限定版) (1st LIVE Day.1 最速先行抽選申込券付) [DVD]"
           },
           {
-            "thisRank": "37",
-            "totalPt": "5639",
-            "prevRank": "39",
-            "id": 25,
+            "thisRank": 17,
+            "totalPt": 6071,
+            "prevRank": 17,
+            "id": 12,
             "title": "アイドリッシュセブン 1 (特装限定版) (1st LIVE Day.1 最速先行抽選申込券付) [Blu-ray]"
           },
           {
-            "thisRank": "111",
-            "totalPt": "1225",
-            "prevRank": "105",
-            "id": 29,
+            "thisRank": 157,
+            "totalPt": 1440,
+            "prevRank": 178,
+            "id": 30,
             "title": "衛宮さんちの今日のごはん 1(完全生産限定版) [Blu-ray]"
           },
           {
-            "thisRank": "231",
-            "totalPt": "1529",
-            "prevRank": "211",
-            "id": 30,
+            "thisRank": 97,
+            "totalPt": 1750,
+            "prevRank": 85,
+            "id": 33,
             "title": "宇宙よりも遠い場所 1(イベントチケット優先販売申券) [Blu-ray]"
           },
           {
-            "thisRank": "267",
-            "totalPt": "575",
-            "prevRank": "252",
-            "id": 31,
-            "title": "【Amazon.co.jp限定】Fate/EXTRA Last Encore 1(全巻購入特典:「描き下ろしB1布ポスター+ブックカバー」「ワダアルコ描き下ろし全巻収納BOX&ポートレート」引換シリアルコード付)(完全生産限定版) [Blu-ray]"
-          },
-          {
-            "thisRank": "142",
-            "totalPt": "618",
-            "prevRank": "161",
-            "id": 32,
-            "title": "ハクメイとミコチ Blu-ray BOX 上巻(イベントチケット優先販売申券)"
-          },
-          {
-            "thisRank": "285",
-            "totalPt": "1110",
-            "prevRank": "261",
-            "id": 33,
-            "title": "オーバーロード�U 1 [Blu-ray]"
-          },
-          {
-            "thisRank": "288",
-            "totalPt": "935",
-            "prevRank": "269",
+            "thisRank": 390,
+            "totalPt": 982,
+            "prevRank": 368,
             "id": 34,
-            "title": "カードキャプターさくら クリアカード編 Vol.1 初回仕様版 [Blu-ray]"
-          },
-          {
-            "thisRank": "471",
-            "totalPt": "1368",
-            "prevRank": "430",
-            "id": 35,
-            "title": "【Amazon.co.jp限定】ヴァイオレット・エヴァーガーデン 1 (第1巻のみ特典：L版ブロマイド ＋ 全巻購入特典：「LPサイズディスク収納ケース」引換シリアルコード付) [ VIOLET EVERGARDEN ] [Blu-ray]"
-          },
-          {
-            "thisRank": "307",
-            "totalPt": "699",
-            "prevRank": "279",
-            "id": 36,
-            "title": "からかい上手の高木さん Vol.1(初回生産限定版) [Blu-ray]"
-          },
-          {
-            "thisRank": "263",
-            "totalPt": "881",
-            "prevRank": "232",
-            "id": 37,
             "title": "【Amazon.co.jp限定】ダーリン・イン・ザ・フランキス 1(メーカー特典:「線画A3ポスター」「田中将賀描きおろし複製色紙」付)(1~4巻連動購入特典:「描き下ろしB1布ポスター」&全巻連動購入特典:「描き下ろし全巻収納ボックス」引換シリアルコード付)(完全生産限定版) [Blu-ray]"
           },
           {
-            "thisRank": "484",
-            "totalPt": "329",
-            "prevRank": "441",
-            "id": 38,
-            "title": "Fate/EXTRA Last Encore 1(完全生産限定版) [Blu-ray]"
+            "thisRank": 421,
+            "totalPt": 700,
+            "prevRank": 412,
+            "id": 31,
+            "title": "ハクメイとミコチ Blu-ray BOX 上巻(イベントチケット優先販売申券)"
           },
           {
-            "thisRank": "208",
-            "totalPt": "1274",
-            "prevRank": "205",
-            "id": 39,
-            "title": "続『刀剣乱舞-花丸-』 其の一 Blu-ray （初回生産限定版）（イベントチケット優先販売申し込み券付き）"
+            "thisRank": 343,
+            "totalPt": 1109,
+            "prevRank": 322,
+            "id": 36,
+            "title": "DEVILMAN crybaby COMPLETE BOX(完全生産限定版) [Blu-ray]"
           },
           {
-            "thisRank": "1091",
-            "totalPt": "1439",
-            "prevRank": "1038",
-            "id": 40,
-            "title": "続『刀剣乱舞-花丸-』 其の一 DVD (初回生産限定版)(イベントチケット優先販売申し込み券付き)"
-          },
-          {
-            "thisRank": "959",
-            "totalPt": "1027",
-            "prevRank": "910",
+            "thisRank": 485,
+            "totalPt": 1128,
+            "prevRank": 459,
             "id": 41,
             "title": "「りゅうおうのおしごと! 」Blu-ray vol.1(初回限定版)"
           },
           {
-            "thisRank": "838",
-            "totalPt": "1250",
-            "prevRank": "773",
-            "id": 42,
-            "title": "【Amazon.co.jp限定】 オーバーロードII 1(第1巻早期予約特典:キャラクター原案・so-bin描き下ろし「アルベド&シャルティアA4ダブルポケットクリアファイル」付)(全巻購入特典:アニメ描き下ろしイラスト使用原作サイズブックカバー 引換シリアルコード) [Blu-ray]"
+            "thisRank": 3151,
+            "totalPt": 361,
+            "prevRank": 3085,
+            "id": 32,
+            "title": "【Amazon.co.jp限定】からかい上手の高木さんVol.1(初回生産限定版)(全巻購入特典:描きおろし全巻収納BOX+オリジナル特典映像DVD引換シリアルコード付) [Blu-ray]"
           },
           {
-            "thisRank": "1686",
-            "totalPt": "1445",
-            "prevRank": "1662",
+            "thisRank": 360,
+            "totalPt": 823,
+            "prevRank": 338,
+            "id": 40,
+            "title": "からかい上手の高木さん Vol.1(初回生産限定版) [Blu-ray]"
+          },
+          {
+            "thisRank": 743,
+            "totalPt": 618,
+            "prevRank": 708,
             "id": 43,
-            "title": "【Amazon.co.jp限定】からかい上手の高木さんVol.1 Blu-ray特別版(オリジナルTシャツ付)(全巻購入特典:描きおろし全巻収納BOX+オリジナル特典映像DVD引換シリアルコード付)"
-          },
-          {
-            "thisRank": "227",
-            "totalPt": "547",
-            "prevRank": "341",
-            "id": 44,
             "title": "ダーリン・イン・ザ・フランキス 1(完全生産限定版) [Blu-ray]"
           },
           {
-            "thisRank": "421",
-            "totalPt": "882",
-            "prevRank": "679",
-            "id": 45,
+            "thisRank": 617,
+            "totalPt": 1032,
+            "prevRank": 594,
+            "id": 38,
+            "title": "カードキャプターさくら クリアカード編 Vol.1 初回仕様版 [Blu-ray]"
+          },
+          {
+            "thisRank": 293,
+            "totalPt": 982,
+            "prevRank": 271,
+            "id": 44,
             "title": "ヴァイオレット・エヴァーガーデン1 [Blu-ray]"
           },
           {
-            "thisRank": "1067",
-            "totalPt": "450",
-            "prevRank": "1000",
-            "id": 46,
-            "title": "【Amazon.co.jp限定】 宇宙よりも遠い場所 1(第1巻早期予約特典:アニメ描き下ろし「キマリのA3クリアポスター」付)(全巻購入特典:アニメ描き下ろしイラスト使用B1布ポスター 引換シリアルコード）(イベントチケット優先販売申込券) [Blu-ray]"
+            "thisRank": 1452,
+            "totalPt": 1359,
+            "prevRank": 1408,
+            "id": 35,
+            "title": "続『刀剣乱舞-花丸-』 其の一 Blu-ray （初回生産限定版）（イベントチケット優先販売申し込み券付き）"
           },
           {
-            "thisRank": "1033",
-            "totalPt": "830",
-            "prevRank": "965",
+            "thisRank": 776,
+            "totalPt": 680,
+            "prevRank": 751,
+            "id": 37,
+            "title": "【Amazon.co.jp限定】Fate/EXTRA Last Encore 1(全巻購入特典:「描き下ろしB1布ポスター+ブックカバー」「ワダアルコ描き下ろし全巻収納BOX&ポートレート」引換シリアルコード付)(完全生産限定版) [Blu-ray]"
+          },
+          {
+            "thisRank": 482,
+            "totalPt": 1164,
+            "prevRank": 462,
+            "id": 42,
+            "title": "オーバーロード�U 1 [Blu-ray]"
+          },
+          {
+            "thisRank": 843,
+            "totalPt": 1549,
+            "prevRank": 802,
             "id": 47,
+            "title": "続『刀剣乱舞-花丸-』 其の一 DVD (初回生産限定版)(イベントチケット優先販売申し込み券付き)"
+          },
+          {
+            "thisRank": 369,
+            "totalPt": 1477,
+            "prevRank": 349,
+            "id": 39,
+            "title": "【Amazon.co.jp限定】ヴァイオレット・エヴァーガーデン 1 (第1巻のみ特典：L版ブロマイド ＋ 全巻購入特典：「LPサイズディスク収納ケース」引換シリアルコード付) [ VIOLET EVERGARDEN ] [Blu-ray]"
+          },
+          {
+            "thisRank": 1696,
+            "totalPt": 147,
+            "prevRank": 1624,
+            "id": 75,
+            "title": "弱虫ペダル GLORY LINE DVD BOX Vol.1(初回生産限定版)(イベントチケット優先販売申込券付き)"
+          },
+          {
+            "thisRank": 1072,
+            "totalPt": 395,
+            "prevRank": 1012,
+            "id": 45,
+            "title": "Fate/EXTRA Last Encore 1(完全生産限定版) [Blu-ray]"
+          },
+          {
+            "thisRank": 1663,
+            "totalPt": 289,
+            "prevRank": 1555,
+            "id": 76,
+            "title": "デスマーチからはじまる異世界狂想曲 １ [Blu-ray]"
+          },
+          {
+            "thisRank": 1059,
+            "totalPt": 1284,
+            "prevRank": 1019,
+            "id": 46,
+            "title": "【Amazon.co.jp限定】 オーバーロードII 1(第1巻早期予約特典:キャラクター原案・so-bin描き下ろし「アルベド&シャルティアA4ダブルポケットクリアファイル」付)(全巻購入特典:アニメ描き下ろしイラスト使用原作サイズブックカバー 引換シリアルコード) [Blu-ray]"
+          },
+          {
+            "thisRank": 3728,
+            "totalPt": 69,
+            "prevRank": 3581,
+            "id": 49,
+            "title": "刻刻 Blu-ray BOX【完全受注生産限定版】 [Blu-ray]"
+          },
+          {
+            "thisRank": 2015,
+            "totalPt": 355,
+            "prevRank": 4905,
+            "id": 63,
+            "title": "からかい上手の高木さん Vol.1(初回生産限定版) [DVD]"
+          },
+          {
+            "thisRank": 1480,
+            "totalPt": 349,
+            "prevRank": 1373,
+            "id": 50,
+            "title": "スロウスタート 1(完全生産限定版) [Blu-ray]"
+          },
+          {
+            "thisRank": 7467,
+            "totalPt": 717,
+            "prevRank": 7325,
+            "id": 67,
+            "title": "【Amazon.co.jp限定】 アイドリッシュセブン 1 (特装限定版) (1st LIVE Day.1 最速先行抽選申込券＆インナージャケット使用ビジュアルシート付) [Blu-ray]"
+          },
+          {
+            "thisRank": 4690,
+            "totalPt": 868,
+            "prevRank": 4685,
+            "id": 48,
             "title": "【Amazon.co.jp限定】続『刀剣乱舞-花丸-』 其の一 Blu-ray (初回生産限定版)（イベントチケット優先販売申し込み券付き）（全巻購入特典:描き下ろし全巻収納BOX&千社札ステッカー 引換シリアルコード付)[Blu-ray]"
           },
           {
-            "thisRank": "369",
-            "totalPt": "1044",
-            "prevRank": "354",
-            "id": 48,
-            "title": "DEVILMAN crybaby COMPLETE BOX(完全生産限定版) [Blu-ray]"
+            "thisRank": 1081,
+            "totalPt": 847,
+            "prevRank": 1003,
+            "id": 61,
+            "title": "【Amazon.co.jp限定】 アイドリッシュセブン 1 (特装限定版) (1st LIVE Day.1 最速先行抽選申込券＆インナージャケット使用ビジュアルシート付) [DVD]"
           },
           {
-            "thisRank": "819",
-            "totalPt": "419",
-            "prevRank": "1075",
-            "id": 49,
-            "title": "【Amazon.co.jp限定】 ハクメイとミコチ Blu-ray BOX 上巻(上巻早期予約特典:ハクメイとミコチの飛び出すポップアップカード付)(全巻購入特典:アニメ描き下ろしイラスト使用アクリル卓上カレンダー 引換シリアルコード)(イベントチケット優先販売申込券)"
+            "thisRank": 356,
+            "totalPt": 136,
+            "prevRank": 329,
+            "id": 60,
+            "title": "ゆるキャン△ 1 [DVD]"
           },
           {
-            "thisRank": "2412",
-            "totalPt": "180",
-            "prevRank": "2295",
-            "id": 50,
-            "title": "博多豚骨ラーメンズ 1 ブルーレイ (初回仕様版) [Blu-ray]"
-          },
-          {
-            "thisRank": "1515",
-            "totalPt": "473",
-            "prevRank": "1410",
-            "id": 51,
-            "title": "だがしかし2 Blu-ray上巻"
-          },
-          {
-            "thisRank": "1271",
-            "totalPt": "325",
-            "prevRank": "1202",
-            "id": 52,
-            "title": "【Amazon.co.jp限定】衛宮さんちの今日のごはん 1(メーカー特典:「TAa描き下ろしミニ色紙」付)(全巻購入特典:「描き下ろしB1布ポスター」引換シリアルコード付)(完全生産限定版) [Blu-ray]"
-          },
-          {
-            "thisRank": "1017",
-            "totalPt": "509",
-            "prevRank": "962",
+            "thisRank": 2164,
+            "totalPt": 542,
+            "prevRank": 2025,
             "id": 53,
             "title": "【Amazon.co.jp限定】カードキャプターさくら クリアカード編 Vol.1 ブルーレイ初回仕様版(全巻購入特典:「アニメイラスト描き下ろしキャンバスアート」引換シリアルコード付) [Blu-ray]"
           },
           {
-            "thisRank": "2977",
-            "totalPt": "101",
-            "prevRank": "2800",
-            "id": 54,
-            "title": "ハクメイとミコチ DVD BOX 上巻(イベントチケット優先販売申券)"
+            "thisRank": 3709,
+            "totalPt": 249,
+            "prevRank": 3476,
+            "id": 51,
+            "title": "三ツ星カラーズ Vol.1（イベントチケット優先販売申券） [Blu-ray]"
           },
           {
-            "thisRank": "2084",
-            "totalPt": "259",
-            "prevRank": "1979",
-            "id": 55,
-            "title": "「ラーメン大好き小泉さん」Blu-ray Disc 上巻"
-          },
-          {
-            "thisRank": "2323",
-            "totalPt": "613",
-            "prevRank": "2226",
-            "id": 56,
-            "title": "【Amazon.co.jp限定】 デスマーチからはじまる異世界狂想曲 1(各巻購入特典:ジャケットステッカー)+(全巻購入特典:描き下ろし全巻収納BOX(ポチ・タマ・アリサ・ルル)引換シリアルコード)+(メーカー早期予約特典:キャラクター原案shri描き下ろしミニ色紙(ポチ・タマ))付 [Blu-ray]"
-          },
-          {
-            "thisRank": "1104",
-            "totalPt": "691",
-            "prevRank": "1029",
-            "id": 57,
-            "title": "【Amazon.co.jp限定】 アイドリッシュセブン 1 (特装限定版) (1st LIVE Day.1 最速先行抽選申込券＆インナージャケット使用ビジュアルシート付) [Blu-ray]"
-          },
-          {
-            "thisRank": "2465",
-            "totalPt": "664",
-            "prevRank": "2275",
-            "id": 58,
-            "title": "【Amazon.co.jp限定】続『刀剣乱舞-花丸-』 其の一 DVD (初回生産限定版)（イベントチケット優先販売申し込み券付き）（全巻購入特典:描き下ろし全巻収納BOX&千社札ステッカー 引換シリアルコード付)[DVD]"
-          },
-          {
-            "thisRank": "3033",
-            "totalPt": "359",
-            "prevRank": "2771",
+            "thisRank": 756,
+            "totalPt": 151,
+            "prevRank": 697,
             "id": 59,
-            "title": "オーバーロード�U 1 [DVD]"
-          },
-          {
-            "thisRank": "2360",
-            "totalPt": "121",
-            "prevRank": "2224",
-            "id": 60,
-            "title": "弱虫ペダル GLORY LINE DVD BOX Vol.1(初回生産限定版)(イベントチケット優先販売申込券付き)"
-          },
-          {
-            "thisRank": "786",
-            "totalPt": "290",
-            "prevRank": "725",
-            "id": 61,
-            "title": "スロウスタート 1(完全生産限定版) [Blu-ray]"
-          },
-          {
-            "thisRank": "4366",
-            "totalPt": "207",
-            "prevRank": "4270",
-            "id": 62,
-            "title": "衛宮さんちの今日のごはん 1(完全生産限定版) [DVD]"
-          },
-          {
-            "thisRank": "11161",
-            "totalPt": "241",
-            "prevRank": "10925",
-            "id": 63,
-            "title": "デスマーチからはじまる異世界狂想曲 １ [Blu-ray]"
-          },
-          {
-            "thisRank": "6410",
-            "totalPt": "528",
-            "prevRank": "6104",
-            "id": 64,
-            "title": "銀魂．銀ノ魂篇 1(完全生産限定版) [Blu-ray]"
-          },
-          {
-            "thisRank": "4420",
-            "totalPt": "69",
-            "prevRank": "4258",
-            "id": 65,
-            "title": "刀使ノ巫女 第1巻(イベントチケット優先販売申込券) [Blu-ray]"
-          },
-          {
-            "thisRank": "1080",
-            "totalPt": "51",
-            "prevRank": "1616",
-            "id": 66,
-            "title": "刻刻 Blu-ray BOX【完全受注生産限定版】 [Blu-ray]"
-          },
-          {
-            "thisRank": "4122",
-            "totalPt": "199",
-            "prevRank": "3909",
-            "id": 67,
-            "title": "たくのみ。Blu-ray上巻"
-          },
-          {
-            "thisRank": "3497",
-            "totalPt": "100",
-            "prevRank": "3399",
-            "id": 68,
-            "title": "ゆるキャン△ 1 [DVD]"
-          },
-          {
-            "thisRank": "2434",
-            "totalPt": "311",
-            "prevRank": "2244",
-            "id": 69,
-            "title": "からかい上手の高木さん Vol.1(初回生産限定版) [DVD]"
-          },
-          {
-            "thisRank": "10522",
-            "totalPt": "167",
-            "prevRank": "10141",
-            "id": 70,
-            "title": "【Amazon.co.jp限定】スロウスタート 1(全巻購入特典:「アニメ描き下ろしイラスト使用 B1布ポスター」「原作 篤見唯子描き下ろしイラスト使用 全巻収納BOX」引換シリアルコード付)(完全生産限定版) [Blu-ray]"
-          },
-          {
-            "thisRank": "3503",
-            "totalPt": "254",
-            "prevRank": "3248",
-            "id": 71,
-            "title": "カードキャプターさくら クリアカード編 Vol.1 初回仕様版 [DVD]"
-          },
-          {
-            "thisRank": "478",
-            "totalPt": "275",
-            "prevRank": "421",
-            "id": 72,
-            "title": "【Amazon.co.jp限定】からかい上手の高木さんVol.1(初回生産限定版)(全巻購入特典:描きおろし全巻収納BOX+オリジナル特典映像DVD引換シリアルコード付) [Blu-ray]"
-          },
-          {
-            "thisRank": "5447",
-            "totalPt": "351",
-            "prevRank": "5197",
-            "id": 73,
-            "title": "学園ベビーシッターズ　１　(特装限定版) [DVD]"
-          },
-          {
-            "thisRank": "1191",
-            "totalPt": "804",
-            "prevRank": "1076",
-            "id": 74,
-            "title": "【Amazon.co.jp限定】 アイドリッシュセブン 1 (特装限定版) (1st LIVE Day.1 最速先行抽選申込券＆インナージャケット使用ビジュアルシート付) [DVD]"
-          },
-          {
-            "thisRank": "36280",
-            "totalPt": "21",
-            "prevRank": "35759",
-            "id": 75,
-            "title": "斉木楠雄のΨ難　Season2　�@【DVD】"
-          },
-          {
-            "thisRank": "1204",
-            "totalPt": "132",
-            "prevRank": "1923",
-            "id": 76,
             "title": "【早期購入特典あり】恋は雨上がりのように 上(上巻購入特典:「A4ポートレート」付)(上下巻連動購入特典:「上下巻収納スリーブケース」引換シリアルコード付)(完全生産限定版) [Blu-ray]"
           },
           {
-            "thisRank": "19880",
-            "totalPt": "100",
-            "prevRank": "19961",
-            "id": 77,
-            "title": "弱虫ペダル GLORY LINE　Blu-ray BOX Vol.1(初回生産限定版)（イベントチケット優先販売申込券付き）"
-          },
-          {
-            "thisRank": "6164",
-            "totalPt": "302",
-            "prevRank": "5819",
+            "thisRank": 4762,
+            "totalPt": 553,
+            "prevRank": 4522,
             "id": 78,
-            "title": "覇穹 封神演義 第1巻〈初回限定版〉 [Blu-ray]"
+            "title": "銀魂．銀ノ魂篇 1(完全生産限定版) [Blu-ray]"
           },
           {
-            "thisRank": "1746",
-            "totalPt": "319",
-            "prevRank": "1601",
-            "id": 79,
-            "title": "citrus 1 [Blu-ray]"
-          },
-          {
-            "thisRank": "3020",
-            "totalPt": "144",
-            "prevRank": "2860",
-            "id": 80,
-            "title": "【Amazon.co.jp限定】DEVILMAN crybaby COMPLETE BOX(メーカー特典:「B2告知ポスター」付)(オリジナル特典:「デビルカッター(特製レターオープナー)」付)(完全生産限定版) [Blu-ray]"
-          },
-          {
-            "thisRank": "11465",
-            "totalPt": "83",
-            "prevRank": "11099",
-            "id": 81,
-            "title": "キリングバイツ 第1巻<初回限定版> [Blu-ray]"
-          },
-          {
-            "thisRank": "27127",
-            "totalPt": "54",
-            "prevRank": "26748",
-            "id": 82,
-            "title": "【Amazon.co.jp限定】衛宮さんちの今日のごはん 1(メーカー特典:「TAa描き下ろしミニ色紙」付)(全巻購入特典:「描き下ろしB1布ポスター」引換シリアルコード付)(完全生産限定版) [DVD]"
-          },
-          {
-            "thisRank": "9585",
-            "totalPt": "147",
-            "prevRank": "9059",
-            "id": 83,
-            "title": "ヴァイオレット・エヴァーガーデン1 [DVD]"
-          },
-          {
-            "thisRank": "11490",
-            "totalPt": "55",
-            "prevRank": "11139",
-            "id": 84,
-            "title": "【Amazon.co.jp限定】メルヘン・メドヘン第1巻(初回限定生産)(全巻購入特典:カントク描き下ろしB1布ポスター引換シリアルコード付き) [Blu-ray]"
-          },
-          {
-            "thisRank": "22924",
-            "totalPt": "43",
-            "prevRank": "22633",
-            "id": 85,
-            "title": "【Amazon.co.jp限定】博多豚骨ラーメンズ 1 ブルーレイ(初回仕様版)(全巻購入特典:「キャラクター原案・一色 箱 描き下ろしB2布ポスター(キャラクター:馬場善治&林憲明)」引換シリアルコード付) [Blu-ray]"
-          },
-          {
-            "thisRank": "2203",
-            "totalPt": "554",
-            "prevRank": "2018",
-            "id": 86,
-            "title": "銀魂.銀ノ魂篇 1(完全生産限定版) [DVD]"
-          },
-          {
-            "thisRank": "1279",
-            "totalPt": "117",
-            "prevRank": "2065",
+            "thisRank": 14432,
+            "totalPt": 116,
+            "prevRank": 14293,
             "id": 87,
-            "title": "TVアニメ「サンリオ男子」第1巻【DVD】/イベントチケット優先販売申込券(昼の部)つき"
-          },
-          {
-            "thisRank": "9086",
-            "totalPt": "354",
-            "prevRank": "8534",
-            "id": 88,
-            "title": "覇穹 封神演義 第1巻〈初回限定版〉 [DVD]"
-          },
-          {
-            "thisRank": "25802",
-            "totalPt": "125",
-            "prevRank": "25493",
-            "id": 89,
-            "title": "【Amazon.co.jp限定】カードキャプターさくら クリアカード編 Vol.1 DVD初回仕様版(全巻購入特典:「アニメイラスト描き下ろしキャンバスアート」引換シリアルコード付)"
-          },
-          {
-            "thisRank": "3932",
-            "totalPt": "101",
-            "prevRank": "3520",
-            "id": 90,
-            "title": "【Amazon.co.jp限定】覇穹 封神演義 第1巻〈初回限定版〉(全巻購入特典:「キャスト座談会CD」「アニメ描きおろし四曲屏風 [太公望&聞仲]」引換シリアルコード付き) [Blu-ray]"
-          },
-          {
-            "thisRank": "2879",
-            "totalPt": "95",
-            "prevRank": "2602",
-            "id": 91,
             "title": "博多豚骨ラーメンズ 1 DVD (初回仕様版)"
           },
           {
-            "thisRank": "15617",
-            "totalPt": "63",
-            "prevRank": "15497",
-            "id": 92,
+            "thisRank": 926,
+            "totalPt": 160,
+            "prevRank": 838,
+            "id": 58,
+            "title": "【Amazon.co.jp限定】からかい上手の高木さんVol.1(初回生産限定版)(全巻購入特典:描きおろし全巻収納BOX+オリジナル特典映像DVD引換シリアルコード付)"
+          },
+          {
+            "thisRank": 6745,
+            "totalPt": 641,
+            "prevRank": 6702,
+            "id": 64,
+            "title": "【Amazon.co.jp限定】 デスマーチからはじまる異世界狂想曲 1(各巻購入特典:ジャケットステッカー)+(全巻購入特典:描き下ろし全巻収納BOX(ポチ・タマ・アリサ・ルル)引換シリアルコード)+(メーカー早期予約特典:キャラクター原案shri描き下ろしミニ色紙(ポチ・タマ))付 [Blu-ray]"
+          },
+          {
+            "thisRank": 3230,
+            "totalPt": 360,
+            "prevRank": 3123,
+            "id": 71,
+            "title": "【Amazon.co.jp限定】衛宮さんちの今日のごはん 1(メーカー特典:「TAa描き下ろしミニ色紙」付)(全巻購入特典:「描き下ろしB1布ポスター」引換シリアルコード付)(完全生産限定版) [Blu-ray]"
+          },
+          {
+            "thisRank": 1489,
+            "totalPt": 273,
+            "prevRank": 1379,
+            "id": 70,
+            "title": "「ラーメン大好き小泉さん」Blu-ray Disc 上巻"
+          },
+          {
+            "thisRank": 2319,
+            "totalPt": 704,
+            "prevRank": 2147,
+            "id": 65,
+            "title": "【Amazon.co.jp限定】続『刀剣乱舞-花丸-』 其の一 DVD (初回生産限定版)（イベントチケット優先販売申し込み券付き）（全巻購入特典:描き下ろし全巻収納BOX&千社札ステッカー 引換シリアルコード付)[DVD]"
+          },
+          {
+            "thisRank": 2592,
+            "totalPt": 436,
+            "prevRank": 2507,
+            "id": 52,
+            "title": "【Amazon.co.jp限定】 ハクメイとミコチ Blu-ray BOX 上巻(上巻早期予約特典:ハクメイとミコチの飛び出すポップアップカード付)(全巻購入特典:アニメ描き下ろしイラスト使用アクリル卓上カレンダー 引換シリアルコード)(イベントチケット優先販売申込券)"
+          },
+          {
+            "thisRank": 3538,
+            "totalPt": 130,
+            "prevRank": 3260,
+            "id": 68,
+            "title": "【Amazon.co.jp限定】BEATLESS BOX 1(Amazon.co.jp限定版全巻購入特典:アニメ描き下ろし等身大タペストリー引換シリアルコード&BOX1早期予約特典:原作イラスト・redjuice描き下ろしイラスト使用A2ポスター(専用収納ケース)付) [Blu-ray]"
+          },
+          {
+            "thisRank": 2289,
+            "totalPt": 1479,
+            "prevRank": 2206,
+            "id": 57,
+            "title": "【Amazon.co.jp限定】からかい上手の高木さんVol.1 Blu-ray特別版(オリジナルTシャツ付)(全巻購入特典:描きおろし全巻収納BOX+オリジナル特典映像DVD引換シリアルコード付)"
+          },
+          {
+            "thisRank": 3384,
+            "totalPt": 590,
+            "prevRank": 3101,
+            "id": 73,
+            "title": "銀魂.銀ノ魂篇 1(完全生産限定版) [DVD]"
+          },
+          {
+            "thisRank": 18925,
+            "totalPt": 148,
+            "prevRank": 18819,
+            "id": 79,
+            "title": "【Amazon.co.jp限定】DEVILMAN crybaby COMPLETE BOX(メーカー特典:「B2告知ポスター」付)(オリジナル特典:「デビルカッター(特製レターオープナー)」付)(完全生産限定版) [Blu-ray]"
+          },
+          {
+            "thisRank": 1035,
+            "totalPt": 515,
+            "prevRank": 956,
+            "id": 56,
+            "title": "だがしかし2 Blu-ray上巻"
+          },
+          {
+            "thisRank": 595,
+            "totalPt": 521,
+            "prevRank": 562,
+            "id": 62,
+            "title": "【Amazon.co.jp限定】 宇宙よりも遠い場所 1(第1巻早期予約特典:アニメ描き下ろし「キマリのA3クリアポスター」付)(全巻購入特典:アニメ描き下ろしイラスト使用B1布ポスター 引換シリアルコード）(イベントチケット優先販売申込券) [Blu-ray]"
+          },
+          {
+            "thisRank": 4907,
+            "totalPt": 342,
+            "prevRank": 4715,
+            "id": 89,
+            "title": "citrus 1 [Blu-ray]"
+          },
+          {
+            "thisRank": 7715,
+            "totalPt": 54,
+            "prevRank": 7336,
+            "id": 54,
+            "title": "BEATLESS BOX 1 [Blu-ray]"
+          },
+          {
+            "thisRank": 25678,
+            "totalPt": 44,
+            "prevRank": 25329,
+            "id": 83,
+            "title": "【Amazon.co.jp限定】 刀使ノ巫女 第1巻(第1巻早期予約特典:「しずまよしのり描き下ろしA3クリアポスター」付)(各巻購入特典:「オリジナルデカ缶バッチ」付)(全巻購入特典:「しずまよしのり描き下ろしイラスト使用 4曲屏風」引換シリアルコード付)(イベントチケット優先販売申込券) [Blu-ray]"
+          },
+          {
+            "thisRank": 5905,
+            "totalPt": 221,
+            "prevRank": 5574,
+            "id": 55,
+            "title": "たくのみ。Blu-ray上巻"
+          },
+          {
+            "thisRank": 10765,
+            "totalPt": 91,
+            "prevRank": 10157,
+            "id": 90,
+            "title": "TVアニメ「サンリオ男子」第1巻/イベントチケット優先販売申込券(昼の部)つき [Blu-ray]"
+          },
+          {
+            "thisRank": 11583,
+            "totalPt": 180,
+            "prevRank": 11096,
+            "id": 95,
+            "title": "【Amazon.co.jp限定】スロウスタート 1(全巻購入特典:「アニメ描き下ろしイラスト使用 B1布ポスター」「原作 篤見唯子描き下ろしイラスト使用 全巻収納BOX」引換シリアルコード付)(完全生産限定版) [Blu-ray]"
+          },
+          {
+            "thisRank": 9876,
+            "totalPt": 227,
+            "prevRank": 9565,
+            "id": 97,
+            "title": "宇宙よりも遠い場所 1(イベントチケット優先販売申券) [DVD]"
+          },
+          {
+            "thisRank": 7577,
+            "totalPt": 82,
+            "prevRank": 7049,
+            "id": 102,
             "title": "Fate/EXTRA Last Encore 1(完全生産限定版) [DVD]"
           },
           {
-            "thisRank": "8156",
-            "totalPt": "263",
-            "prevRank": "7713",
-            "id": 93,
+            "thisRank": 21247,
+            "totalPt": 162,
+            "prevRank": 21015,
+            "id": 88,
+            "title": "ヴァイオレット・エヴァーガーデン1 [DVD]"
+          },
+          {
+            "thisRank": 7672,
+            "totalPt": 281,
+            "prevRank": 7321,
+            "id": 81,
             "title": "【Amazon.co.jp限定】「りゅうおうのおしごと! 」Vol.1 (初回限定版) (全巻購入特典引換シリアルコード付:特典内容未定) [Blu-ray]"
           },
           {
-            "thisRank": "6867",
-            "totalPt": "227",
-            "prevRank": "6655",
+            "thisRank": 2831,
+            "totalPt": 106,
+            "prevRank": 2554,
+            "id": 98,
+            "title": "ハクメイとミコチ DVD BOX 上巻(イベントチケット優先販売申券)"
+          },
+          {
+            "thisRank": 14505,
+            "totalPt": 136,
+            "prevRank": 14209,
+            "id": 86,
+            "title": "TVアニメ「サンリオ男子」第1巻【DVD】/イベントチケット優先販売申込券(昼の部)つき"
+          },
+          {
+            "thisRank": 7657,
+            "totalPt": 237,
+            "prevRank": 7424,
+            "id": 66,
+            "title": "衛宮さんちの今日のごはん 1(完全生産限定版) [DVD]"
+          },
+          {
+            "thisRank": 1866,
+            "totalPt": 204,
+            "prevRank": 1689,
+            "id": 69,
+            "title": "博多豚骨ラーメンズ 1 ブルーレイ (初回仕様版) [Blu-ray]"
+          },
+          {
+            "thisRank": 11499,
+            "totalPt": 371,
+            "prevRank": 11040,
+            "id": 110,
+            "title": "覇穹 封神演義 第1巻〈初回限定版〉 [DVD]"
+          },
+          {
+            "thisRank": 19345,
+            "totalPt": 275,
+            "prevRank": 19256,
+            "id": 74,
+            "title": "カードキャプターさくら クリアカード編 Vol.1 初回仕様版 [DVD]"
+          },
+          {
+            "thisRank": 12011,
+            "totalPt": 375,
+            "prevRank": 11673,
+            "id": 72,
+            "title": "学園ベビーシッターズ　１　(特装限定版) [DVD]"
+          },
+          {
+            "thisRank": 24312,
+            "totalPt": 75,
+            "prevRank": 23931,
+            "id": 112,
+            "title": "ダーリン・イン・ザ・フランキス 1(完全生産限定版) [DVD]"
+          },
+          {
+            "thisRank": 42643,
+            "totalPt": 60,
+            "prevRank": 42022,
+            "id": 147,
+            "title": "【Amazon.co.jp限定】スロウスタート 1（全巻購入特典：「アニメ描き下ろしイラスト使用 B1布ポスター」「原作 篤見唯子描き下ろしイラスト使用 全巻収納BOX」引換シリアルコード付）(完全生産限定版) [DVD]"
+          },
+          {
+            "thisRank": 16015,
+            "totalPt": 336,
+            "prevRank": 15980,
+            "id": 109,
+            "title": "伊藤潤二『コレクション』 完全版DVD 上巻"
+          },
+          {
+            "thisRank": 16756,
+            "totalPt": 72,
+            "prevRank": 16675,
+            "id": 77,
+            "title": "刀使ノ巫女 第1巻(イベントチケット優先販売申込券) [Blu-ray]"
+          },
+          {
+            "thisRank": 15426,
+            "totalPt": 52,
+            "prevRank": 14753,
+            "id": 142,
+            "title": "グランクレスト戦記 1(完全生産限定版) [DVD]"
+          },
+          {
+            "thisRank": 36430,
+            "totalPt": 309,
+            "prevRank": 36087,
+            "id": 134,
+            "title": "【Amazon.co.jp限定】 オーバーロードII 1(第1巻早期予約特典:キャラクター原案・so-bin描き下ろし「アルベド&シャルティアA4ダブルポケットクリアファイル」付)(全巻購入特典:アニメ描き下ろしイラスト使用原作サイズブックカバー 引換シリアルコード) [DVD]"
+          },
+          {
+            "thisRank": 11085,
+            "totalPt": 381,
+            "prevRank": 10636,
+            "id": 82,
+            "title": "オーバーロード�U 1 [DVD]"
+          },
+          {
+            "thisRank": 41277,
+            "totalPt": 54,
+            "prevRank": 40814,
+            "id": 138,
+            "title": "【Amazon.co.jp限定】博多豚骨ラーメンズ 1 DVD(初回仕様版)(全巻購入特典:「キャラクター原案・一色 箱 描き下ろしB2布ポスター(キャラクター:馬場善治&林憲明)」引換シリアルコード付)"
+          },
+          {
+            "thisRank": 19047,
+            "totalPt": 179,
+            "prevRank": 18761,
+            "id": 84,
+            "title": "学園ベビーシッターズ　１　(特装限定版) [Blu-ray]"
+          },
+          {
+            "thisRank": 36167,
+            "totalPt": 85,
+            "prevRank": 35731,
+            "id": 80,
+            "title": "【Amazon.co.jp限定】覇穹 封神演義 第1巻〈初回限定版〉(全巻購入特典:「キャスト座談会CD」「アニメ描きおろし四曲屏風 [太公望&聞仲]」引換シリアルコード付き) [DVD]"
+          },
+          {
+            "thisRank": 14877,
+            "totalPt": 196,
+            "prevRank": 14534,
+            "id": 85,
+            "title": "【Amazon.co.jp限定】からかい上手の高木さんVol.1 DVD特別版(オリジナルTシャツ付) (全巻購入特典:描きおろし全巻収納BOX+オリジナル特典映像DVD引換シリアルコード付)"
+          },
+          {
+            "thisRank": 29032,
+            "totalPt": 143,
+            "prevRank": 28813,
+            "id": 91,
+            "title": "【Amazon.co.jp限定】だがしかし2 Blu-ray上巻(アニメ描き下ろし(ほたる&ハジメ)B2布ポスター引換シリアルコード付)"
+          },
+          {
+            "thisRank": 14178,
+            "totalPt": 239,
+            "prevRank": 13997,
             "id": 94,
             "title": "【Amazon.co.jp限定】citrus 1(全巻購入特典:描き下ろしB2布ポスター引換シリアルコード付) [Blu-ray]"
           },
           {
-            "thisRank": "1742",
-            "totalPt": "196",
-            "prevRank": "1580",
-            "id": 95,
-            "title": "宇宙よりも遠い場所 1(イベントチケット優先販売申券) [DVD]"
+            "thisRank": 25314,
+            "totalPt": 161,
+            "prevRank": 24890,
+            "id": 92,
+            "title": "【Amazon.co.jp限定】ヴァイオレット・エヴァーガーデン 1 (第1巻のみ特典:L版ブロマイド + 全巻購入特典:「LPサイズディスク収納ケース」引換シリアルコード付) [ VIOLET EVERGARDEN ] [DVD]"
           },
           {
-            "thisRank": "25201",
-            "totalPt": "232",
-            "prevRank": "25044",
-            "id": 96,
-            "title": "【Amazon.co.jp限定】TVアニメ「ミイラの飼い方」DVD1匹目・ミーくんポーチ入り(L盤ビジュアルシート付き)"
-          },
-          {
-            "thisRank": "9895",
-            "totalPt": "321",
-            "prevRank": "9360",
-            "id": 97,
-            "title": "伊藤潤二『コレクション』 完全版DVD 上巻"
-          },
-          {
-            "thisRank": "37797",
-            "totalPt": "82",
-            "prevRank": "37363",
-            "id": 98,
-            "title": "【Amazon.co.jp限定】七つの大罪 戒めの復活1（1〜4巻連動購入特典：「描き下ろしB2布ポスター」引換シリアルコード付）(完全生産限定版) [Blu-ray]"
-          },
-          {
-            "thisRank": "6146",
-            "totalPt": "184",
-            "prevRank": "5785",
+            "thisRank": 35791,
+            "totalPt": 12,
+            "prevRank": 35372,
             "id": 99,
-            "title": "【Amazon.co.jp限定】からかい上手の高木さんVol.1 DVD特別版(オリジナルTシャツ付) (全巻購入特典:描きおろし全巻収納BOX+オリジナル特典映像DVD引換シリアルコード付)"
+            "title": "【早期購入特典あり】恋は雨上がりのように　上(上巻購入特典：「A4ポートレート」付)（上下巻連動購入特典：「上下巻収納スリーブケース」引換シリアルコード付）(完全生産限定版) [DVD]"
           },
           {
-            "thisRank": "1146",
-            "totalPt": "121",
-            "prevRank": "1046",
+            "thisRank": 38877,
+            "totalPt": 66,
+            "prevRank": 38454,
+            "id": 96,
+            "title": "【Amazon.co.jp限定】キリングバイツ 第1巻<初回限定版>(全巻購入特典:「アニメ描き下ろしイラスト全巻収納BOX[宇崎瞳(ラーテル)&稲葉初(ラビ)]」引換シリアルコード付き) [Blu-ray]"
+          },
+          {
+            "thisRank": 44622,
+            "totalPt": 72,
+            "prevRank": 44129,
+            "id": 93,
+            "title": "刀使ノ巫女 第1巻(イベントチケット優先販売申込券) [DVD]"
+          },
+          {
+            "thisRank": 2300,
+            "totalPt": 115,
+            "prevRank": 2192,
             "id": 100,
-            "title": "【Amazon.co.jp限定】BEATLESS BOX 1(Amazon.co.jp限定版全巻購入特典:アニメ描き下ろし等身大タペストリー引換シリアルコード&BOX1早期予約特典:原作イラスト・redjuice描き下ろしイラスト使用A2ポスター(専用収納ケース)付) [Blu-ray]"
+            "title": "弱虫ペダル GLORY LINE　Blu-ray BOX Vol.1(初回生産限定版)（イベントチケット優先販売申込券付き）"
           },
           {
-            "thisRank": "1409",
-            "totalPt": "46",
-            "prevRank": "2435",
+            "thisRank": 10307,
+            "totalPt": 96,
+            "prevRank": 9808,
             "id": 101,
-            "title": "BEATLESS BOX 1 [Blu-ray]"
+            "title": "キリングバイツ 第1巻<初回限定版> [Blu-ray]"
           },
           {
-            "thisRank": "12654",
-            "totalPt": "64",
-            "prevRank": "12292",
-            "id": 102,
-            "title": "斉木楠雄のΨ難　Season2　�@【Blu−ray】 [Blu-ray]"
-          },
-          {
-            "thisRank": "2482",
-            "totalPt": "214",
-            "prevRank": "2302",
-            "id": 103,
-            "title": "三ツ星カラーズ Vol.1（イベントチケット優先販売申券） [Blu-ray]"
-          },
-          {
-            "thisRank": "12176",
-            "totalPt": "41",
-            "prevRank": "11861",
+            "thisRank": 4346,
+            "totalPt": 323,
+            "prevRank": 4131,
             "id": 104,
-            "title": "【Amazon.co.jp限定】 刀使ノ巫女 第1巻(第1巻早期予約特典:「しずまよしのり描き下ろしA3クリアポスター」付)(各巻購入特典:「オリジナルデカ缶バッチ」付)(全巻購入特典:「しずまよしのり描き下ろしイラスト使用 4曲屏風」引換シリアルコード付)(イベントチケット優先販売申込券) [Blu-ray]"
+            "title": "覇穹 封神演義 第1巻〈初回限定版〉 [Blu-ray]"
           },
           {
-            "thisRank": "36388",
-            "totalPt": "31",
-            "prevRank": "36114",
-            "id": 105,
-            "title": "【Amazon.co.jp限定】弱虫ペダル GLORY LINE DVD BOX Vol.1(初回生産限定版)(イベントチケット優先販売申込券付き)(全巻購入特典:「描き下ろし全巻収納BOX」&「A4クリアファイル」引換シリアルコード付)"
-          },
-          {
-            "thisRank": "36170",
-            "totalPt": "42",
-            "prevRank": "35921",
-            "id": 106,
-            "title": "【Amazon.co.jp限定】 ハクメイとミコチ DVD BOX 上巻(上巻早期予約特典:ハクメイとミコチの飛び出すポップアップカード付）（全巻購入特典:アニメ描き下ろしイラスト使用アクリル卓上カレンダー 引換シリアルコード)(イベントチケット優先販売申込券)"
-          },
-          {
-            "thisRank": "40147",
-            "totalPt": "32",
-            "prevRank": "39839",
-            "id": 107,
-            "title": "「ラーメン大好き小泉さん」DVD 上巻"
-          },
-          {
-            "thisRank": "39821",
-            "totalPt": "89",
-            "prevRank": "39470",
-            "id": 108,
-            "title": "三ツ星カラーズ Vol.1（イベントチケット優先販売申券） [DVD]"
-          },
-          {
-            "thisRank": "38723",
-            "totalPt": "108",
-            "prevRank": "38458",
-            "id": 109,
-            "title": "【Amazon.co.jp限定】 三ツ星カラーズ Vol.1(第1巻早期予約特典:キャスト複製サイン入りミニ色紙付)(全巻購入特典:アニメ描き下ろしイラスト使用B1布ポスター 引換シリアルコード）(イベントチケット優先販売申込券) [Blu-ray]"
-          },
-          {
-            "thisRank": "12000",
-            "totalPt": "99",
-            "prevRank": "11259",
-            "id": 110,
-            "title": "【Amazon.co.jp限定】からかい上手の高木さんVol.1(初回生産限定版)(全巻購入特典:描きおろし全巻収納BOX+オリジナル特典映像DVD引換シリアルコード付)"
-          },
-          {
-            "thisRank": "8222",
-            "totalPt": "167",
-            "prevRank": "7717",
-            "id": 111,
-            "title": "学園ベビーシッターズ　１　(特装限定版) [Blu-ray]"
-          },
-          {
-            "thisRank": "42177",
-            "totalPt": "102",
-            "prevRank": "41867",
-            "id": 112,
-            "title": "citrus 1 [DVD]"
-          },
-          {
-            "thisRank": "44017",
-            "totalPt": "78",
-            "prevRank": "43640",
-            "id": 113,
-            "title": "【Amazon.co.jp限定】 宇宙よりも遠い場所 1(第1巻早期予約特典:アニメ描き下ろし「キマリのA3クリアポスター」付)(全巻購入特典:アニメ描き下ろしイラスト使用B1布ポスター 引換シリアルコード)(イベントチケット優先販売申込券) [DVD]"
-          },
-          {
-            "thisRank": "24871",
-            "totalPt": "43",
-            "prevRank": "24516",
-            "id": 114,
-            "title": "【Amazon.co.jp限定】Fate/EXTRA Last Encore 1(全巻購入特典:「描き下ろしB1布ポスター+ブックカバー」「ワダアルコ描き下ろし全巻収納BOX&ポートレート」引換シリアルコード付)(完全生産限定版) [DVD]"
-          },
-          {
-            "thisRank": "42008",
-            "totalPt": "80",
-            "prevRank": "41871",
-            "id": 115,
+            "thisRank": 14344,
+            "totalPt": 88,
+            "prevRank": 13665,
+            "id": 103,
             "title": "グランクレスト戦記 1(完全生産限定版) [Blu-ray]"
           },
           {
-            "thisRank": "8972",
-            "totalPt": "76",
-            "prevRank": "8123",
-            "id": 116,
-            "title": "TVアニメ「サンリオ男子」第1巻/イベントチケット優先販売申込券(昼の部)つき [Blu-ray]"
+            "thisRank": 38850,
+            "totalPt": 107,
+            "prevRank": 38487,
+            "id": 105,
+            "title": "【Amazon.co.jp限定】覇穹 封神演義 第1巻〈初回限定版〉(全巻購入特典:「キャスト座談会CD」「アニメ描きおろし四曲屏風 [太公望&聞仲]」引換シリアルコード付き) [Blu-ray]"
           },
           {
-            "thisRank": "5182",
-            "totalPt": "133",
-            "prevRank": "4456",
-            "id": 117,
-            "title": "【Amazon.co.jp限定】だがしかし2 Blu-ray上巻(アニメ描き下ろし(ほたる&ハジメ)B2布ポスター引換シリアルコード付)"
+            "thisRank": 11902,
+            "totalPt": 41,
+            "prevRank": 11318,
+            "id": 106,
+            "title": "【Amazon.co.jp限定】弱虫ペダル GLORY LINE　Blu-ray BOX Vol.1(初回生産限定版)（イベントチケット優先販売申込券付き）(全巻購入特典:「描き下ろし全巻収納BOX」＆「A4クリアファイル」引換シリアルコード付)"
           },
           {
-            "thisRank": "44988",
-            "totalPt": "301",
-            "prevRank": "44861",
+            "thisRank": 47844,
+            "totalPt": 86,
+            "prevRank": 47360,
+            "id": 107,
+            "title": "【Amazon.co.jp限定】 学園ベビーシッターズ 1 (特装限定版) (既存版権使用2Lビジュアルシート/鹿島竜一) [DVD]"
+          },
+          {
+            "thisRank": 48545,
+            "totalPt": 29,
+            "prevRank": 48000,
+            "id": 108,
+            "title": "斉木楠雄のΨ難　Season2　�@【DVD】"
+          },
+          {
+            "thisRank": 18026,
+            "totalPt": 64,
+            "prevRank": 17678,
+            "id": 111,
+            "title": "【Amazon.co.jp限定】メルヘン・メドヘン第1巻(初回限定生産)(全巻購入特典:カントク描き下ろしB1布ポスター引換シリアルコード付き) [Blu-ray]"
+          },
+          {
+            "thisRank": 4950,
+            "totalPt": 80,
+            "prevRank": 4624,
+            "id": 114,
+            "title": "斉木楠雄のΨ難　Season2　�@【Blu−ray】 [Blu-ray]"
+          },
+          {
+            "thisRank": 10757,
+            "totalPt": 56,
+            "prevRank": 10076,
+            "id": 113,
+            "title": "【Amazon.co.jp限定】たくのみ。Blu-ray 上巻(アニメ描き下ろし(香枝&真)B2布ポスター引換シリアルコード付)"
+          },
+          {
+            "thisRank": 34816,
+            "totalPt": 240,
+            "prevRank": 34797,
+            "id": 115,
+            "title": "【Amazon.co.jp限定】TVアニメ「ミイラの飼い方」DVD1匹目・ミーくんポーチ入り(L盤ビジュアルシート付き)"
+          },
+          {
+            "thisRank": 4671,
+            "totalPt": 51,
+            "prevRank": 4089,
             "id": 118,
-            "title": "【Amazon.co.jp限定】 オーバーロードII 1(第1巻早期予約特典:キャラクター原案・so-bin描き下ろし「アルベド&シャルティアA4ダブルポケットクリアファイル」付)(全巻購入特典:アニメ描き下ろしイラスト使用原作サイズブックカバー 引換シリアルコード) [DVD]"
+            "title": "【Amazon.co.jp限定】博多豚骨ラーメンズ 1 ブルーレイ(初回仕様版)(全巻購入特典:「キャラクター原案・一色 箱 描き下ろしB2布ポスター(キャラクター:馬場善治&林憲明)」引換シリアルコード付) [Blu-ray]"
           },
           {
-            "thisRank": "21306",
-            "totalPt": "78",
-            "prevRank": "20833",
+            "thisRank": 49344,
+            "totalPt": 84,
+            "prevRank": 49091,
             "id": 119,
             "title": "【Amazon.co.jp限定】ダーリン・イン・ザ・フランキス 1(メーカー特典:「線画A3ポスター」「田中将賀描きおろし複製色紙」付)(1~4巻連動購入特典:「描き下ろしB1布ポスター」&全巻連動購入特典:「描き下ろし全巻収納ボックス」引換シリアルコード付)(完全生産限定版) [DVD]"
           },
           {
-            "thisRank": "55050",
-            "totalPt": "73",
-            "prevRank": "54594",
+            "thisRank": 11986,
+            "totalPt": 142,
+            "prevRank": 11542,
             "id": 120,
-            "title": "【Amazon.co.jp限定】覇穹 封神演義 第1巻〈初回限定版〉(全巻購入特典:「キャスト座談会CD」「アニメ描きおろし四曲屏風 [太公望&聞仲]」引換シリアルコード付き) [DVD]"
+            "title": "【Amazon.co.jp限定】カードキャプターさくら クリアカード編 Vol.1 DVD初回仕様版(全巻購入特典:「アニメイラスト描き下ろしキャンバスアート」引換シリアルコード付)"
           },
           {
-            "thisRank": "4044",
-            "totalPt": "37",
-            "prevRank": "3624",
+            "thisRank": 58341,
+            "totalPt": 91,
+            "prevRank": 57832,
+            "id": 117,
+            "title": "【Amazon.co.jp限定】七つの大罪 戒めの復活1（1〜4巻連動購入特典：「描き下ろしB2布ポスター」引換シリアルコード付）(完全生産限定版) [DVD]"
+          },
+          {
+            "thisRank": 62240,
+            "totalPt": 81,
+            "prevRank": 61594,
+            "id": 116,
+            "title": "【Amazon.co.jp限定】citrus 1(全巻購入特典:描き下ろしB2布ポスター引換シリアルコード付) [DVD]"
+          },
+          {
+            "thisRank": 32772,
+            "totalPt": 52,
+            "prevRank": 32429,
             "id": 121,
-            "title": "【Amazon.co.jp限定】弱虫ペダル GLORY LINE　Blu-ray BOX Vol.1(初回生産限定版)（イベントチケット優先販売申込券付き）(全巻購入特典:「描き下ろし全巻収納BOX」＆「A4クリアファイル」引換シリアルコード付)"
+            "title": "【Amazon.co.jp限定】Fate/EXTRA Last Encore 1(全巻購入特典:「描き下ろしB1布ポスター+ブックカバー」「ワダアルコ描き下ろし全巻収納BOX&ポートレート」引換シリアルコード付)(完全生産限定版) [DVD]"
           },
           {
-            "thisRank": "55902",
-            "totalPt": "78",
-            "prevRank": "55494",
+            "thisRank": 54485,
+            "totalPt": 123,
+            "prevRank": 54211,
             "id": 122,
-            "title": "【Amazon.co.jp限定】 学園ベビーシッターズ 1 (特装限定版) (既存版権使用2Lビジュアルシート/鹿島竜一) [DVD]"
+            "title": "七つの大罪 戒めの復活 1 [DVD]"
           },
           {
-            "thisRank": "25724",
-            "totalPt": "45",
-            "prevRank": "25256",
+            "thisRank": 1878,
+            "totalPt": 51,
+            "prevRank": 24740,
             "id": 123,
             "title": "メルヘン・メドヘン第1巻(初回限定生産) [Blu-ray]"
           },
           {
-            "thisRank": "58034",
-            "totalPt": "48",
-            "prevRank": "57699",
+            "thisRank": 33973,
+            "totalPt": 63,
+            "prevRank": 33583,
             "id": 124,
-            "title": "【Amazon.co.jp限定】たくのみ。Blu-ray 上巻(アニメ描き下ろし(香枝&真)B2布ポスター引換シリアルコード付)"
+            "title": "【Amazon.co.jp限定】衛宮さんちの今日のごはん 1(メーカー特典:「TAa描き下ろしミニ色紙」付)(全巻購入特典:「描き下ろしB1布ポスター」引換シリアルコード付)(完全生産限定版) [DVD]"
           },
           {
-            "thisRank": "22419",
-            "totalPt": "117",
-            "prevRank": "21888",
+            "thisRank": 62200,
+            "totalPt": 107,
+            "prevRank": 61855,
             "id": 125,
-            "title": "七つの大罪 戒めの復活 1 [DVD]"
-          },
-          {
-            "thisRank": "58418",
-            "totalPt": "62",
-            "prevRank": "58155",
-            "id": 126,
-            "title": "ダーリン・イン・ザ・フランキス 1(完全生産限定版) [DVD]"
-          },
-          {
-            "thisRank": "54562",
-            "totalPt": "147",
-            "prevRank": "54536",
-            "id": 127,
-            "title": "【Amazon.co.jp限定】ヴァイオレット・エヴァーガーデン 1 (第1巻のみ特典:L版ブロマイド + 全巻購入特典:「LPサイズディスク収納ケース」引換シリアルコード付) [ VIOLET EVERGARDEN ] [DVD]"
-          },
-          {
-            "thisRank": "24726",
-            "totalPt": "60",
-            "prevRank": "24227",
-            "id": 128,
-            "title": "【Amazon.co.jp限定】キリングバイツ 第1巻<初回限定版>(全巻購入特典:「アニメ描き下ろしイラスト全巻収納BOX[宇崎瞳(ラーテル)&稲葉初(ラビ)]」引換シリアルコード付き) [Blu-ray]"
-          },
-          {
-            "thisRank": "73331",
-            "totalPt": "24",
-            "prevRank": "72870",
-            "id": 129,
-            "title": "【Amazon.co.jp限定】斉木楠雄のΨ難 Season2 1 (全巻購入特典 引換シリアルコード付) [Blu-ray]"
-          },
-          {
-            "thisRank": "64489",
-            "totalPt": "47",
-            "prevRank": "64365",
-            "id": 130,
-            "title": "【Amazon.co.jp限定】博多豚骨ラーメンズ 1 DVD(初回仕様版)(全巻購入特典:「キャラクター原案・一色 箱 描き下ろしB2布ポスター(キャラクター:馬場善治&林憲明)」引換シリアルコード付)"
-          },
-          {
-            "thisRank": "70608",
-            "totalPt": "65",
-            "prevRank": "70323",
-            "id": 131,
-            "title": "刀使ノ巫女 第1巻(イベントチケット優先販売申込券) [DVD]"
-          },
-          {
-            "thisRank": "73302",
-            "totalPt": "64",
-            "prevRank": "72981",
-            "id": 132,
-            "title": "【Amazon.co.jp限定】 学園ベビーシッターズ　１　(特装限定版)　(既存版権使用2Lビジュアルシート/鹿島竜一) [Blu-ray]"
-          },
-          {
-            "thisRank": "64462",
-            "totalPt": "17",
-            "prevRank": "64428",
-            "id": 133,
-            "title": "【Amazon.co.jp限定】ダメプリ ANIME CARAVAN 上巻(全巻購入特典:描き下ろし収納BOX引換シリアルコード付) [Blu-ray]"
-          },
-          {
-            "thisRank": "79470",
-            "totalPt": "32",
-            "prevRank": "79001",
-            "id": 134,
-            "title": "【Amazon.co.jp限定】グランクレスト戦記 1(全巻連動購入特典:「描き下ろしB1布ポスター（シルーカ、アイシェラ）」引換シリアルコード付)(完全生産限定版) [DVD]"
-          },
-          {
-            "thisRank": "88296",
-            "totalPt": "29",
-            "prevRank": "87690",
-            "id": 135,
-            "title": "【Amazon.co.jp限定】斉木楠雄のΨ難 Season2 1 (全巻購入特典 引換シリアルコード付) [DVD]"
-          },
-          {
-            "thisRank": "29406",
-            "totalPt": "102",
-            "prevRank": "28950",
-            "id": 136,
             "title": "スロウスタート 1(完全生産限定版) [DVD]"
           },
           {
-            "thisRank": "80589",
-            "totalPt": "42",
-            "prevRank": "80404",
+            "thisRank": 52074,
+            "totalPt": 42,
+            "prevRank": 52011,
+            "id": 127,
+            "title": "【Amazon.co.jp限定】 ハクメイとミコチ DVD BOX 上巻(上巻早期予約特典:ハクメイとミコチの飛び出すポップアップカード付）（全巻購入特典:アニメ描き下ろしイラスト使用アクリル卓上カレンダー 引換シリアルコード)(イベントチケット優先販売申込券)"
+          },
+          {
+            "thisRank": 12904,
+            "totalPt": 33,
+            "prevRank": 12200,
+            "id": 128,
+            "title": "【Amazon.co.jp限定】弱虫ペダル GLORY LINE DVD BOX Vol.1(初回生産限定版)(イベントチケット優先販売申込券付き)(全巻購入特典:「描き下ろし全巻収納BOX」&「A4クリアファイル」引換シリアルコード付)"
+          },
+          {
+            "thisRank": 75444,
+            "totalPt": 30,
+            "prevRank": 74739,
+            "id": 126,
+            "title": "【Amazon.co.jp限定】TVアニメ「サンリオ男子」第1巻 Blu-ray/イベントチケット優先販売申込券(昼の部)つき(全巻購入特典:描き下ろしB2布ポスター 引き換えシリアルコード付)"
+          },
+          {
+            "thisRank": 14916,
+            "totalPt": 113,
+            "prevRank": 14151,
+            "id": 129,
+            "title": "【Amazon.co.jp限定】 三ツ星カラーズ Vol.1(第1巻早期予約特典:キャスト複製サイン入りミニ色紙付)(全巻購入特典:アニメ描き下ろしイラスト使用B1布ポスター 引換シリアルコード）(イベントチケット優先販売申込券) [Blu-ray]"
+          },
+          {
+            "thisRank": 64368,
+            "totalPt": 85,
+            "prevRank": 64129,
+            "id": 131,
+            "title": "【Amazon.co.jp限定】七つの大罪 戒めの復活1（1〜4巻連動購入特典：「描き下ろしB2布ポスター」引換シリアルコード付）(完全生産限定版) [Blu-ray]"
+          },
+          {
+            "thisRank": 6657,
+            "totalPt": 32,
+            "prevRank": 5740,
+            "id": 132,
+            "title": "「ラーメン大好き小泉さん」DVD 上巻"
+          },
+          {
+            "thisRank": 24451,
+            "totalPt": 5,
+            "prevRank": 24005,
+            "id": 130,
+            "title": "【Amazon.co.jp限定】ダメプリ ANIME CARAVAN 上巻(全巻購入特典:描き下ろし収納BOX引換シリアルコード付) [DVD]"
+          },
+          {
+            "thisRank": 28004,
+            "totalPt": 97,
+            "prevRank": 27473,
+            "id": 133,
+            "title": "三ツ星カラーズ Vol.1（イベントチケット優先販売申券） [DVD]"
+          },
+          {
+            "thisRank": 62154,
+            "totalPt": 107,
+            "prevRank": 61965,
+            "id": 135,
+            "title": "citrus 1 [DVD]"
+          },
+          {
+            "thisRank": 27572,
+            "totalPt": 88,
+            "prevRank": 27143,
+            "id": 136,
+            "title": "【Amazon.co.jp限定】 宇宙よりも遠い場所 1(第1巻早期予約特典:アニメ描き下ろし「キマリのA3クリアポスター」付)(全巻購入特典:アニメ描き下ろしイラスト使用B1布ポスター 引換シリアルコード)(イベントチケット優先販売申込券) [DVD]"
+          },
+          {
+            "thisRank": 74907,
+            "totalPt": 18,
+            "prevRank": 74757,
             "id": 137,
-            "title": "グランクレスト戦記 1(完全生産限定版) [DVD]"
+            "title": "【Amazon.co.jp限定】ダメプリ ANIME CARAVAN 上巻(全巻購入特典:描き下ろし収納BOX引換シリアルコード付) [Blu-ray]"
           },
           {
-            "thisRank": "16246",
-            "totalPt": "85",
-            "prevRank": "15464",
-            "id": 138,
-            "title": "【Amazon.co.jp限定】七つの大罪 戒めの復活1（1〜4巻連動購入特典：「描き下ろしB2布ポスター」引換シリアルコード付）(完全生産限定版) [DVD]"
-          },
-          {
-            "thisRank": "8323",
-            "totalPt": "10",
-            "prevRank": "7434",
+            "thisRank": 92013,
+            "totalPt": 67,
+            "prevRank": 91817,
             "id": 139,
-            "title": "【早期購入特典あり】恋は雨上がりのように　上(上巻購入特典：「A4ポートレート」付)（上下巻連動購入特典：「上下巻収納スリーブケース」引換シリアルコード付）(完全生産限定版) [DVD]"
+            "title": "【Amazon.co.jp限定】 学園ベビーシッターズ　１　(特装限定版)　(既存版権使用2Lビジュアルシート/鹿島竜一) [Blu-ray]"
           },
           {
-            "thisRank": "92740",
-            "totalPt": "50",
-            "prevRank": "92308",
+            "thisRank": 98098,
+            "totalPt": 27,
+            "prevRank": 97822,
             "id": 140,
-            "title": "【Amazon.co.jp限定】TVアニメ「サンリオ男子」第1巻/イベントチケット優先販売申込券(昼の部)つき(全巻購入特典:描き下ろしB2布ポスター 引き換えシリアルコード付) [DVD]"
+            "title": "【Amazon.co.jp限定】斉木楠雄のΨ難 Season2 1 (全巻購入特典 引換シリアルコード付) [Blu-ray]"
           },
           {
-            "thisRank": "79894",
-            "totalPt": "50",
-            "prevRank": "79767",
+            "thisRank": 8749,
+            "totalPt": 54,
+            "prevRank": 8010,
             "id": 141,
             "title": "【Amazon.co.jp限定】グランクレスト戦記 1(全巻連動購入特典：「描き下ろしB1布ポスター（シルーカ、アイシェラ）」引換シリアルコード付)(完全生産限定版) [Blu-ray]"
           },
           {
-            "thisRank": "14703",
-            "totalPt": "75",
-            "prevRank": "13851",
-            "id": 142,
-            "title": "【Amazon.co.jp限定】citrus 1(全巻購入特典:描き下ろしB2布ポスター引換シリアルコード付) [DVD]"
+            "thisRank": 103100,
+            "totalPt": 36,
+            "prevRank": 102854,
+            "id": 143,
+            "title": "【Amazon.co.jp限定】グランクレスト戦記 1(全巻連動購入特典:「描き下ろしB1布ポスター（シルーカ、アイシェラ）」引換シリアルコード付)(完全生産限定版) [DVD]"
           },
           {
-            "thisRank": "161841",
-            "totalPt": "38",
-            "prevRank": "161604",
-            "id": 143,
+            "thisRank": 120327,
+            "totalPt": 32,
+            "prevRank": 120014,
+            "id": 144,
+            "title": "【Amazon.co.jp限定】斉木楠雄のΨ難 Season2 1 (全巻購入特典 引換シリアルコード付) [DVD]"
+          },
+          {
+            "thisRank": 115873,
+            "totalPt": 53,
+            "prevRank": 115596,
+            "id": 145,
+            "title": "【Amazon.co.jp限定】TVアニメ「サンリオ男子」第1巻/イベントチケット優先販売申込券(昼の部)つき(全巻購入特典:描き下ろしB2布ポスター 引き換えシリアルコード付) [DVD]"
+          },
+          {
+            "thisRank": 179787,
+            "totalPt": 40,
+            "prevRank": 179506,
+            "id": 146,
             "title": "【Amazon.co.jp限定】 刀使ノ巫女 第1巻(第1巻早期予約特典:「しずまよしのり描き下ろしA3クリアポスター」付)(各巻購入特典:「オリジナルデカ缶バッチ」付)(全巻購入特典:「しずまよしのり描き下ろしイラスト使用 4曲屏風」引換シリアルコード付)(イベントチケット優先販売申込券) [DVD]"
           },
           {
-            "thisRank": "28977",
-            "totalPt": "26",
-            "prevRank": "28358",
-            "id": 144,
-            "title": "【Amazon.co.jp限定】TVアニメ「サンリオ男子」第1巻 Blu-ray/イベントチケット優先販売申込券(昼の部)つき(全巻購入特典:描き下ろしB2布ポスター 引き換えシリアルコード付)"
-          },
-          {
-            "thisRank": "221809",
-            "totalPt": "53",
-            "prevRank": "221606",
-            "id": 145,
-            "title": "【Amazon.co.jp限定】スロウスタート 1（全巻購入特典：「アニメ描き下ろしイラスト使用 B1布ポスター」「原作 篤見唯子描き下ろしイラスト使用 全巻収納BOX」引換シリアルコード付）(完全生産限定版) [DVD]"
-          },
-          {
-            "thisRank": "298158",
-            "totalPt": "29",
-            "prevRank": "297908",
-            "id": 146,
+            "thisRank": 312882,
+            "totalPt": 30,
+            "prevRank": 312668,
+            "id": 148,
             "title": "【Amazon.co.jp限定】 三ツ星カラーズ Vol.1(第1巻早期予約特典:キャスト複製サイン入りミニ色紙付)(全巻購入特典:アニメ描き下ろしイラスト使用B1布ポスター 引換シリアルコード)(イベントチケット優先販売申込券) [DVD]"
-          },
-          {
-            "thisRank": "34149",
-            "totalPt": "3",
-            "prevRank": "33606",
-            "id": 147,
-            "title": "【Amazon.co.jp限定】ダメプリ ANIME CARAVAN 上巻(全巻購入特典:描き下ろし収納BOX引換シリアルコード付) [DVD]"
           }
         ],
         "key": "2018-01",
         "enabled": true
       },
       {
-        "sakuraUpdateDate": 1519023869000,
+        "modifyTime": 1519376190000,
+        "viewType": "SakuraList",
         "id": 3,
         "title": "2017年10月新番",
         "discs": [
           {
-            "thisRank": "704",
-            "totalPt": "2638",
-            "prevRank": "918",
-            "id": 148,
+            "thisRank": 2237,
+            "totalPt": 2659,
+            "prevRank": 2160,
+            "id": 149,
             "title": "結城友奈は勇者である-勇者の章-Blu-ray"
           },
           {
-            "thisRank": "1690",
-            "totalPt": "141",
-            "prevRank": "1587",
-            "id": 149,
+            "thisRank": 2380,
+            "totalPt": 154,
+            "prevRank": 2230,
+            "id": 150,
             "title": "DYNAMIC CHORD BOX 1 ([PREMIUM FAN MEETING 2018 PARTI]チケット最速先行抽選販売申込券封入) [DVD]"
           },
           {
-            "thisRank": "7408",
-            "totalPt": "70",
-            "prevRank": "6988",
-            "id": 150,
-            "title": "DYNAMIC CHORD BOX 1([PREMIUM FAN MEETING 2018 PARTI]チケット最速先行抽選販売申込券封入) [Blu-ray]"
+            "thisRank": 25867,
+            "totalPt": 15,
+            "prevRank": 25337,
+            "id": 163,
+            "title": "【Amazon.co.jp限定】DYNAMIC CHORD BOX 1(全巻購入特典:Liar-Sアニメ描き下ろしB2布ポスター引換シリアルコード付)([PREMIUM FAN MEETING 2018 PARTI]チケット最速先行抽選販売申込券封入) [Blu-ray]"
           },
           {
-            "thisRank": "8248",
-            "totalPt": "759",
-            "prevRank": "7883",
-            "id": 151,
-            "title": "【Amazon.co.jp限定】結城友奈は勇者である -勇者の章- Blu-ray (各巻特典:オリジナルTシャツB+2巻購入特典:描き下ろしイラスト使用 LPサイズディスク収納ケース(キャラクター:犬吠埼風・犬吠埼樹)引換シリアルコード付)"
-          },
-          {
-            "thisRank": "37047",
-            "totalPt": "172",
-            "prevRank": "36618",
-            "id": 152,
-            "title": "【早期購入特典あり】「いつだって僕らの恋は10センチだった。」上巻(メーカー特典:「総監督・難波日登志描き下ろし色紙」「オリジナルステッカーシート」付)(イベントチケット優先販売申込券付)(完全生産限定版) [Blu-ray]"
-          },
-          {
-            "thisRank": "11748",
-            "totalPt": "51",
-            "prevRank": "11296",
-            "id": 153,
-            "title": "ブラッククローバー Chapter I [Blu-ray]"
-          },
-          {
-            "thisRank": "13869",
-            "totalPt": "27",
-            "prevRank": "13265",
-            "id": 154,
-            "title": "ブラッククローバー Chapter I [DVD]"
-          },
-          {
-            "thisRank": "58882",
-            "totalPt": "25",
-            "prevRank": "58525",
-            "id": 155,
-            "title": "【Amazon.co.jp限定】ブラッククローバー Chapter I (描き下ろし絵巻バスタオル「アスタ」+メーカー特典:描き下ろしクリアステッカー 3種セット(アスタ、ユノ、ノエル)付) [Blu-ray]"
-          },
-          {
-            "thisRank": "59118",
-            "totalPt": "250",
-            "prevRank": "59027",
+            "thisRank": 38748,
+            "totalPt": 257,
+            "prevRank": 38292,
             "id": 156,
             "title": "【早期購入特典あり】「いつだって僕らの恋は10センチだった。」上巻(メーカー特典:「総監督・難波日登志描き下ろし色紙」「オリジナルステッカーシート」付)(イベントチケット優先販売申込券付)(完全生産限定版) [DVD]"
           },
           {
-            "thisRank": "101309",
-            "totalPt": "19",
-            "prevRank": "100859",
-            "id": 157,
-            "title": "【Amazon.co.jp限定】URAHARA Blu-ray-BOX (オーディオコメンタリーCD 収録エピソード:#1 ドーナツクライシス(収録キャスト:春奈るな/上坂すみれ/石見舞菜香)付)"
-          },
-          {
-            "thisRank": "88803",
-            "totalPt": "205",
-            "prevRank": "88683",
-            "id": 158,
-            "title": "結城友奈は勇者である-勇者の章-DVD1"
-          },
-          {
-            "thisRank": "94021",
-            "totalPt": "20",
-            "prevRank": "93841",
+            "thisRank": 18487,
+            "totalPt": 22,
+            "prevRank": 18148,
             "id": 159,
             "title": "【Amazon.co.jp限定】ブラッククローバー Chapter I (描き下ろし絵巻バスタオル「アスタ」+メーカー特典:描き下ろしクリアステッカー 3種セット(アスタ、ユノ、ノエル)付) [DVD]"
           },
           {
-            "thisRank": "148987",
-            "totalPt": "21",
-            "prevRank": "148860",
+            "thisRank": 8467,
+            "totalPt": 93,
+            "prevRank": 7615,
+            "id": 164,
+            "title": "ラブ米 二期作 [DVD]"
+          },
+          {
+            "thisRank": 7919,
+            "totalPt": 74,
+            "prevRank": 7479,
+            "id": 151,
+            "title": "DYNAMIC CHORD BOX 1([PREMIUM FAN MEETING 2018 PARTI]チケット最速先行抽選販売申込券封入) [Blu-ray]"
+          },
+          {
+            "thisRank": 3898,
+            "totalPt": 53,
+            "prevRank": 3473,
+            "id": 152,
+            "title": "ブラッククローバー Chapter I [Blu-ray]"
+          },
+          {
+            "thisRank": 3745,
+            "totalPt": 762,
+            "prevRank": 3381,
+            "id": 153,
+            "title": "【Amazon.co.jp限定】結城友奈は勇者である -勇者の章- Blu-ray (各巻特典:オリジナルTシャツB+2巻購入特典:描き下ろしイラスト使用 LPサイズディスク収納ケース(キャラクター:犬吠埼風・犬吠埼樹)引換シリアルコード付)"
+          },
+          {
+            "thisRank": 15273,
+            "totalPt": 28,
+            "prevRank": 14912,
+            "id": 154,
+            "title": "ブラッククローバー Chapter I [DVD]"
+          },
+          {
+            "thisRank": 63219,
+            "totalPt": 175,
+            "prevRank": 62979,
+            "id": 155,
+            "title": "【早期購入特典あり】「いつだって僕らの恋は10センチだった。」上巻(メーカー特典:「総監督・難波日登志描き下ろし色紙」「オリジナルステッカーシート」付)(イベントチケット優先販売申込券付)(完全生産限定版) [Blu-ray]"
+          },
+          {
+            "thisRank": 28791,
+            "totalPt": 26,
+            "prevRank": 28237,
+            "id": 157,
+            "title": "【Amazon.co.jp限定】ブラッククローバー Chapter I (描き下ろし絵巻バスタオル「アスタ」+メーカー特典:描き下ろしクリアステッカー 3種セット(アスタ、ユノ、ノエル)付) [Blu-ray]"
+          },
+          {
+            "thisRank": 100262,
+            "totalPt": 208,
+            "prevRank": 100125,
+            "id": 158,
+            "title": "結城友奈は勇者である-勇者の章-DVD1"
+          },
+          {
+            "thisRank": 123792,
+            "totalPt": 19,
+            "prevRank": 123548,
             "id": 160,
+            "title": "【Amazon.co.jp限定】URAHARA Blu-ray-BOX (オーディオコメンタリーCD 収録エピソード:#1 ドーナツクライシス(収録キャスト:春奈るな/上坂すみれ/石見舞菜香)付)"
+          },
+          {
+            "thisRank": 159531,
+            "totalPt": 22,
+            "prevRank": 159378,
+            "id": 161,
             "title": "URAHARA Blu-ray-BOX"
           },
           {
-            "thisRank": "197101",
-            "totalPt": "20",
-            "prevRank": "196966",
-            "id": 161,
-            "title": "【Amazon.co.jp限定】DYNAMIC CHORD BOX 1(全巻購入特典:Liar-Sアニメ描き下ろしB2布ポスター引換シリアルコード付)([PREMIUM FAN MEETING 2018 PARTI]チケット最速先行抽選販売申込券封入) [DVD]"
-          },
-          {
-            "thisRank": "212835",
-            "totalPt": "14",
-            "prevRank": "212627",
+            "thisRank": 206268,
+            "totalPt": 21,
+            "prevRank": 206156,
             "id": 162,
-            "title": "【Amazon.co.jp限定】DYNAMIC CHORD BOX 1(全巻購入特典:Liar-Sアニメ描き下ろしB2布ポスター引換シリアルコード付)([PREMIUM FAN MEETING 2018 PARTI]チケット最速先行抽選販売申込券封入) [Blu-ray]"
-          },
-          {
-            "thisRank": "281521",
-            "totalPt": "86",
-            "prevRank": "281483",
-            "id": 163,
-            "title": "ラブ米 二期作 [DVD]"
+            "title": "【Amazon.co.jp限定】DYNAMIC CHORD BOX 1(全巻購入特典:Liar-Sアニメ描き下ろしB2布ポスター引換シリアルコード付)([PREMIUM FAN MEETING 2018 PARTI]チケット最速先行抽選販売申込券封入) [DVD]"
           }
         ],
         "key": "2017-10",
@@ -1249,25 +1272,42 @@
   "basic-sakuras": {
     "data": [
       {
-        "sakuraUpdateDate": 1519023613000,
+        "modifyTime": 1519381744000,
+        "viewType": "SakuraList",
         "id": 1,
         "title": "日亚实时TOP100",
         "key": "9999-99",
         "enabled": true
       },
       {
-        "sakuraUpdateDate": 1519023869000,
+        "modifyTime": 1519381978000,
+        "viewType": "SakuraList",
         "id": 2,
         "title": "2018年01月新番",
         "key": "2018-01",
         "enabled": true
       },
       {
-        "sakuraUpdateDate": 1519023869000,
+        "modifyTime": 1519381978000,
+        "viewType": "SakuraList",
         "id": 3,
         "title": "2017年10月新番",
         "key": "2017-10",
         "enabled": true
+      },
+      {
+        "viewType": "PrivateList",
+        "id": 4,
+        "title": "ddd",
+        "key": "ddd",
+        "enabled": false
+      },
+      {
+        "viewType": "PublicList",
+        "id": 5,
+        "title": "LoveLive!",
+        "key": "lovelive",
+        "enabled": false
       }
     ],
     "success": true
@@ -1275,18 +1315,29 @@
   "admin-users": {
     "data": [
       {
-        "lastLoggedIn": "2018/02/19 16:04:10",
+        "lastLoggedIn": "2018/02/23 18:46:37",
         "id": 1,
         "enabled": true,
         "username": "admin",
-        "registerDate": "2018/02/17 13:45:35"
+        "registerDate": "2018/02/20 16:47:45"
       },
       {
-        "lastLoggedIn": "2018/02/18 16:23:53",
         "id": 2,
         "enabled": true,
         "username": "test",
-        "registerDate": "2018/02/17 17:29:10"
+        "registerDate": "2018/02/22 12:05:33"
+      },
+      {
+        "id": 3,
+        "enabled": false,
+        "username": "test2",
+        "registerDate": "2018/02/22 12:06:13"
+      },
+      {
+        "id": 4,
+        "enabled": false,
+        "username": "test3",
+        "registerDate": "2018/02/23 09:50:35"
       }
     ],
     "success": true
