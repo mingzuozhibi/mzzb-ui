@@ -6,7 +6,7 @@ import { Icon } from '../../lib/icon'
 
 import { md5Password } from '../../utils/manager'
 import { AdminUserModel, AdminUserState } from './reducer'
-import { ViewportState } from '../../hoc/Viewport'
+import { ViewportProps } from '../../hoc/Viewport'
 
 interface FormSave {
   username?: string
@@ -22,7 +22,7 @@ interface FormEdit {
 const formSave: FormSave = {}
 const formEdit: FormEdit = {}
 
-interface AdminUserProps extends AdminUserState, ViewportState {
+interface AdminUserProps extends AdminUserState, ViewportProps {
   saveModel: (model: {}) => void
   editModel: (model: {}) => void
 }

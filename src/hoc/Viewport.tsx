@@ -1,7 +1,14 @@
 import * as React from 'react'
 
-export interface ViewportState {
+export interface ViewportProps {
   viewport?: {
+    width: number
+    height: number
+  }
+}
+
+interface ViewportState {
+  viewport: {
     width: number
     height: number
   }
@@ -20,7 +27,7 @@ export function withViewport(ComposedComponent: any) {
       const width = window.innerWidth
       const height = window.innerHeight
       const viewport = this.state.viewport
-      if (viewport!.width !== width || viewport!.height !== height) {
+      if (viewport.width !== width || viewport.height !== height) {
         this.setState({viewport: {width, height}})
       }
     }

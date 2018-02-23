@@ -4,11 +4,9 @@ import { Icon } from '../../lib/icon'
 
 import { RouteInfo, routeInfos } from '../../common/route-infos'
 import { RouteComponentProps } from 'react-router-dom'
-import { CollapseType } from 'antd/lib/layout/Sider'
-import { ClickParam } from 'antd/lib/menu'
-import { ViewportState } from '../../hoc/Viewport'
+import { ViewportProps } from '../../hoc/Viewport'
 
-interface AppSiderProps extends RouteComponentProps<{}>, ViewportState {
+interface AppSiderProps extends RouteComponentProps<{}>, ViewportProps {
   viewSider: boolean
   userRoles: string[]
   clearReload: () => void
@@ -17,13 +15,13 @@ interface AppSiderProps extends RouteComponentProps<{}>, ViewportState {
 
 export function AppSider(props: AppSiderProps) {
 
-  function onCollapse(hideSider: boolean, type: CollapseType) {
+  function onCollapse(hideSider: boolean, type: 'clickTrigger' | 'responsive') {
     if (type === 'responsive') {
       props.setViewSider(!hideSider)
     }
   }
 
-  function selectItem({key}: ClickParam) {
+  function selectItem({key}: { key: string }) {
     if (key === props.location.pathname) {
       return
     }
