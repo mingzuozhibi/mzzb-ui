@@ -1,6 +1,9 @@
 import { connect, Dispatch } from 'react-redux'
 import { RootState } from '../../common/root-reducer'
 import { Sakura } from './sakura'
+import { setReload } from '../../App/reducer'
+
+export const MODEL_NAME = 'Sakura'
 
 function mapStateToProps(state: RootState) {
   return {
@@ -10,7 +13,8 @@ function mapStateToProps(state: RootState) {
 }
 
 function mapDispatchToProps(dispatch: Dispatch<any>) {
-  dispatch({type: 'listSakuraRequest'})
+  dispatch(setReload(`list${MODEL_NAME}`))
+  dispatch({type: `list${MODEL_NAME}Request`})
   return {}
 }
 

@@ -13,6 +13,9 @@ function mapStateToProps(state: RootState) {
 function mapDispatchToProps(dispatch: Dispatch<any>) {
   dispatch({type: 'sessionQueryRequest'})
   return {
+    dispatch(action: string) {
+      dispatch({type: `${action}Request`})
+    },
     showLogin() {
       dispatch({type: 'setViewLogin', viewLogin: true})
     },

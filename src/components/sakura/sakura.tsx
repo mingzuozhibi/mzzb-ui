@@ -75,6 +75,8 @@ export function Sakura(props: SakuraProps) {
     }
   }
 
+  // console.info(`sakura render ${props.models !== undefined}`)
+
   return (
     <div className="sakura-root">
       {props.errors && <Alert message={props.errors} type="error"/>}

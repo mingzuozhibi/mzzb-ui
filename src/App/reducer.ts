@@ -6,7 +6,7 @@ import produce from 'immer'
 
 export interface Reload {
   loading: boolean
-  refresh: () => void
+  refresh: string
 }
 
 export interface Session {
@@ -38,8 +38,28 @@ const initState: AppState = {
   submiting: false,
 }
 
+const regExp = new RegExp(/^(\w+)(Request|Succeed|Failed)$/)
+
+function checkSagas(type: string, draft: AppState) {
+  if (draft.reload) {
+    const matcher = regExp.exec(type)
+    if (matcher && matcher.length) {
+      if (matcher[1] === draft.reload.refresh) {
+        switch (matcher[2]) {
+          case 'Request':
+            draft.reload.loading = true
+            break
+          default:
+            draft.reload.loading = false
+        }
+      }
+    }
+  }
+}
+
 export const appReducer = (state: AppState = initState, action: AnyAction) => {
   return produce(state, draftState => {
+    checkSagas(action.type, draftState)
     switch (action.type) {
       case 'setViewSider':
         draftState.viewSider = action.viewSider
@@ -95,3 +115,7 @@ function* sessionLogout() {
 }
 
 export const appFetcher = {sessionQuery, sessionLogin, sessionLogout}
+
+export function setReload(refresh: string) {
+  return {type: 'setReload', reload: {loading: false, refresh}}
+}
