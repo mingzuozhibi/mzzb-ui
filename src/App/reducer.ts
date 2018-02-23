@@ -71,8 +71,13 @@ export const appReducer = (state: AppState = initState, action: AnyAction) => {
       case 'setReload':
         draftState.reload = action.reload
         break
+      case 'sessionLoginRequest':
+        draftState.submiting = true
+        break
       case 'sessionSucceed':
         draftState.session = action.session
+        draftState.submiting = false
+        draftState.viewLogin = false
         if (action.message) {
           message.success(action.message)
         }
@@ -100,7 +105,6 @@ function* sessionLogin(action: AnyAction) {
   const result = yield call(sessionManager.login, action.username, action.password)
   if (result.success) {
     yield put({type: 'sessionSucceed', session: result.data, message: '你已成功登入'})
-    yield put({type: 'setViewLogin', viewLogin: false})
     const reload = yield select((state: RootState) => state.app.reload)
     if (reload) {
       yield put({type: `${reload.refresh}Request`})
