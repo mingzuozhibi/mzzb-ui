@@ -1,8 +1,9 @@
 import { AnyAction } from 'redux'
-import { call, put } from 'redux-saga/effects'
+import { call, put, select } from 'redux-saga/effects'
 import { sessionManager } from '../utils/manager'
 import { message, Modal } from 'antd'
 import produce from 'immer'
+import { RootState } from '../common/root-reducer'
 
 export interface Reload {
   loading: boolean
@@ -100,6 +101,10 @@ function* sessionLogin(action: AnyAction) {
   if (result.success) {
     yield put({type: 'sessionSucceed', session: result.data, message: '你已成功登入'})
     yield put({type: 'setViewLogin', viewLogin: false})
+    const reload = yield select((state: RootState) => state.app.reload)
+    if (reload) {
+      yield put({type: `${reload.refresh}Request`})
+    }
   } else {
     yield put({type: 'sessionFailed', title: '登入错误', content: result.message})
   }
