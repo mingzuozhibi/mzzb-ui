@@ -83,6 +83,7 @@ export const appReducer = (state: AppState = initState, action: AnyAction) => {
         }
         break
       case 'sessionFailed':
+        draftState.submiting = false
         if (action.title && action.content) {
           Modal.error({title: action.title, content: action.content})
         }
