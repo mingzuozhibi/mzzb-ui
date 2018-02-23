@@ -2,6 +2,9 @@ import { connect, Dispatch } from 'react-redux'
 import { RootState } from '../../common/root-reducer'
 import { AdminUser } from './admin-user'
 import { withViewport } from '../../hoc/Viewport'
+import { setReload } from '../../App/reducer'
+
+export const MODEL_NAME = 'AdminUser'
 
 function mapStateToProps(state: RootState) {
   return {
@@ -11,13 +14,14 @@ function mapStateToProps(state: RootState) {
 }
 
 function mapDispatchToProps(dispatch: Dispatch<any>) {
-  dispatch({type: 'listAdminUserRequest'})
+  dispatch(setReload(`list${MODEL_NAME}`))
+  dispatch({type: `list${MODEL_NAME}Request`})
   return {
     saveModel(model: {}) {
-      dispatch({type: 'saveAdminUserRequest', model})
+      dispatch({type: `save${MODEL_NAME}Request`, model})
     },
     editModel(model: {}) {
-      dispatch({type: 'editAdminUserRequest', model})
+      dispatch({type: `edit${MODEL_NAME}Request`, model})
     },
   }
 }

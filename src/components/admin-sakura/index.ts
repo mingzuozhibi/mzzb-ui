@@ -1,6 +1,9 @@
 import { connect, Dispatch } from 'react-redux'
 import { RootState } from '../../common/root-reducer'
 import { AdminSakura } from './admin-sakura'
+import { setReload } from '../../App/reducer'
+
+export const MODEL_NAME = 'AdminSakura'
 
 function mapStateToProps(state: RootState) {
   return {
@@ -10,13 +13,14 @@ function mapStateToProps(state: RootState) {
 }
 
 function mapDispatchToProps(dispatch: Dispatch<any>) {
-  dispatch({type: 'listAdminSakuraRequest'})
+  dispatch(setReload(`list${MODEL_NAME}`))
+  dispatch({type: `list${MODEL_NAME}Request`})
   return {
     saveModel(model: {}) {
-      dispatch({type: 'saveAdminSakuraRequest', model})
+      dispatch({type: `save${MODEL_NAME}Request`, model})
     },
     editModel(model: {}) {
-      dispatch({type: 'editAdminSakuraRequest', model})
+      dispatch({type: `edit${MODEL_NAME}Request`, model})
     },
   }
 }

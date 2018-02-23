@@ -1,12 +1,13 @@
 import { AnyAction } from 'redux'
-import { call, put } from 'redux-saga/effects'
+import { call, put, select } from 'redux-saga/effects'
 import { sessionManager } from '../utils/manager'
 import { message, Modal } from 'antd'
 import produce from 'immer'
+import { RootState } from '../common/root-reducer'
 
 export interface Reload {
   loading: boolean
-  refresh: () => void
+  refresh: string
 }
 
 export interface Session {
@@ -38,8 +39,28 @@ const initState: AppState = {
   submiting: false,
 }
 
+const regExp = new RegExp(/^(\w+)(Request|Succeed|Failed)$/)
+
+function checkSagas(type: string, draft: AppState) {
+  if (draft.reload) {
+    const matcher = regExp.exec(type)
+    if (matcher && matcher.length) {
+      if (matcher[1] === draft.reload.refresh) {
+        switch (matcher[2]) {
+          case 'Request':
+            draft.reload.loading = true
+            break
+          default:
+            draft.reload.loading = false
+        }
+      }
+    }
+  }
+}
+
 export const appReducer = (state: AppState = initState, action: AnyAction) => {
   return produce(state, draftState => {
+    checkSagas(action.type, draftState)
     switch (action.type) {
       case 'setViewSider':
         draftState.viewSider = action.viewSider
@@ -50,8 +71,13 @@ export const appReducer = (state: AppState = initState, action: AnyAction) => {
       case 'setReload':
         draftState.reload = action.reload
         break
+      case 'sessionLoginRequest':
+        draftState.submiting = true
+        break
       case 'sessionSucceed':
         draftState.session = action.session
+        draftState.submiting = false
+        draftState.viewLogin = false
         if (action.message) {
           message.success(action.message)
         }
@@ -79,7 +105,10 @@ function* sessionLogin(action: AnyAction) {
   const result = yield call(sessionManager.login, action.username, action.password)
   if (result.success) {
     yield put({type: 'sessionSucceed', session: result.data, message: '你已成功登入'})
-    yield put({type: 'setViewLogin', viewLogin: false})
+    const reload = yield select((state: RootState) => state.app.reload)
+    if (reload) {
+      yield put({type: `${reload.refresh}Request`})
+    }
   } else {
     yield put({type: 'sessionFailed', title: '登入错误', content: result.message})
   }
@@ -95,3 +124,7 @@ function* sessionLogout() {
 }
 
 export const appFetcher = {sessionQuery, sessionLogin, sessionLogout}
+
+export function setReload(refresh: string) {
+  return {type: 'setReload', reload: {loading: false, refresh}}
+}
