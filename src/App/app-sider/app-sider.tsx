@@ -6,7 +6,9 @@ import { RouteInfo, routeInfos } from '../../common/route-infos'
 import { RouteComponentProps } from 'react-router-dom'
 import { ViewportProps } from '../../hoc/Viewport'
 
-interface AppSiderProps extends RouteComponentProps<{}>, ViewportProps {
+export type OwnProps = ViewportProps & RouteComponentProps<{}>
+
+interface AppSiderProps extends OwnProps {
   viewSider: boolean
   userRoles: string[]
   clearReload: () => void
