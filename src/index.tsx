@@ -37,14 +37,15 @@ const async = (loader: () => any) => {
 
 const renderRoute = (route: RouteInfo, key: number): React.ReactNode => {
   switch (route.type) {
-    case 'Routes':
+    case 'HasRoutes':
       return route.routes.map(renderRoute)
-    case 'Route':
+    case 'NotRoutes':
+    case 'DetailPath':
       return (
         <Route key={key} path={route.path} component={async(route.component)}/>
       )
     default:
-      return null
+      return undefined
   }
 }
 

@@ -117,8 +117,8 @@ export function AdminSakura(props: AdminSakuraProps) {
     <div className="basic-sakura">
       <Tabs>
         <Tabs.TabPane tab="Sakura列表" key="1">
-          {props.errors && (
-            <Alert message={props.errors} type="error"/>
+          {props.message && (
+            <Alert message={props.message} type="error"/>
           )}
           {props.models && (
             <Table rows={props.models} columns={getColumns()}/>

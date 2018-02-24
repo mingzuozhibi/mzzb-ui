@@ -5,6 +5,8 @@ import { BaseModel, Manager } from '../../utils/manager'
 import { message, Modal } from 'antd'
 import produce from 'immer'
 
+export const MODEL_NAME = 'AdminUser'
+
 export interface AdminUserModel extends BaseModel {
   username: string
   enabled: boolean
@@ -24,26 +26,26 @@ function replace(action: AnyAction) {
 export const adminUserReducer = (state: AdminUserState = initState, action: AnyAction) => {
   return produce(state, draftState => {
     switch (action.type) {
-      case 'listAdminUserSucceed':
+      case `list${MODEL_NAME}Succeed`:
         draftState.models = action.models
-        draftState.errors = undefined
+        draftState.message = undefined
         break
-      case 'listAdminUserFailed':
-        draftState.errors = action.errors
+      case `list${MODEL_NAME}Failed`:
+        draftState.message = action.message
         break
-      case 'saveAdminUserSucceed':
+      case `save${MODEL_NAME}Succeed`:
         draftState.models!.push(action.model)
         message.success('添加用户成功')
         break
-      case 'saveAdminUserFailed':
-        Modal.error({title: '添加用户失败', content: action.errors})
+      case `save${MODEL_NAME}Failed`:
+        Modal.error({title: '添加用户失败', content: action.message})
         break
-      case 'editAdminUserSucceed':
+      case `edit${MODEL_NAME}Succeed`:
         message.success('编辑用户成功')
         draftState.models = draftState.models!.map(replace(action))
         break
-      case 'editAdminUserFailed':
-        Modal.error({title: '编辑用户失败', content: action.errors})
+      case `edit${MODEL_NAME}Failed`:
+        Modal.error({title: '编辑用户失败', content: action.message})
         break
       default:
     }
@@ -55,27 +57,27 @@ const manager = new Manager<AdminUserModel>('/api/admin/users')
 function* listModel() {
   const result = yield call(manager.findAll)
   if (result.success) {
-    yield put({type: 'listAdminUserSucceed', models: result.data})
+    yield put({type: `list${MODEL_NAME}Succeed`, models: result.data})
   } else {
-    yield put({type: 'listAdminUserFailed', errors: result.message})
+    yield put({type: `list${MODEL_NAME}Failed`, message: result.message})
   }
 }
 
 function* saveModel(action: AnyAction) {
   const result = yield call(manager.addOne, action.model)
   if (result.success) {
-    yield put({type: 'saveAdminUserSucceed', model: result.data})
+    yield put({type: `save${MODEL_NAME}Succeed`, model: result.data})
   } else {
-    yield put({type: 'saveAdminUserFailed', errors: result.message})
+    yield put({type: `save${MODEL_NAME}Failed`, message: result.message})
   }
 }
 
 function* editModel(action: AnyAction) {
   const result = yield call(manager.update, action.model)
   if (result.success) {
-    yield put({type: 'editAdminUserSucceed', model: result.data})
+    yield put({type: `edit${MODEL_NAME}Succeed`, model: result.data})
   } else {
-    yield put({type: 'editAdminUserFailed', errors: result.message})
+    yield put({type: `edit${MODEL_NAME}Failed`, message: result.message})
   }
 }
 

@@ -4,6 +4,8 @@ import { BaseState } from '../../common/root-reducer'
 import { BaseModel, Manager } from '../../utils/manager'
 import produce from 'immer'
 
+export const MODEL_NAME = 'Sakura'
+
 export interface DiscModel extends BaseModel {
   thisRank: number
   prevRank: number
@@ -27,12 +29,12 @@ const initState: SakuraState = {}
 export const sakuraReducer = (state: SakuraState = initState, action: AnyAction) => {
   return produce(state, draftState => {
     switch (action.type) {
-      case 'listSakuraSucceed':
+      case `list${MODEL_NAME}Succeed`:
         draftState.models = action.models
-        draftState.errors = undefined
+        draftState.message = undefined
         break
-      case 'listSakuraFailed':
-        draftState.errors = action.errors
+      case `list${MODEL_NAME}Failed`:
+        draftState.message = action.message
         break
       default:
     }
@@ -44,9 +46,9 @@ const manager = new Manager<SakuraModel>('/api/sakuras')
 function* listModel() {
   const result = yield call(manager.findAll, 'discColumns=id,thisRank,prevRank,totalPt,title')
   if (result.success) {
-    yield put({type: 'listSakuraSucceed', models: result.data})
+    yield put({type: `list${MODEL_NAME}Succeed`, models: result.data})
   } else {
-    yield put({type: 'listSakuraFailed', errors: result.message})
+    yield put({type: `list${MODEL_NAME}Failed`, message: result.message})
   }
 }
 

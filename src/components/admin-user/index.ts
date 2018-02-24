@@ -1,15 +1,15 @@
 import { connect, Dispatch } from 'react-redux'
 import { RootState } from '../../common/root-reducer'
-import { AdminUser } from './admin-user'
-import { withViewport } from '../../hoc/Viewport'
+import { AdminUser, OwnProps } from './admin-user'
 import { setReload } from '../../App/reducer'
+import { MODEL_NAME } from './reducer'
+import { withViewport } from '../../hoc/Viewport'
 
-export const MODEL_NAME = 'AdminUser'
-
-function mapStateToProps(state: RootState) {
+function mapStateToProps(state: RootState, ownProps: OwnProps) {
   return {
     models: state.adminUser.models,
-    errors: state.adminUser.errors,
+    message: state.adminUser.message,
+    ...ownProps
   }
 }
 

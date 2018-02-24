@@ -6,7 +6,9 @@ import { RouteInfo, routeInfos } from '../../common/route-infos'
 import { RouteComponentProps } from 'react-router-dom'
 import { ViewportProps } from '../../hoc/Viewport'
 
-interface AppSiderProps extends RouteComponentProps<{}>, ViewportProps {
+export type OwnProps = ViewportProps & RouteComponentProps<{}>
+
+interface AppSiderProps extends OwnProps {
   viewSider: boolean
   userRoles: string[]
   clearReload: () => void
@@ -36,28 +38,30 @@ export function AppSider(props: AppSiderProps) {
     }
   }
 
-  function renderTitle(route: RouteInfo) {
-    return (
-      <span><Icon className="sider-icon" type={route.icon}/>{route.text}</span>
-    )
+  function renderTitle(icon: string, text: string) {
+    return <span><Icon className="sider-icon" type={icon}/>{text}</span>
   }
 
   function renderMenu(route: RouteInfo, userRoles: string[]): React.ReactNode {
     if (route.role && !userRoles.some(role => role === route.role)) {
       return null
     }
-    if (route.type === 'Routes') {
-      return (
-        <Menu.SubMenu key={route.path} title={renderTitle(route)}>
-          {route.routes.map(subRoute => renderMenu(subRoute, userRoles))}
-        </Menu.SubMenu>
-      )
-    } else {
-      return (
-        <Menu.Item key={route.path}>
-          {renderTitle(route)}
-        </Menu.Item>
-      )
+    switch (route.type) {
+      case 'HasRoutes':
+        return (
+          <Menu.SubMenu key={route.path} title={renderTitle(route.icon, route.text)}>
+            {route.routes.map(subRoute => renderMenu(subRoute, userRoles))}
+          </Menu.SubMenu>
+        )
+      case 'NotRoutes':
+      case 'SiteLink':
+        return (
+          <Menu.Item key={route.path}>
+            {renderTitle(route.icon, route.text)}
+          </Menu.Item>
+        )
+      default:
+        return undefined
     }
   }
 

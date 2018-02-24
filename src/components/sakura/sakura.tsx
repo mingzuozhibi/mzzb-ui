@@ -1,5 +1,6 @@
 import * as React from 'react'
-import { Alert } from 'antd'
+import { Link } from 'react-router-dom'
+import { Alert, Breadcrumb } from 'antd'
 import { Column, Table } from '../../lib/table'
 import { Timer } from '../../lib/timer'
 import './sakura.css'
@@ -7,6 +8,7 @@ import './sakura.css'
 import { formatNumber } from '../../utils/format'
 import { compareFactory } from '../../utils/compare'
 import { DiscModel, SakuraModel, SakuraState } from './reducer'
+import { Route, RouteComponentProps, Switch } from 'react-router'
 
 const compareRank = compareFactory({
   apply: (disc: DiscModel) => disc.thisRank,
@@ -14,7 +16,9 @@ const compareRank = compareFactory({
   compare: (rankA: number, rankB: number) => rankA - rankB
 })
 
-export interface SakuraProps extends SakuraState {
+export type OwnProps = RouteComponentProps<{}>
+
+export interface SakuraProps extends SakuraState, OwnProps {
 }
 
 export function Sakura(props: SakuraProps) {
@@ -58,7 +62,22 @@ export function Sakura(props: SakuraProps) {
       props.models.sort((a, b) => b.key.localeCompare(a.key))
       return render(props.models)
     }
-    return undefined
+    return null
+  }
+
+  function withDetail(key: string, render: (detail: SakuraModel) => React.ReactNode) {
+    if (props.models) {
+      const detail = props.models.find(t => {
+        return t.key === key
+      })
+      if (detail) {
+        detail.discs.sort(compareRank)
+        return render(detail)
+      } else {
+        return <Alert message={`未找到Key=${key}的Sakura`} type="error"/>
+      }
+    }
+    return null
   }
 
   function formatModifyTime(sakura: SakuraModel) {
@@ -79,17 +98,75 @@ export function Sakura(props: SakuraProps) {
 
   return (
     <div className="sakura-root">
-      {props.errors && <Alert message={props.errors} type="error"/>}
-      {withModels(models => models.map(sakura => (
-        <div key={sakura.id}>
-          <Table
-            title={sakura.title}
-            subtitle={formatModifyTime(sakura)}
-            rows={sakura.discs}
-            columns={getColumns()}
-          />
-        </div>
-      )))}
+      {props.message && (
+        <Alert message={props.message} type="error"/>
+      )}
+      <Switch>
+        <Route
+          path={`${props.match.url}`}
+          exact={true}
+          render={() => withModels(models => (
+            <div>
+              <Breadcrumb style={{padding: 10}}>
+                <Breadcrumb.Item>
+                  <Link to="/home">首页</Link>
+                </Breadcrumb.Item>
+                <Breadcrumb.Item>
+                  Sakura
+                </Breadcrumb.Item>
+              </Breadcrumb>
+              <div style={{padding: '0 10px'}}>
+                {
+                  models.map(sakura => (
+                    <Link
+                      key={sakura.id}
+                      to={`${props.match.url}/${sakura.key}`}
+                      style={{paddingRight: 10}}
+                    >
+                      {sakura.title}
+                    </Link>
+                  ))
+                }
+              </div>
+              {models.map(sakura => (
+                <div key={sakura.id}>
+                  <Table
+                    title={sakura.title}
+                    subtitle={formatModifyTime(sakura)}
+                    rows={sakura.discs}
+                    columns={getColumns()}
+                  />
+                </div>
+              ))}
+            </div>
+          ))}
+        />
+        <Route
+          path={`${props.match.url}/:key`}
+          exact={true}
+          render={({match}) => withDetail(match.params.key, detail => (
+            <div>
+              <Breadcrumb style={{padding: 10}}>
+                <Breadcrumb.Item>
+                  <Link to="/home">首页</Link>
+                </Breadcrumb.Item>
+                <Breadcrumb.Item>
+                  <Link to="/sakura">Sakura</Link>
+                </Breadcrumb.Item>
+                <Breadcrumb.Item>
+                  {detail.title}
+                </Breadcrumb.Item>
+              </Breadcrumb>
+              <Table
+                title={detail.title}
+                subtitle={formatModifyTime(detail)}
+                rows={detail.discs}
+                columns={getColumns()}
+              />
+            </div>
+          ))}
+        />
+      </Switch>
     </div>
   )
 }

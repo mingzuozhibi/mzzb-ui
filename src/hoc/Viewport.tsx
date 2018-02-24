@@ -1,18 +1,13 @@
 import * as React from 'react'
 
-export interface ViewportProps {
-  viewport?: {
-    width: number
-    height: number
-  }
-}
-
 interface ViewportState {
   viewport: {
     width: number
     height: number
   }
 }
+
+export type ViewportProps = ViewportState
 
 export function withViewport(ComposedComponent: any) {
   return class Viewport extends React.Component {

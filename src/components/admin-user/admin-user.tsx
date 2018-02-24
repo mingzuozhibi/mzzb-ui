@@ -5,8 +5,8 @@ import { Link } from '../../lib/link'
 import { Icon } from '../../lib/icon'
 
 import { md5Password } from '../../utils/manager'
-import { AdminUserModel, AdminUserState } from './reducer'
 import { ViewportProps } from '../../hoc/Viewport'
+import { AdminUserModel, AdminUserState } from './reducer'
 
 interface FormSave {
   username?: string
@@ -22,7 +22,9 @@ interface FormEdit {
 const formSave: FormSave = {}
 const formEdit: FormEdit = {}
 
-interface AdminUserProps extends AdminUserState, ViewportProps {
+export type OwnProps = ViewportProps
+
+interface AdminUserProps extends AdminUserState, OwnProps {
   saveModel: (model: {}) => void
   editModel: (model: {}) => void
 }
@@ -113,8 +115,8 @@ export function AdminUser(props: AdminUserProps) {
     <div className="admin-users">
       <Tabs>
         <Tabs.TabPane tab="用户列表" key="1">
-          {props.errors && (
-            <Alert message={props.errors} type="error"/>
+          {props.message && (
+            <Alert message={props.message} type="error"/>
           )}
           {props.models && (
             <Table rows={props.models} columns={getColumns()}/>

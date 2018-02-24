@@ -8,6 +8,7 @@ import { RootState } from '../common/root-reducer'
 export interface Reload {
   loading: boolean
   refresh: string
+  action?: AnyAction
 }
 
 export interface Session {
@@ -126,6 +127,6 @@ function* sessionLogout() {
 
 export const appFetcher = {sessionQuery, sessionLogin, sessionLogout}
 
-export function setReload(refresh: string) {
-  return {type: 'setReload', reload: {loading: false, refresh}}
+export function setReload(refresh: string, action?: AnyAction) {
+  return {type: 'setReload', reload: {loading: false, refresh, action}}
 }
