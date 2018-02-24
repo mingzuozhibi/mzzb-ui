@@ -1,5 +1,6 @@
 import * as React from 'react'
-import { Alert } from 'antd'
+import { Link } from 'react-router-dom'
+import { Alert, Breadcrumb } from 'antd'
 import { Column, Table } from '../../lib/table'
 import { Timer } from '../../lib/timer'
 import './sakura.css'
@@ -106,6 +107,14 @@ export function Sakura(props: SakuraProps) {
           exact={true}
           render={() => withModels(models => models.map(sakura => (
             <div key={sakura.id}>
+              <Breadcrumb style={{padding: 10}}>
+                <Breadcrumb.Item>
+                  <Link to="/home">首页</Link>
+                </Breadcrumb.Item>
+                <Breadcrumb.Item>
+                  Sakura
+                </Breadcrumb.Item>
+              </Breadcrumb>
               <Table
                 title={sakura.title}
                 subtitle={formatModifyTime(sakura)}
@@ -119,7 +128,18 @@ export function Sakura(props: SakuraProps) {
           path={`${props.match.url}/:id`}
           exact={true}
           render={({match}) => withDetail(match.params.id, detail => (
-            <div key={detail.id}>
+            <div>
+              <Breadcrumb style={{padding: 10}}>
+                <Breadcrumb.Item>
+                  <Link to="/home">首页</Link>
+                </Breadcrumb.Item>
+                <Breadcrumb.Item>
+                  <Link to="/sakura">Sakura</Link>
+                </Breadcrumb.Item>
+                <Breadcrumb.Item>
+                  {detail.title}
+                </Breadcrumb.Item>
+              </Breadcrumb>
               <Table
                 title={detail.title}
                 subtitle={formatModifyTime(detail)}
