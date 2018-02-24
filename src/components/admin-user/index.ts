@@ -8,7 +8,7 @@ import { MODEL_NAME } from './reducer'
 function mapStateToProps(state: RootState) {
   return {
     models: state.adminUser.models,
-    errors: state.adminUser.errors,
+    message: state.adminUser.message,
   }
 }
 

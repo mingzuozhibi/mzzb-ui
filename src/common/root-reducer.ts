@@ -23,5 +23,6 @@ export const rootReducer = combineReducers({
 
 export interface BaseState<T> {
   models?: T[]
-  errors?: string
+  detail?: T
+  message?: string
 }

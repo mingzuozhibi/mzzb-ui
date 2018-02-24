@@ -31,10 +31,10 @@ export const sakuraReducer = (state: SakuraState = initState, action: AnyAction)
     switch (action.type) {
       case `list${MODEL_NAME}Succeed`:
         draftState.models = action.models
-        draftState.errors = undefined
+        draftState.message = undefined
         break
       case `list${MODEL_NAME}Failed`:
-        draftState.errors = action.errors
+        draftState.message = action.message
         break
       default:
     }
@@ -48,7 +48,7 @@ function* listModel() {
   if (result.success) {
     yield put({type: `list${MODEL_NAME}Succeed`, models: result.data})
   } else {
-    yield put({type: `list${MODEL_NAME}Failed`, errors: result.message})
+    yield put({type: `list${MODEL_NAME}Failed`, message: result.message})
   }
 }
 

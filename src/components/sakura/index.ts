@@ -7,7 +7,7 @@ import { MODEL_NAME } from './reducer'
 function mapStateToProps(state: RootState) {
   return {
     models: state.sakura.models,
-    errors: state.sakura.errors,
+    message: state.sakura.message,
   }
 }
 

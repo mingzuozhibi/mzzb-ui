@@ -28,24 +28,24 @@ export const adminUserReducer = (state: AdminUserState = initState, action: AnyA
     switch (action.type) {
       case `list${MODEL_NAME}Succeed`:
         draftState.models = action.models
-        draftState.errors = undefined
+        draftState.message = undefined
         break
       case `list${MODEL_NAME}Failed`:
-        draftState.errors = action.errors
+        draftState.message = action.message
         break
       case `save${MODEL_NAME}Succeed`:
         draftState.models!.push(action.model)
         message.success('添加用户成功')
         break
       case `save${MODEL_NAME}Failed`:
-        Modal.error({title: '添加用户失败', content: action.errors})
+        Modal.error({title: '添加用户失败', content: action.message})
         break
       case `edit${MODEL_NAME}Succeed`:
         message.success('编辑用户成功')
         draftState.models = draftState.models!.map(replace(action))
         break
       case `edit${MODEL_NAME}Failed`:
-        Modal.error({title: '编辑用户失败', content: action.errors})
+        Modal.error({title: '编辑用户失败', content: action.message})
         break
       default:
     }
@@ -59,7 +59,7 @@ function* listModel() {
   if (result.success) {
     yield put({type: `list${MODEL_NAME}Succeed`, models: result.data})
   } else {
-    yield put({type: `list${MODEL_NAME}Failed`, errors: result.message})
+    yield put({type: `list${MODEL_NAME}Failed`, message: result.message})
   }
 }
 
@@ -68,7 +68,7 @@ function* saveModel(action: AnyAction) {
   if (result.success) {
     yield put({type: `save${MODEL_NAME}Succeed`, model: result.data})
   } else {
-    yield put({type: `save${MODEL_NAME}Failed`, errors: result.message})
+    yield put({type: `save${MODEL_NAME}Failed`, message: result.message})
   }
 }
 
@@ -77,7 +77,7 @@ function* editModel(action: AnyAction) {
   if (result.success) {
     yield put({type: `edit${MODEL_NAME}Succeed`, model: result.data})
   } else {
-    yield put({type: `edit${MODEL_NAME}Failed`, errors: result.message})
+    yield put({type: `edit${MODEL_NAME}Failed`, message: result.message})
   }
 }
 

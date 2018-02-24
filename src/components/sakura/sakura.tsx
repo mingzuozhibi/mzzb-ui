@@ -79,7 +79,9 @@ export function Sakura(props: SakuraProps) {
 
   return (
     <div className="sakura-root">
-      {props.errors && <Alert message={props.errors} type="error"/>}
+      {props.message && (
+        <Alert message={props.message} type="error"/>
+      )}
       {withModels(models => models.map(sakura => (
         <div key={sakura.id}>
           <Table

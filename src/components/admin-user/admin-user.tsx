@@ -113,8 +113,8 @@ export function AdminUser(props: AdminUserProps) {
     <div className="admin-users">
       <Tabs>
         <Tabs.TabPane tab="用户列表" key="1">
-          {props.errors && (
-            <Alert message={props.errors} type="error"/>
+          {props.message && (
+            <Alert message={props.message} type="error"/>
           )}
           {props.models && (
             <Table rows={props.models} columns={getColumns()}/>
