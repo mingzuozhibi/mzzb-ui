@@ -68,7 +68,7 @@ export const routeInfos: RouteInfo[] = [
         type: 'NotRoutes',
         icon: 'icon-yinghua',
         text: 'Sakura管理',
-        path: '/basic/sakura',
+        path: '/admin/sakura',
         role: 'ROLE_BASIC',
         component: () => import('../components/admin-sakura')
       },
