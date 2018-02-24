@@ -9,6 +9,7 @@ import { formatNumber } from '../../utils/format'
 import { compareFactory } from '../../utils/compare'
 import { DiscModel, SakuraModel, SakuraState } from './reducer'
 import { Route, RouteComponentProps, Switch } from 'react-router'
+import produce from 'immer'
 
 const compareRank = compareFactory({
   apply: (disc: DiscModel) => disc.thisRank,
@@ -56,11 +57,13 @@ export function Sakura(props: SakuraProps) {
 
   function withModels(render: (models: SakuraModel[]) => React.ReactNode) {
     if (props.models) {
-      props.models.forEach(sakura => {
-        sakura.discs.sort(compareRank)
+      const newModels = produce(props.models, draft => {
+        draft.forEach(sakura => {
+          sakura.discs.sort(compareRank)
+        })
+        draft.sort((a, b) => b.key.localeCompare(a.key))
       })
-      props.models.sort((a, b) => b.key.localeCompare(a.key))
-      return render(props.models)
+      return render(newModels)
     }
     return null
   }
@@ -71,8 +74,11 @@ export function Sakura(props: SakuraProps) {
         return t.key === key
       })
       if (detail) {
-        detail.discs.sort(compareRank)
-        return render(detail)
+        const newDetail = produce(detail, draft => {
+          draft.discs.sort(compareRank)
+          return draft
+        })
+        return render(newDetail)
       } else {
         return <Alert message={`未找到Key=${key}的Sakura`} type="error"/>
       }
