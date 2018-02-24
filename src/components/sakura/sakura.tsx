@@ -65,16 +65,16 @@ export function Sakura(props: SakuraProps) {
     return null
   }
 
-  function withDetail(id: string, render: (detail: SakuraModel) => React.ReactNode) {
+  function withDetail(key: string, render: (detail: SakuraModel) => React.ReactNode) {
     if (props.models) {
       const detail = props.models.find(t => {
-        return t.id === parseInt(id, 10)
+        return t.key === key
       })
       if (detail) {
         detail.discs.sort(compareRank)
         return render(detail)
       } else {
-        return <Alert message={`未找到ID=${id}的Sakura`} type="error"/>
+        return <Alert message={`未找到Key=${key}的Sakura`} type="error"/>
       }
     }
     return null
@@ -105,8 +105,8 @@ export function Sakura(props: SakuraProps) {
         <Route
           path={`${props.match.url}`}
           exact={true}
-          render={() => withModels(models => models.map(sakura => (
-            <div key={sakura.id}>
+          render={() => withModels(models => (
+            <div>
               <Breadcrumb style={{padding: 10}}>
                 <Breadcrumb.Item>
                   <Link to="/home">首页</Link>
@@ -115,19 +115,36 @@ export function Sakura(props: SakuraProps) {
                   Sakura
                 </Breadcrumb.Item>
               </Breadcrumb>
-              <Table
-                title={sakura.title}
-                subtitle={formatModifyTime(sakura)}
-                rows={sakura.discs}
-                columns={getColumns()}
-              />
+              <div style={{padding: '0 10px'}}>
+                {
+                  models.map(sakura => (
+                    <Link
+                      key={sakura.id}
+                      to={`${props.match.url}/${sakura.key}`}
+                      style={{paddingRight: 10}}
+                    >
+                      {sakura.title}
+                    </Link>
+                  ))
+                }
+              </div>
+              {models.map(sakura => (
+                <div key={sakura.id}>
+                  <Table
+                    title={sakura.title}
+                    subtitle={formatModifyTime(sakura)}
+                    rows={sakura.discs}
+                    columns={getColumns()}
+                  />
+                </div>
+              ))}
             </div>
-          )))}
+          ))}
         />
         <Route
-          path={`${props.match.url}/:id`}
+          path={`${props.match.url}/:key`}
           exact={true}
-          render={({match}) => withDetail(match.params.id, detail => (
+          render={({match}) => withDetail(match.params.key, detail => (
             <div>
               <Breadcrumb style={{padding: 10}}>
                 <Breadcrumb.Item>
