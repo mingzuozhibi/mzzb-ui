@@ -3,8 +3,7 @@ import { RootState } from '../../common/root-reducer'
 import { AdminUser } from './admin-user'
 import { withViewport } from '../../hoc/Viewport'
 import { setReload } from '../../App/reducer'
-
-export const MODEL_NAME = 'AdminUser'
+import { MODEL_NAME } from './reducer'
 
 function mapStateToProps(state: RootState) {
   return {

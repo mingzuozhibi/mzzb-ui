@@ -2,8 +2,7 @@ import { connect, Dispatch } from 'react-redux'
 import { RootState } from '../../common/root-reducer'
 import { AdminSakura } from './admin-sakura'
 import { setReload } from '../../App/reducer'
-
-export const MODEL_NAME = 'AdminSakura'
+import { MODEL_NAME } from './reducer'
 
 function mapStateToProps(state: RootState) {
   return {

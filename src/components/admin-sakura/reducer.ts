@@ -5,6 +5,8 @@ import { BaseModel, Manager } from '../../utils/manager'
 import { message, Modal } from 'antd'
 import produce from 'immer'
 
+export const MODEL_NAME = 'AdminSakura'
+
 export interface AdminSakuraModel extends BaseModel {
   key: string
   title: string
@@ -25,25 +27,25 @@ function replace(action: AnyAction) {
 export const adminSakuraReducer = (state: AdminSakuraState = initState, action: AnyAction) => {
   return produce(state, draftState => {
     switch (action.type) {
-      case 'listAdminSakuraSucceed':
+      case `list${MODEL_NAME}Succeed`:
         draftState.models = action.models
         draftState.errors = undefined
         break
-      case 'listAdminSakuraFailed':
+      case `list${MODEL_NAME}Failed`:
         draftState.errors = action.errors
         break
-      case 'saveAdminSakuraSucceed':
+      case `save${MODEL_NAME}Succeed`:
         draftState.models!.push(action.model)
         message.success('添加Sakura成功')
         break
-      case 'saveAdminSakuraFailed':
+      case `save${MODEL_NAME}Failed`:
         Modal.error({title: '添加Sakura失败', content: action.errors})
         break
-      case 'editAdminSakuraSucceed':
+      case `edit${MODEL_NAME}Succeed`:
         message.success('编辑Sakura成功')
         draftState.models = draftState.models!.map(replace(action))
         break
-      case 'editAdminSakuraFailed':
+      case `edit${MODEL_NAME}Failed`:
         Modal.error({title: '编辑Sakura失败', content: action.errors})
         break
       default:
@@ -56,27 +58,27 @@ const manager = new Manager<AdminSakuraModel>('/api/basic/sakuras')
 function* listModel() {
   const result = yield call(manager.findAll)
   if (result.success) {
-    yield put({type: 'listAdminSakuraSucceed', models: result.data})
+    yield put({type: `list${MODEL_NAME}Succeed`, models: result.data})
   } else {
-    yield put({type: 'listAdminSakuraFailed', errors: result.message})
+    yield put({type: `list${MODEL_NAME}Failed`, errors: result.message})
   }
 }
 
 function* saveModel(action: AnyAction) {
   const result = yield call(manager.addOne, action.model)
   if (result.success) {
-    yield put({type: 'saveAdminSakuraSucceed', model: result.data})
+    yield put({type: `save${MODEL_NAME}Succeed`, model: result.data})
   } else {
-    yield put({type: 'saveAdminSakuraFailed', errors: result.message})
+    yield put({type: `save${MODEL_NAME}Failed`, errors: result.message})
   }
 }
 
 function* editModel(action: AnyAction) {
   const result = yield call(manager.update, action.model)
   if (result.success) {
-    yield put({type: 'editAdminSakuraSucceed', model: result.data})
+    yield put({type: `edit${MODEL_NAME}Succeed`, model: result.data})
   } else {
-    yield put({type: 'editAdminSakuraFailed', errors: result.message})
+    yield put({type: `edit${MODEL_NAME}Failed`, errors: result.message})
   }
 }
 
