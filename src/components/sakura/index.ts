@@ -1,13 +1,15 @@
 import { connect, Dispatch } from 'react-redux'
 import { RootState } from '../../common/root-reducer'
-import { Sakura } from './sakura'
+import { OwnProps, Sakura } from './sakura'
 import { setReload } from '../../App/reducer'
 import { MODEL_NAME } from './reducer'
 
-function mapStateToProps(state: RootState) {
+function mapStateToProps(state: RootState, ownProps: OwnProps) {
   return {
     models: state.sakura.models,
+    detail: state.sakura.detail,
     message: state.sakura.message,
+    ...ownProps
   }
 }
 

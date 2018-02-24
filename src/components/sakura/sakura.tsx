@@ -7,6 +7,7 @@ import './sakura.css'
 import { formatNumber } from '../../utils/format'
 import { compareFactory } from '../../utils/compare'
 import { DiscModel, SakuraModel, SakuraState } from './reducer'
+import { Route, RouteComponentProps, Switch } from 'react-router'
 
 const compareRank = compareFactory({
   apply: (disc: DiscModel) => disc.thisRank,
@@ -14,7 +15,9 @@ const compareRank = compareFactory({
   compare: (rankA: number, rankB: number) => rankA - rankB
 })
 
-export interface SakuraProps extends SakuraState {
+export type OwnProps = RouteComponentProps<{}>
+
+export interface SakuraProps extends SakuraState, OwnProps {
 }
 
 export function Sakura(props: SakuraProps) {
@@ -58,7 +61,22 @@ export function Sakura(props: SakuraProps) {
       props.models.sort((a, b) => b.key.localeCompare(a.key))
       return render(props.models)
     }
-    return undefined
+    return null
+  }
+
+  function withDetail(id: string, render: (detail: SakuraModel) => React.ReactNode) {
+    if (props.models) {
+      const detail = props.models.find(t => {
+        return t.id === parseInt(id, 10)
+      })
+      if (detail) {
+        detail.discs.sort(compareRank)
+        return render(detail)
+      } else {
+        return <Alert message={`未找到ID=${id}的Sakura`} type="error"/>
+      }
+    }
+    return null
   }
 
   function formatModifyTime(sakura: SakuraModel) {
@@ -82,16 +100,36 @@ export function Sakura(props: SakuraProps) {
       {props.message && (
         <Alert message={props.message} type="error"/>
       )}
-      {withModels(models => models.map(sakura => (
-        <div key={sakura.id}>
-          <Table
-            title={sakura.title}
-            subtitle={formatModifyTime(sakura)}
-            rows={sakura.discs}
-            columns={getColumns()}
-          />
-        </div>
-      )))}
+      <Switch>
+        <Route
+          path={`${props.match.url}`}
+          exact={true}
+          render={() => withModels(models => models.map(sakura => (
+            <div key={sakura.id}>
+              <Table
+                title={sakura.title}
+                subtitle={formatModifyTime(sakura)}
+                rows={sakura.discs}
+                columns={getColumns()}
+              />
+            </div>
+          )))}
+        />
+        <Route
+          path={`${props.match.url}/:id`}
+          exact={true}
+          render={({match}) => withDetail(match.params.id, detail => (
+            <div key={detail.id}>
+              <Table
+                title={detail.title}
+                subtitle={formatModifyTime(detail)}
+                rows={detail.discs}
+                columns={getColumns()}
+              />
+            </div>
+          ))}
+        />
+      </Switch>
     </div>
   )
 }
