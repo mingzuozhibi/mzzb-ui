@@ -19,9 +19,17 @@ const FontIcon = ({type, className, ...props}: IconProps) => {
 
 const Icon = ({type, className, ...props}: IconProps) => {
   if (type.substr(0, 5) === 'icon-') {
-    return <FontIcon {...props} type={type} className={className}/>
+    return (
+      <span className="icon-wrapper">
+        <FontIcon {...props} type={type} className={className}/>
+      </span>
+    )
   } else {
-    return <AntdIcon {...props} type={type} className={className}/>
+    return (
+      <span className="icon-wrapper">
+        <AntdIcon {...props} type={type} className={className}/>
+      </span>
+    )
   }
 }
 
