@@ -11,7 +11,6 @@ export type OwnProps = ViewportProps & RouteComponentProps<{}>
 interface AppSiderProps extends OwnProps {
   viewSider: boolean
   userRoles: string[]
-  clearReload: () => void
   setViewSider: (viewSider: boolean) => void
 }
 
@@ -31,7 +30,6 @@ export function AppSider(props: AppSiderProps) {
       props.setViewSider(false)
     }
     if (key.charAt(0) === '/') {
-      props.clearReload()
       props.history.push(key)
     } else {
       window.open(key)
@@ -47,14 +45,14 @@ export function AppSider(props: AppSiderProps) {
       return null
     }
     switch (route.type) {
-      case 'HasRoutes':
+      case 'Routes':
         return (
           <Menu.SubMenu key={route.path} title={renderTitle(route.icon, route.text)}>
             {route.routes.map(subRoute => renderMenu(subRoute, userRoles))}
           </Menu.SubMenu>
         )
-      case 'NotRoutes':
-      case 'SiteLink':
+      case 'Simple':
+      case 'Link':
         return (
           <Menu.Item key={route.path}>
             {renderTitle(route.icon, route.text)}

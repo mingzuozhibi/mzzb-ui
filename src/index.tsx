@@ -15,7 +15,7 @@ import { Load } from './lib/load'
 import * as Loadable from 'react-loadable'
 import { rootSagas } from './common/root-sagas'
 import { rootReducer } from './common/root-reducer'
-import { RouteInfo, routeInfos } from './common/route-infos'
+import { RouteInfo, routeInfos, Simple } from './common/route-infos'
 import registerServiceWorker from './registerServiceWorker'
 
 const history = createHistory()
@@ -35,12 +35,14 @@ const async = (loader: () => any) => {
   })
 }
 
+const simpleRoutes: Simple[] = []
+
 const renderRoute = (route: RouteInfo, key: number): React.ReactNode => {
   switch (route.type) {
-    case 'HasRoutes':
+    case 'Routes':
       return route.routes.map(renderRoute)
-    case 'NotRoutes':
-    case 'DetailPath':
+    case 'Simple':
+      simpleRoutes.push(route)
       return (
         <Route key={key} path={route.path} component={async(route.component)}/>
       )
@@ -48,6 +50,8 @@ const renderRoute = (route: RouteInfo, key: number): React.ReactNode => {
       return undefined
   }
 }
+
+export { simpleRoutes }
 
 sagaMid.run(rootSagas)
 

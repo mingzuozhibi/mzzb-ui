@@ -1,9 +1,12 @@
+import { LocationChangeAction } from 'react-router-redux'
 import { AnyAction } from 'redux'
 import { call, put, select } from 'redux-saga/effects'
+import { RootState } from '../common/root-reducer'
 import { sessionManager } from '../utils/manager'
 import { message, Modal } from 'antd'
 import produce from 'immer'
-import { RootState } from '../common/root-reducer'
+import { simpleRoutes } from '../index'
+import { match } from 'react-router'
 
 export interface Reload {
   loading: boolean
@@ -19,6 +22,7 @@ export interface Session {
 
 export interface AppState {
   title: string
+  match?: match<any>
   reload?: Reload
   session: Session
   viewSider: boolean
@@ -107,10 +111,7 @@ function* sessionLogin(action: AnyAction) {
   const result = yield call(sessionManager.login, action.username, action.password)
   if (result.success) {
     yield put({type: 'sessionSucceed', session: result.data, message: '你已成功登入'})
-    const reload = yield select((state: RootState) => state.app.reload)
-    if (reload) {
-      yield put({type: `${reload.refresh}Request`})
-    }
+    yield invokeReload()
   } else {
     yield put({type: 'sessionFailed', title: '登入错误', content: result.message})
   }
@@ -125,8 +126,39 @@ function* sessionLogout() {
   }
 }
 
-export const appFetcher = {sessionQuery, sessionLogin, sessionLogout}
+function* updateReload(action: LocationChangeAction) {
+  const pathname = action.payload.pathname
+  const route = simpleRoutes.find(r => pathname.startsWith(r.path))
+  if (route) {
+    if (route.model) {
+      if (route.search && route.path !== pathname) {
+        const refresh = `view${route.model}`
+        const value = pathname.substring(route.path.length + 1)
+        const reloadAction = {type: `${refresh}Request`, search: route.search, value: value}
+        yield put(setReload(refresh, reloadAction))
+      } else {
+        yield put(setReload(`list${route.model}`))
+      }
+      yield invokeReload()
+    } else {
+      yield put(clearReload())
+    }
+  }
+}
+
+function* invokeReload() {
+  const reload = yield select((state: RootState) => state.app.reload)
+  if (reload) {
+    yield put(reload.action || {type: `${reload.refresh}Request`})
+  }
+}
+
+export const appSaga = {sessionQuery, sessionLogin, sessionLogout, updateReload, invokeReload}
 
 export function setReload(refresh: string, action?: AnyAction) {
   return {type: 'setReload', reload: {loading: false, refresh, action}}
+}
+
+export function clearReload() {
+  return {type: 'setReload', reload: undefined}
 }

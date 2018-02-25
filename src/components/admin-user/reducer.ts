@@ -81,4 +81,4 @@ function* editModel(action: AnyAction) {
   }
 }
 
-export const adminUserFetcher = {listModel, saveModel, editModel}
+export const adminUserSaga = {listModel, saveModel, editModel}

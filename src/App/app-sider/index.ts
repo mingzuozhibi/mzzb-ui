@@ -14,9 +14,6 @@ function mapStateToProps(state: RootState, ownProps: OwnProps) {
 
 function mapDispatchToProps(dispatch: Dispatch<any>) {
   return {
-    clearReload() {
-      dispatch({type: 'setReload'})
-    },
     setViewSider(viewSider: boolean) {
       dispatch({type: 'setViewSider', viewSider})
     },

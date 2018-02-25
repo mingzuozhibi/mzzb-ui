@@ -1,20 +1,27 @@
 import { all, takeEvery, takeLatest } from 'redux-saga/effects'
-import { appFetcher } from '../App/reducer'
-import { sakuraFetcher } from '../components/sakura/reducer'
-import { adminUserFetcher } from '../components/admin-user/reducer'
-import { adminSakuraFetcher } from '../components/admin-sakura/reducer'
+import { appSaga } from '../App/reducer'
+import { sakuraSaga } from '../components/sakura/reducer'
+import { adminUserSaga } from '../components/admin-user/reducer'
+import { adminSakuraSaga } from '../components/admin-sakura/reducer'
+import { LOCATION_CHANGE } from 'react-router-redux'
 
 export function* rootSagas() {
   yield all([
-    takeLatest('listSakuraRequest', sakuraFetcher.listModel),
-    takeLatest('listAdminUserRequest', adminUserFetcher.listModel),
-    takeEvery('saveAdminUserRequest', adminUserFetcher.saveModel),
-    takeLatest('editAdminUserRequest', adminUserFetcher.editModel),
-    takeLatest('listAdminSakuraRequest', adminSakuraFetcher.listModel),
-    takeEvery('saveAdminSakuraRequest', adminSakuraFetcher.saveModel),
-    takeLatest('editAdminSakuraRequest', adminSakuraFetcher.editModel),
-    takeLatest('sessionQueryRequest', appFetcher.sessionQuery),
-    takeLatest('sessionLoginRequest', appFetcher.sessionLogin),
-    takeLatest('sessionLogoutRequest', appFetcher.sessionLogout),
+    takeLatest('sessionQueryRequest', appSaga.sessionQuery),
+    takeLatest('sessionLoginRequest', appSaga.sessionLogin),
+    takeLatest('sessionLogoutRequest', appSaga.sessionLogout),
+    takeLatest(LOCATION_CHANGE, appSaga.updateReload),
+    takeLatest('reloadRequest', appSaga.invokeReload),
+
+    takeLatest('listSakuraRequest', sakuraSaga.listModel),
+    takeLatest('viewSakuraRequest', sakuraSaga.viewModel),
+
+    takeLatest('listAdminUserRequest', adminUserSaga.listModel),
+    takeEvery('saveAdminUserRequest', adminUserSaga.saveModel),
+    takeLatest('editAdminUserRequest', adminUserSaga.editModel),
+
+    takeLatest('listAdminSakuraRequest', adminSakuraSaga.listModel),
+    takeEvery('saveAdminSakuraRequest', adminSakuraSaga.saveModel),
+    takeLatest('editAdminSakuraRequest', adminSakuraSaga.editModel),
   ])
 }

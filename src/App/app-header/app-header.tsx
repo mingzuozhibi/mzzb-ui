@@ -5,19 +5,15 @@ import { Reload } from '../reducer'
 
 interface AppHeaderProps {
   reload?: Reload
-  dispatch: (reload: Reload) => void
   isLogged: boolean
   viewSider: boolean
   showLogin: () => void
   setViewSider: (viewSider: boolean) => void
+  reloadRequest: () => void
   sessionLogout: () => void
 }
 
 export function AppHeader(props: AppHeaderProps) {
-
-  function reloadRequest() {
-    return props.dispatch(props.reload!)
-  }
 
   return (
     <Layout.Header className="app-header">
@@ -30,7 +26,7 @@ export function AppHeader(props: AppHeaderProps) {
         <Icon
           className="header-icon"
           type={props.reload.loading ? 'loading' : 'reload'}
-          onClick={reloadRequest}
+          onClick={props.reloadRequest}
         />
       )}
       {props.isLogged ? (

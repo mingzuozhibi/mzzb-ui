@@ -82,4 +82,4 @@ function* editModel(action: AnyAction) {
   }
 }
 
-export const adminSakuraFetcher = {listModel, saveModel, editModel}
+export const adminSakuraSaga = {listModel, saveModel, editModel}
