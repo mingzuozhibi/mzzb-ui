@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Alert, Breadcrumb } from 'antd'
 import { Column, Table } from '../../lib/table'
 import { Timer } from '../../lib/timer'
+import { Helmet } from 'react-helmet'
 import './sakura.css'
 
 import { formatNumber } from '../../utils/format'
@@ -105,6 +106,9 @@ export function Sakura(props: SakuraProps) {
           exact={true}
           render={() => withModels(models => (
             <div>
+              <Helmet>
+                <title>Sakura - 名作之壁吧</title>
+              </Helmet>
               <Breadcrumb style={{padding: 10}}>
                 <Breadcrumb.Item>
                   Sakura
@@ -138,6 +142,9 @@ export function Sakura(props: SakuraProps) {
           exact={true}
           render={({match}) => withDetail(match.params.key, detail => (
             <div>
+              <Helmet>
+                <title>{detail.title} - 名作之壁吧</title>
+              </Helmet>
               <Breadcrumb style={{padding: 10}}>
                 <Breadcrumb.Item>
                   <Link to="/sakura">Sakura</Link>

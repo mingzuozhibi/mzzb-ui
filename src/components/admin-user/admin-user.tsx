@@ -3,6 +3,7 @@ import { Alert, Button, Checkbox, Input, Modal, Tabs } from 'antd'
 import { Column, Table } from '../../lib/table'
 import { Link } from '../../lib/link'
 import { Icon } from '../../lib/icon'
+import { Helmet } from 'react-helmet'
 
 import { md5Password } from '../../utils/manager'
 import { ViewportProps } from '../../hoc/Viewport'
@@ -113,6 +114,9 @@ export function AdminUser(props: AdminUserProps) {
 
   return (
     <div className="admin-users">
+      <Helmet>
+        <title>用户管理 - 名作之壁吧</title>
+      </Helmet>
       <Tabs>
         <Tabs.TabPane tab="用户列表" key="1">
           {props.message && (

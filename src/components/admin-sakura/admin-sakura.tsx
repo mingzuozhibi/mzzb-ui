@@ -3,6 +3,7 @@ import { Alert, Button, Checkbox, Input, Modal, Radio, Tabs } from 'antd'
 import { Column, Table } from '../../lib/table'
 import { Link } from '../../lib/link'
 import { Icon } from '../../lib/icon'
+import { Helmet } from 'react-helmet'
 
 import { formatTimeout } from '../../utils/format'
 import { AdminSakuraModel, AdminSakuraState } from './reducer'
@@ -115,6 +116,9 @@ export function AdminSakura(props: AdminSakuraProps) {
 
   return (
     <div className="basic-sakura">
+      <Helmet>
+        <title>Sakura管理 - 名作之壁吧</title>
+      </Helmet>
       <Tabs>
         <Tabs.TabPane tab="Sakura列表" key="1">
           {props.message && (
