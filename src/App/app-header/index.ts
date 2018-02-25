@@ -1,7 +1,6 @@
 import { connect, Dispatch } from 'react-redux'
 import { RootState } from '../../common/root-reducer'
 import { AppHeader } from './app-header'
-import { Reload } from '../reducer'
 
 function mapStateToProps(state: RootState) {
   return {
@@ -14,12 +13,8 @@ function mapStateToProps(state: RootState) {
 function mapDispatchToProps(dispatch: Dispatch<any>) {
   dispatch({type: 'sessionQueryRequest'})
   return {
-    dispatch(reload: Reload) {
-      if (reload.action) {
-        dispatch(reload.action)
-      } else {
-        dispatch({type: `${reload.refresh}Request`})
-      }
+    reloadRequest() {
+      dispatch({type: 'reloadRequest'})
     },
     showLogin() {
       dispatch({type: 'setViewLogin', viewLogin: true})

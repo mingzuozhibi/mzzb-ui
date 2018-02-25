@@ -36,15 +36,23 @@ export const sakuraReducer = (state: SakuraState = initState, action: AnyAction)
       case `list${MODEL_NAME}Failed`:
         draftState.message = action.message
         break
+      case `view${MODEL_NAME}Succeed`:
+        draftState.detail = action.detail
+        draftState.message = undefined
+        break
+      case `view${MODEL_NAME}Failed`:
+        draftState.message = action.message
+        break
       default:
     }
   })
 }
 
 const manager = new Manager<SakuraModel>('/api/sakuras')
+const columns = 'discColumns=id,thisRank,prevRank,totalPt,title'
 
 function* listModel() {
-  const result = yield call(manager.findAll, 'discColumns=id,thisRank,prevRank,totalPt,title')
+  const result = yield call(manager.findAll, columns)
   if (result.success) {
     yield put({type: `list${MODEL_NAME}Succeed`, models: result.data})
   } else {
@@ -52,4 +60,21 @@ function* listModel() {
   }
 }
 
-export const sakuraFetcher = {listModel}
+function* searchModel(action: AnyAction) {
+  if (action.search === 'id') {
+    return yield call(manager.getOne, parseInt(action.value, 10), columns)
+  } else {
+    return yield call(manager.search, action.search, action.value, columns)
+  }
+}
+
+function* viewModel(action: AnyAction) {
+  const result = yield searchModel(action)
+  if (result.success) {
+    yield put({type: `view${MODEL_NAME}Succeed`, detail: result.data})
+  } else {
+    yield put({type: `view${MODEL_NAME}Failed`, message: result.message})
+  }
+}
+
+export const sakuraSaga = {listModel, viewModel}

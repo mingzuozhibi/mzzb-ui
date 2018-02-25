@@ -69,19 +69,11 @@ export function Sakura(props: SakuraProps) {
   }
 
   function withDetail(key: string, render: (detail: SakuraModel) => React.ReactNode) {
-    if (props.models) {
-      const detail = props.models.find(t => {
-        return t.key === key
+    if (props.detail && props.detail.key === key) {
+      const newDetail = produce(props.detail, draft => {
+        draft.discs.sort(compareRank)
       })
-      if (detail) {
-        const newDetail = produce(detail, draft => {
-          draft.discs.sort(compareRank)
-          return draft
-        })
-        return render(newDetail)
-      } else {
-        return <Alert message={`未找到Key=${key}的Sakura`} type="error"/>
-      }
+      return render(newDetail)
     }
     return null
   }
@@ -122,27 +114,24 @@ export function Sakura(props: SakuraProps) {
                 </Breadcrumb.Item>
               </Breadcrumb>
               <div style={{padding: '0 10px'}}>
-                {
-                  models.map(sakura => (
-                    <Link
-                      key={sakura.id}
-                      to={`${props.match.url}/${sakura.key}`}
-                      style={{paddingRight: 10}}
-                    >
-                      {sakura.title}
-                    </Link>
-                  ))
-                }
+                {models.map(sakura => (
+                  <Link
+                    key={sakura.id}
+                    to={`${props.match.url}/${sakura.key}`}
+                    style={{paddingRight: 10}}
+                  >
+                    {sakura.title}
+                  </Link>
+                ))}
               </div>
               {models.map(sakura => (
-                <div key={sakura.id}>
-                  <Table
-                    title={sakura.title}
-                    subtitle={formatModifyTime(sakura)}
-                    rows={sakura.discs}
-                    columns={getColumns()}
-                  />
-                </div>
+                <Table
+                  key={sakura.id}
+                  title={sakura.title}
+                  subtitle={formatModifyTime(sakura)}
+                  rows={sakura.discs}
+                  columns={getColumns()}
+                />
               ))}
             </div>
           ))}
@@ -153,9 +142,6 @@ export function Sakura(props: SakuraProps) {
           render={({match}) => withDetail(match.params.key, detail => (
             <div>
               <Breadcrumb style={{padding: 10}}>
-                <Breadcrumb.Item>
-                  <Link to="/home">首页</Link>
-                </Breadcrumb.Item>
                 <Breadcrumb.Item>
                   <Link to="/sakura">Sakura</Link>
                 </Breadcrumb.Item>

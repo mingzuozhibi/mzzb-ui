@@ -1,92 +1,87 @@
-export type RouteInfo = HasRoutes | NotRoutes | SiteLink | DetailPath
+export type RouteInfo = Simple | Routes | Link
 
 interface RouteCommon {
-  type: 'HasRoutes' | 'NotRoutes' | 'SiteLink' | 'DetailPath'
+  icon: string
+  text: string
+  path: string
+  type: 'Simple' | 'Routes' | 'Link'
   role?: 'ROLE_ADMIN' | 'ROLE_BASIC'
 }
 
-interface HasRoutes extends RouteCommon {
-  type: 'HasRoutes'
-  icon: string
-  text: string
-  path: string
+export interface Simple extends RouteCommon {
+  type: 'Simple'
+  model?: string
+  search?: string
+  component: () => any
+}
+
+interface Routes extends RouteCommon {
+  type: 'Routes'
   routes: RouteInfo[]
 }
 
-interface NotRoutes extends RouteCommon {
-  type: 'NotRoutes'
-  icon: string
-  text: string
-  path: string
-  component: () => any
-}
-
-interface SiteLink extends RouteCommon {
-  type: 'SiteLink'
-  icon: string
-  text: string
-  path: string
-}
-
-interface DetailPath extends RouteCommon {
-  type: 'DetailPath'
-  path: string
-  component: () => any
+interface Link extends RouteCommon {
+  type: 'Link'
 }
 
 export const routeInfos: RouteInfo[] = [
   {
-    type: 'NotRoutes',
+    type: 'Simple',
     icon: 'home',
     text: '首页',
     path: '/home',
+    model: undefined,
     component: () => import('../components/home')
   },
   {
-    type: 'NotRoutes',
+    type: 'Simple',
     icon: 'icon-yinghua',
     text: 'Sakura',
     path: '/sakura',
+    model: 'Sakura',
+    search: 'key',
     component: () => import('../components/sakura')
   },
   {
-    type: 'HasRoutes',
+    type: 'Routes',
     icon: 'profile',
     text: '后台管理',
     path: '/admin',
     role: 'ROLE_BASIC',
     routes: [
       {
-        type: 'NotRoutes',
+        type: 'Simple',
         icon: 'icon-user',
         text: '用户管理',
         path: '/admin/user',
         role: 'ROLE_ADMIN',
+        model: 'AdminUser',
         component: () => import('../components/admin-user')
       },
       {
-        type: 'NotRoutes',
+        type: 'Simple',
         icon: 'icon-yinghua',
         text: 'Sakura管理',
         path: '/admin/sakura',
         role: 'ROLE_BASIC',
+        model: 'AdminSakura',
         component: () => import('../components/admin-sakura')
       },
     ]
   },
   {
-    type: 'SiteLink',
+    type: 'Link',
     icon: 'icon-social-tieba',
     text: '名作之壁吧',
     path: 'https://tieba.baidu.com/f?kw=%E5%90%8D%E4%BD%9C%E4%B9%8B%E5%A3%81'
   },
   {
-    type: 'SiteLink',
+    type: 'Link',
     icon: 'github',
     text: 'Github - UI',
     path: 'https://github.com/mingzuozhibi/mzzb-ui'
   }, {
-    type: 'SiteLink',
+    type: 'Link',
     icon: 'github',
     text: 'Github - Server',
     path: 'https://github.com/mingzuozhibi/mzzb-server'
