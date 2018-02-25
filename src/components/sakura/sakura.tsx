@@ -107,9 +107,6 @@ export function Sakura(props: SakuraProps) {
             <div>
               <Breadcrumb style={{padding: 10}}>
                 <Breadcrumb.Item>
-                  <Link to="/home">首页</Link>
-                </Breadcrumb.Item>
-                <Breadcrumb.Item>
                   Sakura
                 </Breadcrumb.Item>
               </Breadcrumb>
