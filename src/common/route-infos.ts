@@ -43,6 +43,15 @@ export const routeInfos: RouteInfo[] = [
     component: () => import('../components/sakura')
   },
   {
+    type: 'Simple',
+    icon: 'icon-yinghua',
+    text: '推荐列表',
+    path: '/public',
+    model: 'Public',
+    search: 'key',
+    component: () => import('../components/public')
+  },
+  {
     type: 'Routes',
     icon: 'profile',
     text: '后台管理',
