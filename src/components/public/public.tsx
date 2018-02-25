@@ -48,6 +48,11 @@ export function Public(props: PublicProps) {
   function getSakuraColumns(): Column<SakuraModel>[] {
     return [
       {
+        key: 'id',
+        title: '#',
+        format: (t) => t.id
+      },
+      {
         key: 'key',
         title: 'Key',
         format: (t) => t.key
@@ -111,7 +116,7 @@ export function Public(props: PublicProps) {
   }
 
   return (
-    <div className="sakura-root">
+    <div className="public-root">
       {props.message && (
         <Alert message={props.message} type="error"/>
       )}
@@ -120,7 +125,7 @@ export function Public(props: PublicProps) {
           path={`${props.match.url}`}
           exact={true}
           render={() => withModels(models => (
-            <div>
+            <div className="with-modals">
               <Helmet>
                 <title>推荐列表 - 名作之壁吧</title>
               </Helmet>
@@ -139,7 +144,7 @@ export function Public(props: PublicProps) {
           path={`${props.match.url}/:key`}
           exact={true}
           render={({match}) => withDetail(match.params.key, detail => (
-            <div>
+            <div className="with-detail">
               <Helmet>
                 <title>{detail.title} - 名作之壁吧</title>
               </Helmet>

@@ -49,10 +49,9 @@ export const publicReducer = (state: PublicState = initState, action: AnyAction)
 }
 
 const manager = new Manager<SakuraModel>('/api/sakuras')
-const columns = 'discColumns=id,thisRank,prevRank,totalPt,title&viewType=PublicList'
 
 function* listModel() {
-  const result = yield call(manager.findAll, 'hasDiscs=false')
+  const result = yield call(manager.findAll, 'hasDiscs=false&viewType=PublicList')
   if (result.success) {
     yield put({type: `list${MODEL_NAME}Succeed`, models: result.data})
   } else {
@@ -62,9 +61,9 @@ function* listModel() {
 
 function* searchModel(action: AnyAction) {
   if (action.search === 'id') {
-    return yield call(manager.getOne, parseInt(action.value, 10), columns)
+    return yield call(manager.getOne, parseInt(action.value, 10))
   } else {
-    return yield call(manager.search, action.search, action.value, columns)
+    return yield call(manager.search, action.search, action.value)
   }
 }
 
