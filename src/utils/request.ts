@@ -1,6 +1,3 @@
-const header = 'X-CSRF-HEADER'
-const token = 'X-CSRF-TOKEN'
-
 function prepareCookies({credentials, ...props}: RequestInit) {
   if (!credentials) {
     credentials = 'include'
@@ -9,8 +6,8 @@ function prepareCookies({credentials, ...props}: RequestInit) {
 }
 
 function prepareHeaders({headers = {}, ...prors}: RequestInit) {
-  const name = sessionStorage[header]
-  const value = sessionStorage[token]
+  const name = sessionStorage['X-CSRF-HEADER']
+  const value = sessionStorage['X-CSRF-TOKEN']
   if (name && value) {
     headers[name] = value
   }
@@ -29,8 +26,11 @@ function checkStatus(response: Response) {
 
 function saveOfToken(response: Response) {
   const headers = response.headers
-  sessionStorage[header] = headers.get(header)
-  sessionStorage[token] = headers.get(token)
+  sessionStorage['X-CSRF-HEADER'] = headers.get('X-CSRF-HEADER')
+  sessionStorage['X-CSRF-TOKEN'] = headers.get('X-CSRF-TOKEN')
+  if (headers.has('X-AUTO-LOGIN')) {
+    localStorage['X-AUTO-LOGIN'] = headers.get('X-AUTO-LOGIN')
+  }
   return response
 }
 

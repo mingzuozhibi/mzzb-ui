@@ -65,7 +65,11 @@ export const md5Password = (username: string, password: string) => {
 
 export const sessionManager = {
   query: () => {
-    return request('/api/session')
+    return request('/api/session', {
+      headers: {
+        ['X-AUTO-LOGIN']: localStorage['X-AUTO-LOGIN']
+      }
+    })
   },
   login: (username: string, password: string) => {
     password = md5Password(username, password)

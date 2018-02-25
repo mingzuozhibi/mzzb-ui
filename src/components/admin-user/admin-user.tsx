@@ -127,24 +127,24 @@ export function AdminUser(props: AdminUserProps) {
           )}
         </Tabs.TabPane>
         <Tabs.TabPane tab="添加用户" key="2">
-          <div style={{padding: 10}}>
+          <div className="input-wrapper">
             <Input
-              prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
+              prefix={<Icon type="user"/>}
               defaultValue={formSave.username}
               onChange={e => formSave.username = e.target.value}
               placeholder="请输入用户名称"
             />
           </div>
-          <div style={{padding: 10}}>
+          <div className="input-wrapper">
             <Input
               type="password"
-              prefix={<Icon type="key" style={{color: 'rgba(0,0,0,.25)'}}/>}
+              prefix={<Icon type="key"/>}
               defaultValue={formSave.password}
               onChange={e => formSave.password = e.target.value}
               placeholder="请输入用户密码"
             />
           </div>
-          <div style={{padding: '5px 10px'}}>
+          <div className="input-wrapper">
             <Button type="primary" onClick={saveModel}>添加用户</Button>
           </div>
         </Tabs.TabPane>
@@ -165,23 +165,23 @@ export function AdminUser(props: AdminUserProps) {
       cancelText: '取消',
       content: (
         <div>
-          <div style={{padding: 10}}>
+          <div className="input-wrapper">
             <Input
-              prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
+              prefix={<Icon type="user"/>}
               defaultValue={formEdit.username}
               onChange={e => formEdit.username = e.target.value}
               placeholder="请输入用户名称"
             />
           </div>
-          <div style={{padding: 10}}>
+          <div className="input-wrapper">
             <Input
               type="password"
-              prefix={<Icon type="key" style={{color: 'rgba(0,0,0,.25)'}}/>}
+              prefix={<Icon type="key"/>}
               onChange={e => formEdit.password = e.target.value}
               placeholder="如不需修改用户密码可留空"
             />
           </div>
-          <div style={{padding: 10}}>
+          <div className="input-wrapper">
             <Checkbox
               defaultChecked={formEdit.enabled}
               onChange={e => formEdit.enabled = e.target.checked}
