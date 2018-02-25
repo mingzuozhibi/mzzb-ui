@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Alert, Button, Checkbox, Input, Modal, Radio, Tabs } from 'antd'
+import { Alert, Breadcrumb, Button, Checkbox, Input, Modal, Radio, Tabs } from 'antd'
 import { Column, Table } from '../../lib/table'
 import { Link } from '../../lib/link'
 import { Icon } from '../../lib/icon'
@@ -7,6 +7,7 @@ import { Helmet } from 'react-helmet'
 
 import { formatTimeout } from '../../utils/format'
 import { AdminSakuraModel, AdminSakuraState } from './reducer'
+import { Route, RouteComponentProps, Switch } from 'react-router'
 
 interface FormSave {
   key?: string
@@ -21,7 +22,9 @@ interface FormEdit extends FormSave {
 const formSave: FormSave = {}
 const formEdit: FormEdit = {}
 
-interface AdminSakuraProps extends AdminSakuraState {
+export type OwnProps = RouteComponentProps<{}>
+
+interface AdminSakuraProps extends AdminSakuraState, OwnProps {
   saveModel: (model: {}) => void
   editModel: (model: {}) => void
 }
@@ -115,46 +118,61 @@ export function AdminSakura(props: AdminSakuraProps) {
   }
 
   return (
-    <div className="basic-sakura">
-      <Helmet>
-        <title>Sakura管理 - 名作之壁吧</title>
-      </Helmet>
-      <Tabs>
-        <Tabs.TabPane tab="Sakura列表" key="1">
-          {props.message && (
-            <Alert message={props.message} type="error"/>
+    <div className="admin-sakura">
+      <Switch>
+        <Route
+          path={`${props.match.url}`}
+          exact={true}
+          render={() => (
+            <div className="with-models">
+              <Helmet>
+                <title>Sakura管理 - 名作之壁吧</title>
+              </Helmet>
+              <Breadcrumb style={{padding: 10}}>
+                <Breadcrumb.Item>
+                  推荐列表
+                </Breadcrumb.Item>
+              </Breadcrumb>
+              <Tabs>
+                <Tabs.TabPane tab="Sakura列表" key="1">
+                  {props.message && (
+                    <Alert message={props.message} type="error"/>
+                  )}
+                  {props.models && (
+                    <Table rows={props.models} columns={getColumns()}/>
+                  )}
+                </Tabs.TabPane>
+                <Tabs.TabPane tab="添加Sakura" key="2">
+                  <div className="input-wrapper">
+                    <Input
+                      prefix={<Icon type="key"/>}
+                      onChange={(e) => formSave.key = e.target.value}
+                      placeholder="请输入Sakura'Key"
+                    />
+                  </div>
+                  <div className="input-wrapper">
+                    <Input
+                      prefix={<Icon type="tag-o"/>}
+                      onChange={(e) => formSave.title = e.target.value}
+                      placeholder="请输入Sakura标题"
+                    />
+                  </div>
+                  <div className="input-wrapper">
+                    <span className="input-label">显示类型</span>
+                    <Radio.Group
+                      options={['SakuraList', 'PublicList', 'PrivateList']}
+                      onChange={e => formSave.viewType = e.target.value}
+                    />
+                  </div>
+                  <div className="input-wrapper">
+                    <Button type="primary" onClick={saveModel}>添加Sakura</Button>
+                  </div>
+                </Tabs.TabPane>
+              </Tabs>
+            </div>
           )}
-          {props.models && (
-            <Table rows={props.models} columns={getColumns()}/>
-          )}
-        </Tabs.TabPane>
-        <Tabs.TabPane tab="添加Sakura" key="2">
-          <div style={{padding: 10}}>
-            <Input
-              prefix={<Icon type="key" style={{color: 'rgba(0,0,0,.25)'}}/>}
-              onChange={(e) => formSave.key = e.target.value}
-              placeholder="请输入Sakura'Key"
-            />
-          </div>
-          <div style={{padding: 10}}>
-            <Input
-              prefix={<Icon type="tag-o" style={{color: 'rgba(0,0,0,.25)'}}/>}
-              onChange={(e) => formSave.title = e.target.value}
-              placeholder="请输入Sakura标题"
-            />
-          </div>
-          <div style={{padding: 10}}>
-            <span style={{paddingRight: 10}}>显示类型</span>
-            <Radio.Group
-              options={['SakuraList', 'PublicList', 'PrivateList']}
-              onChange={e => formSave.viewType = e.target.value}
-            />
-          </div>
-          <div style={{padding: '5px 10px'}}>
-            <Button type="primary" onClick={saveModel}>添加Sakura</Button>
-          </div>
-        </Tabs.TabPane>
-      </Tabs>
+        />
+      </Switch>
     </div>
   )
 
@@ -172,31 +190,31 @@ export function AdminSakura(props: AdminSakuraProps) {
       cancelText: '取消',
       content: (
         <div>
-          <div style={{padding: 10}}>
+          <div className="input-wrapper">
             <Input
-              prefix={<Icon type="key" style={{color: 'rgba(0,0,0,.25)'}}/>}
+              prefix={<Icon type="key"/>}
               defaultValue={formEdit.key}
               onChange={e => formEdit.key = e.target.value}
               placeholder="请输入Sakura'key"
             />
           </div>
-          <div style={{padding: 10}}>
+          <div className="input-wrapper">
             <Input
-              prefix={<Icon type="tag-o" style={{color: 'rgba(0,0,0,.25)'}}/>}
+              prefix={<Icon type="tag-o"/>}
               defaultValue={formEdit.title}
               onChange={e => formEdit.title = e.target.value}
               placeholder="请输入Sakura标题"
             />
           </div>
-          <div style={{padding: 10}}>
-            <span style={{paddingRight: 10}}>显示类型</span>
+          <div className="input-wrapper">
+            <span className="input-label">显示类型</span>
             <Radio.Group
               options={['SakuraList', 'PublicList', 'PrivateList']}
               defaultValue={formEdit.viewType}
               onChange={e => formEdit.viewType = e.target.value}
             />
           </div>
-          <div style={{padding: 10}}>
+          <div className="input-wrapper">
             <Checkbox
               defaultChecked={formEdit.enabled}
               onChange={e => formEdit.enabled = e.target.checked}
