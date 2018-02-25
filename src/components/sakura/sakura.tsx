@@ -113,8 +113,6 @@ export function Sakura(props: SakuraProps) {
                 <Breadcrumb.Item>
                   Sakura
                 </Breadcrumb.Item>
-              </Breadcrumb>
-              <div style={{padding: '0 10px'}}>
                 {models.map(sakura => (
                   <Link
                     key={sakura.id}
@@ -124,7 +122,7 @@ export function Sakura(props: SakuraProps) {
                     {sakura.title}
                   </Link>
                 ))}
-              </div>
+              </Breadcrumb>
               {models.map(sakura => (
                 <Table
                   key={sakura.id}
