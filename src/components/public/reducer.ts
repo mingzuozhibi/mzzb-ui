@@ -52,7 +52,7 @@ const manager = new Manager<SakuraModel>('/api/sakuras')
 const columns = 'discColumns=id,thisRank,prevRank,totalPt,title&viewType=PublicList'
 
 function* listModel() {
-  const result = yield call(manager.findAll, columns)
+  const result = yield call(manager.findAll, 'hasDiscs=false')
   if (result.success) {
     yield put({type: `list${MODEL_NAME}Succeed`, models: result.data})
   } else {

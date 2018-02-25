@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Alert, Breadcrumb } from 'antd'
 import { Column, Table } from '../../lib/table'
 import { Timer } from '../../lib/timer'
+import { Helmet } from 'react-helmet'
 import './public.css'
 
 import { formatNumber } from '../../utils/format'
@@ -120,6 +121,9 @@ export function Public(props: PublicProps) {
           exact={true}
           render={() => withModels(models => (
             <div>
+              <Helmet>
+                <title>推荐列表 - 名作之壁吧</title>
+              </Helmet>
               <Breadcrumb style={{padding: 10}}>
                 <Breadcrumb.Item>
                   推荐列表
@@ -136,6 +140,9 @@ export function Public(props: PublicProps) {
           exact={true}
           render={({match}) => withDetail(match.params.key, detail => (
             <div>
+              <Helmet>
+                <title>{detail.title} - 名作之壁吧</title>
+              </Helmet>
               <Breadcrumb style={{padding: 10}}>
                 <Breadcrumb.Item>
                   <Link to="/public">推荐列表</Link>
