@@ -61,7 +61,7 @@ export function Public(props: PublicProps) {
       },
       {
         key: 'title',
-        title: '列表标题',
+        title: '列表标题 (点击进入列表)',
         format: (t) => <Link to={`/public/${t.key}`}>{t.title}</Link>
       },
       {
