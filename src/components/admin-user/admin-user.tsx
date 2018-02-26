@@ -38,7 +38,7 @@ export function AdminUser(props: AdminUserProps) {
     return [
       {
         key: 'id',
-        title: '#',
+        title: 'ID',
         format: (t) => t.id
       },
       {

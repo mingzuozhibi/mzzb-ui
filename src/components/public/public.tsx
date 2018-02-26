@@ -51,17 +51,17 @@ export function Public(props: PublicProps) {
     return [
       {
         key: 'id',
-        title: '#',
+        title: 'ID',
         format: (t) => t.id
       },
       {
         key: 'key',
-        title: 'Key',
+        title: '索引',
         format: (t) => t.key
       },
       {
         key: 'title',
-        title: '标题',
+        title: '列表标题',
         format: (t) => <Link to={`/public/${t.key}`}>{t.title}</Link>
       },
       {
