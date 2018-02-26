@@ -114,13 +114,11 @@ export function Sakura(props: SakuraProps) {
                   Sakura
                 </Breadcrumb.Item>
                 {models.map(sakura => (
-                  <Link
-                    key={sakura.id}
-                    to={`${props.match.url}/${sakura.key}`}
-                    style={{paddingRight: 10}}
-                  >
-                    {sakura.title}
-                  </Link>
+                  <Breadcrumb.Item key={sakura.id}>
+                    <Link to={`${props.match.url}/${sakura.key}`}>
+                      {sakura.title}
+                    </Link>
+                  </Breadcrumb.Item>
                 ))}
               </Breadcrumb>
               {models.map(sakura => (
