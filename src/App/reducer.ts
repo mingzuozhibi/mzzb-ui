@@ -1,18 +1,9 @@
-import { LocationChangeAction } from 'react-router-redux'
 import { AnyAction } from 'redux'
-import { call, put, select } from 'redux-saga/effects'
-import { RootState } from '../common/root-reducer'
+import { call, put } from 'redux-saga/effects'
 import { sessionManager } from '../utils/manager'
 import { message, Modal } from 'antd'
+import { currentSaga } from './current'
 import produce from 'immer'
-import { simpleRoutes } from '../index'
-import { match } from 'react-router'
-
-export interface Reload {
-  loading: boolean
-  refresh: string
-  action?: AnyAction
-}
 
 export interface Session {
   userName: string
@@ -22,8 +13,6 @@ export interface Session {
 
 export interface AppState {
   title: string
-  match?: match<any>
-  reload?: Reload
   session: Session
   viewSider: boolean
   viewLogin: boolean
@@ -39,42 +28,19 @@ const initSession = {
 const initState: AppState = {
   title: '名作之壁吧',
   session: initSession,
-  viewSider: true,
+  viewSider: false,
   viewLogin: false,
   submiting: false,
 }
 
-const regExp = new RegExp(/^(\w+)(Request|Succeed|Failed)$/)
-
-function checkSagas(type: string, draft: AppState) {
-  if (draft.reload) {
-    const matcher = regExp.exec(type)
-    if (matcher && matcher.length) {
-      if (matcher[1] === draft.reload.refresh) {
-        switch (matcher[2]) {
-          case 'Request':
-            draft.reload.loading = true
-            break
-          default:
-            draft.reload.loading = false
-        }
-      }
-    }
-  }
-}
-
 export const appReducer = (state: AppState = initState, action: AnyAction) => {
   return produce(state, draftState => {
-    checkSagas(action.type, draftState)
     switch (action.type) {
       case 'setViewSider':
         draftState.viewSider = action.viewSider
         break
       case 'setViewLogin':
         draftState.viewLogin = action.viewLogin
-        break
-      case 'setReload':
-        draftState.reload = action.reload
         break
       case 'sessionLoginRequest':
         draftState.submiting = true
@@ -111,7 +77,7 @@ function* sessionLogin(action: AnyAction) {
   const result = yield call(sessionManager.login, action.username, action.password)
   if (result.success) {
     yield put({type: 'sessionSucceed', session: result.data, message: '你已成功登入'})
-    yield invokeReload()
+    yield currentSaga.reloadCurrent()
   } else {
     yield put({type: 'sessionFailed', title: '登入错误', content: result.message})
   }
@@ -126,39 +92,4 @@ function* sessionLogout() {
   }
 }
 
-function* updateReload(action: LocationChangeAction) {
-  const pathname = action.payload.pathname
-  const route = simpleRoutes.find(r => pathname.startsWith(r.path))
-  if (route) {
-    if (route.model) {
-      if (route.search && route.path !== pathname) {
-        const refresh = `view${route.model}`
-        const value = pathname.substring(route.path.length + 1)
-        const reloadAction = {type: `${refresh}Request`, search: route.search, value: value}
-        yield put(setReload(refresh, reloadAction))
-      } else {
-        yield put(setReload(`list${route.model}`))
-      }
-      yield invokeReload()
-    } else {
-      yield put(clearReload())
-    }
-  }
-}
-
-function* invokeReload() {
-  const reload = yield select((state: RootState) => state.app.reload)
-  if (reload) {
-    yield put(reload.action || {type: `${reload.refresh}Request`})
-  }
-}
-
-export const appSaga = {sessionQuery, sessionLogin, sessionLogout, updateReload, invokeReload}
-
-export function setReload(refresh: string, action?: AnyAction) {
-  return {type: 'setReload', reload: {loading: false, refresh, action}}
-}
-
-export function clearReload() {
-  return {type: 'setReload', reload: undefined}
-}
+export const appSaga = {sessionQuery, sessionLogin, sessionLogout}

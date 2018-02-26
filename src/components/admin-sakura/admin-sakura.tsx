@@ -8,6 +8,7 @@ import { Helmet } from 'react-helmet'
 import { formatTimeout } from '../../utils/format'
 import { AdminSakuraModel, AdminSakuraState } from './reducer'
 import { Route, RouteComponentProps, Switch } from 'react-router'
+import { CurrentState } from '../../App/current'
 
 interface FormSave {
   key?: string
@@ -25,6 +26,7 @@ const formEdit: FormEdit = {}
 export type OwnProps = RouteComponentProps<{}>
 
 interface AdminSakuraProps extends AdminSakuraState, OwnProps {
+  current: CurrentState
   saveModel: (model: {}) => void
   editModel: (model: {}) => void
 }
@@ -126,7 +128,7 @@ export function AdminSakura(props: AdminSakuraProps) {
           render={() => (
             <div className="with-models">
               <Helmet>
-                <title>Sakura管理 - 名作之壁吧</title>
+                <title>{props.current.route.text} - 名作之壁吧</title>
               </Helmet>
               <Tabs>
                 <Tabs.TabPane tab="所有列表" key="1">

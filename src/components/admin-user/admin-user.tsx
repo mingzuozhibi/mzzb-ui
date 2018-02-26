@@ -8,6 +8,7 @@ import { Helmet } from 'react-helmet'
 import { md5Password } from '../../utils/manager'
 import { ViewportProps } from '../../hoc/Viewport'
 import { AdminUserModel, AdminUserState } from './reducer'
+import { CurrentState } from '../../App/current'
 
 interface FormSave {
   username?: string
@@ -26,6 +27,7 @@ const formEdit: FormEdit = {}
 export type OwnProps = ViewportProps
 
 interface AdminUserProps extends AdminUserState, OwnProps {
+  current: CurrentState
   saveModel: (model: {}) => void
   editModel: (model: {}) => void
 }
@@ -115,7 +117,7 @@ export function AdminUser(props: AdminUserProps) {
   return (
     <div className="admin-users">
       <Helmet>
-        <title>用户管理 - 名作之壁吧</title>
+        <title>{props.current.route.text} - 名作之壁吧</title>
       </Helmet>
       <Tabs>
         <Tabs.TabPane tab="用户列表" key="1">
