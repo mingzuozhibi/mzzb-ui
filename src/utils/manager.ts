@@ -33,7 +33,7 @@ export class Manager<T extends BaseModel> {
     }
   }
 
-  search = (name: string, value: any, query?: string) => {
+  search = (name: string, value: string | number, query?: string) => {
     if (query) {
       return request(`${this.path}/${name}/${value}?${query}`)
     } else {
