@@ -8,6 +8,7 @@ function mapStateToProps(state: RootState, ownProps: OwnProps) {
   return {
     models: state.adminUser.models,
     message: state.adminUser.message,
+    current: state.current!,
     ...ownProps
   }
 }

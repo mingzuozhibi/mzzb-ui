@@ -10,6 +10,7 @@ import { formatNumber } from '../../utils/format'
 import { compareFactory } from '../../utils/compare'
 import { DiscModel, PublicState, SakuraModel } from './reducer'
 import { Route, RouteComponentProps, Switch } from 'react-router'
+import { CurrentState } from '../../App/current'
 import produce from 'immer'
 
 const compareRank = compareFactory({
@@ -21,6 +22,7 @@ const compareRank = compareFactory({
 export type OwnProps = RouteComponentProps<{}>
 
 export interface PublicProps extends PublicState, OwnProps {
+  current: CurrentState
 }
 
 export function Public(props: PublicProps) {
@@ -49,17 +51,17 @@ export function Public(props: PublicProps) {
     return [
       {
         key: 'id',
-        title: '#',
+        title: 'ID',
         format: (t) => t.id
       },
       {
         key: 'key',
-        title: 'Key',
+        title: '索引',
         format: (t) => t.key
       },
       {
         key: 'title',
-        title: '标题',
+        title: '列表标题 (点击进入列表)',
         format: (t) => <Link to={`/public/${t.key}`}>{t.title}</Link>
       },
       {
@@ -127,11 +129,11 @@ export function Public(props: PublicProps) {
           render={() => withModels(models => (
             <div className="with-modals">
               <Helmet>
-                <title>推荐列表 - 名作之壁吧</title>
+                <title>{props.current.route.text} - 名作之壁吧</title>
               </Helmet>
               <Breadcrumb style={{padding: 10}}>
                 <Breadcrumb.Item>
-                  推荐列表
+                  {props.current.route.text}
                 </Breadcrumb.Item>
               </Breadcrumb>
               <div style={{padding: '0 10px'}}>
@@ -150,7 +152,7 @@ export function Public(props: PublicProps) {
               </Helmet>
               <Breadcrumb style={{padding: 10}}>
                 <Breadcrumb.Item>
-                  <Link to="/public">推荐列表</Link>
+                  <Link to={props.match.url}>{props.current.route.text}</Link>
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>
                   {detail.title}

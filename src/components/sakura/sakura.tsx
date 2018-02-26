@@ -10,6 +10,7 @@ import { formatNumber } from '../../utils/format'
 import { compareFactory } from '../../utils/compare'
 import { DiscModel, SakuraModel, SakuraState } from './reducer'
 import { Route, RouteComponentProps, Switch } from 'react-router'
+import { CurrentState } from '../../App/current'
 import produce from 'immer'
 
 const compareRank = compareFactory({
@@ -21,6 +22,7 @@ const compareRank = compareFactory({
 export type OwnProps = RouteComponentProps<{}>
 
 export interface SakuraProps extends SakuraState, OwnProps {
+  current: CurrentState
 }
 
 export function Sakura(props: SakuraProps) {
@@ -107,20 +109,18 @@ export function Sakura(props: SakuraProps) {
           render={() => withModels(models => (
             <div>
               <Helmet>
-                <title>Sakura - 名作之壁吧</title>
+                <title>{props.current.route.text} - 名作之壁吧</title>
               </Helmet>
               <Breadcrumb style={{padding: 10}}>
                 <Breadcrumb.Item>
-                  Sakura
+                  {props.current.route.text}
                 </Breadcrumb.Item>
                 {models.map(sakura => (
-                  <Link
-                    key={sakura.id}
-                    to={`${props.match.url}/${sakura.key}`}
-                    style={{paddingRight: 10}}
-                  >
-                    {sakura.title}
-                  </Link>
+                  <Breadcrumb.Item key={sakura.id}>
+                    <Link to={`${props.match.url}/${sakura.key}`}>
+                      {sakura.title}
+                    </Link>
+                  </Breadcrumb.Item>
                 ))}
               </Breadcrumb>
               {models.map(sakura => (
@@ -145,7 +145,7 @@ export function Sakura(props: SakuraProps) {
               </Helmet>
               <Breadcrumb style={{padding: 10}}>
                 <Breadcrumb.Item>
-                  <Link to="/sakura">Sakura</Link>
+                  <Link to={props.match.url}>{props.current.route.text}</Link>
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>
                   {detail.title}

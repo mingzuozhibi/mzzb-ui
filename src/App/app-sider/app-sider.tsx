@@ -18,7 +18,10 @@ export function AppSider(props: AppSiderProps) {
 
   function onCollapse(hideSider: boolean, type: 'clickTrigger' | 'responsive') {
     if (type === 'responsive') {
-      props.setViewSider(!hideSider)
+      const handler = () => {
+        props.setViewSider(!hideSider)
+      }
+      setTimeout(handler, 100)
     }
   }
 

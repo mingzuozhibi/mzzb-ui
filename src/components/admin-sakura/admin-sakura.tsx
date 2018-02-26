@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Alert, Breadcrumb, Button, Checkbox, Input, Modal, Radio, Tabs } from 'antd'
+import { Alert, Button, Checkbox, Input, Modal, Radio, Tabs } from 'antd'
 import { Column, Table } from '../../lib/table'
 import { Link } from '../../lib/link'
 import { Icon } from '../../lib/icon'
@@ -8,6 +8,7 @@ import { Helmet } from 'react-helmet'
 import { formatTimeout } from '../../utils/format'
 import { AdminSakuraModel, AdminSakuraState } from './reducer'
 import { Route, RouteComponentProps, Switch } from 'react-router'
+import { CurrentState } from '../../App/current'
 
 interface FormSave {
   key?: string
@@ -25,6 +26,7 @@ const formEdit: FormEdit = {}
 export type OwnProps = RouteComponentProps<{}>
 
 interface AdminSakuraProps extends AdminSakuraState, OwnProps {
+  current: CurrentState
   saveModel: (model: {}) => void
   editModel: (model: {}) => void
 }
@@ -37,12 +39,12 @@ export function AdminSakura(props: AdminSakuraProps) {
     const viewType = formSave.viewType
 
     if (!key) {
-      Modal.warning({title: '请检查输入项', content: 'Sakura\'Key必须输入'})
+      Modal.warning({title: '请检查输入项', content: '列表索引必须输入'})
       return
     }
 
     if (!title) {
-      Modal.warning({title: '请检查输入项', content: 'Sakura标题必须输入'})
+      Modal.warning({title: '请检查输入项', content: '列表标题必须输入'})
       return
     }
 
@@ -61,12 +63,12 @@ export function AdminSakura(props: AdminSakuraProps) {
     const enabled = formEdit.enabled
 
     if (!key) {
-      Modal.warning({title: '请检查输入项', content: '你必须输入Sakura\'Key'})
+      Modal.warning({title: '请检查输入项', content: '你必须输入列表索引'})
       return
     }
 
     if (!title) {
-      Modal.warning({title: '请检查输入项', content: '你必须输入Sakura标题'})
+      Modal.warning({title: '请检查输入项', content: '你必须输入列表标题'})
       return
     }
 
@@ -77,12 +79,12 @@ export function AdminSakura(props: AdminSakuraProps) {
     return [
       {
         key: 'id',
-        title: '#',
+        title: 'ID',
         format: (t) => t.id
       },
       {
         key: 'key',
-        title: 'Key',
+        title: '索引',
         format: (t) => t.key
       },
       {
@@ -126,15 +128,10 @@ export function AdminSakura(props: AdminSakuraProps) {
           render={() => (
             <div className="with-models">
               <Helmet>
-                <title>Sakura管理 - 名作之壁吧</title>
+                <title>{props.current.route.text} - 名作之壁吧</title>
               </Helmet>
-              <Breadcrumb style={{padding: 10}}>
-                <Breadcrumb.Item>
-                  推荐列表
-                </Breadcrumb.Item>
-              </Breadcrumb>
               <Tabs>
-                <Tabs.TabPane tab="Sakura列表" key="1">
+                <Tabs.TabPane tab="所有列表" key="1">
                   {props.message && (
                     <Alert message={props.message} type="error"/>
                   )}
@@ -142,25 +139,28 @@ export function AdminSakura(props: AdminSakuraProps) {
                     <Table rows={props.models} columns={getColumns()}/>
                   )}
                 </Tabs.TabPane>
-                <Tabs.TabPane tab="添加Sakura" key="2">
+                <Tabs.TabPane tab="添加列表" key="2">
                   <div className="input-wrapper">
                     <Input
                       prefix={<Icon type="key"/>}
+                      defaultValue={formSave.key}
                       onChange={(e) => formSave.key = e.target.value}
-                      placeholder="请输入Sakura'Key"
+                      placeholder="请输入列表索引"
                     />
                   </div>
                   <div className="input-wrapper">
                     <Input
                       prefix={<Icon type="tag-o"/>}
+                      defaultValue={formSave.title}
                       onChange={(e) => formSave.title = e.target.value}
-                      placeholder="请输入Sakura标题"
+                      placeholder="请输入列表标题"
                     />
                   </div>
                   <div className="input-wrapper">
                     <span className="input-label">显示类型</span>
                     <Radio.Group
                       options={['SakuraList', 'PublicList', 'PrivateList']}
+                      defaultValue={formSave.viewType}
                       onChange={e => formSave.viewType = e.target.value}
                     />
                   </div>
@@ -183,7 +183,7 @@ export function AdminSakura(props: AdminSakuraProps) {
     formEdit.enabled = model.enabled
 
     Modal.confirm({
-      title: '编辑Sakura',
+      title: '编辑列表',
       okText: '保存',
       okType: 'primary',
       onOk: () => editModel(model.id),
@@ -195,7 +195,7 @@ export function AdminSakura(props: AdminSakuraProps) {
               prefix={<Icon type="key"/>}
               defaultValue={formEdit.key}
               onChange={e => formEdit.key = e.target.value}
-              placeholder="请输入Sakura'key"
+              placeholder="请输入列表索引"
             />
           </div>
           <div className="input-wrapper">
@@ -203,7 +203,7 @@ export function AdminSakura(props: AdminSakuraProps) {
               prefix={<Icon type="tag-o"/>}
               defaultValue={formEdit.title}
               onChange={e => formEdit.title = e.target.value}
-              placeholder="请输入Sakura标题"
+              placeholder="请输入列表标题"
             />
           </div>
           <div className="input-wrapper">
