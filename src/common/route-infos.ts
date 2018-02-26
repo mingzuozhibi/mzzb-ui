@@ -36,7 +36,7 @@ export const routeInfos: RouteInfo[] = [
   {
     type: 'Simple',
     icon: 'icon-yinghua',
-    text: 'Sakura',
+    text: '日亚实时',
     path: '/sakura',
     model: 'Sakura',
     search: 'key',
@@ -45,7 +45,7 @@ export const routeInfos: RouteInfo[] = [
   {
     type: 'Simple',
     icon: 'icon-yinghua',
-    text: '推荐列表',
+    text: '公开列表',
     path: '/public',
     model: 'Public',
     search: 'key',
@@ -70,7 +70,7 @@ export const routeInfos: RouteInfo[] = [
       {
         type: 'Simple',
         icon: 'icon-yinghua',
-        text: 'Sakura管理',
+        text: '列表管理',
         path: '/admin/sakura',
         role: 'ROLE_BASIC',
         model: 'AdminSakura',

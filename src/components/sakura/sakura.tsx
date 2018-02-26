@@ -107,11 +107,11 @@ export function Sakura(props: SakuraProps) {
           render={() => withModels(models => (
             <div>
               <Helmet>
-                <title>Sakura - 名作之壁吧</title>
+                <title>日亚实时 - 名作之壁吧</title>
               </Helmet>
               <Breadcrumb style={{padding: 10}}>
                 <Breadcrumb.Item>
-                  Sakura
+                  日亚实时
                 </Breadcrumb.Item>
                 {models.map(sakura => (
                   <Breadcrumb.Item key={sakura.id}>
@@ -143,7 +143,7 @@ export function Sakura(props: SakuraProps) {
               </Helmet>
               <Breadcrumb style={{padding: 10}}>
                 <Breadcrumb.Item>
-                  <Link to="/sakura">Sakura</Link>
+                  <Link to="/sakura">日亚实时</Link>
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>
                   {detail.title}

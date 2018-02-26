@@ -36,17 +36,17 @@ export const adminSakuraReducer = (state: AdminSakuraState = initState, action: 
         break
       case `save${MODEL_NAME}Succeed`:
         draftState.models!.push(action.model)
-        message.success('添加Sakura成功')
+        message.success('添加列表成功')
         break
       case `save${MODEL_NAME}Failed`:
-        Modal.error({title: '添加Sakura失败', content: action.message})
+        Modal.error({title: '添加列表失败', content: action.message})
         break
       case `edit${MODEL_NAME}Succeed`:
-        message.success('编辑Sakura成功')
+        message.success('编辑列表成功')
         draftState.models = draftState.models!.map(replace(action))
         break
       case `edit${MODEL_NAME}Failed`:
-        Modal.error({title: '编辑Sakura失败', content: action.message})
+        Modal.error({title: '编辑列表失败', content: action.message})
         break
       default:
     }
