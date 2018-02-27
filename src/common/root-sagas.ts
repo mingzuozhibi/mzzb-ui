@@ -27,6 +27,7 @@ export function* rootSagas() {
     takeLatest('editAdminUserRequest', adminUserSaga.editModel),
 
     takeLatest('listAdminSakuraRequest', adminSakuraSaga.listModel),
+    takeLatest('viewAdminSakuraRequest', adminSakuraSaga.viewModel),
     takeEvery('saveAdminSakuraRequest', adminSakuraSaga.saveModel),
     takeLatest('editAdminSakuraRequest', adminSakuraSaga.editModel),
   ])

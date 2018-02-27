@@ -34,6 +34,13 @@ export const adminSakuraReducer = (state: AdminSakuraState = initState, action: 
       case `list${MODEL_NAME}Failed`:
         draftState.message = action.message
         break
+      case `view${MODEL_NAME}Succeed`:
+        draftState.detail = action.detail
+        draftState.message = undefined
+        break
+      case `view${MODEL_NAME}Failed`:
+        draftState.message = action.message
+        break
       case `save${MODEL_NAME}Succeed`:
         draftState.models!.push(action.model)
         message.success('添加列表成功')
@@ -64,6 +71,23 @@ function* listModel() {
   }
 }
 
+function* searchModel(action: AnyAction) {
+  if (action.search === 'id') {
+    return yield call(manager.getOne, parseInt(action.value, 10))
+  } else {
+    return yield call(manager.search, action.search, action.value)
+  }
+}
+
+function* viewModel(action: AnyAction) {
+  const result = yield searchModel(action)
+  if (result.success) {
+    yield put({type: `view${MODEL_NAME}Succeed`, detail: result.data})
+  } else {
+    yield put({type: `view${MODEL_NAME}Failed`, message: result.message})
+  }
+}
+
 function* saveModel(action: AnyAction) {
   const result = yield call(manager.addOne, action.model)
   if (result.success) {
@@ -82,4 +106,4 @@ function* editModel(action: AnyAction) {
   }
 }
 
-export const adminSakuraSaga = {listModel, saveModel, editModel}
+export const adminSakuraSaga = {listModel, viewModel, saveModel, editModel}

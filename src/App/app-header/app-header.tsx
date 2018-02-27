@@ -4,7 +4,7 @@ import { CurrentState } from '../current'
 import { Icon } from '../../lib/icon'
 
 interface AppHeaderProps {
-  currnet?: CurrentState
+  current: CurrentState
   isLogged: boolean
   viewSider: boolean
   showLogin: () => void
@@ -22,10 +22,10 @@ export function AppHeader(props: AppHeaderProps) {
         onClick={() => props.setViewSider(!props.viewSider)}
         type={props.viewSider ? 'menu-fold' : 'menu-unfold'}
       />
-      {props.currnet && (
+      {props.current.reload && (
         <Icon
           className="header-icon"
-          type={props.currnet.loading ? 'loading' : 'reload'}
+          type={props.current.reload.loading ? 'loading' : 'reload'}
           onClick={props.reloadRequest}
         />
       )}

@@ -117,7 +117,7 @@ export function AdminUser(props: AdminUserProps) {
   return (
     <div className="admin-users">
       <Helmet>
-        <title>{props.current.route.text} - 名作之壁吧</title>
+        <title>{props.current.route!.text} - 名作之壁吧</title>
       </Helmet>
       <Tabs>
         <Tabs.TabPane tab="用户列表" key="1">

@@ -109,11 +109,11 @@ export function Sakura(props: SakuraProps) {
           render={() => withModels(models => (
             <div>
               <Helmet>
-                <title>{props.current.route.text} - 名作之壁吧</title>
+                <title>{props.current.route!.text} - 名作之壁吧</title>
               </Helmet>
               <Breadcrumb style={{padding: 10}}>
                 <Breadcrumb.Item>
-                  {props.current.route.text}
+                  {props.current.route!.text}
                 </Breadcrumb.Item>
                 {models.map(sakura => (
                   <Breadcrumb.Item key={sakura.id}>
@@ -145,7 +145,7 @@ export function Sakura(props: SakuraProps) {
               </Helmet>
               <Breadcrumb style={{padding: 10}}>
                 <Breadcrumb.Item>
-                  <Link to={props.match.url}>{props.current.route.text}</Link>
+                  <Link to={props.match.url}>{props.current.route!.text}</Link>
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>
                   {detail.title}

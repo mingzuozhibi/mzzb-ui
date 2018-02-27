@@ -7,7 +7,7 @@ function mapStateToProps(state: RootState, ownProps: OwnProps) {
     models: state.public.models,
     detail: state.public.detail,
     message: state.public.message,
-    current: state.current!,
+    current: state.current,
     ...ownProps
   }
 }

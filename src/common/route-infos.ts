@@ -74,6 +74,7 @@ export const routeInfos: RouteInfo[] = [
         path: '/admin/sakura',
         role: 'ROLE_BASIC',
         model: 'AdminSakura',
+        search: 'key',
         component: () => import('../components/admin-sakura')
       },
     ]

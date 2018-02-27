@@ -12,7 +12,7 @@ export interface RootState {
   router: RouterState
   sakura: SakuraState
   public: PublicState
-  current?: CurrentState
+  current: CurrentState
   adminUser: AdminUserState
   adminSakura: AdminSakuraState
 }
