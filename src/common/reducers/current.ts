@@ -4,7 +4,7 @@ import { RootState } from '../root-reducer'
 import { pageInfos } from '../menu-infos'
 import produce from 'immer'
 
-interface Reload {
+export interface Reload {
   loading: boolean
   action: string
   param?: {}

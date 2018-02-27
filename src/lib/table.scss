@@ -8,6 +8,14 @@
       font-size: 18px;
       padding-left: 12px;
     }
+    @media screen and (max-width: 400px) {
+      font-size: 22px;
+      padding: 10px;
+      span {
+        font-size: 16px;
+        padding-left: 10px;
+      }
+    }
   }
   @media screen and (max-width: $mobile-max-width) {
     .table > thead > tr > th,

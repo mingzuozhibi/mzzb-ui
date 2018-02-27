@@ -1,10 +1,10 @@
 import * as React from 'react'
 import { Layout, Popconfirm } from 'antd'
-import { CurrentState } from '../../common/reducers/current'
+import { Reload } from '../../common/reducers/current'
 import { Icon } from '../../lib/icon'
 
 interface AppHeaderProps {
-  current: CurrentState
+  reload?: Reload
   isLogged: boolean
   viewSider: boolean
   showLogin: () => void
@@ -14,7 +14,6 @@ interface AppHeaderProps {
 }
 
 export function AppHeader(props: AppHeaderProps) {
-
   return (
     <Layout.Header className="app-header">
       <Icon
@@ -22,10 +21,10 @@ export function AppHeader(props: AppHeaderProps) {
         onClick={() => props.setViewSider(!props.viewSider)}
         type={props.viewSider ? 'menu-fold' : 'menu-unfold'}
       />
-      {props.current.reload && (
+      {props.reload && (
         <Icon
           className="header-icon"
-          type={props.current.reload.loading ? 'loading' : 'reload'}
+          type={props.reload.loading ? 'loading' : 'reload'}
           onClick={props.reloadRequest}
         />
       )}
