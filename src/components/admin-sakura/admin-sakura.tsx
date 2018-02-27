@@ -101,7 +101,7 @@ export function AdminSakura(props: AdminSakuraProps) {
                 </Breadcrumb.Item>
               </Breadcrumb>
               <AdminSakuraEdit
-                model={detail}
+                detail={detail}
                 pageInfo={props.pageInfo}
                 editModel={props.editModel}
               />

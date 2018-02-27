@@ -14,7 +14,7 @@ interface FormEdit {
 const formEdit: FormEdit = {}
 
 interface AdminSakuraEditProps {
-  model: AdminSakuraModel
+  detail: AdminSakuraModel
   pageInfo: PageInfo
   editModel: (model: {}) => void
 }
@@ -37,16 +37,16 @@ export function AdminSakuraEdit(props: AdminSakuraEditProps) {
       return
     }
 
-    props.editModel({id: props.model.id, key, title, viewType, enabled})
+    props.editModel({id: props.detail.id, key, title, viewType, enabled})
   }
 
-  formEdit.key = props.model.key
-  formEdit.title = props.model.title
-  formEdit.enabled = props.model.enabled
-  formEdit.viewType = props.model.viewType
+  formEdit.key = props.detail.key
+  formEdit.title = props.detail.title
+  formEdit.enabled = props.detail.enabled
+  formEdit.viewType = props.detail.viewType
 
   return (
-    <div className="admin-sakura-save-content">
+    <div className="admin-sakura-edit-content">
       <div className="input-wrapper">
         <Input
           prefix={<Icon type="key"/>}
@@ -80,7 +80,7 @@ export function AdminSakuraEdit(props: AdminSakuraEditProps) {
         </Checkbox>
       </div>
       <div className="input-wrapper">
-        <Button onClick={editModel}>保存</Button>
+        <Button type="primary" onClick={editModel}>保存修改</Button>
       </div>
     </div>
   )

@@ -8,7 +8,6 @@ function mapStateToProps(state: RootState, ownProps: OwnProps) {
     models: state.adminSakura.models,
     detail: state.adminSakura.detail,
     message: state.adminSakura.message,
-    current: state.current,
     pageInfo, ...ownProps,
   }
 }

@@ -23,6 +23,7 @@ export function* rootSagas() {
     takeLatest('reloadRequest', currentSaga.invokeReload),
 
     takeLatest('listAdminUserRequest', adminUserSaga.listModel),
+    takeLatest('viewAdminUserRequest', adminUserSaga.viewModel),
     takeEvery('saveAdminUserRequest', adminUserSaga.saveModel),
     takeLatest('editAdminUserRequest', adminUserSaga.editModel),
 
