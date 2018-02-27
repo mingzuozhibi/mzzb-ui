@@ -38,6 +38,13 @@ export const adminUserReducer = (state: AdminUserState = initState, action: AnyA
       case `list${pageInfo.pageModel}Failed`:
         draftState.message = action.message
         break
+      case `view${pageInfo.pageModel}Succeed`:
+        draftState.detail = action.detail
+        draftState.message = undefined
+        break
+      case `view${pageInfo.pageModel}Failed`:
+        draftState.message = action.message
+        break
       case `save${pageInfo.pageModel}Succeed`:
         draftState.models!.push(action.detail)
         message.success(`添加${pageInfo.modelName}成功`)
@@ -68,6 +75,23 @@ function* listModel() {
   }
 }
 
+function* searchModel(action: AnyAction) {
+  if (action.search === 'id') {
+    return yield call(manager.getOne, parseInt(action.value, 10))
+  } else {
+    return yield call(manager.search, action.search, action.value)
+  }
+}
+
+function* viewModel(action: AnyAction) {
+  const result = yield searchModel(action)
+  if (result.success) {
+    yield put({type: `view${pageInfo.pageModel}Succeed`, detail: result.data})
+  } else {
+    yield put({type: `view${pageInfo.pageModel}Failed`, message: result.message})
+  }
+}
+
 function* saveModel(action: AnyAction) {
   const result = yield call(manager.addOne, action.model)
   if (result.success) {
@@ -86,4 +110,4 @@ function* editModel(action: AnyAction) {
   }
 }
 
-export const adminUserSaga = {listModel, saveModel, editModel}
+export const adminUserSaga = {listModel, viewModel, saveModel, editModel}
