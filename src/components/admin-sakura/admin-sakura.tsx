@@ -1,8 +1,7 @@
 import * as React from 'react'
-import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
-import { Route, RouteComponentProps, Switch } from 'react-router'
 import { Alert, Breadcrumb } from 'antd'
+import { Link, Route, RouteComponentProps, Switch } from 'react-router-dom'
 
 import { AdminSakuraModel, AdminSakuraState } from './reducer'
 import { AdminSakuraList } from './admin-sakura-list'

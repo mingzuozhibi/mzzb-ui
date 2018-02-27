@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Layout, Menu } from 'antd'
 import { Icon } from '../../lib/icon'
 
-import { MenuInfo, menuInfos } from '../../common/menu-infos'
+import { MenuInfo, menuInfos } from '../../common/route-infos'
 import { RouteComponentProps } from 'react-router-dom'
 import { ViewportProps } from '../../hoc/Viewport'
 

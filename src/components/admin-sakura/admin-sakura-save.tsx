@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Button, Input, Modal, Radio } from 'antd'
+import { PageInfo } from '../../common/route-infos'
 import { Icon } from '../../lib/icon'
-import { PageInfo } from '../../common/root-reducer'
 
 interface FormSave {
   key?: string

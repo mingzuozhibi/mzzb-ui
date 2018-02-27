@@ -1,10 +1,9 @@
 import * as React from 'react'
-import { Link } from 'react-router-dom'
-import { Column, Table } from '../../lib/table'
-
-import { PageInfo } from '../../common/root-reducer'
 import { AdminUserModel } from './reducer'
+import { Column, Table } from '../../lib/table'
 import { ViewportProps } from '../../hoc/Viewport'
+import { PageInfo } from '../../common/route-infos'
+import { Link } from 'react-router-dom'
 
 interface AdminUserListProps extends ViewportProps {
   pageInfo: PageInfo
