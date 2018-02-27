@@ -11,7 +11,6 @@ function mapStateToProps(state: RootState) {
 }
 
 function mapDispatchToProps(dispatch: Dispatch<any>) {
-  dispatch({type: 'sessionQueryRequest'})
   return {
     reloadRequest() {
       dispatch({type: 'reloadRequest'})

@@ -24,6 +24,10 @@ const store = createStore(
 
 sagaMid.run(rootSagas)
 
+const handler = () => store.dispatch({type: 'sessionQueryRequest'})
+
+setTimeout(handler, 500)
+
 ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>

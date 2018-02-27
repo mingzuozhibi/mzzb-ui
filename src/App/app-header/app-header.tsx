@@ -14,7 +14,6 @@ interface AppHeaderProps {
 }
 
 export function AppHeader(props: AppHeaderProps) {
-
   return (
     <Layout.Header className="app-header">
       <Icon
