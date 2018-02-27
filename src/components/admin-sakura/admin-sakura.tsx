@@ -5,7 +5,6 @@ import { Route, RouteComponentProps, Switch } from 'react-router'
 import { Alert, Breadcrumb } from 'antd'
 
 import { AdminSakuraModel, AdminSakuraState } from './reducer'
-import { CurrentState } from '../../App/current'
 import { AdminSakuraList } from './admin-sakura-list'
 import { AdminSakuraSave } from './admin-sakura-save'
 import { AdminSakuraEdit } from './admin-sakura-edit'
@@ -13,7 +12,6 @@ import { AdminSakuraEdit } from './admin-sakura-edit'
 export type OwnProps = RouteComponentProps<{}>
 
 interface AdminSakuraProps extends AdminSakuraState, OwnProps {
-  current: CurrentState
   saveModel: (model: {}) => void
   editModel: (model: {}) => void
 }
@@ -46,14 +44,14 @@ export function AdminSakura(props: AdminSakuraProps) {
           render={() => withModels(models => (
             <div className="admin-sakura-list">
               <Helmet>
-                <title>{props.current.route!.text} - 名作之壁吧</title>
+                <title>{props.pageInfo.pageTitle} - 名作之壁吧</title>
               </Helmet>
               <Breadcrumb style={{padding: 10}}>
                 <Breadcrumb.Item>
-                  {props.current.route!.text}
+                  {props.pageInfo.pageTitle}
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>
-                  <Link to={`${props.match.url}/save`}>添加列表</Link>
+                  <Link to={`${props.match.url}/save`}>添加{props.pageInfo.modelName}</Link>
                 </Breadcrumb.Item>
               </Breadcrumb>
               <AdminSakuraList
@@ -69,17 +67,18 @@ export function AdminSakura(props: AdminSakuraProps) {
           render={() => (
             <div className="admin-sakura-save">
               <Helmet>
-                <title>添加列表 - 名作之壁吧</title>
+                <title>添加{props.pageInfo.modelName} - 名作之壁吧</title>
               </Helmet>
               <Breadcrumb style={{padding: 10}}>
                 <Breadcrumb.Item>
-                  <Link to={props.match.url}>{props.current.route!.text}</Link>
+                  <Link to={props.match.url}>{props.pageInfo.pageTitle}</Link>
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>
-                  添加列表
+                  添加{props.pageInfo.modelName}
                 </Breadcrumb.Item>
               </Breadcrumb>
               <AdminSakuraSave
+                pageInfo={props.pageInfo}
                 saveModel={props.saveModel}
               />
             </div>
@@ -91,18 +90,19 @@ export function AdminSakura(props: AdminSakuraProps) {
           render={({match}) => withDetail(match.params.key, detail => (
             <div className="admin-sakura-edit">
               <Helmet>
-                <title>编辑列表 - 名作之壁吧</title>
+                <title>编辑{props.pageInfo.modelName} - 名作之壁吧</title>
               </Helmet>
               <Breadcrumb style={{padding: 10}}>
                 <Breadcrumb.Item>
-                  <Link to={props.match.url}>{props.current.route!.text}</Link>
+                  <Link to={props.match.url}>{props.pageInfo.pageTitle}</Link>
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>
-                  编辑列表
+                  编辑{props.pageInfo.modelName}
                 </Breadcrumb.Item>
               </Breadcrumb>
               <AdminSakuraEdit
                 model={detail}
+                pageInfo={props.pageInfo}
                 editModel={props.editModel}
               />
             </div>

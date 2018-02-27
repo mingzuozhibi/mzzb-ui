@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Layout, Popconfirm } from 'antd'
-import { CurrentState } from '../current'
+import { CurrentState } from '../../common/reducers/current'
 import { Icon } from '../../lib/icon'
 
 interface AppHeaderProps {

@@ -1,11 +1,18 @@
 import { AnyAction } from 'redux'
 import { call, put } from 'redux-saga/effects'
-import { BaseState } from '../../common/root-reducer'
+import { BaseState, PageInfo } from '../../common/root-reducer'
 import { BaseModel, Manager } from '../../utils/manager'
 import { message, Modal } from 'antd'
 import produce from 'immer'
 
-export const MODEL_NAME = 'AdminSakura'
+export const pageInfo: PageInfo = {
+  pageTitle: '管理列表',
+  matchPath: '/admin/sakura',
+  pageModel: 'AdminSakura',
+  modelName: '列表',
+  searchFor: 'key',
+  component: () => import('.')
+}
 
 export interface AdminSakuraModel extends BaseModel {
   key: string
@@ -18,42 +25,40 @@ export interface AdminSakuraModel extends BaseModel {
 export interface AdminSakuraState extends BaseState<AdminSakuraModel> {
 }
 
-const initState: AdminSakuraState = {}
-
-function replace(action: AnyAction) {
-  return (t: BaseModel) => t.id === action.model.id ? action.model : t
+const initState: AdminSakuraState = {
+  pageInfo
 }
 
 export const adminSakuraReducer = (state: AdminSakuraState = initState, action: AnyAction) => {
   return produce(state, draftState => {
     switch (action.type) {
-      case `list${MODEL_NAME}Succeed`:
+      case `list${pageInfo.pageModel}Succeed`:
         draftState.models = action.models
         draftState.message = undefined
         break
-      case `list${MODEL_NAME}Failed`:
+      case `list${pageInfo.pageModel}Failed`:
         draftState.message = action.message
         break
-      case `view${MODEL_NAME}Succeed`:
+      case `view${pageInfo.pageModel}Succeed`:
         draftState.detail = action.detail
         draftState.message = undefined
         break
-      case `view${MODEL_NAME}Failed`:
+      case `view${pageInfo.pageModel}Failed`:
         draftState.message = action.message
         break
-      case `save${MODEL_NAME}Succeed`:
-        draftState.models!.push(action.model)
-        message.success('添加列表成功')
+      case `save${pageInfo.pageModel}Succeed`:
+        draftState.models!.push(action.detail)
+        message.success(`添加${pageInfo.modelName}成功`)
         break
-      case `save${MODEL_NAME}Failed`:
-        Modal.error({title: '添加列表失败', content: action.message})
+      case `save${pageInfo.pageModel}Failed`:
+        Modal.error({title: `添加${pageInfo.modelName}失败`, content: action.message})
         break
-      case `edit${MODEL_NAME}Succeed`:
-        message.success('编辑列表成功')
-        draftState.models = draftState.models!.map(replace(action))
+      case `edit${pageInfo.pageModel}Succeed`:
+        message.success(`编辑${pageInfo.modelName}成功`)
+        draftState.detail = action.detail
         break
-      case `edit${MODEL_NAME}Failed`:
-        Modal.error({title: '编辑列表失败', content: action.message})
+      case `edit${pageInfo.modelName}Failed`:
+        Modal.error({title: `编辑${pageInfo.modelName}失败`, content: action.message})
         break
       default:
     }
@@ -65,9 +70,9 @@ const manager = new Manager<AdminSakuraModel>('/api/basic/sakuras')
 function* listModel() {
   const result = yield call(manager.findAll)
   if (result.success) {
-    yield put({type: `list${MODEL_NAME}Succeed`, models: result.data})
+    yield put({type: `list${pageInfo.pageModel}Succeed`, models: result.data})
   } else {
-    yield put({type: `list${MODEL_NAME}Failed`, message: result.message})
+    yield put({type: `list${pageInfo.pageModel}Failed`, message: result.message})
   }
 }
 
@@ -82,27 +87,27 @@ function* searchModel(action: AnyAction) {
 function* viewModel(action: AnyAction) {
   const result = yield searchModel(action)
   if (result.success) {
-    yield put({type: `view${MODEL_NAME}Succeed`, detail: result.data})
+    yield put({type: `view${pageInfo.pageModel}Succeed`, detail: result.data})
   } else {
-    yield put({type: `view${MODEL_NAME}Failed`, message: result.message})
+    yield put({type: `view${pageInfo.pageModel}Failed`, message: result.message})
   }
 }
 
 function* saveModel(action: AnyAction) {
   const result = yield call(manager.addOne, action.model)
   if (result.success) {
-    yield put({type: `save${MODEL_NAME}Succeed`, model: result.data})
+    yield put({type: `save${pageInfo.pageModel}Succeed`, detail: result.data})
   } else {
-    yield put({type: `save${MODEL_NAME}Failed`, message: result.message})
+    yield put({type: `save${pageInfo.pageModel}Failed`, message: result.message})
   }
 }
 
 function* editModel(action: AnyAction) {
   const result = yield call(manager.update, action.model)
   if (result.success) {
-    yield put({type: `edit${MODEL_NAME}Succeed`, model: result.data})
+    yield put({type: `edit${pageInfo.pageModel}Succeed`, detail: result.data})
   } else {
-    yield put({type: `edit${MODEL_NAME}Failed`, message: result.message})
+    yield put({type: `edit${pageInfo.pageModel}Failed`, message: result.message})
   }
 }
 

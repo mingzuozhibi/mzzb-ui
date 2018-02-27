@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "mzzb-ui",
-  "version": "0.13.0",
+  "version": "0.13.1",
   "license": "Apache-2.0",
   "description": "ui for mingzuozhibi",
   "dependencies": {
@@ -19,7 +19,8 @@
     "react-router-redux": "^5.0.0-alpha.9",
     "redux": "^3.7.2",
     "redux-devtools-extension": "^2.13.2",
-    "redux-saga": "^0.16.0"
+    "redux-saga": "^0.16.0",
+    "reselect": "^3.0.1"
   },
   "scripts": {
     "build-css": "node-sass-chokidar src/ -o src/",
@@ -47,6 +48,7 @@
     "@types/react-router-redux": "^5.0.12",
     "@types/redux-devtools-extension": "^2.13.2",
     "@types/redux-saga": "^0.10.5",
+    "@types/reselect": "^2.2.0",
     "json-server": "^0.12.1",
     "node-sass-chokidar": "^0.0.3",
     "npm-run-all": "^4.1.2",

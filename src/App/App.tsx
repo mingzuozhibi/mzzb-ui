@@ -1,26 +1,29 @@
-import * as Loadable from 'react-loadable'
 import * as React from 'react'
+import * as Loadable from 'react-loadable'
 import { Layout } from 'antd'
+import { Load } from '../lib/load'
 import './App.css'
 
-const async = (loader: () => any) => {
+import { Redirect, Route, Switch } from 'react-router'
+import { PageInfo } from '../common/root-reducer'
+import { pageInfos } from '../common/menu-infos'
+
+function asyncLayout(loader: () => any) {
   return Loadable({
     loader: loader,
     loading: () => null,
   })
 }
 
-const AsyncAppSider = async(() => import('./app-sider'))
+const AsyncAppSider = asyncLayout(() => import('./app-sider'))
 
-const AsyncAppHeader = async(() => import('./app-header'))
+const AsyncAppHeader = asyncLayout(() => import('./app-header'))
 
-const AsyncAppFooter = async(() => import('./app-footer'))
+const AsyncAppFooter = asyncLayout(() => import('./app-footer'))
 
-interface AppProps {
-  children: React.ReactNode
-}
+const asyncHome = asyncComponent(() => import('../components/home'))
 
-function App(props: AppProps) {
+export function App() {
   return (
     <div className="app-root">
       <Layout>
@@ -28,7 +31,12 @@ function App(props: AppProps) {
         <Layout>
           <AsyncAppHeader/>
           <Layout.Content className="app-content">
-            {props.children}
+            <Switch>
+              <Redirect exact={true} path="/" to="/home"/>
+              <Route path="/home" component={asyncHome}/>
+              {pageInfos.map(renderRoute)}
+              <Redirect exact={true} path="*" to="/home?not-found"/>
+            </Switch>
           </Layout.Content>
           <AsyncAppFooter/>
         </Layout>
@@ -37,4 +45,17 @@ function App(props: AppProps) {
   )
 }
 
-export default App
+function renderRoute(pageInfo: PageInfo, key: number): React.ReactNode {
+  return (
+    <Route key={key} path={pageInfo.matchPath} component={asyncComponent(pageInfo.component)}/>
+  )
+}
+
+function asyncComponent(loader: () => any) {
+  return Loadable({
+    loader: loader,
+    loading: Load,
+    delay: 300,
+    timeout: 5000,
+  })
+}

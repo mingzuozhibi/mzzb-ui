@@ -2,6 +2,7 @@ import * as React from 'react'
 import { Button, Checkbox, Input, Modal, Radio } from 'antd'
 import { AdminSakuraModel } from './reducer'
 import { Icon } from '../../lib/icon'
+import { PageInfo } from '../../common/root-reducer'
 
 interface FormEdit {
   key?: string
@@ -14,6 +15,7 @@ const formEdit: FormEdit = {}
 
 interface AdminSakuraEditProps {
   model: AdminSakuraModel
+  pageInfo: PageInfo
   editModel: (model: {}) => void
 }
 
@@ -26,12 +28,12 @@ export function AdminSakuraEdit(props: AdminSakuraEditProps) {
     const viewType = formEdit.viewType
 
     if (!key) {
-      Modal.warning({title: '请检查输入项', content: '你必须输入列表索引'})
+      Modal.warning({title: '请检查输入项', content: `你必须输入${props.pageInfo.modelName}索引`})
       return
     }
 
     if (!title) {
-      Modal.warning({title: '请检查输入项', content: '你必须输入列表标题'})
+      Modal.warning({title: '请检查输入项', content: `你必须输入${props.pageInfo.modelName}标题`})
       return
     }
 
@@ -40,8 +42,8 @@ export function AdminSakuraEdit(props: AdminSakuraEditProps) {
 
   formEdit.key = props.model.key
   formEdit.title = props.model.title
-  formEdit.viewType = props.model.viewType
   formEdit.enabled = props.model.enabled
+  formEdit.viewType = props.model.viewType
 
   return (
     <div className="admin-sakura-save-content">
@@ -50,7 +52,7 @@ export function AdminSakuraEdit(props: AdminSakuraEditProps) {
           prefix={<Icon type="key"/>}
           defaultValue={formEdit.key}
           onChange={e => formEdit.key = e.target.value}
-          placeholder="请输入列表索引"
+          placeholder={`请输入${props.pageInfo.modelName}索引`}
         />
       </div>
       <div className="input-wrapper">
@@ -58,7 +60,7 @@ export function AdminSakuraEdit(props: AdminSakuraEditProps) {
           prefix={<Icon type="tag-o"/>}
           defaultValue={formEdit.title}
           onChange={e => formEdit.title = e.target.value}
-          placeholder="请输入列表标题"
+          placeholder={`请输入${props.pageInfo.modelName}标题`}
         />
       </div>
       <div className="input-wrapper">
