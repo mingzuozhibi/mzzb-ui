@@ -58,10 +58,9 @@ export const sakuraReducer = (state: SakuraState = initState, action: AnyAction)
 }
 
 const manager = new Manager<SakuraModel>('/api/sakuras')
-const columns = 'discColumns=id,thisRank,prevRank,totalPt,title'
 
 function* listModel() {
-  const result = yield call(manager.findAll, columns)
+  const result = yield call(manager.findAll)
   if (result.success) {
     yield put({type: `list${pageInfo.pageModel}Succeed`, models: result.data})
   } else {
@@ -71,9 +70,9 @@ function* listModel() {
 
 function* searchModel(action: AnyAction) {
   if (action.search === 'id') {
-    return yield call(manager.getOne, parseInt(action.value, 10), columns)
+    return yield call(manager.getOne, parseInt(action.value, 10))
   } else {
-    return yield call(manager.search, action.search, action.value, columns)
+    return yield call(manager.search, action.search, action.value)
   }
 }
 
