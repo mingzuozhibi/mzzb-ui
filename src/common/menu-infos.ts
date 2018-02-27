@@ -14,6 +14,15 @@ export interface MenuInfo {
   subMenus?: MenuInfo[]
 }
 
+export const pageInfos: PageInfo[] = []
+
+const fromPage = (pageInfo: PageInfo, icon: string, role?: Role) => {
+  pageInfos.push(pageInfo)
+  return {
+    icon, role, path: pageInfo.matchPath, text: pageInfo.pageTitle
+  }
+}
+
 export const menuInfos: MenuInfo[] = [
   {
     icon: 'home',
@@ -47,12 +56,3 @@ export const menuInfos: MenuInfo[] = [
     path: 'https://github.com/mingzuozhibi/mzzb-server',
   },
 ]
-
-export const pageInfos: PageInfo[] = []
-
-function fromPage(pageInfo: PageInfo, icon: string, role?: Role): MenuInfo {
-  pageInfos.push(pageInfo)
-  return {
-    icon, role, path: pageInfo.matchPath, text: pageInfo.pageTitle
-  }
-}
