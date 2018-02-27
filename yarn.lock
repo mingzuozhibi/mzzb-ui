@@ -2,12 +2,6 @@
 # yarn lockfile v1
 
 
-"@types/antd@^1.0.0":
-  version "1.0.0"
-  resolved "http://registry.npm.taobao.org/@types/antd/download/@types/antd-1.0.0.tgz#f04e2a84efd9ea937366cd3dfbada5d3c949471d"
-  dependencies:
-    antd "*"
-
 "@types/history@*":
   version "4.6.2"
   resolved "http://registry.npm.taobao.org/@types/history/download/@types/history-4.6.2.tgz#12cfaba693ba20f114ed5765467ff25fdf67ddb0"
@@ -92,24 +86,6 @@
 "@types/react@*", "@types/react@^16.0.36":
   version "16.0.38"
   resolved "http://registry.npm.taobao.org/@types/react/download/@types/react-16.0.38.tgz#76617433ea10274505f60bb86eddfdd0476ffdc2"
-
-"@types/redux-devtools-extension@^2.13.2":
-  version "2.13.2"
-  resolved "http://registry.npm.taobao.org/@types/redux-devtools-extension/download/@types/redux-devtools-extension-2.13.2.tgz#b2e09a8c163b2b0f5072e6a5ac41474000df2111"
-  dependencies:
-    redux-devtools-extension "*"
-
-"@types/redux-saga@^0.10.5":
-  version "0.10.5"
-  resolved "http://registry.npm.taobao.org/@types/redux-saga/download/@types/redux-saga-0.10.5.tgz#80bf21078379ebc97387dbe56e44467b5677fa85"
-  dependencies:
-    redux-saga "*"
-
-"@types/reselect@^2.2.0":
-  version "2.2.0"
-  resolved "http://registry.npm.taobao.org/@types/reselect/download/@types/reselect-2.2.0.tgz#c667206cfdc38190e1d379babe08865b2288575f"
-  dependencies:
-    reselect "*"
 
 abab@^1.0.3:
   version "1.0.4"
@@ -228,7 +204,7 @@ ansi-styles@^3.0.0, ansi-styles@^3.2.0:
   dependencies:
     color-convert "^1.9.0"
 
-antd@*, antd@^3.2.1:
+antd@^3.2.1:
   version "3.2.2"
   resolved "http://registry.npm.taobao.org/antd/download/antd-3.2.2.tgz#522abfee52d3ba1194cf394e4b857f208c5c3c9a"
   dependencies:
@@ -5728,11 +5704,11 @@ reduce-function-call@^1.0.1:
   dependencies:
     balanced-match "^0.4.2"
 
-redux-devtools-extension@*, redux-devtools-extension@^2.13.2:
+redux-devtools-extension@^2.13.2:
   version "2.13.2"
   resolved "http://registry.npm.taobao.org/redux-devtools-extension/download/redux-devtools-extension-2.13.2.tgz#e0f9a8e8dfca7c17be92c7124958a3b94eb2911d"
 
-redux-saga@*, redux-saga@^0.16.0:
+redux-saga@^0.16.0:
   version "0.16.0"
   resolved "http://registry.npm.taobao.org/redux-saga/download/redux-saga-0.16.0.tgz#0a231db0a1489301dd980f6f2f88d8ced418f724"
 
@@ -5921,7 +5897,7 @@ requires-port@1.0.x, requires-port@1.x.x, requires-port@~1.0.0:
   version "1.0.0"
   resolved "http://registry.npm.taobao.org/requires-port/download/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
 
-reselect@*, reselect@^3.0.1:
+reselect@^3.0.1:
   version "3.0.1"
   resolved "http://registry.npm.taobao.org/reselect/download/reselect-3.0.1.tgz#efdaa98ea7451324d092b2b2163a6a1d7a9a2147"
 
