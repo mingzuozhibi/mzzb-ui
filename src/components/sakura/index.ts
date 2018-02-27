@@ -1,22 +1,18 @@
-import { connect, Dispatch } from 'react-redux'
+import { connect } from 'react-redux'
 import { RootState } from '../../common/root-reducer'
 import { OwnProps, Sakura } from './sakura'
+import { pageInfo } from './reducer'
 
 function mapStateToProps(state: RootState, ownProps: OwnProps) {
   return {
     models: state.sakura.models,
     detail: state.sakura.detail,
     message: state.sakura.message,
-    current: state.current,
-    ...ownProps
+    pageInfo, ...ownProps
   }
-}
-
-function mapDispatchToProps(dispatch: Dispatch<any>) {
-  return {}
 }
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  undefined
 )(Sakura)

@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { Button, Input, Modal, Radio } from 'antd'
 import { Icon } from '../../lib/icon'
+import { PageInfo } from '../../common/root-reducer'
 
 interface FormSave {
   key?: string
@@ -11,6 +12,7 @@ interface FormSave {
 const formSave: FormSave = {}
 
 interface AdminSakuraSaveProps {
+  pageInfo: PageInfo
   saveModel: (model: {}) => void
 }
 
@@ -22,12 +24,12 @@ export function AdminSakuraSave(props: AdminSakuraSaveProps) {
     const viewType = formSave.viewType
 
     if (!key) {
-      Modal.warning({title: '请检查输入项', content: '列表索引必须输入'})
+      Modal.warning({title: '请检查输入项', content: `${props.pageInfo.modelName}索引必须输入`})
       return
     }
 
     if (!title) {
-      Modal.warning({title: '请检查输入项', content: '列表标题必须输入'})
+      Modal.warning({title: '请检查输入项', content: `${props.pageInfo.modelName}标题必须输入`})
       return
     }
 
@@ -46,7 +48,7 @@ export function AdminSakuraSave(props: AdminSakuraSaveProps) {
           prefix={<Icon type="key"/>}
           defaultValue={formSave.key}
           onChange={(e) => formSave.key = e.target.value}
-          placeholder="请输入列表索引"
+          placeholder={`请输入${props.pageInfo.modelName}索引`}
         />
       </div>
       <div className="input-wrapper">
@@ -54,7 +56,7 @@ export function AdminSakuraSave(props: AdminSakuraSaveProps) {
           prefix={<Icon type="tag-o"/>}
           defaultValue={formSave.title}
           onChange={(e) => formSave.title = e.target.value}
-          placeholder="请输入列表标题"
+          placeholder={`请输入${props.pageInfo.modelName}标题`}
         />
       </div>
       <div className="input-wrapper">
@@ -66,7 +68,7 @@ export function AdminSakuraSave(props: AdminSakuraSaveProps) {
         />
       </div>
       <div className="input-wrapper">
-        <Button type="primary" onClick={saveModel}>添加Sakura</Button>
+        <Button type="primary" onClick={saveModel}>添加{props.pageInfo.modelName}</Button>
       </div>
     </div>
   )

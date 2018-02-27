@@ -8,7 +8,7 @@ import { Helmet } from 'react-helmet'
 import { md5Password } from '../../utils/manager'
 import { ViewportProps } from '../../hoc/Viewport'
 import { AdminUserModel, AdminUserState } from './reducer'
-import { CurrentState } from '../../App/current'
+import { PageInfo } from '../../common/root-reducer'
 
 interface FormSave {
   username?: string
@@ -27,7 +27,7 @@ const formEdit: FormEdit = {}
 export type OwnProps = ViewportProps
 
 interface AdminUserProps extends AdminUserState, OwnProps {
-  current: CurrentState
+  pageInfo: PageInfo
   saveModel: (model: {}) => void
   editModel: (model: {}) => void
 }
@@ -43,7 +43,7 @@ export function AdminUser(props: AdminUserProps) {
       },
       {
         key: 'username',
-        title: '用户名',
+        title: `${props.pageInfo.modelName}名`,
         format: (t) => t.username
       },
       {
@@ -87,12 +87,12 @@ export function AdminUser(props: AdminUserProps) {
     const password = formSave.password
 
     if (!username) {
-      Modal.warning({title: '请检查输入项', content: '你必须输入用户名称'})
+      Modal.warning({title: '请检查输入项', content: `你必须输入${props.pageInfo.modelName}名称`})
       return
     }
 
     if (!password) {
-      Modal.warning({title: '请检查输入项', content: '你必须输入用户密码'})
+      Modal.warning({title: '请检查输入项', content: `你必须输入${props.pageInfo.modelName}密码`})
       return
     }
 
@@ -106,7 +106,7 @@ export function AdminUser(props: AdminUserProps) {
     const enabled = formEdit.enabled
 
     if (!username) {
-      Modal.warning({title: '请检查输入项', content: '你必须输入用户名称'})
+      Modal.warning({title: '请检查输入项', content: `你必须输入${props.pageInfo.modelName}名称`})
       return
     }
 
@@ -117,10 +117,10 @@ export function AdminUser(props: AdminUserProps) {
   return (
     <div className="admin-users">
       <Helmet>
-        <title>{props.current.route!.text} - 名作之壁吧</title>
+        <title>{props.pageInfo.pageTitle} - 名作之壁吧</title>
       </Helmet>
       <Tabs>
-        <Tabs.TabPane tab="用户列表" key="1">
+        <Tabs.TabPane tab={`${props.pageInfo.modelName}列表`} key="1">
           {props.message && (
             <Alert message={props.message} type="error"/>
           )}
@@ -128,13 +128,13 @@ export function AdminUser(props: AdminUserProps) {
             <Table rows={props.models} columns={getColumns()}/>
           )}
         </Tabs.TabPane>
-        <Tabs.TabPane tab="添加用户" key="2">
+        <Tabs.TabPane tab={`添加${props.pageInfo.modelName}`} key="2">
           <div className="input-wrapper">
             <Input
               prefix={<Icon type="user"/>}
               defaultValue={formSave.username}
               onChange={e => formSave.username = e.target.value}
-              placeholder="请输入用户名称"
+              placeholder={`请输入${props.pageInfo.modelName}名称`}
             />
           </div>
           <div className="input-wrapper">
@@ -143,11 +143,11 @@ export function AdminUser(props: AdminUserProps) {
               prefix={<Icon type="key"/>}
               defaultValue={formSave.password}
               onChange={e => formSave.password = e.target.value}
-              placeholder="请输入用户密码"
+              placeholder={`请输入${props.pageInfo.modelName}密码`}
             />
           </div>
           <div className="input-wrapper">
-            <Button type="primary" onClick={saveModel}>添加用户</Button>
+            <Button type="primary" onClick={saveModel}>添加{props.pageInfo.modelName}</Button>
           </div>
         </Tabs.TabPane>
       </Tabs>
@@ -160,7 +160,7 @@ export function AdminUser(props: AdminUserProps) {
     formEdit.password = undefined
 
     Modal.confirm({
-      title: '编辑用户',
+      title: `编辑${props.pageInfo.modelName}`,
       okText: '保存',
       okType: 'primary',
       onOk: () => editModel(model.id),
@@ -172,7 +172,7 @@ export function AdminUser(props: AdminUserProps) {
               prefix={<Icon type="user"/>}
               defaultValue={formEdit.username}
               onChange={e => formEdit.username = e.target.value}
-              placeholder="请输入用户名称"
+              placeholder={`请输入${props.pageInfo.modelName}名称`}
             />
           </div>
           <div className="input-wrapper">
@@ -180,7 +180,7 @@ export function AdminUser(props: AdminUserProps) {
               type="password"
               prefix={<Icon type="key"/>}
               onChange={e => formEdit.password = e.target.value}
-              placeholder="如不需修改用户密码可留空"
+              placeholder={`如不需修改${props.pageInfo.modelName}密码可留空`}
             />
           </div>
           <div className="input-wrapper">

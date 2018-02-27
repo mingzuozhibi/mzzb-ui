@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Layout, Menu } from 'antd'
 import { Icon } from '../../lib/icon'
 
-import { RouteInfo, routeInfos } from '../../common/route-infos'
+import { MenuInfo, menuInfos } from '../../common/menu-infos'
 import { RouteComponentProps } from 'react-router-dom'
 import { ViewportProps } from '../../hoc/Viewport'
 
@@ -39,30 +39,26 @@ export function AppSider(props: AppSiderProps) {
     }
   }
 
-  function renderTitle(icon: string, text: string) {
+  function renderLabel(icon: string, text: string) {
     return <span><Icon className="sider-icon" type={icon}/>{text}</span>
   }
 
-  function renderMenu(route: RouteInfo, userRoles: string[]): React.ReactNode {
-    if (route.role && !userRoles.some(role => role === route.role)) {
+  function renderMenu(menuInfo: MenuInfo, userRoles: string[]): React.ReactNode {
+    if (menuInfo.role && !userRoles.some(role => role === menuInfo.role)) {
       return null
     }
-    switch (route.type) {
-      case 'Routes':
-        return (
-          <Menu.SubMenu key={route.path} title={renderTitle(route.icon, route.text)}>
-            {route.routes.map(subRoute => renderMenu(subRoute, userRoles))}
-          </Menu.SubMenu>
-        )
-      case 'Simple':
-      case 'Link':
-        return (
-          <Menu.Item key={route.path}>
-            {renderTitle(route.icon, route.text)}
-          </Menu.Item>
-        )
-      default:
-        return undefined
+    if (menuInfo.subMenus) {
+      return (
+        <Menu.SubMenu key={menuInfo.path} title={renderLabel(menuInfo.icon, menuInfo.text)}>
+          {menuInfo.subMenus.map(subRoute => renderMenu(subRoute, userRoles))}
+        </Menu.SubMenu>
+      )
+    } else {
+      return (
+        <Menu.Item key={menuInfo.path}>
+          {renderLabel(menuInfo.icon, menuInfo.text)}
+        </Menu.Item>
+      )
     }
   }
 
@@ -84,7 +80,7 @@ export function AppSider(props: AppSiderProps) {
         style={{height: '100%'}}
         onClick={selectItem}
       >
-        {routeInfos.map(route => renderMenu(route, props.userRoles))}
+        {menuInfos.map(route => renderMenu(route, props.userRoles))}
       </Menu>
     </Layout.Sider>
   )

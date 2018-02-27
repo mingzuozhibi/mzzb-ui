@@ -1,10 +1,17 @@
 import { AnyAction } from 'redux'
 import { call, put } from 'redux-saga/effects'
-import { BaseState } from '../../common/root-reducer'
+import { BaseState, PageInfo } from '../../common/root-reducer'
 import { BaseModel, Manager } from '../../utils/manager'
 import produce from 'immer'
 
-export const MODEL_NAME = 'Sakura'
+export const pageInfo: PageInfo = {
+  pageTitle: '日亚实时',
+  matchPath: '/sakura',
+  pageModel: 'Sakura',
+  modelName: '列表',
+  searchFor: 'key',
+  component: () => import('.')
+}
 
 export interface DiscModel extends BaseModel {
   thisRank: number
@@ -24,23 +31,25 @@ export interface SakuraModel extends BaseModel {
 export interface SakuraState extends BaseState<SakuraModel> {
 }
 
-const initState: SakuraState = {}
+const initState: SakuraState = {
+  pageInfo
+}
 
 export const sakuraReducer = (state: SakuraState = initState, action: AnyAction) => {
   return produce(state, draftState => {
     switch (action.type) {
-      case `list${MODEL_NAME}Succeed`:
+      case `list${pageInfo.pageModel}Succeed`:
         draftState.models = action.models
         draftState.message = undefined
         break
-      case `list${MODEL_NAME}Failed`:
+      case `list${pageInfo.pageModel}Failed`:
         draftState.message = action.message
         break
-      case `view${MODEL_NAME}Succeed`:
+      case `view${pageInfo.pageModel}Succeed`:
         draftState.detail = action.detail
         draftState.message = undefined
         break
-      case `view${MODEL_NAME}Failed`:
+      case `view${pageInfo.pageModel}Failed`:
         draftState.message = action.message
         break
       default:
@@ -54,9 +63,9 @@ const columns = 'discColumns=id,thisRank,prevRank,totalPt,title'
 function* listModel() {
   const result = yield call(manager.findAll, columns)
   if (result.success) {
-    yield put({type: `list${MODEL_NAME}Succeed`, models: result.data})
+    yield put({type: `list${pageInfo.pageModel}Succeed`, models: result.data})
   } else {
-    yield put({type: `list${MODEL_NAME}Failed`, message: result.message})
+    yield put({type: `list${pageInfo.pageModel}Failed`, message: result.message})
   }
 }
 
@@ -71,9 +80,9 @@ function* searchModel(action: AnyAction) {
 function* viewModel(action: AnyAction) {
   const result = yield searchModel(action)
   if (result.success) {
-    yield put({type: `view${MODEL_NAME}Succeed`, detail: result.data})
+    yield put({type: `view${pageInfo.pageModel}Succeed`, detail: result.data})
   } else {
-    yield put({type: `view${MODEL_NAME}Failed`, message: result.message})
+    yield put({type: `view${pageInfo.pageModel}Failed`, message: result.message})
   }
 }
 

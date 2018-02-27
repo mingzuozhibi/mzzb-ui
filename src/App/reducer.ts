@@ -2,7 +2,7 @@ import { AnyAction } from 'redux'
 import { call, put } from 'redux-saga/effects'
 import { sessionManager } from '../utils/manager'
 import { message, Modal } from 'antd'
-import { currentSaga } from './current'
+import { currentSaga } from '../common/reducers/current'
 import produce from 'immer'
 
 export interface Session {
@@ -67,7 +67,12 @@ export const appReducer = (state: AppState = initState, action: AnyAction) => {
 function* sessionQuery() {
   const result = yield call(sessionManager.query)
   if (result.success) {
-    yield put({type: 'sessionSucceed', session: result.data})
+    if (result.data.isLogged) {
+      yield put({type: 'sessionSucceed', session: result.data, message: '你已成功登入'})
+      yield currentSaga.invokeReload()
+    } else {
+      yield put({type: 'sessionSucceed', session: result.data})
+    }
   } else {
     yield put({type: 'sessionFailed', title: '获取当前登入状态异常', content: result.message})
   }
@@ -77,7 +82,7 @@ function* sessionLogin(action: AnyAction) {
   const result = yield call(sessionManager.login, action.username, action.password)
   if (result.success) {
     yield put({type: 'sessionSucceed', session: result.data, message: '你已成功登入'})
-    yield currentSaga.reloadCurrent()
+    yield currentSaga.invokeReload()
   } else {
     yield put({type: 'sessionFailed', title: '登入错误', content: result.message})
   }

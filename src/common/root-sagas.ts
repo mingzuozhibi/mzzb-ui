@@ -2,7 +2,7 @@ import { all, takeEvery, takeLatest } from 'redux-saga/effects'
 import { appSaga } from '../App/reducer'
 import { sakuraSaga } from '../components/sakura/reducer'
 import { publicSaga } from '../components/public/reducer'
-import { currentSaga } from '../App/current'
+import { currentSaga } from './reducers/current'
 import { adminUserSaga } from '../components/admin-user/reducer'
 import { adminSakuraSaga } from '../components/admin-sakura/reducer'
 import { LOCATION_CHANGE } from 'react-router-redux'
@@ -19,8 +19,8 @@ export function* rootSagas() {
     takeLatest('listPublicRequest', publicSaga.listModel),
     takeLatest('viewPublicRequest', publicSaga.viewModel),
 
-    takeLatest(LOCATION_CHANGE, currentSaga.updateCurrent),
-    takeLatest('reloadRequest', currentSaga.reloadCurrent),
+    takeLatest(LOCATION_CHANGE, currentSaga.updateReload),
+    takeLatest('reloadRequest', currentSaga.invokeReload),
 
     takeLatest('listAdminUserRequest', adminUserSaga.listModel),
     takeEvery('saveAdminUserRequest', adminUserSaga.saveModel),

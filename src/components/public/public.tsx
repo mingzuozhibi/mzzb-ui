@@ -10,7 +10,6 @@ import { formatNumber } from '../../utils/format'
 import { compareFactory } from '../../utils/compare'
 import { DiscModel, PublicState, SakuraModel } from './reducer'
 import { Route, RouteComponentProps, Switch } from 'react-router'
-import { CurrentState } from '../../App/current'
 import produce from 'immer'
 
 const compareRank = compareFactory({
@@ -22,7 +21,6 @@ const compareRank = compareFactory({
 export type OwnProps = RouteComponentProps<{}>
 
 export interface PublicProps extends PublicState, OwnProps {
-  current: CurrentState
 }
 
 export function Public(props: PublicProps) {
@@ -61,7 +59,7 @@ export function Public(props: PublicProps) {
       },
       {
         key: 'title',
-        title: '列表标题 (点击进入列表)',
+        title: `${props.pageInfo.modelName}标题 (点击进入${props.pageInfo.modelName})`,
         format: (t) => <Link to={`/public/${t.key}`}>{t.title}</Link>
       },
       {
@@ -129,11 +127,11 @@ export function Public(props: PublicProps) {
           render={() => withModels(models => (
             <div className="with-modals">
               <Helmet>
-                <title>{props.current.route!.text} - 名作之壁吧</title>
+                <title>{props.pageInfo.pageTitle} - 名作之壁吧</title>
               </Helmet>
               <Breadcrumb style={{padding: 10}}>
                 <Breadcrumb.Item>
-                  {props.current.route!.text}
+                  {props.pageInfo.pageTitle}
                 </Breadcrumb.Item>
               </Breadcrumb>
               <div style={{padding: '0 10px'}}>
@@ -152,7 +150,7 @@ export function Public(props: PublicProps) {
               </Helmet>
               <Breadcrumb style={{padding: 10}}>
                 <Breadcrumb.Item>
-                  <Link to={props.match.url}>{props.current.route!.text}</Link>
+                  <Link to={props.match.url}>{props.pageInfo.pageTitle}</Link>
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>
                   {detail.title}

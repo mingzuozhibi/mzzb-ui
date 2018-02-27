@@ -10,7 +10,6 @@ import { formatNumber } from '../../utils/format'
 import { compareFactory } from '../../utils/compare'
 import { DiscModel, SakuraModel, SakuraState } from './reducer'
 import { Route, RouteComponentProps, Switch } from 'react-router'
-import { CurrentState } from '../../App/current'
 import produce from 'immer'
 
 const compareRank = compareFactory({
@@ -22,7 +21,6 @@ const compareRank = compareFactory({
 export type OwnProps = RouteComponentProps<{}>
 
 export interface SakuraProps extends SakuraState, OwnProps {
-  current: CurrentState
 }
 
 export function Sakura(props: SakuraProps) {
@@ -95,7 +93,7 @@ export function Sakura(props: SakuraProps) {
     }
   }
 
-  // console.info(`sakura render ${props.models !== undefined}`)
+  // console.info(`sakura render ${props.models !== undefined} ${new Date()}`)
 
   return (
     <div className="sakura-root">
@@ -109,11 +107,11 @@ export function Sakura(props: SakuraProps) {
           render={() => withModels(models => (
             <div>
               <Helmet>
-                <title>{props.current.route!.text} - 名作之壁吧</title>
+                <title>{props.pageInfo.pageTitle} - 名作之壁吧</title>
               </Helmet>
               <Breadcrumb style={{padding: 10}}>
                 <Breadcrumb.Item>
-                  {props.current.route!.text}
+                  {props.pageInfo.pageTitle}
                 </Breadcrumb.Item>
                 {models.map(sakura => (
                   <Breadcrumb.Item key={sakura.id}>
@@ -145,7 +143,7 @@ export function Sakura(props: SakuraProps) {
               </Helmet>
               <Breadcrumb style={{padding: 10}}>
                 <Breadcrumb.Item>
-                  <Link to={props.match.url}>{props.current.route!.text}</Link>
+                  <Link to={props.match.url}>{props.pageInfo.pageTitle}</Link>
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>
                   {detail.title}
