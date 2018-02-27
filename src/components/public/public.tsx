@@ -129,11 +129,11 @@ export function Public(props: PublicProps) {
           render={() => withModels(models => (
             <div className="with-modals">
               <Helmet>
-                <title>{props.current.route.text} - 名作之壁吧</title>
+                <title>{props.current.route!.text} - 名作之壁吧</title>
               </Helmet>
               <Breadcrumb style={{padding: 10}}>
                 <Breadcrumb.Item>
-                  {props.current.route.text}
+                  {props.current.route!.text}
                 </Breadcrumb.Item>
               </Breadcrumb>
               <div style={{padding: '0 10px'}}>
@@ -152,7 +152,7 @@ export function Public(props: PublicProps) {
               </Helmet>
               <Breadcrumb style={{padding: 10}}>
                 <Breadcrumb.Item>
-                  <Link to={props.match.url}>{props.current.route.text}</Link>
+                  <Link to={props.match.url}>{props.current.route!.text}</Link>
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>
                   {detail.title}
