@@ -7,7 +7,7 @@ const FontIcon = ({type, className, ...props}: IconProps) => {
   // noinspection HtmlUnknownAttribute
   const useTag = `<use xlink:href="#${type}" />`
   return (
-    <span className={className} {...props}>
+    <span {...props}>
       <svg
         className="icon-font"
         aria-hidden="true"
@@ -20,14 +20,14 @@ const FontIcon = ({type, className, ...props}: IconProps) => {
 const Icon = ({type, className, ...props}: IconProps) => {
   if (type.substr(0, 5) === 'icon-') {
     return (
-      <span className="icon-wrapper">
-        <FontIcon {...props} type={type} className={className}/>
+      <span className={`icon-wrapper ${className}`}>
+        <FontIcon {...props} type={type}/>
       </span>
     )
   } else {
     return (
-      <span className="icon-wrapper">
-        <AntdIcon {...props} type={type} className={className}/>
+      <span className={`icon-wrapper ${className}`}>
+        <AntdIcon {...props} type={type}/>
       </span>
     )
   }
