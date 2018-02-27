@@ -1,11 +1,14 @@
 import { combineReducers } from 'redux'
-import { routerReducer, RouterState } from 'react-router-redux'
 import { appReducer, AppState } from '../App/reducer'
+import { routerReducer, RouterState } from 'react-router-redux'
 import { sakuraReducer, SakuraState } from '../components/sakura/reducer'
 import { publicReducer, PublicState } from '../components/public/reducer'
 import { currentReducer, CurrentState } from './reducers/current'
 import { adminUserReducer, AdminUserState } from '../components/admin-user/reducer'
 import { adminSakuraReducer, AdminSakuraState } from '../components/admin-sakura/reducer'
+import { PageInfo } from './route-infos'
+
+export { PageInfo }
 
 export interface RootState {
   app: AppState
@@ -26,15 +29,6 @@ export const rootReducer = combineReducers({
   adminUser: adminUserReducer,
   adminSakura: adminSakuraReducer,
 })
-
-export interface PageInfo {
-  pageTitle: string // 管理用户
-  matchPath: string // /admin/user
-  pageModel: string // AdminUser
-  modelName: string // 用户
-  searchFor: string // key
-  component: () => any
-}
 
 export interface BaseState<T> {
   models?: T[]

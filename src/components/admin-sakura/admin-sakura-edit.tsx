@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { Button, Checkbox, Input, Modal, Radio } from 'antd'
 import { AdminSakuraModel } from './reducer'
+import { PageInfo } from '../../common/route-infos'
 import { Icon } from '../../lib/icon'
-import { PageInfo } from '../../common/root-reducer'
 
 interface FormEdit {
   key?: string

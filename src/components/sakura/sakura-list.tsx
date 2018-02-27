@@ -1,10 +1,9 @@
 import * as React from 'react'
+import { DiscModel, SakuraModel } from './reducer'
 import { Column, Table } from '../../lib/table'
+import { formatNumber } from '../../utils/format'
 import { Timer } from '../../lib/timer'
 import './sakura.css'
-
-import { formatNumber } from '../../utils/format'
-import { DiscModel, SakuraModel } from './reducer'
 
 interface SakuraListProps {
   models: SakuraModel[]

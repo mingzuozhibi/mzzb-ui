@@ -1,9 +1,8 @@
 import * as React from 'react'
 import { Button, Input, Modal } from 'antd'
-import { Icon } from '../../lib/icon'
-
 import { md5Password } from '../../utils/manager'
-import { PageInfo } from '../../common/root-reducer'
+import { PageInfo } from '../../common/route-infos'
+import { Icon } from '../../lib/icon'
 
 interface FormSave {
   username?: string

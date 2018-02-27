@@ -1,12 +1,12 @@
 import * as React from 'react'
-import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
-import { Route, RouteComponentProps, Switch } from 'react-router'
 import { Alert, Breadcrumb } from 'antd'
+import { Link, Route, RouteComponentProps, Switch } from 'react-router-dom'
 import './sakura.css'
 
-import { DiscModel, SakuraModel, SakuraState } from './reducer'
 import { compareFactory } from '../../utils/compare'
+
+import { DiscModel, SakuraModel, SakuraState } from './reducer'
 import { SakuraList } from './sakura-list'
 import { SakuraView } from './sakura-view'
 import produce from 'immer'

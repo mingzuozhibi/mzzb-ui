@@ -1,15 +1,15 @@
 import * as React from 'react'
-import { Link } from 'react-router-dom'
-import { Alert, Breadcrumb } from 'antd'
-import { Column, Table } from '../../lib/table'
-import { Timer } from '../../lib/timer'
 import { Helmet } from 'react-helmet'
+import { Alert, Breadcrumb } from 'antd'
+import { Link, Route, RouteComponentProps, Switch } from 'react-router-dom'
 import './public.css'
+
+import { Timer } from '../../lib/timer'
+import { Column, Table } from '../../lib/table'
 
 import { formatNumber } from '../../utils/format'
 import { compareFactory } from '../../utils/compare'
 import { DiscModel, PublicState, SakuraModel } from './reducer'
-import { Route, RouteComponentProps, Switch } from 'react-router'
 import produce from 'immer'
 
 const compareRank = compareFactory({

@@ -1,7 +1,7 @@
 import { AnyAction } from 'redux'
 import { put, select } from 'redux-saga/effects'
 import { RootState } from '../root-reducer'
-import { pageInfos } from '../menu-infos'
+import { pageInfos } from '../route-infos'
 import produce from 'immer'
 
 export interface Reload {

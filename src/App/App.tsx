@@ -4,9 +4,8 @@ import { Layout } from 'antd'
 import { Load } from '../lib/load'
 import './App.css'
 
-import { Redirect, Route, Switch } from 'react-router'
-import { PageInfo } from '../common/root-reducer'
-import { pageInfos } from '../common/menu-infos'
+import { Redirect, Route, Switch } from 'react-router-dom'
+import { PageInfo, pageInfos } from '../common/route-infos'
 
 function asyncLayout(loader: () => any) {
   return Loadable({

@@ -1,10 +1,18 @@
-import { PageInfo } from './root-reducer'
 import { pageInfo as sakuraPage } from '../components/sakura/reducer'
 import { pageInfo as publicPage } from '../components/public/reducer'
 import { pageInfo as adminUserPage } from '../components/admin-user/reducer'
 import { pageInfo as adminSakuraPage } from '../components/admin-sakura/reducer'
 
 type Role = 'ROLE_ADMIN' | 'ROLE_BASIC'
+
+export interface PageInfo {
+  pageTitle: string // 管理用户
+  matchPath: string // /admin/user
+  pageModel: string // AdminUser
+  modelName: string // 用户
+  searchFor: string // key
+  component: () => any
+}
 
 export interface MenuInfo {
   icon: string
