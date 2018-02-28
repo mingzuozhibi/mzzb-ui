@@ -23,6 +23,8 @@ export type OwnProps = RouteComponentProps<{}>
 interface AdminSakuraProps extends AdminSakuraState, OwnProps {
   saveModel: (model: {}) => void
   editModel: (id: number, model: {}) => void
+  pushDisc: (id: number, pid: number) => void
+  dropDisc: (id: number, pid: number) => void
 }
 
 export function AdminSakura(props: AdminSakuraProps) {
@@ -147,7 +149,11 @@ export function AdminSakura(props: AdminSakuraProps) {
                   管理{props.pageInfo.modelName}碟片
                 </Breadcrumb.Item>
               </Breadcrumb>
-              <AdminSakuraOfDiscs detail={detail}/>
+              <AdminSakuraOfDiscs
+                detail={detail}
+                pushDisc={props.pushDisc}
+                dropDisc={props.dropDisc}
+              />
             </div>
           ))}
         />

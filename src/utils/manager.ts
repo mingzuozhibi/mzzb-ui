@@ -76,6 +76,24 @@ export class Manager<T extends BaseModel> {
     }
   }
 
+  listPush = (id: number, pkey: string, pid: number, query?: string): Promise<Result<T>> => {
+    const props = {method: 'post'}
+    if (query) {
+      return request(`${this.path}/${id}/${pkey}/${pid}?${query}`, props)
+    } else {
+      return request(`${this.path}/${id}/${pkey}/${pid}`, props)
+    }
+  }
+
+  listDrop = (id: number, pkey: string, pid: number, query?: string): Promise<Result<T>> => {
+    const props = {method: 'delete'}
+    if (query) {
+      return request(`${this.path}/${id}/${pkey}/${pid}?${query}`, props)
+    } else {
+      return request(`${this.path}/${id}/${pkey}/${pid}`, props)
+    }
+  }
+
 }
 
 export const md5Password = (username: string, password: string) => {
