@@ -72,7 +72,7 @@ function* searchModel(action: AnyAction) {
   if (action.search === 'id') {
     return yield call(manager.getOne, parseInt(action.value, 10))
   } else {
-    return yield call(manager.search, action.search, action.value)
+    return yield call(manager.findOne, action.search, action.value)
   }
 }
 

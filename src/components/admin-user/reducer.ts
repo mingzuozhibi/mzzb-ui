@@ -79,7 +79,7 @@ function* searchModel(action: AnyAction) {
   if (action.search === 'id') {
     return yield call(manager.getOne, parseInt(action.value, 10))
   } else {
-    return yield call(manager.search, action.search, action.value)
+    return yield call(manager.findOne, action.search, action.value)
   }
 }
 
@@ -102,7 +102,7 @@ function* saveModel(action: AnyAction) {
 }
 
 function* editModel(action: AnyAction) {
-  const result = yield call(manager.update, action.model)
+  const result = yield call(manager.setOne, action.id, action.model)
   if (result.success) {
     yield put({type: `edit${pageInfo.pageModel}Succeed`, detail: result.data})
   } else {

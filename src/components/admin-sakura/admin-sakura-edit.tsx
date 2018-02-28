@@ -16,7 +16,7 @@ const formEdit: FormEdit = {}
 interface AdminSakuraEditProps {
   detail: SakuraModel
   pageInfo: PageInfo
-  editModel: (model: {}) => void
+  editModel: (id: number, model: {}) => void
 }
 
 export function AdminSakuraEdit(props: AdminSakuraEditProps) {
@@ -37,7 +37,7 @@ export function AdminSakuraEdit(props: AdminSakuraEditProps) {
       return
     }
 
-    props.editModel({id: props.detail.id, key, title, viewType, enabled})
+    props.editModel(props.detail.id, {key, title, viewType, enabled})
   }
 
   formEdit.key = props.detail.key

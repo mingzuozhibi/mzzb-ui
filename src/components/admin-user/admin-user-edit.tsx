@@ -16,7 +16,7 @@ const formEdit: FormEdit = {}
 interface AdminUserEditProps {
   detail: UserModel
   pageInfo: PageInfo
-  editModel: (model: {}) => void
+  editModel: (id: number, model: {}) => void
 }
 
 export function AdminUserEdit(props: AdminUserEditProps) {
@@ -32,7 +32,7 @@ export function AdminUserEdit(props: AdminUserEditProps) {
     }
 
     const encode = password ? md5Password(username, password) : ''
-    props.editModel({id: props.detail.id, username, password: encode, enabled})
+    props.editModel(props.detail.id, {username, password: encode, enabled})
   }
 
   formEdit.username = props.detail.username

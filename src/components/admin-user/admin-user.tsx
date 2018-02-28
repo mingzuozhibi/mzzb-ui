@@ -14,7 +14,7 @@ export type OwnProps = ViewportProps & RouteComponentProps<{}>
 
 interface AdminUserProps extends AdminUserState, OwnProps {
   saveModel: (model: {}) => void
-  editModel: (model: {}) => void
+  editModel: (id: number, model: {}) => void
 }
 
 export function AdminUser(props: AdminUserProps) {

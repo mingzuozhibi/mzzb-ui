@@ -22,7 +22,7 @@ export type OwnProps = RouteComponentProps<{}>
 
 interface AdminSakuraProps extends AdminSakuraState, OwnProps {
   saveModel: (model: {}) => void
-  editModel: (model: {}) => void
+  editModel: (id: number, model: {}) => void
 }
 
 export function AdminSakura(props: AdminSakuraProps) {
