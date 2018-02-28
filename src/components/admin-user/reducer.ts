@@ -75,16 +75,16 @@ function* listModel() {
   }
 }
 
-function* searchModel(action: AnyAction) {
+function* findModel(action: AnyAction, query?: string) {
   if (action.search === 'id') {
-    return yield call(manager.getOne, parseInt(action.value, 10))
+    return yield call(manager.getOne, parseInt(action.value, 10), query)
   } else {
-    return yield call(manager.findOne, action.search, action.value)
+    return yield call(manager.findOne, action.search, action.value, query)
   }
 }
 
 function* viewModel(action: AnyAction) {
-  const result = yield searchModel(action)
+  const result = yield findModel(action)
   if (result.success) {
     yield put({type: `view${pageInfo.pageModel}Succeed`, detail: result.data})
   } else {

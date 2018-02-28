@@ -82,8 +82,23 @@ export const adminSakuraReducer = (state: AdminSakuraState = initState, action: 
         message.success(`编辑${pageInfo.modelName}成功`)
         draftState.detail = action.detail
         break
-      case `edit${pageInfo.modelName}Failed`:
+      case `edit${pageInfo.pageModel}Failed`:
         Modal.error({title: `编辑${pageInfo.modelName}失败`, content: action.message})
+        break
+      case `pushDisc${pageInfo.pageModel}Succeed`:
+        message.success(`添加碟片成功`)
+        draftState.detailOfDiscs!.discs.unshift(action.disc)
+        break
+      case `pushDisc${pageInfo.pageModel}Failed`:
+        Modal.error({title: `添加碟片失败`, content: action.message})
+        break
+      case `dropDisc${pageInfo.pageModel}Succeed`:
+        message.success(`移除碟片成功`)
+        const model = draftState.detailOfDiscs!
+        model.discs = model.discs.filter(d => d.id !== action.disc.id)
+        break
+      case `dropDisc${pageInfo.pageModel}Failed`:
+        Modal.error({title: `移除碟片失败`, content: action.message})
         break
       default:
     }
@@ -101,16 +116,16 @@ function* listModel() {
   }
 }
 
-function* searchModel(action: AnyAction) {
+function* findModel(action: AnyAction, query?: string) {
   if (action.search === 'id') {
-    return yield call(manager.getOne, parseInt(action.value, 10))
+    return yield call(manager.getOne, parseInt(action.value, 10), query)
   } else {
-    return yield call(manager.findOne, action.search, action.value)
+    return yield call(manager.findOne, action.search, action.value, query)
   }
 }
 
 function* viewModel(action: AnyAction) {
-  const result = yield searchModel(action)
+  const result = yield findModel(action)
   if (result.success) {
     yield put({type: `view${pageInfo.pageModel}Succeed`, detail: result.data})
   } else {
@@ -118,8 +133,8 @@ function* viewModel(action: AnyAction) {
   }
 }
 
-function* viewModelOfDiscs(action: AnyAction) {
-  const result = yield yield call(manager.findOne, action.search, action.value, 'hasDiscs=true')
+function* viewOfDiscs(action: AnyAction) {
+  const result = yield findModel(action, 'hasDiscs=true')
   if (result.success) {
     yield put({type: `view${pageInfo.pageModel}(discs)Succeed`, detail: result.data})
   } else {
@@ -145,4 +160,24 @@ function* editModel(action: AnyAction) {
   }
 }
 
-export const adminSakuraSaga = {listModel, viewModel, saveModel, editModel, viewModelOfDiscs}
+function* pushDisc(action: AnyAction) {
+  const result = yield call(manager.listPush, action.id, 'discs', action.pid)
+  if (result.success) {
+    yield put({type: `pushDisc${pageInfo.pageModel}Succeed`, disc: result.data})
+  } else {
+    yield put({type: `pushDisc${pageInfo.pageModel}Failed`, message: result.message})
+  }
+}
+
+function* dropDisc(action: AnyAction) {
+  const result = yield call(manager.listDrop, action.id, 'discs', action.pid)
+  if (result.success) {
+    yield put({type: `dropDisc${pageInfo.pageModel}Succeed`, disc: result.data})
+  } else {
+    yield put({type: `dropDisc${pageInfo.pageModel}Failed`, message: result.message})
+  }
+}
+
+export const adminSakuraSaga = {
+  listModel, viewModel, viewOfDiscs, saveModel, editModel, pushDisc, dropDisc
+}

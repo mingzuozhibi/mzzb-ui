@@ -33,11 +33,11 @@ export class Manager<T extends BaseModel> {
     }
   }
 
-  findOne = (name: string, value: string | number, query?: string): Promise<Result<T>> => {
+  findOne = (key: string, value: string | number, query?: string): Promise<Result<T>> => {
     if (query) {
-      return request(`${this.path}/${name}/${value}?${query}`)
+      return request(`${this.path}/${key}/${value}?${query}`)
     } else {
-      return request(`${this.path}/${name}/${value}`)
+      return request(`${this.path}/${key}/${value}`)
     }
   }
 
@@ -73,6 +73,24 @@ export class Manager<T extends BaseModel> {
       return request(`${this.path}/${id}?${query}`, props)
     } else {
       return request(`${this.path}/${id}`, props)
+    }
+  }
+
+  listPush = (id: number, pkey: string, pid: number, query?: string): Promise<Result<T>> => {
+    const props = {method: 'post'}
+    if (query) {
+      return request(`${this.path}/${id}/${pkey}/${pid}?${query}`, props)
+    } else {
+      return request(`${this.path}/${id}/${pkey}/${pid}`, props)
+    }
+  }
+
+  listDrop = (id: number, pkey: string, pid: number, query?: string): Promise<Result<T>> => {
+    const props = {method: 'delete'}
+    if (query) {
+      return request(`${this.path}/${id}/${pkey}/${pid}?${query}`, props)
+    } else {
+      return request(`${this.path}/${id}/${pkey}/${pid}`, props)
     }
   }
 
