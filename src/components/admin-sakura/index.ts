@@ -14,8 +14,8 @@ function mapDispatchToProps(dispatch: Dispatch<any>) {
     saveModel(model: {}) {
       dispatch({type: `save${pageInfo.pageModel}Request`, model})
     },
-    editModel(model: {}) {
-      dispatch({type: `edit${pageInfo.pageModel}Request`, model})
+    editModel(id: number, model: {}) {
+      dispatch({type: `edit${pageInfo.pageModel}Request`, id, model})
     },
   }
 }

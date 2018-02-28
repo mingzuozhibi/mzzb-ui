@@ -1,11 +1,11 @@
 import * as React from 'react'
 
-interface LinkProps {
+interface CommandProp {
   onClick: () => void
   children: React.ReactNode
 }
 
-const Link = ({onClick, children}: LinkProps) => {
+const Command = ({onClick, children}: CommandProp) => {
   return (
     <a style={{cursor: 'pointer'}} onClick={onClick}>
       {children}
@@ -13,4 +13,4 @@ const Link = ({onClick, children}: LinkProps) => {
   )
 }
 
-export { Link }
+export { Command }

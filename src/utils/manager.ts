@@ -33,7 +33,7 @@ export class Manager<T extends BaseModel> {
     }
   }
 
-  search = (name: string, value: string | number, query?: string) => {
+  findOne = (name: string, value: string | number, query?: string): Promise<Result<T>> => {
     if (query) {
       return request(`${this.path}/${name}/${value}?${query}`)
     } else {
@@ -41,20 +41,39 @@ export class Manager<T extends BaseModel> {
     }
   }
 
-  getOne = (id: number): Promise<Result<T>> => {
-    return request(`${this.path}/${id}`)
+  addOne = (t: any, query?: string): Promise<Result<T>> => {
+    const props = {method: 'post', body: JSON.stringify(t)}
+    if (query) {
+      return request(`${this.path}?${query}`, props)
+    } else {
+      return request(`${this.path}`, props)
+    }
   }
 
-  addOne = (t: any): Promise<Result<T>> => {
-    return request(this.path, {method: 'post', body: JSON.stringify(t)})
+  getOne = (id: number, query?: string): Promise<Result<T>> => {
+    if (query) {
+      return request(`${this.path}/${id}?${query}`)
+    } else {
+      return request(`${this.path}/${id}`)
+    }
   }
 
-  delOne = (id: number): Promise<Result<T>> => {
-    return request(`${this.path}/${id}`, {method: 'delete'})
+  setOne = (id: number, t: any, query?: string): Promise<Result<T>> => {
+    const props = {method: 'post', body: JSON.stringify(t)}
+    if (query) {
+      return request(`${this.path}/${id}?${query}`, props)
+    } else {
+      return request(`${this.path}/${id}`, props)
+    }
   }
 
-  update = (t: any): Promise<Result<T>> => {
-    return request(`${this.path}/${t.id}`, {method: 'post', body: JSON.stringify(t)})
+  delOne = (id: number, query?: string): Promise<Result<T>> => {
+    const props = {method: 'delete'}
+    if (query) {
+      return request(`${this.path}/${id}?${query}`, props)
+    } else {
+      return request(`${this.path}/${id}`, props)
+    }
   }
 
 }

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Button, Checkbox, Input, Modal, Radio } from 'antd'
-import { SakuraModel } from './reducer'
+import { SakuraModel, viewTypes } from './reducer'
 import { PageInfo } from '../../common/route-infos'
 import { Icon } from '../../lib/icon'
 
@@ -16,7 +16,7 @@ const formEdit: FormEdit = {}
 interface AdminSakuraEditProps {
   detail: SakuraModel
   pageInfo: PageInfo
-  editModel: (model: {}) => void
+  editModel: (id: number, model: {}) => void
 }
 
 export function AdminSakuraEdit(props: AdminSakuraEditProps) {
@@ -37,7 +37,7 @@ export function AdminSakuraEdit(props: AdminSakuraEditProps) {
       return
     }
 
-    props.editModel({id: props.detail.id, key, title, viewType, enabled})
+    props.editModel(props.detail.id, {key, title, viewType, enabled})
   }
 
   formEdit.key = props.detail.key
@@ -66,7 +66,7 @@ export function AdminSakuraEdit(props: AdminSakuraEditProps) {
       <div className="input-wrapper">
         <span className="input-label">显示类型</span>
         <Radio.Group
-          options={['SakuraList', 'PublicList', 'PrivateList']}
+          options={viewTypes}
           defaultValue={formEdit.viewType}
           onChange={e => formEdit.viewType = e.target.value}
         />

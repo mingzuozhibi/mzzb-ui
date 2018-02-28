@@ -2,6 +2,7 @@ import * as React from 'react'
 import { Button, Input, Modal, Radio } from 'antd'
 import { PageInfo } from '../../common/route-infos'
 import { Icon } from '../../lib/icon'
+import { viewTypes } from './reducer'
 
 interface FormSave {
   key?: string
@@ -62,7 +63,7 @@ export function AdminSakuraSave(props: AdminSakuraSaveProps) {
       <div className="input-wrapper">
         <span className="input-label">显示类型</span>
         <Radio.Group
-          options={['SakuraList', 'PublicList', 'PrivateList']}
+          options={viewTypes}
           defaultValue={formSave.viewType}
           onChange={e => formSave.viewType = e.target.value}
         />
