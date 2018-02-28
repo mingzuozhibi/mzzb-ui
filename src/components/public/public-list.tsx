@@ -55,7 +55,7 @@ export function PublicList(props: PublicListProps) {
 
   return (
     <div className="public-list-content">
-      <Table title={props.pageInfo.pageTitle} rows={props.models} columns={getSakuraColumns()}/>
+      <Table rows={props.models} columns={getSakuraColumns()}/>
     </div>
   )
 }

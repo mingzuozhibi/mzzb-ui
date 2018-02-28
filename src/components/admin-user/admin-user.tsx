@@ -5,7 +5,7 @@ import { Link, Route, RouteComponentProps, Switch } from 'react-router-dom'
 
 import { ViewportProps } from '../../hoc/Viewport'
 
-import { UserModel, AdminUserState } from './reducer'
+import { AdminUserState, UserModel } from './reducer'
 import { AdminUserList } from './admin-user-list'
 import { AdminUserSave } from './admin-user-save'
 import { AdminUserEdit } from './admin-user-edit'
@@ -103,6 +103,9 @@ export function AdminUser(props: AdminUserProps) {
                   编辑{props.pageInfo.modelName}
                 </Breadcrumb.Item>
               </Breadcrumb>
+              <div className="form-message">
+                提示: 用户密码可以留空，留空则继续使用原密码
+              </div>
               <AdminUserEdit
                 detail={detail}
                 pageInfo={props.pageInfo}

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { SakuraModel } from './reducer'
+import { SakuraModel, viewTypes } from './reducer'
 import { formatTimeout } from '../../utils/format'
 import { Column, Table } from '../../lib/table'
 import { Link } from 'react-router-dom'
@@ -37,12 +37,12 @@ export function AdminSakuraList(props: AdminSakuraListProps) {
       {
         key: 'viewType',
         title: '显示类型',
-        format: (t) => t.viewType
+        format: (t) => formatViewType(t)
       },
       {
         key: 'modifyTime',
         title: '上次更新',
-        format: (t) => formatModifyTime(t)
+        format: (t) => formatTimeout(t.modifyTime)
       },
       {
         key: 'control',
@@ -52,6 +52,11 @@ export function AdminSakuraList(props: AdminSakuraListProps) {
     ]
   }
 
+  function formatViewType(t: SakuraModel) {
+    const find = viewTypes.find(v => v.value === t.viewType)
+    return find ? find.label : t.viewType
+  }
+
   function formatControl(t: SakuraModel) {
     return (
       <span>
@@ -59,10 +64,6 @@ export function AdminSakuraList(props: AdminSakuraListProps) {
         <Link to={props.viewOfDiscTo(t)}>碟片</Link>
       </span>
     )
-  }
-
-  function formatModifyTime(t: SakuraModel) {
-    return t.modifyTime == null ? '从未更新' : formatTimeout(t.modifyTime)
   }
 
   return (

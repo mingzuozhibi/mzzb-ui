@@ -73,6 +73,9 @@ export function AdminSakura(props: AdminSakuraProps) {
                   <Link to={`${props.match.url}/save`}>添加{props.pageInfo.modelName}</Link>
                 </Breadcrumb.Item>
               </Breadcrumb>
+              <div style={{paddingBottom: 10}}>
+                <Alert message="点击编辑，编辑列表信息；点击碟片，添加删除碟片"/>
+              </div>
               <AdminSakuraList
                 models={models}
                 editTo={t => `${props.match.url}/edit/${t.key}`}
