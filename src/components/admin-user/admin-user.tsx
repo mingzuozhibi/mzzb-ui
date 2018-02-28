@@ -5,7 +5,7 @@ import { Link, Route, RouteComponentProps, Switch } from 'react-router-dom'
 
 import { ViewportProps } from '../../hoc/Viewport'
 
-import { AdminUserModel, AdminUserState } from './reducer'
+import { UserModel, AdminUserState } from './reducer'
 import { AdminUserList } from './admin-user-list'
 import { AdminUserSave } from './admin-user-save'
 import { AdminUserEdit } from './admin-user-edit'
@@ -19,14 +19,14 @@ interface AdminUserProps extends AdminUserState, OwnProps {
 
 export function AdminUser(props: AdminUserProps) {
 
-  function withModels(render: (models: AdminUserModel[]) => React.ReactNode) {
+  function withModels(render: (models: UserModel[]) => React.ReactNode) {
     if (props.models) {
       return render(props.models)
     }
     return null
   }
 
-  function withDetail(id: string, render: (detail: AdminUserModel) => React.ReactNode) {
+  function withDetail(id: string, render: (detail: UserModel) => React.ReactNode) {
     if (props.detail && props.detail.id === parseInt(id, 10)) {
       return render(props.detail)
     }

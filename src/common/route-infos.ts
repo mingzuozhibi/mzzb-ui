@@ -22,7 +22,8 @@ export interface MenuInfo {
   subMenus?: MenuInfo[]
 }
 
-export const pageInfos: PageInfo[] = []
+export const pageInfos: PageInfo[] = [
+]
 
 const fromPage = (pageInfo: PageInfo, icon: string, role?: Role) => {
   pageInfos.push(pageInfo)

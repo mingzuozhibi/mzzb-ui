@@ -22,7 +22,7 @@ export interface AppState {
 const initSession = {
   userName: 'Guest',
   isLogged: false,
-  userRoles: [],
+  userRoles: ['NONE'],
 }
 
 const initState: AppState = {

@@ -1,17 +1,18 @@
 import * as React from 'react'
-import { AdminSakuraModel } from './reducer'
+import { SakuraModel } from './reducer'
 import { formatTimeout } from '../../utils/format'
 import { Column, Table } from '../../lib/table'
 import { Link } from 'react-router-dom'
 
 interface AdminSakuraListProps {
-  editTo: (t: AdminSakuraModel) => string
-  models: AdminSakuraModel[]
+  models: SakuraModel[]
+  editTo: (t: SakuraModel) => string
+  viewOfDiscTo: (t: SakuraModel) => string
 }
 
 export function AdminSakuraList(props: AdminSakuraListProps) {
 
-  function getColumns(): Column<AdminSakuraModel>[] {
+  function getColumns(): Column<SakuraModel>[] {
     return [
       {
         key: 'id',
@@ -46,12 +47,21 @@ export function AdminSakuraList(props: AdminSakuraListProps) {
       {
         key: 'control',
         title: '功能',
-        format: (t) => <Link to={props.editTo(t)}>编辑</Link>
+        format: (t) => formatControl(t)
       },
     ]
   }
 
-  function formatModifyTime(t: AdminSakuraModel) {
+  function formatControl(t: SakuraModel) {
+    return (
+      <span>
+        <Link to={props.editTo(t)} style={{marginRight: 10}}>编辑</Link>
+        <Link to={props.viewOfDiscTo(t)}>碟片</Link>
+      </span>
+    )
+  }
+
+  function formatModifyTime(t: SakuraModel) {
     return t.modifyTime == null ? '从未更新' : formatTimeout(t.modifyTime)
   }
 
