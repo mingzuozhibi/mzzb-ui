@@ -6,10 +6,7 @@ import { withViewport } from '../../hoc/Viewport'
 
 function mapStateToProps(state: RootState, ownProps: OwnProps) {
   return {
-    models: state.adminUser.models,
-    detail: state.adminUser.detail,
-    message: state.adminUser.message,
-    pageInfo, ...ownProps
+    ...state.adminUser, ...ownProps
   }
 }
 

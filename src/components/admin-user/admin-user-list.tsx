@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { AdminUserModel } from './reducer'
+import { UserModel } from './reducer'
 import { Column, Table } from '../../lib/table'
 import { ViewportProps } from '../../hoc/Viewport'
 import { PageInfo } from '../../common/route-infos'
@@ -7,13 +7,13 @@ import { Link } from 'react-router-dom'
 
 interface AdminUserListProps extends ViewportProps {
   pageInfo: PageInfo
-  models: AdminUserModel[]
-  editTo: (t: AdminUserModel) => string
+  models: UserModel[]
+  editTo: (t: UserModel) => string
 }
 
 export function AdminUserList(props: AdminUserListProps) {
 
-  function getColumns(): Column<AdminUserModel>[] {
+  function getColumns(): Column<UserModel>[] {
     return [
       {
         key: 'id',
@@ -48,11 +48,11 @@ export function AdminUserList(props: AdminUserListProps) {
     ]
   }
 
-  function formatRegisterDate(t: AdminUserModel) {
+  function formatRegisterDate(t: UserModel) {
     return formatLong(t.registerDate, 0, 10)
   }
 
-  function formatLastLoggedIn(t: AdminUserModel) {
+  function formatLastLoggedIn(t: UserModel) {
     const text = t.lastLoggedIn
     return text ? formatLong(text, 5, 11) : '从未登入'
   }

@@ -14,14 +14,14 @@ export const pageInfo: PageInfo = {
   component: () => import('.')
 }
 
-export interface AdminUserModel extends BaseModel {
+export interface UserModel extends BaseModel {
   username: string
   enabled: boolean
   registerDate: string
   lastLoggedIn: string
 }
 
-export interface AdminUserState extends BaseState<AdminUserModel> {
+export interface AdminUserState extends BaseState<UserModel> {
 }
 
 const initState: AdminUserState = {
@@ -64,7 +64,7 @@ export const adminUserReducer = (state: AdminUserState = initState, action: AnyA
   })
 }
 
-const manager = new Manager<AdminUserModel>('/api/admin/users')
+const manager = new Manager<UserModel>('/api/admin/users')
 
 function* listModel() {
   const result = yield call(manager.findAll)

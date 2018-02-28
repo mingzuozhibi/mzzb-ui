@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Button, Checkbox, Input, Modal } from 'antd'
-import { AdminUserModel } from './reducer'
+import { UserModel } from './reducer'
 import { md5Password } from '../../utils/manager'
 import { PageInfo } from '../../common/route-infos'
 import { Icon } from '../../lib/icon'
@@ -14,7 +14,7 @@ interface FormEdit {
 const formEdit: FormEdit = {}
 
 interface AdminUserEditProps {
-  detail: AdminUserModel
+  detail: UserModel
   pageInfo: PageInfo
   editModel: (model: {}) => void
 }
