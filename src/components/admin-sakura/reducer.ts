@@ -14,7 +14,7 @@ export const pageInfo: PageInfo = {
   component: () => import('.')
 }
 
-export interface AdminSakuraModel extends BaseModel {
+export interface SakuraModel extends BaseModel {
   key: string
   title: string
   enabled: boolean
@@ -22,7 +22,19 @@ export interface AdminSakuraModel extends BaseModel {
   modifyTime: number
 }
 
-export interface AdminSakuraState extends BaseState<AdminSakuraModel> {
+export interface DiscModel extends BaseModel {
+  asin: number
+  title: string
+  thisRank: number
+  surplusDays: number
+}
+
+export interface SakuraOfDiscsModel extends SakuraModel {
+  discs: DiscModel[]
+}
+
+export interface AdminSakuraState extends BaseState<SakuraModel> {
+  detailOfDiscs?: SakuraOfDiscsModel
 }
 
 const initState: AdminSakuraState = {
@@ -46,6 +58,13 @@ export const adminSakuraReducer = (state: AdminSakuraState = initState, action: 
       case `view${pageInfo.pageModel}Failed`:
         draftState.message = action.message
         break
+      case `view${pageInfo.pageModel}(discs)Succeed`:
+        draftState.detailOfDiscs = action.detail
+        draftState.message = undefined
+        break
+      case `view${pageInfo.pageModel}(discs)Failed`:
+        draftState.message = action.message
+        break
       case `save${pageInfo.pageModel}Succeed`:
         draftState.models!.push(action.detail)
         message.success(`添加${pageInfo.modelName}成功`)
@@ -65,7 +84,7 @@ export const adminSakuraReducer = (state: AdminSakuraState = initState, action: 
   })
 }
 
-const manager = new Manager<AdminSakuraModel>('/api/basic/sakuras')
+const manager = new Manager<SakuraModel>('/api/basic/sakuras')
 
 function* listModel() {
   const result = yield call(manager.findAll)
@@ -93,6 +112,15 @@ function* viewModel(action: AnyAction) {
   }
 }
 
+function* viewModelOfDiscs(action: AnyAction) {
+  const result = yield yield call(manager.search, action.search, action.value, 'hasDiscs=true')
+  if (result.success) {
+    yield put({type: `view${pageInfo.pageModel}(discs)Succeed`, detail: result.data})
+  } else {
+    yield put({type: `view${pageInfo.pageModel}(discs)Failed`, message: result.message})
+  }
+}
+
 function* saveModel(action: AnyAction) {
   const result = yield call(manager.addOne, action.model)
   if (result.success) {
@@ -111,4 +139,4 @@ function* editModel(action: AnyAction) {
   }
 }
 
-export const adminSakuraSaga = {listModel, viewModel, saveModel, editModel}
+export const adminSakuraSaga = {listModel, viewModel, saveModel, editModel, viewModelOfDiscs}

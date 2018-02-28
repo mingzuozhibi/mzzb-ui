@@ -65,6 +65,10 @@ function* updateReload({payload}: any) {
           /**  /admin/sakura/edit/:key  */
           yield put(_updateReload(_reload(action, {search, value: split[1]})))
           break
+        case 'of':
+          /**  /admin/sakura/of/discs/:key  */
+          yield put(_updateReload(_reload(`${action}(${split[1]})`, {search, value: split[2]})))
+          break
         default:
           /**  /admin/sakura/:key       */
           yield put(_updateReload(_reload(action, {search, value: split[0]})))

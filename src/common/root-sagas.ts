@@ -31,5 +31,6 @@ export function* rootSagas() {
     takeLatest('viewAdminSakuraRequest', adminSakuraSaga.viewModel),
     takeEvery('saveAdminSakuraRequest', adminSakuraSaga.saveModel),
     takeLatest('editAdminSakuraRequest', adminSakuraSaga.editModel),
+    takeLatest('viewAdminSakura(discs)Request', adminSakuraSaga.viewModelOfDiscs),
   ])
 }

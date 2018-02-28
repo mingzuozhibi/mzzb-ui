@@ -5,10 +5,7 @@ import { pageInfo } from './reducer'
 
 function mapStateToProps(state: RootState, ownProps: OwnProps) {
   return {
-    models: state.adminSakura.models,
-    detail: state.adminSakura.detail,
-    message: state.adminSakura.message,
-    pageInfo, ...ownProps,
+    ...ownProps, ...state.adminSakura,
   }
 }
 

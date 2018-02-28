@@ -1,3 +1,6 @@
+import * as React from 'react'
+import { Timer } from '../lib/timer'
+
 export const formatNumber = (numbez: number, format: string) => {
   const numstr = numbez.toString()
   let result = ''
@@ -26,14 +29,16 @@ export const formatNumber = (numbez: number, format: string) => {
   return /^,.*/.test(result) ? result.substr(1, result.length - 1) : result
 }
 
-export const formatTimeout = (timestamp: number, message?: string) => {
-  if (timestamp === 0) {
-    return message
+export function formatTimeout(time: number) {
+  if (time) {
+    return (
+      <Timer
+        time={time}
+        timeout={1000}
+        render={(state => `${state.hour}时${state.minute}分${state.second}秒前`)}
+      />
+    )
   } else {
-    const millis = new Date().getTime() - timestamp
-    const minutes = Math.floor(millis / 60000)
-    const hour = Math.floor(minutes / 60)
-    const minute = Math.floor(minutes % 60)
-    return `${hour}时${minute}分前`
+    return '从未更新'
   }
 }

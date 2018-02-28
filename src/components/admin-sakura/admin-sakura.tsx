@@ -2,11 +2,21 @@ import * as React from 'react'
 import { Helmet } from 'react-helmet'
 import { Alert, Breadcrumb } from 'antd'
 import { Link, Route, RouteComponentProps, Switch } from 'react-router-dom'
+import './admin-sakura.css'
 
-import { AdminSakuraModel, AdminSakuraState } from './reducer'
+import { AdminSakuraState, DiscModel, SakuraModel, SakuraOfDiscsModel } from './reducer'
 import { AdminSakuraList } from './admin-sakura-list'
 import { AdminSakuraSave } from './admin-sakura-save'
 import { AdminSakuraEdit } from './admin-sakura-edit'
+import { AdminSakuraOfDiscs } from './admin-sakura-of-discs'
+import { compareFactory } from '../../utils/compare'
+import produce from 'immer'
+
+const compareBySurplusDays = compareFactory({
+  apply: (disc: DiscModel) => disc.surplusDays,
+  check: (sday: number) => sday === undefined,
+  compare: (a: number, b: number) => a - b
+})
 
 export type OwnProps = RouteComponentProps<{}>
 
@@ -17,16 +27,26 @@ interface AdminSakuraProps extends AdminSakuraState, OwnProps {
 
 export function AdminSakura(props: AdminSakuraProps) {
 
-  function withModels(render: (models: AdminSakuraModel[]) => React.ReactNode) {
+  function withModels(render: (models: SakuraModel[]) => React.ReactNode) {
     if (props.models) {
       return render(props.models)
     }
     return null
   }
 
-  function withDetail(key: string, render: (detail: AdminSakuraModel) => React.ReactNode) {
+  function withDetail(key: string, render: (detail: SakuraModel) => React.ReactNode) {
     if (props.detail && props.detail.key === key) {
       return render(props.detail)
+    }
+    return null
+  }
+
+  function withDetailOfDiscs(key: string, render: (detail: SakuraOfDiscsModel) => React.ReactNode) {
+    if (props.detailOfDiscs && props.detailOfDiscs.key === key) {
+      const newDetail = produce(props.detailOfDiscs, draftState => {
+        draftState.discs.sort(compareBySurplusDays)
+      })
+      return render(newDetail)
     }
     return null
   }
@@ -56,6 +76,7 @@ export function AdminSakura(props: AdminSakuraProps) {
               <AdminSakuraList
                 models={models}
                 editTo={t => `${props.match.url}/edit/${t.key}`}
+                viewOfDiscTo={t => `${props.match.url}/of/discs/${t.key}`}
               />
             </div>
           ))}
@@ -104,6 +125,26 @@ export function AdminSakura(props: AdminSakuraProps) {
                 pageInfo={props.pageInfo}
                 editModel={props.editModel}
               />
+            </div>
+          ))}
+        />
+        <Route
+          path={`${props.match.url}/of/discs/:key`}
+          exact={true}
+          render={({match}) => withDetailOfDiscs(match.params.key, detail => (
+            <div className="admin-sakura-of-discs">
+              <Helmet>
+                <title>管理{props.pageInfo.modelName}碟片 - 名作之壁吧</title>
+              </Helmet>
+              <Breadcrumb style={{padding: 10}}>
+                <Breadcrumb.Item>
+                  <Link to={props.match.url}>{props.pageInfo.pageTitle}</Link>
+                </Breadcrumb.Item>
+                <Breadcrumb.Item>
+                  管理{props.pageInfo.modelName}碟片
+                </Breadcrumb.Item>
+              </Breadcrumb>
+              <AdminSakuraOfDiscs detail={detail}/>
             </div>
           ))}
         />
