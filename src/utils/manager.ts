@@ -33,11 +33,11 @@ export class Manager<T extends BaseModel> {
     }
   }
 
-  findOne = (name: string, value: string | number, query?: string): Promise<Result<T>> => {
+  findOne = (key: string, value: string | number, query?: string): Promise<Result<T>> => {
     if (query) {
-      return request(`${this.path}/${name}/${value}?${query}`)
+      return request(`${this.path}/${key}/${value}?${query}`)
     } else {
-      return request(`${this.path}/${name}/${value}`)
+      return request(`${this.path}/${key}/${value}`)
     }
   }
 
