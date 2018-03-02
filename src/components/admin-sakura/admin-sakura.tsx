@@ -31,7 +31,15 @@ export function AdminSakura(props: AdminSakuraProps) {
 
   function withModels(render: (models: SakuraModel[]) => React.ReactNode) {
     if (props.models) {
-      return render(props.models)
+      const newModels = produce(props.models, draft => {
+        draft.sort((a, b) => {
+          if (a.viewType !== b.viewType) {
+            return a.viewType === 'SakuraList' ? -1 : 1
+          }
+          return b.key.localeCompare(a.key)
+        })
+      })
+      return render(newModels)
     }
     return null
   }
