@@ -36,7 +36,7 @@ export function AdminSakuraList(props: AdminSakuraListProps) {
       },
       {
         key: 'viewType',
-        title: '显示类型',
+        title: '列表类型',
         format: (t) => formatViewType(t)
       },
       {

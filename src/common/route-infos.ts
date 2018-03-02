@@ -1,5 +1,4 @@
 import { pageInfo as sakuraPage } from '../components/sakura/reducer'
-import { pageInfo as publicPage } from '../components/public/reducer'
 import { pageInfo as adminUserPage } from '../components/admin-user/reducer'
 import { pageInfo as adminSakuraPage } from '../components/admin-sakura/reducer'
 
@@ -39,7 +38,6 @@ export const menuInfos: MenuInfo[] = [
     path: '/home',
   },
   fromPage(sakuraPage, 'icon-yinghua'),
-  fromPage(publicPage, 'icon-yinghua'),
   {
     icon: 'profile',
     text: '后台管理',

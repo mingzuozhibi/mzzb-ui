@@ -64,7 +64,7 @@ export const adminUserReducer = (state: AdminUserState = initState, action: AnyA
   })
 }
 
-const manager = new Manager<UserModel>('/api/admin/users')
+const manager = new Manager<UserModel>('/api/users')
 
 function* listModel() {
   const result = yield call(manager.findAll)
@@ -75,16 +75,8 @@ function* listModel() {
   }
 }
 
-function* findModel(action: AnyAction, query?: string) {
-  if (action.search === 'id') {
-    return yield call(manager.getOne, parseInt(action.value, 10), query)
-  } else {
-    return yield call(manager.findOne, action.search, action.value, query)
-  }
-}
-
 function* viewModel(action: AnyAction) {
-  const result = yield findModel(action)
+  const result = yield call(manager.getOne, parseInt(action.value, 10))
   if (result.success) {
     yield put({type: `view${pageInfo.pageModel}Succeed`, detail: result.data})
   } else {

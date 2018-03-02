@@ -1,40 +1,42 @@
 @import '../../global';
 
 .sakura {
-  table {
-    table-layout: fixed;
-    td, th {
-      &.rank {
-        width: 130px;
-        @media screen and (max-width: $mobile-max-width) {
-          width: 115px;
+  .sakura-view {
+    table {
+      table-layout: fixed;
+      td, th {
+        &.rank {
+          width: 130px;
+          @media screen and (max-width: $mobile-max-width) {
+            width: 115px;
+          }
+        }
+        &.totalPt {
+          width: 75px;
+          @media screen and (max-width: $mobile-max-width) {
+            width: 68px;
+          }
+          @media screen and (max-width: 400px) {
+            display: none;
+          }
         }
       }
-      &.totalPt {
-        width: 75px;
-        @media screen and (max-width: $mobile-max-width) {
-          width: 68px;
+      td {
+        &.rank {
+          word-break: keep-all;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          text-align: center;
         }
-        @media screen and (max-width: 400px) {
-          display: none;
+        &.totalPt {
+          word-break: keep-all;
+          white-space: nowrap;
+          text-align: right;
         }
-      }
-    }
-    td {
-      &.rank {
-        word-break: keep-all;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        text-align: center;
-      }
-      &.totalPt {
-        word-break: keep-all;
-        white-space: nowrap;
-        text-align: right;
-      }
-      &.title {
-        text-align: left;
+        &.title {
+          text-align: left;
+        }
       }
     }
   }

@@ -5,9 +5,9 @@ import { BaseModel, Manager } from '../../utils/manager'
 import produce from 'immer'
 
 export const pageInfo: PageInfo = {
-  pageTitle: '日亚实时',
-  matchPath: '/sakura',
-  pageModel: 'Sakura',
+  pageTitle: '推荐列表',
+  matchPath: '/list',
+  pageModel: 'List',
   modelName: '列表',
   searchFor: 'key',
   component: () => import('.')
@@ -24,6 +24,7 @@ export interface SakuraModel extends BaseModel {
   key: string
   title: string
   enabled: boolean
+  viewType: string
   modifyTime: number
   discs: DiscModel[]
 }
@@ -57,7 +58,7 @@ export const sakuraReducer = (state: SakuraState = initState, action: AnyAction)
   })
 }
 
-const manager = new Manager<SakuraModel>('/api/sakuras')
+const manager = new Manager<SakuraModel>('/api/lists')
 
 function* listModel() {
   const result = yield call(manager.findAll)
@@ -68,16 +69,8 @@ function* listModel() {
   }
 }
 
-function* searchModel(action: AnyAction) {
-  if (action.search === 'id') {
-    return yield call(manager.getOne, parseInt(action.value, 10))
-  } else {
-    return yield call(manager.findOne, action.search, action.value)
-  }
-}
-
 function* viewModel(action: AnyAction) {
-  const result = yield searchModel(action)
+  const result = yield call(manager.findList, action.search, action.value, 'discs')
   if (result.success) {
     yield put({type: `view${pageInfo.pageModel}Succeed`, detail: result.data})
   } else {
