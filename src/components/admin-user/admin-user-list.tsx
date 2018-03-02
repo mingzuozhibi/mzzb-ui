@@ -5,13 +5,13 @@ import { ViewportProps } from '../../hoc/Viewport'
 import { PageInfo } from '../../common/route-infos'
 import { Link } from 'react-router-dom'
 
-interface Props extends ViewportProps {
+interface AdminUserListProps extends ViewportProps {
   pageInfo: PageInfo
   models: UserModel[]
-  editOneTo: (t: UserModel) => string
+  editTo: (t: UserModel) => string
 }
 
-export function UserEditAll(props: Props) {
+export function AdminUserList(props: AdminUserListProps) {
 
   function getColumns(): Column<UserModel>[] {
     return [
@@ -43,7 +43,7 @@ export function UserEditAll(props: Props) {
       {
         key: 'control',
         title: '功能',
-        format: (t) => <Link to={props.editOneTo(t)}>编辑</Link>
+        format: (t) => <Link to={props.editTo(t)}>编辑</Link>
       }
     ]
   }
@@ -62,7 +62,7 @@ export function UserEditAll(props: Props) {
   }
 
   return (
-    <div className="user-edit-all-content">
+    <div className="admin-users-list-content">
       <Table rows={props.models} columns={getColumns()}/>
     </div>
   )

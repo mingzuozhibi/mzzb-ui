@@ -1,5 +1,5 @@
 import { pageInfo as listPage } from '../components/list/reducer'
-import { pageInfo as userPage } from '../components/user/reducer'
+import { pageInfo as adminUserPage } from '../components/admin-user/reducer'
 
 type Role = 'ROLE_ADMIN' | 'ROLE_BASIC'
 
@@ -20,9 +20,7 @@ export interface MenuInfo {
   subMenus?: MenuInfo[]
 }
 
-export const pageInfos: PageInfo[] = [
-  userPage
-]
+export const pageInfos: PageInfo[] = []
 
 const fromPage = (pageInfo: PageInfo, icon: string, role?: Role) => {
   pageInfos.push(pageInfo)
@@ -50,12 +48,7 @@ export const menuInfos: MenuInfo[] = [
         path: '/list/edit',
         role: 'ROLE_BASIC',
       },
-      {
-        icon: 'user',
-        text: '管理用户',
-        path: '/user/edit',
-        role: 'ROLE_ADMIN',
-      },
+      fromPage(adminUserPage, 'icon-user', 'ROLE_ADMIN'),
     ]
   },
   {
