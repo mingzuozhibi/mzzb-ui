@@ -1,5 +1,6 @@
-import { pageInfo as listPage } from '../components/list/reducer'
-import { pageInfo as userPage } from '../components/user/reducer'
+import { pageInfo as sakuraPage } from '../components/sakura/reducer'
+import { pageInfo as adminUserPage } from '../components/admin-user/reducer'
+import { pageInfo as adminSakuraPage } from '../components/admin-sakura/reducer'
 
 type Role = 'ROLE_ADMIN' | 'ROLE_BASIC'
 
@@ -21,7 +22,6 @@ export interface MenuInfo {
 }
 
 export const pageInfos: PageInfo[] = [
-  userPage
 ]
 
 const fromPage = (pageInfo: PageInfo, icon: string, role?: Role) => {
@@ -37,25 +37,15 @@ export const menuInfos: MenuInfo[] = [
     text: '首页',
     path: '/home',
   },
-  fromPage(listPage, 'icon-yinghua'),
+  fromPage(sakuraPage, 'icon-yinghua'),
   {
     icon: 'profile',
     text: '后台管理',
     path: '/admin',
     role: 'ROLE_BASIC',
     subMenus: [
-      {
-        icon: 'icon-yinghua',
-        text: '管理列表',
-        path: '/list/edit',
-        role: 'ROLE_BASIC',
-      },
-      {
-        icon: 'user',
-        text: '管理用户',
-        path: '/user/edit',
-        role: 'ROLE_ADMIN',
-      },
+      fromPage(adminUserPage, 'icon-user', 'ROLE_ADMIN'),
+      fromPage(adminSakuraPage, 'icon-yinghua', 'ROLE_BASIC'),
     ]
   },
   {

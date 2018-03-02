@@ -33,10 +33,7 @@ export class Manager<T extends BaseModel> {
     }
   }
 
-  findOne = (key: string, value: string, query?: string): Promise<Result<T>> => {
-    if (key === 'id') {
-      return this.getOne(parseInt(value, 10), query)
-    }
+  findOne = (key: string, value: string | number, query?: string): Promise<Result<T>> => {
     if (query) {
       return request(`${this.path}/${key}/${value}?${query}`)
     } else {

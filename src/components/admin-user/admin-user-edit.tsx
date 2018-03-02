@@ -13,13 +13,13 @@ interface FormEdit {
 
 const formEdit: FormEdit = {}
 
-interface Props {
+interface AdminUserEditProps {
   detail: UserModel
   pageInfo: PageInfo
   editModel: (id: number, model: {}) => void
 }
 
-export function UserEditOne(props: Props) {
+export function AdminUserEdit(props: AdminUserEditProps) {
 
   function editModel() {
     const username = formEdit.username
@@ -40,7 +40,7 @@ export function UserEditOne(props: Props) {
   formEdit.password = ''
 
   return (
-    <div className="user-edit-one-content">
+    <div className="admin-user-edit-content">
       <div>
         <div className="input-wrapper">
           <Input
