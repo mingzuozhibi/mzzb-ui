@@ -1,16 +1,15 @@
 import * as React from 'react'
-import { DiscModel, SakuraModel } from './reducer'
+import { formatNumber, formatTimeout } from '../../utils/format'
+import { FindListModel, FindDiscModel } from './reducer'
 import { Column, Table } from '../../lib/table'
-import { formatNumber } from '../../utils/format'
-import { Timer } from '../../lib/timer'
 
-interface SakuraListProps {
-  detail: SakuraModel
+interface Props {
+  detail: FindListModel
 }
 
-export function SakuraView(props: SakuraListProps) {
+export function ListFindDiscs(props: Props) {
 
-  function getColumns(): Column<DiscModel>[] {
+  function getColumns(): Column<FindDiscModel>[] {
     return [
       {
         key: 'rank',
@@ -30,37 +29,23 @@ export function SakuraView(props: SakuraListProps) {
     ]
   }
 
-  function formatRank(t: DiscModel) {
+  function formatRank(t: FindDiscModel) {
     const thisRank = t.thisRank ? formatNumber(t.thisRank, '****') : '----'
     const prevRank = t.prevRank ? formatNumber(t.prevRank, '****') : '----'
     return `${thisRank}位/${prevRank}位`
   }
 
-  function formatTotalPt(t: DiscModel) {
+  function formatTotalPt(t: FindDiscModel) {
     const totalPt = t.totalPt || '----'
     return `${totalPt} pt`
   }
 
-  function formatModifyTime(sakura: SakuraModel) {
-    if (sakura.modifyTime) {
-      return (
-        <Timer
-          time={sakura.modifyTime}
-          timeout={1000}
-          render={(state => `${state.hour}时${state.minute}分${state.second}秒前`)}
-        />
-      )
-    } else {
-      return '从未更新'
-    }
-  }
-
   return (
-    <div className="sakura-view-content">
+    <div className="list-find-discs-content">
       <Table
         key={props.detail.id}
         title={props.detail.title}
-        subtitle={formatModifyTime(props.detail)}
+        subtitle={formatTimeout(props.detail.modifyTime)}
         rows={props.detail.discs}
         columns={getColumns()}
       />

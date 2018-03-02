@@ -1,18 +1,17 @@
 import * as React from 'react'
-import { SakuraModel, viewTypes } from './reducer'
+import { FindListModel, viewTypes } from './reducer'
 import { formatTimeout } from '../../utils/format'
 import { Column, Table } from '../../lib/table'
 import { Link } from 'react-router-dom'
 
-interface AdminSakuraListProps {
-  models: SakuraModel[]
-  editTo: (t: SakuraModel) => string
-  viewOfDiscTo: (t: SakuraModel) => string
+interface Props {
+  models: FindListModel[]
+  findDiscsTo: (t: FindListModel) => string
 }
 
-export function AdminSakuraList(props: AdminSakuraListProps) {
+export function ListFindAll(props: Props) {
 
-  function getColumns(): Column<SakuraModel>[] {
+  function getColumns(): Column<FindListModel>[] {
     return [
       {
         key: 'id',
@@ -27,12 +26,7 @@ export function AdminSakuraList(props: AdminSakuraListProps) {
       {
         key: 'title',
         title: '标题',
-        format: (t) => <Link to={props.viewOfDiscTo(t)}>{t.title}</Link>
-      },
-      {
-        key: 'enabled',
-        title: '启用',
-        format: (t) => t.enabled ? '是' : '否'
+        format: (t) => <Link to={props.findDiscsTo(t)}>{t.title}</Link>
       },
       {
         key: 'viewType',
@@ -44,21 +38,16 @@ export function AdminSakuraList(props: AdminSakuraListProps) {
         title: '上次更新',
         format: (t) => formatTimeout(t.modifyTime)
       },
-      {
-        key: 'control',
-        title: '功能',
-        format: (t) => <Link to={props.editTo(t)}>编辑</Link>
-      },
     ]
   }
 
-  function formatViewType(t: SakuraModel) {
+  function formatViewType(t: FindListModel) {
     const find = viewTypes.find(v => v.value === t.viewType)
     return find ? find.label : t.viewType
   }
 
   return (
-    <div className="admin-sakura-list-content">
+    <div className="list-find-all-content">
       <Table rows={props.models} columns={getColumns()}/>
     </div>
   )

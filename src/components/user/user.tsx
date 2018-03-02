@@ -5,45 +5,45 @@ import { Link, Route, RouteComponentProps, Switch } from 'react-router-dom'
 
 import { ViewportProps } from '../../hoc/Viewport'
 
-import { AdminUserState, UserModel } from './reducer'
-import { AdminUserList } from './admin-user-list'
-import { AdminUserSave } from './admin-user-save'
-import { AdminUserEdit } from './admin-user-edit'
+import { UserModel, UserState } from './reducer'
+import { UserEditAll } from './user-edit-all'
+import { UserSave } from './user-save'
+import { UserEditOne } from './user-edit-one'
 
 export type OwnProps = ViewportProps & RouteComponentProps<{}>
 
-interface AdminUserProps extends AdminUserState, OwnProps {
+interface Props extends UserState, OwnProps {
   saveModel: (model: {}) => void
   editModel: (id: number, model: {}) => void
 }
 
-export function AdminUser(props: AdminUserProps) {
+export function User(props: Props) {
 
-  function withModels(render: (models: UserModel[]) => React.ReactNode) {
-    if (props.models) {
-      return render(props.models)
+  function withEditAll(render: (editAll: UserModel[]) => React.ReactNode) {
+    if (props.editAll) {
+      return render(props.editAll)
     }
     return null
   }
 
-  function withDetail(id: string, render: (detail: UserModel) => React.ReactNode) {
-    if (props.detail && props.detail.id === parseInt(id, 10)) {
-      return render(props.detail)
+  function withEditOne(id: string, render: (editOne: UserModel) => React.ReactNode) {
+    if (props.editOne && props.editOne.id === parseInt(id, 10)) {
+      return render(props.editOne)
     }
     return null
   }
 
   return (
-    <div className="admin-users">
+    <div className="user-root">
       {props.message && (
         <Alert message={props.message} type="error"/>
       )}
       <Switch>
         <Route
-          path={`${props.match.url}`}
+          path={`${props.match.url}/edit`}
           exact={true}
-          render={() => withModels(models => (
-            <div className="admin-user-list">
+          render={() => withEditAll(editAll => (
+            <div className="user-edit-all">
               <Helmet>
                 <title>{props.pageInfo.pageTitle} - 名作之壁吧</title>
               </Helmet>
@@ -55,11 +55,11 @@ export function AdminUser(props: AdminUserProps) {
                   <Link to={`${props.match.url}/save`}>添加{props.pageInfo.modelName}</Link>
                 </Breadcrumb.Item>
               </Breadcrumb>
-              <AdminUserList
+              <UserEditAll
+                models={editAll}
                 viewport={props.viewport}
                 pageInfo={props.pageInfo}
-                models={models}
-                editTo={t => `${props.match.url}/edit/${t.id}`}
+                editOneTo={t => `${props.match.url}/${t.id}/edit`}
               />
             </div>
           ))}
@@ -68,19 +68,19 @@ export function AdminUser(props: AdminUserProps) {
           path={`${props.match.url}/save`}
           exact={true}
           render={() => (
-            <div className="admin-user-save">
+            <div className="user-save">
               <Helmet>
                 <title>添加{props.pageInfo.modelName} - 名作之壁吧</title>
               </Helmet>
               <Breadcrumb style={{padding: 10}}>
                 <Breadcrumb.Item>
-                  <Link to={props.match.url}>{props.pageInfo.pageTitle}</Link>
+                  <Link to={`${props.match.url}/edit`}>{props.pageInfo.pageTitle}</Link>
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>
                   添加{props.pageInfo.modelName}
                 </Breadcrumb.Item>
               </Breadcrumb>
-              <AdminUserSave
+              <UserSave
                 pageInfo={props.pageInfo}
                 saveModel={props.saveModel}
               />
@@ -88,16 +88,16 @@ export function AdminUser(props: AdminUserProps) {
           )}
         />
         <Route
-          path={`${props.match.url}/edit/:id`}
+          path={`${props.match.url}/:id/edit`}
           exact={true}
-          render={({match}) => withDetail(match.params.id, detail => (
-            <div className="admin-user-edit">
+          render={({match}) => withEditOne(match.params.id, editOne => (
+            <div className="user-edit-one">
               <Helmet>
                 <title>编辑{props.pageInfo.modelName} - 名作之壁吧</title>
               </Helmet>
               <Breadcrumb style={{padding: 10}}>
                 <Breadcrumb.Item>
-                  <Link to={props.match.url}>{props.pageInfo.pageTitle}</Link>
+                  <Link to={`${props.match.url}/edit`}>{props.pageInfo.pageTitle}</Link>
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>
                   编辑{props.pageInfo.modelName}
@@ -106,8 +106,8 @@ export function AdminUser(props: AdminUserProps) {
               <div className="form-message">
                 提示: 用户密码可以留空，留空则继续使用原密码
               </div>
-              <AdminUserEdit
-                detail={detail}
+              <UserEditOne
+                detail={editOne}
                 pageInfo={props.pageInfo}
                 editModel={props.editModel}
               />

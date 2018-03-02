@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { Button, Input, Modal, Radio } from 'antd'
 import { PageInfo } from '../../common/route-infos'
-import { Icon } from '../../lib/icon'
 import { viewTypes } from './reducer'
+import { Icon } from '../../lib/icon'
 
 interface FormSave {
   key?: string
@@ -12,12 +12,12 @@ interface FormSave {
 
 const formSave: FormSave = {}
 
-interface AdminSakuraSaveProps {
+interface Props {
   pageInfo: PageInfo
   saveModel: (model: {}) => void
 }
 
-export function AdminSakuraSave(props: AdminSakuraSaveProps) {
+export function ListSave(props: Props) {
 
   function saveModel() {
     const key = formSave.key
@@ -43,7 +43,7 @@ export function AdminSakuraSave(props: AdminSakuraSaveProps) {
   }
 
   return (
-    <div className="admin-sakura-save-content">
+    <div className="list-save-content">
       <div className="input-wrapper">
         <Input
           prefix={<Icon type="key"/>}

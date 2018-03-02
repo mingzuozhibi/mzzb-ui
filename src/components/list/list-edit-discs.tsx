@@ -1,18 +1,18 @@
 import * as React from 'react'
-import { DiscModel, SakuraOfDiscsModel } from './reducer'
 import { formatNumber, formatTimeout } from '../../utils/format'
+import { EditListModel, EditDiscModel } from './reducer'
 import { Column, Table } from '../../lib/table'
 import { Command } from '../../lib/command'
 
-interface AdminSakuraOfDiscsProps {
-  detail: SakuraOfDiscsModel
+interface Props {
+  detail: EditListModel
   pushDisc: (id: number, pid: number) => void
   dropDisc: (id: number, pid: number) => void
 }
 
-export function AdminSakuraOfDiscs(props: AdminSakuraOfDiscsProps) {
+export function ListEditDiscs(props: Props) {
 
-  function getColumns(): Column<DiscModel>[] {
+  function getColumns(): Column<EditDiscModel>[] {
     return [
       {
         key: 'id',
@@ -47,12 +47,12 @@ export function AdminSakuraOfDiscs(props: AdminSakuraOfDiscsProps) {
     ]
   }
 
-  function formatRank(t: DiscModel) {
+  function formatRank(t: EditDiscModel) {
     const thisRank = t.thisRank ? formatNumber(t.thisRank, '****') : '----'
     return `${thisRank}位`
   }
 
-  function formatControl(t: DiscModel) {
+  function formatControl(t: EditDiscModel) {
     return (
       <span>
         <Command onClick={() => props.dropDisc(props.detail.id, t.id)}>移除</Command>
@@ -61,7 +61,7 @@ export function AdminSakuraOfDiscs(props: AdminSakuraOfDiscsProps) {
   }
 
   return (
-    <div className="admin-sakura-of-discs-content">
+    <div className="list-edit-discs-content">
       <Table
         key={props.detail.id}
         title={props.detail.title}

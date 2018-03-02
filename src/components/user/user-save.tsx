@@ -16,7 +16,7 @@ interface AdminUserSaveProps {
   saveModel: (model: {}) => void
 }
 
-export function AdminUserSave(props: AdminUserSaveProps) {
+export function UserSave(props: AdminUserSaveProps) {
 
   function saveModel() {
     const username = formSave.username
@@ -37,7 +37,7 @@ export function AdminUserSave(props: AdminUserSaveProps) {
   }
 
   return (
-    <div className="admin-users-save-content">
+    <div className="user-save-content">
       <div className="input-wrapper">
         <Input
           prefix={<Icon type="user"/>}

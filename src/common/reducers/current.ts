@@ -2,6 +2,7 @@ import { AnyAction } from 'redux'
 import { put, select } from 'redux-saga/effects'
 import { RootState } from '../root-reducer'
 import { pageInfos } from '../route-infos'
+import { matchPath } from 'react-router-dom'
 import produce from 'immer'
 
 export interface Reload {
@@ -45,40 +46,81 @@ function checkSagas(type: string, draft: CurrentState) {
   }
 }
 
+function match<T>(pathname: string, path: string) {
+  return matchPath<T>(pathname, {path, exact: true})
+}
+
 function* updateReload({payload}: any) {
   const pathname: string = payload.pathname
   const state = yield select()
   const pageInfo = findPageInfo(state, pathname)
 
   if (pageInfo) {
-    if (pageInfo.matchPath !== pathname) {
-      const action = `view${pageInfo.pageModel}`
-      const search = pageInfo.searchFor
+    const path = pageInfo.matchPath
+    const model = pageInfo.pageModel
+    const search = pageInfo.searchFor
 
-      const split = pathname.substring(pageInfo.matchPath.length + 1).split('/')
-      switch (split[0]) {
-        case 'save':
-          /**  /admin/sakura/save       */
-          yield put(_updateReload())
-          break
-        case 'edit':
-          /**  /admin/sakura/edit/:key  */
-          yield put(_updateReload(_reload(action, {search, value: split[1]})))
-          break
-        case 'of':
-          /**  /admin/sakura/of/discs/:key  */
-          yield put(_updateReload(_reload(`${action}(${split[1]})`, {search, value: split[2]})))
-          break
-        default:
-          /**  /admin/sakura/:key       */
-          yield put(_updateReload(_reload(action, {search, value: split[0]})))
-          break
-      }
-    } else {
-      yield put(_updateReload(_reload(`list${pageInfo.pageModel}`)))
+    /**  /list  */
+    const matchFindAll = match(pathname, path)
+    if (matchFindAll) {
+      yield put(_updateReload(_reload(`findAll${model}`)))
+      yield invokeReload()
+      return
     }
-    yield invokeReload()
-  } else {
+
+    /**  /list/edit  */
+    const matchEditAll = match(pathname, `${path}/edit`)
+    if (matchEditAll) {
+      yield put(_updateReload(_reload(`editAll${model}`)))
+      yield invokeReload()
+      return
+    }
+
+    /**  /list/save  */
+    const matchSaveAll = match(pathname, `${path}/save`)
+    if (matchSaveAll) {
+      yield put(_updateReload())
+      return
+    }
+
+    /**  /list/:key  */
+    const matchFindOne = match<{ value: string }>(pathname, `${path}/:value`)
+    if (matchFindOne) {
+      const value = matchFindOne.params.value
+      yield put(_updateReload(_reload(`findOne${model}`, {search, value})))
+      yield invokeReload()
+      return
+    }
+
+    /**  /list/:key/edit  */
+    const matchEditOne = match<{ value: string }>(pathname, `${path}/:value/edit`)
+    if (matchEditOne) {
+      const value = matchEditOne.params.value
+      yield put(_updateReload(_reload(`editOne${model}`, {search, value})))
+      yield invokeReload()
+      return
+    }
+
+    /**  /list/:key/discs  */
+    const matchFindList = match<{ value: string, pkey: string }>(pathname, `${path}/:value/:pkey`)
+    if (matchFindList) {
+      const value = matchFindList.params.value
+      const pkey = matchFindList.params.pkey
+      yield put(_updateReload(_reload(`find(${pkey})${model}`, {search, value})))
+      yield invokeReload()
+      return
+    }
+
+    /**  /list/:key/discs/edit  */
+    const matchEditList = match<{ value: string, pkey: string }>(pathname, `${path}/:value/:pkey/edit`)
+    if (matchEditList) {
+      const value = matchEditList.params.value
+      const pkey = matchEditList.params.pkey
+      yield put(_updateReload(_reload(`edit(${pkey})${model}`, {search, value})))
+      yield invokeReload()
+      return
+    }
+
     yield put(_updateReload())
   }
 }
