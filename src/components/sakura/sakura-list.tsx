@@ -1,18 +1,18 @@
 import * as React from 'react'
-import { EditListModel, viewTypes } from './reducer'
-import { formatTimeout } from '../../utils/format'
+import { SakuraModel } from './reducer'
 import { Column, Table } from '../../lib/table'
+import { formatTimeout } from '../../utils/format'
+import { viewTypes } from '../admin-sakura/reducer'
 import { Link } from 'react-router-dom'
 
-interface Props {
-  models: EditListModel[]
-  editOneTo: (t: EditListModel) => string
-  editDiscsTo: (t: EditListModel) => string
+interface SakuraListProps {
+  models: SakuraModel[]
+  viewTo: (t: SakuraModel) => string
 }
 
-export function ListEditAll(props: Props) {
+export function SakuraList(props: SakuraListProps) {
 
-  function getColumns(): Column<EditListModel>[] {
+  function getColumns(): Column<SakuraModel>[] {
     return [
       {
         key: 'id',
@@ -27,12 +27,7 @@ export function ListEditAll(props: Props) {
       {
         key: 'title',
         title: '标题',
-        format: (t) => <Link to={props.editDiscsTo(t)}>{t.title}</Link>
-      },
-      {
-        key: 'enabled',
-        title: '启用',
-        format: (t) => t.enabled ? '是' : '否'
+        format: (t) => <Link to={props.viewTo(t)}>{t.title}</Link>
       },
       {
         key: 'viewType',
@@ -44,21 +39,16 @@ export function ListEditAll(props: Props) {
         title: '上次更新',
         format: (t) => formatTimeout(t.modifyTime)
       },
-      {
-        key: 'control',
-        title: '功能',
-        format: (t) => <Link to={props.editOneTo(t)}>编辑</Link>
-      },
     ]
   }
 
-  function formatViewType(t: EditListModel) {
+  function formatViewType(t: SakuraModel) {
     const find = viewTypes.find(v => v.value === t.viewType)
     return find ? find.label : t.viewType
   }
 
   return (
-    <div className="list-edit-all-content">
+    <div className="sakura-list-content">
       <Table rows={props.models} columns={getColumns()}/>
     </div>
   )

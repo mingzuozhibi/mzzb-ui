@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Button, Checkbox, Input, Modal, Radio } from 'antd'
-import { EditListModel, viewTypes } from './reducer'
+import { SakuraModel, viewTypes } from './reducer'
 import { PageInfo } from '../../common/route-infos'
 import { Icon } from '../../lib/icon'
 
@@ -13,13 +13,13 @@ interface FormEdit {
 
 const formEdit: FormEdit = {}
 
-interface Props {
-  detail: EditListModel
+interface AdminSakuraEditProps {
+  detail: SakuraModel
   pageInfo: PageInfo
   editModel: (id: number, model: {}) => void
 }
 
-export function ListEditOne(props: Props) {
+export function AdminSakuraEdit(props: AdminSakuraEditProps) {
 
   function editModel() {
     const key = formEdit.key
@@ -46,7 +46,7 @@ export function ListEditOne(props: Props) {
   formEdit.viewType = props.detail.viewType
 
   return (
-    <div className="list-edit-one-content">
+    <div className="admin-sakura-edit-content">
       <div className="input-wrapper">
         <Input
           prefix={<Icon type="key"/>}
