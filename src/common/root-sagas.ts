@@ -1,9 +1,8 @@
 import { all, takeEvery, takeLatest } from 'redux-saga/effects'
 import { appSaga } from '../App/reducer'
-import { sakuraSaga } from '../components/sakura/reducer'
+import { listSaga } from '../components/list/reducer'
 import { currentSaga } from './reducers/current'
 import { adminUserSaga } from '../components/admin-user/reducer'
-import { adminSakuraSaga } from '../components/admin-sakura/reducer'
 import { LOCATION_CHANGE } from 'react-router-redux'
 
 export function* rootSagas() {
@@ -12,8 +11,15 @@ export function* rootSagas() {
     takeLatest('sessionLoginRequest', appSaga.sessionLogin),
     takeLatest('sessionLogoutRequest', appSaga.sessionLogout),
 
-    takeLatest('listListRequest', sakuraSaga.listModel),
-    takeLatest('viewListRequest', sakuraSaga.viewModel),
+    takeLatest('findAllListRequest', listSaga.findAll),
+    takeLatest('editAllListRequest', listSaga.editAll),
+    takeLatest('editOneListRequest', listSaga.editOne),
+    takeLatest('find(discs)ListRequest', listSaga.findDiscs),
+    takeLatest('edit(discs)ListRequest', listSaga.editDiscs),
+    takeEvery('addOneListRequest', listSaga.addOne),
+    takeLatest('setOneListRequest', listSaga.setOne),
+    takeEvery('push(discs)ListRequest', listSaga.pushDiscs),
+    takeEvery('drop(discs)ListRequest', listSaga.dropDiscs),
 
     takeLatest(LOCATION_CHANGE, currentSaga.updateReload),
     takeLatest('reloadRequest', currentSaga.invokeReload),
@@ -22,13 +28,5 @@ export function* rootSagas() {
     takeLatest('viewAdminUserRequest', adminUserSaga.viewModel),
     takeEvery('saveAdminUserRequest', adminUserSaga.saveModel),
     takeLatest('editAdminUserRequest', adminUserSaga.editModel),
-
-    takeLatest('listAdminSakuraRequest', adminSakuraSaga.listModel),
-    takeLatest('viewAdminSakuraRequest', adminSakuraSaga.viewModel),
-    takeEvery('saveAdminSakuraRequest', adminSakuraSaga.saveModel),
-    takeLatest('editAdminSakuraRequest', adminSakuraSaga.editModel),
-    takeEvery('pushDiscAdminSakuraRequest', adminSakuraSaga.pushDisc),
-    takeEvery('dropDiscAdminSakuraRequest', adminSakuraSaga.dropDisc),
-    takeLatest('viewAdminSakura(discs)Request', adminSakuraSaga.viewOfDiscs),
   ])
 }

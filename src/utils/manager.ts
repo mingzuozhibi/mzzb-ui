@@ -34,6 +34,9 @@ export class Manager<T extends BaseModel> {
   }
 
   findOne = (key: string, value: string | number, query?: string): Promise<Result<T>> => {
+    if (key === 'id' && typeof value === 'number') {
+      return this.getOne(value, query)
+    }
     if (query) {
       return request(`${this.path}/${key}/${value}?${query}`)
     } else {
