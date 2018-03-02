@@ -41,6 +41,14 @@ export class Manager<T extends BaseModel> {
     }
   }
 
+  findList = (key: string, value: string | number, pkey: string, query?: string): Promise<Result<T>> => {
+    if (query) {
+      return request(`${this.path}/${key}/${value}/${pkey}?${query}`)
+    } else {
+      return request(`${this.path}/${key}/${value}/${pkey}`)
+    }
+  }
+
   addOne = (t: any, query?: string): Promise<Result<T>> => {
     const props = {method: 'post', body: JSON.stringify(t)}
     if (query) {
@@ -59,7 +67,7 @@ export class Manager<T extends BaseModel> {
   }
 
   setOne = (id: number, t: any, query?: string): Promise<Result<T>> => {
-    const props = {method: 'post', body: JSON.stringify(t)}
+    const props = {method: 'put', body: JSON.stringify(t)}
     if (query) {
       return request(`${this.path}/${id}?${query}`, props)
     } else {
@@ -110,14 +118,14 @@ export const sessionManager = {
   },
   login: (username: string, password: string) => {
     password = md5Password(username, password)
-    return request('/api/session/login', {
+    return request('/api/session', {
       method: 'post',
       body: JSON.stringify({username, password}),
     })
   },
   logout: () => {
-    return request('/api/session/logout', {
-      method: 'post',
+    return request('/api/session', {
+      method: 'delete',
     })
   },
 }

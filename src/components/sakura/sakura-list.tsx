@@ -1,72 +1,55 @@
 import * as React from 'react'
-import { DiscModel, SakuraModel } from './reducer'
+import { SakuraModel } from './reducer'
 import { Column, Table } from '../../lib/table'
-import { formatNumber } from '../../utils/format'
-import { Timer } from '../../lib/timer'
-import './sakura.css'
+import { formatTimeout } from '../../utils/format'
+import { viewTypes } from '../admin-sakura/reducer'
+import { Link } from 'react-router-dom'
 
 interface SakuraListProps {
   models: SakuraModel[]
+  viewTo: (t: SakuraModel) => string
 }
 
 export function SakuraList(props: SakuraListProps) {
 
-  function getColumns(): Column<DiscModel>[] {
+  function getColumns(): Column<SakuraModel>[] {
     return [
       {
-        key: 'rank',
-        title: '日亚排名',
-        format: (t) => formatRank(t)
+        key: 'id',
+        title: 'ID',
+        format: (t) => t.id
       },
       {
-        key: 'totalPt',
-        title: '累积PT',
-        format: (t) => formatTotalPt(t)
+        key: 'key',
+        title: '索引',
+        format: (t) => t.key
       },
       {
         key: 'title',
-        title: '碟片标题',
-        format: (t) => t.title
+        title: '标题',
+        format: (t) => <Link to={props.viewTo(t)}>{t.title}</Link>
+      },
+      {
+        key: 'viewType',
+        title: '列表类型',
+        format: (t) => formatViewType(t)
+      },
+      {
+        key: 'modifyTime',
+        title: '上次更新',
+        format: (t) => formatTimeout(t.modifyTime)
       },
     ]
   }
 
-  function formatRank(t: DiscModel) {
-    const thisRank = t.thisRank ? formatNumber(t.thisRank, '****') : '----'
-    const prevRank = t.prevRank ? formatNumber(t.prevRank, '****') : '----'
-    return `${thisRank}位/${prevRank}位`
-  }
-
-  function formatTotalPt(t: DiscModel) {
-    const totalPt = t.totalPt || '----'
-    return `${totalPt} pt`
-  }
-
-  function formatModifyTime(sakura: SakuraModel) {
-    if (sakura.modifyTime) {
-      return (
-        <Timer
-          time={sakura.modifyTime}
-          timeout={1000}
-          render={(state => `${state.hour}时${state.minute}分${state.second}秒前`)}
-        />
-      )
-    } else {
-      return '从未更新'
-    }
+  function formatViewType(t: SakuraModel) {
+    const find = viewTypes.find(v => v.value === t.viewType)
+    return find ? find.label : t.viewType
   }
 
   return (
     <div className="sakura-list-content">
-      {props.models.map(sakura => (
-        <Table
-          key={sakura.id}
-          title={sakura.title}
-          subtitle={formatModifyTime(sakura)}
-          rows={sakura.discs}
-          columns={getColumns()}
-        />
-      ))}
+      <Table rows={props.models} columns={getColumns()}/>
     </div>
   )
 }

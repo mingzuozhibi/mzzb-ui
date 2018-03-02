@@ -31,7 +31,15 @@ export function AdminSakura(props: AdminSakuraProps) {
 
   function withModels(render: (models: SakuraModel[]) => React.ReactNode) {
     if (props.models) {
-      return render(props.models)
+      const newModels = produce(props.models, draft => {
+        draft.sort((a, b) => {
+          if (a.viewType !== b.viewType) {
+            return a.viewType === 'SakuraList' ? -1 : 1
+          }
+          return b.key.localeCompare(a.key)
+        })
+      })
+      return render(newModels)
     }
     return null
   }
@@ -76,7 +84,7 @@ export function AdminSakura(props: AdminSakuraProps) {
                 </Breadcrumb.Item>
               </Breadcrumb>
               <div style={{paddingBottom: 10}}>
-                <Alert message="点击编辑，编辑列表信息；点击碟片，添加删除碟片"/>
+                <Alert message="点击编辑，编辑列表信息；点击标题，进入碟片管理"/>
               </div>
               <AdminSakuraList
                 models={models}

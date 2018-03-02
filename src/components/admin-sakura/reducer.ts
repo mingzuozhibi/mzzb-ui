@@ -105,10 +105,10 @@ export const adminSakuraReducer = (state: AdminSakuraState = initState, action: 
   })
 }
 
-const manager = new Manager<SakuraModel>('/api/basic/sakuras')
+const manager = new Manager<SakuraModel>('/api/lists')
 
 function* listModel() {
-  const result = yield call(manager.findAll)
+  const result = yield call(manager.findAll, 'public=false')
   if (result.success) {
     yield put({type: `list${pageInfo.pageModel}Succeed`, models: result.data})
   } else {
@@ -116,16 +116,8 @@ function* listModel() {
   }
 }
 
-function* findModel(action: AnyAction, query?: string) {
-  if (action.search === 'id') {
-    return yield call(manager.getOne, parseInt(action.value, 10), query)
-  } else {
-    return yield call(manager.findOne, action.search, action.value, query)
-  }
-}
-
 function* viewModel(action: AnyAction) {
-  const result = yield findModel(action)
+  const result = yield yield call(manager.findOne, action.search, action.value)
   if (result.success) {
     yield put({type: `view${pageInfo.pageModel}Succeed`, detail: result.data})
   } else {
@@ -134,7 +126,8 @@ function* viewModel(action: AnyAction) {
 }
 
 function* viewOfDiscs(action: AnyAction) {
-  const result = yield findModel(action, 'hasDiscs=true')
+  const query = 'discColumns=id,asin,thisRank,surplusDays,title'
+  const result = yield call(manager.findList, action.search, action.value, 'discs', query)
   if (result.success) {
     yield put({type: `view${pageInfo.pageModel}(discs)Succeed`, detail: result.data})
   } else {

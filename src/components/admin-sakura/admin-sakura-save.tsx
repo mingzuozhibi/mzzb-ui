@@ -35,7 +35,7 @@ export function AdminSakuraSave(props: AdminSakuraSaveProps) {
     }
 
     if (!viewType) {
-      Modal.warning({title: '请检查输入项', content: '你必须选择一个显示类型'})
+      Modal.warning({title: '请检查输入项', content: '你必须选择一个列表类型'})
       return
     }
 
@@ -61,7 +61,7 @@ export function AdminSakuraSave(props: AdminSakuraSaveProps) {
         />
       </div>
       <div className="input-wrapper">
-        <span className="input-label">显示类型</span>
+        <span className="input-label">列表类型</span>
         <Radio.Group
           options={viewTypes}
           defaultValue={formSave.viewType}

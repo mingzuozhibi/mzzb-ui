@@ -27,7 +27,7 @@ export function AdminSakuraList(props: AdminSakuraListProps) {
       {
         key: 'title',
         title: '标题',
-        format: (t) => t.title
+        format: (t) => <Link to={props.viewOfDiscTo(t)}>{t.title}</Link>
       },
       {
         key: 'enabled',
@@ -36,7 +36,7 @@ export function AdminSakuraList(props: AdminSakuraListProps) {
       },
       {
         key: 'viewType',
-        title: '显示类型',
+        title: '列表类型',
         format: (t) => formatViewType(t)
       },
       {
@@ -47,7 +47,7 @@ export function AdminSakuraList(props: AdminSakuraListProps) {
       {
         key: 'control',
         title: '功能',
-        format: (t) => formatControl(t)
+        format: (t) => <Link to={props.editTo(t)}>编辑</Link>
       },
     ]
   }
@@ -55,15 +55,6 @@ export function AdminSakuraList(props: AdminSakuraListProps) {
   function formatViewType(t: SakuraModel) {
     const find = viewTypes.find(v => v.value === t.viewType)
     return find ? find.label : t.viewType
-  }
-
-  function formatControl(t: SakuraModel) {
-    return (
-      <span>
-        <Link to={props.editTo(t)} style={{marginRight: 10}}>编辑</Link>
-        <Link to={props.viewOfDiscTo(t)}>碟片</Link>
-      </span>
-    )
   }
 
   return (

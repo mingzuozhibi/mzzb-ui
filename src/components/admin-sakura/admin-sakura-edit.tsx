@@ -64,7 +64,7 @@ export function AdminSakuraEdit(props: AdminSakuraEditProps) {
         />
       </div>
       <div className="input-wrapper">
-        <span className="input-label">显示类型</span>
+        <span className="input-label">列表类型</span>
         <Radio.Group
           options={viewTypes}
           defaultValue={formEdit.viewType}

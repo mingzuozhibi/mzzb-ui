@@ -27,10 +27,12 @@ export function Sakura(props: SakuraProps) {
   function withModels(render: (models: SakuraModel[]) => React.ReactNode) {
     if (props.models) {
       const newModels = produce(props.models, draft => {
-        draft.forEach(sakura => {
-          sakura.discs.sort(compareRank)
+        draft.sort((a, b) => {
+          if (a.viewType !== b.viewType) {
+            return a.viewType === 'SakuraList' ? -1 : 1
+          }
+          return b.key.localeCompare(a.key)
         })
-        draft.sort((a, b) => b.key.localeCompare(a.key))
       })
       return render(newModels)
     }
@@ -67,15 +69,11 @@ export function Sakura(props: SakuraProps) {
                 <Breadcrumb.Item>
                   {props.pageInfo.pageTitle}
                 </Breadcrumb.Item>
-                {models.map(sakura => (
-                  <Breadcrumb.Item key={sakura.id}>
-                    <Link to={`${props.match.url}/${sakura.key}`}>
-                      {sakura.title}
-                    </Link>
-                  </Breadcrumb.Item>
-                ))}
               </Breadcrumb>
-              <SakuraList models={models}/>
+              <SakuraList
+                models={models}
+                viewTo={t => `${props.match.url}/${t.key}`}
+              />
             </div>
           ))}
         />
@@ -83,7 +81,7 @@ export function Sakura(props: SakuraProps) {
           path={`${props.match.url}/:key`}
           exact={true}
           render={({match}) => withDetail(match.params.key, detail => (
-            <div>
+            <div className="sakura-view">
               <Helmet>
                 <title>{detail.title} - 名作之壁吧</title>
               </Helmet>
