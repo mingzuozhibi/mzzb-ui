@@ -2,7 +2,7 @@ import { all, takeEvery, takeLatest } from 'redux-saga/effects'
 import { appSaga } from '../App/reducer'
 import { listSaga } from '../components/list/reducer'
 import { currentSaga } from './reducers/current'
-import { adminUserSaga } from '../components/admin-user/reducer'
+import { adminUserSaga } from '../components/user/reducer'
 import { LOCATION_CHANGE } from 'react-router-redux'
 
 export function* rootSagas() {
@@ -24,9 +24,9 @@ export function* rootSagas() {
     takeLatest(LOCATION_CHANGE, currentSaga.updateReload),
     takeLatest('reloadRequest', currentSaga.invokeReload),
 
-    takeLatest('listAdminUserRequest', adminUserSaga.listModel),
-    takeLatest('viewAdminUserRequest', adminUserSaga.viewModel),
-    takeEvery('saveAdminUserRequest', adminUserSaga.saveModel),
-    takeLatest('editAdminUserRequest', adminUserSaga.editModel),
+    takeLatest('editAllUserRequest', adminUserSaga.editAll),
+    takeLatest('editOneUserRequest', adminUserSaga.editOne),
+    takeEvery('addOneUserRequest', adminUserSaga.addOne),
+    takeLatest('setOneUserRequest', adminUserSaga.setOne),
   ])
 }

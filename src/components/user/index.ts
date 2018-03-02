@@ -1,22 +1,22 @@
 import { connect, Dispatch } from 'react-redux'
 import { RootState } from '../../common/root-reducer'
-import { AdminUser, OwnProps } from './admin-user'
+import { User, OwnProps } from './user'
 import { pageInfo } from './reducer'
 import { withViewport } from '../../hoc/Viewport'
 
 function mapStateToProps(state: RootState, ownProps: OwnProps) {
   return {
-    ...state.adminUser, ...ownProps
+    ...state.user, ...ownProps
   }
 }
 
 function mapDispatchToProps(dispatch: Dispatch<any>) {
   return {
     saveModel(model: {}) {
-      dispatch({type: `save${pageInfo.pageModel}Request`, model})
+      dispatch({type: `addOne${pageInfo.pageModel}Request`, model})
     },
     editModel(id: number, model: {}) {
-      dispatch({type: `edit${pageInfo.pageModel}Request`, id, model})
+      dispatch({type: `setOne${pageInfo.pageModel}Request`, id, model})
     },
   }
 }
@@ -24,6 +24,6 @@ function mapDispatchToProps(dispatch: Dispatch<any>) {
 const Connected = connect(
   mapStateToProps,
   mapDispatchToProps
-)(AdminUser)
+)(User)
 
 export default withViewport(Connected)
