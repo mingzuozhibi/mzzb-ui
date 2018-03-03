@@ -5,7 +5,7 @@ import { pageInfo } from './reducer'
 
 function mapStateToProps(state: RootState, ownProps: OwnProps) {
   return {
-    ...ownProps, ...state.adminSakura,
+    ...ownProps, ...state.adminSakura, session: state.app.session
   }
 }
 
@@ -16,6 +16,9 @@ function mapDispatchToProps(dispatch: Dispatch<any>) {
     },
     editModel(id: number, model: {}) {
       dispatch({type: `edit${pageInfo.pageModel}Request`, id, model})
+    },
+    dropModel(id: number) {
+      dispatch({type: `drop${pageInfo.pageModel}Request`, id})
     },
     pushDiscs(id: number, pid: number) {
       dispatch({type: `push(discs)${pageInfo.pageModel}Request`, id, pid})
