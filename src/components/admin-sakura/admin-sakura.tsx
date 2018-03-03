@@ -4,13 +4,15 @@ import { Alert, Breadcrumb } from 'antd'
 import { Link, Route, RouteComponentProps, Switch } from 'react-router-dom'
 import './admin-sakura.css'
 
-import { AdminSakuraState, DiscModel, SakuraModel, SakuraOfDiscsModel } from './reducer'
+import { compareFactory } from '../../utils/compare'
+import produce from 'immer'
+
+import { AdminSakuraState, SakuraModel } from './reducer'
+import { DiscModel, SakuraOfDiscsModel } from './reducer-discs'
 import { AdminSakuraList } from './admin-sakura-list'
 import { AdminSakuraSave } from './admin-sakura-save'
 import { AdminSakuraEdit } from './admin-sakura-edit'
-import { AdminSakuraOfDiscs } from './admin-sakura-of-discs'
-import { compareFactory } from '../../utils/compare'
-import produce from 'immer'
+import { AdminSakuraDiscs } from './admin-sakura-with-discs'
 
 const compareBySurplusDays = compareFactory({
   apply: (disc: DiscModel) => disc.surplusDays,
@@ -23,8 +25,8 @@ export type OwnProps = RouteComponentProps<{}>
 interface AdminSakuraProps extends AdminSakuraState, OwnProps {
   saveModel: (model: {}) => void
   editModel: (id: number, model: {}) => void
-  pushDisc: (id: number, pid: number) => void
-  dropDisc: (id: number, pid: number) => void
+  pushDiscs: (id: number, pid: number) => void
+  dropDiscs: (id: number, pid: number) => void
 }
 
 export function AdminSakura(props: AdminSakuraProps) {
@@ -88,8 +90,8 @@ export function AdminSakura(props: AdminSakuraProps) {
               </div>
               <AdminSakuraList
                 models={models}
-                editTo={t => `${props.match.url}/edit/${t.key}`}
-                viewOfDiscTo={t => `${props.match.url}/of/discs/${t.key}`}
+                editModelTo={t => `${props.match.url}/${t.key}`}
+                editDiscsTo={t => `${props.match.url}/${t.key}/discs`}
               />
             </div>
           ))}
@@ -100,14 +102,14 @@ export function AdminSakura(props: AdminSakuraProps) {
           render={() => (
             <div className="admin-sakura-save">
               <Helmet>
-                <title>添加{props.pageInfo.modelName} - 名作之壁吧</title>
+                <title>创建{props.pageInfo.modelName} - 名作之壁吧</title>
               </Helmet>
               <Breadcrumb style={{padding: 10}}>
                 <Breadcrumb.Item>
                   <Link to={props.match.url}>{props.pageInfo.pageTitle}</Link>
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>
-                  添加{props.pageInfo.modelName}
+                  创建{props.pageInfo.modelName}
                 </Breadcrumb.Item>
               </Breadcrumb>
               <AdminSakuraSave
@@ -118,12 +120,12 @@ export function AdminSakura(props: AdminSakuraProps) {
           )}
         />
         <Route
-          path={`${props.match.url}/edit/:key`}
+          path={`${props.match.url}/:key`}
           exact={true}
           render={({match}) => withDetail(match.params.key, detail => (
             <div className="admin-sakura-edit">
               <Helmet>
-                <title>编辑{props.pageInfo.modelName} - 名作之壁吧</title>
+                <title>编辑{props.pageInfo.modelName} - {detail.title} - 名作之壁吧</title>
               </Helmet>
               <Breadcrumb style={{padding: 10}}>
                 <Breadcrumb.Item>
@@ -142,25 +144,25 @@ export function AdminSakura(props: AdminSakuraProps) {
           ))}
         />
         <Route
-          path={`${props.match.url}/of/discs/:key`}
+          path={`${props.match.url}/:key/discs`}
           exact={true}
           render={({match}) => withDetailOfDiscs(match.params.key, detail => (
-            <div className="admin-sakura-of-discs">
+            <div className="admin-sakura-discs">
               <Helmet>
-                <title>管理{props.pageInfo.modelName}碟片 - 名作之壁吧</title>
+                <title>碟片管理 - {detail.title} - 名作之壁吧</title>
               </Helmet>
               <Breadcrumb style={{padding: 10}}>
                 <Breadcrumb.Item>
                   <Link to={props.match.url}>{props.pageInfo.pageTitle}</Link>
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>
-                  管理{props.pageInfo.modelName}碟片
+                  碟片管理
                 </Breadcrumb.Item>
               </Breadcrumb>
-              <AdminSakuraOfDiscs
+              <AdminSakuraDiscs
                 detail={detail}
-                pushDisc={props.pushDisc}
-                dropDisc={props.dropDisc}
+                pushDiscs={props.pushDiscs}
+                dropDiscs={props.dropDiscs}
               />
             </div>
           ))}

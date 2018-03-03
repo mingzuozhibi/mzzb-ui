@@ -6,9 +6,9 @@ import { PageInfo } from '../../common/route-infos'
 import { Link } from 'react-router-dom'
 
 interface AdminUserListProps extends ViewportProps {
-  pageInfo: PageInfo
   models: UserModel[]
-  editTo: (t: UserModel) => string
+  pageInfo: PageInfo
+  editModelTo: (t: UserModel) => string
 }
 
 export function AdminUserList(props: AdminUserListProps) {
@@ -43,7 +43,7 @@ export function AdminUserList(props: AdminUserListProps) {
       {
         key: 'control',
         title: '功能',
-        format: (t) => <Link to={props.editTo(t)}>编辑</Link>
+        format: (t) => <Link to={props.editModelTo(t)}>编辑</Link>
       }
     ]
   }

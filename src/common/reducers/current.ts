@@ -1,5 +1,6 @@
-import { AnyAction } from 'redux'
 import { put, select } from 'redux-saga/effects'
+import { AnyAction } from 'redux'
+import { matchPath } from 'react-router'
 import { RootState } from '../root-reducer'
 import { pageInfos } from '../route-infos'
 import produce from 'immer'
@@ -45,41 +46,58 @@ function checkSagas(type: string, draft: CurrentState) {
   }
 }
 
+function match<T>(pathname: string, path: string) {
+  return matchPath<T>(pathname, {path, exact: true})
+}
+
 function* updateReload({payload}: any) {
   const pathname: string = payload.pathname
   const state = yield select()
   const pageInfo = findPageInfo(state, pathname)
 
   if (pageInfo) {
-    if (pageInfo.matchPath !== pathname) {
-      const action = `view${pageInfo.pageModel}`
-      const search = pageInfo.searchFor
+    const search = pageInfo.searchFor
+    const model = pageInfo.pageModel
+    const path = pageInfo.matchPath
 
-      const split = pathname.substring(pageInfo.matchPath.length + 1).split('/')
-      switch (split[0]) {
-        case 'save':
-          /**  /admin/sakura/save       */
-          yield put(_updateReload())
-          break
-        case 'edit':
-          /**  /admin/sakura/edit/:key  */
-          yield put(_updateReload(_reload(action, {search, value: split[1]})))
-          break
-        case 'of':
-          /**  /admin/sakura/of/discs/:key  */
-          yield put(_updateReload(_reload(`${action}(${split[1]})`, {search, value: split[2]})))
-          break
-        default:
-          /**  /admin/sakura/:key       */
-          yield put(_updateReload(_reload(action, {search, value: split[0]})))
-          break
-      }
-    } else {
-      yield put(_updateReload(_reload(`list${pageInfo.pageModel}`)))
+    /**  /sakura  */
+    const matchList = match(pathname, path)
+    if (matchList) {
+      yield put(_updateReload(`list${model}`))
+      yield invokeReload()
+      return
     }
-    yield invokeReload()
+
+    /**  /sakura/save  */
+    const matchSave = match<{}>(pathname, `${path}/save`)
+    if (matchSave) {
+      yield put(_clearReload())
+      return
+    }
+
+    /**  /sakura/:key  */
+    const matchView = match<{ key: string }>(pathname, `${path}/:key`)
+    if (matchView) {
+      const value = matchView.params.key
+      yield put(_updateReload(`view${model}`, {search, value}))
+      yield invokeReload()
+      return
+    }
+
+    /**  /sakura/:key/:pkey  */
+    type Created = { key: string, pkey: string }
+    const matchViewList = match<Created>(pathname, `${path}/:key/:pkey`)
+    if (matchViewList) {
+      const pkey = matchViewList.params.pkey
+      const value = matchViewList.params.key
+      yield put(_updateReload(`view(${pkey})${model}`, {search, value}))
+      yield invokeReload()
+      return
+    }
+
   } else {
-    yield put(_updateReload())
+
+    yield put(_clearReload())
   }
 }
 
@@ -101,10 +119,10 @@ function* invokeReload() {
 
 export const currentSaga = {updateReload, invokeReload}
 
-function _reload(action: string, param?: {}) {
-  return {loading: false, action, param}
+function _updateReload(action: string, param?: {}) {
+  return {type: 'updateReload', reload: {loading: false, action, param}}
 }
 
-function _updateReload(reload?: Reload) {
-  return {type: 'updateReload', reload}
+function _clearReload() {
+  return {type: 'updateReload'}
 }

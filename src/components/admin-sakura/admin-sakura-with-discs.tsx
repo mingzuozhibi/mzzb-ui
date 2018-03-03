@@ -1,16 +1,16 @@
 import * as React from 'react'
-import { DiscModel, SakuraOfDiscsModel } from './reducer'
+import { DiscModel, SakuraOfDiscsModel } from './reducer-discs'
 import { formatNumber, formatTimeout } from '../../utils/format'
 import { Column, Table } from '../../lib/table'
 import { Command } from '../../lib/command'
 
 interface AdminSakuraOfDiscsProps {
   detail: SakuraOfDiscsModel
-  pushDisc: (id: number, pid: number) => void
-  dropDisc: (id: number, pid: number) => void
+  pushDiscs: (id: number, pid: number) => void
+  dropDiscs: (id: number, pid: number) => void
 }
 
-export function AdminSakuraOfDiscs(props: AdminSakuraOfDiscsProps) {
+export function AdminSakuraDiscs(props: AdminSakuraOfDiscsProps) {
 
   function getColumns(): Column<DiscModel>[] {
     return [
@@ -55,13 +55,13 @@ export function AdminSakuraOfDiscs(props: AdminSakuraOfDiscsProps) {
   function formatControl(t: DiscModel) {
     return (
       <span>
-        <Command onClick={() => props.dropDisc(props.detail.id, t.id)}>移除</Command>
+        <Command onClick={() => props.dropDiscs(props.detail.id, t.id)}>移除</Command>
       </span>
     )
   }
 
   return (
-    <div className="admin-sakura-of-discs-content">
+    <div className="admin-sakura-discs-content">
       <Table
         key={props.detail.id}
         title={props.detail.title}

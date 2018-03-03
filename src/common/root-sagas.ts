@@ -1,4 +1,4 @@
-import { all, takeEvery, takeLatest } from 'redux-saga/effects'
+import { all, takeEvery } from 'redux-saga/effects'
 import { appSaga } from '../App/reducer'
 import { sakuraSaga } from '../components/sakura/reducer'
 import { currentSaga } from './reducers/current'
@@ -8,27 +8,28 @@ import { LOCATION_CHANGE } from 'react-router-redux'
 
 export function* rootSagas() {
   yield all([
-    takeLatest('sessionQueryRequest', appSaga.sessionQuery),
-    takeLatest('sessionLoginRequest', appSaga.sessionLogin),
-    takeLatest('sessionLogoutRequest', appSaga.sessionLogout),
+    takeEvery('sessionQueryRequest', appSaga.sessionQuery),
+    takeEvery('sessionLoginRequest', appSaga.sessionLogin),
+    takeEvery('sessionLogoutRequest', appSaga.sessionLogout),
 
-    takeLatest('listListRequest', sakuraSaga.listModel),
-    takeLatest('viewListRequest', sakuraSaga.viewModel),
+    takeEvery('listSakuraRequest', sakuraSaga.listModel),
+    takeEvery('view(discs)SakuraRequest', sakuraSaga.viewDiscs),
 
-    takeLatest(LOCATION_CHANGE, currentSaga.updateReload),
-    takeLatest('reloadRequest', currentSaga.invokeReload),
+    takeEvery(LOCATION_CHANGE, currentSaga.updateReload),
+    takeEvery('reloadRequest', currentSaga.invokeReload),
 
-    takeLatest('listAdminUserRequest', adminUserSaga.listModel),
-    takeLatest('viewAdminUserRequest', adminUserSaga.viewModel),
+    takeEvery('listAdminUserRequest', adminUserSaga.listModel),
+    takeEvery('viewAdminUserRequest', adminUserSaga.viewModel),
     takeEvery('saveAdminUserRequest', adminUserSaga.saveModel),
-    takeLatest('editAdminUserRequest', adminUserSaga.editModel),
+    takeEvery('editAdminUserRequest', adminUserSaga.editModel),
 
-    takeLatest('listAdminSakuraRequest', adminSakuraSaga.listModel),
-    takeLatest('viewAdminSakuraRequest', adminSakuraSaga.viewModel),
+    takeEvery('listAdminSakuraRequest', adminSakuraSaga.listModel),
+    takeEvery('viewAdminSakuraRequest', adminSakuraSaga.viewModel),
     takeEvery('saveAdminSakuraRequest', adminSakuraSaga.saveModel),
-    takeLatest('editAdminSakuraRequest', adminSakuraSaga.editModel),
-    takeEvery('pushDiscAdminSakuraRequest', adminSakuraSaga.pushDisc),
-    takeEvery('dropDiscAdminSakuraRequest', adminSakuraSaga.dropDisc),
-    takeLatest('viewAdminSakura(discs)Request', adminSakuraSaga.viewOfDiscs),
+    takeEvery('editAdminSakuraRequest', adminSakuraSaga.editModel),
+
+    takeEvery('view(discs)AdminSakuraRequest', adminSakuraSaga.viewDiscs),
+    takeEvery('push(discs)AdminSakuraRequest', adminSakuraSaga.pushDiscs),
+    takeEvery('drop(discs)AdminSakuraRequest', adminSakuraSaga.dropDiscs),
   ])
 }

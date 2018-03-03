@@ -56,10 +56,10 @@ export function AdminUser(props: AdminUserProps) {
                 </Breadcrumb.Item>
               </Breadcrumb>
               <AdminUserList
+                models={models}
                 viewport={props.viewport}
                 pageInfo={props.pageInfo}
-                models={models}
-                editTo={t => `${props.match.url}/edit/${t.id}`}
+                editModelTo={t => `${props.match.url}/${t.id}`}
               />
             </div>
           ))}
@@ -70,14 +70,14 @@ export function AdminUser(props: AdminUserProps) {
           render={() => (
             <div className="admin-user-save">
               <Helmet>
-                <title>添加{props.pageInfo.modelName} - 名作之壁吧</title>
+                <title>创建{props.pageInfo.modelName} - 名作之壁吧</title>
               </Helmet>
               <Breadcrumb style={{padding: 10}}>
                 <Breadcrumb.Item>
                   <Link to={props.match.url}>{props.pageInfo.pageTitle}</Link>
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>
-                  添加{props.pageInfo.modelName}
+                  创建{props.pageInfo.modelName}
                 </Breadcrumb.Item>
               </Breadcrumb>
               <AdminUserSave
@@ -88,7 +88,7 @@ export function AdminUser(props: AdminUserProps) {
           )}
         />
         <Route
-          path={`${props.match.url}/edit/:id`}
+          path={`${props.match.url}/:id`}
           exact={true}
           render={({match}) => withDetail(match.params.id, detail => (
             <div className="admin-user-edit">

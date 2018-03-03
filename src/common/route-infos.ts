@@ -5,7 +5,7 @@ import { pageInfo as adminSakuraPage } from '../components/admin-sakura/reducer'
 type Role = 'ROLE_ADMIN' | 'ROLE_BASIC'
 
 export interface PageInfo {
-  pageTitle: string // 管理用户
+  pageTitle: string // 用户管理
   matchPath: string // /admin/user
   pageModel: string // AdminUser
   modelName: string // 用户

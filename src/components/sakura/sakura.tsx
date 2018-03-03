@@ -6,9 +6,9 @@ import './sakura.css'
 
 import { compareFactory } from '../../utils/compare'
 
-import { DiscModel, SakuraModel, SakuraState } from './reducer'
+import { DiscModel, SakuraModel, SakuraOfDiscsModel, SakuraState } from './reducer'
 import { SakuraList } from './sakura-list'
-import { SakuraView } from './sakura-view'
+import { SakuraDiscs } from './sakura-with-discs'
 import produce from 'immer'
 
 const compareRank = compareFactory({
@@ -39,10 +39,10 @@ export function Sakura(props: SakuraProps) {
     return null
   }
 
-  function withDetail(key: string, render: (detail: SakuraModel) => React.ReactNode) {
-    if (props.detail && props.detail.key === key) {
-      const newDetail = produce(props.detail, draft => {
-        draft.discs.sort(compareRank)
+  function withDetailOfDiscs(key: string, render: (detail: SakuraOfDiscsModel) => React.ReactNode) {
+    if (props.detailOfDiscs && props.detailOfDiscs.key === key) {
+      const newDetail = produce(props.detailOfDiscs, draftState => {
+        draftState.discs.sort(compareRank)
       })
       return render(newDetail)
     }
@@ -72,16 +72,16 @@ export function Sakura(props: SakuraProps) {
               </Breadcrumb>
               <SakuraList
                 models={models}
-                viewTo={t => `${props.match.url}/${t.key}`}
+                viewDiscsTo={t => `${props.match.url}/${t.key}/discs`}
               />
             </div>
           ))}
         />
         <Route
-          path={`${props.match.url}/:key`}
+          path={`${props.match.url}/:key/discs`}
           exact={true}
-          render={({match}) => withDetail(match.params.key, detail => (
-            <div className="sakura-view">
+          render={({match}) => withDetailOfDiscs(match.params.key, detail => (
+            <div className="sakura-discs">
               <Helmet>
                 <title>{detail.title} - 名作之壁吧</title>
               </Helmet>
@@ -93,7 +93,7 @@ export function Sakura(props: SakuraProps) {
                   {detail.title}
                 </Breadcrumb.Item>
               </Breadcrumb>
-              <SakuraView detail={detail}/>
+              <SakuraDiscs detail={detail}/>
             </div>
           ))}
         />
