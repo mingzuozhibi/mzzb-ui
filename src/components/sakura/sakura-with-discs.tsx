@@ -1,14 +1,14 @@
 import * as React from 'react'
-import { DiscModel, SakuraModel } from './reducer'
+import { DiscModel, SakuraModel, SakuraOfDiscsModel } from './reducer'
 import { Column, Table } from '../../lib/table'
 import { formatNumber } from '../../utils/format'
 import { Timer } from '../../lib/timer'
 
 interface SakuraListProps {
-  detail: SakuraModel
+  detail: SakuraOfDiscsModel
 }
 
-export function SakuraView(props: SakuraListProps) {
+export function SakuraDiscs(props: SakuraListProps) {
 
   function getColumns(): Column<DiscModel>[] {
     return [
@@ -56,7 +56,7 @@ export function SakuraView(props: SakuraListProps) {
   }
 
   return (
-    <div className="sakura-view-content">
+    <div className="sakura-discs-content">
       <Table
         key={props.detail.id}
         title={props.detail.title}

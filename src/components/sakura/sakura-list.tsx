@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 
 interface SakuraListProps {
   models: SakuraModel[]
-  viewTo: (t: SakuraModel) => string
+  viewDiscsTo: (t: SakuraModel) => string
 }
 
 export function SakuraList(props: SakuraListProps) {
@@ -27,7 +27,7 @@ export function SakuraList(props: SakuraListProps) {
       {
         key: 'title',
         title: '标题',
-        format: (t) => <Link to={props.viewTo(t)}>{t.title}</Link>
+        format: (t) => <Link to={props.viewDiscsTo(t)}>{t.title}</Link>
       },
       {
         key: 'viewType',

@@ -6,8 +6,8 @@ import { Link } from 'react-router-dom'
 
 interface AdminSakuraListProps {
   models: SakuraModel[]
-  editTo: (t: SakuraModel) => string
-  viewOfDiscTo: (t: SakuraModel) => string
+  editModelTo: (t: SakuraModel) => string
+  editDiscsTo: (t: SakuraModel) => string
 }
 
 export function AdminSakuraList(props: AdminSakuraListProps) {
@@ -27,7 +27,7 @@ export function AdminSakuraList(props: AdminSakuraListProps) {
       {
         key: 'title',
         title: '标题',
-        format: (t) => <Link to={props.viewOfDiscTo(t)}>{t.title}</Link>
+        format: (t) => <Link to={props.editDiscsTo(t)}>{t.title}</Link>
       },
       {
         key: 'enabled',
@@ -47,7 +47,7 @@ export function AdminSakuraList(props: AdminSakuraListProps) {
       {
         key: 'control',
         title: '功能',
-        format: (t) => <Link to={props.editTo(t)}>编辑</Link>
+        format: (t) => <Link to={props.editModelTo(t)}>编辑</Link>
       },
     ]
   }
