@@ -36,7 +36,14 @@ export function AdminUser(props: AdminUserProps) {
   return (
     <div className="admin-users">
       {props.message && (
-        <Alert message={props.message} type="error"/>
+        <div>
+          <Breadcrumb style={{padding: 10}}>
+            <Breadcrumb.Item>
+              <Link to={props.match.url}>{props.pageInfo.pageTitle}</Link>
+            </Breadcrumb.Item>
+          </Breadcrumb>
+          <Alert message={props.message} type="error"/>
+        </div>
       )}
       <Switch>
         <Route

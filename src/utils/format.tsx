@@ -34,8 +34,8 @@ export function formatTimeout(time: number) {
     return (
       <Timer
         time={time}
-        timeout={1000}
-        render={(state => `${state.hour}时${state.minute}分${state.second}秒前`)}
+        timeout={20000}
+        render={(state => `${state.hour}时${state.minute}分前`)}
       />
     )
   } else {

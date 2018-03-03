@@ -5,13 +5,27 @@ import { Link, Route, RouteComponentProps, Switch } from 'react-router-dom'
 import './sakura.css'
 
 import { compareFactory } from '../../utils/compare'
+import { viewTypes } from '../admin-sakura/reducer'
 
 import { DiscModel, SakuraModel, SakuraOfDiscsModel, SakuraState } from './reducer'
 import { SakuraList } from './sakura-list'
 import { SakuraDiscs } from './sakura-with-discs'
 import produce from 'immer'
 
-const compareRank = compareFactory({
+const compareList = (a: SakuraModel, b: SakuraModel) => {
+  const indexA = viewTypes.findIndex(v => v.value === a.viewType)
+  const indexB = viewTypes.findIndex(v => v.value === b.viewType)
+  if (indexA !== indexB) {
+    return indexA - indexB
+  }
+  if (a.viewType !== 'PrivateList') {
+    return b.key.localeCompare(a.key)
+  } else {
+    return a.key.localeCompare(b.key)
+  }
+}
+
+const compareDisc = compareFactory({
   apply: (disc: DiscModel) => disc.thisRank,
   check: (rank: number) => rank === undefined,
   compare: (rankA: number, rankB: number) => rankA - rankB
@@ -26,13 +40,8 @@ export function Sakura(props: SakuraProps) {
 
   function withModels(render: (models: SakuraModel[]) => React.ReactNode) {
     if (props.models) {
-      const newModels = produce(props.models, draft => {
-        draft.sort((a, b) => {
-          if (a.viewType !== b.viewType) {
-            return a.viewType === 'SakuraList' ? -1 : 1
-          }
-          return b.key.localeCompare(a.key)
-        })
+      const newModels = produce(props.models, draftState => {
+        draftState.sort(compareList)
       })
       return render(newModels)
     }
@@ -42,7 +51,7 @@ export function Sakura(props: SakuraProps) {
   function withDetailOfDiscs(key: string, render: (detail: SakuraOfDiscsModel) => React.ReactNode) {
     if (props.detailOfDiscs && props.detailOfDiscs.key === key) {
       const newDetail = produce(props.detailOfDiscs, draftState => {
-        draftState.discs.sort(compareRank)
+        draftState.discs.sort(compareDisc)
       })
       return render(newDetail)
     }
@@ -54,7 +63,14 @@ export function Sakura(props: SakuraProps) {
   return (
     <div className="sakura">
       {props.message && (
-        <Alert message={props.message} type="error"/>
+        <div>
+          <Breadcrumb style={{padding: 10}}>
+            <Breadcrumb.Item>
+              <Link to={props.match.url}>{props.pageInfo.pageTitle}</Link>
+            </Breadcrumb.Item>
+          </Breadcrumb>
+          <Alert message={props.message} type="error"/>
+        </div>
       )}
       <Switch>
         <Route

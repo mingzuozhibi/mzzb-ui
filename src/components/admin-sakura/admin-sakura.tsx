@@ -4,22 +4,35 @@ import { Alert, Breadcrumb } from 'antd'
 import { Link, Route, RouteComponentProps, Switch } from 'react-router-dom'
 import './admin-sakura.css'
 
-import { compareFactory } from '../../utils/compare'
 import { Session } from '../../App/reducer'
 import produce from 'immer'
 
-import { AdminSakuraState, SakuraModel } from './reducer'
+import { AdminSakuraState, SakuraModel, viewTypes } from './reducer'
 import { DiscModel, SakuraOfDiscsModel } from './reducer-discs'
 import { AdminSakuraList } from './admin-sakura-list'
 import { AdminSakuraSave } from './admin-sakura-save'
 import { AdminSakuraEdit } from './admin-sakura-edit'
 import { AdminSakuraDiscs } from './admin-sakura-with-discs'
 
-const compareBySurplusDays = compareFactory({
-  apply: (disc: DiscModel) => disc.surplusDays,
-  check: (sday: number) => sday === undefined,
-  compare: (a: number, b: number) => a - b
-})
+const compareList = (a: SakuraModel, b: SakuraModel) => {
+  const indexA = viewTypes.findIndex(v => v.value === a.viewType)
+  const indexB = viewTypes.findIndex(v => v.value === b.viewType)
+  if (indexA !== indexB) {
+    return indexA - indexB
+  }
+  if (a.viewType !== 'PrivateList') {
+    return b.key.localeCompare(a.key)
+  } else {
+    return a.key.localeCompare(b.key)
+  }
+}
+
+const compareDisc = (a: DiscModel, b: DiscModel) => {
+  if (a.surplusDays !== b.surplusDays) {
+    return a.surplusDays - b.surplusDays
+  }
+  return a.title.localeCompare(b.title)
+}
 
 export type OwnProps = RouteComponentProps<{}>
 
@@ -37,12 +50,7 @@ export function AdminSakura(props: AdminSakuraProps) {
   function withModels(render: (models: SakuraModel[]) => React.ReactNode) {
     if (props.models) {
       const newModels = produce(props.models, draft => {
-        draft.sort((a, b) => {
-          if (a.viewType !== b.viewType) {
-            return a.viewType === 'SakuraList' ? -1 : 1
-          }
-          return b.key.localeCompare(a.key)
-        })
+        draft.sort(compareList)
       })
       return render(newModels)
     }
@@ -59,7 +67,7 @@ export function AdminSakura(props: AdminSakuraProps) {
   function withDetailOfDiscs(key: string, render: (detail: SakuraOfDiscsModel) => React.ReactNode) {
     if (props.detailOfDiscs && props.detailOfDiscs.key === key) {
       const newDetail = produce(props.detailOfDiscs, draftState => {
-        draftState.discs.sort(compareBySurplusDays)
+        draftState.discs.sort(compareDisc)
       })
       return render(newDetail)
     }
@@ -69,7 +77,14 @@ export function AdminSakura(props: AdminSakuraProps) {
   return (
     <div className="admin-sakura">
       {props.message && (
-        <Alert message={props.message} type="error"/>
+        <div>
+          <Breadcrumb style={{padding: 10}}>
+            <Breadcrumb.Item>
+              <Link to={props.match.url}>{props.pageInfo.pageTitle}</Link>
+            </Breadcrumb.Item>
+          </Breadcrumb>
+          <Alert message={props.message} type="error"/>
+        </div>
       )}
       <Switch>
         <Route
