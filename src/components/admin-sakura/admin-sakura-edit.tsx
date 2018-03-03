@@ -1,7 +1,8 @@
 import * as React from 'react'
-import { Button, Checkbox, Input, Modal, Radio } from 'antd'
+import { Button, Checkbox, Input, Modal, Popconfirm, Radio } from 'antd'
 import { SakuraModel, viewTypes } from './reducer'
 import { PageInfo } from '../../common/route-infos'
+import { Session } from '../../App/reducer'
 import { Icon } from '../../lib/icon'
 
 interface FormEdit {
@@ -15,8 +16,10 @@ const formEdit: FormEdit = {}
 
 interface AdminSakuraEditProps {
   detail: SakuraModel
+  session: Session
   pageInfo: PageInfo
   editModel: (id: number, model: {}) => void
+  dropModel: (id: number) => void
 }
 
 export function AdminSakuraEdit(props: AdminSakuraEditProps) {
@@ -38,6 +41,10 @@ export function AdminSakuraEdit(props: AdminSakuraEditProps) {
     }
 
     props.editModel(props.detail.id, {key, title, viewType, enabled})
+  }
+
+  function dropModel() {
+    return props.dropModel(props.detail.id)
   }
 
   formEdit.key = props.detail.key
@@ -81,6 +88,22 @@ export function AdminSakuraEdit(props: AdminSakuraEditProps) {
       </div>
       <div className="input-wrapper">
         <Button type="primary" onClick={editModel}>保存修改</Button>
+        {props.session.userRoles.find(value => value === 'ROLE_ADMIN') && (
+          <Popconfirm
+            title="你确定要删除这个列表吗？"
+            placement="bottomRight"
+            okText="Yes"
+            cancelText="No"
+            onConfirm={dropModel}
+          >
+            <Button
+              type="danger"
+              style={{marginLeft: 20}}
+            >
+              删除{props.pageInfo.modelName}
+            </Button>
+          </Popconfirm>
+        )}
       </div>
     </div>
   )

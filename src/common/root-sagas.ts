@@ -27,6 +27,7 @@ export function* rootSagas() {
     takeEvery('viewAdminSakuraRequest', adminSakuraSaga.viewModel),
     takeEvery('saveAdminSakuraRequest', adminSakuraSaga.saveModel),
     takeEvery('editAdminSakuraRequest', adminSakuraSaga.editModel),
+    takeEvery('dropAdminSakuraRequest', adminSakuraSaga.dropModel),
 
     takeEvery('view(discs)AdminSakuraRequest', adminSakuraSaga.viewDiscs),
     takeEvery('push(discs)AdminSakuraRequest', adminSakuraSaga.pushDiscs),

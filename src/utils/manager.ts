@@ -3,6 +3,7 @@ import * as md5 from 'md5'
 
 export interface BaseModel {
   id: number
+  drop?: boolean
 }
 
 type Result1<T> = {

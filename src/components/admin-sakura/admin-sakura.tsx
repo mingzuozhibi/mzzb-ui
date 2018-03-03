@@ -5,6 +5,7 @@ import { Link, Route, RouteComponentProps, Switch } from 'react-router-dom'
 import './admin-sakura.css'
 
 import { compareFactory } from '../../utils/compare'
+import { Session } from '../../App/reducer'
 import produce from 'immer'
 
 import { AdminSakuraState, SakuraModel } from './reducer'
@@ -23,8 +24,10 @@ const compareBySurplusDays = compareFactory({
 export type OwnProps = RouteComponentProps<{}>
 
 interface AdminSakuraProps extends AdminSakuraState, OwnProps {
+  session: Session
   saveModel: (model: {}) => void
   editModel: (id: number, model: {}) => void
+  dropModel: (id: number) => void
   pushDiscs: (id: number, pid: number) => void
   dropDiscs: (id: number, pid: number) => void
 }
@@ -135,11 +138,21 @@ export function AdminSakura(props: AdminSakuraProps) {
                   编辑{props.pageInfo.modelName}
                 </Breadcrumb.Item>
               </Breadcrumb>
-              <AdminSakuraEdit
-                detail={detail}
-                pageInfo={props.pageInfo}
-                editModel={props.editModel}
-              />
+              {detail.drop && (
+                <Alert
+                  message={`${props.pageInfo.modelName}已被删除`}
+                  type="error"
+                />
+              )}
+              {detail.drop || (
+                <AdminSakuraEdit
+                  detail={detail}
+                  session={props.session}
+                  pageInfo={props.pageInfo}
+                  editModel={props.editModel}
+                  dropModel={props.dropModel}
+                />
+              )}
             </div>
           ))}
         />
