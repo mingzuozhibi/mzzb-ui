@@ -5,9 +5,9 @@ import { BaseModel, Manager } from '../../utils/manager'
 import produce from 'immer'
 
 export const pageInfo: PageInfo = {
-  pageTitle: '推荐列表',
-  matchPath: '/list',
-  pageModel: 'List',
+  pageTitle: '日亚实时',
+  matchPath: '/sakura',
+  pageModel: 'Sakura',
   modelName: '列表',
   searchFor: 'key',
   component: () => import('.')
@@ -58,7 +58,7 @@ export const sakuraReducer = (state: SakuraState = initState, action: AnyAction)
   })
 }
 
-const manager = new Manager<SakuraModel>('/api/lists')
+const manager = new Manager<SakuraModel>('/api/sakuras')
 
 function* listModel() {
   const result = yield call(manager.findAll)

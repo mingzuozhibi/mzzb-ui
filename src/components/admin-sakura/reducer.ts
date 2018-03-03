@@ -105,7 +105,7 @@ export const adminSakuraReducer = (state: AdminSakuraState = initState, action: 
   })
 }
 
-const manager = new Manager<SakuraModel>('/api/lists')
+const manager = new Manager<SakuraModel>('/api/sakuras')
 
 function* listModel() {
   const result = yield call(manager.findAll, 'public=false')

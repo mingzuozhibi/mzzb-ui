@@ -12,8 +12,8 @@ export function* rootSagas() {
     takeLatest('sessionLoginRequest', appSaga.sessionLogin),
     takeLatest('sessionLogoutRequest', appSaga.sessionLogout),
 
-    takeLatest('listListRequest', sakuraSaga.listModel),
-    takeLatest('viewListRequest', sakuraSaga.viewModel),
+    takeLatest('listSakuraRequest', sakuraSaga.listModel),
+    takeLatest('viewSakuraRequest', sakuraSaga.viewModel),
 
     takeLatest(LOCATION_CHANGE, currentSaga.updateReload),
     takeLatest('reloadRequest', currentSaga.invokeReload),
