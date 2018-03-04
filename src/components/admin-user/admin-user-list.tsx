@@ -5,13 +5,13 @@ import { ViewportProps } from '../../hoc/Viewport'
 import { PageInfo } from '../../common/route-infos'
 import { Link } from 'react-router-dom'
 
-interface AdminUserListProps extends ViewportProps {
+interface Props extends ViewportProps {
   models: UserModel[]
   pageInfo: PageInfo
   editModelTo: (t: UserModel) => string
 }
 
-export function AdminUserList(props: AdminUserListProps) {
+export function AdminUserList(props: Props) {
 
   function getColumns(): Column<UserModel>[] {
     return [

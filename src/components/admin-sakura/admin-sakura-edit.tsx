@@ -14,7 +14,7 @@ interface FormEdit {
 
 const formEdit: FormEdit = {}
 
-interface AdminSakuraEditProps {
+interface Props {
   detail: SakuraModel
   session: Session
   pageInfo: PageInfo
@@ -22,7 +22,7 @@ interface AdminSakuraEditProps {
   dropModel: (id: number) => void
 }
 
-export function AdminSakuraEdit(props: AdminSakuraEditProps) {
+export function AdminSakuraEdit(props: Props) {
 
   function editModel() {
     const key = formEdit.key

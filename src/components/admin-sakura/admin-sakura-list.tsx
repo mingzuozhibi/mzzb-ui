@@ -4,13 +4,13 @@ import { formatTimeout } from '../../utils/format'
 import { Column, Table } from '../../lib/table'
 import { Link } from 'react-router-dom'
 
-interface AdminSakuraListProps {
+interface Props {
   models: SakuraModel[]
   editModelTo: (t: SakuraModel) => string
   editDiscsTo: (t: SakuraModel) => string
 }
 
-export function AdminSakuraList(props: AdminSakuraListProps) {
+export function AdminSakuraList(props: Props) {
 
   function getColumns(): Column<SakuraModel>[] {
     return [
