@@ -11,12 +11,12 @@ interface FormSave {
 
 const formSave: FormSave = {}
 
-interface AdminUserSaveProps {
+interface Props {
   pageInfo: PageInfo
   saveModel: (model: {}) => void
 }
 
-export function AdminUserSave(props: AdminUserSaveProps) {
+export function AdminUserSave(props: Props) {
 
   function saveModel() {
     const username = formSave.username

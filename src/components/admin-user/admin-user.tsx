@@ -12,12 +12,12 @@ import { AdminUserEdit } from './admin-user-edit'
 
 export type OwnProps = ViewportProps & RouteComponentProps<{}>
 
-interface AdminUserProps extends AdminUserState, OwnProps {
+interface Props extends AdminUserState, OwnProps {
   saveModel: (model: {}) => void
   editModel: (id: number, model: {}) => void
 }
 
-export function AdminUser(props: AdminUserProps) {
+export function AdminUser(props: Props) {
 
   function withModels(render: (models: UserModel[]) => React.ReactNode) {
     if (props.models) {

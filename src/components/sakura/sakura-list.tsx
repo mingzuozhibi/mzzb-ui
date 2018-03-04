@@ -5,12 +5,12 @@ import { formatTimeout } from '../../utils/format'
 import { viewTypes } from '../admin-sakura/reducer'
 import { Link } from 'react-router-dom'
 
-interface SakuraListProps {
+interface Props {
   models: SakuraModel[]
   viewDiscsTo: (t: SakuraModel) => string
 }
 
-export function SakuraList(props: SakuraListProps) {
+export function SakuraList(props: Props) {
 
   function getColumns(): Column<SakuraModel>[] {
     return [

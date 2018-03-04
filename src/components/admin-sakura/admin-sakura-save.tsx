@@ -12,12 +12,12 @@ interface FormSave {
 
 const formSave: FormSave = {}
 
-interface AdminSakuraSaveProps {
+interface Props {
   pageInfo: PageInfo
   saveModel: (model: {}) => void
 }
 
-export function AdminSakuraSave(props: AdminSakuraSaveProps) {
+export function AdminSakuraSave(props: Props) {
 
   function saveModel() {
     const key = formSave.key

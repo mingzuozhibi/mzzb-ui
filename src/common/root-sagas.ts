@@ -32,5 +32,6 @@ export function* rootSagas() {
     takeEvery('view(discs)AdminSakuraRequest', adminSakuraSaga.viewDiscs),
     takeEvery('push(discs)AdminSakuraRequest', adminSakuraSaga.pushDiscs),
     takeEvery('drop(discs)AdminSakuraRequest', adminSakuraSaga.dropDiscs),
+    takeEvery('search(discs)AdminSakuraRequest', adminSakuraSaga.searchDisc),
   ])
 }

@@ -4,11 +4,11 @@ import { Column, Table } from '../../lib/table'
 import { formatNumber } from '../../utils/format'
 import { Timer } from '../../lib/timer'
 
-interface SakuraListProps {
+interface Props {
   detail: SakuraOfDiscsModel
 }
 
-export function SakuraDiscs(props: SakuraListProps) {
+export function SakuraDiscs(props: Props) {
 
   function getColumns(): Column<DiscModel>[] {
     return [

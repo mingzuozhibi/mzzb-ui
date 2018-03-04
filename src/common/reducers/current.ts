@@ -84,9 +84,9 @@ function* updateReload({payload}: any) {
       return
     }
 
-    /**  /sakura/:key/:pkey  */
+    /**  /sakura/:key/:pkey(/other)*  */
     type Created = { key: string, pkey: string }
-    const matchViewList = match<Created>(pathname, `${path}/:key/:pkey`)
+    const matchViewList = match<Created>(pathname, `${path}/:key/:pkey/:other*`)
     if (matchViewList) {
       const pkey = matchViewList.params.pkey
       const value = matchViewList.params.key

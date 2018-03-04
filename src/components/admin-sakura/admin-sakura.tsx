@@ -36,16 +36,17 @@ const compareDisc = (a: DiscModel, b: DiscModel) => {
 
 export type OwnProps = RouteComponentProps<{}>
 
-interface AdminSakuraProps extends AdminSakuraState, OwnProps {
+interface Props extends AdminSakuraState, OwnProps {
   session: Session
   saveModel: (model: {}) => void
   editModel: (id: number, model: {}) => void
   dropModel: (id: number) => void
   pushDiscs: (id: number, pid: number) => void
   dropDiscs: (id: number, pid: number) => void
+  searchDisc: (id: number, asin: string) => void
 }
 
-export function AdminSakura(props: AdminSakuraProps) {
+export function AdminSakura(props: Props) {
 
   function withModels(render: (models: SakuraModel[]) => React.ReactNode) {
     if (props.models) {
@@ -189,8 +190,10 @@ export function AdminSakura(props: AdminSakuraProps) {
               </Breadcrumb>
               <AdminSakuraDiscs
                 detail={detail}
+                search={props.searchOfDiscs}
                 pushDiscs={props.pushDiscs}
                 dropDiscs={props.dropDiscs}
+                searchDisc={props.searchDisc}
               />
             </div>
           ))}

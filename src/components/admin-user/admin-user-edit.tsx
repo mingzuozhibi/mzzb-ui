@@ -13,13 +13,13 @@ interface FormEdit {
 
 const formEdit: FormEdit = {}
 
-interface AdminUserEditProps {
+interface Props {
   detail: UserModel
   pageInfo: PageInfo
   editModel: (id: number, model: {}) => void
 }
 
-export function AdminUserEdit(props: AdminUserEditProps) {
+export function AdminUserEdit(props: Props) {
 
   function editModel() {
     const username = formEdit.username

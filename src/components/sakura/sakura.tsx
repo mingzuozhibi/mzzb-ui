@@ -33,10 +33,10 @@ const compareDisc = compareFactory({
 
 export type OwnProps = RouteComponentProps<{}>
 
-export interface SakuraProps extends SakuraState, OwnProps {
+export interface Props extends SakuraState, OwnProps {
 }
 
-export function Sakura(props: SakuraProps) {
+export function Sakura(props: Props) {
 
   function withModels(render: (models: SakuraModel[]) => React.ReactNode) {
     if (props.models) {
