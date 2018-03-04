@@ -26,6 +26,9 @@ function mapDispatchToProps(dispatch: Dispatch<any>) {
     dropDiscs(id: number, pid: number) {
       dispatch({type: `drop(discs)${pageInfo.pageModel}Request`, id, pid})
     },
+    searchDisc(id: number, asin: string) {
+      dispatch({type: `search(discs)${pageInfo.pageModel}Request`, id, asin})
+    },
   }
 }
 
