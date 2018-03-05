@@ -1,5 +1,6 @@
 import { all, takeEvery } from 'redux-saga/effects'
 import { appSaga } from '../App/reducer'
+import { discSaga } from '../components/disc/reducer'
 import { sakuraSaga } from '../components/sakura/reducer'
 import { currentSaga } from './reducers/current'
 import { adminUserSaga } from '../components/admin-user/reducer'
@@ -11,6 +12,9 @@ export function* rootSagas() {
     takeEvery('sessionQueryRequest', appSaga.sessionQuery),
     takeEvery('sessionLoginRequest', appSaga.sessionLogin),
     takeEvery('sessionLogoutRequest', appSaga.sessionLogout),
+
+    takeEvery('viewDiscRequest', discSaga.viewModel),
+    takeEvery('editDiscRequest', discSaga.editModel),
 
     takeEvery('listSakuraRequest', sakuraSaga.listModel),
     takeEvery('view(discs)SakuraRequest', sakuraSaga.viewDiscs),

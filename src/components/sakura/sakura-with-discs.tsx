@@ -1,11 +1,13 @@
 import * as React from 'react'
 import { DiscModel, SakuraModel, SakuraOfDiscsModel } from './reducer'
 import { Column, Table } from '../../lib/table'
-import { formatNumber } from '../../utils/format'
 import { Timer } from '../../lib/timer'
+import { formatNumber } from '../../utils/format'
+import { Command } from '../../lib/command'
 
 interface Props {
   detail: SakuraOfDiscsModel
+  toViewDisc: (t: DiscModel) => void
 }
 
 export function SakuraDiscs(props: Props) {
@@ -20,12 +22,12 @@ export function SakuraDiscs(props: Props) {
       {
         key: 'totalPt',
         title: '累积PT',
-        format: (t) => formatTotalPt(t)
+        format: (t) => `${(t.totalPt || '----')} pt`
       },
       {
         key: 'title',
         title: '碟片标题',
-        format: (t) => t.title
+        format: (t) => <Command onClick={() => props.toViewDisc(t)}>{t.title}</Command>
       },
     ]
   }
@@ -34,11 +36,6 @@ export function SakuraDiscs(props: Props) {
     const thisRank = t.thisRank ? formatNumber(t.thisRank, '****') : '----'
     const prevRank = t.prevRank ? formatNumber(t.prevRank, '****') : '----'
     return `${thisRank}位/${prevRank}位`
-  }
-
-  function formatTotalPt(t: DiscModel) {
-    const totalPt = t.totalPt || '----'
-    return `${totalPt} pt`
   }
 
   function formatModifyTime(sakura: SakuraModel) {

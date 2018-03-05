@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
 import { appReducer, AppState } from '../App/reducer'
+import { discReducer, DiscState } from '../components/disc/reducer'
 import { routerReducer, RouterState } from 'react-router-redux'
 import { sakuraReducer, SakuraState } from '../components/sakura/reducer'
 import { currentReducer, CurrentState } from './reducers/current'
@@ -11,6 +12,7 @@ export { PageInfo }
 
 export interface RootState {
   app: AppState
+  disc: DiscState
   router: RouterState
   sakura: SakuraState
   current: CurrentState
@@ -20,6 +22,7 @@ export interface RootState {
 
 export const rootReducer = combineReducers({
   app: appReducer,
+  disc: discReducer,
   router: routerReducer,
   sakura: sakuraReducer,
   current: currentReducer,
