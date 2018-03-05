@@ -175,7 +175,7 @@ export function AdminSakura(props: Props) {
         <Route
           path={`${props.match.url}/:key/discs`}
           exact={true}
-          render={({match}) => withDetailOfDiscs(match.params.key, detail => (
+          render={({match, history}) => withDetailOfDiscs(match.params.key, detail => (
             <div className="admin-sakura-discs">
               <Helmet>
                 <title>碟片管理 - {detail.title} - 名作之壁吧</title>
@@ -194,6 +194,11 @@ export function AdminSakura(props: Props) {
                 pushDiscs={props.pushDiscs}
                 dropDiscs={props.dropDiscs}
                 searchDisc={props.searchDisc}
+                toViewDisc={(t: DiscModel) => {
+                  history.push(`/disc/${t.id}`, {
+                    url: match.url, title: detail.title
+                  })
+                }}
               />
             </div>
           ))}

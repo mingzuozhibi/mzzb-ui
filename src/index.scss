@@ -13,8 +13,12 @@ body {
   .icon-wrapper {
     color: rgba(0, 0, 0, .25)
   }
-  .input-label {
+  span.input-label {
     padding-right: 10px;
+  }
+  div.input-label {
+    padding-left: 10px;
+    padding-bottom: 5px;
   }
 }
 

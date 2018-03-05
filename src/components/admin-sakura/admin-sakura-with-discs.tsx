@@ -17,6 +17,7 @@ interface Props {
   pushDiscs: (id: number, pid: number) => void
   dropDiscs: (id: number, pid: number) => void
   searchDisc: (id: number, asin: string) => void
+  toViewDisc: (t: DiscModel) => void
 }
 
 export function AdminSakuraDiscs(props: Props) {
@@ -57,7 +58,7 @@ export function AdminSakuraDiscs(props: Props) {
       {
         key: 'title',
         title: '碟片标题',
-        format: (t) => t.title
+        format: (t) => <Command onClick={() => props.toViewDisc(t)}>{t.title}</Command>
       },
       extraColumn
     ]

@@ -20,8 +20,6 @@ const AsyncAppHeader = asyncLayout(() => import('./app-header'))
 
 const AsyncAppFooter = asyncLayout(() => import('./app-footer'))
 
-const asyncHome = asyncComponent(() => import('../components/home'))
-
 export function App() {
   return (
     <div className="app-root">
@@ -31,10 +29,9 @@ export function App() {
           <AsyncAppHeader/>
           <Layout.Content className="app-content">
             <Switch>
-              <Redirect exact={true} path="/" to="/home"/>
-              <Route path="/home" component={asyncHome}/>
+              <Redirect exact={true} path="/" to="/sakura"/>
               {pageInfos.map(renderRoute)}
-              <Redirect exact={true} path="*" to="/home?not-found"/>
+              <Redirect exact={true} path="*" to="/sakura"/>
             </Switch>
           </Layout.Content>
           <AsyncAppFooter/>

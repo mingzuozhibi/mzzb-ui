@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "mzzb-ui",
-  "version": "0.19.0",
+  "version": "0.20.0",
   "license": "Apache-2.0",
   "description": "ui for mingzuozhibi",
   "dependencies": {
@@ -28,7 +28,6 @@
     "start-ts": "react-app-rewired start --scripts-version react-scripts-ts",
     "build-ts": "react-app-rewired build --scripts-version react-scripts-ts",
     "start": "npm-run-all -p watch-css start-ts",
-    "serve": "json-server --port 4000 mock/db.json --routes mock/routes.json --static build",
     "build": "yarn build-css && yarn build-ts",
     "eject": "react-scripts-ts eject"
   },
@@ -45,7 +44,6 @@
     "@types/react-redux": "^5.0.15",
     "@types/react-router-dom": "^4.2.4",
     "@types/react-router-redux": "^5.0.12",
-    "json-server": "^0.12.1",
     "node-sass-chokidar": "^0.0.3",
     "npm-run-all": "^4.1.2",
     "react-app-rewired": "^1.4.1",
