@@ -32,11 +32,6 @@ const fromPage = (pageInfo: PageInfo, icon: string, role?: Role) => {
 }
 
 export const menuInfos: MenuInfo[] = [
-  {
-    icon: 'home',
-    text: '首页',
-    path: '/home',
-  },
   fromPage(sakuraPage, 'icon-yinghua'),
   {
     icon: 'profile',
