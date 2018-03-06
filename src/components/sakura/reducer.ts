@@ -28,6 +28,7 @@ export interface DiscModel extends BaseModel {
   totalPt: number
   thisRank: number
   prevRank: number
+  surplusDays: number
 }
 
 export interface SakuraOfDiscsModel extends SakuraModel {
@@ -76,7 +77,8 @@ function* listModel() {
 }
 
 function* viewDiscs(action: AnyAction) {
-  const result = yield call(manager.findList, action.search, action.value, 'discs')
+  const query = 'discColumns=id,thisRank,prevRank,totalPt,title,titlePc,titleMo,surplusDays'
+  const result = yield call(manager.findList, action.search, action.value, 'discs', query)
   if (result.success) {
     yield put({type: `view(discs)${pageInfo.pageModel}Succeed`, data: result.data})
   } else {

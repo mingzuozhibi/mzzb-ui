@@ -20,6 +20,12 @@
             display: none;
           }
         }
+        &.surplusDays {
+          width: 75px;
+          @media screen and (max-width: $mobile-max-width) {
+            display: none;
+          }
+        }
       }
       td {
         &.rank {
@@ -32,6 +38,9 @@
         &.totalPt {
           word-break: keep-all;
           white-space: nowrap;
+          text-align: right;
+        }
+        &.surplusDays {
           text-align: right;
         }
         &.title {
