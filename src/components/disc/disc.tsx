@@ -13,6 +13,7 @@ export type OwnProps = RouteComponentProps<{}>
 export interface Props extends DiscState, OwnProps {
   session: Session
   editModel: (id: number, model: {}) => void
+  setRecord: (id: number, model: {}) => void
 }
 
 export function Disc(props: Props) {
@@ -61,6 +62,7 @@ export function Disc(props: Props) {
                 detail={detail}
                 session={props.session}
                 editModel={props.editModel}
+                setRecord={props.setRecord}
               />
             </div>
           ))}

@@ -15,6 +15,7 @@ export function* rootSagas() {
 
     takeEvery('viewDiscRequest', discSaga.viewModel),
     takeEvery('editDiscRequest', discSaga.editModel),
+    takeEvery('set(record)DiscRequest', discSaga.setRecord),
 
     takeEvery('listSakuraRequest', sakuraSaga.listModel),
     takeEvery('view(discs)SakuraRequest', sakuraSaga.viewDiscs),

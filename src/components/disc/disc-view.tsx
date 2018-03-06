@@ -11,12 +11,18 @@ interface FormEdit {
   releaseDate?: string
 }
 
+interface FormRecord {
+  recordText?: string
+}
+
 const formEdit: FormEdit = {}
+const formRecord: FormRecord = {}
 
 interface Props {
   detail: DiscModel
   session: Session
   editModel: (id: number, model: {}) => void
+  setRecord: (id: number, model: {}) => void
 }
 
 export function DiscView(props: Props) {
@@ -36,11 +42,22 @@ export function DiscView(props: Props) {
     props.editModel(props.detail.id, formEdit)
   }
 
+  function setRecord() {
+
+    if (!formRecord.recordText) {
+      Modal.warning({title: '请检查输入项', content: `你必须输入历史排名`})
+      return
+    }
+
+    props.setRecord(props.detail.id, formRecord)
+  }
+
   formEdit.titlePc = props.detail.titlePc
   formEdit.titleMo = props.detail.titleMo
   formEdit.discType = props.detail.discType
   formEdit.updateType = props.detail.updateType
   formEdit.releaseDate = props.detail.releaseDate
+  formRecord.recordText = undefined
 
   return (
     <div className="disc-view-content">
@@ -184,12 +201,34 @@ export function DiscView(props: Props) {
         />
       </div>
       {props.session.userRoles.find(role => role === 'ROLE_BASIC') && (
-        <div className="input-wrapper">
-          <Button type="danger" onClick={editModel}>提交修改</Button>
+        <div>
+          <div className="input-wrapper">
+            <Button type="danger" onClick={editModel}>提交修改</Button>
+          </div>
+          <div className="input-wrapper">
+            <div className="input-label">
+              <span style={{marginRight: 10}}>Sakura历史排名</span>
+              <a target="_blank" href={toSakuraRank(props.detail.asin)}>
+                点击这里打开Sakura网站
+              </a>
+            </div>
+            <Input.TextArea
+              autosize={true}
+              onChange={e => formRecord.recordText = e.target.value}
+              placeholder="你可以从Sakura网站手动复制排名数据到这里"
+            />
+          </div>
+          <div className="input-wrapper">
+            <Button type="danger" onClick={setRecord}>提交排名</Button>
+          </div>
         </div>
       )}
     </div>
   )
+}
+
+function toSakuraRank(asin: string) {
+  return `http://rankstker.net/show.cgi?n=${asin}&rg=100000&li=&tn=1#ui-tab`
 }
 
 function formatDate(time?: number) {
