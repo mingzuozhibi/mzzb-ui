@@ -68,6 +68,33 @@ export function DiscView(props: Props) {
           defaultValue={formEdit.titleMo}
         />
       </div>
+      <div className="input-wrapper">
+        <span className="input-label">碟片类型</span>
+        <Select
+          style={{width: 160}}
+          defaultValue={formEdit.discType}
+          onChange={value => formEdit.discType = value.toString()}
+        >
+          <Select.Option value="Bluray">Blu-ray</Select.Option>
+          <Select.Option value="Dvd">DVD</Select.Option>
+          <Select.Option value="Box">BOX</Select.Option>
+          <Select.Option value="Cd">CD</Select.Option>
+          <Select.Option value="Other">未知</Select.Option>
+        </Select>
+      </div>
+      <div className="input-wrapper">
+        <span className="input-label">更新模式</span>
+        <Select
+          style={{width: 160}}
+          defaultValue={formEdit.updateType}
+          onChange={value => formEdit.updateType = value.toString()}
+        >
+          <Select.Option value="Sakura">只从Sakura更新</Select.Option>
+          <Select.Option value="Amazon">只从Amazon更新</Select.Option>
+          <Select.Option value="Both">自动更新模式</Select.Option>
+          <Select.Option value="None">不进行更新</Select.Option>
+        </Select>
+      </div>
       <Input.Group compact={true}>
         <div className="input-wrapper">
           <Input
@@ -133,31 +160,28 @@ export function DiscView(props: Props) {
         </div>
       </Input.Group>
       <div className="input-wrapper">
-        <span className="input-label">碟片类型</span>
-        <Select
-          style={{width: 160}}
-          defaultValue={formEdit.discType}
-          onChange={value => formEdit.discType = value.toString()}
-        >
-          <Select.Option value="Bluray">Blu-ray</Select.Option>
-          <Select.Option value="Dvd">DVD</Select.Option>
-          <Select.Option value="Box">BOX</Select.Option>
-          <Select.Option value="Cd">CD</Select.Option>
-          <Select.Option value="Other">未知</Select.Option>
-        </Select>
+        <Input
+          disabled={true}
+          addonBefore="创建时间"
+          style={{width: 260}}
+          defaultValue={formatDate(props.detail.createTime)}
+        />
       </div>
       <div className="input-wrapper">
-        <span className="input-label">更新模式</span>
-        <Select
-          style={{width: 160}}
-          defaultValue={formEdit.updateType}
-          onChange={value => formEdit.updateType = value.toString()}
-        >
-          <Select.Option value="Sakura">只从Sakura更新</Select.Option>
-          <Select.Option value="Amazon">只从Amazon更新</Select.Option>
-          <Select.Option value="Both">自动更新模式</Select.Option>
-          <Select.Option value="None">不进行更新</Select.Option>
-        </Select>
+        <Input
+          disabled={true}
+          addonBefore="刷新时间"
+          style={{width: 260}}
+          defaultValue={formatDate(props.detail.updateTime)}
+        />
+      </div>
+      <div className="input-wrapper">
+        <Input
+          disabled={true}
+          addonBefore="修改时间"
+          style={{width: 260}}
+          defaultValue={formatDate(props.detail.modifyTime)}
+        />
       </div>
       {props.session.userRoles.find(role => role === 'ROLE_BASIC') && (
         <div className="input-wrapper">
@@ -166,4 +190,8 @@ export function DiscView(props: Props) {
       )}
     </div>
   )
+}
+
+function formatDate(time?: number) {
+  return time == null ? '无' : new Date(time).toLocaleString()
 }

@@ -19,12 +19,15 @@ export interface DiscModel extends BaseModel {
   title: string
   titlePc?: string
   titleMo?: string
-  totalPt: number
-  nicoBook: number
-  thisRank: number
-  prevRank: number
+  totalPt?: number
+  nicoBook?: number
+  thisRank?: number
+  prevRank?: number
   discType: string
   updateType: string
+  createTime: number
+  updateTime?: number
+  modifyTime?: number
   releaseDate: string
   surplusDays: number
 }
