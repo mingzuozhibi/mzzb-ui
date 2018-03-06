@@ -51,6 +51,7 @@ function match<T>(pathname: string, path: string) {
 }
 
 function* updateReload({payload}: any) {
+  window.scroll(0, 0)
   const pathname: string = payload.pathname
   const state = yield select()
   const pageInfo = findPageInfo(state, pathname)

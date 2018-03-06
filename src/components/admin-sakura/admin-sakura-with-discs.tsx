@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { DiscModel, SakuraOfDiscsModel } from './reducer-discs'
-import { formatNumber, formatTimeout } from '../../utils/format'
+import { ViewportProps, withViewport } from '../../hoc/Viewport'
+import { formatTimeout } from '../../utils/format'
 import { Button, Input, Modal } from 'antd'
 import { Column, Table } from '../../lib/table'
 import { Command } from '../../lib/command'
@@ -20,7 +21,7 @@ interface Props {
   toViewDisc: (t: DiscModel) => void
 }
 
-export function AdminSakuraDiscs(props: Props) {
+function AdminSakuraDiscs(props: Props & ViewportProps) {
 
   function searchDisc() {
     const asin = formSearch.asin
@@ -36,19 +37,9 @@ export function AdminSakuraDiscs(props: Props) {
   function getColumns(extraColumn: Column<DiscModel>): Column<DiscModel>[] {
     return [
       {
-        key: 'id',
-        title: 'ID',
-        format: (t) => t.id
-      },
-      {
         key: 'asin',
         title: 'ASIN',
         format: (t) => t.asin
-      },
-      {
-        key: 'rank',
-        title: '排名',
-        format: (t) => formatRank(t)
       },
       {
         key: 'surplusDays',
@@ -58,15 +49,22 @@ export function AdminSakuraDiscs(props: Props) {
       {
         key: 'title',
         title: '碟片标题',
-        format: (t) => <Command onClick={() => props.toViewDisc(t)}>{t.title}</Command>
+        format: (t) => <Command onClick={toViewDisc(t)}>{formatTitle(t)}</Command>
       },
       extraColumn
     ]
   }
 
-  function formatRank(t: DiscModel) {
-    const thisRank = t.thisRank ? formatNumber(t.thisRank, '****') : '----'
-    return `${thisRank}位`
+  function toViewDisc(t: DiscModel) {
+    return () => props.toViewDisc(t)
+  }
+
+  function formatTitle(t: DiscModel) {
+    if (props.viewport.width > 600) {
+      return t.titlePc || t.title
+    } else {
+      return t.titleMo || t.titlePc || t.title
+    }
   }
 
   function getPushControl() {
@@ -118,3 +116,7 @@ export function AdminSakuraDiscs(props: Props) {
     </div>
   )
 }
+
+const WithViewport = withViewport<Props>(AdminSakuraDiscs)
+
+export { WithViewport as AdminSakuraDiscs }

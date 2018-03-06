@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { DiscModel, SakuraModel, SakuraOfDiscsModel } from './reducer'
+import { ViewportProps, withViewport } from '../../hoc/Viewport'
 import { Column, Table } from '../../lib/table'
 import { Timer } from '../../lib/timer'
 import { formatNumber } from '../../utils/format'
@@ -10,7 +11,7 @@ interface Props {
   toViewDisc: (t: DiscModel) => void
 }
 
-export function SakuraDiscs(props: Props) {
+function SakuraDiscs(props: Props & ViewportProps) {
 
   function getColumns(): Column<DiscModel>[] {
     return [
@@ -27,7 +28,7 @@ export function SakuraDiscs(props: Props) {
       {
         key: 'title',
         title: '碟片标题',
-        format: (t) => <Command onClick={() => props.toViewDisc(t)}>{t.title}</Command>
+        format: (t) => <Command onClick={toViewDisc(t)}>{formatTitle(t)}</Command>
       },
     ]
   }
@@ -36,6 +37,18 @@ export function SakuraDiscs(props: Props) {
     const thisRank = t.thisRank ? formatNumber(t.thisRank, '****') : '----'
     const prevRank = t.prevRank ? formatNumber(t.prevRank, '****') : '----'
     return `${thisRank}位/${prevRank}位`
+  }
+
+  function toViewDisc(t: DiscModel) {
+    return () => props.toViewDisc(t)
+  }
+
+  function formatTitle(t: DiscModel) {
+    if (props.viewport.width > 600) {
+      return t.titlePc || t.title
+    } else {
+      return t.titleMo || t.titlePc || t.title
+    }
   }
 
   function formatModifyTime(sakura: SakuraModel) {
@@ -64,3 +77,7 @@ export function SakuraDiscs(props: Props) {
     </div>
   )
 }
+
+const WithViewport = withViewport<Props>(SakuraDiscs)
+
+export { WithViewport as SakuraDiscs }

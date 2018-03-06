@@ -3,17 +3,11 @@
     table {
       table-layout: fixed;
       td, th {
-        &.id {
-          width: 40px;
-        }
         &.asin {
-          width: 100px;
-        }
-        &.rank {
-          width: 70px;
+          width: 105px;
         }
         &.surplusDays {
-          width: 50px;
+          width: 60px;
         }
         &.control {
           width: 50px;
@@ -21,12 +15,6 @@
       }
       td {
         text-align: center;
-        &.rank {
-          word-break: keep-all;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-          overflow: hidden;
-        }
         &.title {
           text-align: left;
         }
