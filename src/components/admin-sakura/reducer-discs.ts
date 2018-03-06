@@ -8,7 +8,6 @@ import request from '../../utils/request'
 export interface DiscModel extends BaseModel {
   asin: number
   title: string
-  thisRank: number
   surplusDays: number
 }
 

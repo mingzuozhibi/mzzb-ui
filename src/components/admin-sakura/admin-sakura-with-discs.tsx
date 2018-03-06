@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { DiscModel, SakuraOfDiscsModel } from './reducer-discs'
-import { formatNumber, formatTimeout } from '../../utils/format'
+import { formatTimeout } from '../../utils/format'
 import { Button, Input, Modal } from 'antd'
 import { Column, Table } from '../../lib/table'
 import { Command } from '../../lib/command'
@@ -36,19 +36,9 @@ export function AdminSakuraDiscs(props: Props) {
   function getColumns(extraColumn: Column<DiscModel>): Column<DiscModel>[] {
     return [
       {
-        key: 'id',
-        title: 'ID',
-        format: (t) => t.id
-      },
-      {
         key: 'asin',
         title: 'ASIN',
         format: (t) => t.asin
-      },
-      {
-        key: 'rank',
-        title: '排名',
-        format: (t) => formatRank(t)
       },
       {
         key: 'surplusDays',
@@ -62,11 +52,6 @@ export function AdminSakuraDiscs(props: Props) {
       },
       extraColumn
     ]
-  }
-
-  function formatRank(t: DiscModel) {
-    const thisRank = t.thisRank ? formatNumber(t.thisRank, '****') : '----'
-    return `${thisRank}位`
   }
 
   function getPushControl() {
