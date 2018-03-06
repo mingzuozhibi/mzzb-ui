@@ -26,6 +26,7 @@ export interface DiscModel extends BaseModel {
   discType: string
   updateType: string
   releaseDate: string
+  surplusDays: number
 }
 
 export interface DiscState extends BaseState<DiscModel> {
