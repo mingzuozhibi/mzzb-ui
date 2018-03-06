@@ -4,6 +4,7 @@ import { BaseState, PageInfo } from '../../common/root-reducer'
 import { BaseModel, Manager } from '../../utils/manager'
 import produce from 'immer'
 import { message, Modal } from 'antd'
+import request from '../../utils/request'
 
 export const pageInfo: PageInfo = {
   pageTitle: '碟片信息',
@@ -56,6 +57,13 @@ export const discReducer = (state: DiscState = initState, action: AnyAction) => 
       case `edit${pageInfo.pageModel}Failed`:
         Modal.error({title: `编辑${pageInfo.modelName}失败`, content: action.message})
         break
+      case `set(record)${pageInfo.pageModel}Succeed`:
+        message.success(`设置排名数据成功`)
+        draftState.detail = action.data
+        break
+      case `set(record)${pageInfo.pageModel}Failed`:
+        Modal.error({title: `设置排名数据失败`, content: action.message})
+        break
       default:
     }
   })
@@ -81,4 +89,14 @@ function* editModel(action: AnyAction) {
   }
 }
 
-export const discSaga = {viewModel, editModel}
+function* setRecord(action: AnyAction) {
+  const param = {method: 'put', body: JSON.stringify(action.model)}
+  const result = yield call(request, `/api/discs/${action.id}/record`, param)
+  if (result.success) {
+    yield put({type: `set(record)${pageInfo.pageModel}Succeed`, data: result.data})
+  } else {
+    yield put({type: `set(record)${pageInfo.pageModel}Failed`, message: result.message})
+  }
+}
+
+export const discSaga = {viewModel, editModel, setRecord}

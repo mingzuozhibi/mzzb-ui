@@ -14,6 +14,9 @@ function mapDispatchToProps(dispatch: Dispatch<any>) {
     editModel(id: number, model: {}) {
       dispatch({type: `edit${pageInfo.pageModel}Request`, id, model})
     },
+    setRecord(id: number, model: {}) {
+      dispatch({type: `set(record)${pageInfo.pageModel}Request`, id, model})
+    },
   }
 }
 
