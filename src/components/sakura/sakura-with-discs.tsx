@@ -26,6 +26,11 @@ function SakuraDiscs(props: Props & ViewportProps) {
         format: (t) => `${(t.totalPt || '----')} pt`
       },
       {
+        key: 'surplusDays',
+        title: '剩余日期',
+        format: (t) => `${t.surplusDays} 天`
+      },
+      {
         key: 'title',
         title: '碟片标题',
         format: (t) => <Command onClick={toViewDisc(t)}>{formatTitle(t)}</Command>

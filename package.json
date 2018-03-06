@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "mzzb-ui",
-  "version": "0.21.1",
+  "version": "0.21.2",
   "license": "Apache-2.0",
   "description": "ui for mingzuozhibi",
   "dependencies": {
@@ -63,5 +63,5 @@
     "name": "fuhaiwei",
     "email": "fuhaiwei@126.com"
   },
-  "proxy": "http://localhost:9090"
+  "proxy": "http://mingzuozhibi.com"
 }
