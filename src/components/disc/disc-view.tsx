@@ -65,7 +65,6 @@ export function DiscView(props: Props) {
         <div className="input-label">原标题</div>
         <Input.TextArea
           autosize={true}
-          disabled={true}
           defaultValue={props.detail.title}
         />
       </div>
@@ -115,13 +114,11 @@ export function DiscView(props: Props) {
       <Input.Group compact={true}>
         <div className="input-wrapper">
           <Input
-            disabled={true}
             addonBefore="Id"
             style={{width: 100}}
             defaultValue={props.detail.id}
           />
           <Input
-            disabled={true}
             addonBefore="Asin"
             style={{width: 180, marginLeft: 12}}
             defaultValue={props.detail.asin}
@@ -132,14 +129,13 @@ export function DiscView(props: Props) {
         <div className="input-wrapper">
           <Input
             addonBefore="发售"
-            style={{width: 150}}
+            style={{width: 160}}
             onChange={e => formEdit.releaseDate = e.target.value}
             defaultValue={formEdit.releaseDate}
           />
           <Input
-            disabled={true}
-            addonBefore="剩余天数"
-            style={{width: 130, marginLeft: 12}}
+            addonBefore="天数"
+            style={{width: 120, marginLeft: 12}}
             defaultValue={props.detail.surplusDays}
           />
         </div>
@@ -147,13 +143,11 @@ export function DiscView(props: Props) {
       <Input.Group compact={true}>
         <div className="input-wrapper">
           <Input
-            disabled={true}
             addonBefore="当前"
             style={{width: 140}}
             defaultValue={props.detail.thisRank}
           />
           <Input
-            disabled={true}
             addonBefore="前回"
             style={{width: 140, marginLeft: 12}}
             defaultValue={props.detail.prevRank}
@@ -163,13 +157,11 @@ export function DiscView(props: Props) {
       <Input.Group compact={true}>
         <div className="input-wrapper">
           <Input
-            disabled={true}
             addonBefore="累积PT"
             style={{width: 140}}
             defaultValue={props.detail.totalPt}
           />
           <Input
-            disabled={true}
             addonBefore="Nico预订"
             style={{width: 140, marginLeft: 12}}
             defaultValue={props.detail.nicoBook}
@@ -178,25 +170,22 @@ export function DiscView(props: Props) {
       </Input.Group>
       <div className="input-wrapper">
         <Input
-          disabled={true}
           addonBefore="创建时间"
-          style={{width: 260}}
+          style={{width: 270}}
           defaultValue={formatDate(props.detail.createTime)}
         />
       </div>
       <div className="input-wrapper">
         <Input
-          disabled={true}
           addonBefore="刷新时间"
-          style={{width: 260}}
+          style={{width: 270}}
           defaultValue={formatDate(props.detail.updateTime)}
         />
       </div>
       <div className="input-wrapper">
         <Input
-          disabled={true}
           addonBefore="修改时间"
-          style={{width: 260}}
+          style={{width: 270}}
           defaultValue={formatDate(props.detail.modifyTime)}
         />
       </div>
