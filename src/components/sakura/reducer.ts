@@ -23,6 +23,8 @@ export interface SakuraModel extends BaseModel {
 
 export interface DiscModel extends BaseModel {
   title: string
+  titlePc?: string
+  titleMo?: string
   totalPt: number
   thisRank: number
   prevRank: number

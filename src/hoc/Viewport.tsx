@@ -9,8 +9,8 @@ interface ViewportState {
 
 export type ViewportProps = ViewportState
 
-export function withViewport(ComposedComponent: any) {
-  return class Viewport extends React.Component {
+export function withViewport<P>(ComposedComponent: any) {
+  return class Viewport extends React.Component<P, ViewportState> {
     state: ViewportState = {
       viewport: {
         width: window.innerWidth,

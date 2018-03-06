@@ -8,6 +8,8 @@ import request from '../../utils/request'
 export interface DiscModel extends BaseModel {
   asin: number
   title: string
+  titlePc?: string
+  titleMo?: string
   surplusDays: number
 }
 
@@ -59,7 +61,7 @@ export function discsReducer(action: AnyAction, draftState: AdminSakuraState) {
 }
 
 const manager = new Manager<SakuraModel>('/api/sakuras')
-const query = 'discColumns=id,asin,thisRank,surplusDays,title'
+const query = 'discColumns=id,asin,surplusDays,title,titlePc,titleMo'
 
 function* viewDiscs(action: AnyAction) {
   const result = yield call(manager.findList, action.search, action.value, 'discs', query)
