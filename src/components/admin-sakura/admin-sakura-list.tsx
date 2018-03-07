@@ -16,8 +16,8 @@ export function AdminSakuraList(props: Props) {
     return [
       {
         key: 'id',
-        title: 'ID',
-        format: (t) => t.id
+        title: '#',
+        format: (t, i) => i + 1
       },
       {
         key: 'key',

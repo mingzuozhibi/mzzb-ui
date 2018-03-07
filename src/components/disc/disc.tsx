@@ -4,9 +4,10 @@ import { Alert, Breadcrumb } from 'antd'
 import { Link, Route, RouteComponentProps, Switch } from 'react-router-dom'
 import './disc.css'
 
-import { DiscModel, DiscState } from './reducer'
+import { DiscModel, DiscOfRanksModel, DiscState } from './reducer'
 import { DiscView } from './disc-view'
 import { Session } from '../../App/reducer'
+import { DiscRank } from './disc-rank'
 
 export type OwnProps = RouteComponentProps<{}>
 
@@ -21,6 +22,13 @@ export function Disc(props: Props) {
   function withDetail(id: string, render: (detail: DiscModel) => React.ReactNode) {
     if (props.detail && props.detail.id === parseInt(id, 10)) {
       return render(props.detail)
+    }
+    return null
+  }
+
+  function withDetailOfRanks(id: string, render: (detail: DiscOfRanksModel) => React.ReactNode) {
+    if (props.detailOfRanks && props.detailOfRanks.id === parseInt(id, 10)) {
+      return render(props.detailOfRanks)
     }
     return null
   }
@@ -44,7 +52,7 @@ export function Disc(props: Props) {
           path={`${props.match.url}/:id`}
           exact={true}
           render={({match}) => withDetail(match.params.id, detail => (
-            <div className="sakura-view">
+            <div className="disc-view">
               <Helmet>
                 <title>{props.pageInfo.pageTitle} - 名作之壁吧</title>
               </Helmet>
@@ -68,6 +76,30 @@ export function Disc(props: Props) {
                 session={props.session}
                 editModel={props.editModel}
                 setRecord={props.setRecord}
+              />
+            </div>
+          ))}
+        />
+        <Route
+          path={`${props.match.url}/:id/ranks`}
+          exact={true}
+          render={({match}) => withDetailOfRanks(match.params.id, detail => (
+            <div className="disc-ranks">
+              <Helmet>
+                <title>排名数据 - 名作之壁吧</title>
+              </Helmet>
+              <Breadcrumb style={{padding: 10}}>
+                <Breadcrumb.Item>
+                  <Link to={props.location.state.url}>
+                    {props.location.state.title}
+                  </Link>
+                </Breadcrumb.Item>
+                <Breadcrumb.Item>
+                  排名数据
+                </Breadcrumb.Item>
+              </Breadcrumb>
+              <DiscRank
+                detailOfRanks={detail}
               />
             </div>
           ))}

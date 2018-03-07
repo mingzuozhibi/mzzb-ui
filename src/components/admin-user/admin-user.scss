@@ -1,11 +1,13 @@
 @import '../../global';
 
-.disc {
-  .disc-ranks {
+.admin-user {
+  .admin-user-list {
     table {
       table-layout: fixed;
       text-align: center;
-      width: auto;
+      .key, .title {
+        text-align: left;
+      }
       td, th {
         &.id {
           width: 45px;
@@ -13,34 +15,35 @@
             width: 35px;
           }
         }
-        &.date {
-          width: 110px;
+        &.username {
+          width: 95px;
           @media screen and (max-width: $mobile-max-width) {
-            width: 100px;
+            width: 85px;
           }
         }
-        &.todayPt {
-          width: 70px;
+        &.enabled {
+          width: 50px;
           @media screen and (max-width: $mobile-max-width) {
-            width: 60px;
+            width: 40px;
           }
         }
-        &.totalPt {
-          width: 70px;
+        &.registerDate {
+          width: 150px;
           @media screen and (max-width: $mobile-max-width) {
-            width: 60px;
+            width: 85px;
           }
         }
-        &.averRank {
-          width: 90px;
+        &.lastLoggedIn {
+          width: 150px;
           @media screen and (max-width: $mobile-max-width) {
-            width: 80px;
+            width: 85px;
           }
         }
-      }
-      td {
-        &.todayPt, &.totalPt, &.averRank {
-          text-align: right;
+        &.control {
+          width: 50px;
+          @media screen and (max-width: $mobile-max-width) {
+            width: 40px;
+          }
         }
       }
     }

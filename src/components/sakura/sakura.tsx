@@ -116,6 +116,11 @@ export function Sakura(props: Props) {
                     url: match.url, title: detail.title
                   })
                 }}
+                toViewRank={(t: DiscModel) => {
+                  history.push(`/disc/${t.id}/ranks`, {
+                    url: match.url, title: detail.title
+                  })
+                }}
               />
             </div>
           ))}

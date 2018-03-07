@@ -4,9 +4,13 @@
   .sakura-list {
     table {
       table-layout: fixed;
+      text-align: center;
+      .key, .title {
+        text-align: left;
+      }
       td, th {
         &.id {
-          width: 50px;
+          width: 45px;
           @media screen and (max-width: $mobile-max-width) {
             width: 35px;
           }
@@ -21,9 +25,9 @@
           }
         }
         &.viewType {
-          width: 95px;
+          width: 80px;
           @media screen and (max-width: $mobile-max-width) {
-            width: 80px;
+            width: 70px;
           }
           @media screen and (max-width: 375px) {
             display: none;
@@ -37,8 +41,8 @@
         }
       }
       td {
-        &.id {
-          text-align: center;
+        &.modifyTime {
+          text-align: right;
         }
       }
     }

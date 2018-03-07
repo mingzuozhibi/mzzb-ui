@@ -5,7 +5,7 @@ import { BaseModel } from '../utils/manager'
 interface Column<M> {
   key: string
   title: string
-  format: (m: M) => React.ReactNode
+  format: (m: M, i: number) => React.ReactNode
 }
 
 interface TableProps<M> {
@@ -32,10 +32,10 @@ const Table = <M extends BaseModel>({title, subtitle, rows, columns}: TableProps
         </tr>
         </thead>
         <tbody>
-        {rows.map(m => (
+        {rows.map((m, i) => (
           <tr key={m.id}>
-            {columns.map(c => (
-              <td key={c.key} className={c.key}>{c.format(m)}</td>
+            {columns.map((c) => (
+              <td key={c.key} className={c.key}>{c.format(m, i)}</td>
             ))}
           </tr>
         ))}

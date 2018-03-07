@@ -4,14 +4,22 @@
   .admin-sakura-list {
     table {
       table-layout: fixed;
+      text-align: center;
+      .key, .title {
+        text-align: left;
+      }
       td, th {
         &.id {
-          width: 50px;
+          width: 45px;
           @media screen and (max-width: $mobile-max-width) {
             width: 35px;
           }
         }
         &.key {
+          width: 135px;
+          @media screen and (max-width: $mobile-max-width) {
+            width: 120px;
+          }
           @media screen and (max-width: 500px) {
             display: none;
           }
@@ -19,18 +27,21 @@
         &.enabled {
           width: 50px;
           @media screen and (max-width: $mobile-max-width) {
-            width: 35px;
+            width: 40px;
           }
         }
         &.viewType {
-          width: 95px;
+          width: 80px;
           @media screen and (max-width: $mobile-max-width) {
-            width: 80px;
+            width: 70px;
           }
         }
         &.modifyTime {
           width: 95px;
           @media screen and (max-width: 700px) {
+            display: none;
+          }
+          @media screen and (min-width: 769px) and (max-width: 869px) {
             display: none;
           }
         }
@@ -42,9 +53,8 @@
         }
       }
       td {
-        text-align: center;
-        &.title, &.key {
-          text-align: left;
+        &.modifyTime {
+          text-align: right;
         }
       }
     }

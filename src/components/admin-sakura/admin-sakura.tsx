@@ -101,7 +101,7 @@ export function AdminSakura(props: Props) {
                   {props.pageInfo.pageTitle}
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>
-                  <Link to={`${props.match.url}/save`}>添加{props.pageInfo.modelName}</Link>
+                  <Link to={`${props.match.url}/save`}>创建{props.pageInfo.modelName}</Link>
                 </Breadcrumb.Item>
               </Breadcrumb>
               <div style={{paddingBottom: 10}}>
