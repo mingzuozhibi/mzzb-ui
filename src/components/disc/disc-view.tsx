@@ -64,7 +64,7 @@ export function DiscView(props: Props) {
   }
 
   function toAmazon() {
-    return <a href={`http://www.amazon.co.jp/dp/${props.detail.asin}`} target="_blank">Sakura链接</a>
+    return <a href={`http://www.amazon.co.jp/dp/${props.detail.asin}`} target="_blank">Amazon链接</a>
   }
 
   return (
