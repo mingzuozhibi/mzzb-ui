@@ -66,7 +66,7 @@ export function Disc(props: Props) {
                   {props.pageInfo.pageTitle}
                 </Breadcrumb.Item>
               </Breadcrumb>
-              {props.session.userRoles.find(role => role === 'ROLE-BASIC') && (
+              {props.session.userRoles.find(role => role === 'ROLE_BASIC') && (
                 <div className="form-message">
                   提示: 只有长标题、短标题、碟片类型、更新模式、发售日期可以修改
                 </div>
