@@ -82,13 +82,20 @@ export class Manager<T extends BaseModel> {
 
   findList = (key: string, value: string, pkey: string, query?: string): Promise<Result<T>> => {
     if (key === 'id') {
-      const id = parseInt(value, 10)
-      return request(`${this.path}/${id}/${pkey}?${query}`)
+      return this.getList(parseInt(value, 10), pkey, query)
     }
     if (query) {
       return request(`${this.path}/${key}/${value}/${pkey}?${query}`)
     } else {
       return request(`${this.path}/${key}/${value}/${pkey}`)
+    }
+  }
+
+  getList = (id: number, pkey: string, query?: string): Promise<Result<T>> => {
+    if (query) {
+      return request(`${this.path}/${id}/${pkey}?${query}`)
+    } else {
+      return request(`${this.path}/${id}/${pkey}`)
     }
   }
 
