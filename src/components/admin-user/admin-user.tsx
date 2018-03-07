@@ -2,6 +2,7 @@ import * as React from 'react'
 import { Helmet } from 'react-helmet'
 import { Alert, Breadcrumb } from 'antd'
 import { Link, Route, RouteComponentProps, Switch } from 'react-router-dom'
+import './admin-user.css'
 
 import { ViewportProps } from '../../hoc/Viewport'
 
@@ -34,7 +35,7 @@ export function AdminUser(props: Props) {
   }
 
   return (
-    <div className="admin-users">
+    <div className="admin-user">
       {props.message && (
         <div>
           <Breadcrumb style={{padding: 10}}>
