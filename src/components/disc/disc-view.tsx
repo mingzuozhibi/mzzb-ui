@@ -59,17 +59,31 @@ export function DiscView(props: Props) {
   formEdit.releaseDate = props.detail.releaseDate
   formRecord.recordText = undefined
 
+  function toSakura() {
+    return <a href={`http://rankstker.net/show.cgi?n=${props.detail.asin}`} target="_blank">Sakura链接</a>
+  }
+
+  function toAmazon() {
+    return <a href={`http://www.amazon.co.jp/dp/${props.detail.asin}`} target="_blank">Sakura链接</a>
+  }
+
   return (
     <div className="disc-view-content">
       <div className="input-wrapper">
-        <div className="input-label">原标题</div>
+        <div className="input-label">
+          <span>原标题</span>
+          <span style={{marginLeft: 10}}>{toSakura()}</span>
+        </div>
         <Input.TextArea
           autosize={true}
           defaultValue={props.detail.title}
         />
       </div>
       <div className="input-wrapper">
-        <div className="input-label">长标题</div>
+        <div className="input-label">
+            <span>长标题</span>
+            <span style={{marginLeft: 10}}>{toAmazon()}</span>
+        </div>
         <Input.TextArea
           autosize={true}
           onChange={e => formEdit.titlePc = e.target.value}
