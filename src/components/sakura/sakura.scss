@@ -1,6 +1,48 @@
 @import '../../global';
 
 .sakura {
+  .sakura-list {
+    table {
+      table-layout: fixed;
+      td, th {
+        &.id {
+          width: 50px;
+          @media screen and (max-width: $mobile-max-width) {
+            width: 35px;
+          }
+        }
+        &.key {
+          width: 145px;
+          @media screen and (max-width: $mobile-max-width) {
+            width: 130px;
+          }
+          @media screen and (max-width: 500px) {
+            display: none;
+          }
+        }
+        &.viewType {
+          width: 95px;
+          @media screen and (max-width: $mobile-max-width) {
+            width: 80px;
+          }
+          @media screen and (max-width: 375px) {
+            display: none;
+          }
+        }
+        &.modifyTime {
+          width: 95px;
+          @media screen and (max-width: $mobile-max-width) {
+            width: 80px;
+          }
+        }
+      }
+      td {
+        &.id {
+          text-align: center;
+        }
+      }
+    }
+  }
   .sakura-discs {
     table {
       table-layout: fixed;

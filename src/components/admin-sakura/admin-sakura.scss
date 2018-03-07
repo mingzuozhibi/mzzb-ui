@@ -1,4 +1,54 @@
+@import '../../global';
+
 .admin-sakura {
+  .admin-sakura-list {
+    table {
+      table-layout: fixed;
+      td, th {
+        &.id {
+          width: 50px;
+          @media screen and (max-width: $mobile-max-width) {
+            width: 35px;
+          }
+        }
+        &.key {
+          @media screen and (max-width: 500px) {
+            display: none;
+          }
+        }
+        &.enabled {
+          width: 50px;
+          @media screen and (max-width: $mobile-max-width) {
+            width: 35px;
+          }
+        }
+        &.viewType {
+          width: 95px;
+          @media screen and (max-width: $mobile-max-width) {
+            width: 80px;
+          }
+        }
+        &.modifyTime {
+          width: 95px;
+          @media screen and (max-width: 700px) {
+            display: none;
+          }
+        }
+        &.control {
+          width: 50px;
+          @media screen and (max-width: $mobile-max-width) {
+            width: 40px;
+          }
+        }
+      }
+      td {
+        text-align: center;
+        &.title, &.key {
+          text-align: left;
+        }
+      }
+    }
+  }
   .admin-sakura-discs {
     table {
       table-layout: fixed;
