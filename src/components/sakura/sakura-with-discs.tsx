@@ -9,6 +9,7 @@ import { Command } from '../../lib/command'
 interface Props {
   detail: SakuraOfDiscsModel
   toViewDisc: (t: DiscModel) => void
+  toViewRank: (t: DiscModel) => void
 }
 
 function SakuraDiscs(props: Props & ViewportProps) {
@@ -18,7 +19,7 @@ function SakuraDiscs(props: Props & ViewportProps) {
       {
         key: 'rank',
         title: '日亚排名',
-        format: (t) => formatRank(t)
+        format: (t) => <Command onClick={toViewRank(t)}>{formatRank(t)}</Command>
       },
       {
         key: 'totalPt',
@@ -46,6 +47,10 @@ function SakuraDiscs(props: Props & ViewportProps) {
 
   function toViewDisc(t: DiscModel) {
     return () => props.toViewDisc(t)
+  }
+
+  function toViewRank(t: DiscModel) {
+    return () => props.toViewRank(t)
   }
 
   function formatTitle(t: DiscModel) {

@@ -162,7 +162,21 @@ export function DiscView(props: Props) {
             defaultValue={props.detail.totalPt}
           />
           <Input
-            addonBefore="Nico预订"
+            addonBefore="预测PT"
+            style={{width: 140, marginLeft: 12}}
+            defaultValue={props.detail.guessPt}
+          />
+        </div>
+      </Input.Group>
+      <Input.Group compact={true}>
+        <div className="input-wrapper">
+          <Input
+            addonBefore="日增PT"
+            style={{width: 140}}
+            defaultValue={props.detail.todayPt}
+          />
+          <Input
+            addonBefore="Nico预约"
             style={{width: 140, marginLeft: 12}}
             defaultValue={props.detail.nicoBook}
           />

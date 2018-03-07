@@ -20,7 +20,9 @@ export interface DiscModel extends BaseModel {
   title: string
   titlePc?: string
   titleMo?: string
+  todayPt?: number
   totalPt?: number
+  guessPt?: number
   nicoBook?: number
   thisRank?: number
   prevRank?: number
@@ -33,7 +35,19 @@ export interface DiscModel extends BaseModel {
   surplusDays: number
 }
 
+export interface DiscRanksModel extends BaseModel {
+  date: string
+  todayPt?: number
+  totalPt?: number
+  averRank?: number
+}
+
+export interface DiscOfRanksModel extends DiscModel {
+  ranks: DiscRanksModel[]
+}
+
 export interface DiscState extends BaseState<DiscModel> {
+  detailOfRanks?: DiscOfRanksModel
 }
 
 const initState: DiscState = {
@@ -48,6 +62,13 @@ export const discReducer = (state: DiscState = initState, action: AnyAction) => 
         draftState.message = undefined
         break
       case `view${pageInfo.pageModel}Failed`:
+        draftState.message = action.message
+        break
+      case `view(ranks)${pageInfo.pageModel}Succeed`:
+        draftState.detailOfRanks = action.data
+        draftState.message = undefined
+        break
+      case `view(ranks)${pageInfo.pageModel}Failed`:
         draftState.message = action.message
         break
       case `edit${pageInfo.pageModel}Succeed`:
@@ -80,6 +101,15 @@ function* viewModel(action: AnyAction) {
   }
 }
 
+function* viewRanks(action: AnyAction) {
+  const result = yield call(manager.findList, action.search, action.value, 'ranks')
+  if (result.success) {
+    yield put({type: `view(ranks)${pageInfo.pageModel}Succeed`, data: result.data})
+  } else {
+    yield put({type: `view(ranks)${pageInfo.pageModel}Failed`, message: result.message})
+  }
+}
+
 function* editModel(action: AnyAction) {
   const result = yield call(manager.setOne, action.id, action.model)
   if (result.success) {
@@ -99,4 +129,4 @@ function* setRecord(action: AnyAction) {
   }
 }
 
-export const discSaga = {viewModel, editModel, setRecord}
+export const discSaga = {viewModel, viewRanks, editModel, setRecord}

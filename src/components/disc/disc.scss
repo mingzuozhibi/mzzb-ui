@@ -1,1 +1,48 @@
 @import '../../global';
+
+.disc {
+  .disc-ranks {
+    table {
+      table-layout: fixed;
+      text-align: center;
+      width: auto;
+      td, th {
+        &.id {
+          width: 45px;
+          @media screen and (max-width: $mobile-max-width) {
+            width: 35px;
+          }
+        }
+        &.date {
+          width: 110px;
+          @media screen and (max-width: $mobile-max-width) {
+            width: 100px;
+          }
+        }
+        &.todayPt {
+          width: 70px;
+          @media screen and (max-width: $mobile-max-width) {
+            width: 60px;
+          }
+        }
+        &.totalPt {
+          width: 70px;
+          @media screen and (max-width: $mobile-max-width) {
+            width: 60px;
+          }
+        }
+        &.averRank {
+          width: 90px;
+          @media screen and (max-width: $mobile-max-width) {
+            width: 80px;
+          }
+        }
+      }
+      td {
+        &.todayPt, &.totalPt, &.averRank {
+          text-align: right;
+        }
+      }
+    }
+  }
+}
