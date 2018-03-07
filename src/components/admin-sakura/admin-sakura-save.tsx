@@ -69,7 +69,7 @@ export function AdminSakuraSave(props: Props) {
         />
       </div>
       <div className="input-wrapper">
-        <Button type="primary" onClick={saveModel}>添加{props.pageInfo.modelName}</Button>
+        <Button type="primary" onClick={saveModel}>创建{props.pageInfo.modelName}</Button>
       </div>
     </div>
   )
