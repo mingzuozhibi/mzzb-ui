@@ -4,31 +4,31 @@ import { Alert, Breadcrumb } from 'antd'
 import { Link, Route, RouteComponentProps, Switch } from 'react-router-dom'
 import './disc.css'
 
-import { DiscModel, DiscOfRanksModel, DiscState } from './reducer'
+import { DiscOfRanksModel, DiscOfRecordsModel, DiscState } from './reducer'
 import { DiscView } from './disc-view'
 import { Session } from '../../App/reducer'
-import { DiscRank } from './disc-rank'
+import { DiscRecords } from './disc-records'
 
 export type OwnProps = RouteComponentProps<{}>
 
 export interface Props extends DiscState, OwnProps {
   session: Session
   editModel: (id: number, model: {}) => void
-  setRecord: (id: number, model: {}) => void
+  addRecords: (id: number, model: {}) => void
 }
 
 export function Disc(props: Props) {
 
-  function withDetail(id: string, render: (detail: DiscModel) => React.ReactNode) {
+  function withDetail(id: string, render: (detail: DiscOfRanksModel) => React.ReactNode) {
     if (props.detail && props.detail.id === parseInt(id, 10)) {
       return render(props.detail)
     }
     return null
   }
 
-  function withDetailOfRanks(id: string, render: (detail: DiscOfRanksModel) => React.ReactNode) {
-    if (props.detailOfRanks && props.detailOfRanks.id === parseInt(id, 10)) {
-      return render(props.detailOfRanks)
+  function withDetailOfRecords(id: string, render: (detail: DiscOfRecordsModel) => React.ReactNode) {
+    if (props.detailOfRecords && props.detailOfRecords.id === parseInt(id, 10)) {
+      return render(props.detailOfRecords)
     }
     return null
   }
@@ -70,16 +70,16 @@ export function Disc(props: Props) {
                 detail={detail}
                 session={props.session}
                 editModel={props.editModel}
-                setRecord={props.setRecord}
+                addRecords={props.addRecords}
               />
             </div>
           ))}
         />
         <Route
-          path={`${props.match.url}/:id/ranks`}
+          path={`${props.match.url}/:id/records`}
           exact={true}
-          render={({match}) => withDetailOfRanks(match.params.id, detail => (
-            <div className="disc-ranks">
+          render={({match}) => withDetailOfRecords(match.params.id, detail => (
+            <div className="disc-records">
               <Helmet>
                 <title>排名数据 - 名作之壁吧</title>
               </Helmet>
@@ -93,7 +93,7 @@ export function Disc(props: Props) {
                   排名数据
                 </Breadcrumb.Item>
               </Breadcrumb>
-              <DiscRank
+              <DiscRecords
                 detailOfRanks={detail}
               />
             </div>

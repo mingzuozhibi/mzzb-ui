@@ -1,8 +1,9 @@
 import * as React from 'react'
 import { Button, Input, Modal, Select, Tabs } from 'antd'
-import { DiscModel } from './reducer'
+import { DiscOfRanksModel } from './reducer'
 import { Session } from '../../App/reducer'
 import { ViewportProps, withViewport } from '../../hoc/Viewport'
+import { formatNumber } from '../../utils/format'
 
 interface FormEdit {
   titlePc?: string
@@ -13,17 +14,17 @@ interface FormEdit {
 }
 
 interface FormRecord {
-  recordText?: string
+  recordsText?: string
 }
 
 const formEdit: FormEdit = {}
 const formRecord: FormRecord = {}
 
 interface Props {
-  detail: DiscModel
+  detail: DiscOfRanksModel
   session: Session
   editModel: (id: number, model: {}) => void
-  setRecord: (id: number, model: {}) => void
+  addRecords: (id: number, model: {}) => void
 }
 
 function DiscView(props: Props & ViewportProps) {
@@ -42,13 +43,13 @@ function DiscView(props: Props & ViewportProps) {
     props.editModel(props.detail.id, formEdit)
   }
 
-  function setRecord() {
-    if (!formRecord.recordText) {
+  function addRecords() {
+    if (!formRecord.recordsText) {
       Modal.warning({title: '请检查输入项', content: `你必须输入历史排名`})
       return
     }
 
-    props.setRecord(props.detail.id, formRecord)
+    props.addRecords(props.detail.id, formRecord)
   }
 
   formEdit.titlePc = props.detail.titlePc
@@ -56,7 +57,7 @@ function DiscView(props: Props & ViewportProps) {
   formEdit.discType = props.detail.discType
   formEdit.updateType = props.detail.updateType
   formEdit.releaseDate = props.detail.releaseDate
-  formRecord.recordText = undefined
+  formRecord.recordsText = undefined
 
   function toSakura() {
     return <a href={`http://rankstker.net/show.cgi?n=${props.detail.asin}`} target="_blank">Sakura链接</a>
@@ -66,7 +67,7 @@ function DiscView(props: Props & ViewportProps) {
     return <a href={`http://www.amazon.co.jp/dp/${props.detail.asin}`} target="_blank">Amazon链接</a>
   }
 
-  function formatTitle(t: DiscModel) {
+  function formatTitle(t: DiscOfRanksModel) {
     if (props.viewport.width > 600) {
       return t.titlePc || t.title
     } else {
@@ -80,12 +81,12 @@ function DiscView(props: Props & ViewportProps) {
     <div className="disc-view-content">
       {hasBasicRole && (
         <div className="form-message">
-          <div>提示: 基本信息页面可以修改，只有原标题不会被改变</div>
+          <div>提示: 基本信息页面可以编辑，原标题，Id，Asin不会被修改</div>
           <div>提示: 提交排名页面可以手动提交历史排名</div>
         </div>
       )}
       <Tabs>
-        <Tabs.TabPane key={1} tab="排名数据">
+        <Tabs.TabPane key={1} tab="销量排名">
           <div className="input-wrapper">
             <div className="input-label">
               <span>碟片标题</span>
@@ -98,45 +99,29 @@ function DiscView(props: Props & ViewportProps) {
               value={formatTitle(props.detail)}
             />
           </div>
-          <Input.Group compact={true}>
-            <div className="input-wrapper">
-              <Input
-                addonBefore="Id"
-                style={{width: 100}}
-                defaultValue={props.detail.id}
-              />
-              <Input
-                addonBefore="Asin"
-                style={{width: 180, marginLeft: 12}}
-                defaultValue={props.detail.asin}
-              />
+          <div className="input-wrapper">
+            <div className="input-label">
+              <span>最近5个有效排名(发售日之前)</span>
             </div>
-          </Input.Group>
-          <Input.Group compact={true}>
-            <div className="input-wrapper">
-              <Input
-                addonBefore="发售"
-                style={{width: 160}}
-                defaultValue={props.detail.releaseDate}
-              />
-              <Input
-                addonBefore="天数"
-                style={{width: 120, marginLeft: 12}}
-                defaultValue={props.detail.surplusDays}
-              />
-            </div>
-          </Input.Group>
+            <Input.TextArea
+              style={{maxWidth: 292}}
+              autosize={true}
+              value={props.detail.ranks.map(rank => (
+                `${rank.date} ${rank.hour}时 ${formatRank(rank.rank)}`
+              )).join('\n')}
+            />
+          </div>
           <Input.Group compact={true}>
             <div className="input-wrapper">
               <Input
                 addonBefore="当前"
                 style={{width: 140}}
-                defaultValue={props.detail.thisRank}
+                value={formatRank(props.detail.thisRank)}
               />
               <Input
                 addonBefore="前回"
                 style={{width: 140, marginLeft: 12}}
-                defaultValue={props.detail.prevRank}
+                value={formatRank(props.detail.prevRank)}
               />
             </div>
           </Input.Group>
@@ -145,12 +130,12 @@ function DiscView(props: Props & ViewportProps) {
               <Input
                 addonBefore="累积PT"
                 style={{width: 140}}
-                defaultValue={props.detail.totalPt}
+                value={props.detail.totalPt}
               />
               <Input
                 addonBefore="预测PT"
                 style={{width: 140, marginLeft: 12}}
-                defaultValue={props.detail.guessPt}
+                value={props.detail.guessPt}
               />
             </div>
           </Input.Group>
@@ -159,12 +144,26 @@ function DiscView(props: Props & ViewportProps) {
               <Input
                 addonBefore="日增PT"
                 style={{width: 140}}
-                defaultValue={props.detail.todayPt}
+                value={props.detail.todayPt}
               />
               <Input
                 addonBefore="Nico预约"
                 style={{width: 140, marginLeft: 12}}
-                defaultValue={props.detail.nicoBook}
+                value={props.detail.nicoBook}
+              />
+            </div>
+          </Input.Group>
+          <Input.Group compact={true}>
+            <div className="input-wrapper">
+              <Input
+                addonBefore="发售"
+                style={{width: 160}}
+                value={props.detail.releaseDate}
+              />
+              <Input
+                addonBefore="天数"
+                style={{width: 120, marginLeft: 12}}
+                value={props.detail.surplusDays}
               />
             </div>
           </Input.Group>
@@ -172,21 +171,21 @@ function DiscView(props: Props & ViewportProps) {
             <Input
               addonBefore="创建时间"
               style={{width: 270}}
-              defaultValue={formatDate(props.detail.createTime)}
+              value={formatDate(props.detail.createTime)}
             />
           </div>
           <div className="input-wrapper">
             <Input
               addonBefore="刷新时间"
               style={{width: 270}}
-              defaultValue={formatDate(props.detail.updateTime)}
+              value={formatDate(props.detail.updateTime)}
             />
           </div>
           <div className="input-wrapper">
             <Input
               addonBefore="修改时间"
               style={{width: 270}}
-              defaultValue={formatDate(props.detail.modifyTime)}
+              value={formatDate(props.detail.modifyTime)}
             />
           </div>
         </Tabs.TabPane>
@@ -195,7 +194,7 @@ function DiscView(props: Props & ViewportProps) {
             <div className="input-label">原标题</div>
             <Input.TextArea
               autosize={true}
-              defaultValue={props.detail.title}
+              value={props.detail.title}
             />
           </div>
           <div className="input-wrapper">
@@ -214,6 +213,20 @@ function DiscView(props: Props & ViewportProps) {
               defaultValue={formEdit.titleMo}
             />
           </div>
+          <Input.Group compact={true}>
+            <div className="input-wrapper">
+              <Input
+                addonBefore="Id"
+                style={{width: 100}}
+                value={props.detail.id}
+              />
+              <Input
+                addonBefore="Asin"
+                style={{width: 180, marginLeft: 12}}
+                value={props.detail.asin}
+              />
+            </div>
+          </Input.Group>
           <div className="input-wrapper">
             <span className="input-label">发售日期</span>
             <Input
@@ -260,7 +273,7 @@ function DiscView(props: Props & ViewportProps) {
         {hasBasicRole && (
           <Tabs.TabPane key={3} tab="提交排名">
             <div className="input-wrapper">
-              <Button type="danger" onClick={setRecord}>提交排名</Button>
+              <Button type="danger" onClick={addRecords}>提交排名</Button>
             </div>
             <div className="input-wrapper">
               <div className="input-label">
@@ -271,12 +284,12 @@ function DiscView(props: Props & ViewportProps) {
               </div>
               <Input.TextArea
                 autosize={true}
-                onChange={e => formRecord.recordText = e.target.value}
+                onChange={e => formRecord.recordsText = e.target.value}
                 placeholder="你可以从Sakura网站手动复制排名数据到这里"
               />
             </div>
             <div className="input-wrapper">
-              <Button type="danger" onClick={setRecord}>提交排名</Button>
+              <Button type="danger" onClick={addRecords}>提交排名</Button>
             </div>
           </Tabs.TabPane>
         )}
@@ -291,6 +304,10 @@ function toSakuraRank(asin: string) {
 
 function formatDate(time?: number) {
   return time == null ? '无' : new Date(time).toLocaleString()
+}
+
+function formatRank(rank?: number) {
+  return `${(rank ? formatNumber(rank, '****') : '----')}位`
 }
 
 const WithViewport = withViewport<Props>(DiscView)

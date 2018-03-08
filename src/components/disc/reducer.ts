@@ -35,19 +35,29 @@ export interface DiscModel extends BaseModel {
   surplusDays: number
 }
 
-export interface DiscRanksModel extends BaseModel {
+export interface RankModel {
+  date: string
+  hour: string
+  rank: number
+}
+
+export interface DiscOfRanksModel extends DiscModel {
+  ranks: RankModel[]
+}
+
+export interface RecordModel extends BaseModel {
   date: string
   todayPt?: number
   totalPt?: number
   averRank?: number
 }
 
-export interface DiscOfRanksModel extends DiscModel {
-  ranks: DiscRanksModel[]
+export interface DiscOfRecordsModel extends DiscModel {
+  records: RecordModel[]
 }
 
-export interface DiscState extends BaseState<DiscModel> {
-  detailOfRanks?: DiscOfRanksModel
+export interface DiscState extends BaseState<DiscOfRanksModel> {
+  detailOfRecords?: DiscOfRecordsModel
 }
 
 const initState: DiscState = {
@@ -64,13 +74,6 @@ export const discReducer = (state: DiscState = initState, action: AnyAction) => 
       case `view${pageInfo.pageModel}Failed`:
         draftState.message = action.message
         break
-      case `view(ranks)${pageInfo.pageModel}Succeed`:
-        draftState.detailOfRanks = action.data
-        draftState.message = undefined
-        break
-      case `view(ranks)${pageInfo.pageModel}Failed`:
-        draftState.message = action.message
-        break
       case `edit${pageInfo.pageModel}Succeed`:
         message.success(`编辑${pageInfo.modelName}成功`)
         draftState.detail = action.data
@@ -78,11 +81,18 @@ export const discReducer = (state: DiscState = initState, action: AnyAction) => 
       case `edit${pageInfo.pageModel}Failed`:
         Modal.error({title: `编辑${pageInfo.modelName}失败`, content: action.message})
         break
-      case `set(record)${pageInfo.pageModel}Succeed`:
+      case `view(records)${pageInfo.pageModel}Succeed`:
+        draftState.detailOfRecords = action.data
+        draftState.message = undefined
+        break
+      case `view(records)${pageInfo.pageModel}Failed`:
+        draftState.message = action.message
+        break
+      case `push(records)${pageInfo.pageModel}Succeed`:
         message.success(`设置排名数据成功`)
         draftState.detail = action.data
         break
-      case `set(record)${pageInfo.pageModel}Failed`:
+      case `push(records)${pageInfo.pageModel}Failed`:
         Modal.error({title: `设置排名数据失败`, content: action.message})
         break
       default:
@@ -90,7 +100,7 @@ export const discReducer = (state: DiscState = initState, action: AnyAction) => 
   })
 }
 
-const manager = new Manager<DiscModel>('/api/discs')
+const manager = new Manager<DiscOfRanksModel>('/api/discs')
 
 function* viewModel(action: AnyAction) {
   const result = yield call(manager.findOne, action.search, action.value)
@@ -98,15 +108,6 @@ function* viewModel(action: AnyAction) {
     yield put({type: `view${pageInfo.pageModel}Succeed`, data: result.data})
   } else {
     yield put({type: `view${pageInfo.pageModel}Failed`, message: result.message})
-  }
-}
-
-function* viewRanks(action: AnyAction) {
-  const result = yield call(manager.findList, action.search, action.value, 'ranks')
-  if (result.success) {
-    yield put({type: `view(ranks)${pageInfo.pageModel}Succeed`, data: result.data})
-  } else {
-    yield put({type: `view(ranks)${pageInfo.pageModel}Failed`, message: result.message})
   }
 }
 
@@ -119,14 +120,23 @@ function* editModel(action: AnyAction) {
   }
 }
 
-function* setRecord(action: AnyAction) {
-  const param = {method: 'put', body: JSON.stringify(action.model)}
-  const result = yield call(request, `/api/discs/${action.id}/record`, param)
+function* viewRecords(action: AnyAction) {
+  const result = yield call(manager.findList, action.search, action.value, 'records')
   if (result.success) {
-    yield put({type: `set(record)${pageInfo.pageModel}Succeed`, data: result.data})
+    yield put({type: `view(records)${pageInfo.pageModel}Succeed`, data: result.data})
   } else {
-    yield put({type: `set(record)${pageInfo.pageModel}Failed`, message: result.message})
+    yield put({type: `view(records)${pageInfo.pageModel}Failed`, message: result.message})
   }
 }
 
-export const discSaga = {viewModel, viewRanks, editModel, setRecord}
+function* pushRecords(action: AnyAction) {
+  const param = {method: 'post', body: JSON.stringify(action.model)}
+  const result = yield call(request, `/api/discs/${action.id}/records`, param)
+  if (result.success) {
+    yield put({type: `push(records)${pageInfo.pageModel}Succeed`, data: result.data})
+  } else {
+    yield put({type: `push(records)${pageInfo.pageModel}Failed`, message: result.message})
+  }
+}
+
+export const discSaga = {viewModel, viewRecords, editModel, pushRecords}
