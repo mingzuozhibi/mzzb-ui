@@ -95,7 +95,7 @@ function DiscView(props: Props & ViewportProps) {
             <Input.TextArea
               style={{maxWidth: 292}}
               autosize={true}
-              defaultValue={formatTitle(props.detail)}
+              value={formatTitle(props.detail)}
             />
           </div>
           <Input.Group compact={true}>
