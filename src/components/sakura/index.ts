@@ -4,7 +4,7 @@ import { OwnProps, Sakura } from './sakura'
 
 function mapStateToProps(state: RootState, ownProps: OwnProps) {
   return {
-    ...state.sakura, ...ownProps
+    ...state.sakura, ...ownProps, session: state.app.session
   }
 }
 

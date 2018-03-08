@@ -6,11 +6,12 @@ import './sakura.css'
 
 import { compareFactory } from '../../utils/compare'
 import { viewTypes } from '../admin-sakura/reducer'
+import { Session } from '../../App/reducer'
+import produce from 'immer'
 
 import { DiscModel, SakuraModel, SakuraOfDiscsModel, SakuraState } from './reducer'
 import { SakuraList } from './sakura-list'
 import { SakuraDiscs } from './sakura-with-discs'
-import produce from 'immer'
 
 const compareList = (a: SakuraModel, b: SakuraModel) => {
   const indexA = viewTypes.findIndex(v => v.value === a.viewType)
@@ -34,6 +35,7 @@ const compareDisc = compareFactory({
 export type OwnProps = RouteComponentProps<{}>
 
 export interface Props extends SakuraState, OwnProps {
+  session: Session
 }
 
 export function Sakura(props: Props) {
@@ -59,6 +61,11 @@ export function Sakura(props: Props) {
   }
 
   // console.info(`sakura render ${props.models !== undefined} ${new Date()}`)
+
+  const sakuraDiscsMsg = '最新更新：点击碟片标题可以看到最新5个排名，并有快捷链接到Amazon和Sakura；' +
+    '新版刚刚上线需要修复很多Bug，可能会经常重启服务，会有20~30秒不能访问。'
+
+  const hasBasicRole = props.session.userRoles.find(role => role === 'ROLE_BASIC')
 
   return (
     <div className="sakura">
@@ -86,6 +93,9 @@ export function Sakura(props: Props) {
                   {props.pageInfo.pageTitle}
                 </Breadcrumb.Item>
               </Breadcrumb>
+              <div style={{paddingBottom: 10}}>
+                <Alert message="点击标题查看碟片排名"/>
+              </div>
               <SakuraList
                 models={models}
                 viewDiscsTo={t => `${props.match.url}/${t.key}/discs`}
@@ -105,10 +115,16 @@ export function Sakura(props: Props) {
                 <Breadcrumb.Item>
                   <Link to={props.match.url}>{props.pageInfo.pageTitle}</Link>
                 </Breadcrumb.Item>
+                {hasBasicRole && (
+                  <Breadcrumb.Item>
+                    <Link to={`/admin${match.url}`}>跳转到后台模式</Link>
+                  </Breadcrumb.Item>
+                )}
                 <Breadcrumb.Item>
                   {detail.title}
                 </Breadcrumb.Item>
               </Breadcrumb>
+              <Alert type="info" message={sakuraDiscsMsg}/>
               <SakuraDiscs
                 detail={detail}
                 toViewDisc={(t: DiscModel) => {
