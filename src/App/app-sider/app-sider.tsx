@@ -39,8 +39,12 @@ export function AppSider(props: AppSiderProps) {
     }
   }
 
-  function renderLabel(icon: string, text: string) {
-    return <span><Icon className="sider-icon" type={icon}/>{text}</span>
+  function renderLabel(text: string, icon?: string) {
+    if (icon) {
+      return <span><Icon className="sider-icon" type={icon}/>{text}</span>
+    } else {
+      return <span>{text}</span>
+    }
   }
 
   function renderMenu(menuInfo: MenuInfo, userRoles: string[]): React.ReactNode {
@@ -49,14 +53,14 @@ export function AppSider(props: AppSiderProps) {
     }
     if (menuInfo.subMenus) {
       return (
-        <Menu.SubMenu key={menuInfo.path} title={renderLabel(menuInfo.icon, menuInfo.text)}>
+        <Menu.SubMenu key={menuInfo.path} title={renderLabel(menuInfo.text, menuInfo.icon)}>
           {menuInfo.subMenus.map(subRoute => renderMenu(subRoute, userRoles))}
         </Menu.SubMenu>
       )
     } else {
       return (
         <Menu.Item key={menuInfo.path}>
-          {renderLabel(menuInfo.icon, menuInfo.text)}
+          {renderLabel(menuInfo.text, menuInfo.icon)}
         </Menu.Item>
       )
     }
