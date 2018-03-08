@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Layout, Popconfirm } from 'antd'
+import { Layout, message, Popconfirm } from 'antd'
 import { Reload } from '../../common/reducers/current'
 import { Icon } from '../../lib/icon'
 
@@ -14,6 +14,12 @@ interface AppHeaderProps {
 }
 
 export function AppHeader(props: AppHeaderProps) {
+
+  function reloadRequest() {
+    message.info('已发起更新')
+    props.reloadRequest()
+  }
+
   return (
     <Layout.Header className="app-header">
       <Icon
@@ -25,7 +31,7 @@ export function AppHeader(props: AppHeaderProps) {
         <Icon
           className="header-icon"
           type={props.reload.loading ? 'loading' : 'reload'}
-          onClick={props.reloadRequest}
+          onClick={reloadRequest}
         />
       )}
       {props.isLogged ? (

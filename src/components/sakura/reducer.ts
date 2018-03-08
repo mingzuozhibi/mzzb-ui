@@ -5,7 +5,7 @@ import { BaseModel, Manager } from '../../utils/manager'
 import produce from 'immer'
 
 export const pageInfo: PageInfo = {
-  pageTitle: '日亚实时',
+  pageTitle: '推荐列表',
   matchPath: '/sakura',
   pageModel: 'Sakura',
   modelName: '列表',
