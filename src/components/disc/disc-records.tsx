@@ -1,14 +1,14 @@
 import * as React from 'react'
-import { DiscOfRanksModel, DiscRanksModel } from './reducer'
+import { DiscOfRecordsModel, RecordModel } from './reducer'
 import { Column, Table } from '../../lib/table'
 
 interface Props {
-  detailOfRanks: DiscOfRanksModel
+  detailOfRanks: DiscOfRecordsModel
 }
 
-export function DiscRank(props: Props) {
+export function DiscRecords(props: Props) {
 
-  function getColumns(): Column<DiscRanksModel>[] {
+  function getColumns(): Column<RecordModel>[] {
     return [
       {
         key: 'id',
@@ -38,17 +38,17 @@ export function DiscRank(props: Props) {
     ]
   }
 
-  function formatTitle(t: DiscOfRanksModel) {
+  function formatTitle(t: DiscOfRecordsModel) {
     return t.titlePc || t.title
   }
 
   return (
-    <div className="disc-ranks-content">
+    <div className="disc-records-content">
       <div style={{fontSize: 18, padding: 10}}>
         {formatTitle(props.detailOfRanks)}
       </div>
       <Table
-        rows={props.detailOfRanks.ranks}
+        rows={props.detailOfRanks.records}
         columns={getColumns()}
       />
     </div>

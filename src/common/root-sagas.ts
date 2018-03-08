@@ -14,9 +14,9 @@ export function* rootSagas() {
     takeEvery('sessionLogoutRequest', appSaga.sessionLogout),
 
     takeEvery('viewDiscRequest', discSaga.viewModel),
-    takeEvery('view(ranks)DiscRequest', discSaga.viewRanks),
     takeEvery('editDiscRequest', discSaga.editModel),
-    takeEvery('set(record)DiscRequest', discSaga.setRecord),
+    takeEvery('view(records)DiscRequest', discSaga.viewRecords),
+    takeEvery('push(records)DiscRequest', discSaga.pushRecords),
 
     takeEvery('listSakuraRequest', sakuraSaga.listModel),
     takeEvery('view(discs)SakuraRequest', sakuraSaga.viewDiscs),
