@@ -14,7 +14,7 @@ const formSearch: FormSearch = {}
 
 interface Props {
   detail: SakuraOfDiscsModel
-  search?: DiscModel[]
+  addDiscs: DiscModel[]
   pushDiscs: (id: number, pid: number) => void
   dropDiscs: (id: number, pid: number) => void
   searchDisc: (id: number, asin: string) => void
@@ -28,6 +28,16 @@ function AdminSakuraDiscs(props: Props & ViewportProps) {
 
     if (!asin) {
       Modal.warning({title: '请检查输入项', content: `碟片ASIN必须输入`})
+      return
+    }
+
+    if (props.addDiscs.some(t => t.asin === asin)) {
+      Modal.warning({title: '请检查输入项', content: `该碟片已存在于待选列表`})
+      return
+    }
+
+    if (props.detail.discs.some(t => t.asin === asin)) {
+      Modal.warning({title: '请检查输入项', content: `该碟片已存在于当前列表`})
       return
     }
 
@@ -100,10 +110,10 @@ function AdminSakuraDiscs(props: Props & ViewportProps) {
           <Button onClick={searchDisc}>提交</Button>
         </div>
       </div>
-      {props.search && (
+      {props.addDiscs && (
         <Table
           title="待选碟片"
-          rows={props.search}
+          rows={props.addDiscs}
           columns={getColumns(getPushControl())}
         />
       )}

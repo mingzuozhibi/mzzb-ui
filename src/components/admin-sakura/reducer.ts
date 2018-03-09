@@ -33,7 +33,7 @@ export interface AdminSakuraState extends BaseState<SakuraModel>, DiscsState {
 }
 
 const initState: AdminSakuraState = {
-  pageInfo
+  pageInfo, addDiscs: []
 }
 
 export const adminSakuraReducer = (state: AdminSakuraState = initState, action: AnyAction) => {
