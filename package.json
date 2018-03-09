@@ -63,5 +63,5 @@
     "name": "fuhaiwei",
     "email": "fuhaiwei@126.com"
   },
-  "proxy": "http://localhost:5000"
+  "proxy": "https://localhost:5433"
 }
