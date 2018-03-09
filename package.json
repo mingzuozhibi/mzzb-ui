@@ -27,7 +27,7 @@
     "watch-css": "yarn build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
     "start-ts": "react-app-rewired start --scripts-version react-scripts-ts",
     "build-ts": "react-app-rewired build --scripts-version react-scripts-ts",
-    "start": "npm-run-all -p watch-css start-ts",
+    "start": "HTTPS=true npm-run-all -p watch-css start-ts",
     "build": "yarn build-css && yarn build-ts",
     "eject": "react-scripts-ts eject"
   },
@@ -63,5 +63,5 @@
     "name": "fuhaiwei",
     "email": "fuhaiwei@126.com"
   },
-  "proxy": "https://localhost:5433"
+  "proxy": "https://localhost:5443"
 }
