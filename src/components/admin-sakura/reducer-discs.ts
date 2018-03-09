@@ -6,7 +6,7 @@ import { AdminSakuraState, pageInfo, SakuraModel } from './reducer'
 import request from '../../utils/request'
 
 export interface DiscModel extends BaseModel {
-  asin: number
+  asin: string
   title: string
   titlePc?: string
   titleMo?: string
@@ -18,13 +18,12 @@ export interface SakuraOfDiscsModel extends SakuraModel {
 }
 
 export interface DiscsState {
-  searchOfDiscs?: DiscModel[]
+  addDiscs: DiscModel[]
   detailOfDiscs?: SakuraOfDiscsModel
 }
 
 export function discsReducer(action: AnyAction, draftState: AdminSakuraState) {
-  const model = draftState.detailOfDiscs!
-  const search = draftState.searchOfDiscs || []
+  const detail = draftState.detailOfDiscs!
   switch (action.type) {
     case `view(discs)${pageInfo.pageModel}Succeed`:
       draftState.detailOfDiscs = action.data
@@ -35,28 +34,36 @@ export function discsReducer(action: AnyAction, draftState: AdminSakuraState) {
       break
     case `push(discs)${pageInfo.pageModel}Succeed`:
       message.success(`添加碟片成功`)
-      model.discs.unshift(action.data)
-      draftState.searchOfDiscs = search.filter(d => d.id !== action.data.id)
+      detail.discs.unshift(action.data)
+      deleteIf(draftState.addDiscs, t => t.id === action.data.id)
       break
     case `push(discs)${pageInfo.pageModel}Failed`:
       Modal.error({title: `添加碟片失败`, content: action.message})
       break
     case `drop(discs)${pageInfo.pageModel}Succeed`:
       message.success(`移除碟片成功`)
-      model.discs = model.discs.filter(d => d.id !== action.data.id)
-      draftState.searchOfDiscs = [action.data, ...search]
+      deleteIf(detail.discs, t => t.id === action.data.id)
+      draftState.addDiscs.push(action.data)
       break
     case `drop(discs)${pageInfo.pageModel}Failed`:
       Modal.error({title: `移除碟片失败`, content: action.message})
       break
     case `search(discs)${pageInfo.pageModel}Succeed`:
       message.success(`查找碟片成功`)
-      draftState.searchOfDiscs = [...action.data, ...search]
+      draftState.addDiscs.unshift(...action.data)
       break
     case `search(discs)${pageInfo.pageModel}Failed`:
       Modal.error({title: `查找碟片失败`, content: action.message})
       break
     default:
+  }
+}
+
+function deleteIf<T>(array: Array<T>, fun: (t: T) => boolean) {
+  let index = 0
+  while (index < array.length) {
+    array[index] && fun(array[index]) && array.splice(index, 1)
+    index++
   }
 }
 

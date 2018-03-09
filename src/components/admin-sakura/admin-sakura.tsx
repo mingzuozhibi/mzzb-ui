@@ -197,7 +197,7 @@ export function AdminSakura(props: Props) {
               </Breadcrumb>
               <AdminSakuraDiscs
                 detail={detail}
-                search={props.searchOfDiscs}
+                addDiscs={props.addDiscs}
                 pushDiscs={props.pushDiscs}
                 dropDiscs={props.dropDiscs}
                 searchDisc={props.searchDisc}
