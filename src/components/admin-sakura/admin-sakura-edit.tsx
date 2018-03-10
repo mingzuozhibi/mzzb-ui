@@ -52,6 +52,8 @@ export function AdminSakuraEdit(props: Props) {
   formEdit.enabled = props.detail.enabled
   formEdit.viewType = props.detail.viewType
 
+  const hasAdminRole = props.session.userRoles.some(role => role === 'ROLE_ADMIN')
+
   return (
     <div className="admin-sakura-edit-content">
       <div className="input-wrapper">
@@ -88,7 +90,7 @@ export function AdminSakuraEdit(props: Props) {
       </div>
       <div className="input-wrapper">
         <Button type="primary" onClick={editModel}>保存修改</Button>
-        {props.session.userRoles.find(value => value === 'ROLE_ADMIN') && (
+        {hasAdminRole && (
           <Popconfirm
             title="你确定要删除这个列表吗？"
             placement="bottomRight"

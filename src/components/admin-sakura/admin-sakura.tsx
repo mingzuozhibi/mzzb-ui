@@ -75,7 +75,7 @@ export function AdminSakura(props: Props) {
     return null
   }
 
-  const hasBasicRole = props.session.userRoles.find(role => role === 'ROLE_BASIC')
+  const hasBasicRole = props.session.userRoles.some(role => role === 'ROLE_BASIC')
 
   return (
     <div className="admin-sakura">

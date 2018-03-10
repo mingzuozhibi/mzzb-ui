@@ -75,7 +75,7 @@ function DiscView(props: Props & ViewportProps) {
     }
   }
 
-  const hasBasicRole = props.session.userRoles.find(role => role === 'ROLE_BASIC')
+  const hasBasicRole = props.session.userRoles.some(role => role === 'ROLE_BASIC')
 
   return (
     <div className="disc-view-content">
