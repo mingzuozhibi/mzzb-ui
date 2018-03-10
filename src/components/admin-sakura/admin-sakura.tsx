@@ -76,8 +76,6 @@ export function AdminSakura(props: Props) {
     return null
   }
 
-  const hasBasicRole = props.session.userRoles.some(role => role === 'ROLE_BASIC')
-
   return (
     <div className="admin-sakura">
       {props.message && (
@@ -103,11 +101,9 @@ export function AdminSakura(props: Props) {
                 <Breadcrumb.Item>
                   {props.pageInfo.pageTitle}
                 </Breadcrumb.Item>
-                {hasBasicRole && (
-                  <Breadcrumb.Item>
-                    <Link to={match.url.substring(6)}>跳转到浏览模式</Link>
-                  </Breadcrumb.Item>
-                )}
+                <Breadcrumb.Item>
+                  <Link to={match.url.substring(6)}>跳转到浏览模式</Link>
+                </Breadcrumb.Item>
                 <Breadcrumb.Item>
                   <Link to={`${props.match.url}/save`}>创建{props.pageInfo.modelName}</Link>
                 </Breadcrumb.Item>
@@ -194,11 +190,9 @@ export function AdminSakura(props: Props) {
                 <Breadcrumb.Item>
                   <Link to={props.match.url}>{props.pageInfo.pageTitle}</Link>
                 </Breadcrumb.Item>
-                {hasBasicRole && (
-                  <Breadcrumb.Item>
-                    <Link to={match.url.substring(6)}>跳转到浏览模式</Link>
-                  </Breadcrumb.Item>
-                )}
+                <Breadcrumb.Item>
+                  <Link to={match.url.substring(6)}>跳转到浏览模式</Link>
+                </Breadcrumb.Item>
                 <Breadcrumb.Item>
                   {detail.title}
                 </Breadcrumb.Item>
