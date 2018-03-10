@@ -80,7 +80,7 @@ export function Sakura(props: Props) {
         <Route
           path={`${props.match.url}`}
           exact={true}
-          render={() => withModels(models => (
+          render={({match}) => withModels(models => (
             <div className="sakura-list">
               <Helmet>
                 <title>{props.pageInfo.pageTitle} - 名作之壁吧</title>
@@ -89,6 +89,11 @@ export function Sakura(props: Props) {
                 <Breadcrumb.Item>
                   {props.pageInfo.pageTitle}
                 </Breadcrumb.Item>
+                {hasBasicRole && (
+                  <Breadcrumb.Item>
+                    <Link to={`/admin${match.url}`}>跳转到后台模式</Link>
+                  </Breadcrumb.Item>
+                )}
               </Breadcrumb>
               <div style={{paddingBottom: 10}}>
                 <Alert message="点击标题查看碟片排名"/>
