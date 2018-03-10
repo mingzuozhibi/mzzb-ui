@@ -85,8 +85,9 @@ function DiscView(props: Props & ViewportProps) {
               <span style={{marginLeft: 20}}>{toAmazon()}</span>
             </div>
             <Input.TextArea
-              style={{maxWidth: 292}}
+              readOnly={true}
               autosize={true}
+              style={{maxWidth: 292}}
               value={formatTitle(props.detail)}
             />
           </div>
@@ -95,8 +96,9 @@ function DiscView(props: Props & ViewportProps) {
               <span>最近5个有效排名(发售日之前)</span>
             </div>
             <Input.TextArea
-              style={{maxWidth: 292}}
+              readOnly={true}
               autosize={true}
+              style={{maxWidth: 292}}
               value={props.detail.ranks.map(rank => (
                 `${rank.date} ${rank.hour}时 ${formatRank(rank.rank)}`
               )).join('\n')}
@@ -105,11 +107,13 @@ function DiscView(props: Props & ViewportProps) {
           <Input.Group compact={true}>
             <div className="input-wrapper">
               <Input
+                readOnly={true}
                 addonBefore="当前"
                 style={{width: 140}}
                 value={formatRank(props.detail.thisRank)}
               />
               <Input
+                readOnly={true}
                 addonBefore="前回"
                 style={{width: 140, marginLeft: 12}}
                 value={formatRank(props.detail.prevRank)}
@@ -119,11 +123,13 @@ function DiscView(props: Props & ViewportProps) {
           <Input.Group compact={true}>
             <div className="input-wrapper">
               <Input
+                readOnly={true}
                 addonBefore="累积PT"
                 style={{width: 140}}
                 value={props.detail.totalPt}
               />
               <Input
+                readOnly={true}
                 addonBefore="预测PT"
                 style={{width: 140, marginLeft: 12}}
                 value={props.detail.guessPt}
@@ -133,11 +139,13 @@ function DiscView(props: Props & ViewportProps) {
           <Input.Group compact={true}>
             <div className="input-wrapper">
               <Input
+                readOnly={true}
                 addonBefore="日增PT"
                 style={{width: 140}}
                 value={props.detail.todayPt}
               />
               <Input
+                readOnly={true}
                 addonBefore="Nico预约"
                 style={{width: 140, marginLeft: 12}}
                 value={props.detail.nicoBook}
@@ -147,11 +155,13 @@ function DiscView(props: Props & ViewportProps) {
           <Input.Group compact={true}>
             <div className="input-wrapper">
               <Input
+                readOnly={true}
                 addonBefore="发售"
                 style={{width: 160}}
                 value={props.detail.releaseDate}
               />
               <Input
+                readOnly={true}
                 addonBefore="天数"
                 style={{width: 120, marginLeft: 12}}
                 value={props.detail.surplusDays}
@@ -160,6 +170,7 @@ function DiscView(props: Props & ViewportProps) {
           </Input.Group>
           <div className="input-wrapper">
             <Input
+              readOnly={true}
               addonBefore="创建时间"
               style={{width: 270}}
               value={formatDate(props.detail.createTime)}
@@ -167,6 +178,7 @@ function DiscView(props: Props & ViewportProps) {
           </div>
           <div className="input-wrapper">
             <Input
+              readOnly={true}
               addonBefore="刷新时间"
               style={{width: 270}}
               value={formatDate(props.detail.updateTime)}
@@ -174,6 +186,7 @@ function DiscView(props: Props & ViewportProps) {
           </div>
           <div className="input-wrapper">
             <Input
+              readOnly={true}
               addonBefore="修改时间"
               style={{width: 270}}
               value={formatDate(props.detail.modifyTime)}
@@ -184,6 +197,7 @@ function DiscView(props: Props & ViewportProps) {
           <div className="input-wrapper">
             <div className="input-label">原标题</div>
             <Input.TextArea
+              readOnly={true}
               autosize={true}
               value={props.detail.title}
             />
@@ -207,11 +221,13 @@ function DiscView(props: Props & ViewportProps) {
           <Input.Group compact={true}>
             <div className="input-wrapper">
               <Input
+                readOnly={true}
                 addonBefore="Id"
                 style={{width: 100}}
                 value={props.detail.id}
               />
               <Input
+                readOnly={true}
                 addonBefore="Asin"
                 style={{width: 180, marginLeft: 12}}
                 value={props.detail.asin}

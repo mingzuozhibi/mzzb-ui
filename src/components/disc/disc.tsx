@@ -8,6 +8,7 @@ import { DiscOfRanksModel, DiscOfRecordsModel, DiscState } from './reducer'
 import { adminDiscEditMessage } from '../../common/site-messages'
 import { DiscRecords } from './disc-records'
 import { DiscView } from './disc-view'
+import { Command } from '../../lib/command'
 import { Session } from '../../App/reducer'
 
 export type OwnProps = RouteComponentProps<{}>
@@ -32,6 +33,16 @@ export function Disc(props: Props) {
       return render(props.detailOfRecords)
     }
     return null
+  }
+
+  function pushToRecords() {
+    const matchUrl = props.location.pathname
+    props.history.push(matchUrl.substring(0, matchUrl.length - 8), props.location.state)
+  }
+
+  function pushToView() {
+    const matchUrl = props.location.pathname
+    props.history.push(`${matchUrl}/records`, props.location.state)
   }
 
   const hasBasicRole = props.session.userRoles.some(role => role === 'ROLE_BASIC')
@@ -60,10 +71,15 @@ export function Disc(props: Props) {
                 <title>{props.pageInfo.pageTitle} - 名作之壁吧</title>
               </Helmet>
               <Breadcrumb style={{padding: 10}}>
+                {props.location.state && (
+                  <Breadcrumb.Item>
+                    <Link to={props.location.state.url}>
+                      {props.location.state.title}
+                    </Link>
+                  </Breadcrumb.Item>
+                )}
                 <Breadcrumb.Item>
-                  <Link to={props.location.state.url}>
-                    {props.location.state.title}
-                  </Link>
+                  <Command onClick={pushToView}>排名数据</Command>
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>
                   {props.pageInfo.pageTitle}
@@ -92,10 +108,15 @@ export function Disc(props: Props) {
                 <title>排名数据 - 名作之壁吧</title>
               </Helmet>
               <Breadcrumb style={{padding: 10}}>
+                {props.location.state && (
+                  <Breadcrumb.Item>
+                    <Link to={props.location.state.url}>
+                      {props.location.state.title}
+                    </Link>
+                  </Breadcrumb.Item>
+                )}
                 <Breadcrumb.Item>
-                  <Link to={props.location.state.url}>
-                    {props.location.state.title}
-                  </Link>
+                  <Command onClick={pushToRecords}>碟片信息</Command>
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>
                   排名数据
