@@ -60,10 +60,7 @@ export function Sakura(props: Props) {
     return null
   }
 
-  // console.info(`sakura render ${props.models !== undefined} ${new Date()}`)
-
-  const sakuraDiscsMsg = '最新更新：点击碟片标题可以看到最新5个排名，并有快捷链接到Amazon和Sakura；' +
-    '新版刚刚上线需要修复很多Bug，可能会经常重启服务，会有20~30秒不能访问。'
+  const siteMessage = ''
 
   const hasBasicRole = props.session.userRoles.find(role => role === 'ROLE_BASIC')
 
@@ -124,7 +121,9 @@ export function Sakura(props: Props) {
                   {detail.title}
                 </Breadcrumb.Item>
               </Breadcrumb>
-              <Alert type="info" message={sakuraDiscsMsg}/>
+              {siteMessage && (
+                <Alert type="info" message={siteMessage}/>
+              )}
               <SakuraDiscs
                 detail={detail}
                 toViewDisc={(t: DiscModel) => {
