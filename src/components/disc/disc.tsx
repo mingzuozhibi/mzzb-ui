@@ -126,6 +126,7 @@ export function Disc(props: Props) {
                 detail={detail}
                 mergeRanks={props.mergeRanks}
                 mergePts={props.mergePts}
+                hasBasicRole={hasBasicRole}
               />
             </div>
           ))}

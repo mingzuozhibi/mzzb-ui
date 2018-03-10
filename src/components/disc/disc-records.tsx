@@ -13,6 +13,7 @@ interface Props {
   detail: DiscOfRecordsModel
   mergeRanks: (id: number, model: {}) => void
   mergePts: (id: number, model: {}) => void
+  hasBasicRole: boolean
 }
 
 export function DiscRecords(props: Props) {
@@ -83,50 +84,54 @@ export function DiscRecords(props: Props) {
             columns={getColumns()}
           />
         </Tabs.TabPane>
-        <Tabs.TabPane key={2} tab="提交排名">
-          <div className="input-wrapper">
-            <Button type="danger" onClick={mergeRanks}>提交排名</Button>
-          </div>
-          <div className="input-wrapper">
-            <div className="input-label">
-              <span style={{marginRight: 10}}>Sakura历史排名</span>
-              <a target="_blank" href={toSakuraRank(props.detail.asin)}>
-                点击这里打开Sakura网站
-              </a>
-            </div>
-            <Input.TextArea
-              autosize={true}
-              onChange={e => formRecord.text = e.target.value}
-              defaultValue={formRecord.text}
-              placeholder="你可以从Sakura网站手动复制排名数据到这里"
-            />
-          </div>
-          <div className="input-wrapper">
-            <Button type="danger" onClick={mergeRanks}>提交排名</Button>
-          </div>
-        </Tabs.TabPane>
-        <Tabs.TabPane key={3} tab="提交PT">
-          <div className="input-wrapper">
-            <Button type="danger" onClick={mergePts}>提交PT</Button>
-          </div>
-          <div className="input-wrapper">
-            <div className="input-label">
-              <span style={{marginRight: 10}}>Sakura累积PT</span>
-              <a target="_blank" href={toSakuraPt(props.detail.asin)}>
-                点击这里打开Sakura网站
-              </a>
-            </div>
-            <Input.TextArea
-              autosize={true}
-              onChange={e => formRecord.text = e.target.value}
-              defaultValue={formRecord.text}
-              placeholder="你可以从Sakura网站手动复制PT数据到这里"
-            />
-          </div>
-          <div className="input-wrapper">
-            <Button type="danger" onClick={mergePts}>提交PT</Button>
-          </div>
-        </Tabs.TabPane>
+        {props.hasBasicRole && (
+          <React.Fragment>
+            <Tabs.TabPane key={2} tab="提交排名">
+              <div className="input-wrapper">
+                <Button type="danger" onClick={mergeRanks}>提交排名</Button>
+              </div>
+              <div className="input-wrapper">
+                <div className="input-label">
+                  <span style={{marginRight: 10}}>Sakura历史排名</span>
+                  <a target="_blank" href={toSakuraRank(props.detail.asin)}>
+                    点击这里打开Sakura网站
+                  </a>
+                </div>
+                <Input.TextArea
+                  autosize={true}
+                  onChange={e => formRecord.text = e.target.value}
+                  defaultValue={formRecord.text}
+                  placeholder="你可以从Sakura网站手动复制排名数据到这里"
+                />
+              </div>
+              <div className="input-wrapper">
+                <Button type="danger" onClick={mergeRanks}>提交排名</Button>
+              </div>
+            </Tabs.TabPane>
+            <Tabs.TabPane key={3} tab="提交PT">
+              <div className="input-wrapper">
+                <Button type="danger" onClick={mergePts}>提交PT</Button>
+              </div>
+              <div className="input-wrapper">
+                <div className="input-label">
+                  <span style={{marginRight: 10}}>Sakura累积PT</span>
+                  <a target="_blank" href={toSakuraPt(props.detail.asin)}>
+                    点击这里打开Sakura网站
+                  </a>
+                </div>
+                <Input.TextArea
+                  autosize={true}
+                  onChange={e => formRecord.text = e.target.value}
+                  defaultValue={formRecord.text}
+                  placeholder="你可以从Sakura网站手动复制PT数据到这里"
+                />
+              </div>
+              <div className="input-wrapper">
+                <Button type="danger" onClick={mergePts}>提交PT</Button>
+              </div>
+            </Tabs.TabPane>
+          </React.Fragment>
+        )}
       </Tabs>
     </div>
   )
