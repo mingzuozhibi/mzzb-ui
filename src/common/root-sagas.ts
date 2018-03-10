@@ -15,8 +15,10 @@ export function* rootSagas() {
 
     takeEvery('viewDiscRequest', discSaga.viewModel),
     takeEvery('editDiscRequest', discSaga.editModel),
+
     takeEvery('view(records)DiscRequest', discSaga.viewRecords),
-    takeEvery('push(records)DiscRequest', discSaga.pushRecords),
+    takeEvery('merge(ranks)DiscRequest', discSaga.mergeRanks),
+    takeEvery('merge(pts)DiscRequest', discSaga.mergePts),
 
     takeEvery('listSakuraRequest', sakuraSaga.listModel),
     takeEvery('view(discs)SakuraRequest', sakuraSaga.viewDiscs),

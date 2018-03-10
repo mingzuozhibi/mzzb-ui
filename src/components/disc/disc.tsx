@@ -5,16 +5,19 @@ import { Link, Route, RouteComponentProps, Switch } from 'react-router-dom'
 import './disc.css'
 
 import { DiscOfRanksModel, DiscOfRecordsModel, DiscState } from './reducer'
-import { DiscView } from './disc-view'
-import { Session } from '../../App/reducer'
+import { adminDiscEditMessage } from '../../common/site-messages'
 import { DiscRecords } from './disc-records'
+import { DiscView } from './disc-view'
+import { Command } from '../../lib/command'
+import { Session } from '../../App/reducer'
 
 export type OwnProps = RouteComponentProps<{}>
 
 export interface Props extends DiscState, OwnProps {
   session: Session
   editModel: (id: number, model: {}) => void
-  addRecords: (id: number, model: {}) => void
+  mergeRanks: (id: number, model: {}) => void
+  mergePts: (id: number, model: {}) => void
 }
 
 export function Disc(props: Props) {
@@ -32,6 +35,18 @@ export function Disc(props: Props) {
     }
     return null
   }
+
+  function pushToRecords() {
+    const matchUrl = props.location.pathname
+    props.history.push(matchUrl.substring(0, matchUrl.length - 8), props.location.state)
+  }
+
+  function pushToView() {
+    const matchUrl = props.location.pathname
+    props.history.push(`${matchUrl}/records`, props.location.state)
+  }
+
+  const hasBasicRole = props.session.userRoles.some(role => role === 'ROLE_BASIC')
 
   return (
     <div className="disc">
@@ -57,20 +72,29 @@ export function Disc(props: Props) {
                 <title>{props.pageInfo.pageTitle} - 名作之壁吧</title>
               </Helmet>
               <Breadcrumb style={{padding: 10}}>
+                {props.location.state && (
+                  <Breadcrumb.Item>
+                    <Link to={props.location.state.url}>
+                      {props.location.state.title}
+                    </Link>
+                  </Breadcrumb.Item>
+                )}
                 <Breadcrumb.Item>
-                  <Link to={props.location.state.url}>
-                    {props.location.state.title}
-                  </Link>
+                  <Command onClick={pushToView}>排名数据</Command>
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>
                   {props.pageInfo.pageTitle}
                 </Breadcrumb.Item>
               </Breadcrumb>
+              {hasBasicRole && adminDiscEditMessage && (
+                <div className="form-message">
+                  {adminDiscEditMessage}
+                </div>
+              )}
               <DiscView
                 detail={detail}
-                session={props.session}
                 editModel={props.editModel}
-                addRecords={props.addRecords}
+                hasBasicRole={hasBasicRole}
               />
             </div>
           ))}
@@ -84,17 +108,24 @@ export function Disc(props: Props) {
                 <title>排名数据 - 名作之壁吧</title>
               </Helmet>
               <Breadcrumb style={{padding: 10}}>
+                {props.location.state && (
+                  <Breadcrumb.Item>
+                    <Link to={props.location.state.url}>
+                      {props.location.state.title}
+                    </Link>
+                  </Breadcrumb.Item>
+                )}
                 <Breadcrumb.Item>
-                  <Link to={props.location.state.url}>
-                    {props.location.state.title}
-                  </Link>
+                  <Command onClick={pushToRecords}>碟片信息</Command>
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>
                   排名数据
                 </Breadcrumb.Item>
               </Breadcrumb>
               <DiscRecords
-                detailOfRanks={detail}
+                detail={detail}
+                mergeRanks={props.mergeRanks}
+                mergePts={props.mergePts}
               />
             </div>
           ))}

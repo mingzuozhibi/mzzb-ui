@@ -14,8 +14,11 @@ function mapDispatchToProps(dispatch: Dispatch<any>) {
     editModel(id: number, model: {}) {
       dispatch({type: `edit${pageInfo.pageModel}Request`, id, model})
     },
-    addRecords(id: number, model: {}) {
-      dispatch({type: `push(records)${pageInfo.pageModel}Request`, id, model})
+    mergeRanks(id: number, model: {}) {
+      dispatch({type: `merge(ranks)${pageInfo.pageModel}Request`, id, model})
+    },
+    mergePts(id: number, model: {}) {
+      dispatch({type: `merge(pts)${pageInfo.pageModel}Request`, id, model})
     },
   }
 }

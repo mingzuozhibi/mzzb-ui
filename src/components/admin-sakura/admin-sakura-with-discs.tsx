@@ -107,12 +107,12 @@ function AdminSakuraDiscs(props: Props & ViewportProps) {
           />
         </div>
         <div className="input-wrapper">
-          <Button onClick={searchDisc}>提交</Button>
+          <Button onClick={searchDisc}>查找碟片</Button>
         </div>
       </div>
       {props.addDiscs && (
         <Table
-          title="待选碟片"
+          title="待选列表"
           rows={props.addDiscs}
           columns={getColumns(getPushControl())}
         />

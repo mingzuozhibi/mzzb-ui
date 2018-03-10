@@ -4,6 +4,7 @@ import { Alert, Breadcrumb } from 'antd'
 import { Link, Route, RouteComponentProps, Switch } from 'react-router-dom'
 import './sakura.css'
 
+import { sakuraDiscsMessge, sakuraListMessge } from '../../common/site-messages'
 import { compareFactory } from '../../utils/compare'
 import { viewTypes } from '../admin-sakura/reducer'
 import { Session } from '../../App/reducer'
@@ -60,8 +61,6 @@ export function Sakura(props: Props) {
     return null
   }
 
-  const siteMessage = ''
-
   const hasBasicRole = props.session.userRoles.some(role => role === 'ROLE_BASIC')
 
   return (
@@ -95,9 +94,11 @@ export function Sakura(props: Props) {
                   </Breadcrumb.Item>
                 )}
               </Breadcrumb>
-              <div style={{paddingBottom: 10}}>
-                <Alert message="点击标题查看碟片排名"/>
-              </div>
+              {sakuraListMessge && (
+                <div style={{paddingBottom: 10}}>
+                  <Alert message={sakuraListMessge}/>
+                </div>
+              )}
               <SakuraList
                 models={models}
                 viewDiscsTo={t => `${props.match.url}/${t.key}/discs`}
@@ -126,8 +127,8 @@ export function Sakura(props: Props) {
                   {detail.title}
                 </Breadcrumb.Item>
               </Breadcrumb>
-              {siteMessage && (
-                <Alert type="info" message={siteMessage}/>
+              {sakuraDiscsMessge && (
+                <Alert type="info" message={sakuraDiscsMessge}/>
               )}
               <SakuraDiscs
                 detail={detail}

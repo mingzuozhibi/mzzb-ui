@@ -51,27 +51,66 @@ export const menuInfos: MenuInfo[] = [
     path: '/zhuantie',
     subMenus: [
       {
-        text: '2018年冬番-长期追踪贴',
-        path: 'https://tieba.baidu.com/p/5533369671?pn=9999',
+        text: '2018冬-B站数据统计',
+        path: 'https://tieba.baidu.com/p/5490501406?pn=9999',
       },
       {
-        text: '2018年冬番-PT排名走势',
+        text: '2018冬-原作销量贴',
+        path: 'https://tieba.baidu.com/p/5505393535?pn=9999',
+      },
+      {
+        text: '2018冬-PT排名走势',
         path: 'https://tieba.baidu.com/p/5500417708?pn=9999',
       },
       {
-        text: '2017年秋番-PT排名走势',
+        text: '2018冬-长期追踪贴',
+        path: 'https://tieba.baidu.com/p/5533369671?pn=9999',
+      },
+      {
+        text: '2017秋-PT排名走势',
         path: 'https://tieba.baidu.com/p/5350894353?pn=9999',
       },
       {
-        text: '2017年夏番-PT排名走势',
+        text: '2017秋-长期追踪贴',
+        path: 'https://tieba.baidu.com/p/5369087987?pn=9999',
+      },
+      {
+        text: '2017夏-PT排名走势',
         path: 'https://tieba.baidu.com/p/5197490889?pn=9999',
+      },
+      {
+        text: '2017夏-长期追踪贴',
+        path: 'https://tieba.baidu.com/p/5244395926?pn=9999',
+      },
+    ]
+  },
+  {
+    icon: 'icon-social-tieba',
+    text: '票房专楼',
+    path: '/piapfang',
+    subMenus: [
+      {
+        text: '日本票房综合讨论楼V3',
+        path: 'https://tieba.baidu.com/p/4803602533?pn=9999',
+      },
+      {
+        text: '超时空要塞Δ 激情的ワルキ',
+        path: 'https://tieba.baidu.com/p/5544251789?pn=9999',
+      },
+      {
+        text: 'FSN Heavens Feel',
+        path: 'https://tieba.baidu.com/p/5360321349?pn=9999',
+      },
+      {
+        text: 'NO GAME NO LIFE : ZERO',
+        path: 'https://tieba.baidu.com/p/5209590919?pn=9999',
       },
     ]
   },
   {
     icon: 'icon-social-tieba',
     text: '本季专楼',
-    path: '/zhuanlou',
+    path: '/benji',
     subMenus: [
       {
         text: 'DitF(国家队)',
@@ -118,7 +157,7 @@ export const menuInfos: MenuInfo[] = [
   {
     icon: 'icon-social-tieba',
     text: '往季专楼',
-    path: '/zhuanlou2',
+    path: '/wangyi',
     subMenus: [
       {
         text: 'Princess Principal',
