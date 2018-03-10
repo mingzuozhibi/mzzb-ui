@@ -84,8 +84,7 @@ export function DiscRecords(props: Props) {
             columns={getColumns()}
           />
         </Tabs.TabPane>
-        {props.hasBasicRole && (
-          <React.Fragment>
+        {props.hasBasicRole && [
             <Tabs.TabPane key={2} tab="提交排名">
               <div className="input-wrapper">
                 <Button type="danger" onClick={mergeRanks}>提交排名</Button>
@@ -108,6 +107,7 @@ export function DiscRecords(props: Props) {
                 <Button type="danger" onClick={mergeRanks}>提交排名</Button>
               </div>
             </Tabs.TabPane>
+          ,
             <Tabs.TabPane key={3} tab="提交PT">
               <div className="input-wrapper">
                 <Button type="danger" onClick={mergePts}>提交PT</Button>
@@ -130,8 +130,7 @@ export function DiscRecords(props: Props) {
                 <Button type="danger" onClick={mergePts}>提交PT</Button>
               </div>
             </Tabs.TabPane>
-          </React.Fragment>
-        )}
+        ]}
       </Tabs>
     </div>
   )

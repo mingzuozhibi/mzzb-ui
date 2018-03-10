@@ -5,7 +5,10 @@ import { Link, Route, RouteComponentProps, Switch } from 'react-router-dom'
 import './disc.css'
 
 import { DiscOfRanksModel, DiscOfRecordsModel, DiscState } from './reducer'
-import { adminDiscEditMessage } from '../../common/site-messages'
+import {
+  adminDiscRecordsMessage, adminDiscViewMessage, discRecordsMessage,
+  discViewMessage
+} from '../../common/site-messages'
 import { DiscRecords } from './disc-records'
 import { DiscView } from './disc-view'
 import { Command } from '../../lib/command'
@@ -86,9 +89,14 @@ export function Disc(props: Props) {
                   {props.pageInfo.pageTitle}
                 </Breadcrumb.Item>
               </Breadcrumb>
-              {hasBasicRole && adminDiscEditMessage && (
+              {hasBasicRole && adminDiscViewMessage && (
                 <div className="form-message">
-                  {adminDiscEditMessage}
+                  {adminDiscViewMessage}
+                </div>
+              )}
+              {!hasBasicRole && discViewMessage && (
+                <div className="form-message">
+                  {discViewMessage}
                 </div>
               )}
               <DiscView
@@ -122,6 +130,16 @@ export function Disc(props: Props) {
                   排名数据
                 </Breadcrumb.Item>
               </Breadcrumb>
+              {hasBasicRole && adminDiscRecordsMessage && (
+                <div className="form-message">
+                  {adminDiscRecordsMessage}
+                </div>
+              )}
+              {!hasBasicRole && discRecordsMessage && (
+                <div className="form-message">
+                  {discRecordsMessage}
+                </div>
+              )}
               <DiscRecords
                 detail={detail}
                 mergeRanks={props.mergeRanks}

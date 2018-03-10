@@ -7,7 +7,18 @@ const adminSakuraDiscsMessage = '操作提示：' +
 
 const adminUserEditMessage = '提示: 用户密码可以留空，留空则继续使用原密码'
 
-const adminDiscEditMessage = '提示: 基本信息页面可以编辑，原标题，Id，Asin不会被修改；提交排名页面可以手动提交历史排名'
+const adminDiscViewMessage = '提示: ' +
+  '基本信息页面可以编辑，原标题，Id，Asin不会被修改；' +
+  '新增提交PT功能，和提交排名一起移动到了排名数据页面；' +
+  '点击上方排名数据链接可跳转到该页面'
+
+const adminDiscRecordsMessage = '提示：' +
+  '提交排名页面可手动提交Sakura排名数据；' +
+  '提交PT页面可手动提交SakuraPT数据；' +
+  '如要同时操作，请先排名后PT'
+
+const discViewMessage = '提示：左上新增排名数据跳转链接'
+const discRecordsMessage = '提示：左上新增碟片信息跳转链接'
 
 const sakuraListMessge = '最新更新：' +
   '左侧导航菜单中新增各专贴及专楼链接。' +
@@ -19,7 +30,10 @@ export {
   adminSakuraListMessage,
   adminSakuraDiscsMessage,
   adminUserEditMessage,
-  adminDiscEditMessage,
+  adminDiscViewMessage,
+  adminDiscRecordsMessage,
+  discViewMessage,
+  discRecordsMessage,
   sakuraListMessge,
   sakuraDiscsMessge,
 }
