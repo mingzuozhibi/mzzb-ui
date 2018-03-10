@@ -4,7 +4,7 @@ import { Alert, Breadcrumb } from 'antd'
 import { Link, Route, RouteComponentProps, Switch } from 'react-router-dom'
 import './admin-sakura.css'
 
-import { adminSakuraListMessage } from '../../common/site-messages'
+import { adminSakuraDiscsMessage, adminSakuraListMessage } from '../../common/site-messages'
 import { Session } from '../../App/reducer'
 import produce from 'immer'
 
@@ -197,6 +197,9 @@ export function AdminSakura(props: Props) {
                   {detail.title}
                 </Breadcrumb.Item>
               </Breadcrumb>
+              <div className="form-message">
+                {adminSakuraDiscsMessage}
+              </div>
               <AdminSakuraDiscs
                 detail={detail}
                 addDiscs={props.addDiscs}
