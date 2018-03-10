@@ -16,9 +16,9 @@
           }
         }
         &.key {
-          width: 145px;
+          width: 135px;
           @media screen and (max-width: $mobile-max-width) {
-            width: 130px;
+            width: 120px;
           }
           @media screen and (max-width: 500px) {
             display: none;

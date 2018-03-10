@@ -60,12 +60,9 @@ export function Sakura(props: Props) {
     return null
   }
 
-  // console.info(`sakura render ${props.models !== undefined} ${new Date()}`)
+  const siteMessage = ''
 
-  const sakuraDiscsMsg = '最新更新：点击碟片标题可以看到最新5个排名，并有快捷链接到Amazon和Sakura；' +
-    '新版刚刚上线需要修复很多Bug，可能会经常重启服务，会有20~30秒不能访问。'
-
-  const hasBasicRole = props.session.userRoles.find(role => role === 'ROLE_BASIC')
+  const hasBasicRole = props.session.userRoles.some(role => role === 'ROLE_BASIC')
 
   return (
     <div className="sakura">
@@ -83,7 +80,7 @@ export function Sakura(props: Props) {
         <Route
           path={`${props.match.url}`}
           exact={true}
-          render={() => withModels(models => (
+          render={({match}) => withModels(models => (
             <div className="sakura-list">
               <Helmet>
                 <title>{props.pageInfo.pageTitle} - 名作之壁吧</title>
@@ -92,6 +89,11 @@ export function Sakura(props: Props) {
                 <Breadcrumb.Item>
                   {props.pageInfo.pageTitle}
                 </Breadcrumb.Item>
+                {hasBasicRole && (
+                  <Breadcrumb.Item>
+                    <Link to={`/admin${match.url}`}>跳转到后台模式</Link>
+                  </Breadcrumb.Item>
+                )}
               </Breadcrumb>
               <div style={{paddingBottom: 10}}>
                 <Alert message="点击标题查看碟片排名"/>
@@ -124,7 +126,9 @@ export function Sakura(props: Props) {
                   {detail.title}
                 </Breadcrumb.Item>
               </Breadcrumb>
-              <Alert type="info" message={sakuraDiscsMsg}/>
+              {siteMessage && (
+                <Alert type="info" message={siteMessage}/>
+              )}
               <SakuraDiscs
                 detail={detail}
                 toViewDisc={(t: DiscModel) => {
