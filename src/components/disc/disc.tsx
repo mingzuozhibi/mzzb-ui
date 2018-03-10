@@ -16,7 +16,8 @@ export type OwnProps = RouteComponentProps<{}>
 export interface Props extends DiscState, OwnProps {
   session: Session
   editModel: (id: number, model: {}) => void
-  addRecords: (id: number, model: {}) => void
+  mergeRanks: (id: number, model: {}) => void
+  mergePts: (id: number, model: {}) => void
 }
 
 export function Disc(props: Props) {
@@ -93,7 +94,6 @@ export function Disc(props: Props) {
               <DiscView
                 detail={detail}
                 editModel={props.editModel}
-                addRecords={props.addRecords}
                 hasBasicRole={hasBasicRole}
               />
             </div>
@@ -123,7 +123,9 @@ export function Disc(props: Props) {
                 </Breadcrumb.Item>
               </Breadcrumb>
               <DiscRecords
-                detailOfRanks={detail}
+                detail={detail}
+                mergeRanks={props.mergeRanks}
+                mergePts={props.mergePts}
               />
             </div>
           ))}

@@ -4,7 +4,7 @@ import { BaseState, PageInfo } from '../../common/root-reducer'
 import { BaseModel, Manager } from '../../utils/manager'
 import produce from 'immer'
 import { message, Modal } from 'antd'
-import request from '../../utils/request'
+import { recordsReducer, recordsSaga } from './reducer-records'
 
 export const pageInfo: PageInfo = {
   pageTitle: '碟片信息',
@@ -81,22 +81,10 @@ export const discReducer = (state: DiscState = initState, action: AnyAction) => 
       case `edit${pageInfo.pageModel}Failed`:
         Modal.error({title: `编辑${pageInfo.modelName}失败`, content: action.message})
         break
-      case `view(records)${pageInfo.pageModel}Succeed`:
-        draftState.detailOfRecords = action.data
-        draftState.message = undefined
-        break
-      case `view(records)${pageInfo.pageModel}Failed`:
-        draftState.message = action.message
-        break
-      case `push(records)${pageInfo.pageModel}Succeed`:
-        message.success(`设置排名数据成功`)
-        draftState.detail = action.data
-        break
-      case `push(records)${pageInfo.pageModel}Failed`:
-        Modal.error({title: `设置排名数据失败`, content: action.message})
-        break
       default:
     }
+
+    recordsReducer(action, draftState)
   })
 }
 
@@ -120,23 +108,4 @@ function* editModel(action: AnyAction) {
   }
 }
 
-function* viewRecords(action: AnyAction) {
-  const result = yield call(manager.findList, action.search, action.value, 'records')
-  if (result.success) {
-    yield put({type: `view(records)${pageInfo.pageModel}Succeed`, data: result.data})
-  } else {
-    yield put({type: `view(records)${pageInfo.pageModel}Failed`, message: result.message})
-  }
-}
-
-function* pushRecords(action: AnyAction) {
-  const param = {method: 'post', body: JSON.stringify(action.model)}
-  const result = yield call(request, `/api/discs/${action.id}/records`, param)
-  if (result.success) {
-    yield put({type: `push(records)${pageInfo.pageModel}Succeed`, data: result.data})
-  } else {
-    yield put({type: `push(records)${pageInfo.pageModel}Failed`, message: result.message})
-  }
-}
-
-export const discSaga = {viewModel, viewRecords, editModel, pushRecords}
+export const discSaga = {viewModel, editModel, ...recordsSaga}

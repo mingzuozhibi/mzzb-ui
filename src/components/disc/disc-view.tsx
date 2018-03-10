@@ -12,17 +12,11 @@ interface FormEdit {
   releaseDate?: string
 }
 
-interface FormRecord {
-  recordsText?: string
-}
-
 const formEdit: FormEdit = {}
-const formRecord: FormRecord = {}
 
 interface Props {
   detail: DiscOfRanksModel
   editModel: (id: number, model: {}) => void
-  addRecords: (id: number, model: {}) => void
   hasBasicRole: boolean
 }
 
@@ -42,21 +36,11 @@ function DiscView(props: Props & ViewportProps) {
     props.editModel(props.detail.id, formEdit)
   }
 
-  function addRecords() {
-    if (!formRecord.recordsText) {
-      Modal.warning({title: '请检查输入项', content: `你必须输入历史排名`})
-      return
-    }
-
-    props.addRecords(props.detail.id, formRecord)
-  }
-
   formEdit.titlePc = props.detail.titlePc
   formEdit.titleMo = props.detail.titleMo
   formEdit.discType = props.detail.discType
   formEdit.updateType = props.detail.updateType
   formEdit.releaseDate = props.detail.releaseDate
-  formRecord.recordsText = undefined
 
   function toSakura() {
     return <a href={`http://rankstker.net/show.cgi?n=${props.detail.asin}`} target="_blank">Sakura链接</a>
@@ -277,36 +261,9 @@ function DiscView(props: Props & ViewportProps) {
             )}
           </div>
         </Tabs.TabPane>
-        {props.hasBasicRole && (
-          <Tabs.TabPane key={3} tab="提交排名">
-            <div className="input-wrapper">
-              <Button type="danger" onClick={addRecords}>提交排名</Button>
-            </div>
-            <div className="input-wrapper">
-              <div className="input-label">
-                <span style={{marginRight: 10}}>Sakura历史排名</span>
-                <a target="_blank" href={toSakuraRank(props.detail.asin)}>
-                  点击这里打开Sakura网站
-                </a>
-              </div>
-              <Input.TextArea
-                autosize={true}
-                onChange={e => formRecord.recordsText = e.target.value}
-                placeholder="你可以从Sakura网站手动复制排名数据到这里"
-              />
-            </div>
-            <div className="input-wrapper">
-              <Button type="danger" onClick={addRecords}>提交排名</Button>
-            </div>
-          </Tabs.TabPane>
-        )}
       </Tabs>
     </div>
   )
-}
-
-function toSakuraRank(asin: string) {
-  return `http://rankstker.net/show.cgi?n=${asin}&rg=100000&li=&tn=1#ui-tab`
 }
 
 function formatDate(time?: number) {
