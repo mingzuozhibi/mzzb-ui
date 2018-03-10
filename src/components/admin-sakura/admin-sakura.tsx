@@ -4,6 +4,7 @@ import { Alert, Breadcrumb } from 'antd'
 import { Link, Route, RouteComponentProps, Switch } from 'react-router-dom'
 import './admin-sakura.css'
 
+import { adminSakuraListMessage } from '../../common/site-messages'
 import { Session } from '../../App/reducer'
 import produce from 'immer'
 
@@ -111,9 +112,11 @@ export function AdminSakura(props: Props) {
                   <Link to={`${props.match.url}/save`}>创建{props.pageInfo.modelName}</Link>
                 </Breadcrumb.Item>
               </Breadcrumb>
-              <div style={{paddingBottom: 10}}>
-                <Alert message="点击编辑，编辑列表信息；点击标题，进入碟片管理"/>
-              </div>
+              {adminSakuraListMessage && (
+                <div style={{paddingBottom: 10}}>
+                  <Alert message={adminSakuraListMessage}/>
+                </div>
+              )}
               <AdminSakuraList
                 models={models}
                 editModelTo={t => `${props.match.url}/${t.key}`}

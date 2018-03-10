@@ -5,9 +5,10 @@ import { Link, Route, RouteComponentProps, Switch } from 'react-router-dom'
 import './disc.css'
 
 import { DiscOfRanksModel, DiscOfRecordsModel, DiscState } from './reducer'
+import { adminDiscEditMessage } from '../../common/site-messages'
+import { DiscRecords } from './disc-records'
 import { DiscView } from './disc-view'
 import { Session } from '../../App/reducer'
-import { DiscRecords } from './disc-records'
 
 export type OwnProps = RouteComponentProps<{}>
 
@@ -32,6 +33,8 @@ export function Disc(props: Props) {
     }
     return null
   }
+
+  const hasBasicRole = props.session.userRoles.some(role => role === 'ROLE_BASIC')
 
   return (
     <div className="disc">
@@ -66,11 +69,16 @@ export function Disc(props: Props) {
                   {props.pageInfo.pageTitle}
                 </Breadcrumb.Item>
               </Breadcrumb>
+              {hasBasicRole && adminDiscEditMessage && (
+                <div className="form-message">
+                  {adminDiscEditMessage}
+                </div>
+              )}
               <DiscView
                 detail={detail}
-                session={props.session}
                 editModel={props.editModel}
                 addRecords={props.addRecords}
+                hasBasicRole={hasBasicRole}
               />
             </div>
           ))}

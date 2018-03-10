@@ -1,8 +1,7 @@
 import * as React from 'react'
 import { Button, Input, Modal, Select, Tabs } from 'antd'
-import { DiscOfRanksModel } from './reducer'
-import { Session } from '../../App/reducer'
 import { ViewportProps, withViewport } from '../../hoc/Viewport'
+import { DiscOfRanksModel } from './reducer'
 import { formatNumber } from '../../utils/format'
 
 interface FormEdit {
@@ -22,9 +21,9 @@ const formRecord: FormRecord = {}
 
 interface Props {
   detail: DiscOfRanksModel
-  session: Session
   editModel: (id: number, model: {}) => void
   addRecords: (id: number, model: {}) => void
+  hasBasicRole: boolean
 }
 
 function DiscView(props: Props & ViewportProps) {
@@ -75,16 +74,8 @@ function DiscView(props: Props & ViewportProps) {
     }
   }
 
-  const hasBasicRole = props.session.userRoles.some(role => role === 'ROLE_BASIC')
-
   return (
     <div className="disc-view-content">
-      {hasBasicRole && (
-        <div className="form-message">
-          <div>提示: 基本信息页面可以编辑，原标题，Id，Asin不会被修改</div>
-          <div>提示: 提交排名页面可以手动提交历史排名</div>
-        </div>
-      )}
       <Tabs>
         <Tabs.TabPane key={1} tab="销量排名">
           <div className="input-wrapper">
@@ -261,7 +252,7 @@ function DiscView(props: Props & ViewportProps) {
               <Select.Option value="Both">自动更新模式</Select.Option>
               <Select.Option value="None">不进行更新</Select.Option>
             </Select>
-            {hasBasicRole && (
+            {props.hasBasicRole && (
               <div>
                 <div style={{marginTop: 20}}>
                   <Button type="danger" onClick={editModel}>提交修改</Button>
@@ -270,7 +261,7 @@ function DiscView(props: Props & ViewportProps) {
             )}
           </div>
         </Tabs.TabPane>
-        {hasBasicRole && (
+        {props.hasBasicRole && (
           <Tabs.TabPane key={3} tab="提交排名">
             <div className="input-wrapper">
               <Button type="danger" onClick={addRecords}>提交排名</Button>
