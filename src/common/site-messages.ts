@@ -1,4 +1,8 @@
-const adminSakuraListMessage = '点击编辑，编辑列表信息；点击标题，进入碟片管理'
+const adminSakuraListMessage = '提示：' +
+  '点击编辑，编辑列表信息；' +
+  '点击标题，进入碟片管理；' +
+  '点击上方创建列表链接，进入创建列表界面'
+
 const adminSakuraDiscsMessage = '操作提示：' +
   '添加碟片的方法：首先输入ASIN查找碟片，然后从待选列表中点击添加即可；' +
   '移除碟片的方法：点击碟片右侧的移除即可，被移除的碟片会进入待选列表；' +
