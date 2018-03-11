@@ -1,11 +1,12 @@
 import * as React from 'react'
 import { Layout, message, Popconfirm } from 'antd'
+import { Session } from '../reducer'
 import { Reload } from '../../common/reducers/current'
 import { Icon } from '../../lib/icon'
 
 interface AppHeaderProps {
   reload?: Reload
-  isLogged: boolean
+  session: Session
   viewSider: boolean
   showLogin: () => void
   setViewSider: (viewSider: boolean) => void
@@ -34,7 +35,10 @@ export function AppHeader(props: AppHeaderProps) {
           onClick={reloadRequest}
         />
       )}
-      {props.isLogged ? (
+      <span style={{marginLeft: 24}}>
+        在线人数: {props.session.onlineUserCount}
+      </span>
+      {props.session.isLogged ? (
         <Popconfirm
           title="你确定要登出吗？"
           placement="bottomRight"
