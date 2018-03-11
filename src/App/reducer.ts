@@ -9,6 +9,7 @@ export interface Session {
   userName: string
   isLogged: boolean
   userRoles: string[]
+  onlineUserCount: number
 }
 
 export interface AppState {
@@ -23,6 +24,7 @@ const initSession = {
   userName: 'Guest',
   isLogged: false,
   userRoles: ['NONE'],
+  onlineUserCount: 0,
 }
 
 const initState: AppState = {

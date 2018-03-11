@@ -5,7 +5,7 @@ import { AppHeader } from './app-header'
 function mapStateToProps(state: RootState) {
   return {
     reload: state.current.reload,
-    isLogged: state.app.session.isLogged,
+    session: state.app.session,
     viewSider: state.app.viewSider,
   }
 }
