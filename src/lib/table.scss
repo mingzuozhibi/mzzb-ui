@@ -17,6 +17,20 @@
       }
     }
   }
+  .table {
+    th.sortable {
+      cursor: pointer;
+      text-align: left;
+      padding-left: 20px;
+      background: url("/images/table-normal.gif") no-repeat center left;
+      &.asc {
+        background-image: url("/images/table-asc.gif");
+      }
+      &.desc {
+        background-image: url("/images/table-desc.gif");
+      }
+    }
+  }
   @media screen and (max-width: $mobile-max-width) {
     .table > thead > tr > th,
     .table > tbody > tr > th,
