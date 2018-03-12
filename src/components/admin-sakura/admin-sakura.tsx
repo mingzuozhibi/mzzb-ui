@@ -99,10 +99,10 @@ export function AdminSakura(props: Props) {
               </Helmet>
               <Breadcrumb style={{padding: 10}}>
                 <Breadcrumb.Item>
-                  {props.pageInfo.pageTitle}
+                  <Link to={match.url.substring(6)}>跳转到浏览模式</Link>
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>
-                  <Link to={match.url.substring(6)}>跳转到浏览模式</Link>
+                  {props.pageInfo.pageTitle}
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>
                   <Link to={`${props.match.url}/save`}>创建{props.pageInfo.modelName}</Link>
@@ -188,10 +188,10 @@ export function AdminSakura(props: Props) {
               </Helmet>
               <Breadcrumb style={{padding: 10}}>
                 <Breadcrumb.Item>
-                  <Link to={props.match.url}>{props.pageInfo.pageTitle}</Link>
+                  <Link to={match.url.substring(6)}>跳转到浏览模式</Link>
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>
-                  <Link to={match.url.substring(6)}>跳转到浏览模式</Link>
+                  <Link to={props.match.url}>{props.pageInfo.pageTitle}</Link>
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>
                   {detail.title}
