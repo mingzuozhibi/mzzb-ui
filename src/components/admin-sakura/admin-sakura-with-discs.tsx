@@ -49,17 +49,19 @@ function AdminSakuraDiscs(props: Props & ViewportProps) {
       {
         key: 'asin',
         title: 'ASIN',
-        format: (t) => t.asin
+        format: (t) => t.asin,
       },
       {
         key: 'surplusDays',
         title: '天数',
-        format: (t) => `${t.surplusDays}天`
+        format: (t) => `${t.surplusDays}天`,
+        compare: (a, b) => a.surplusDays - b.surplusDays,
       },
       {
         key: 'title',
         title: '碟片标题',
-        format: (t) => <Command onClick={toViewDisc(t)}>{formatTitle(t)}</Command>
+        format: (t) => <Command onClick={toViewDisc(t)}>{formatTitle(t)}</Command>,
+        compare: (a, b) => formatTitle(a).localeCompare(formatTitle(b)),
       },
       extraColumn
     ]
