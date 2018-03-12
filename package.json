@@ -1,11 +1,12 @@
 {
   "private": true,
   "name": "mzzb-ui",
-  "version": "0.26.0",
+  "version": "0.26.1",
   "license": "Apache-2.0",
   "description": "ui for mingzuozhibi",
   "dependencies": {
     "antd": "^3.2.1",
+    "classnames": "^2.2.5",
     "immer": "^1.0.1",
     "lodash.debounce": "^4.0.8",
     "md5": "^2.2.1",
@@ -32,6 +33,7 @@
     "eject": "react-scripts-ts eject"
   },
   "devDependencies": {
+    "@types/classnames": "^2.2.3",
     "@types/jest": "^22.1.2",
     "@types/lodash.debounce": "^4.0.3",
     "@types/md5": "^2.1.32",

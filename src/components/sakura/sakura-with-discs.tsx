@@ -1,10 +1,11 @@
 import * as React from 'react'
 import { DiscModel, SakuraModel, SakuraOfDiscsModel } from './reducer'
 import { ViewportProps, withViewport } from '../../hoc/Viewport'
+import { compareFactory } from '../../utils/compare'
 import { Column, Table } from '../../lib/table'
-import { Timer } from '../../lib/timer'
 import { formatNumber } from '../../utils/format'
 import { Command } from '../../lib/command'
+import { Timer } from '../../lib/timer'
 
 interface Props {
   detail: SakuraOfDiscsModel
@@ -19,22 +20,34 @@ function SakuraDiscs(props: Props & ViewportProps) {
       {
         key: 'rank',
         title: '日亚排名',
-        format: (t) => <Command onClick={toViewRank(t)}>{formatRank(t)}</Command>
+        format: (t) => <Command onClick={toViewRank(t)}>{formatRank(t)}</Command>,
+        compare: compareFactory<DiscModel, number>({
+          apply: model => model.thisRank,
+          check: value => value === undefined,
+          compare: (a, b) => a - b
+        }),
       },
       {
         key: 'totalPt',
-        title: '累积PT',
-        format: (t) => `${(t.totalPt || '----')} pt`
+        title: '累积',
+        format: (t) => `${(t.totalPt || '----')} pt`,
+        compare: compareFactory<DiscModel, number>({
+          apply: model => model.totalPt,
+          check: value => value === undefined,
+          compare: (a, b) => b - a
+        }),
       },
       {
         key: 'surplusDays',
-        title: '剩余日期',
-        format: (t) => `${t.surplusDays} 天`
+        title: '发售',
+        format: (t) => `${t.surplusDays} 天`,
+        compare: (a, b) => a.surplusDays - b.surplusDays,
       },
       {
         key: 'title',
         title: '碟片标题',
-        format: (t) => <Command onClick={toViewDisc(t)}>{formatTitle(t)}</Command>
+        format: (t) => <Command onClick={toViewDisc(t)}>{formatTitle(t)}</Command>,
+        compare: (a, b) => formatTitle(a).localeCompare(formatTitle(b)),
       },
     ]
   }

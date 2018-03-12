@@ -12,7 +12,7 @@ import createSagaMiddleware from 'redux-saga'
 import App from './App'
 import { rootSagas } from './common/root-sagas'
 import { rootReducer } from './common/root-reducer'
-import registerServiceWorker from './registerServiceWorker'
+import { unregister } from './registerServiceWorker'
 
 const history = createHistory()
 const routerMid = routerMiddleware(history)
@@ -37,4 +37,4 @@ ReactDOM.render(
   document.getElementById('root') as HTMLElement
 )
 
-registerServiceWorker()
+unregister()

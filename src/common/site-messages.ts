@@ -28,7 +28,7 @@ const sakuraListMessge = '最新更新：' +
   '左侧导航菜单中新增各专贴及专楼链接。' +
   '如B站数据贴，轻改带动贴，PT走势贴，长期跟踪帖；' +
   '各电影票房专楼；国家队，紫罗兰，摇曳露营等等本季及往季专楼'
-const sakuraDiscsMessge = ''
+const sakuraDiscsMessge = '最新更新：排序功能回归了'
 
 export {
   adminSakuraListMessage,
