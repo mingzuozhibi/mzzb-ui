@@ -91,7 +91,7 @@ function SakuraDiscs(props: Props & ViewportProps) {
   return (
     <div className="sakura-discs-content">
       <Table
-        key={props.detail.id}
+        name={`sakura-discs-${props.detail.key}`}
         title={props.detail.title}
         subtitle={formatModifyTime(props.detail)}
         rows={props.detail.discs}

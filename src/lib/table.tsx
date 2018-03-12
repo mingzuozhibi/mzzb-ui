@@ -12,38 +12,44 @@ interface Column<T> {
 }
 
 interface TableProps<T> {
+  name?: string | number
   title?: string
   subtitle?: React.ReactNode
   rows: T[]
   columns: Column<T>[]
 }
 
-interface TableState<T> {
-  sortColumn?: Column<T>
+interface TableState {
+  sortKey?: string
   sortAsc?: boolean
 }
 
-class Table<T extends BaseModel> extends React.Component<TableProps<T>, TableState<T>> {
+class Table<T extends BaseModel> extends React.Component<TableProps<T>, TableState> {
 
-  state: TableState<T> = {}
+  state: TableState = JSON.parse(localStorage.getItem(`table-state-${this.props.name}`) || '{}')
 
   sortColumn = (column: Column<T>) => {
-    this.setState(produce(this.state, draftState => {
-      if (this.state.sortColumn === column) {
+    const next = produce(this.state, draftState => {
+      if (this.state.sortKey === column.key) {
         draftState.sortAsc = this.state.sortAsc !== true
       } else {
         draftState.sortAsc = true
-        draftState.sortColumn = column
+        draftState.sortKey = column.key
       }
-    }))
+    })
+    localStorage.setItem(`table-state-${this.props.name}`, JSON.stringify(next))
+    this.setState(next)
   }
 
   render() {
     const {title, subtitle, rows, columns} = this.props
 
     const finalRows = produce(rows, draftState => {
-      if (this.state.sortColumn) {
-        draftState.sort(this.state.sortColumn.compare)
+      if (this.state.sortKey) {
+        const findColumn = this.props.columns.find(c => c.key === this.state.sortKey)
+        if (findColumn) {
+          draftState.sort(findColumn.compare)
+        }
         if (this.state.sortAsc === false) {
           draftState.reverse()
         }
@@ -63,11 +69,12 @@ class Table<T extends BaseModel> extends React.Component<TableProps<T>, TableSta
             {columns.map(c => {
               const className = classNames(c.key, {
                 sortable: c.compare !== undefined,
-                asc: this.state.sortColumn === c && this.state.sortAsc === true,
-                desc: this.state.sortColumn === c && this.state.sortAsc === false,
+                asc: this.state.sortKey === c.key && this.state.sortAsc === true,
+                desc: this.state.sortKey === c.key && this.state.sortAsc === false,
               })
+              const onClick = c.compare ? () => this.sortColumn(c) : undefined
               return (
-                <th key={c.key} className={className} onClick={() => this.sortColumn(c)}>{c.title}</th>
+                <th key={c.key} className={className} onClick={onClick}>{c.title}</th>
               )
             })}
           </tr>
