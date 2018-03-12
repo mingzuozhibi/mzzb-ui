@@ -68,10 +68,9 @@ function deleteIf<T>(array: Array<T>, fun: (t: T) => boolean) {
 }
 
 const manager = new Manager<SakuraModel>('/api/sakuras')
-const query = 'discColumns=id,asin,surplusDays,title,titlePc,titleMo'
 
 function* viewDiscs(action: AnyAction) {
-  const result = yield call(manager.findList, action.search, action.value, 'discs', query)
+  const result = yield call(manager.findList, action.search, action.value, 'discs')
   if (result.success) {
     yield put({type: `view(discs)${pageInfo.pageModel}Succeed`, data: result.data})
   } else {
@@ -80,7 +79,7 @@ function* viewDiscs(action: AnyAction) {
 }
 
 function* pushDiscs(action: AnyAction) {
-  const result = yield call(manager.pushList, action.id, 'discs', action.pid, query)
+  const result = yield call(manager.pushList, action.id, 'discs', action.pid)
   if (result.success) {
     yield put({type: `push(discs)${pageInfo.pageModel}Succeed`, data: result.data})
   } else {
@@ -89,7 +88,7 @@ function* pushDiscs(action: AnyAction) {
 }
 
 function* dropDiscs(action: AnyAction) {
-  const result = yield call(manager.dropList, action.id, 'discs', action.pid, query)
+  const result = yield call(manager.dropList, action.id, 'discs', action.pid)
   if (result.success) {
     yield put({type: `drop(discs)${pageInfo.pageModel}Succeed`, data: result.data})
   } else {

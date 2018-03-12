@@ -85,14 +85,14 @@ export function Sakura(props: Props) {
                 <title>{props.pageInfo.pageTitle} - 名作之壁吧</title>
               </Helmet>
               <Breadcrumb style={{padding: 10}}>
-                <Breadcrumb.Item>
-                  {props.pageInfo.pageTitle}
-                </Breadcrumb.Item>
                 {hasBasicRole && (
                   <Breadcrumb.Item>
                     <Link to={`/admin${match.url}`}>跳转到后台模式</Link>
                   </Breadcrumb.Item>
                 )}
+                <Breadcrumb.Item>
+                  {props.pageInfo.pageTitle}
+                </Breadcrumb.Item>
               </Breadcrumb>
               {sakuraListMessge && (
                 <div style={{paddingBottom: 10}}>
@@ -115,14 +115,14 @@ export function Sakura(props: Props) {
                 <title>{detail.title} - 名作之壁吧</title>
               </Helmet>
               <Breadcrumb style={{padding: 10}}>
-                <Breadcrumb.Item>
-                  <Link to={props.match.url}>{props.pageInfo.pageTitle}</Link>
-                </Breadcrumb.Item>
                 {hasBasicRole && (
                   <Breadcrumb.Item>
                     <Link to={`/admin${match.url}`}>跳转到后台模式</Link>
                   </Breadcrumb.Item>
                 )}
+                <Breadcrumb.Item>
+                  <Link to={props.match.url}>{props.pageInfo.pageTitle}</Link>
+                </Breadcrumb.Item>
                 <Breadcrumb.Item>
                   {detail.title}
                 </Breadcrumb.Item>

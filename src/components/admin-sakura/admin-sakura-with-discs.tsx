@@ -120,6 +120,7 @@ function AdminSakuraDiscs(props: Props & ViewportProps) {
         />
       )}
       <Table
+        name={`admin-sakura-discs-${props.detail.key}`}
         title={props.detail.title}
         subtitle={formatTimeout(props.detail.modifyTime)}
         rows={props.detail.discs}
