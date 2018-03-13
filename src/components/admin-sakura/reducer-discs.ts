@@ -70,7 +70,7 @@ function deleteIf<T>(array: Array<T>, fun: (t: T) => boolean) {
 const manager = new Manager<SakuraModel>('/api/sakuras')
 
 function* viewDiscs(action: AnyAction) {
-  const result = yield call(manager.findList, action.search, action.value, 'discs')
+  const result = yield call(manager.findList, action.search, action.value, 'discs', 'public=false')
   if (result.success) {
     yield put({type: `view(discs)${pageInfo.pageModel}Succeed`, data: result.data})
   } else {
