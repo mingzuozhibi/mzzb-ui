@@ -1,5 +1,4 @@
 @import '../../global';
-
 .sakura {
   .sakura-list {
     table {
@@ -48,13 +47,40 @@
     }
   }
   .sakura-discs {
+    .sakura-discs-content {
+      overflow-x: auto;
+      .pc-mode {
+        min-width: 1001px;
+        table {
+          th, td {
+            display: table-cell !important;
+          }
+        }
+      }
+    }
     table {
       table-layout: fixed;
       td, th {
+        $today-pt-hide-width: 1000px;
+        $total-pt-hide-width: 600px;
+        $guess-pt-hide-width: 900px;
+        $surplus-days-hide-width: 800px;
         &.rank {
           width: 130px;
           @media screen and (max-width: $mobile-max-width) {
             width: 115px;
+          }
+        }
+        &.todayPt {
+          width: 75px;
+          @media screen and (max-width: $mobile-max-width) {
+            width: 68px;
+          }
+          @media screen and (max-width: $sider-menu-close) and (max-width: $today-pt-hide-width - $sider-menu-width) {
+            display: none;
+          }
+          @media screen and (min-width: $sider-menu-close + 1px) and (max-width: $today-pt-hide-width) {
+            display: none;
           }
         }
         &.totalPt {
@@ -62,13 +88,34 @@
           @media screen and (max-width: $mobile-max-width) {
             width: 68px;
           }
-          @media screen and (max-width: 400px) {
+          @media screen and (max-width: $sider-menu-close) and (max-width: $total-pt-hide-width - $sider-menu-width) {
+            display: none;
+          }
+          @media screen and (min-width: $sider-menu-close + 1px) and (max-width: $total-pt-hide-width) {
+            display: none;
+          }
+        }
+        &.guessPt {
+          width: 75px;
+          @media screen and (max-width: $mobile-max-width) {
+            width: 68px;
+          }
+          @media screen and (max-width: $sider-menu-close) and (max-width: $guess-pt-hide-width - $sider-menu-width) {
+            display: none;
+          }
+          @media screen and (min-width: $sider-menu-close + 1px) and (max-width: $guess-pt-hide-width) {
             display: none;
           }
         }
         &.surplusDays {
           width: 75px;
           @media screen and (max-width: $mobile-max-width) {
+            width: 68px;
+          }
+          @media screen and (max-width: $sider-menu-close) and (max-width: $surplus-days-hide-width - $sider-menu-width) {
+            display: none;
+          }
+          @media screen and (min-width: $sider-menu-close + 1px) and (max-width: $surplus-days-hide-width) {
             display: none;
           }
         }
@@ -81,7 +128,7 @@
           overflow: hidden;
           text-align: center;
         }
-        &.totalPt {
+        &.todayPt, &.totalPt, &.guessPt {
           word-break: keep-all;
           white-space: nowrap;
           text-align: right;

@@ -13,6 +13,7 @@ import produce from 'immer'
 import { DiscModel, SakuraModel, SakuraOfDiscsModel, SakuraState } from './reducer'
 import { SakuraList } from './sakura-list'
 import { SakuraDiscs } from './sakura-with-discs'
+import { Command } from '../../lib/command'
 
 const compareList = (a: SakuraModel, b: SakuraModel) => {
   const indexA = viewTypes.findIndex(v => v.value === a.viewType)
@@ -37,6 +38,7 @@ export type OwnProps = RouteComponentProps<{}>
 
 export interface Props extends SakuraState, OwnProps {
   session: Session
+  switchToPc: () => void
 }
 
 export function Sakura(props: Props) {
@@ -130,8 +132,14 @@ export function Sakura(props: Props) {
               {sakuraDiscsMessge && (
                 <Alert type="info" message={sakuraDiscsMessge}/>
               )}
+              <div style={{paddingLeft: 10, paddingTop: 10}}>
+                <Command onClick={props.switchToPc}>
+                  {props.isPcMode ? '切换到正常模式(根据宽度智能隐藏列)' : '切换到完整模式(显示所有列)'}
+                </Command>
+              </div>
               <SakuraDiscs
                 detail={detail}
+                isPcMode={props.isPcMode}
                 toViewDisc={(t: DiscModel) => {
                   history.push(`/disc/${t.id}`, {
                     url: match.url, title: detail.title
