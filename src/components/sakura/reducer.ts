@@ -38,11 +38,12 @@ export interface SakuraOfDiscsModel extends SakuraModel {
 }
 
 export interface SakuraState extends BaseState<SakuraModel> {
+  isPcMode: boolean
   detailOfDiscs?: SakuraOfDiscsModel
 }
 
 const initState: SakuraState = {
-  pageInfo
+  pageInfo, isPcMode: false
 }
 
 export const sakuraReducer = (state: SakuraState = initState, action: AnyAction) => {
@@ -61,6 +62,9 @@ export const sakuraReducer = (state: SakuraState = initState, action: AnyAction)
         break
       case `view(discs)${pageInfo.pageModel}Failed`:
         draftState.message = action.message
+        break
+      case `switchToPcMode`:
+        draftState.isPcMode = !draftState.isPcMode
         break
       default:
     }

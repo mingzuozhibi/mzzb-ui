@@ -14,7 +14,8 @@ const discViewMessage = ''
 const discRecordsMessage = ''
 
 const sakuraListMessge = ''
-const sakuraDiscsMessge = '最新更新：日增PT，预测PT上线，屏幕宽度大于1000px才能完整显示'
+const sakuraDiscsMessge = '最新更新：日增PT，预测PT上线，正常模式下屏幕宽度大于1000px才能完整显示；' +
+  '你可以手动点击下方链接切换到完整模式，完整模式下强制显示所有的列'
 
 export {
   adminSakuraListMessage,

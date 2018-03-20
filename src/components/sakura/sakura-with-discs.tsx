@@ -6,9 +6,11 @@ import { Column, Table } from '../../lib/table'
 import { formatNumber } from '../../utils/format'
 import { Command } from '../../lib/command'
 import { Timer } from '../../lib/timer'
+import * as classNames from 'classnames'
 
 interface Props {
   detail: SakuraOfDiscsModel
+  isPcMode: boolean
   toViewDisc: (t: DiscModel) => void
   toViewRank: (t: DiscModel) => void
 }
@@ -108,15 +110,21 @@ function SakuraDiscs(props: Props & ViewportProps) {
     }
   }
 
+  const className = classNames({
+    'pc-mode': props.isPcMode
+  })
+
   return (
     <div className="sakura-discs-content">
-      <Table
-        name={`sakura-discs-${props.detail.key}`}
-        title={props.detail.title}
-        subtitle={formatModifyTime(props.detail)}
-        rows={props.detail.discs}
-        columns={getColumns()}
-      />
+      <div className={className}>
+        <Table
+          name={`sakura-discs-${props.detail.key}`}
+          title={props.detail.title}
+          subtitle={formatModifyTime(props.detail)}
+          rows={props.detail.discs}
+          columns={getColumns()}
+        />
+      </div>
     </div>
   )
 }

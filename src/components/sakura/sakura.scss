@@ -47,6 +47,17 @@
     }
   }
   .sakura-discs {
+    .sakura-discs-content {
+      overflow-x: auto;
+      .pc-mode {
+        min-width: 1001px;
+        table {
+          th, td {
+            display: table-cell !important;
+          }
+        }
+      }
+    }
     table {
       table-layout: fixed;
       td, th {
