@@ -21,20 +21,40 @@ function SakuraDiscs(props: Props & ViewportProps) {
         key: 'rank',
         title: '日亚排名',
         format: (t) => <Command onClick={toViewRank(t)}>{formatRank(t)}</Command>,
-        compare: compareFactory<DiscModel, number>({
+        compare: compareFactory<DiscModel, number | undefined>({
           apply: model => model.thisRank,
           check: value => value === undefined,
-          compare: (a, b) => a - b
+          compare: (a, b) => a! - b!
+        }),
+      },
+      {
+        key: 'todayPt',
+        title: '日增',
+        format: (t) => `${(t.todayPt || '----')} pt`,
+        compare: compareFactory<DiscModel, number | undefined>({
+          apply: model => model.todayPt,
+          check: value => value === undefined,
+          compare: (a, b) => b! - a!
         }),
       },
       {
         key: 'totalPt',
         title: '累积',
         format: (t) => `${(t.totalPt || '----')} pt`,
-        compare: compareFactory<DiscModel, number>({
+        compare: compareFactory<DiscModel, number | undefined>({
           apply: model => model.totalPt,
           check: value => value === undefined,
-          compare: (a, b) => b - a
+          compare: (a, b) => b! - a!
+        }),
+      },
+      {
+        key: 'guessPt',
+        title: '预测',
+        format: (t) => `${(t.guessPt || '----')} pt`,
+        compare: compareFactory<DiscModel, number | undefined>({
+          apply: model => model.guessPt,
+          check: value => value === undefined,
+          compare: (a, b) => b! - a!
         }),
       },
       {
