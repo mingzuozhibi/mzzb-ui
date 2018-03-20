@@ -197,9 +197,11 @@ export function AdminSakura(props: Props) {
                   {detail.title}
                 </Breadcrumb.Item>
               </Breadcrumb>
-              <div className="form-message">
-                {adminSakuraDiscsMessage}
-              </div>
+              {adminSakuraDiscsMessage && (
+                <div className="form-message">
+                  {adminSakuraDiscsMessage}
+                </div>
+              )}
               <AdminSakuraDiscs
                 detail={detail}
                 addDiscs={props.addDiscs}
