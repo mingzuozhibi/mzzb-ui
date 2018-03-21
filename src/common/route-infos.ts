@@ -145,8 +145,8 @@ export const menuInfos: MenuInfo[] = [
         path: 'https://tieba.baidu.com/p/5503857640?pn=9999',
       },
       {
-        text: '魔卡少女樱 透明牌篇',
-        path: 'https://tieba.baidu.com/p/5503792011?pn=9999',
+        text: '魔卡少女樱 CC篇2.0',
+        path: 'https://tieba.baidu.com/p/5589343312?pn=9999',
       },
       {
         text: '刀使之巫女',

@@ -10,9 +10,11 @@ import createHistory from 'history/createBrowserHistory'
 import createSagaMiddleware from 'redux-saga'
 
 import App from './App'
+import { cleanup } from './utils/cleanup'
 import { rootSagas } from './common/root-sagas'
 import { rootReducer } from './common/root-reducer'
-import { unregister } from './registerServiceWorker'
+
+cleanup('v0.27.2')
 
 const history = createHistory()
 const routerMid = routerMiddleware(history)
@@ -36,5 +38,3 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root') as HTMLElement
 )
-
-unregister()
