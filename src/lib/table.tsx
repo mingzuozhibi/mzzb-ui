@@ -26,7 +26,7 @@ interface TableState {
 
 class Table<T extends BaseModel> extends React.Component<TableProps<T>, TableState> {
 
-  state: TableState = JSON.parse(localStorage.getItem(`table-state-${this.props.name}`) || '{}')
+  state: TableState = JSON.parse(sessionStorage.getItem(`table-state-${this.props.name}`) || '{}')
 
   sortColumn = (column: Column<T>) => {
     const next = produce(this.state, draftState => {
@@ -37,7 +37,7 @@ class Table<T extends BaseModel> extends React.Component<TableProps<T>, TableSta
         draftState.sortKey = column.key
       }
     })
-    localStorage.setItem(`table-state-${this.props.name}`, JSON.stringify(next))
+    sessionStorage.setItem(`table-state-${this.props.name}`, JSON.stringify(next))
     this.setState(next)
   }
 
