@@ -55,7 +55,12 @@ function AdminSakuraDiscs(props: Props & ViewportProps) {
         key: 'surplusDays',
         title: '天数',
         format: (t) => `${t.surplusDays}天`,
-        compare: (a, b) => a.surplusDays - b.surplusDays,
+        compare: (a, b) => {
+          if (a.surplusDays !== b.surplusDays) {
+            return a.surplusDays - b.surplusDays
+          }
+          return formatTitle(a).localeCompare(formatTitle(b))
+        },
       },
       {
         key: 'title',
