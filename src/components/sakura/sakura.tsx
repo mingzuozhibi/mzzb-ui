@@ -30,7 +30,7 @@ const compareList = (a: SakuraModel, b: SakuraModel) => {
 
 const compareDisc = compareFactory({
   apply: (disc: DiscModel) => disc.thisRank,
-  check: (rank: number) => rank === undefined,
+  check: (rank: number) => rank === undefined || rank === 0,
   compare: (rankA: number, rankB: number) => rankA - rankB
 })
 

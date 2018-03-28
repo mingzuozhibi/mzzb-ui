@@ -2,6 +2,7 @@ import * as React from 'react'
 import { DiscOfRecordsModel, RecordModel } from './reducer'
 import { Button, Input, Modal, Tabs } from 'antd'
 import { Column, Table } from '../../lib/table'
+import { formatNumber } from '../../utils/format'
 
 interface FormRecord {
   text?: string
@@ -33,19 +34,24 @@ export function DiscRecords(props: Props) {
       {
         key: 'todayPt',
         title: '日增PT',
-        format: (t) => t.todayPt
+        format: (t) => `${(t.todayPt || '----')} pt`
       },
       {
         key: 'totalPt',
         title: '累积PT',
-        format: (t) => t.totalPt
+        format: (t) => `${(t.totalPt || '----')} pt`
       },
       {
         key: 'averRank',
         title: '平均排名',
-        format: (t) => t.averRank || '-'
+        format: (t) => formatRank(t)
       },
     ]
+  }
+
+  function formatRank(t: RecordModel) {
+    const averRank = t.averRank ? formatNumber(t.averRank, '***,***') : '---,---'
+    return `${averRank}位`
   }
 
   function formatTitle(t: DiscOfRecordsModel) {
