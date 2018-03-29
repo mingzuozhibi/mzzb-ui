@@ -15,7 +15,9 @@ const discViewMessage = ''
 const discRecordsMessage = ''
 
 const sakuraListMessge = ''
-const sakuraDiscsMessge = '最新更新：优化了「发售(剩余天数)」的排序规则'
+const sakuraDiscsMessge = '最新更新：' +
+  '优化了「发售(剩余天数)」的排序规则；' +
+  '当排名发生变化15分钟内时背景色为绿色'
 
 export {
   adminSakuraListMessage,

@@ -8,15 +8,17 @@ interface Column<T> {
   key: string
   title: string
   format: (t: T, i: number) => React.ReactNode
+  tdClass?: (t: T) => string
   compare?: (a: T, b: T) => number
 }
 
 interface TableProps<T> {
+  rows: T[]
+  columns: Column<T>[]
   name?: string | number
   title?: string
   subtitle?: React.ReactNode
-  rows: T[]
-  columns: Column<T>[]
+  trClass?: (t: T) => string
 }
 
 interface TableState {
@@ -42,7 +44,7 @@ class Table<T extends BaseModel> extends React.Component<TableProps<T>, TableSta
   }
 
   render() {
-    const {title, subtitle, rows, columns} = this.props
+    const {title, subtitle, rows, columns, trClass} = this.props
 
     const finalRows = produce(rows, draftState => {
       if (this.state.sortKey) {
@@ -66,24 +68,20 @@ class Table<T extends BaseModel> extends React.Component<TableProps<T>, TableSta
         <table className="table table-striped table-bordered table-hover">
           <thead>
           <tr>
-            {columns.map(c => {
-              const className = classNames(c.key, {
-                sortable: c.compare !== undefined,
-                asc: this.state.sortKey === c.key && this.state.sortAsc === true,
-                desc: this.state.sortKey === c.key && this.state.sortAsc === false,
-              })
-              const onClick = c.compare ? () => this.sortColumn(c) : undefined
-              return (
-                <th key={c.key} className={className} onClick={onClick}>{c.title}</th>
-              )
-            })}
+            {columns.map(c => (
+              <th key={c.key} onClick={this.thClick(c)} className={this.thClass(c)}>
+                {c.title}
+              </th>
+            ))}
           </tr>
           </thead>
           <tbody>
           {finalRows.map((t, i) => (
-            <tr key={t.id}>
+            <tr key={t.id} className={trClass && trClass(t)}>
               {columns.map((c) => (
-                <td key={c.key} className={c.key}>{c.format(t, i)}</td>
+                <td key={c.key} className={this.tdClass(c, t)}>
+                  {c.format(t, i)}
+                </td>
               ))}
             </tr>
           ))}
@@ -92,6 +90,23 @@ class Table<T extends BaseModel> extends React.Component<TableProps<T>, TableSta
       </div>
     )
   }
+
+  private thClick(c: Column<T>) {
+    return c.compare && (() => this.sortColumn(c))
+  }
+
+  private thClass(c: Column<T>) {
+    return classNames(c.key, {
+      sortable: c.compare !== undefined,
+      asc: this.state.sortKey === c.key && this.state.sortAsc === true,
+      desc: this.state.sortKey === c.key && this.state.sortAsc === false,
+    })
+  }
+
+  private tdClass(c: Column<T>, t: T) {
+    return classNames(c.key, c.tdClass && c.tdClass(t))
+  }
+
 }
 
 export { Table, Column }
