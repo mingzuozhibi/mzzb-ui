@@ -23,11 +23,12 @@ function SakuraDiscs(props: Props & ViewportProps) {
         key: 'rank',
         title: '日亚排名',
         format: (t) => <Command onClick={toViewRank(t)}>{formatRank(t)}</Command>,
+        tdClass: (t) => rankTdClass(t),
         compare: compareFactory<DiscModel, number | undefined>({
           apply: model => model.thisRank,
-          check: value => value === undefined,
+          check: value => value === undefined || value === 0,
           compare: (a, b) => a! - b!
-        }),
+        })
       },
       {
         key: 'todayPt',
@@ -99,6 +100,13 @@ function SakuraDiscs(props: Props & ViewportProps) {
     } else {
       return t.titleMo || t.titlePc || t.title
     }
+  }
+
+  function rankTdClass(t: DiscModel) {
+    if (t.modifyTime && new Date().getTime() - t.modifyTime < 900000) {
+      return 'success'
+    }
+    return ''
   }
 
   function formatModifyTime(sakura: SakuraModel) {

@@ -30,6 +30,7 @@ export interface DiscModel extends BaseModel {
   guessPt?: number
   thisRank?: number
   prevRank?: number
+  modifyTime?: number
   surplusDays: number
 }
 
@@ -83,7 +84,7 @@ function* listModel() {
 }
 
 function* viewDiscs(action: AnyAction) {
-  const query = 'discColumns=id,thisRank,prevRank,todayPt,totalPt,guessPt,title,titlePc,titleMo,surplusDays'
+  const query = 'discColumns=id,thisRank,prevRank,todayPt,totalPt,guessPt,title,titlePc,titleMo,modifyTime,surplusDays'
   const result = yield call(manager.findList, action.search, action.value, 'discs', query)
   if (result.success) {
     yield put({type: `view(discs)${pageInfo.pageModel}Succeed`, data: result.data})

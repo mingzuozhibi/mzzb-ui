@@ -51,16 +51,24 @@ export const menuInfos: MenuInfo[] = [
     path: '/zhuantie',
     subMenus: [
       {
-        text: '2018冬-B站数据统计',
-        path: 'https://tieba.baidu.com/p/5490501406?pn=9999',
+        text: '2018春-PT排名走势',
+        path: 'https://tieba.baidu.com/p/5627916964?pn=9999',
       },
       {
-        text: '2018冬-原作销量贴',
-        path: 'https://tieba.baidu.com/p/5505393535?pn=9999',
+        text: '2018春-B站数据统计',
+        path: 'https://tieba.baidu.com/p/5615545349?pn=9999',
+      },
+      {
+        text: '2018春-长期追踪贴',
+        path: 'https://tieba.baidu.com/p/5627461603?pn=9999',
       },
       {
         text: '2018冬-PT排名走势',
         path: 'https://tieba.baidu.com/p/5500417708?pn=9999',
+      },
+      {
+        text: '2018冬-B站数据统计',
+        path: 'https://tieba.baidu.com/p/5490501406?pn=9999',
       },
       {
         text: '2018冬-长期追踪贴',
@@ -74,20 +82,12 @@ export const menuInfos: MenuInfo[] = [
         text: '2017秋-长期追踪贴',
         path: 'https://tieba.baidu.com/p/5369087987?pn=9999',
       },
-      {
-        text: '2017夏-PT排名走势',
-        path: 'https://tieba.baidu.com/p/5197490889?pn=9999',
-      },
-      {
-        text: '2017夏-长期追踪贴',
-        path: 'https://tieba.baidu.com/p/5244395926?pn=9999',
-      },
     ]
   },
   {
     icon: 'icon-social-tieba',
     text: '票房专楼',
-    path: '/piapfang',
+    path: '/piaofang',
     subMenus: [
       {
         text: '日本票房综合讨论楼V3',
@@ -109,24 +109,31 @@ export const menuInfos: MenuInfo[] = [
   },
   {
     icon: 'icon-social-tieba',
-    text: '本季专楼',
-    path: '/benji',
+    text: '2018春专楼',
+    path: '/zl-201804',
+    subMenus: [
+      {
+        text: '命运石之门0',
+        path: 'https://tieba.baidu.com/p/5627694697?pn=9999',
+      },
+      {
+        text: '女神异闻录5',
+        path: 'https://tieba.baidu.com/p/5627689510?pn=9999',
+      },
+    ]
+  },
+  {
+    icon: 'icon-social-tieba',
+    text: '2018冬专楼',
+    path: '/zl-201801',
     subMenus: [
       {
         text: 'DitF(国家队)',
         path: 'https://tieba.baidu.com/p/5500270781?pn=9999',
       },
       {
-        text: 'DitF(国家队)?',
-        path: 'https://tieba.baidu.com/p/5574834789?pn=9999',
-      },
-      {
         text: '紫罗兰永恒花园1.0',
         path: 'https://tieba.baidu.com/p/5500266707?pn=9999',
-      },
-      {
-        text: '紫罗兰永恒花园2.0',
-        path: 'https://tieba.baidu.com/p/5574705537?pn=9999',
       },
       {
         text: '摇曳露营(黑马楼)',
@@ -148,16 +155,12 @@ export const menuInfos: MenuInfo[] = [
         text: '魔卡少女樱 CC篇2.0',
         path: 'https://tieba.baidu.com/p/5589343312?pn=9999',
       },
-      {
-        text: '刀使之巫女',
-        path: 'https://tieba.baidu.com/p/5493101957?pn=9999',
-      },
     ]
   },
   {
     icon: 'icon-social-tieba',
     text: '往季专楼',
-    path: '/wangyi',
+    path: '/zl-wangji',
     subMenus: [
       {
         text: 'Princess Principal',
@@ -186,6 +189,11 @@ export const menuInfos: MenuInfo[] = [
     icon: 'icon-social-tieba',
     text: '壁吧专楼吧',
     path: 'https://tieba.baidu.com/f?kw=%E5%A3%81%E5%90%A7%E4%B8%93%E6%A5%BC',
+  },
+  {
+    icon: 'icon-buoumaotubiao31',
+    text: '日本PT站(Sakura)',
+    path: 'http://rankstker.net/index_news.cgi',
   },
   {
     icon: 'github',
