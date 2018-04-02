@@ -14,7 +14,7 @@ const adminDiscRecordsMessage = ''
 const discViewMessage = ''
 const discRecordsMessage = ''
 
-const sakuraListMessge = '最新更新：添加2018年4月专贴及专楼链接'
+const sakuraListMessge = '最新更新：新增刀剑神域GGO，马娘专楼链接'
 const sakuraDiscsMessge = ''
 
 export {

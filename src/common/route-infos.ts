@@ -120,6 +120,14 @@ export const menuInfos: MenuInfo[] = [
         text: '女神异闻录5',
         path: 'https://tieba.baidu.com/p/5627689510?pn=9999',
       },
+      {
+        text: '刀剑神域外传GGO',
+        path: 'https://tieba.baidu.com/p/5617733420?pn=9999',
+      },
+      {
+        text: '马娘',
+        path: 'https://tieba.baidu.com/p/5617629946?pn=9999',
+      },
     ]
   },
   {
