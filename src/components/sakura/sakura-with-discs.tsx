@@ -26,7 +26,7 @@ function SakuraDiscs(props: Props & ViewportProps) {
         tdClass: (t) => rankTdClass(t),
         compare: compareFactory<DiscModel, number | undefined>({
           apply: model => model.thisRank,
-          check: value => value === undefined,
+          check: value => value === undefined || value === 0,
           compare: (a, b) => a! - b!
         })
       },
