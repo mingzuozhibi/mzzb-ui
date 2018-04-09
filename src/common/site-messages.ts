@@ -14,8 +14,8 @@ const adminDiscRecordsMessage = ''
 const discViewMessage = ''
 const discRecordsMessage = ''
 
-const sakuraListMessge = '最新更新：添加2018年4月专贴及专楼链接'
-const sakuraDiscsMessge = ''
+const sakuraListMessge = '最新更新：新增银河英雄传说链接，往季专楼新增部分链接'
+const sakuraDiscsMessge = '最新更新：针对PT，本站自行计算的PT将会使用后缀「点」以提示'
 
 export {
   adminSakuraListMessage,

@@ -33,32 +33,20 @@ function SakuraDiscs(props: Props & ViewportProps) {
       {
         key: 'todayPt',
         title: '日增',
-        format: (t) => `${(t.todayPt || '----')} pt`,
-        compare: compareFactory<DiscModel, number | undefined>({
-          apply: model => model.todayPt,
-          check: value => value === undefined,
-          compare: (a, b) => b! - a!
-        }),
+        format: (t) => formatPt(t, t.todayPt),
+        compare: comparePt(model => model.todayPt),
       },
       {
         key: 'totalPt',
         title: '累积',
-        format: (t) => `${(t.totalPt || '----')} pt`,
-        compare: compareFactory<DiscModel, number | undefined>({
-          apply: model => model.totalPt,
-          check: value => value === undefined,
-          compare: (a, b) => b! - a!
-        }),
+        format: (t) => formatPt(t, t.totalPt),
+        compare: comparePt(model => model.totalPt),
       },
       {
         key: 'guessPt',
         title: '预测',
-        format: (t) => `${(t.guessPt || '----')} pt`,
-        compare: compareFactory<DiscModel, number | undefined>({
-          apply: model => model.guessPt,
-          check: value => value === undefined,
-          compare: (a, b) => b! - a!
-        }),
+        format: (t) => formatPt(t, t.guessPt),
+        compare: comparePt(model => model.guessPt),
       },
       {
         key: 'surplusDays',
@@ -84,6 +72,19 @@ function SakuraDiscs(props: Props & ViewportProps) {
     const thisRank = t.thisRank ? formatNumber(t.thisRank, '****') : '----'
     const prevRank = t.prevRank ? formatNumber(t.prevRank, '****') : '----'
     return `${thisRank}位/${prevRank}位`
+  }
+
+  function formatPt(t: DiscModel, n?: number) {
+    const isSakura = t.updateType === 'Sakura'
+    return `${(n || '----')} ${isSakura ? 'pt' : '点'}`
+  }
+
+  function comparePt(apply: (model: DiscModel) => number | undefined) {
+    return compareFactory<DiscModel, number | undefined>({
+      apply: apply,
+      check: value => value === undefined,
+      compare: (a, b) => b! - a!
+    })
   }
 
   function toViewDisc(t: DiscModel) {

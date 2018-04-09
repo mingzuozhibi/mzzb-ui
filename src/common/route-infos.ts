@@ -120,6 +120,14 @@ export const menuInfos: MenuInfo[] = [
         text: '女神异闻录5',
         path: 'https://tieba.baidu.com/p/5627689510?pn=9999',
       },
+      {
+        text: '刀剑神域外传',
+        path: 'https://tieba.baidu.com/p/5617733420?pn=9999',
+      },
+      {
+        text: '银河英雄传说',
+        path: 'https://tieba.baidu.com/p/5637222082?pn=9999',
+      },
     ]
   },
   {
@@ -134,10 +142,6 @@ export const menuInfos: MenuInfo[] = [
       {
         text: '紫罗兰永恒花园1.0',
         path: 'https://tieba.baidu.com/p/5500266707?pn=9999',
-      },
-      {
-        text: '摇曳露营(黑马楼)',
-        path: 'https://tieba.baidu.com/p/5563728799?pn=9999',
       },
       {
         text: '摇曳露营(专楼吧)',
@@ -162,14 +166,37 @@ export const menuInfos: MenuInfo[] = [
     text: '往季专楼',
     path: '/zl-wangji',
     subMenus: [
+      /** 1710 */
+      {
+        text: '少女终末旅行',
+        path: 'https://tieba.baidu.com/p/5342754125?pn=9999',
+      },
+      /** 1707 */
       {
         text: 'Princess Principal',
         path: 'https://tieba.baidu.com/p/5202234378?pn=9999',
       },
+      /** 1704 */
       {
         text: '末日时在做什么？有没有空？可以来拯救吗？',
         path: 'https://tieba.baidu.com/p/5040597877?pn=9999',
       },
+      /** 1701 */
+      {
+        text: '兽娘动物园',
+        path: 'https://tieba.baidu.com/p/4977733257?pn=9999',
+      },
+      /** 1610 */
+      {
+        text: 'YURI!!! ON ICE 2.0',
+        path: 'https://tieba.baidu.com/p/4956531567?pn=9999',
+      },
+      /** 1607 */
+      {
+        text: '灵能百分百',
+        path: 'https://tieba.baidu.com/p/4633245390?pn=9999',
+      },
+      /** 1604 */
       {
         text: 'Re:从零开始的异世界生活',
         path: 'https://tieba.baidu.com/p/4773136352?pn=9999',
