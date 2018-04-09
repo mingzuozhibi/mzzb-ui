@@ -15,7 +15,7 @@ const discViewMessage = ''
 const discRecordsMessage = ''
 
 const sakuraListMessge = '最新更新：新增刀剑神域GGO，马娘专楼链接'
-const sakuraDiscsMessge = ''
+const sakuraDiscsMessge = '最新更新：针对PT，本站自行计算的PT将会使用后缀「点」以提示'
 
 export {
   adminSakuraListMessage,
