@@ -152,8 +152,8 @@ export const menuInfos: MenuInfo[] = [
         path: 'https://tieba.baidu.com/p/5493097898?pn=9999',
       },
       {
-        text: 'Fate/Extra 卫宫饭',
-        path: 'https://tieba.baidu.com/p/5503857640?pn=9999',
+        text: 'FE/LE 卫宫饭3.0',
+        path: 'https://tieba.baidu.com/p/5597968420?pn=9999',
       },
       {
         text: '魔卡少女樱 CC篇2.0',
