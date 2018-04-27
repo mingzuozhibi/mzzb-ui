@@ -19,7 +19,11 @@ function prepareHeaders({headers = {}, ...prors}: RequestInit) {
 
 function checkStatus(response: Response) {
   if (!response.ok) {
-    throw new Error(`服务器未正确响应: ${response.status}: ${response.statusText}`)
+    if (response.status === 502) {
+      throw new Error(`服务器可能正在重启，请过一分钟再试。`)
+    } else {
+      throw new Error(`服务器未正确响应: ${response.status}: ${response.statusText}`)
+    }
   }
   return response
 }
