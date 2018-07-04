@@ -14,7 +14,7 @@ const adminDiscRecordsMessage = ''
 const discViewMessage = ''
 const discRecordsMessage = ''
 
-const sakuraListMessge = '最新更新：FE/LE 卫宫饭专楼链接更新到3.0'
+const sakuraListMessge = '最新更新：添加18夏季部分专贴链接，添加B萌链接'
 const sakuraDiscsMessge = ''
 
 export {
