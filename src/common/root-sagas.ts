@@ -3,6 +3,7 @@ import { appSaga } from '../App/reducer'
 import { discSaga } from '../components/disc/reducer'
 import { sakuraSaga } from '../components/sakura/reducer'
 import { currentSaga } from './reducers/current'
+import { newdiscSaga } from '../components/newdisc/reducer'
 import { adminUserSaga } from '../components/admin-user/reducer'
 import { adminSakuraSaga } from '../components/admin-sakura/reducer'
 import { LOCATION_CHANGE } from 'react-router-redux'
@@ -25,6 +26,8 @@ export function* rootSagas() {
 
     takeEvery(LOCATION_CHANGE, currentSaga.updateReload),
     takeEvery('reloadRequest', currentSaga.invokeReload),
+
+    takeEvery('listNewDiscRequest', newdiscSaga.listModel),
 
     takeEvery('listAdminUserRequest', adminUserSaga.listModel),
     takeEvery('viewAdminUserRequest', adminUserSaga.viewModel),

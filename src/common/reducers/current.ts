@@ -73,6 +73,15 @@ function* updateReload({payload}: any) {
     const model = pageInfo.pageModel
     const path = pageInfo.matchPath
 
+    /**  /newdisc/page/:page  */
+    const matchPage = match<{ page: number }>(pathname, `${path}/page/:page`)
+    if (matchPage) {
+      const page = matchPage.params.page
+      yield put(_updateReload(`list${model}`, {page}))
+      yield invokeReload()
+      return
+    }
+
     /**  /sakura  */
     const matchList = match(pathname, path)
     if (matchList) {
@@ -82,7 +91,7 @@ function* updateReload({payload}: any) {
     }
 
     /**  /sakura/save  */
-    const matchSave = match<{}>(pathname, `${path}/save`)
+    const matchSave = match(pathname, `${path}/save`)
     if (matchSave) {
       yield put(_clearReload())
       return
