@@ -14,16 +14,16 @@ function createPageLinks(props: Props) {
   const maxPage = props.pageData.maxPage
   const page = props.pageData.page
 
-  let pages = Array(maxPage).fill(0)
+  let pages = Array(maxPage + 1).fill(0)
   if (pages.length > 10) {
     pages = pages.map((value, index) => index).filter((value, index) => {
-      if (index === 0 || index === maxPage - 1) {
+      if (index === 0 || index === maxPage) {
         return true
       }
       if (page < 5 && index < 10) {
         return true
       }
-      if (maxPage - page < 6 && maxPage - index < 11) {
+      if (maxPage - page < 5 && maxPage - index < 10) {
         return true
       }
       return Math.abs(page - index) < 5
