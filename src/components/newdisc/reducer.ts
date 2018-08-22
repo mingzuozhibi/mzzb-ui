@@ -54,7 +54,7 @@ export const newdiscReducer = (state: NewDiscState = initState, action: AnyActio
 const manager = new Manager<NewDiscModel>('/api/newdiscs')
 
 function* listModel(action: AnyAction) {
-  const result = yield call(manager.findAll, `page=${action.page || 0}`)
+  const result = yield call(manager.findAll, action.query)
   if (result.success) {
     const {newdiscs, pageInfo: pageData} = result.data
     yield put({type: `list${pageInfo.pageModel}Succeed`, newdiscs, pageData})

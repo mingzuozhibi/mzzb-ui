@@ -34,7 +34,7 @@ function createPageLinks(props: Props) {
   const style = {fontSize: 16, padding: '8px 12px'}
   for (let i = 0; i < pages.length; i++) {
     const p = pages[i]
-    const href = `${props.pageInfo.matchPath}/page/${p}`
+    const href = `${props.pageInfo.matchPath}?page=${p}`
     if (p === page) {
       nodes.push(<Link style={{...style, color: 'black'}} key={p} to={href}>{p}</Link>)
     } else {

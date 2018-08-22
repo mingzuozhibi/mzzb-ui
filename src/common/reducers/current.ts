@@ -73,19 +73,10 @@ function* updateReload({payload}: any) {
     const model = pageInfo.pageModel
     const path = pageInfo.matchPath
 
-    /**  /newdisc/page/:page  */
-    const matchPage = match<{ page: number }>(pathname, `${path}/page/:page`)
-    if (matchPage) {
-      const page = matchPage.params.page
-      yield put(_updateReload(`list${model}`, {page}))
-      yield invokeReload()
-      return
-    }
-
     /**  /sakura  */
     const matchList = match(pathname, path)
     if (matchList) {
-      yield put(_updateReload(`list${model}`))
+      yield put(_updateReload(`list${model}`, {query: payload.search}))
       yield invokeReload()
       return
     }

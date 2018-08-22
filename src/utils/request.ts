@@ -51,6 +51,7 @@ function handleError(error: Error) {
 }
 
 export default function request(url: string, props: RequestInit = {}) {
+  url = url.replace('??', '?')
   props = prepareCookies(props)
   props = prepareHeaders(props)
   return fetch(url, props)
