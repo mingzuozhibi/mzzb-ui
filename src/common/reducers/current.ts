@@ -76,13 +76,13 @@ function* updateReload({payload}: any) {
     /**  /sakura  */
     const matchList = match(pathname, path)
     if (matchList) {
-      yield put(_updateReload(`list${model}`))
+      yield put(_updateReload(`list${model}`, {query: payload.search}))
       yield invokeReload()
       return
     }
 
     /**  /sakura/save  */
-    const matchSave = match<{}>(pathname, `${path}/save`)
+    const matchSave = match(pathname, `${path}/save`)
     if (matchSave) {
       yield put(_clearReload())
       return

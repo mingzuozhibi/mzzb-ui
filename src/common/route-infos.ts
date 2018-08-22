@@ -1,5 +1,6 @@
 import { pageInfo as discPage } from '../components/disc/reducer'
 import { pageInfo as sakuraPage } from '../components/sakura/reducer'
+import { pageInfo as newdiscPage } from '../components/newdisc/reducer'
 import { pageInfo as adminUserPage } from '../components/admin-user/reducer'
 import { pageInfo as adminSakuraPage } from '../components/admin-sakura/reducer'
 
@@ -35,6 +36,7 @@ const fromPage = (pageInfo: PageInfo, icon: string, role?: Role) => {
 
 export const menuInfos: MenuInfo[] = [
   fromPage(sakuraPage, 'icon-yinghua'),
+  fromPage(newdiscPage, 'icon-yinghua'),
   {
     icon: 'profile',
     text: '后台管理',
@@ -51,6 +53,18 @@ export const menuInfos: MenuInfo[] = [
     path: '/zhuantie',
     subMenus: [
       {
+        text: '日本票房综合讨论楼V3',
+        path: 'https://tieba.baidu.com/p/4803602533?pn=9999',
+      },
+      {
+        text: '2018夏-PT排名走势',
+        path: 'https://tieba.baidu.com/p/5777199371?pn=9999',
+      },
+      {
+        text: '2018夏-长期追踪贴',
+        path: 'https://tieba.baidu.com/p/5776069088?pn=9999',
+      },
+      {
         text: '2018春-PT排名走势',
         path: 'https://tieba.baidu.com/p/5627916964?pn=9999',
       },
@@ -61,49 +75,6 @@ export const menuInfos: MenuInfo[] = [
       {
         text: '2018春-长期追踪贴',
         path: 'https://tieba.baidu.com/p/5627461603?pn=9999',
-      },
-      {
-        text: '2018冬-PT排名走势',
-        path: 'https://tieba.baidu.com/p/5500417708?pn=9999',
-      },
-      {
-        text: '2018冬-B站数据统计',
-        path: 'https://tieba.baidu.com/p/5490501406?pn=9999',
-      },
-      {
-        text: '2018冬-长期追踪贴',
-        path: 'https://tieba.baidu.com/p/5533369671?pn=9999',
-      },
-      {
-        text: '2017秋-PT排名走势',
-        path: 'https://tieba.baidu.com/p/5350894353?pn=9999',
-      },
-      {
-        text: '2017秋-长期追踪贴',
-        path: 'https://tieba.baidu.com/p/5369087987?pn=9999',
-      },
-    ]
-  },
-  {
-    icon: 'icon-social-tieba',
-    text: '票房专楼',
-    path: '/piaofang',
-    subMenus: [
-      {
-        text: '日本票房综合讨论楼V3',
-        path: 'https://tieba.baidu.com/p/4803602533?pn=9999',
-      },
-      {
-        text: '超时空要塞Δ 激情的ワルキ',
-        path: 'https://tieba.baidu.com/p/5544251789?pn=9999',
-      },
-      {
-        text: 'FSN Heavens Feel',
-        path: 'https://tieba.baidu.com/p/5360321349?pn=9999',
-      },
-      {
-        text: 'NO GAME NO LIFE : ZERO',
-        path: 'https://tieba.baidu.com/p/5209590919?pn=9999',
       },
     ]
   },
@@ -132,9 +103,10 @@ export const menuInfos: MenuInfo[] = [
   },
   {
     icon: 'icon-social-tieba',
-    text: '2018冬专楼',
-    path: '/zl-201801',
+    text: '往季专楼',
+    path: '/zl-wangji',
     subMenus: [
+      /** 1801 */
       {
         text: 'DitF(国家队)',
         path: 'https://tieba.baidu.com/p/5500270781?pn=9999',
@@ -143,29 +115,6 @@ export const menuInfos: MenuInfo[] = [
         text: '紫罗兰永恒花园1.0',
         path: 'https://tieba.baidu.com/p/5500266707?pn=9999',
       },
-      {
-        text: '摇曳露营(专楼吧)',
-        path: 'https://tieba.baidu.com/p/5493148682?pn=9999',
-      },
-      {
-        text: '比宇宙更远的地方',
-        path: 'https://tieba.baidu.com/p/5493097898?pn=9999',
-      },
-      {
-        text: 'FE/LE 卫宫饭3.0',
-        path: 'https://tieba.baidu.com/p/5597968420?pn=9999',
-      },
-      {
-        text: '魔卡少女樱 CC篇2.0',
-        path: 'https://tieba.baidu.com/p/5589343312?pn=9999',
-      },
-    ]
-  },
-  {
-    icon: 'icon-social-tieba',
-    text: '往季专楼',
-    path: '/zl-wangji',
-    subMenus: [
       /** 1710 */
       {
         text: '少女终末旅行',
@@ -221,6 +170,11 @@ export const menuInfos: MenuInfo[] = [
     icon: 'icon-buoumaotubiao31',
     text: '日本PT站(Sakura)',
     path: 'http://rankstker.net/index_news.cgi',
+  },
+  {
+    icon: 'icon-buoumaotubiao31',
+    text: 'B萌2018(Hot)',
+    path: 'https://mingzuozhibi.com/bmoe2018.html',
   },
   {
     icon: 'github',
