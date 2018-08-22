@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { Helmet } from 'react-helmet'
 import { Alert, Breadcrumb } from 'antd'
 import { Link, RouteComponentProps } from 'react-router-dom'
 
@@ -98,10 +99,18 @@ export function NewDisc(props: Props) {
       )}
       {props.models && (
         <div className="newdisc-content">
+          <Helmet>
+            <title>{props.pageInfo.pageTitle} - 名作之壁吧</title>
+          </Helmet>
+          <Breadcrumb style={{padding: 10}}>
+            <Breadcrumb.Item>
+              {props.pageInfo.pageTitle}
+            </Breadcrumb.Item>
+          </Breadcrumb>
           <Table rows={props.models} columns={getColumns()}/>
+          {createPageLinks(props)}
         </div>
       )}
-      {createPageLinks(props)}
     </div>
   )
 }
