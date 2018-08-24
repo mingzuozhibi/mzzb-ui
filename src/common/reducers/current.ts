@@ -50,23 +50,10 @@ function match<T>(pathname: string, path: string) {
   return matchPath<T>(pathname, {path, exact: true})
 }
 
-let referer: string
-
-function umeng_uweb_pv(pathname: string) {
-  try {
-    (window as any)._czc.push(['_trackPageview', pathname, referer])
-    referer = location.href
-  } catch (e) {
-    console.warn(e)
-  }
-}
-
 function* updateReload({payload}: any) {
   window.scroll(0, 0)
   const pathname: string = payload.pathname
   const pageInfo = findPageInfo(pathname)
-
-  umeng_uweb_pv(pathname)
 
   if (pageInfo) {
     const search = pageInfo.searchFor
