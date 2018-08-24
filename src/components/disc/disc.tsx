@@ -75,18 +75,11 @@ export function Disc(props: Props) {
                 <title>{props.pageInfo.pageTitle} - 名作之壁吧</title>
               </Helmet>
               <Breadcrumb style={{padding: 10}}>
-                {props.location.state && (
-                  <Breadcrumb.Item>
-                    <Link to={props.location.state.url}>
-                      {props.location.state.title}
-                    </Link>
-                  </Breadcrumb.Item>
-                )}
-                <Breadcrumb.Item>
-                  <Command onClick={pushToView}>排名数据</Command>
-                </Breadcrumb.Item>
                 <Breadcrumb.Item>
                   {props.pageInfo.pageTitle}
+                </Breadcrumb.Item>
+                <Breadcrumb.Item>
+                  <Command onClick={pushToView}>排名数据</Command>
                 </Breadcrumb.Item>
               </Breadcrumb>
               {hasBasicRole && adminDiscViewMessage && (
@@ -116,13 +109,6 @@ export function Disc(props: Props) {
                 <title>排名数据 - 名作之壁吧</title>
               </Helmet>
               <Breadcrumb style={{padding: 10}}>
-                {props.location.state && (
-                  <Breadcrumb.Item>
-                    <Link to={props.location.state.url}>
-                      {props.location.state.title}
-                    </Link>
-                  </Breadcrumb.Item>
-                )}
                 <Breadcrumb.Item>
                   <Command onClick={pushToRecords}>碟片信息</Command>
                 </Breadcrumb.Item>
