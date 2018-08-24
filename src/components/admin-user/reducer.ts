@@ -76,7 +76,7 @@ function* listModel() {
 }
 
 function* viewModel(action: AnyAction) {
-  const result = yield yield call(manager.findOne, action.search, action.value)
+  const result = yield yield call(manager.findOne, action.key, action.value)
   if (result.success) {
     yield put({type: `view${pageInfo.pageModel}Succeed`, data: result.data})
   } else {

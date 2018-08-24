@@ -91,7 +91,7 @@ export const discReducer = (state: DiscState = initState, action: AnyAction) => 
 const manager = new Manager<DiscOfRanksModel>('/api/discs')
 
 function* viewModel(action: AnyAction) {
-  const result = yield call(manager.findOne, action.search, action.value)
+  const result = yield call(manager.findOne, action.key, action.value)
   if (result.success) {
     yield put({type: `view${pageInfo.pageModel}Succeed`, data: result.data})
   } else {

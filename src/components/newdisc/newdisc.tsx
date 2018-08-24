@@ -65,7 +65,7 @@ export function NewDisc(props: Props) {
       {
         key: 'followed',
         title: '%',
-        format: (t) => t.followed ? '有' : '无'
+        format: (t) => t.followed ? <Link to={`/disc/find/asin/${t.asin}`}>有</Link> : '无'
       },
       {
         key: 'createTime',

@@ -56,7 +56,7 @@ function* updateReload({payload}: any) {
   const pageInfo = findPageInfo(pathname)
 
   if (pageInfo) {
-    const search = pageInfo.searchFor
+    const primary = pageInfo.searchFor
     const model = pageInfo.pageModel
     const path = pageInfo.matchPath
 
@@ -75,22 +75,32 @@ function* updateReload({payload}: any) {
       return
     }
 
-    /**  /sakura/:key  */
-    const matchView = match<{ key: string }>(pathname, `${path}/:key`)
-    if (matchView) {
-      const value = matchView.params.key
-      yield put(_updateReload(`view${model}`, {search, value}))
+    /**  /disc/find/asin/xxxx  */
+    const matchFind = match<{ key: string, value: string}>(pathname, `${path}/find/:key/:value`)
+    if (matchFind) {
+      const key = matchFind.params.key
+      const value = matchFind.params.value
+      yield put(_updateReload(`view${model}`, {key, value}))
       yield invokeReload()
       return
     }
 
-    /**  /sakura/:key/:pkey(/other)*  */
-    type Created = { key: string, pkey: string }
-    const matchViewList = match<Created>(pathname, `${path}/:key/:pkey/:other*`)
+    /**  /sakura/xxxx  */
+    const matchView = match<{ value: string }>(pathname, `${path}/:value`)
+    if (matchView) {
+      const value = matchView.params.value
+      yield put(_updateReload(`view${model}`, {key: primary, value}))
+      yield invokeReload()
+      return
+    }
+
+    /**  /sakura/xxxx/discs  */
+    type Created = { value: string, field: string }
+    const matchViewList = match<Created>(pathname, `${path}/:value/:field`)
     if (matchViewList) {
-      const pkey = matchViewList.params.pkey
-      const value = matchViewList.params.key
-      yield put(_updateReload(`view(${pkey})${model}`, {search, value}))
+      const field = matchViewList.params.field
+      const value = matchViewList.params.value
+      yield put(_updateReload(`view(${field})${model}`, {key: primary, value}))
       yield invokeReload()
       return
     }
