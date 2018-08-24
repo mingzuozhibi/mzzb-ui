@@ -1,17 +1,18 @@
 import * as React from 'react'
 import { Helmet } from 'react-helmet'
 import { Alert, Breadcrumb } from 'antd'
-import { Route, RouteComponentProps, Switch } from 'react-router-dom'
+import { Link, Route, RouteComponentProps, Switch } from 'react-router-dom'
 import './disc.css'
 
 import { DiscOfRanksModel, DiscOfRecordsModel, DiscState } from './reducer'
 import {
-  adminDiscRecordsMessage, adminDiscViewMessage, discRecordsMessage,
+  adminDiscRecordsMessage,
+  adminDiscViewMessage,
+  discRecordsMessage,
   discViewMessage
 } from '../../common/site-messages'
 import { DiscRecords } from './disc-records'
 import { DiscView } from './disc-view'
-import { Command } from '../../lib/command'
 import { Session } from '../../App/reducer'
 
 export type OwnProps = RouteComponentProps<{}>
@@ -46,16 +47,6 @@ export function Disc(props: Props) {
     return null
   }
 
-  function pushToRecords() {
-    const matchUrl = props.location.pathname
-    props.history.push(matchUrl.substring(0, matchUrl.length - 8), props.location.state)
-  }
-
-  function pushToView() {
-    const matchUrl = props.location.pathname
-    props.history.push(`${matchUrl}/records`, props.location.state)
-  }
-
   const hasBasicRole = props.session.userRoles.some(role => role === 'ROLE_BASIC')
 
   function renderDetail(detail: DiscOfRanksModel) {
@@ -69,7 +60,7 @@ export function Disc(props: Props) {
             {props.pageInfo.pageTitle}
           </Breadcrumb.Item>
           <Breadcrumb.Item>
-            <Command onClick={pushToView}>排名数据</Command>
+            <Link to={`/disc/${detail.id}/records`}>排名数据</Link>
           </Breadcrumb.Item>
         </Breadcrumb>
         {hasBasicRole && adminDiscViewMessage && (
@@ -110,40 +101,6 @@ export function Disc(props: Props) {
           render={({match}) => withDetail(match.params.id, renderDetail)}
         />
         <Route
-          path={`${props.match.url}/:id`}
-          exact={true}
-          render={({match}) => withDetail(match.params.id, detail => (
-            <div className="disc-view">
-              <Helmet>
-                <title>{props.pageInfo.pageTitle} - 名作之壁吧</title>
-              </Helmet>
-              <Breadcrumb style={{padding: 10}}>
-                <Breadcrumb.Item>
-                  {props.pageInfo.pageTitle}
-                </Breadcrumb.Item>
-                <Breadcrumb.Item>
-                  <Command onClick={pushToView}>排名数据</Command>
-                </Breadcrumb.Item>
-              </Breadcrumb>
-              {hasBasicRole && adminDiscViewMessage && (
-                <div className="form-message">
-                  {adminDiscViewMessage}
-                </div>
-              )}
-              {!hasBasicRole && discViewMessage && (
-                <div className="form-message">
-                  {discViewMessage}
-                </div>
-              )}
-              <DiscView
-                detail={detail}
-                editModel={props.editModel}
-                hasBasicRole={hasBasicRole}
-              />
-            </div>
-          ))}
-        />
-        <Route
           path={`${props.match.url}/:id/records`}
           exact={true}
           render={({match}) => withDetailOfRecords(match.params.id, detail => (
@@ -153,7 +110,7 @@ export function Disc(props: Props) {
               </Helmet>
               <Breadcrumb style={{padding: 10}}>
                 <Breadcrumb.Item>
-                  <Command onClick={pushToRecords}>碟片信息</Command>
+                  <Link to={`/disc/${detail.id}`}>碟片信息</Link>
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>
                   排名数据
