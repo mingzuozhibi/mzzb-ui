@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { Helmet } from 'react-helmet'
 import { Alert, Breadcrumb } from 'antd'
 import { Link, RouteComponentProps } from 'react-router-dom'
 
@@ -14,16 +15,16 @@ function createPageLinks(props: Props) {
   const maxPage = props.pageData.maxPage
   const page = props.pageData.page
 
-  let pages = Array(maxPage).fill(0)
+  let pages = Array(maxPage + 1).fill(0)
   if (pages.length > 10) {
     pages = pages.map((value, index) => index).filter((value, index) => {
-      if (index === 0 || index === maxPage - 1) {
+      if (index === 0 || index === maxPage) {
         return true
       }
       if (page < 5 && index < 10) {
         return true
       }
-      if (maxPage - page < 6 && maxPage - index < 11) {
+      if (maxPage - page < 5 && maxPage - index < 10) {
         return true
       }
       return Math.abs(page - index) < 5
@@ -64,7 +65,7 @@ export function NewDisc(props: Props) {
       {
         key: 'followed',
         title: '%',
-        format: (t) => t.followed ? '有' : '无'
+        format: (t) => t.followed ? <Link to={`/disc/find/asin/${t.asin}`}>有</Link> : '无'
       },
       {
         key: 'createTime',
@@ -98,10 +99,18 @@ export function NewDisc(props: Props) {
       )}
       {props.models && (
         <div className="newdisc-content">
+          <Helmet>
+            <title>{props.pageInfo.pageTitle} - 名作之壁吧</title>
+          </Helmet>
+          <Breadcrumb style={{padding: 10}}>
+            <Breadcrumb.Item>
+              {props.pageInfo.pageTitle}
+            </Breadcrumb.Item>
+          </Breadcrumb>
           <Table rows={props.models} columns={getColumns()}/>
+          {createPageLinks(props)}
         </div>
       )}
-      {createPageLinks(props)}
     </div>
   )
 }

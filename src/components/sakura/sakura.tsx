@@ -111,7 +111,7 @@ export function Sakura(props: Props) {
         <Route
           path={`${props.match.url}/:key/discs`}
           exact={true}
-          render={({match, history}) => withDetailOfDiscs(match.params.key, detail => (
+          render={({match}) => withDetailOfDiscs(match.params.key, detail => (
             <div className="sakura-discs">
               <Helmet>
                 <title>{detail.title} - 名作之壁吧</title>
@@ -140,16 +140,6 @@ export function Sakura(props: Props) {
               <SakuraDiscs
                 detail={detail}
                 isPcMode={props.isPcMode}
-                toViewDisc={(t: DiscModel) => {
-                  history.push(`/disc/${t.id}`, {
-                    url: match.url, title: detail.title
-                  })
-                }}
-                toViewRank={(t: DiscModel) => {
-                  history.push(`/disc/${t.id}/records`, {
-                    url: match.url, title: detail.title
-                  })
-                }}
               />
             </div>
           ))}

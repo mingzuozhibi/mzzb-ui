@@ -4,15 +4,13 @@ import { ViewportProps, withViewport } from '../../hoc/Viewport'
 import { compareFactory } from '../../utils/compare'
 import { Column, Table } from '../../lib/table'
 import { formatNumber } from '../../utils/format'
-import { Command } from '../../lib/command'
 import { Timer } from '../../lib/timer'
+import { Link } from 'react-router-dom'
 import * as classNames from 'classnames'
 
 interface Props {
   detail: SakuraOfDiscsModel
   isPcMode: boolean
-  toViewDisc: (t: DiscModel) => void
-  toViewRank: (t: DiscModel) => void
 }
 
 function SakuraDiscs(props: Props & ViewportProps) {
@@ -22,7 +20,7 @@ function SakuraDiscs(props: Props & ViewportProps) {
       {
         key: 'rank',
         title: '日亚排名',
-        format: (t) => <Command onClick={toViewRank(t)}>{formatRank(t)}</Command>,
+        format: (t) => <Link to={`/disc/${t.id}/records`}>{formatRank(t)}</Link>,
         tdClass: (t) => rankTdClass(t),
         compare: compareFactory<DiscModel, number | undefined>({
           apply: model => model.thisRank,
@@ -62,7 +60,7 @@ function SakuraDiscs(props: Props & ViewportProps) {
       {
         key: 'title',
         title: '碟片标题',
-        format: (t) => <Command onClick={toViewDisc(t)}>{formatTitle(t)}</Command>,
+        format: (t) => <Link to={`/disc/${t.id}`}>{formatTitle(t)}</Link>,
         compare: (a, b) => formatTitle(a).localeCompare(formatTitle(b)),
       },
     ]
@@ -85,14 +83,6 @@ function SakuraDiscs(props: Props & ViewportProps) {
       check: value => value === undefined,
       compare: (a, b) => b! - a!
     })
-  }
-
-  function toViewDisc(t: DiscModel) {
-    return () => props.toViewDisc(t)
-  }
-
-  function toViewRank(t: DiscModel) {
-    return () => props.toViewRank(t)
   }
 
   function formatTitle(t: DiscModel) {

@@ -46,7 +46,7 @@ export const recordsReducer = (action: AnyAction, draftState: DiscState) => {
 const manager = new Manager<DiscOfRecordsModel>('/api/discs')
 
 function* viewRecords(action: AnyAction) {
-  const result = yield call(manager.findList, action.search, action.value, 'records')
+  const result = yield call(manager.findList, action.key, action.value, 'records')
   if (result.success) {
     yield put({type: `view(records)${pageInfo.pageModel}Succeed`, data: result.data})
   } else {

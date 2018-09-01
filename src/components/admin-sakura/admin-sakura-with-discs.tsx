@@ -5,6 +5,7 @@ import { formatTimeout } from '../../utils/format'
 import { Button, Input, Modal } from 'antd'
 import { Column, Table } from '../../lib/table'
 import { Command } from '../../lib/command'
+import { Link } from 'react-router-dom'
 
 interface FormSearch {
   asin?: string
@@ -18,7 +19,6 @@ interface Props {
   pushDiscs: (id: number, pid: number) => void
   dropDiscs: (id: number, pid: number) => void
   searchDisc: (id: number, asin: string) => void
-  toViewDisc: (t: DiscModel) => void
 }
 
 function AdminSakuraDiscs(props: Props & ViewportProps) {
@@ -65,15 +65,11 @@ function AdminSakuraDiscs(props: Props & ViewportProps) {
       {
         key: 'title',
         title: '碟片标题',
-        format: (t) => <Command onClick={toViewDisc(t)}>{formatTitle(t)}</Command>,
+        format: (t) => <Link to={`/disc/${t.id}`}>{formatTitle(t)}</Link>,
         compare: (a, b) => formatTitle(a).localeCompare(formatTitle(b)),
       },
       extraColumn
     ]
-  }
-
-  function toViewDisc(t: DiscModel) {
-    return () => props.toViewDisc(t)
   }
 
   function formatTitle(t: DiscModel) {

@@ -159,6 +159,9 @@ export function AdminSakura(props: Props) {
                 <Breadcrumb.Item>
                   编辑{props.pageInfo.modelName}
                 </Breadcrumb.Item>
+                <Breadcrumb.Item>
+                  <Link to={`${props.match.url}/${match.params.key}/discs`}>碟片管理</Link>
+                </Breadcrumb.Item>
               </Breadcrumb>
               {detail.drop && (
                 <Alert
@@ -181,7 +184,7 @@ export function AdminSakura(props: Props) {
         <Route
           path={`${props.match.url}/:key/discs`}
           exact={true}
-          render={({match, history}) => withDetailOfDiscs(match.params.key, detail => (
+          render={({match}) => withDetailOfDiscs(match.params.key, detail => (
             <div className="admin-sakura-discs">
               <Helmet>
                 <title>碟片管理 - {detail.title} - 名作之壁吧</title>
@@ -192,6 +195,9 @@ export function AdminSakura(props: Props) {
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>
                   <Link to={props.match.url}>{props.pageInfo.pageTitle}</Link>
+                </Breadcrumb.Item>
+                <Breadcrumb.Item>
+                  <Link to={`${props.match.url}/${match.params.key}`}>编辑{props.pageInfo.modelName}</Link>
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>
                   {detail.title}
@@ -208,11 +214,6 @@ export function AdminSakura(props: Props) {
                 pushDiscs={props.pushDiscs}
                 dropDiscs={props.dropDiscs}
                 searchDisc={props.searchDisc}
-                toViewDisc={(t: DiscModel) => {
-                  history.push(`/disc/${t.id}`, {
-                    url: match.url, title: detail.title
-                  })
-                }}
               />
             </div>
           ))}

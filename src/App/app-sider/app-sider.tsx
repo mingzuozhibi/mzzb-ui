@@ -60,7 +60,9 @@ export function AppSider(props: AppSiderProps) {
     } else {
       return (
         <Menu.Item key={menuInfo.path}>
-          {renderLabel(menuInfo.text, menuInfo.icon)}
+          <span onMouseDown={e => e.button === 1 && window.open(menuInfo.path)}>
+            {renderLabel(menuInfo.text, menuInfo.icon)}
+          </span>
         </Menu.Item>
       )
     }
