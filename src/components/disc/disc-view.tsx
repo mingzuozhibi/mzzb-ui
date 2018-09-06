@@ -233,10 +233,10 @@ function DiscView(props: Props & ViewportProps) {
               defaultValue={formEdit.discType}
               onChange={value => formEdit.discType = value.toString()}
             >
-              <Select.Option value="Bluray">Blu-ray</Select.Option>
-              <Select.Option value="Dvd">DVD</Select.Option>
-              <Select.Option value="Box">BOX</Select.Option>
               <Select.Option value="Cd">CD</Select.Option>
+              <Select.Option value="Bluray">BD</Select.Option>
+              <Select.Option value="Dvd">DVD</Select.Option>
+              <Select.Option value="Auto">自动</Select.Option>
               <Select.Option value="Other">未知</Select.Option>
             </Select>
           </div>
