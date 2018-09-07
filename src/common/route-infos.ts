@@ -167,14 +167,14 @@ export const menuInfos: MenuInfo[] = [
     path: 'https://tieba.baidu.com/f?kw=%E5%A3%81%E5%90%A7%E4%B8%93%E6%A5%BC',
   },
   {
-    icon: 'icon-buoumaotubiao31',
-    text: '日本PT站(Sakura)',
-    path: 'http://rankstker.net/index_news.cgi',
+    icon: 'icon-social-tieba',
+    text: '新碟片反馈专楼',
+    path: 'https://tieba.baidu.com/p/5848378452',
   },
   {
     icon: 'icon-buoumaotubiao31',
-    text: 'B萌2018(Hot)',
-    path: 'https://mingzuozhibi.com/bmoe2018.html',
+    text: '日本PT站(Sakura)',
+    path: 'http://rankstker.net/index_news.cgi',
   },
   {
     icon: 'github',

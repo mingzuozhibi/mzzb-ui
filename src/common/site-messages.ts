@@ -14,7 +14,7 @@ const adminDiscRecordsMessage = ''
 const discViewMessage = ''
 const discRecordsMessage = ''
 
-const sakuraListMessge = '最新更新：添加18夏季部分专贴链接，添加B萌链接'
+const sakuraListMessge = '最新更新：添加上架追踪页面，添加新碟片反馈专楼链接'
 const sakuraDiscsMessge = ''
 
 export {
