@@ -6,6 +6,7 @@ import './topdisc.css'
 
 import { TopDiscModel, TopDiscState } from './reducer'
 import { Column, Table } from '../../lib/table'
+import { formatTimeout } from '../../utils/format'
 
 export type OwnProps = RouteComponentProps<{}>
 
@@ -52,7 +53,7 @@ export function TopDisc(props: Props) {
           </Helmet>
           <Breadcrumb style={{padding: 10}}>
             <Breadcrumb.Item>
-              {props.pageInfo.pageTitle}
+              {props.pageInfo.pageTitle} 更新于{formatTimeout(props.updateOn!)}
             </Breadcrumb.Item>
           </Breadcrumb>
           <Table rows={props.models} columns={getColumns()} trClass={trClass}/>

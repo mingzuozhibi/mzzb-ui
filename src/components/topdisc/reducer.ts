@@ -28,10 +28,11 @@ export interface PageData {
 }
 
 export interface TopDiscState extends BaseState<TopDiscModel> {
+  updateOn?: number
 }
 
 const initState: TopDiscState = {
-  pageInfo
+  pageInfo,
 }
 
 export const topdiscReducer = (state: TopDiscState = initState, action: AnyAction) => {
@@ -39,6 +40,7 @@ export const topdiscReducer = (state: TopDiscState = initState, action: AnyActio
     switch (action.type) {
       case `list${pageInfo.pageModel}Succeed`:
         draftState.models = action.topdiscs
+        draftState.updateOn = action.updateOn
         draftState.message = undefined
         break
       case `list${pageInfo.pageModel}Failed`:
@@ -54,7 +56,8 @@ const manager = new Manager<TopDiscModel>('/proxy/topDiscs')
 function* listModel(action: AnyAction) {
   const result = yield call(manager.findAll, action.query)
   if (result.success) {
-    yield put({type: `list${pageInfo.pageModel}Succeed`, topdiscs: result.content})
+    const {content: topdiscs, updateOn} = result
+    yield put({type: `list${pageInfo.pageModel}Succeed`, topdiscs, updateOn})
   } else {
     yield put({type: `list${pageInfo.pageModel}Failed`, message: result.message})
   }
