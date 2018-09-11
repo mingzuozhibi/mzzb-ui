@@ -1,6 +1,7 @@
 import { pageInfo as discPage } from '../components/disc/reducer'
 import { pageInfo as sakuraPage } from '../components/sakura/reducer'
 import { pageInfo as newdiscPage } from '../components/newdisc/reducer'
+import { pageInfo as topdiscPage } from '../components/topdisc/reducer'
 import { pageInfo as adminUserPage } from '../components/admin-user/reducer'
 import { pageInfo as adminSakuraPage } from '../components/admin-sakura/reducer'
 
@@ -37,6 +38,7 @@ const fromPage = (pageInfo: PageInfo, icon: string, role?: Role) => {
 export const menuInfos: MenuInfo[] = [
   fromPage(sakuraPage, 'icon-yinghua'),
   fromPage(newdiscPage, 'icon-yinghua'),
+  fromPage(topdiscPage, 'icon-yinghua'),
   {
     icon: 'profile',
     text: '后台管理',

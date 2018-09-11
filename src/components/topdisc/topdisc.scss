@@ -1,0 +1,24 @@
+@import '../../global';
+
+.topdisc {
+  .topdisc-content {
+    table {
+      table-layout: fixed;
+      text-align: center;
+      .title {
+        text-align: left;
+      }
+      tr.is-anime {
+        background-color: #ffbaf6;
+      }
+      td, th {
+        &.rank {
+          width: 55px;
+          @media screen and (max-width: $mobile-max-width) {
+            width: 45px;
+          }
+        }
+      }
+    }
+  }
+}

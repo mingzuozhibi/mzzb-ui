@@ -5,6 +5,7 @@ import { routerReducer, RouterState } from 'react-router-redux'
 import { sakuraReducer, SakuraState } from '../components/sakura/reducer'
 import { currentReducer, CurrentState } from './reducers/current'
 import { newdiscReducer, NewDiscState } from '../components/newdisc/reducer'
+import { topdiscReducer, TopDiscState } from '../components/topdisc/reducer'
 import { adminUserReducer, AdminUserState } from '../components/admin-user/reducer'
 import { adminSakuraReducer, AdminSakuraState } from '../components/admin-sakura/reducer'
 import { PageInfo } from './route-infos'
@@ -18,6 +19,7 @@ export interface RootState {
   sakura: SakuraState
   current: CurrentState
   newdisc: NewDiscState
+  topdisc: TopDiscState
   adminUser: AdminUserState
   adminSakura: AdminSakuraState
 }
@@ -29,6 +31,7 @@ export const rootReducer = combineReducers({
   sakura: sakuraReducer,
   current: currentReducer,
   newdisc: newdiscReducer,
+  topdisc: topdiscReducer,
   adminUser: adminUserReducer,
   adminSakura: adminSakuraReducer,
 })
