@@ -39,9 +39,9 @@ export const topdiscReducer = (state: TopDiscState = initState, action: AnyActio
   return produce(state, draftState => {
     switch (action.type) {
       case `list${pageInfo.pageModel}Succeed`:
-        draftState.models = action.topdiscs
-        draftState.updateOn = action.updateOn
+        draftState.models = action.data
         draftState.message = undefined
+        draftState.updateOn = action.updateOn
         break
       case `list${pageInfo.pageModel}Failed`:
         draftState.message = action.message
@@ -56,8 +56,7 @@ const manager = new Manager<TopDiscModel>('/proxy/topDiscs')
 function* listModel(action: AnyAction) {
   const result = yield call(manager.findAll, action.query)
   if (result.success) {
-    const {content: topdiscs, updateOn} = result
-    yield put({type: `list${pageInfo.pageModel}Succeed`, topdiscs, updateOn})
+    yield put({type: `list${pageInfo.pageModel}Succeed`, ...result})
   } else {
     yield put({type: `list${pageInfo.pageModel}Failed`, message: result.message})
   }
