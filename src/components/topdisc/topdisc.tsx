@@ -6,8 +6,9 @@ import './topdisc.css'
 
 import { TopDiscModel, TopDiscState } from './reducer'
 import { Column, Table } from '../../lib/table'
-import { formatNumber, formatTimeout } from '../../utils/format'
+import { formatNumber } from '../../utils/format'
 import { Command } from '../../lib/command'
+import { Timer } from '../../lib/timer'
 
 export type OwnProps = RouteComponentProps<{}>
 
@@ -44,7 +45,10 @@ export function TopDisc(props: Props) {
   }
 
   function trClass(t: TopDiscModel) {
-    return t.isAnime && props.isShowAll ? 'is-anime' : 'no-anime'
+    if (!props.isShowAll) {
+      return ''
+    }
+    return t.isAnime ? 'is-anime' : 'no-anime'
   }
 
   function withModels(render: (models: TopDiscModel[]) => React.ReactNode) {
@@ -52,6 +56,20 @@ export function TopDisc(props: Props) {
       return render(props.models.filter(t => t.isAnime || props.isShowAll))
     }
     return null
+  }
+
+  function formatUpdateOn() {
+    if (props.updateOn) {
+      return (
+        <Timer
+          time={props.updateOn}
+          timeout={1000}
+          render={(state => `更新于${state.hour}时${state.minute}分${state.second}秒前`)}
+        />
+      )
+    } else {
+      return '从未更新'
+    }
   }
 
   return (
@@ -76,12 +94,13 @@ export function TopDisc(props: Props) {
               {props.isShowAll ? '当前显示所有碟片（点击只显示动画碟片）' : '当前只显示动画碟片（点击显示所有碟片）'}
             </Command>
           </div>
-          <Breadcrumb style={{padding: 10}}>
-            <Breadcrumb.Item>
-              {props.pageInfo.pageTitle} 更新于{formatTimeout(props.updateOn!)}
-            </Breadcrumb.Item>
-          </Breadcrumb>
-          <Table rows={models} columns={getColumns()} trClass={trClass}/>
+          <Table
+            title={props.pageInfo.pageTitle}
+            subtitle={formatUpdateOn()}
+            rows={models}
+            columns={getColumns()}
+            trClass={trClass}
+          />
         </div>
       ))}
     </div>
