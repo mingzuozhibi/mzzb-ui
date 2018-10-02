@@ -12,10 +12,16 @@
         background-color: #ffbaf6;
       }
       td, th {
-        &.rank {
-          width: 55px;
+        &.id {
+          width: 50px;
           @media screen and (max-width: $mobile-max-width) {
-            width: 45px;
+            width: 40px;
+          }
+        }
+        &.rank {
+          width: 100px;
+          @media screen and (max-width: $mobile-max-width) {
+            width: 90px;
           }
         }
       }

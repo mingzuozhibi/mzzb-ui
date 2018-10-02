@@ -14,7 +14,7 @@ const adminDiscRecordsMessage = ''
 const discViewMessage = ''
 const discRecordsMessage = ''
 
-const sakuraListMessge = '最新更新：添加上架追踪页面，添加新碟片反馈专楼链接'
+const sakuraListMessge = '最新更新：更新Top100页面：显示前回排名'
 const sakuraDiscsMessge = ''
 
 export {

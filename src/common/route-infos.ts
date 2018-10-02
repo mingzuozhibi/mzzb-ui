@@ -55,8 +55,12 @@ export const menuInfos: MenuInfo[] = [
     path: '/zhuantie',
     subMenus: [
       {
-        text: '日本票房综合讨论楼V3',
-        path: 'https://tieba.baidu.com/p/4803602533?pn=9999',
+        text: '日本票房临时专楼',
+        path: 'https://tieba.baidu.com/p/5900422262?pn=9999',
+      },
+      {
+        text: '2018秋-长期追踪贴',
+        path: 'https://tieba.baidu.com/p/5899226795?pn=9999',
       },
       {
         text: '2018夏-PT排名走势',

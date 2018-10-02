@@ -9,7 +9,11 @@ function mapStateToProps(state: RootState, ownProps: OwnProps) {
 }
 
 function mapDispatchToProps(dispatch: Dispatch<any>) {
-  return {}
+  return {
+    onShowAll() {
+      dispatch({type: 'topDisc_onShowAll'})
+    }
+  }
 }
 
 export default connect(

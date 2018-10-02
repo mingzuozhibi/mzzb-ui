@@ -16,6 +16,7 @@ export const pageInfo: PageInfo = {
 export interface TopDiscModel extends BaseModel {
   asin: string
   rank: number
+  prev?: number
   title: string
   isAnime: boolean
 }
@@ -29,10 +30,11 @@ export interface PageData {
 
 export interface TopDiscState extends BaseState<TopDiscModel> {
   updateOn?: number
+  isShowAll: boolean
 }
 
 const initState: TopDiscState = {
-  pageInfo,
+  pageInfo, isShowAll: false
 }
 
 export const topdiscReducer = (state: TopDiscState = initState, action: AnyAction) => {
@@ -45,6 +47,9 @@ export const topdiscReducer = (state: TopDiscState = initState, action: AnyActio
         break
       case `list${pageInfo.pageModel}Failed`:
         draftState.message = action.message
+        break
+      case `topDisc_onShowAll`:
+        draftState.isShowAll = !state.isShowAll
         break
       default:
     }
