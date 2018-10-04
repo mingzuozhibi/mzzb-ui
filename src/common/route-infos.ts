@@ -38,7 +38,7 @@ const fromPage = (pageInfo: PageInfo, icon: string, role?: Role) => {
 export const menuInfos: MenuInfo[] = [
   fromPage(sakuraPage, 'icon-yinghua'),
   fromPage(newdiscPage, 'icon-yinghua'),
-  fromPage(topdiscPage, 'icon-yinghua'),
+  // fromPage(topdiscPage, 'icon-yinghua'),
   {
     icon: 'profile',
     text: '后台管理',

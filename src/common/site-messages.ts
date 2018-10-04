@@ -14,7 +14,7 @@ const adminDiscRecordsMessage = ''
 const discViewMessage = ''
 const discRecordsMessage = ''
 
-const sakuraListMessge = '最新更新：更新Top100页面：显示前回排名'
+const sakuraListMessge = '最新更新：为了应对Amazon反抓取系统，暂时关闭TOP100页面'
 const sakuraDiscsMessge = ''
 
 export {
