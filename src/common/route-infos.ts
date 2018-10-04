@@ -1,7 +1,7 @@
 import { pageInfo as discPage } from '../components/disc/reducer'
 import { pageInfo as sakuraPage } from '../components/sakura/reducer'
 import { pageInfo as newdiscPage } from '../components/newdisc/reducer'
-import { pageInfo as topdiscPage } from '../components/topdisc/reducer'
+// import { pageInfo as topdiscPage } from '../components/topdisc/reducer'
 import { pageInfo as adminUserPage } from '../components/admin-user/reducer'
 import { pageInfo as adminSakuraPage } from '../components/admin-sakura/reducer'
 
