@@ -19,6 +19,7 @@ interface Props {
   pushDiscs: (id: number, pid: number) => void
   dropDiscs: (id: number, pid: number) => void
   searchDisc: (id: number, asin: string) => void
+  fetchActiveCount: () => void
 }
 
 function AdminSakuraDiscs(props: Props & ViewportProps) {
@@ -109,8 +110,9 @@ function AdminSakuraDiscs(props: Props & ViewportProps) {
             placeholder="请输入ASIN"
           />
         </div>
-        <div className="input-wrapper">
+        <div className="input-wrapper button-group">
           <Button onClick={searchDisc}>查找碟片</Button>
+          <Button onClick={props.fetchActiveCount}>查询抓取碟片数量</Button>
         </div>
       </div>
       {props.addDiscs && (

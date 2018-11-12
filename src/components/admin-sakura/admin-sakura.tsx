@@ -45,6 +45,7 @@ interface Props extends AdminSakuraState, OwnProps {
   pushDiscs: (id: number, pid: number) => void
   dropDiscs: (id: number, pid: number) => void
   searchDisc: (id: number, asin: string) => void
+  fetchActiveCount: () => void
 }
 
 export function AdminSakura(props: Props) {
@@ -214,6 +215,7 @@ export function AdminSakura(props: Props) {
                 pushDiscs={props.pushDiscs}
                 dropDiscs={props.dropDiscs}
                 searchDisc={props.searchDisc}
+                fetchActiveCount={props.fetchActiveCount}
               />
             </div>
           ))}

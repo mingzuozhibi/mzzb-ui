@@ -60,6 +60,9 @@
     }
   }
   .admin-sakura-discs {
+    .button-group button {
+      margin-right: 10px;
+    }
     table {
       table-layout: fixed;
       td, th {

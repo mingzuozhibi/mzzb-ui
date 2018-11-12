@@ -2,6 +2,8 @@ import { connect, Dispatch } from 'react-redux'
 import { RootState } from '../../common/root-reducer'
 import { AdminSakura, OwnProps } from './admin-sakura'
 import { pageInfo } from './reducer'
+import request from '../../utils/request'
+import { message } from 'antd'
 
 function mapStateToProps(state: RootState, ownProps: OwnProps) {
   return {
@@ -29,6 +31,12 @@ function mapDispatchToProps(dispatch: Dispatch<any>) {
     searchDisc(id: number, asin: string) {
       dispatch({type: `search(discs)${pageInfo.pageModel}Request`, id, asin})
     },
+    async fetchActiveCount() {
+      const json = await request('/api/discs/activeCount')
+      if (json.success) {
+        message.success(`当前抓取的碟片共${json.data}个`)
+      }
+    }
   }
 }
 
