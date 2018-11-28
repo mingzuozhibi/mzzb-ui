@@ -14,8 +14,9 @@ const adminDiscRecordsMessage = ''
 const discViewMessage = ''
 const discRecordsMessage = ''
 
-const sakuraListMessge = '最新更新：为了应对Amazon反抓取系统，暂时关闭TOP100页面'
-const sakuraDiscsMessge = ''
+const sakuraListMessge = ''
+const sakuraDiscsMessge = '最新更新：' +
+  '目前以6小时为周期，分多个批次更新。更新1小时以内的为绿色，更新6小时以上的为黄色。'
 
 export {
   adminSakuraListMessage,

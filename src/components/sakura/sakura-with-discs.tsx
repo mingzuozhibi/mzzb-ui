@@ -94,8 +94,14 @@ function SakuraDiscs(props: Props & ViewportProps) {
   }
 
   function rankTdClass(t: DiscModel) {
-    if (t.modifyTime && new Date().getTime() - t.modifyTime < 900000) {
-      return 'success'
+    const HOUR = 3600 * 1000
+    if (t.modifyTime) {
+      const timeout = new Date().getTime() - t.modifyTime
+      if (timeout < HOUR) {
+        return 'success'
+      } else if (timeout > 6.1 * HOUR) {
+        return 'warning'
+      }
     }
     return ''
   }
