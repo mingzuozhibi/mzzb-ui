@@ -95,8 +95,8 @@ function SakuraDiscs(props: Props & ViewportProps) {
 
   function rankTdClass(t: DiscModel) {
     const HOUR = 3600 * 1000
-    if (t.modifyTime) {
-      const timeout = new Date().getTime() - t.modifyTime
+    if (t.updateTime) {
+      const timeout = new Date().getTime() - t.updateTime
       if (timeout < HOUR) {
         return 'success'
       } else if (timeout > 6.1 * HOUR) {
