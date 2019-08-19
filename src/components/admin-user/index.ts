@@ -1,4 +1,4 @@
-import { connect, Dispatch } from 'react-redux'
+import { connect } from 'react-redux'
 import { RootState } from '../../common/root-reducer'
 import { AdminUser, OwnProps } from './admin-user'
 import { pageInfo } from './reducer'
@@ -10,7 +10,7 @@ function mapStateToProps(state: RootState, ownProps: OwnProps) {
   }
 }
 
-function mapDispatchToProps(dispatch: Dispatch<any>) {
+function mapDispatchToProps(dispatch: any) {
   return {
     saveModel(model: {}) {
       dispatch({type: `save${pageInfo.pageModel}Request`, model})

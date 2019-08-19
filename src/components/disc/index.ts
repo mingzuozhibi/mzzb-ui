@@ -1,4 +1,4 @@
-import { connect, Dispatch } from 'react-redux'
+import { connect } from 'react-redux'
 import { RootState } from '../../common/root-reducer'
 import { Disc, OwnProps } from './disc'
 import { pageInfo } from './reducer'
@@ -9,7 +9,7 @@ function mapStateToProps(state: RootState, ownProps: OwnProps) {
   }
 }
 
-function mapDispatchToProps(dispatch: Dispatch<any>) {
+function mapDispatchToProps(dispatch: any) {
   return {
     editModel(id: number, model: {}) {
       dispatch({type: `edit${pageInfo.pageModel}Request`, id, model})

@@ -1,4 +1,4 @@
-import { connect, Dispatch } from 'react-redux'
+import { connect } from 'react-redux'
 import { RootState } from '../../common/root-reducer'
 import { OwnProps, Sakura } from './sakura'
 
@@ -8,7 +8,7 @@ function mapStateToProps(state: RootState, ownProps: OwnProps) {
   }
 }
 
-function mapDispatchToProps(dispatch: Dispatch<any>) {
+function mapDispatchToProps(dispatch: any) {
   return {
     switchToPc() {
       dispatch({type: 'switchToPcMode'})

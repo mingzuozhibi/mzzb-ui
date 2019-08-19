@@ -6,7 +6,7 @@ import { currentSaga } from './reducers/current'
 import { topdiscSaga } from '../components/topdisc/reducer'
 import { adminUserSaga } from '../components/admin-user/reducer'
 import { adminSakuraSaga } from '../components/admin-sakura/reducer'
-import { LOCATION_CHANGE } from 'react-router-redux'
+import { LOCATION_CHANGE } from 'connected-react-router'
 
 export function* rootSagas() {
   yield all([

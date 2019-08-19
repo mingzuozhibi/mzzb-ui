@@ -1,4 +1,4 @@
-import { connect, Dispatch } from 'react-redux'
+import { connect } from 'react-redux'
 import { RootState } from '../../common/root-reducer'
 import { AppHeader } from './app-header'
 
@@ -10,7 +10,7 @@ function mapStateToProps(state: RootState) {
   }
 }
 
-function mapDispatchToProps(dispatch: Dispatch<any>) {
+function mapDispatchToProps(dispatch: any) {
   return {
     reloadRequest() {
       dispatch({type: 'reloadRequest'})

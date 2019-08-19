@@ -52,7 +52,7 @@ function match<T>(pathname: string, path: string) {
 
 function* updateReload({payload}: any) {
   window.scroll(0, 0)
-  const pathname: string = payload.pathname
+  const pathname: string = payload.location.pathname
   const pageInfo = findPageInfo(pathname)
 
   if (pageInfo) {

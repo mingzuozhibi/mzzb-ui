@@ -1,4 +1,4 @@
-import { connect, Dispatch } from 'react-redux'
+import { connect } from 'react-redux'
 import { RootState } from '../../common/root-reducer'
 import { AppSider, OwnProps } from './app-sider'
 import { withRouter } from 'react-router-dom'
@@ -12,7 +12,7 @@ function mapStateToProps(state: RootState, ownProps: OwnProps) {
   }
 }
 
-function mapDispatchToProps(dispatch: Dispatch<any>) {
+function mapDispatchToProps(dispatch: any) {
   return {
     setViewSider(viewSider: boolean) {
       dispatch({type: 'setViewSider', viewSider})

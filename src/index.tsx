@@ -1,27 +1,27 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import { ConnectedRouter, routerMiddleware } from 'react-router-redux'
 import './index.scss'
 
+import { createBrowserHistory } from 'history'
 import { applyMiddleware, createStore } from 'redux'
+import { ConnectedRouter, routerMiddleware } from 'connected-react-router'
 import { composeWithDevTools } from 'redux-devtools-extension'
-import createHistory from 'history/createBrowserHistory'
 import createSagaMiddleware from 'redux-saga'
 
 import App from './App'
 import { cleanup } from './utils/cleanup'
 import { rootSagas } from './common/root-sagas'
-import { rootReducer } from './common/root-reducer'
+import { createRootReducer } from './common/root-reducer'
 
 cleanup('v0.27.2')
 
-const history = createHistory()
+const history = createBrowserHistory()
 const routerMid = routerMiddleware(history)
 const sagaMid = createSagaMiddleware()
 
 const store = createStore(
-  rootReducer, composeWithDevTools(applyMiddleware(routerMid, sagaMid))
+  createRootReducer(history), composeWithDevTools(applyMiddleware(routerMid, sagaMid))
 )
 
 sagaMid.run(rootSagas)
