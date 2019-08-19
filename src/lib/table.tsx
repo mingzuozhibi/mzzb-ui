@@ -46,14 +46,14 @@ export class Table<T extends BaseModel> extends React.Component<TableProps<T>, T
   render() {
     const {title, subtitle, rows, columns, trClass} = this.props
 
-    const finalRows = produce(rows, draftState => {
+    const finalRows = produce(rows, (draft: T[]) => {
       if (this.state.sortKey) {
         const findColumn = this.props.columns.find(c => c.key === this.state.sortKey)
         if (findColumn) {
-          draftState.sort(findColumn.compare)
+          draft.sort(findColumn.compare)
         }
         if (this.state.sortAsc === false) {
-          draftState.reverse()
+          draft.reverse()
         }
       }
     })
