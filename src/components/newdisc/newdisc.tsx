@@ -1,6 +1,6 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
-import { Alert, Breadcrumb } from 'antd'
+import { Alert, Breadcrumb, Pagination } from 'antd'
 import { Link, RouteComponentProps } from 'react-router-dom'
 
 import { NewDiscModel, NewDiscState } from './reducer'
@@ -9,43 +9,6 @@ import { Column, Table } from '../../lib/table'
 export type OwnProps = RouteComponentProps<{}>
 
 export interface Props extends NewDiscState, OwnProps {
-}
-
-function createPageLinks(props: Props) {
-  const maxPage = props.pageData.maxPage
-  const page = props.pageData.page
-
-  let pages = Array(maxPage + 1).fill(0)
-  if (pages.length > 10) {
-    pages = pages.map((value, index) => index).filter((value, index) => {
-      if (index === 0 || index === maxPage) {
-        return true
-      }
-      if (page < 5 && index < 10) {
-        return true
-      }
-      if (maxPage - page < 5 && maxPage - index < 10) {
-        return true
-      }
-      return Math.abs(page - index) < 5
-    })
-  }
-
-  const nodes = []
-  const style = {fontSize: 16, padding: '8px 12px'}
-  for (let i = 0; i < pages.length; i++) {
-    const p = pages[i]
-    const href = `${props.pageInfo.matchPath}?page=${p}`
-    if (p === page) {
-      nodes.push(<Link style={{...style, color: 'black'}} key={p} to={href}>{p}</Link>)
-    } else {
-      nodes.push(<Link style={style} key={p} to={href}>{p}</Link>)
-    }
-    if (i < pages.length - 1 && pages[i + 1] - pages[i] !== 1) {
-      nodes.push('...')
-    }
-  }
-  return nodes
 }
 
 export function NewDisc(props: Props) {
@@ -75,7 +38,8 @@ export function NewDisc(props: Props) {
       {
         key: 'title',
         title: '标题',
-        format: (t) => <a href={`http://www.amazon.co.jp/dp/${t.asin}`} target="_blank" rel="noopener noreferrer">{t.title}</a>
+        format: (t) => <a href={`http://www.amazon.co.jp/dp/${t.asin}`} target="_blank"
+                          rel="noopener noreferrer">{t.title}</a>
       },
     ]
   }
@@ -108,7 +72,12 @@ export function NewDisc(props: Props) {
             </Breadcrumb.Item>
           </Breadcrumb>
           <Table rows={props.models} columns={getColumns()}/>
-          {createPageLinks(props)}
+          <Pagination
+            showQuickJumper
+            current={props.pageData.page + 1}
+            total={(props.pageData.maxPage + 1) * props.pageData.maxSize}
+            pageSize={props.pageData.maxSize}
+            onChange={page => props.history.push(`/newdisc?page=${page - 1}`)}/>
         </div>
       )}
     </div>
