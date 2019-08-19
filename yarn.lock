@@ -1313,12 +1313,6 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-loadable@^5.3.3":
-  version "5.3.3"
-  resolved "http://registry.npm.taobao.org/@types/react-loadable/download/@types/react-loadable-5.3.3.tgz#ca0625ab41fb222083adcf767de36f0be329acec"
-  dependencies:
-    "@types/react" "*"
-
 "@types/react-redux@^7.1.2":
   version "7.1.2"
   resolved "https://registry.npm.taobao.org/@types/react-redux/download/@types/react-redux-7.1.2.tgz#02303b77d87e54f327c09507cf80ee3ca3063898"
@@ -8447,7 +8441,7 @@ prompts@^2.0.1:
     kleur "^3.0.3"
     sisteransi "^1.0.3"
 
-prop-types@15.x, prop-types@^15.5.0, prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.5.9, prop-types@^15.6.0:
+prop-types@15.x, prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.5.9, prop-types@^15.6.0:
   version "15.6.1"
   resolved "http://registry.npm.taobao.org/prop-types/download/prop-types-15.6.1.tgz#36644453564255ddda391191fb3a125cbdf654ca"
   dependencies:
@@ -9186,12 +9180,6 @@ react-lifecycles-compat@^3.0.2, react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.npm.taobao.org/react-lifecycles-compat/download/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha1-TxonOv38jzSIqMUWv9p4+HI1I2I=
-
-react-loadable@^5.3.1:
-  version "5.3.1"
-  resolved "http://registry.npm.taobao.org/react-loadable/download/react-loadable-5.3.1.tgz#9699e9a08fed49bacd69caaa282034b62a76bcdd"
-  dependencies:
-    prop-types "^15.5.0"
 
 react-redux@^7.1.0:
   version "7.1.0"
