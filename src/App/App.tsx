@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { lazy, Suspense } from 'react'
 import Loadable from 'react-loadable'
-import { Layout } from 'antd'
+import { Layout, Spin } from 'antd'
 import { Load } from '../lib/load'
 import './App.scss'
 
@@ -28,11 +28,14 @@ export function App() {
         <Layout>
           <AsyncAppHeader/>
           <Layout.Content className="app-content">
-            <Switch>
-              <Redirect exact={true} path="/" to="/sakura"/>
-              {pageInfos.map(renderRoute)}
-              <Redirect exact={true} path="*" to="/sakura"/>
-            </Switch>
+            <Suspense fallback={<Spin delay={200}/>}>
+              <Switch>
+                <Redirect exact={true} path="/" to="/sakura"/>
+                <Route path="/new_discs" component={lazy(() => import('../components/newdisc/NewDiscs'))}/>
+                {pageInfos.map(renderRoute)}
+                <Redirect exact={true} path="*" to="/sakura"/>
+              </Switch>
+            </Suspense>
           </Layout.Content>
           <AsyncAppFooter/>
         </Layout>
