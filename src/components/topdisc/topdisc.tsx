@@ -1,8 +1,8 @@
-import * as React from 'react'
+import React from 'react'
 import { Helmet } from 'react-helmet'
 import { Alert, Breadcrumb } from 'antd'
 import { Link, RouteComponentProps } from 'react-router-dom'
-import './topdisc.css'
+import './topdisc.scss'
 
 import { TopDiscModel, TopDiscState } from './reducer'
 import { Column, Table } from '../../lib/table'
@@ -33,7 +33,7 @@ export function TopDisc(props: Props) {
       {
         key: 'title',
         title: '碟片标题',
-        format: (t) => <a href={`http://www.amazon.co.jp/dp/${t.asin}`} target="_blank">{t.title}</a>
+        format: (t) => <a href={`http://www.amazon.co.jp/dp/${t.asin}`} target="_blank" rel="noopener noreferrer">{t.title}</a>
       },
     ]
   }

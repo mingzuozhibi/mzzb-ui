@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { Helmet } from 'react-helmet'
 import { Alert, Breadcrumb } from 'antd'
 import { Link, RouteComponentProps } from 'react-router-dom'
@@ -75,7 +75,7 @@ export function NewDisc(props: Props) {
       {
         key: 'title',
         title: '标题',
-        format: (t) => <a href={`http://www.amazon.co.jp/dp/${t.asin}`} target="_blank">{t.title}</a>
+        format: (t) => <a href={`http://www.amazon.co.jp/dp/${t.asin}`} target="_blank" rel="noopener noreferrer">{t.title}</a>
       },
     ]
   }

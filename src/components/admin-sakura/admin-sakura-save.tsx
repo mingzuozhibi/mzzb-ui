@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { Button, Input, Modal, Radio } from 'antd'
 import { PageInfo } from '../../common/route-infos'
 import { Icon } from '../../lib/icon'

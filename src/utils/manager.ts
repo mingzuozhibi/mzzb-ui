@@ -1,5 +1,5 @@
 import request from './request'
-import * as md5 from 'md5'
+import md5 from 'md5'
 
 export interface BaseModel {
   id: number
@@ -129,7 +129,7 @@ export const sessionManager = {
     if (token && token.length === 36) {
       return request('/api/session', {
         headers: {
-          ['X-AUTO-LOGIN']: token
+          'X-AUTO-LOGIN': token
         }
       })
     } else {

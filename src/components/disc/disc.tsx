@@ -1,8 +1,8 @@
-import * as React from 'react'
+import React from 'react'
 import { Helmet } from 'react-helmet'
 import { Alert, Breadcrumb } from 'antd'
 import { Link, Route, RouteComponentProps, Switch } from 'react-router-dom'
-import './disc.css'
+import './disc.scss'
 
 import { DiscOfRanksModel, DiscOfRecordsModel, DiscState } from './reducer'
 import {
@@ -34,7 +34,7 @@ export function Disc(props: Props) {
   }
 
   function findDetail(key: string, value: string, render: (detail: DiscOfRanksModel) => React.ReactNode) {
-    if (props.detail && props.detail[key] === value) {
+    if (props.detail && (props.detail as any)[key] === value) {
       return render(props.detail)
     }
     return null

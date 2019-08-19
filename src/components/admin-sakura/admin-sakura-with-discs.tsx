@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { DiscModel, SakuraOfDiscsModel } from './reducer-discs'
 import { ViewportProps, withViewport } from '../../hoc/Viewport'
 import { formatTimeout } from '../../utils/format'

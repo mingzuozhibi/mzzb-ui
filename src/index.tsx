@@ -1,8 +1,8 @@
-import * as React from 'react'
-import * as ReactDOM from 'react-dom'
+import React from 'react'
+import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { ConnectedRouter, routerMiddleware } from 'react-router-redux'
-import './index.css'
+import './index.scss'
 
 import { applyMiddleware, createStore } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'

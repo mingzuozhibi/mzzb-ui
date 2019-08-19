@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { DiscOfRecordsModel, RecordModel } from './reducer'
 import { Button, Input, Modal, Tabs } from 'antd'
 import { Column, Table } from '../../lib/table'
@@ -81,7 +81,7 @@ export function DiscRecords(props: Props) {
   return (
     <div className="disc-records-content">
       <Tabs>
-        <Tabs.TabPane key={1} tab="排名数据">
+        <Tabs.TabPane key="1" tab="排名数据">
           <div style={{fontSize: 18, padding: 10}}>
             {formatTitle(props.detail)}
           </div>
@@ -91,51 +91,51 @@ export function DiscRecords(props: Props) {
           />
         </Tabs.TabPane>
         {props.hasBasicRole && [
-            <Tabs.TabPane key={2} tab="提交排名">
-              <div className="input-wrapper">
-                <Button type="danger" onClick={mergeRanks}>提交排名</Button>
+          <Tabs.TabPane key="2" tab="提交排名">
+            <div className="input-wrapper">
+              <Button type="danger" onClick={mergeRanks}>提交排名</Button>
+            </div>
+            <div className="input-wrapper">
+              <div className="input-label">
+                <span style={{marginRight: 10}}>Sakura历史排名</span>
+                <a href={toSakuraRank(props.detail.asin)} target="_blank" rel="noopener noreferrer">
+                  点击这里打开Sakura网站
+                </a>
               </div>
-              <div className="input-wrapper">
-                <div className="input-label">
-                  <span style={{marginRight: 10}}>Sakura历史排名</span>
-                  <a target="_blank" href={toSakuraRank(props.detail.asin)}>
-                    点击这里打开Sakura网站
-                  </a>
-                </div>
-                <Input.TextArea
-                  autosize={true}
-                  onChange={e => formRecord.text = e.target.value}
-                  defaultValue={formRecord.text}
-                  placeholder="你可以从Sakura网站手动复制排名数据到这里"
-                />
-              </div>
-              <div className="input-wrapper">
-                <Button type="danger" onClick={mergeRanks}>提交排名</Button>
-              </div>
-            </Tabs.TabPane>
+              <Input.TextArea
+                autosize={true}
+                onChange={e => formRecord.text = e.target.value}
+                defaultValue={formRecord.text}
+                placeholder="你可以从Sakura网站手动复制排名数据到这里"
+              />
+            </div>
+            <div className="input-wrapper">
+              <Button type="danger" onClick={mergeRanks}>提交排名</Button>
+            </div>
+          </Tabs.TabPane>
           ,
-            <Tabs.TabPane key={3} tab="提交PT">
-              <div className="input-wrapper">
-                <Button type="danger" onClick={mergePts}>提交PT</Button>
+          <Tabs.TabPane key="3" tab="提交PT">
+            <div className="input-wrapper">
+              <Button type="danger" onClick={mergePts}>提交PT</Button>
+            </div>
+            <div className="input-wrapper">
+              <div className="input-label">
+                <span style={{marginRight: 10}}>Sakura累积PT</span>
+                <a href={toSakuraPt(props.detail.asin)} target="_blank" rel="noopener noreferrer">
+                  点击这里打开Sakura网站
+                </a>
               </div>
-              <div className="input-wrapper">
-                <div className="input-label">
-                  <span style={{marginRight: 10}}>Sakura累积PT</span>
-                  <a target="_blank" href={toSakuraPt(props.detail.asin)}>
-                    点击这里打开Sakura网站
-                  </a>
-                </div>
-                <Input.TextArea
-                  autosize={true}
-                  onChange={e => formRecord.text = e.target.value}
-                  defaultValue={formRecord.text}
-                  placeholder="你可以从Sakura网站手动复制PT数据到这里"
-                />
-              </div>
-              <div className="input-wrapper">
-                <Button type="danger" onClick={mergePts}>提交PT</Button>
-              </div>
-            </Tabs.TabPane>
+              <Input.TextArea
+                autosize={true}
+                onChange={e => formRecord.text = e.target.value}
+                defaultValue={formRecord.text}
+                placeholder="你可以从Sakura网站手动复制PT数据到这里"
+              />
+            </div>
+            <div className="input-wrapper">
+              <Button type="danger" onClick={mergePts}>提交PT</Button>
+            </div>
+          </Tabs.TabPane>
         ]}
       </Tabs>
     </div>

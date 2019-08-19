@@ -9,9 +9,11 @@ function prepareHeaders({headers = {}, ...prors}: RequestInit) {
   const name = sessionStorage['X-CSRF-HEADER']
   const value = sessionStorage['X-CSRF-TOKEN']
   if (name && value) {
+    // @ts-ignore
     headers[name] = value
   }
   if (prors.body) {
+    // @ts-ignore
     headers['Content-Type'] = 'application/json;charset=UTF-8'
   }
   return {headers, ...prors}

@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { Layout, message, Popconfirm } from 'antd'
 import { Session } from '../reducer'
 import { Reload } from '../../common/reducers/current'

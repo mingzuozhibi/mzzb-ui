@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux'
+import { PageInfo } from './route-infos'
 import { appReducer, AppState } from '../App/reducer'
 import { discReducer, DiscState } from '../components/disc/reducer'
 import { routerReducer, RouterState } from 'react-router-redux'
@@ -8,9 +9,6 @@ import { newdiscReducer, NewDiscState } from '../components/newdisc/reducer'
 import { topdiscReducer, TopDiscState } from '../components/topdisc/reducer'
 import { adminUserReducer, AdminUserState } from '../components/admin-user/reducer'
 import { adminSakuraReducer, AdminSakuraState } from '../components/admin-sakura/reducer'
-import { PageInfo } from './route-infos'
-
-export { PageInfo }
 
 export interface RootState {
   app: AppState

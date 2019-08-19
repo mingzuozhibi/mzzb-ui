@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { SakuraModel, viewTypes } from './reducer'
 import { formatTimeout } from '../../utils/format'
 import { Column, Table } from '../../lib/table'

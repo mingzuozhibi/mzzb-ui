@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { Button, Input, Modal } from 'antd'
 import { md5Password } from '../../utils/manager'
 import { PageInfo } from '../../common/route-infos'

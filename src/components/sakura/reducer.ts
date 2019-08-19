@@ -1,6 +1,7 @@
 import { AnyAction } from 'redux'
 import { call, put } from 'redux-saga/effects'
-import { BaseState, PageInfo } from '../../common/root-reducer'
+import { PageInfo } from '../../common/route-infos'
+import { BaseState } from '../../common/root-reducer'
 import { BaseModel, Manager } from '../../utils/manager'
 import produce from 'immer'
 

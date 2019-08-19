@@ -1,8 +1,8 @@
-import * as React from 'react'
+import React from 'react'
 import { Helmet } from 'react-helmet'
 import { Alert, Breadcrumb } from 'antd'
 import { Link, Route, RouteComponentProps, Switch } from 'react-router-dom'
-import './sakura.css'
+import './sakura.scss'
 
 import { sakuraDiscsMessge, sakuraListMessge } from '../../common/site-messages'
 import { compareFactory } from '../../utils/compare'
@@ -29,7 +29,7 @@ const compareList = (a: SakuraModel, b: SakuraModel) => {
 }
 
 const compareDisc = compareFactory({
-  apply: (disc: DiscModel) => disc.thisRank,
+  apply: (disc: DiscModel) => disc.thisRank!!,
   check: (rank: number) => rank === undefined || rank === 0,
   compare: (rankA: number, rankB: number) => rankA - rankB
 })

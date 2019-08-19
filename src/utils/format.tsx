@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { Timer } from '../lib/timer'
 
 export const formatNumber = (numbez: number, format: string) => {

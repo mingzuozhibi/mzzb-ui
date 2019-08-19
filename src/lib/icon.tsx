@@ -1,7 +1,7 @@
-import * as React from 'react'
+import React from 'react'
 import { Icon as AntdIcon } from 'antd'
 import { IconProps } from 'antd/lib/icon'
-import './icon.css'
+import './icon.scss'
 
 const FontIcon = ({type, className, ...props}: IconProps) => {
   // noinspection HtmlUnknownAttribute
@@ -18,7 +18,7 @@ const FontIcon = ({type, className, ...props}: IconProps) => {
 }
 
 const Icon = ({type, className, ...props}: IconProps) => {
-  if (type.substr(0, 5) === 'icon-') {
+  if (type!!.substr(0, 5) === 'icon-') {
     return (
       <span className={`icon-wrapper ${className}`}>
         <FontIcon {...props} type={type}/>

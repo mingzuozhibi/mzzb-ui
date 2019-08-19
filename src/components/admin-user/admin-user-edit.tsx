@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { Button, Checkbox, Input, Modal } from 'antd'
 import { UserModel } from './reducer'
 import { md5Password } from '../../utils/manager'

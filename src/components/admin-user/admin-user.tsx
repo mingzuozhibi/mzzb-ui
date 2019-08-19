@@ -1,8 +1,8 @@
-import * as React from 'react'
+import React from 'react'
 import { Helmet } from 'react-helmet'
 import { Alert, Breadcrumb } from 'antd'
 import { Link, Route, RouteComponentProps, Switch } from 'react-router-dom'
-import './admin-user.css'
+import './admin-user.scss'
 
 import { ViewportProps } from '../../hoc/Viewport'
 import { adminUserEditMessage } from '../../common/site-messages'

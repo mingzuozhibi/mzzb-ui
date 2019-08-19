@@ -4,54 +4,48 @@
   "version": "0.29.0",
   "license": "Apache-2.0",
   "description": "ui for mingzuozhibi",
-  "dependencies": {
-    "antd": "^3.2.1",
-    "classnames": "^2.2.5",
-    "immer": "^1.0.1",
-    "lodash.debounce": "^4.0.8",
-    "md5": "^2.2.1",
-    "prop-types": "^15.6.0",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-helmet": "^5.2.0",
-    "react-loadable": "^5.3.1",
-    "react-redux": "^5.0.7",
-    "react-router-dom": "^4.2.2",
-    "react-router-redux": "^5.0.0-alpha.9",
-    "redux": "^3.7.2",
-    "redux-devtools-extension": "^2.13.2",
-    "redux-saga": "^0.16.0",
-    "reselect": "^3.0.1"
-  },
+  "proxy": "https://mingzuozhibi.com",
   "scripts": {
-    "build-css": "node-sass-chokidar src/ -o src/",
-    "watch-css": "yarn build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
-    "start-ts": "react-app-rewired start --scripts-version react-scripts-ts",
-    "build-ts": "react-app-rewired build --scripts-version react-scripts-ts",
-    "start": "npm-run-all -p watch-css start-ts",
-    "build": "yarn build-css && yarn build-ts",
-    "eject": "react-scripts-ts eject"
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "eject": "react-app-rewired eject"
   },
-  "devDependencies": {
+  "dependencies": {
     "@types/classnames": "^2.2.3",
-    "@types/jest": "^22.1.2",
     "@types/lodash.debounce": "^4.0.3",
     "@types/md5": "^2.1.32",
     "@types/node": "^9.4.5",
     "@types/prop-types": "^15.5.2",
-    "@types/react": "^16.0.36",
-    "@types/react-dom": "^16.0.3",
+    "@types/react": "^16.9.2",
+    "@types/react-dom": "^16.8.5",
     "@types/react-helmet": "^5.0.4",
     "@types/react-loadable": "^5.3.3",
     "@types/react-redux": "^5.0.15",
     "@types/react-router-dom": "^4.2.4",
     "@types/react-router-redux": "^5.0.12",
-    "node-sass-chokidar": "^0.0.3",
-    "npm-run-all": "^4.1.2",
-    "react-app-rewired": "^1.4.1",
-    "react-scripts-ts": "2.13.0",
-    "ts-import-plugin": "^1.4.3",
-    "typescript": "^2.7.1"
+    "antd": "^3.22.0",
+    "babel-plugin-import": "^1.12.0",
+    "classnames": "^2.2.5",
+    "customize-cra": "^0.5.0",
+    "immer": "^1.0.1",
+    "lodash.debounce": "^4.0.8",
+    "md5": "^2.2.1",
+    "node-sass": "^4.12.0",
+    "prop-types": "^15.6.0",
+    "react": "^16.9.0",
+    "react-app-rewired": "^2.1.3",
+    "react-dom": "^16.9.0",
+    "react-helmet": "^5.2.0",
+    "react-loadable": "^5.3.1",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.2.2",
+    "react-router-redux": "^5.0.0-alpha.9",
+    "react-scripts": "^3.1.1",
+    "redux": "^3.7.2",
+    "redux-devtools-extension": "^2.13.2",
+    "redux-saga": "^0.16.0",
+    "reselect": "^3.0.1",
+    "typescript": "^3.5.3"
   },
   "repository": {
     "type": "git",
@@ -65,5 +59,16 @@
     "name": "fuhaiwei",
     "email": "fuhaiwei@126.com"
   },
-  "proxy": "https://mingzuozhibi.com"
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }

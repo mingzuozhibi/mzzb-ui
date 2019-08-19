@@ -1,8 +1,8 @@
-import * as React from 'react'
-import * as Loadable from 'react-loadable'
+import React from 'react'
+import Loadable from 'react-loadable'
 import { Layout } from 'antd'
 import { Load } from '../lib/load'
-import './App.css'
+import './App.scss'
 
 import { Redirect, Route, Switch } from 'react-router-dom'
 import { PageInfo, pageInfos } from '../common/route-infos'

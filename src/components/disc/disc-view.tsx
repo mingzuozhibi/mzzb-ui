@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { Button, Input, Modal, Select, Tabs } from 'antd'
 import { ViewportProps, withViewport } from '../../hoc/Viewport'
 import { DiscOfRanksModel } from './reducer'
@@ -43,11 +43,11 @@ function DiscView(props: Props & ViewportProps) {
   formEdit.releaseDate = props.detail.releaseDate
 
   function toSakura() {
-    return <a href={`http://rankstker.net/show.cgi?n=${props.detail.asin}`} target="_blank">Sakura链接</a>
+    return <a href={`http://rankstker.net/show.cgi?n=${props.detail.asin}`} target="_blank" rel="noopener noreferrer">Sakura链接</a>
   }
 
   function toAmazon() {
-    return <a href={`http://www.amazon.co.jp/dp/${props.detail.asin}`} target="_blank">Amazon链接</a>
+    return <a href={`http://www.amazon.co.jp/dp/${props.detail.asin}`} target="_blank" rel="noopener noreferrer">Amazon链接</a>
   }
 
   function formatTitle(t: DiscOfRanksModel) {
@@ -61,7 +61,7 @@ function DiscView(props: Props & ViewportProps) {
   return (
     <div className="disc-view-content">
       <Tabs>
-        <Tabs.TabPane key={1} tab="销量排名">
+        <Tabs.TabPane key="1" tab="销量排名">
           <div className="input-wrapper">
             <div className="input-label">
               <span>碟片标题</span>
@@ -177,7 +177,7 @@ function DiscView(props: Props & ViewportProps) {
             />
           </div>
         </Tabs.TabPane>
-        <Tabs.TabPane key={2} tab="基本信息">
+        <Tabs.TabPane key="2" tab="基本信息">
           <div className="input-wrapper">
             <div className="input-label">原标题</div>
             <Input.TextArea
@@ -231,7 +231,7 @@ function DiscView(props: Props & ViewportProps) {
             <Select
               style={{width: 160}}
               defaultValue={formEdit.discType}
-              onChange={value => formEdit.discType = value.toString()}
+              onChange={(value: string) => formEdit.discType = value}
             >
               <Select.Option value="Cd">CD</Select.Option>
               <Select.Option value="Bluray">BD</Select.Option>
@@ -245,7 +245,7 @@ function DiscView(props: Props & ViewportProps) {
             <Select
               style={{width: 160}}
               defaultValue={formEdit.updateType}
-              onChange={value => formEdit.updateType = value.toString()}
+              onChange={(value: string) => formEdit.updateType = value}
             >
               <Select.Option value="Sakura">只从Sakura更新</Select.Option>
               <Select.Option value="Amazon">只从Amazon更新</Select.Option>

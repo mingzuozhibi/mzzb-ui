@@ -1,8 +1,8 @@
-import * as React from 'react'
+import React from 'react'
 import { Helmet } from 'react-helmet'
 import { Alert, Breadcrumb } from 'antd'
 import { Link, Route, RouteComponentProps, Switch } from 'react-router-dom'
-import './admin-sakura.css'
+import './admin-sakura.scss'
 
 import { adminSakuraDiscsMessage, adminSakuraListMessage } from '../../common/site-messages'
 import { Session } from '../../App/reducer'

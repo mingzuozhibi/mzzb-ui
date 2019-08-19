@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { DiscModel, SakuraModel, SakuraOfDiscsModel } from './reducer'
 import { ViewportProps, withViewport } from '../../hoc/Viewport'
 import { compareFactory } from '../../utils/compare'
@@ -6,7 +6,7 @@ import { Column, Table } from '../../lib/table'
 import { formatNumber } from '../../utils/format'
 import { Timer } from '../../lib/timer'
 import { Link } from 'react-router-dom'
-import * as classNames from 'classnames'
+import classNames from 'classnames'
 
 interface Props {
   detail: SakuraOfDiscsModel

@@ -1,10 +1,10 @@
-import * as React from 'react'
-import * as classNames from 'classnames'
+import React from 'react'
+import classNames from 'classnames'
 import { BaseModel } from '../utils/manager'
 import produce from 'immer'
-import './table.css'
+import './table.scss'
 
-interface Column<T> {
+export interface Column<T> {
   key: string
   title: string
   format: (t: T, i: number) => React.ReactNode
@@ -26,7 +26,7 @@ interface TableState {
   sortAsc?: boolean
 }
 
-class Table<T extends BaseModel> extends React.Component<TableProps<T>, TableState> {
+export class Table<T extends BaseModel> extends React.Component<TableProps<T>, TableState> {
 
   state: TableState = JSON.parse(sessionStorage.getItem(`table-state-${this.props.name}`) || '{}')
 
@@ -108,5 +108,3 @@ class Table<T extends BaseModel> extends React.Component<TableProps<T>, TableSta
   }
 
 }
-
-export { Table, Column }

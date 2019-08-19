@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 
 interface TimerProps {
   time: number
@@ -19,7 +19,7 @@ export class Timer extends React.Component<TimerProps, TimerState> {
     time: this.props.time, ...this.compute()
   }
 
-  timer: NodeJS.Timer
+  timer: any
 
   componentDidMount() {
     const handler = () => {

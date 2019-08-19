@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { Input, Layout, Modal } from 'antd'
 import { Icon } from '../../lib/icon'
 

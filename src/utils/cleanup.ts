@@ -3,7 +3,7 @@ export function cleanup(version: string) {
 
   if (local.getItem('version') !== version) {
     const keys = ['X-AUTO-LOGIN']
-    const vals = {}
+    const vals = {} as any
     keys.forEach(key => {
       vals[key] = local.getItem(key)
     })

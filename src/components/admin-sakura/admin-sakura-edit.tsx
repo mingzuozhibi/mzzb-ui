@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { Button, Checkbox, Input, Modal, Popconfirm, Radio } from 'antd'
 import { SakuraModel, viewTypes } from './reducer'
 import { PageInfo } from '../../common/route-infos'

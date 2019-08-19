@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { UserModel } from './reducer'
 import { Column, Table } from '../../lib/table'
 import { ViewportProps } from '../../hoc/Viewport'
