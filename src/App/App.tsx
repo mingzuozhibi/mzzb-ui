@@ -20,7 +20,7 @@ const AsyncAppHeader = asyncLayout(() => import('./app-header'))
 
 const AsyncAppFooter = asyncLayout(() => import('./app-footer'))
 
-const AsyncNewDiscs = lazy(() => import('../components/newdisc/NewDiscs'))
+const AsyncNewDiscs = lazy(() => import('../_New/newdisc/NewDiscs'))
 
 export function App() {
   return (

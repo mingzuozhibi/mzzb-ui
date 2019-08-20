@@ -8,7 +8,7 @@ export interface Column<T> {
   key: string
   title: string
   format: (t: T, i: number) => React.ReactNode
-  tdClass?: (t: T) => string
+  tdClass?: (t: T) => string | object
   compare?: (a: T, b: T) => number
 }
 
@@ -18,7 +18,7 @@ interface TableProps<T> {
   name?: string | number
   title?: string
   subtitle?: React.ReactNode
-  trClass?: (t: T) => string
+  trClass?: (t: T) => string | object
 }
 
 interface TableState {
@@ -77,7 +77,7 @@ export class Table<T extends BaseModel> extends React.Component<TableProps<T>, T
           </thead>
           <tbody>
           {finalRows.map((t, i) => (
-            <tr key={t.id} className={trClass && trClass(t)}>
+            <tr key={t.id} className={trClass && classNames(trClass(t))}>
               {columns.map((c) => (
                 <td key={c.key} className={this.tdClass(c, t)}>
                   {c.format(t, i)}
