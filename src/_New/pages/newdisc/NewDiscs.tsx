@@ -1,24 +1,24 @@
 import React from 'react'
 import { Link, RouteComponentProps } from 'react-router-dom'
-import { Alert, Pagination } from 'antd'
+import { Alert } from 'antd'
 
-import { outlink } from '../../lib/functions'
-import { Column, Table } from '../../lib/table'
-import { BaseModel } from '../../utils/manager'
-
-import { useDocumentTitle } from '../hooks/hooks'
-import { usePagedData } from '../hooks/PagedData'
+import { useDocumentTitle } from '../../hooks/hooks'
+import { usePagedData } from '../../hooks/usePagedData'
+import { Column, Table } from '../../comps/table/Table'
+import { CustomPagination } from '../../comps/antd'
+import { Outlink } from '../../comps/html'
 
 import './NewDiscs.scss'
 
-interface NewDisc extends BaseModel {
+interface NewDisc {
+  id: number
   asin: string
   title: string
   followed: boolean
   createTime: number
 }
 
-export default function NewDiscs(props: RouteComponentProps<{}>) {
+export default function NewDiscs(props: RouteComponentProps<void>) {
 
   useDocumentTitle('上架追踪')
 
@@ -26,9 +26,9 @@ export default function NewDiscs(props: RouteComponentProps<{}>) {
 
   function onPaginationChange(page: number, pageSize?: number) {
     if (pageSize === 20) {
-      return props.history.push(`/new_discs?page=${page}`)
+      props.history.push(`/new_discs?page=${page}`)
     } else {
-      return props.history.push(`/new_discs?page=${page}&pageSize=${pageSize}`)
+      props.history.push(`/new_discs?page=${page}&pageSize=${pageSize}`)
     }
   }
 
@@ -38,22 +38,11 @@ export default function NewDiscs(props: RouteComponentProps<{}>) {
         <Alert message={error} type="error"/>
       )}
       {data && (
-        <Table
-          title="上架追踪"
-          rows={data}
-          columns={getColumns()}
+        <Table mark="new_discs" title="上架追踪" cols={getColumns()} rows={data}
         />
       )}
       {page && (
-        <Pagination
-          showSizeChanger
-          showQuickJumper
-          pageSize={page.pageSize}
-          current={page.currentPage}
-          total={page.totalElements}
-          onChange={onPaginationChange}
-          onShowSizeChange={onPaginationChange}
-        />
+        <CustomPagination page={page} onChange={onPaginationChange}/>
       )}
     </div>
   )
@@ -88,7 +77,7 @@ function getColumns(): Column<NewDisc>[] {
     {
       key: 'title',
       title: '标题',
-      format: (t) => outlink(`http://www.amazon.co.jp/dp/${t.asin}`, t.title)
+      format: (t) => <Outlink href={`http://www.amazon.co.jp/dp/${t.asin}`} title={t.title}/>
     },
   ]
 }
