@@ -1,7 +1,6 @@
 import { all, takeEvery } from 'redux-saga/effects'
 import { appSaga } from '../App/reducer'
 import { discSaga } from '../components/disc/reducer'
-import { sakuraSaga } from '../components/sakura/reducer'
 import { currentSaga } from './reducers/current'
 import { topdiscSaga } from '../components/topdisc/reducer'
 import { adminUserSaga } from '../components/admin-user/reducer'
@@ -20,9 +19,6 @@ export function* rootSagas() {
     takeEvery('view(records)DiscRequest', discSaga.viewRecords),
     takeEvery('merge(ranks)DiscRequest', discSaga.mergeRanks),
     takeEvery('merge(pts)DiscRequest', discSaga.mergePts),
-
-    takeEvery('listSakuraRequest', sakuraSaga.listModel),
-    takeEvery('view(discs)SakuraRequest', sakuraSaga.viewDiscs),
 
     takeEvery(LOCATION_CHANGE, currentSaga.updateReload),
     takeEvery('reloadRequest', currentSaga.invokeReload),

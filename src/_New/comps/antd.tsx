@@ -1,6 +1,6 @@
 import React from 'react'
 import { Pagination } from 'antd'
-import { Page } from '../hooks/usePagedData'
+import { Page } from '../hooks/useData'
 
 interface CustomPaginationProps {
   page: Page

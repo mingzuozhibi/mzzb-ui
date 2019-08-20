@@ -20,7 +20,9 @@ const AsyncAppHeader = asyncLayout(() => import('./app-header'))
 
 const AsyncAppFooter = asyncLayout(() => import('./app-footer'))
 
-const AsyncNewDiscs = lazy(() => import('../_New/pages/newdisc/NewDiscs'))
+const AsyncNewDiscs = lazy(() => import('../_New/pages/NewDiscs/NewDiscs'))
+const AsyncDiscGroups = lazy(() => import('../_New/pages/DiscGroups/DiscGroups'))
+const AsyncDiscsOfDiscGroups = lazy(() => import('../_New/pages/Discs/DiscsOfDiscGroup'))
 
 export function App() {
   return (
@@ -34,6 +36,8 @@ export function App() {
               <Switch>
                 <Redirect exact={true} path="/" to="/sakura"/>
                 <Route path="/new_discs" component={AsyncNewDiscs}/>
+                <Route path="/disc_groups" component={AsyncDiscGroups}/>
+                <Route path="/discs/disc_groups/:key" component={AsyncDiscsOfDiscGroups}/>
                 {pageInfos.map(renderRoute)}
                 <Redirect exact={true} path="*" to="/sakura"/>
               </Switch>

@@ -3,7 +3,7 @@ import { Link, RouteComponentProps } from 'react-router-dom'
 import { Alert } from 'antd'
 
 import { useDocumentTitle } from '../../hooks/hooks'
-import { usePagedData } from '../../hooks/usePagedData'
+import { useData } from '../../hooks/useData'
 import { Column, Table } from '../../comps/table/Table'
 import { CustomPagination } from '../../comps/antd'
 import { Outlink } from '../../comps/html'
@@ -18,28 +18,29 @@ interface NewDisc {
   createTime: number
 }
 
-export default function NewDiscs(props: RouteComponentProps<void>) {
+const cols = getColumns()
+
+export default function NewDiscs({location, history}: RouteComponentProps<void>) {
 
   useDocumentTitle('上架追踪')
 
-  const [{data, page, error}] = usePagedData<NewDisc>(`/api/newdiscs2${props.location.search}`)
+  const [{data, page, error}, handler] = useData<NewDisc[]>(`/api/newdiscs2${location.search}`)
 
   function onPaginationChange(page: number, pageSize?: number) {
     if (pageSize === 20) {
-      props.history.push(`/new_discs?page=${page}`)
+      history.push(`/new_discs?page=${page}`)
     } else {
-      props.history.push(`/new_discs?page=${page}&pageSize=${pageSize}`)
+      history.push(`/new_discs?page=${page}&pageSize=${pageSize}`)
     }
   }
 
   return (
-    <div className="newdiscs">
+    <div className="NewDiscs">
       {error && (
         <Alert message={error} type="error"/>
       )}
       {data && (
-        <Table mark="new_discs" title="上架追踪" cols={getColumns()} rows={data}
-        />
+        <Table cols={cols} rows={data} handler={handler} mark="NewDiscs" title="上架追踪"/>
       )}
       {page && (
         <CustomPagination page={page} onChange={onPaginationChange}/>

@@ -1,4 +1,5 @@
-import { useEffect, useReducer } from 'react'
+import { useEffect, useReducer, useState } from 'react'
+import { Handler } from '../comps/table/Table'
 import request from '../../utils/request'
 
 export interface Page {
@@ -8,17 +9,20 @@ export interface Page {
 }
 
 export interface State<T> {
-  data?: T[]
+  data?: T
   page?: Page
   error?: string
 }
 
-export function usePagedData<T>(url: string, initialState: State<T> = {}) {
+export function useData<T>(url: string, initialState: State<T> = {}) {
+  const [loading, setLoading] = useState(true)
   const [state, dispatch] = useReducer((prevState: State<T>, action) => {
     switch (action.type) {
       case 'Receive':
+        setLoading(false)
         return {data: action.data, page: action.page}
       case 'Message':
+        setLoading(false)
         return {error: action.error}
       default:
         return prevState
@@ -28,6 +32,7 @@ export function usePagedData<T>(url: string, initialState: State<T> = {}) {
   useEffect(refresh, [url, dispatch])
 
   function refresh() {
+    setLoading(true)
     request(url).then((result) => {
       if (result.success) {
         dispatch({type: 'Receive', data: result.data, page: result.page})
@@ -37,6 +42,6 @@ export function usePagedData<T>(url: string, initialState: State<T> = {}) {
     })
   }
 
-  return [state, refresh] as [State<T>, () => void]
+  return [state, {loading, refresh}] as [State<T>, Handler]
 }
 

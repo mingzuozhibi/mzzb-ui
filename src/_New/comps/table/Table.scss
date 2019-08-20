@@ -1,38 +1,47 @@
 .table-warpper {
   .table-caption {
-    &>* {
-      margin: 8px;
+    padding: 4px;
+    margin-bottom: 4px;
+
+    & > * {
+      margin: 4px;
     }
-    padding: 8px;
+
     .table-title {
-      font-size: 20px;
+      font-size: 24px;
     }
   }
+
   .table {
     th.sortable {
       cursor: pointer;
       text-align: left;
       padding-left: 20px;
       background: url("/images/table-normal.gif") no-repeat center left;
+
       &.asc {
         background-image: url("/images/table-asc.gif");
       }
+
       &.desc {
         background-image: url("/images/table-desc.gif");
       }
     }
+
     .select {
       width: 40px;
       text-align: center;
     }
   }
-   @media screen and (max-width: 600px) {
-   .table>thead>tr>th,
-   .table>tbody>tr>th,
-   .table>tfoot>tr>th,
-   .table>thead>tr>td,
-   .table>tbody>tr>td,
-   .table>tfoot>tr>td {
-     padding: 5px;
-   }}
+
+  @media screen and (max-width: 600px) {
+    .table > thead > tr > th,
+    .table > tbody > tr > th,
+    .table > tfoot > tr > th,
+    .table > thead > tr > td,
+    .table > tbody > tr > td,
+    .table > tfoot > tr > td {
+      padding: 5px;
+    }
+  }
 }

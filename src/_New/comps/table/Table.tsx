@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import copy from 'copy-to-clipboard'
-import classNames from 'classnames'
-import immer from 'immer'
 import { Button, Checkbox, Input, message, Modal } from 'antd'
+import copy from 'copy-to-clipboard'
+import immer from 'immer'
+import classNames from 'classnames'
 import './Table.scss'
 
 interface BaseRow {
@@ -17,6 +17,11 @@ export interface Column<T> {
   compare?: (a: T, b: T) => number
 }
 
+export interface Handler {
+  loading: boolean
+  refresh: () => void
+}
+
 interface Props<T> {
   mark: string
   rows: T[]
@@ -24,7 +29,7 @@ interface Props<T> {
   title?: string
   trClass?: (row: T) => string | object
   copyFmt?: (row: T, idx: number) => string
-  handler?: { refresh: () => void, loading: boolean }
+  handler?: Handler
   defaultSort?: (a: T, b: T) => number
 }
 

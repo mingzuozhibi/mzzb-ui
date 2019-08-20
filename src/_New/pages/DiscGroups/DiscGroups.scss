@@ -1,0 +1,22 @@
+@import '../../comps/table/function';
+
+.DiscGroups {
+  .table {
+    th,
+    td {
+      &.idx {
+        @include columnCenter();
+        @include columnWidth(40px, 35px);
+      }
+
+      &.lastUpdate {
+        @include columnWidth(150px, 95px);
+      }
+
+      &.command {
+        @include columnWidth(40px, 35px);
+        @include columnCenter();
+      }
+    }
+  }
+}
