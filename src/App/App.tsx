@@ -4,6 +4,7 @@ import './App.scss'
 
 import { Redirect, Route, Switch } from 'react-router-dom'
 import { PageInfo, pageInfos } from '../common/route-infos'
+import { RouteInfo, routes } from '../_New/routes'
 
 function asyncLayout(loader: () => any) {
   const AsyncLayout = lazy(loader)
@@ -20,11 +21,8 @@ const AsyncAppHeader = asyncLayout(() => import('./app-header'))
 
 const AsyncAppFooter = asyncLayout(() => import('./app-footer'))
 
-const AsyncNewDiscs = lazy(() => import('../_New/pages/NewDiscs/NewDiscs'))
-const AsyncDiscGroups = lazy(() => import('../_New/pages/DiscGroups/DiscGroups'))
-const AsyncDiscsOfDiscGroups = lazy(() => import('../_New/pages/Discs/DiscsOfDiscGroup'))
-
 export function App() {
+
   return (
     <div className="app-root">
       <Layout>
@@ -35,9 +33,7 @@ export function App() {
             <Suspense fallback={<Spin delay={200}/>}>
               <Switch>
                 <Redirect exact={true} path="/" to="/sakura"/>
-                <Route path="/new_discs" component={AsyncNewDiscs}/>
-                <Route path="/disc_groups" component={AsyncDiscGroups}/>
-                <Route path="/discs/disc_groups/:key" component={AsyncDiscsOfDiscGroups}/>
+                {routes.map(renderNewRoute)}
                 {pageInfos.map(renderRoute)}
                 <Redirect exact={true} path="*" to="/sakura"/>
               </Switch>
@@ -48,6 +44,10 @@ export function App() {
       </Layout>
     </div>
   )
+}
+
+function renderNewRoute(route: RouteInfo, index: number) {
+  return <Route key={index} path={route.path} component={lazy(route.loader)}/>
 }
 
 function renderRoute(pageInfo: PageInfo, key: number): React.ReactNode {

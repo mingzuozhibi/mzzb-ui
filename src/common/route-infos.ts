@@ -43,7 +43,6 @@ export const menuInfos: MenuInfo[] = [
     text: '上架追踪',
     path: '/new_discs',
   },
-  // fromPage(topdiscPage, 'icon-yinghua'),
   {
     icon: 'profile',
     text: '后台管理',
