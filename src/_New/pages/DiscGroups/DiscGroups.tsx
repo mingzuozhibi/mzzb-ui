@@ -4,10 +4,11 @@ import { Link } from 'react-router-dom'
 import { Alert, Icon } from 'antd'
 
 import { RootState } from '../../../common/root-reducer'
-import { useDocumentTitle } from '../../hooks/hooks'
 import { useData } from '../../hooks/useData'
+import { useDocumentTitle } from '../../hooks/hooks'
 import { Column, Table } from '../../comps/table/Table'
-import { formatTimeout, isJustUpdated } from '../../funcs/format'
+import { isJustUpdated } from '../../funcs/domain'
+import { formatTimeout } from '../../funcs/format'
 
 import './DiscGroups.scss'
 

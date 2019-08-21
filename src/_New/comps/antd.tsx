@@ -22,12 +22,13 @@ export function CustomPagination({page, onChange}: CustomPaginationProps) {
 }
 
 interface ClosableMessageProps {
+  unikey?: string
   message: string
 }
 
-export function ClosableMessage(props: ClosableMessageProps) {
-  const message = props.message
-  const showMessage = localStorage[`message/${window.location.pathname}`] !== message
-  const hideMessage = () => localStorage[`message/${window.location.pathname}`] = message
+export function ClosableMessage({unikey, message}: ClosableMessageProps) {
+  if (!unikey) unikey = window.location.pathname
+  const showMessage = localStorage[`message/${unikey}`] !== message
+  const hideMessage = () => localStorage[`message/${unikey}`] = message
   return showMessage ? <Alert message={message} closable onClose={hideMessage}/> : null
 }
