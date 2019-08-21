@@ -2,7 +2,7 @@ import React from 'react'
 import { Link, RouteComponentProps } from 'react-router-dom'
 import { Alert } from 'antd'
 
-import { useTitle } from '../../hooks/hooks'
+import { useDocumentTitle } from '../../hooks/hooks'
 import { useData } from '../../hooks/useData'
 import { Column, Table } from '../../comps/table/Table'
 import { CustomPagination } from '../../comps/antd'
@@ -22,7 +22,7 @@ const cols = getColumns()
 
 export default function DiscComing({location, history}: RouteComponentProps<void>) {
 
-  useTitle('上架追踪')
+  useDocumentTitle('上架追踪')
 
   const [{data, page, error}, handler] = useData<DiscComing[]>(`/api/newdiscs2${location.search}`)
 

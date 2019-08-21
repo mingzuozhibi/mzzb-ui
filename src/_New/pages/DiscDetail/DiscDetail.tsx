@@ -4,7 +4,7 @@ import { Alert, Button, Input, Modal, Radio } from 'antd'
 
 import { Outlink } from '../../comps/html'
 import { formatNumber } from '../../funcs/format'
-import { useTitle } from '../../hooks/hooks'
+import { useDocumentTitle } from '../../hooks/hooks'
 import { useData } from '../../hooks/useData'
 import { connect } from 'react-redux'
 
@@ -45,7 +45,7 @@ function DiscDetail({hasRole, match}: Props & RouteComponentProps<{ id: string }
   const [{error, data}, , setState] = useData<Disc>(`/api/discs/${match.params.id}`)
   const [subminting, setSubmiting] = useState(false)
 
-  useTitle(data ? formatTitle(data) : '碟片信息载入中')
+  useDocumentTitle(data ? formatTitle(data) : '碟片信息载入中')
 
   const form: Form = {}
 

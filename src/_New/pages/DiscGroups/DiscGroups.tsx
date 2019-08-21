@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { Alert, Icon } from 'antd'
 
 import { RootState } from '../../../common/root-reducer'
-import { useTitle } from '../../hooks/hooks'
+import { useDocumentTitle } from '../../hooks/hooks'
 import { useData } from '../../hooks/useData'
 import { Column, Table } from '../../comps/table/Table'
 import { formatTimeout, isJustUpdated } from '../../funcs/format'
@@ -29,7 +29,7 @@ const cols = getColumns()
 
 function DiscGroups(props: Props) {
 
-  useTitle('推荐列表')
+  useDocumentTitle('推荐列表')
 
   const [{data, error}, handler] = useData<DiscGroup[]>(`/api/sakuras`)
 
@@ -55,10 +55,26 @@ export default connect((state: RootState) => ({
 
 function getColumns(): Column<DiscGroup>[] {
   return [
-    {key: 'idx', title: '#', format: (_, idx) => idx + 1},
-    {key: 'title', title: '列表标题', format: formatLinkedTitle},
-    {key: 'lastUpdate', title: '最后更新', format: formatLastUpdate},
-    {key: 'command', title: '操作', format: formatCommand}
+    {
+      key: 'idx',
+      title: '#',
+      format: (_, idx) => idx + 1
+    },
+    {
+      key: 'title',
+      title: '列表标题',
+      format: formatLinkedTitle
+    },
+    {
+      key: 'update',
+      title: '最后更新',
+      format: formatLastUpdate
+    },
+    {
+      key: 'command',
+      title: '操作',
+      format: formatCommand
+    }
   ]
 }
 
@@ -77,8 +93,6 @@ function formatLastUpdate(row: DiscGroup) {
   return `${formatTimeout(row.modifyTime)}前`
 }
 
-function formatCommand(row: DiscGroup) {
-  return (
-    <Link to={`/admin/sakura/${row.key}`}><Icon type="edit"/></Link>
-  )
+function formatCommand(t: DiscGroup) {
+  return <Link to={`/admin/sakura/${t.key}`}><Icon type="edit"/></Link>
 }

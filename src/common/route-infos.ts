@@ -42,6 +42,12 @@ export const menuInfos: MenuInfo[] = [
     path: '/disc_coming',
   },
   {
+    icon: 'icon-user',
+    text: '用户管理',
+    path: '/users',
+    role: 'ROLE_ADMIN'
+  },
+  {
     icon: 'profile',
     text: '后台管理',
     path: '/admin',
