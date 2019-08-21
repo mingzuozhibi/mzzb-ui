@@ -121,7 +121,7 @@ export function Table<T extends BaseRow>(props: Props<T>) {
         {handler && (
           <span className="table-buttons">
             <Button.Group>
-              <Button onClick={handler.refresh} loading={handler.loading}>刷新数据</Button>
+              <Button onClick={handler.refresh} loading={handler.loading}>刷新</Button>
             </Button.Group>
           </span>
         )}
@@ -132,7 +132,7 @@ export function Table<T extends BaseRow>(props: Props<T>) {
   function renderViewButtons() {
     return (
       <Button.Group>
-        <Button onClick={() => setCopyMode(true)}>复制排名</Button>
+        <Button onClick={() => setCopyMode(true)}>复制</Button>
       </Button.Group>
     )
   }
