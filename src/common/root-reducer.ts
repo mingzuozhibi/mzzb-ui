@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux'
 import { PageInfo } from './route-infos'
 import { appReducer, AppState } from '../App/reducer'
-import { discReducer, DiscState } from '../components/disc/reducer'
 import { connectRouter, RouterState } from 'connected-react-router'
 import { currentReducer, CurrentState } from './reducers/current'
 import { topdiscReducer, TopDiscState } from '../components/topdisc/reducer'
@@ -10,7 +9,6 @@ import { adminSakuraReducer, AdminSakuraState } from '../components/admin-sakura
 
 export interface RootState {
   app: AppState
-  disc: DiscState
   router: RouterState
   current: CurrentState
   topdisc: TopDiscState
@@ -21,7 +19,6 @@ export interface RootState {
 export function createRootReducer(history: any) {
   return combineReducers({
     app: appReducer,
-    disc: discReducer,
     router: connectRouter(history),
     current: currentReducer,
     topdisc: topdiscReducer,

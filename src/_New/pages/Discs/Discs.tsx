@@ -98,13 +98,13 @@ function getCols(): Column<Disc>[] {
     {
       key: 'rank',
       title: '日亚排名',
-      format: (disc) => <Link to={`/discs/${disc.id}/records`}>{formatRank(disc)}</Link>,
+      format: formatRank,
+      tdClass: tdClassRank,
       compare: compareFactory<Disc, number>({
         apply: disc => disc.thisRank,
         empty: rank => rank === undefined,
         compare: (a, b) => a - b
-      }),
-      tdClass: rankTdClass
+      })
     },
     {
       key: 'addPt',
@@ -132,22 +132,33 @@ function getCols(): Column<Disc>[] {
         if (a.surplusDays !== b.surplusDays) {
           return a.surplusDays - b.surplusDays
         }
-        return formatTitle(a).localeCompare(formatTitle(b))
+        return compareTitle(a, b)
       },
     },
     {
       key: 'title',
       title: '碟片标题',
-      format: (disc) => <Link to={`/disc/${disc.id}`}>{formatTitle(disc)}</Link>,
-      compare: (a, b) => formatTitle(a).localeCompare(formatTitle(b)),
+      format: (disc) => <Link to={`/discs/${disc.id}`}>{formatTitle(disc)}</Link>,
+      compare: compareTitle,
     },
   ]
+
 }
 
-function formatRank(row: Disc) {
-  const thisRank = row.thisRank ? formatNumber(row.thisRank, '****') : '----'
-  const prevRank = row.prevRank ? formatNumber(row.prevRank, '****') : '----'
-  return `${thisRank}位/${prevRank}位`
+function formatRank(disc: Disc) {
+  const thisRank = disc.thisRank ? formatNumber(disc.thisRank, '****') : '----'
+  const prevRank = disc.prevRank ? formatNumber(disc.prevRank, '****') : '----'
+  return <Link to={`/discs/${disc.id}/records`}>{`${thisRank}位/${prevRank}位`}</Link>
+}
+
+function tdClassRank(disc: Disc) {
+  if (isJustUpdated(disc.updateTime)) {
+    return 'success'
+  }
+  if (isSlowUpdated(disc.updateTime)) {
+    return 'warning'
+  }
+  return ''
 }
 
 function comparePt(apply: (disc: Disc) => number | undefined) {
@@ -159,15 +170,13 @@ function comparePt(apply: (disc: Disc) => number | undefined) {
 }
 
 function formatTitle(disc: Disc) {
-  return disc.titlePc || disc.title
+  return <Link to={`/discs/${disc.id}`}>{titleString(disc)}</Link>
 }
 
-function rankTdClass(disc: Disc) {
-  if (isJustUpdated(disc.updateTime)) {
-    return 'success'
-  }
-  if (isSlowUpdated(disc.updateTime)) {
-    return 'warning'
-  }
-  return ''
+function compareTitle(a: Disc, b: Disc) {
+  return titleString(a).localeCompare(titleString(b))
+}
+
+function titleString(disc: Disc) {
+  return disc.titlePc || disc.title
 }

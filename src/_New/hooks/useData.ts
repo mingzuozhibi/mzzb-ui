@@ -24,6 +24,8 @@ export function useData<T>(url: string, initialState: State<T> = {}) {
       case 'Message':
         setLoading(false)
         return {error: action.error}
+      case 'Modified':
+        return {data: action.data}
       default:
         return prevState
     }
@@ -42,6 +44,9 @@ export function useData<T>(url: string, initialState: State<T> = {}) {
     })
   }
 
-  return [state, {loading, refresh}] as [State<T>, Handler]
-}
+  function setState(state: T) {
+    dispatch({type: 'Modified', data: state})
+  }
 
+  return [state, {loading, refresh}, setState] as [State<T>, Handler, (state: T) => void]
+}

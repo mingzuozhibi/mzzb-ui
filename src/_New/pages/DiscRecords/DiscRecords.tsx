@@ -22,11 +22,7 @@ interface Record {
 
 const cols = getColumns()
 
-interface Params {
-  id: string
-}
-
-export default function DiscRecords({match}: RouteComponentProps<Params>) {
+export default function DiscRecords({match}: RouteComponentProps<{ id: string }>) {
 
   const [{error, data}] = useData<Data>(`/api/discs/${match.params.id}/records`)
 

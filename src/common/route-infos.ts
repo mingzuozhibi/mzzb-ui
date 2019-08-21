@@ -1,4 +1,3 @@
-import { pageInfo as discPage } from '../components/disc/reducer'
 import { pageInfo as adminUserPage } from '../components/admin-user/reducer'
 import { pageInfo as adminSakuraPage } from '../components/admin-sakura/reducer'
 
@@ -22,7 +21,6 @@ export interface MenuInfo {
 }
 
 export const pageInfos: PageInfo[] = [
-  discPage
 ]
 
 const fromPage = (pageInfo: PageInfo, icon: string, role?: Role) => {

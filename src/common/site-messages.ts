@@ -5,14 +5,8 @@ const adminSakuraListMessage = '提示：' +
 const adminSakuraDiscsMessage = ''
 const adminUserEditMessage = '提示: ' +
   '用户密码可以留空，留空则继续使用原密码'
-const adminDiscViewMessage = '提示: ' +
-  '基本信息页面可以编辑；原标题，Id，Asin不会被修改'
-const discViewMessage = ''
-
 export {
   adminSakuraListMessage,
   adminSakuraDiscsMessage,
   adminUserEditMessage,
-  adminDiscViewMessage,
-  discViewMessage,
 }
