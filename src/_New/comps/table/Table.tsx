@@ -23,7 +23,6 @@ export interface Handler {
 }
 
 interface Props<T> {
-  mark: string
   rows: T[]
   cols: Column<T>[]
   title?: string
@@ -41,7 +40,8 @@ interface State {
 }
 
 export function Table<T extends BaseRow>(props: Props<T>) {
-  const {mark, rows, cols, title, handler, trClass, copyFmt, defaultSort} = props
+  const {rows, cols, title, handler, trClass, copyFmt, defaultSort} = props
+  const mark = `talbe-state/${window.location.pathname}`
   const [state, setState] = useState<State>(() => {
     return loadState(mark, {copyMode: false, selected: new Set()})
   })
@@ -247,17 +247,13 @@ export function Table<T extends BaseRow>(props: Props<T>) {
   }
 }
 
-function tableKey(mark: string) {
-  return `table-state-${mark}`
-}
-
-function saveState(mark: string, state: State) {
+function saveState(key: string, state: State) {
   const saveState = {...state, selected: [...state.selected]}
-  sessionStorage[tableKey(mark)] = JSON.stringify(saveState)
+  sessionStorage[key] = JSON.stringify(saveState)
 }
 
-function loadState(mark: string, initState: State): State {
-  const stateText = sessionStorage[tableKey(mark)]
+function loadState(key: string, initState: State): State {
+  const stateText = sessionStorage[key]
   const loadState = JSON.parse(stateText || '{}')
   const nextState = {...initState, ...loadState}
   if (Array.isArray(loadState.selected)) {

@@ -4,6 +4,7 @@ import { Alert, Switch } from 'antd'
 import classNames from 'classnames'
 import { State } from '../../hooks/useData'
 import { Column, Handler, Table } from '../../comps/table/Table'
+import { ClosableMessage } from '../../comps/antd'
 import { compareFactory } from '../../funcs/compare'
 import { formatNumber, formatTimeout, isJustUpdated, isSlowUpdated } from '../../funcs/format'
 import './Discs.scss'
@@ -45,6 +46,7 @@ export function Discs({state: {data, error}, handler}: Props) {
       )}
       {data && (
         <>
+          <ClosableMessage message="点击复制按钮可进入复制模式"/>
           <div style={{padding: 8}}>
             <Switch
               checked={pcMode}
@@ -59,7 +61,6 @@ export function Discs({state: {data, error}, handler}: Props) {
           <div className="pc-mode-warpper">
             <div className={classNames({'pc-mode': pcMode})}>
               <Table
-                mark={`Discs-${data.mark}`}
                 rows={data.discs}
                 cols={getCols()}
                 title={data.title}

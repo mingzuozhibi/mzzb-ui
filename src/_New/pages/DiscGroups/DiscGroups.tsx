@@ -42,8 +42,8 @@ function DiscGroups(props: Props) {
         <Alert message={error} type="error"/>
       )}
       {data && (
-        <Table rows={data} cols={finalCols} mark="DiscGroups" title="推荐列表"
-               handler={handler} defaultSort={(a, b) => b.key.localeCompare(a.key)}/>
+        <Table rows={data} cols={finalCols} title="推荐列表" handler={handler}
+               defaultSort={(a, b) => b.key.localeCompare(a.key)}/>
       )}
     </div>
   )

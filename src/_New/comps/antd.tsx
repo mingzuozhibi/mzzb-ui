@@ -1,5 +1,5 @@
 import React from 'react'
-import { Pagination } from 'antd'
+import { Alert, Pagination } from 'antd'
 import { Page } from '../hooks/useData'
 
 interface CustomPaginationProps {
@@ -19,4 +19,15 @@ export function CustomPagination({page, onChange}: CustomPaginationProps) {
       onShowSizeChange={onChange}
     />
   )
+}
+
+interface ClosableMessageProps {
+  message: string
+}
+
+export function ClosableMessage(props: ClosableMessageProps) {
+  const message = props.message
+  const showMessage = localStorage[`message/${window.location.pathname}`] !== message
+  const hideMessage = () => localStorage[`message/${window.location.pathname}`] = message
+  return showMessage ? <Alert message={message} closable onClose={hideMessage}/> : null
 }

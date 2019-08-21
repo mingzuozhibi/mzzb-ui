@@ -40,7 +40,7 @@ export default function NewDiscs({location, history}: RouteComponentProps<void>)
         <Alert message={error} type="error"/>
       )}
       {data && (
-        <Table cols={cols} rows={data} handler={handler} mark="NewDiscs" title="上架追踪"/>
+        <Table cols={cols} rows={data} title="上架追踪" handler={handler}/>
       )}
       {page && (
         <CustomPagination page={page} onChange={onPaginationChange}/>
