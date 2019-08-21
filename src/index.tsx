@@ -9,12 +9,9 @@ import { ConnectedRouter, routerMiddleware } from 'connected-react-router'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import createSagaMiddleware from 'redux-saga'
 
-import App from './App'
-import { cleanup } from './utils/cleanup'
-import { rootSagas } from './common/root-sagas'
-import { createRootReducer } from './common/root-reducer'
-
-cleanup('v0.27.2')
+import App from './app/App'
+import { sagas } from './sagas'
+import { createRootReducer } from './reducers'
 
 const history = createBrowserHistory()
 const routerMid = routerMiddleware(history)
@@ -24,7 +21,7 @@ const store = createStore(
   createRootReducer(history), composeWithDevTools(applyMiddleware(routerMid, sagaMid))
 )
 
-sagaMid.run(rootSagas)
+sagaMid.run(sagas)
 
 const handler = () => store.dispatch({type: 'sessionQueryRequest'})
 
