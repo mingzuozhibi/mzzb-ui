@@ -32,10 +32,10 @@ export function App() {
           <Layout.Content className="app-content">
             <Suspense fallback={<Spin delay={200}/>}>
               <Switch>
-                <Redirect exact={true} path="/" to="/sakura"/>
+                <Redirect exact={true} path="/" to="/disc_groups"/>
                 {routes.map(renderNewRoute)}
                 {pageInfos.map(renderRoute)}
-                <Redirect exact={true} path="*" to="/sakura"/>
+                <Redirect exact={true} path="*" to="/disc_groups"/>
               </Switch>
             </Suspense>
           </Layout.Content>

@@ -41,7 +41,7 @@ export const menuInfos: MenuInfo[] = [
   {
     icon: 'icon-yinghua',
     text: '上架追踪',
-    path: '/new_discs',
+    path: '/disc_coming',
   },
   {
     icon: 'profile',

@@ -6,7 +6,7 @@ export interface RouteInfo {
 }
 
 export const routes: RouteInfo[] = [
-  {path: '/new_discs', loader: () => import('./pages/NewDiscs/NewDiscs')},
+  {path: '/disc_coming', loader: () => import('./pages/DiscComing/DiscComing')},
   {path: '/disc_groups', loader: () => import('./pages/DiscGroups/DiscGroups')},
   {path: '/discs/disc_groups/:key', loader: () => import('./pages/Discs/DiscsOfDiscGroup')},
 ]

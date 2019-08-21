@@ -8,9 +8,9 @@ import { Column, Table } from '../../comps/table/Table'
 import { CustomPagination } from '../../comps/antd'
 import { Outlink } from '../../comps/html'
 
-import './NewDiscs.scss'
+import './DiscComing.scss'
 
-interface NewDisc {
+interface DiscComing {
   id: number
   asin: string
   title: string
@@ -20,11 +20,11 @@ interface NewDisc {
 
 const cols = getColumns()
 
-export default function NewDiscs({location, history}: RouteComponentProps<void>) {
+export default function DiscComing({location, history}: RouteComponentProps<void>) {
 
   useDocumentTitle('上架追踪')
 
-  const [{data, page, error}, handler] = useData<NewDisc[]>(`/api/newdiscs2${location.search}`)
+  const [{data, page, error}, handler] = useData<DiscComing[]>(`/api/newdiscs2${location.search}`)
 
   function onPaginationChange(page: number, pageSize?: number) {
     if (pageSize === 20) {
@@ -35,7 +35,7 @@ export default function NewDiscs({location, history}: RouteComponentProps<void>)
   }
 
   return (
-    <div className="NewDiscs">
+    <div className="DiscComing">
       {error && (
         <Alert message={error} type="error"/>
       )}
@@ -49,7 +49,7 @@ export default function NewDiscs({location, history}: RouteComponentProps<void>)
   )
 }
 
-function getColumns(): Column<NewDisc>[] {
+function getColumns(): Column<DiscComing>[] {
   return [
     {
       key: 'id',
@@ -83,15 +83,15 @@ function getColumns(): Column<NewDisc>[] {
   ]
 }
 
-function formatCreateTime(t: NewDisc) {
+function formatCreateTime(t: DiscComing) {
   const date = new Date(t.createTime)
   return `${date.toLocaleDateString()} ${date.getHours()}时${date.getMinutes()}分`
 }
 
-function justUpdateIn6Hour(t: NewDisc) {
+function justUpdateIn6Hour(t: DiscComing) {
   return Date.now() - t.createTime < 6 * 3600 * 1000
 }
 
-function justUpdateIn12Hour(t: NewDisc) {
+function justUpdateIn12Hour(t: DiscComing) {
   return Date.now() - t.createTime < 12 * 3600 * 1000
 }
