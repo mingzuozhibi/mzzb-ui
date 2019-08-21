@@ -46,7 +46,7 @@ export function Discs({state: {data, error}, handler}: Props) {
       )}
       {data && (
         <>
-          <ClosableMessage message="点击复制按钮可进入复制模式"/>
+          <ClosableMessage message="点击复制按钮可进入复制模式，选中想要复制的碟片，然后再次点击复制即可将排名复制到剪贴板"/>
           <div style={{padding: 8}}>
             <Switch
               checked={pcMode}
