@@ -5,7 +5,6 @@ import { BaseState } from '../../common/root-reducer'
 import { BaseModel, Manager } from '../../utils/manager'
 import produce from 'immer'
 import { message, Modal } from 'antd'
-import { recordsReducer, recordsSaga } from './reducer-records'
 
 export const pageInfo: PageInfo = {
   pageTitle: '碟片信息',
@@ -84,8 +83,6 @@ export const discReducer = (state: DiscState = initState, action: AnyAction) => 
         break
       default:
     }
-
-    recordsReducer(action, draftState)
   })
 }
 
@@ -109,4 +106,4 @@ function* editModel(action: AnyAction) {
   }
 }
 
-export const discSaga = {viewModel, editModel, ...recordsSaga}
+export const discSaga = {viewModel, editModel}

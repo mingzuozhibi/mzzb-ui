@@ -6,12 +6,9 @@ import './disc.scss'
 
 import { DiscOfRanksModel, DiscOfRecordsModel, DiscState } from './reducer'
 import {
-  adminDiscRecordsMessage,
   adminDiscViewMessage,
-  discRecordsMessage,
   discViewMessage
 } from '../../common/site-messages'
-import { DiscRecords } from './disc-records'
 import { DiscView } from './disc-view'
 import { Session } from '../../App/reducer'
 
@@ -99,41 +96,6 @@ export function Disc(props: Props) {
           path={`${props.match.url}/:id`}
           exact={true}
           render={({match}) => withDetail(match.params.id, renderDetail)}
-        />
-        <Route
-          path={`${props.match.url}/:id/records`}
-          exact={true}
-          render={({match}) => withDetailOfRecords(match.params.id, detail => (
-            <div className="disc-records">
-              <Helmet>
-                <title>排名数据 - 名作之壁吧</title>
-              </Helmet>
-              <Breadcrumb style={{padding: 10}}>
-                <Breadcrumb.Item>
-                  <Link to={`/disc/${detail.id}`}>碟片信息</Link>
-                </Breadcrumb.Item>
-                <Breadcrumb.Item>
-                  排名数据
-                </Breadcrumb.Item>
-              </Breadcrumb>
-              {hasBasicRole && adminDiscRecordsMessage && (
-                <div className="form-message">
-                  {adminDiscRecordsMessage}
-                </div>
-              )}
-              {!hasBasicRole && discRecordsMessage && (
-                <div className="form-message">
-                  {discRecordsMessage}
-                </div>
-              )}
-              <DiscRecords
-                detail={detail}
-                mergeRanks={props.mergeRanks}
-                mergePts={props.mergePts}
-                hasBasicRole={hasBasicRole}
-              />
-            </div>
-          ))}
         />
       </Switch>
     </div>

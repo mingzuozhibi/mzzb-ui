@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { Alert, Icon } from 'antd'
 
 import { RootState } from '../../../common/root-reducer'
-import { useDocumentTitle } from '../../hooks/hooks'
+import { useTitle } from '../../hooks/hooks'
 import { useData } from '../../hooks/useData'
 import { Column, Table } from '../../comps/table/Table'
 import { formatTimeout, isJustUpdated } from '../../funcs/format'
@@ -29,7 +29,7 @@ const cols = getColumns()
 
 function DiscGroups(props: Props) {
 
-  useDocumentTitle('推荐列表')
+  useTitle('推荐列表')
 
   const [{data, error}, handler] = useData<DiscGroup[]>(`/api/sakuras`)
 

@@ -16,10 +16,6 @@ export function* rootSagas() {
     takeEvery('viewDiscRequest', discSaga.viewModel),
     takeEvery('editDiscRequest', discSaga.editModel),
 
-    takeEvery('view(records)DiscRequest', discSaga.viewRecords),
-    takeEvery('merge(ranks)DiscRequest', discSaga.mergeRanks),
-    takeEvery('merge(pts)DiscRequest', discSaga.mergePts),
-
     takeEvery(LOCATION_CHANGE, currentSaga.updateReload),
     takeEvery('reloadRequest', currentSaga.invokeReload),
 

@@ -98,7 +98,7 @@ function getCols(): Column<Disc>[] {
     {
       key: 'rank',
       title: '日亚排名',
-      format: (disc) => <Link to={`/disc/${disc.id}/records`}>{formatRank(disc)}</Link>,
+      format: (disc) => <Link to={`/discs/${disc.id}/records`}>{formatRank(disc)}</Link>,
       compare: compareFactory<Disc, number>({
         apply: disc => disc.thisRank,
         empty: rank => rank === undefined,
