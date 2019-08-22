@@ -49,9 +49,9 @@ export function useData<T>(url: string, initialState: State<T> = {}) {
     dispatch({type: 'Modified', data: state})
   }
 
-  function editData(url: string, body: any) {
+  function putForm(url: string, form: any) {
     setLoading(true)
-    request(url, {method: 'put', body: JSON.stringify(body)}).then(result => {
+    request(url, {method: 'put', body: JSON.stringify(form)}).then(result => {
       setLoading(false)
       if (result.success) {
         setState(result.data)
@@ -61,6 +61,6 @@ export function useData<T>(url: string, initialState: State<T> = {}) {
     })
   }
 
-  return [state, {loading, refresh}, {editData}] as
-    [State<T>, Handler, { editData: (url: string, body: any) => void }]
+  return [state, {loading, refresh}, {putForm}] as
+    [State<T>, Handler, { putForm: (url: string, form: any) => void }]
 }

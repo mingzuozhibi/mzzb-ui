@@ -14,7 +14,7 @@ const form: Form = {}
 
 export default function UserDetail() {
 
-  const [{error, data}, {loading}, {editData}] = useData<User>(``)
+  const [{error, data}, {loading}, {putForm}] = useData<User>(``)
   const [subminting, setSubmiting] = useState(false)
 
   function submitForm() {
@@ -27,7 +27,7 @@ export default function UserDetail() {
       form.password = md5Password(form.username, form.password)
     }
 
-    editData(`/api/users/${data!.id}`, form)
+    putForm(`/api/users/${data!.id}`, form)
   }
 
   if (data) {

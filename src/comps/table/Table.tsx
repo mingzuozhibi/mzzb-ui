@@ -30,6 +30,7 @@ interface Props<T> {
   copyFmt?: (row: T, idx: number) => string
   handler?: Handler
   defaultSort?: (a: T, b: T) => number
+  extraCaption?: React.ReactNode | React.ReactNodeArray
 }
 
 interface State {
@@ -40,7 +41,7 @@ interface State {
 }
 
 export function Table<T extends BaseRow>(props: Props<T>) {
-  const {rows, cols, title, handler, trClass, copyFmt, defaultSort} = props
+  const {rows, cols, title, handler, trClass, copyFmt, defaultSort, extraCaption} = props
   const mark = `talbe-state/${window.location.pathname}`
   const [state, setState] = useState<State>(() => {
     return loadState(mark, {copyMode: false, selected: new Set()})
@@ -125,6 +126,7 @@ export function Table<T extends BaseRow>(props: Props<T>) {
             </Button.Group>
           </span>
         )}
+        {extraCaption}
       </div>
     )
   }

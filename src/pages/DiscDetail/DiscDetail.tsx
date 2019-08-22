@@ -41,7 +41,7 @@ interface Props {
 
 function DiscDetail({hasRole, match}: Props & RouteComponentProps<{ id: string }>) {
 
-  const [{error, data}, {loading}, {editData}] = useData<Disc>(`/api/discs/${match.params.id}`)
+  const [{error, data}, {loading}, {putForm}] = useData<Disc>(`/api/discs/${match.params.id}`)
 
   useDocumentTitle(data ? formatTitle(data) : '碟片信息载入中')
 
@@ -62,7 +62,7 @@ function DiscDetail({hasRole, match}: Props & RouteComponentProps<{ id: string }
       Modal.warning({title: '请检查输入项', content: `你输入的发售日期格式不正确，应该为：yyyy-MM-dd`})
       return
     }
-    editData(`/api/discs2/${data!.id}`, form)
+    putForm(`/api/discs2/${data!.id}`, form)
   }
 
   return (

@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react'
-import { Link } from 'react-router-dom'
-import { Alert, Icon } from 'antd'
+import { Link, RouteComponentProps } from 'react-router-dom'
+import { Alert, Button, Icon } from 'antd'
 import { useData } from '../../hooks/useData'
-import { useDocumentTitle, useClientWidth } from '../../hooks/hooks'
+import { useClientWidth, useDocumentTitle } from '../../hooks/hooks'
 import { Column, Table } from '../../comps/table/Table'
 import './Users.scss'
 
@@ -14,7 +14,7 @@ export interface User {
   lastLoggedIn: string
 }
 
-export default function Users() {
+export default function Users({history}: RouteComponentProps<void>) {
 
   useDocumentTitle('用户管理')
 
@@ -22,6 +22,13 @@ export default function Users() {
 
   const width = useClientWidth('.Users')
   const cols = useMemo(() => getColumns(width), [width])
+  const addUserButton = (
+    <span className="table-buttons">
+      <Button.Group>
+        <Button onClick={() => history.push(`/users/add`)}>添加用户</Button>
+      </Button.Group>
+    </span>
+  )
 
   return (
     <div className="Users">
@@ -29,7 +36,7 @@ export default function Users() {
         <Alert message={error} type="error"/>
       )}
       {data && (
-        <Table rows={data} cols={cols} title="用户管理" handler={handler}/>
+        <Table rows={data} cols={cols} title="用户管理" handler={handler} extraCaption={addUserButton}/>
       )}
     </div>
   )
