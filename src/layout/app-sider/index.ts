@@ -1,29 +1,26 @@
 import { connect } from 'react-redux'
 import { RootState } from '../../reducers'
-import { AppHeader } from './app-header'
+import { AppSider } from './app-sider'
+import { withRouter } from 'react-router-dom'
 
 function mapStateToProps(state: RootState) {
   return {
-    session: state.app.session,
-    viewSider: state.app.viewSider,
+    viewSider: state.layout.viewSider,
+    userRoles: state.session.userRoles,
   }
 }
 
 function mapDispatchToProps(dispatch: any) {
   return {
-    showLogin() {
-      dispatch({type: 'setViewLogin', viewLogin: true})
-    },
     setViewSider(viewSider: boolean) {
       dispatch({type: 'setViewSider', viewSider})
-    },
-    sessionLogout() {
-      dispatch({type: 'sessionLogoutRequest'})
     },
   }
 }
 
-export default connect(
+const Connected = connect(
   mapStateToProps,
   mapDispatchToProps
-)(AppHeader)
+)(AppSider)
+
+export default withRouter<any>(Connected)

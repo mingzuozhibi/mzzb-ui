@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Button, Checkbox, Input, message, Modal } from 'antd'
-import immer from 'immer'
+import produce from 'immer'
 import classNames from 'classnames'
 import copy from 'copy-to-clipboard'
 import './Table.scss'
@@ -243,7 +243,7 @@ export function Table<T extends BaseRow>(props: Props<T>) {
   }
 
   function update(updater: (draft: State) => void) {
-    const nextState = immer(state, updater)
+    const nextState = produce(state, updater)
     setState(nextState)
     saveState(mark, nextState)
   }

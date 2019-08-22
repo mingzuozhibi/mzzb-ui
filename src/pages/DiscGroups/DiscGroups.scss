@@ -10,11 +10,17 @@
       }
 
       &.update {
-        @include columnWidth(150px, 95px);
+        @include columnCenter();
+        @include columnWidth(95px, 85px);
       }
 
-      &.command {
-        @include columnWidth(40px, 35px);
+      &.edit {
+        @include columnWidth(70px, 65px);
+        @include columnCenter();
+      }
+
+      &.item {
+        @include columnWidth(70px, 65px);
         @include columnCenter();
       }
     }

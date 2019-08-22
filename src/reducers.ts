@@ -1,15 +1,18 @@
 import { combineReducers } from 'redux'
-import { appReducer, AppState } from './app/reducer'
 import { connectRouter, RouterState } from 'connected-react-router'
+import { layoutReducer, LayoutState } from './layout/layout'
+import { sessionReducer, SessionState } from './layout/session'
 
 export interface RootState {
-  app: AppState
   router: RouterState
+  layout: LayoutState
+  session: SessionState
 }
 
 export function createRootReducer(history: any) {
   return combineReducers({
-    app: appReducer,
     router: connectRouter(history),
+    layout: layoutReducer,
+    session: sessionReducer
   })
 }

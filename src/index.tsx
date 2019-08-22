@@ -9,7 +9,7 @@ import { ConnectedRouter, routerMiddleware } from 'connected-react-router'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import createSagaMiddleware from 'redux-saga'
 
-import App from './app/App'
+import App from './layout/App'
 import { sagas } from './sagas'
 import { createRootReducer } from './reducers'
 
@@ -22,10 +22,6 @@ const store = createStore(
 )
 
 sagaMid.run(sagas)
-
-const handler = () => store.dispatch({type: 'sessionQueryRequest'})
-
-setTimeout(handler, 500)
 
 ReactDOM.render(
   <Provider store={store}>

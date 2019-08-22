@@ -1,16 +1,12 @@
 import React from 'react'
-import { RouteComponentProps } from 'react-router'
+import { RouteComponentProps } from 'react-router-dom'
 import { useDocumentTitle } from '../../hooks/hooks'
 import { useData } from '../../hooks/useData'
 import { Data, Discs } from './Discs'
 
-interface Params {
-  key: string
-}
-
 const query = 'discColumns=id,asin,title,titlePc,thisRank,prevRank,todayPt,totalPt,guessPt,updateTime,surplusDays'
 
-export default function DiscsOfDiscGroup({match}: RouteComponentProps<Params>) {
+export default function DiscsOfDiscGroup({match}: RouteComponentProps<{ key: string }>) {
   const {key} = match.params
   const [state, handler] = useData<Data>(`/api/sakuras/key/${key}/discs?${query}`)
 

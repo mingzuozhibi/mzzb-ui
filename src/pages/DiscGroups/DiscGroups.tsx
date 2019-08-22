@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Alert, Icon } from 'antd'
+import { Alert, Button, Icon } from 'antd'
 
 import { RootState } from '../../reducers'
 import { useData } from '../../hooks/useData'
@@ -23,19 +23,37 @@ interface DiscGroup {
 }
 
 interface Props {
-  userRoles: string[]
+  hasRole: boolean
 }
 
 const cols = getColumns()
 
-function DiscGroups(props: Props) {
+export default connect((state: RootState) => ({
+  hasRole: state.session.userRoles.includes('ROLE_BASIC')
+}))(DiscGroups)
+
+function DiscGroups({hasRole}: Props) {
 
   useDocumentTitle('推荐列表')
 
   const [{data, error}, handler] = useData<DiscGroup[]>(`/api/sakuras`)
 
-  const hasRole = props.userRoles.includes('ROLE_BASIC')
-  const finalCols = cols.filter(col => hasRole || col.key !== 'command')
+  const finalCols = cols.filter(col => hasRole || !['edit', 'item'].includes(col.key))
+
+  const addUserButton = (
+    <>
+      <span className="table-buttons">
+        <Button.Group>
+          <Button>添加列表</Button>
+        </Button.Group>
+      </span>
+      <span className="table-buttons">
+        <Button.Group>
+          <Button>显示所有</Button>
+        </Button.Group>
+      </span>
+    </>
+  )
 
   return (
     <div className="DiscGroups">
@@ -44,15 +62,11 @@ function DiscGroups(props: Props) {
       )}
       {data && (
         <Table rows={data} cols={finalCols} title="推荐列表" handler={handler}
-               defaultSort={(a, b) => b.key.localeCompare(a.key)}/>
+               defaultSort={(a, b) => b.key.localeCompare(a.key)} extraCaption={addUserButton}/>
       )}
     </div>
   )
 }
-
-export default connect((state: RootState) => ({
-  userRoles: state.app.session.userRoles
-}))(DiscGroups)
 
 function getColumns(): Column<DiscGroup>[] {
   return [
@@ -72,9 +86,14 @@ function getColumns(): Column<DiscGroup>[] {
       format: formatLastUpdate
     },
     {
-      key: 'command',
-      title: '操作',
-      format: formatCommand
+      key: 'edit',
+      title: '编辑信息',
+      format: formatEdit
+    },
+    {
+      key: 'item',
+      title: '增减碟片',
+      format: formatItem
     }
   ]
 }
@@ -94,6 +113,10 @@ function formatLastUpdate(row: DiscGroup) {
   return `${formatTimeout(row.modifyTime)}前`
 }
 
-function formatCommand(t: DiscGroup) {
-  return <Link to={`/admin/sakura/${t.key}`}><Icon type="edit"/></Link>
+function formatEdit(t: DiscGroup) {
+  return <Link to={``}><Icon type="edit"/></Link>
+}
+
+function formatItem(t: DiscGroup) {
+  return <Link to={``}><Icon type="unordered-list"/></Link>
 }

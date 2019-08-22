@@ -4,8 +4,8 @@ import { AppFooter } from './app-footer'
 
 function mapStateToProps(state: RootState) {
   return {
-    viewLogin: state.app.viewLogin,
-    submiting: state.app.submiting,
+    viewLogin: state.layout.viewLogin,
+    submiting: state.session.submiting,
   }
 }
 

@@ -1,9 +1,9 @@
 import React from 'react'
+import { RouteComponentProps } from 'react-router-dom'
 import { Alert, Button, Checkbox, Icon, Input, Modal } from 'antd'
 import { useData } from '../../hooks/useData'
 import { md5Password } from '../../funcs/manager'
 import { User } from '../Users/Users'
-import { RouteComponentProps } from 'react-router'
 
 interface Form {
   username?: string

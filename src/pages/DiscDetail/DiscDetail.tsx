@@ -39,6 +39,10 @@ interface Props {
   hasRole: boolean
 }
 
+export default connect((state: RootState) => ({
+  hasRole: state.session.userRoles.includes('ROLE_BASIC')
+}))(DiscDetail)
+
 function DiscDetail({hasRole, match}: Props & RouteComponentProps<{ id: string }>) {
 
   const [{error, data}, {loading}, {putForm}] = useData<Disc>(`/api/discs/${match.params.id}`)
@@ -241,7 +245,3 @@ function toAmazon(asin: string) {
 function toRecords(id: number) {
   return <Link to={`/discs/${id}/records`}>点击查看所有排名</Link>
 }
-
-export default connect((state: RootState) => ({
-  hasRole: state.app.session.userRoles.includes('ROLE_BASIC')
-}))(DiscDetail)

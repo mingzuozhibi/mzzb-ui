@@ -1,9 +1,8 @@
 import React from 'react'
 import { Layout, Menu } from 'antd'
-import { Icon } from '../../comps/icon/Icon'
-
-import { MenuInfo, menuInfos } from '../../menus'
 import { RouteComponentProps } from 'react-router-dom'
+import { MenuInfo, menuInfos } from '../../menus'
+import { Icon } from '../../comps/icon/Icon'
 import { useClientWidth } from '../../hooks/hooks'
 
 interface AppSiderProps {

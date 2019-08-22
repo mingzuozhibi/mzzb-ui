@@ -1,17 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Layout, Popconfirm } from 'antd'
-import { Session } from '../reducer'
 import { Icon } from '../../comps/icon/Icon'
+import { SessionState } from '../session'
 
 interface AppHeaderProps {
-  session: Session
+  session: SessionState
   viewSider: boolean
   showLogin: () => void
   setViewSider: (viewSider: boolean) => void
   sessionLogout: () => void
+  refreshSession: () => void
 }
 
 export function AppHeader(props: AppHeaderProps) {
+
+  useEffect(() => {
+    props.refreshSession()
+    const id: any = setInterval(props.refreshSession, 10 * 60 * 1000)
+    return clearInterval(id)
+  }, [])
 
   return (
     <Layout.Header className="app-header">
@@ -21,7 +28,7 @@ export function AppHeader(props: AppHeaderProps) {
         type={props.viewSider ? 'menu-fold' : 'menu-unfold'}
       />
       <span style={{marginLeft: 24}}>
-        在线人数: {props.session.onlineUserCount}
+        在线人数: {props.session.userCount}
       </span>
       {props.session.isLogged ? (
         <Popconfirm
