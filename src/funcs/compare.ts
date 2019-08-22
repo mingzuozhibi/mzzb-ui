@@ -22,7 +22,7 @@ export function safeCompare<T, E>(props: Props<T, E>) {
   }
 }
 
-export function composeCompares<T>(compares: Compare<T>[]) {
+export function composeCompares<T>(compares: Compare<T>[]): Compare<T> {
   return (a: T, b: T) => {
     for (const compare of compares) {
       const c = compare(a, b)

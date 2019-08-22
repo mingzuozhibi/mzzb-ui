@@ -14,29 +14,31 @@ interface AppHeaderProps {
 
 export function AppHeader(props: AppHeaderProps) {
 
+  const {session, viewSider, showLogin, setViewSider, sessionLogout, refreshSession} = props
+
   useEffect(() => {
-    props.refreshSession()
-    const id: any = setInterval(props.refreshSession, 10 * 60 * 1000)
+    refreshSession()
+    const id: any = setInterval(refreshSession, 10 * 60 * 1000)
     return clearInterval(id)
-  }, [])
+  }, [refreshSession])
 
   return (
     <Layout.Header className="app-header">
       <Icon
         className="header-icon"
-        onClick={() => props.setViewSider(!props.viewSider)}
-        type={props.viewSider ? 'menu-fold' : 'menu-unfold'}
+        onClick={() => setViewSider(!viewSider)}
+        type={viewSider ? 'menu-fold' : 'menu-unfold'}
       />
       <span style={{marginLeft: 24}}>
-        在线人数: {props.session.userCount}
+        在线人数: {session.userCount}
       </span>
-      {props.session.isLogged ? (
+      {session.isLogged ? (
         <Popconfirm
           title="你确定要登出吗？"
           placement="bottomRight"
           okText="Yes"
           cancelText="No"
-          onConfirm={props.sessionLogout}
+          onConfirm={sessionLogout}
         >
           <Icon
             className="header-icon float-right"
@@ -47,7 +49,7 @@ export function AppHeader(props: AppHeaderProps) {
         <Icon
           className="header-icon float-right"
           type="icon-login"
-          onClick={props.showLogin}
+          onClick={showLogin}
         />
       )}
     </Layout.Header>

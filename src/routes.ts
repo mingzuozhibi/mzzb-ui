@@ -8,7 +8,7 @@ export interface RouteInfo {
 
 export const routes: RouteInfo[] = [
   {path: '/disc_coming', loader: () => import('./pages/DiscComing/DiscComing')},
-  {path: '/disc_groups', loader: () => import('./pages/DiscGroups/DiscGroups')},
+  {path: '/disc_groups', loader: () => import('./pages/DiscGroups/index')},
   {path: '/discs/disc_groups/:key', loader: () => import('./pages/Discs/DiscsOfDiscGroup')},
   {path: '/discs/:id', exact: true, loader: () => import('./pages/DiscDetail/DiscDetail')},
   {path: '/discs/:id/records', loader: () => import('./pages/DiscRecords/DiscRecords')},

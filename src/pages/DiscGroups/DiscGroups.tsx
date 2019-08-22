@@ -1,14 +1,13 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Alert, Button, Icon } from 'antd'
 
-import { RootState } from '../../reducers'
 import { useData } from '../../hooks/useData'
 import { useDocumentTitle } from '../../hooks/hooks'
 import { Column, Table } from '../../comps/table/Table'
 import { isJustUpdated } from '../../funcs/domain'
 import { formatTimeout } from '../../funcs/format'
+import { composeCompares } from '../../funcs/compare'
 
 import './DiscGroups.scss'
 
@@ -24,33 +23,37 @@ interface DiscGroup {
 
 interface Props {
   hasRole: boolean
+  isAdminMode: boolean
+  setAdminMode: (isAdminMode: boolean) => void
 }
 
 const cols = getColumns()
+const sort = compareDiscGroups()
 
-export default connect((state: RootState) => ({
-  hasRole: state.session.userRoles.includes('ROLE_BASIC')
-}))(DiscGroups)
+export function DiscGroups(props: Props) {
 
-function DiscGroups({hasRole}: Props) {
+  const {hasRole, isAdminMode, setAdminMode} = props
 
   useDocumentTitle('推荐列表')
 
-  const [{data, error}, handler] = useData<DiscGroup[]>(`/api/sakuras`)
+  const url = isAdminMode ? '/api/sakuras?public=false' : '/api/sakuras'
+  const [{error, data}, handler] = useData<DiscGroup[]>(url)
 
-  const finalCols = cols.filter(col => hasRole || !['edit', 'item'].includes(col.key))
+  const finalCols = cols.filter(col => isAdminMode || !['edit', 'item'].includes(col.key))
 
-  const addUserButton = (
+  const extraButtons = hasRole && (
     <>
       <span className="table-buttons">
-        <Button.Group>
-          <Button>添加列表</Button>
-        </Button.Group>
-      </span>
-      <span className="table-buttons">
-        <Button.Group>
-          <Button>显示所有</Button>
-        </Button.Group>
+        {isAdminMode ? (
+          <Button.Group>
+            <Button onClick={() => setAdminMode(false)}>浏览模式</Button>
+            <Button>添加列表</Button>
+          </Button.Group>
+        ) : (
+          <Button.Group>
+            <Button onClick={() => setAdminMode(true)}>管理模式</Button>
+          </Button.Group>
+        )}
       </span>
     </>
   )
@@ -62,10 +65,14 @@ function DiscGroups({hasRole}: Props) {
       )}
       {data && (
         <Table rows={data} cols={finalCols} title="推荐列表" handler={handler}
-               defaultSort={(a, b) => b.key.localeCompare(a.key)} extraCaption={addUserButton}/>
+               trClass={trClass} defaultSort={sort} extraCaption={extraButtons}/>
       )}
     </div>
   )
+}
+
+function trClass(t: DiscGroup) {
+  return {'warning': t.viewType === 'PrivateList'}
 }
 
 function getColumns(): Column<DiscGroup>[] {
@@ -119,4 +126,13 @@ function formatEdit(t: DiscGroup) {
 
 function formatItem(t: DiscGroup) {
   return <Link to={``}><Icon type="unordered-list"/></Link>
+}
+
+const viewTpyes = ['SakuraList', 'PublicList', 'PrivateList']
+
+function compareDiscGroups() {
+  return composeCompares<DiscGroup>([
+    (a, b) => viewTpyes.indexOf(a.viewType) - viewTpyes.indexOf(b.viewType),
+    (a, b) => b.key.localeCompare(a.key),
+  ])
 }
