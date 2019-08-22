@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, RouteComponentProps } from 'react-router-dom'
 import { Alert, Button, Icon } from 'antd'
 
 import { useData } from '../../hooks/useData'
@@ -21,6 +21,12 @@ export interface DiscGroup {
   modifyTime: number
 }
 
+export const viewTypes = [
+  {label: '日亚实时', value: 'SakuraList'},
+  {label: '公开列表', value: 'PublicList'},
+  {label: '私有列表', value: 'PrivateList'},
+]
+
 interface Props {
   hasRole: boolean
   isAdminMode: boolean
@@ -30,9 +36,9 @@ interface Props {
 const cols = getColumns()
 const sort = compareDiscGroups()
 
-export function DiscGroups(props: Props) {
+export function DiscGroups(props: Props & RouteComponentProps<void>) {
 
-  const {hasRole, isAdminMode, setAdminMode} = props
+  const {hasRole, isAdminMode, setAdminMode, history} = props
 
   useDocumentTitle('推荐列表')
 
@@ -47,7 +53,7 @@ export function DiscGroups(props: Props) {
         {isAdminMode ? (
           <Button.Group>
             <Button onClick={() => setAdminMode(false)}>浏览模式</Button>
-            <Button>添加列表</Button>
+            <Button onClick={() => history.push('/disc_groups/add')}>添加列表</Button>
           </Button.Group>
         ) : (
           <Button.Group>

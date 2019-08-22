@@ -3,8 +3,8 @@ import { RouteComponentProps } from 'react-router-dom'
 import { Alert, Button, Checkbox, Icon, Input, Modal, PageHeader, Popconfirm, Radio } from 'antd'
 import { useData } from '../../hooks/useData'
 import { useAjax } from '../../hooks/useAjax'
-import { DiscGroup } from '../DiscGroups/DiscGroups'
 import { useDocumentTitle } from '../../hooks/hooks'
+import { DiscGroup, viewTypes } from '../DiscGroups/DiscGroups'
 
 interface Form {
   key?: string
@@ -12,12 +12,6 @@ interface Form {
   enabled?: boolean
   viewType?: string
 }
-
-const viewTypes = [
-  {label: '日亚实时', value: 'SakuraList'},
-  {label: '公开列表', value: 'PublicList'},
-  {label: '私有列表', value: 'PrivateList'},
-]
 
 interface Props {
   hasAdminRole: boolean
@@ -58,18 +52,18 @@ export function DiscGroupDetail(props: Props & RouteComponentProps<{ key: string
 
   function deleteThis() {
     sendAjax(`/api/sakuras/${data!.id}`, {}, () => {
-      Modal.info({title: '删除列表成功'})
+      Modal.success({title: '删除列表成功'})
     })
   }
 
   return (
     <div className="DiscGroupDtail">
+      <PageHeader title="列表信息" onBack={() => history.goBack()}/>
       {error && (
         <Alert message={error} type="error"/>
       )}
       {data && (
         <>
-          <PageHeader title="列表信息" onBack={() => history.goBack()}/>
           <div className="input-wrapper">
             <Input
               prefix={<Icon type="key"/>}

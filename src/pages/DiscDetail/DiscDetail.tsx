@@ -2,13 +2,10 @@ import React from 'react'
 import { Link, RouteComponentProps } from 'react-router-dom'
 import { Alert, Button, Input, Modal, PageHeader, Radio } from 'antd'
 
+import { useData } from '../../hooks/useData'
+import { useDocumentTitle } from '../../hooks/hooks'
 import { Outlink } from '../../comps/html'
 import { formatNumber } from '../../funcs/format'
-import { useDocumentTitle } from '../../hooks/hooks'
-import { useData } from '../../hooks/useData'
-import { connect } from 'react-redux'
-
-import { RootState } from '../../reducers'
 
 export interface Disc {
   id: number
@@ -39,11 +36,7 @@ interface Props {
   hasRole: boolean
 }
 
-export default connect((state: RootState) => ({
-  hasRole: state.session.userRoles.includes('ROLE_BASIC')
-}))(DiscDetail)
-
-function DiscDetail(props: Props & RouteComponentProps<{ id: string }>) {
+export function DiscDetail(props: Props & RouteComponentProps<{ id: string }>) {
 
   const {hasRole, match, history} = props
 
@@ -73,12 +66,12 @@ function DiscDetail(props: Props & RouteComponentProps<{ id: string }>) {
 
   return (
     <div className="DiscDetail">
+      <PageHeader title="碟片信息" onBack={() => history.goBack()}/>
       {error && (
         <Alert message={error} type="error"/>
       )}
       {data && (
         <>
-          <PageHeader title="碟片信息" onBack={() => history.goBack()}/>
           <div className="input-wrapper">
             <div className="input-label">
               <span>日文标题</span>
