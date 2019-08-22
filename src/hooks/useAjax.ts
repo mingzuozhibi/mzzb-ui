@@ -2,12 +2,12 @@ import { useState } from 'react'
 import request from '../funcs/request'
 import { Modal } from 'antd'
 
-export function usePost() {
+export function useAjax(method: 'post' | 'delete') {
   const [loading, setLoading] = useState(false)
 
-  function postForm(url: string, form: any, onSuccess: () => void) {
+  function sendAjax(url: string, form: any, onSuccess: () => void) {
     setLoading(true)
-    request(`/api/users`, {method: 'post', body: JSON.stringify(form)}).then(result => {
+    request(url, {method, body: JSON.stringify(form)}).then(result => {
       setLoading(false)
       if (result.success) {
         onSuccess()
@@ -17,5 +17,5 @@ export function usePost() {
     })
   }
 
-  return {loading, postForm}
+  return {loading, sendAjax}
 }

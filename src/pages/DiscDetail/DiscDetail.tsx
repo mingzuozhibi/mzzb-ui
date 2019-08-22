@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, RouteComponentProps } from 'react-router-dom'
-import { Alert, Button, Input, Modal, Radio } from 'antd'
+import { Alert, Button, Input, Modal, PageHeader, Radio } from 'antd'
 
 import { Outlink } from '../../comps/html'
 import { formatNumber } from '../../funcs/format'
@@ -43,7 +43,9 @@ export default connect((state: RootState) => ({
   hasRole: state.session.userRoles.includes('ROLE_BASIC')
 }))(DiscDetail)
 
-function DiscDetail({hasRole, match}: Props & RouteComponentProps<{ id: string }>) {
+function DiscDetail(props: Props & RouteComponentProps<{ id: string }>) {
+
+  const {hasRole, match, history} = props
 
   const [{error, data}, {loading}, {putForm}] = useData<Disc>(`/api/discs/${match.params.id}`)
 
@@ -76,6 +78,7 @@ function DiscDetail({hasRole, match}: Props & RouteComponentProps<{ id: string }
       )}
       {data && (
         <>
+          <PageHeader title="碟片信息" onBack={() => history.goBack()}/>
           <div className="input-wrapper">
             <div className="input-label">
               <span>日文标题</span>

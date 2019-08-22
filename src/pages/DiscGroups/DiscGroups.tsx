@@ -11,7 +11,7 @@ import { composeCompares } from '../../funcs/compare'
 
 import './DiscGroups.scss'
 
-interface DiscGroup {
+export interface DiscGroup {
   id: number
   key: string
   title: string
@@ -94,7 +94,7 @@ function getColumns(): Column<DiscGroup>[] {
     },
     {
       key: 'edit',
-      title: '编辑信息',
+      title: '编辑列表',
       format: formatEdit
     },
     {
@@ -121,7 +121,7 @@ function formatLastUpdate(row: DiscGroup) {
 }
 
 function formatEdit(t: DiscGroup) {
-  return <Link to={``}><Icon type="edit"/></Link>
+  return <Link to={`/disc_groups/${t.key}`}><Icon type="edit"/></Link>
 }
 
 function formatItem(t: DiscGroup) {

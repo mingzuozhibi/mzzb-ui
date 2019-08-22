@@ -1,5 +1,5 @@
 import React from 'react'
-import { RouteComponentProps } from 'react-router'
+import { RouteComponentProps } from 'react-router-dom'
 import { Alert } from 'antd'
 import { useData } from '../../hooks/useData'
 import { useDocumentTitle } from '../../hooks/hooks'

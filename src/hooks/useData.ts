@@ -1,7 +1,7 @@
 import { useEffect, useReducer, useState } from 'react'
+import { message, Modal } from 'antd'
 import { Handler } from '../comps/table/Table'
 import request from '../funcs/request'
-import { Modal } from 'antd'
 
 export interface Page {
   pageSize: number
@@ -54,6 +54,7 @@ export function useData<T>(url: string, initialState: State<T> = {}) {
     request(url, {method: 'put', body: JSON.stringify(form)}).then(result => {
       setLoading(false)
       if (result.success) {
+        message.success('提交修改成功')
         setState(result.data)
       } else {
         Modal.error({title: '提交修改失败', content: result.message})
