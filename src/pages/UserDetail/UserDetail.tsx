@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Alert, Button, Checkbox, Icon, Input, Modal } from 'antd'
-import { User } from '../Users/Users'
-import { md5Password } from '../../funcs/manager'
 import { useData } from '../../hooks/useData'
+import { md5Password } from '../../funcs/manager'
+import { User } from '../Users/Users'
+import { RouteComponentProps } from 'react-router'
 
 interface Form {
   username?: string
@@ -12,10 +13,9 @@ interface Form {
 
 const form: Form = {}
 
-export default function UserDetail() {
+export default function UserDetail({match}: RouteComponentProps<{ id: string }>) {
 
-  const [{error, data}, {loading}, {putForm}] = useData<User>(``)
-  const [subminting, setSubmiting] = useState(false)
+  const [{error, data}, {loading}, {putForm}] = useData<User>(`/api/users/${match.params.id}`)
 
   function submitForm() {
     if (!form.username) {
@@ -68,7 +68,7 @@ export default function UserDetail() {
             </Checkbox>
           </div>
           <div className="input-wrapper">
-            <Button type="primary" onClick={submitForm}>保存修改</Button>
+            <Button type="primary" loading={loading} onClick={submitForm}>提交修改</Button>
           </div>
         </>
       )}

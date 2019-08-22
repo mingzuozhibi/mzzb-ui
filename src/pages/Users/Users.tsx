@@ -96,5 +96,5 @@ function justLogged(t: User) {
 }
 
 function formatCommand(t: User) {
-  return <Link to={`/admin/user/${t.id}`}><Icon type="edit"/></Link>
+  return <Link to={`/users/${t.id}`}><Icon type="edit"/></Link>
 }

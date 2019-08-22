@@ -14,4 +14,5 @@ export const routes: RouteInfo[] = [
   {path: '/discs/:id/records', loader: () => import('./pages/DiscRecords/DiscRecords')},
   {path: '/users', exact: true, loader: () => import('./pages/Users/Users')},
   {path: '/users/add', loader: () => import('./pages/UserAdd/UserAdd')},
+  {path: '/users/:id', loader: () => import('./pages/UserDetail/UserDetail')},
 ]
