@@ -1,9 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Layout, Menu } from 'antd'
 import { RouteComponentProps } from 'react-router-dom'
 import { MenuInfo, menuInfos } from '../../menus'
 import { Icon } from '../../comps/icon/Icon'
-import { useClientWidth } from '../../hooks/hooks'
 
 interface AppSiderProps {
   viewSider: boolean
@@ -13,14 +12,13 @@ interface AppSiderProps {
 
 export function AppSider(props: AppSiderProps & RouteComponentProps<void>) {
 
-  const width = useClientWidth('body')
+  const [responsive, setResponsive] = useState(false)
 
-  function onCollapse(hideSider: boolean, type: 'clickTrigger' | 'responsive') {
+  function onCollapse(hideSider: boolean, type: string) {
     if (type === 'responsive') {
-      const handler = () => {
-        props.setViewSider(!hideSider)
-      }
-      setTimeout(handler, 100)
+      setTimeout(() => {
+        setResponsive(!hideSider)
+      }, 200)
     }
   }
 
@@ -28,7 +26,7 @@ export function AppSider(props: AppSiderProps & RouteComponentProps<void>) {
     if (key === props.location.pathname) {
       return
     }
-    if (width <= 768) {
+    if (!responsive) {
       props.setViewSider(false)
     }
     if (key.charAt(0) === '/') {
@@ -70,7 +68,7 @@ export function AppSider(props: AppSiderProps & RouteComponentProps<void>) {
   return (
     <Layout.Sider
       className="app-sider"
-      collapsed={!props.viewSider}
+      collapsed={!props.viewSider && !responsive}
       onCollapse={onCollapse}
       collapsedWidth={0}
       breakpoint="md"
