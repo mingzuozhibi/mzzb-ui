@@ -10,6 +10,7 @@
 /build
 *.css
 *.js
+!config-overrides.js
 
 # misc
 .DS_Store

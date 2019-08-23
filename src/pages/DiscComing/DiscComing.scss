@@ -1,0 +1,8 @@
+.DiscComing {
+  .just-update-in-6-hour {
+    color: red;
+  }
+  .just-update-in-12-hour:not(.just-update-in-6-hour) {
+    color: blue;
+  }
+}
