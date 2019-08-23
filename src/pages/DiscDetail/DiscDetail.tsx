@@ -7,7 +7,7 @@ import { useDocumentTitle } from '../../hooks/hooks'
 import { Outlink } from '../../comps/html'
 import { formatNumber } from '../../funcs/format'
 
-export interface Disc {
+interface Disc {
   id: number
   asin: string
   title: string
@@ -40,7 +40,7 @@ export function DiscDetail(props: Props & RouteComponentProps<{ id: string }>) {
 
   const {hasRole, match, history} = props
 
-  const [{error, data}, {loading}, {putForm}] = useData<Disc>(`/api/discs/${match.params.id}`)
+  const [{error, data}, {loading}, {doEdit}] = useData<Disc>(`/api/discs/${match.params.id}`)
 
   useDocumentTitle(data ? formatTitle(data) : '碟片信息载入中')
 
@@ -61,7 +61,7 @@ export function DiscDetail(props: Props & RouteComponentProps<{ id: string }>) {
       Modal.warning({title: '请检查输入项', content: `你输入的发售日期格式不正确，应该为：yyyy-MM-dd`})
       return
     }
-    putForm(`/api/discs2/${data!.id}`, form)
+    doEdit(`/api/discs2/${data!.id}`, form)
   }
 
   return (

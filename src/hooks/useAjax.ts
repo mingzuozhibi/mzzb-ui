@@ -1,21 +1,27 @@
 import { useState } from 'react'
 import request from '../funcs/request'
-import { Modal } from 'antd'
+import { message, Modal } from 'antd'
 
-export function useAjax(method: 'post' | 'delete') {
+interface Options<T> {
+  body?: any
+  onSuccess: (data: T) => void
+}
+
+export function useAjax<T>(method: 'get' | 'put' | 'post' | 'delete') {
   const [loading, setLoading] = useState(false)
 
-  function sendAjax(url: string, form: any, onSuccess: () => void) {
+  function doAjax(url: string, title: string, {body, onSuccess}: Options<T>) {
     setLoading(true)
-    request(url, {method, body: JSON.stringify(form)}).then(result => {
+    request(url, {method, body: body && JSON.stringify(body)}).then(result => {
       setLoading(false)
       if (result.success) {
-        onSuccess()
+        message.success(`${title}成功`)
+        onSuccess(result.data)
       } else {
-        Modal.error({title: '提交保存失败', content: result.message})
+        Modal.error({title: `${title}失败`, content: result.message})
       }
     })
   }
 
-  return {loading, sendAjax}
+  return [loading, doAjax] as [boolean, (url: string, title: string, options: Options<T>) => void]
 }

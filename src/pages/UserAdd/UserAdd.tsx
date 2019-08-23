@@ -1,6 +1,6 @@
 import React from 'react'
 import { RouteComponentProps } from 'react-router-dom'
-import { Button, Icon, Input, message, Modal, PageHeader } from 'antd'
+import { Button, Icon, Input, Modal, PageHeader } from 'antd'
 import { useAjax } from '../../hooks/useAjax'
 import { md5Password } from '../../funcs/manager'
 
@@ -11,7 +11,7 @@ interface Form {
 
 export default function UserAdd({history}: RouteComponentProps<void>) {
 
-  const {loading, sendAjax} = useAjax('post')
+  const [loading, doAdd] = useAjax('post')
 
   const form: Form = {}
 
@@ -28,9 +28,10 @@ export default function UserAdd({history}: RouteComponentProps<void>) {
 
     form.password = md5Password(form.username, form.password)
 
-    sendAjax('/api/users', form, () => {
-      message.success('添加用户成功')
-      history.push('/users')
+    doAdd('/api/users', '添加用户', {
+      body: form, onSuccess() {
+        history.goBack()
+      }
     })
   }
 

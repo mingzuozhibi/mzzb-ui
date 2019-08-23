@@ -15,7 +15,7 @@ const form: Form = {}
 
 export default function UserDetail({match}: RouteComponentProps<{ id: string }>) {
 
-  const [{error, data}, {loading}, {putForm}] = useData<User>(`/api/users/${match.params.id}`)
+  const [{error, data}, {loading}, {doEdit}] = useData<User>(`/api/users/${match.params.id}`)
 
   function submitForm() {
     if (!form.username) {
@@ -27,7 +27,7 @@ export default function UserDetail({match}: RouteComponentProps<{ id: string }>)
       form.password = md5Password(form.username, form.password)
     }
 
-    putForm(`/api/users/${data!.id}`, form)
+    doEdit(`/api/users/${data!.id}`, form)
   }
 
   if (data) {

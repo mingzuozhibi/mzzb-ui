@@ -23,7 +23,7 @@ export function DiscGroupDetail(props: Props & RouteComponentProps<{ key: string
 
   const {hasAdminRole, match, history} = props
 
-  const [{error, data}, {loading}, {putForm}] = useData<DiscGroup>(`/api/sakuras/key/${match.params.key}`)
+  const [{error, data}, {loading, refresh}, {doEdit}] = useData<DiscGroup>(`/api/sakuras/key/${match.params.key}`)
 
   const form: Form = {}
 
@@ -34,7 +34,7 @@ export function DiscGroupDetail(props: Props & RouteComponentProps<{ key: string
     form.viewType = data.viewType
   }
 
-  function submitForm() {
+  function editData() {
     if (!form.key) {
       Modal.warning({title: '请检查输入项', content: `你必须输入列表索引`})
       return
@@ -45,15 +45,13 @@ export function DiscGroupDetail(props: Props & RouteComponentProps<{ key: string
       return
     }
 
-    putForm(`/api/sakuras/${data!.id}`, form)
+    doEdit(`/api/sakuras/${data!.id}`, form)
   }
 
-  const {loading: deleting, sendAjax} = useAjax('delete')
+  const [deleting, doDelete] = useAjax('delete')
 
   function deleteThis() {
-    sendAjax(`/api/sakuras/${data!.id}`, {}, () => {
-      Modal.success({title: '删除列表成功'})
-    })
+    doDelete(`/api/sakuras/${data!.id}`, '删除列表', {onSuccess: refresh})
   }
 
   return (
@@ -92,7 +90,7 @@ export function DiscGroupDetail(props: Props & RouteComponentProps<{ key: string
             <Checkbox defaultChecked={form.enabled} onChange={e => form.enabled = e.target.checked}>启用</Checkbox>
           </div>
           <div className="input-wrapper">
-            <Button type="primary" loading={loading} onClick={submitForm}>提交修改</Button>
+            <Button type="primary" loading={loading} onClick={editData}>提交修改</Button>
             {hasAdminRole && (
               <Popconfirm
                 title="你确定要删除这个列表吗？"

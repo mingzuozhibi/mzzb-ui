@@ -1,6 +1,6 @@
 import React from 'react'
 import { RouteComponentProps } from 'react-router-dom'
-import { Button, Icon, Input, message, Modal, Radio } from 'antd'
+import { Button, Icon, Input, Modal, Radio } from 'antd'
 import { useAjax } from '../../hooks/useAjax'
 import { viewTypes } from '../DiscGroups/DiscGroups'
 
@@ -12,11 +12,11 @@ interface Form {
 
 export default function DiscGroupAdd({history}: RouteComponentProps<void>) {
 
-  const {loading, sendAjax} = useAjax('post')
+  const [loading, doAddList] = useAjax('post')
 
   const form: Form = {}
 
-  function saveModel() {
+  function addList() {
     if (!form.key) {
       Modal.warning({title: '请检查输入项', content: `列表索引必须输入`})
       return
@@ -32,9 +32,10 @@ export default function DiscGroupAdd({history}: RouteComponentProps<void>) {
       return
     }
 
-    sendAjax('/api/sakuras', form, () => {
-      message.success('添加列表成功')
-      history.push('/disc_groups')
+    doAddList('/api/sakuras', '添加列表', {
+      body: form, onSuccess() {
+        history.push('/disc_groups')
+      }
     })
   }
 
@@ -65,7 +66,7 @@ export default function DiscGroupAdd({history}: RouteComponentProps<void>) {
         />
       </div>
       <div className="input-wrapper">
-        <Button type="primary" loading={loading} onClick={saveModel}>提交保存</Button>
+        <Button type="primary" loading={loading} onClick={addList}>提交保存</Button>
       </div>
     </div>
   )

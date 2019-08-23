@@ -131,7 +131,7 @@ function formatEdit(t: DiscGroup) {
 }
 
 function formatItem(t: DiscGroup) {
-  return <Link to={``}><Icon type="unordered-list"/></Link>
+  return <Link to={`/disc_groups/${t.key}/discs`}><Icon type="unordered-list"/></Link>
 }
 
 const viewTpyes = ['SakuraList', 'PublicList', 'PrivateList']

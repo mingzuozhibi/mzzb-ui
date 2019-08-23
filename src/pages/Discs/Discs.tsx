@@ -142,7 +142,7 @@ function formatRank(disc: Disc) {
   return <Link to={`/discs/${disc.id}/records`}>{`${thisRank}位/${prevRank}位`}</Link>
 }
 
-function formatTitle(disc: Disc) {
+export function formatTitle(disc: Disc) {
   return <Link to={`/discs/${disc.id}`}>{titleString(disc)}</Link>
 }
 
@@ -167,11 +167,11 @@ function createComparePt(apply: (disc: Disc) => number | undefined) {
   return safeCompare<Disc, number>({apply, compare: (a, b) => b - a})
 }
 
-function compareSurp(a: Disc, b: Disc) {
+export function compareSurp(a: Disc, b: Disc) {
   return a.surplusDays - b.surplusDays
 }
 
-function compareTitle(a: Disc, b: Disc) {
+export function compareTitle(a: Disc, b: Disc) {
   return titleString(a).localeCompare(titleString(b))
 }
 
