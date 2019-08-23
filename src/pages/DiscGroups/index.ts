@@ -6,9 +6,9 @@ import { DiscGroups } from './DiscGroups'
 export default connect(mapState, mapMethod)(DiscGroups)
 
 function mapState(state: RootState) {
+  let hasRole = state.session.userRoles.includes('ROLE_BASIC')
   return {
-    hasRole: state.session.userRoles.includes('ROLE_BASIC'),
-    isAdminMode: state.admin.isAdminMode,
+    hasRole, isAdminMode: hasRole && state.admin.isAdminMode,
   }
 }
 

@@ -5,12 +5,13 @@ export interface AdminState {
 }
 
 const initState: AdminState = {
-  isAdminMode: false,
+  isAdminMode: localStorage['isAdminMode'] === 'true',
 }
 
 export const adminReducer = (state = initState, action: AnyAction) => {
   switch (action.type) {
     case 'setAdminMode':
+      localStorage['isAdminMode'] = action.isAdminMode
       return {...state, isAdminMode: action.isAdminMode}
     default:
       return state
