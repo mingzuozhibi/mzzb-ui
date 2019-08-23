@@ -1,13 +1,11 @@
 import React from 'react'
-import { Link, RouteComponentProps } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Alert, Button, Input, Modal, PageHeader, Radio } from 'antd'
-
-import { useData } from '../../hooks/useData'
 import { useDocumentTitle } from '../../hooks/hooks'
 import { Outlink } from '../../comps/html'
 import { formatNumber } from '../../funcs/format'
 
-interface Disc {
+export interface Disc {
   id: number
   asin: string
   title: string
@@ -33,14 +31,16 @@ interface Form {
 }
 
 interface Props {
+  data?: Disc
+  error?: string
+  loading: boolean
   hasRole: boolean
+  doEdit: (url: string, form: any) => void
 }
 
-export function DiscDetail(props: Props & RouteComponentProps<{ id: string }>) {
+export function DiscDetail(props: Props) {
 
-  const {hasRole, match} = props
-
-  const [{error, data}, {loading}, {doEdit}] = useData<Disc>(`/api/discs/${match.params.id}`)
+  const {error, data, loading, hasRole, doEdit} = props
 
   useDocumentTitle(data ? formatTitle(data) : '碟片信息载入中')
 

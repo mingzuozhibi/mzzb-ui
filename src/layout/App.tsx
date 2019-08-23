@@ -45,5 +45,5 @@ export default function App() {
 }
 
 function renderRoute(route: RouteInfo, index: number) {
-  return <Route key={index} path={route.path} exact={route.exact} component={lazy(route.loader)}/>
+  return <Route key={index} path={route.path} exact={route.exact !== false} component={lazy(route.loader)}/>
 }
