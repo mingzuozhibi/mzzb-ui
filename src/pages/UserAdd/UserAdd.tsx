@@ -1,5 +1,4 @@
 import React from 'react'
-import { RouteComponentProps } from 'react-router-dom'
 import { Button, Icon, Input, Modal, PageHeader } from 'antd'
 import { useAjax } from '../../hooks/useAjax'
 import { md5Password } from '../../funcs/manager'
@@ -9,7 +8,7 @@ interface Form {
   password?: string
 }
 
-export default function UserAdd({history}: RouteComponentProps<void>) {
+export default function UserAdd() {
 
   const [loading, doAdd] = useAjax('post')
 
@@ -30,14 +29,14 @@ export default function UserAdd({history}: RouteComponentProps<void>) {
 
     doAdd('/api/users', '添加用户', {
       body: form, onSuccess() {
-        history.goBack()
+        window.history.back()
       }
     })
   }
 
   return (
     <div className="UserAdd">
-      <PageHeader title="添加用户" onBack={() => history.goBack()}/>
+      <PageHeader title="添加用户" onBack={() => window.history.back()}/>
       <div className="input-wrapper">
         <Input
           prefix={<Icon type="user"/>}

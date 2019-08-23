@@ -1,6 +1,6 @@
 import React from 'react'
 import { RouteComponentProps } from 'react-router-dom'
-import { Alert } from 'antd'
+import { Alert, PageHeader } from 'antd'
 import { useData } from '../../hooks/useData'
 import { useDocumentTitle } from '../../hooks/hooks'
 import { Column, Table } from '../../comps/table/Table'
@@ -30,6 +30,7 @@ export default function DiscRecords({match}: RouteComponentProps<{ id: string }>
 
   return (
     <div className="DiscRecords">
+      <PageHeader title="碟片排名" onBack={() => window.history.back()}/>
       {error && (
         <Alert message={error} type="error"/>
       )}

@@ -1,6 +1,5 @@
 import React from 'react'
-import { RouteComponentProps } from 'react-router-dom'
-import { Button, Icon, Input, Modal, Radio } from 'antd'
+import { Button, Icon, Input, Modal, PageHeader, Radio } from 'antd'
 import { useAjax } from '../../hooks/useAjax'
 import { viewTypes } from '../DiscGroups/DiscGroups'
 
@@ -10,7 +9,7 @@ interface Form {
   viewType?: string
 }
 
-export default function DiscGroupAdd({history}: RouteComponentProps<void>) {
+export default function DiscGroupAdd() {
 
   const [loading, doAddList] = useAjax('post')
 
@@ -34,13 +33,14 @@ export default function DiscGroupAdd({history}: RouteComponentProps<void>) {
 
     doAddList('/api/sakuras', '添加列表', {
       body: form, onSuccess() {
-        history.push('/disc_groups')
+        window.history.back()
       }
     })
   }
 
   return (
     <div className="admin-sakura-save-content">
+      <PageHeader title="添加列表" onBack={() => window.history.back()}/>
       <div className="input-wrapper">
         <Input
           prefix={<Icon type="key"/>}

@@ -29,7 +29,7 @@ interface Props {
 
 export function DiscGroupItems(props: Props & RouteComponentProps<{ key: string }>) {
 
-  const {toAdds, pushToAdds, dropToAdds, fetchCount, setFetchCount, match, history} = props
+  const {toAdds, pushToAdds, dropToAdds, fetchCount, setFetchCount, match} = props
   const [{error, data}, , {modify}] = useData<Data>(`/api/sakuras/key/${match.params.key}/discs`)
   const [discSearching, doSearchDisc] = useAjax<Disc[]>('get')
   const [countSearching, doSearchCount] = useAjax<number>('get')
@@ -106,7 +106,7 @@ export function DiscGroupItems(props: Props & RouteComponentProps<{ key: string 
 
   return (
     <div className="DiscGroupItems">
-      <PageHeader title="增减碟片" onBack={() => history.goBack()}/>
+      <PageHeader title="增减碟片" onBack={() => window.history.back()}/>
       {error && (
         <Alert message={error} type="error"/>
       )}

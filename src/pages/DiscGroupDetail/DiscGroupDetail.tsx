@@ -21,7 +21,7 @@ export function DiscGroupDetail(props: Props & RouteComponentProps<{ key: string
 
   useDocumentTitle('列表信息')
 
-  const {hasAdminRole, match, history} = props
+  const {hasAdminRole, match} = props
 
   const [{error, data}, {loading, refresh}, {doEdit}] = useData<DiscGroup>(`/api/sakuras/key/${match.params.key}`)
 
@@ -56,7 +56,7 @@ export function DiscGroupDetail(props: Props & RouteComponentProps<{ key: string
 
   return (
     <div className="DiscGroupDtail">
-      <PageHeader title="列表信息" onBack={() => history.goBack()}/>
+      <PageHeader title="列表信息" onBack={() => window.history.back()}/>
       {error && (
         <Alert message={error} type="error"/>
       )}

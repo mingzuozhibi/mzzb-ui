@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Alert, Switch } from 'antd'
+import { Alert, Button, Divider, Icon } from 'antd'
 import classNames from 'classnames'
-import { State } from '../../hooks/useData'
 import { Column, Handler, Table } from '../../comps/table/Table'
 import { ClosableMessage } from '../../comps/antd'
 import { formatNumber, formatTimeout } from '../../funcs/format'
@@ -31,7 +30,8 @@ export interface Disc {
 }
 
 interface Props {
-  state: State<Data>
+  data?: Data
+  error?: string
   handler: Handler
 }
 
@@ -39,8 +39,9 @@ const cols = getColumns()
 
 const message = '点击复制按钮可进入复制模式，选中想要复制的碟片，然后再次点击复制即可将排名复制到剪贴板'
 
-export function Discs({state: {error, data}, handler}: Props) {
+export function Discs(props: Props) {
 
+  const {error, data, handler} = props
   const [pcMode, setPcMode] = useState(false)
 
   return (
@@ -51,16 +52,15 @@ export function Discs({state: {error, data}, handler}: Props) {
       )}
       {data && (
         <>
-          <div style={{padding: 8}}>
-            <Switch
-              checked={pcMode}
-              checkedChildren="智能隐藏列"
-              unCheckedChildren="显示所有列"
-              onChange={(checked) => setPcMode(checked)}
-            />
+          <div className="custom-header">
+            <Icon type="arrow-left" onClick={() => window.history.back()}/>
+            <Divider type="vertical"/>
             {data.modifyTime && (
-              <span style={{marginLeft: 8}}>更新于{formatTimeout(data.modifyTime)}前</span>
+              <span>更新于{formatTimeout(data.modifyTime)}前</span>
             )}
+            <Button onClick={() => setPcMode(!pcMode)}>
+              {pcMode ? '智能隐藏列' : '显示所有列'}
+            </Button>
           </div>
           <div className="pc-mode-warpper">
             <div className={classNames({'pc-mode': pcMode})}>

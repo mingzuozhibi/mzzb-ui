@@ -14,7 +14,7 @@ export default function DiscsOfDiscGroup({match}: RouteComponentProps<{ key: str
 
   return (
     <div className="DiscsSakura">
-      <Discs state={state} handler={handler}/>
+      <Discs error={state.error} data={state.data} handler={handler}/>
     </div>
   )
 }

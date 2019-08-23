@@ -28,9 +28,9 @@ export default function DiscComing({location, history}: RouteComponentProps<void
 
   function onPaginationChange(page: number, pageSize?: number) {
     if (pageSize === 20) {
-      history.push(`/new_discs?page=${page}`)
+      history.push(`/disc_coming?page=${page}`)
     } else {
-      history.push(`/new_discs?page=${page}&pageSize=${pageSize}`)
+      history.push(`/disc_coming?page=${page}&pageSize=${pageSize}`)
     }
   }
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { RouteComponentProps } from 'react-router-dom'
-import { Alert, Button, Checkbox, Icon, Input, Modal } from 'antd'
+import { Alert, Button, Checkbox, Icon, Input, Modal, PageHeader } from 'antd'
 import { useData } from '../../hooks/useData'
 import { md5Password } from '../../funcs/manager'
 import { User } from '../Users/Users'
@@ -38,6 +38,7 @@ export default function UserDetail({match}: RouteComponentProps<{ id: string }>)
 
   return (
     <div className="UserDetail">
+      <PageHeader title="用户信息" onBack={() => window.history.back()}/>
       {error && (
         <Alert message={error} type="error"/>
       )}

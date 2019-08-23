@@ -38,7 +38,7 @@ interface Props {
 
 export function DiscDetail(props: Props & RouteComponentProps<{ id: string }>) {
 
-  const {hasRole, match, history} = props
+  const {hasRole, match} = props
 
   const [{error, data}, {loading}, {doEdit}] = useData<Disc>(`/api/discs/${match.params.id}`)
 
@@ -66,7 +66,7 @@ export function DiscDetail(props: Props & RouteComponentProps<{ id: string }>) {
 
   return (
     <div className="DiscDetail">
-      <PageHeader title="碟片信息" onBack={() => history.goBack()}/>
+      <PageHeader title="碟片信息" onBack={() => window.history.back()}/>
       {error && (
         <Alert message={error} type="error"/>
       )}
