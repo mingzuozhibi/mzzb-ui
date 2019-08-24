@@ -1,33 +1,21 @@
 import React, { lazy, Suspense } from 'react'
+import { Redirect, Route, Switch } from 'react-router-dom'
 import { Layout, Spin } from 'antd'
+import { RouteInfo, routes } from '../routes'
 import './App.scss'
 
-import { Redirect, Route, Switch } from 'react-router-dom'
-import { RouteInfo, routes } from '../routes'
-
-function asyncLayout(loader: () => any) {
-  const AsyncLayout = lazy(loader)
-  return (
-    <Suspense fallback={<Spin delay={200}/>}>
-      <AsyncLayout/>
-    </Suspense>
-  )
-}
-
-const AsyncAppSider = asyncLayout(() => import('./app-sider'))
-
-const AsyncAppHeader = asyncLayout(() => import('./app-header'))
-
-const AsyncAppFooter = asyncLayout(() => import('./app-footer'))
+import AppSider from './app-sider'
+import AppHeader from './app-header'
+import AppFooter from './app-footer'
 
 export default function App() {
 
   return (
     <div className="app-root">
       <Layout>
-        {AsyncAppSider}
+        <AppSider/>
         <Layout>
-          {AsyncAppHeader}
+          <AppHeader/>
           <Layout.Content className="app-content">
             <Suspense fallback={<Spin delay={200}/>}>
               <Switch>
@@ -37,7 +25,7 @@ export default function App() {
               </Switch>
             </Suspense>
           </Layout.Content>
-          {AsyncAppFooter}
+          <AppFooter/>
         </Layout>
       </Layout>
     </div>

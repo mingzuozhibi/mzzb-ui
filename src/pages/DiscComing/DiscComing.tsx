@@ -53,7 +53,7 @@ function getColumns(): Column<DiscComing>[] {
   return [
     {
       key: 'id',
-      title: '#',
+      title: 'ID',
       format: (t) => t.id
     },
     {
@@ -77,7 +77,7 @@ function getColumns(): Column<DiscComing>[] {
     },
     {
       key: 'title',
-      title: '标题',
+      title: '碟片标题',
       format: (t) => <Outlink href={`http://www.amazon.co.jp/dp/${t.asin}`} title={t.title}/>
     },
   ]

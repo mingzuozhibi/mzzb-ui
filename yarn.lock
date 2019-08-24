@@ -1306,13 +1306,6 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-helmet@^5.0.9":
-  version "5.0.9"
-  resolved "https://registry.npm.taobao.org/@types/react-helmet/download/@types/react-helmet-5.0.9.tgz#60ab5accce74b168ca1d274671522f6b2cf2c98f"
-  integrity sha1-YKtazM50sWjKHSdGcVIvayzyyY8=
-  dependencies:
-    "@types/react" "*"
-
 "@types/react-redux@^7.1.2":
   version "7.1.2"
   resolved "https://registry.npm.taobao.org/@types/react-redux/download/@types/react-redux-7.1.2.tgz#02303b77d87e54f327c09507cf80ee3ca3063898"
@@ -4119,10 +4112,6 @@ execa@^1.0.0:
     p-finally "^1.0.0"
     signal-exit "^3.0.0"
     strip-eof "^1.0.0"
-
-exenv@^1.2.1:
-  version "1.2.2"
-  resolved "http://registry.npm.taobao.org/exenv/download/exenv-1.2.2.tgz#2ae78e85d9894158670b03d47bec1f03bd91bb9d"
 
 exit@^0.1.2:
   version "0.1.2"
@@ -9146,21 +9135,6 @@ react-error-overlay@^6.0.1:
   resolved "https://registry.npm.taobao.org/react-error-overlay/download/react-error-overlay-6.0.1.tgz#b8d3cf9bb991c02883225c48044cb3ee20413e0f"
   integrity sha1-uNPPm7mRwCiDIlxIBEyz7iBBPg8=
 
-react-fast-compare@^2.0.2:
-  version "2.0.4"
-  resolved "https://registry.npm.taobao.org/react-fast-compare/download/react-fast-compare-2.0.4.tgz#e84b4d455b0fec113e0402c329352715196f81f9"
-  integrity sha1-6EtNRVsP7BE+BALDKTUnFRlvgfk=
-
-react-helmet@^5.2.1:
-  version "5.2.1"
-  resolved "https://registry.npm.taobao.org/react-helmet/download/react-helmet-5.2.1.tgz#16a7192fdd09951f8e0fe22ffccbf9bb3e591ffa"
-  integrity sha1-FqcZL90JlR+OD+Iv/Mv5uz5ZH/o=
-  dependencies:
-    object-assign "^4.1.1"
-    prop-types "^15.5.4"
-    react-fast-compare "^2.0.2"
-    react-side-effect "^1.1.0"
-
 react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   version "16.9.0"
   resolved "https://registry.npm.taobao.org/react-is/download/react-is-16.9.0.tgz?cache=0&sync_timestamp=1565317930066&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Freact-is%2Fdownload%2Freact-is-16.9.0.tgz#21ca9561399aad0ff1a7701c01683e8ca981edcb"
@@ -9282,13 +9256,6 @@ react-scripts@^3.1.1:
     workbox-webpack-plugin "4.3.1"
   optionalDependencies:
     fsevents "2.0.7"
-
-react-side-effect@^1.1.0:
-  version "1.1.5"
-  resolved "http://registry.npm.taobao.org/react-side-effect/download/react-side-effect-1.1.5.tgz#f26059e50ed9c626d91d661b9f3c8bb38cd0ff2d"
-  dependencies:
-    exenv "^1.2.1"
-    shallowequal "^1.0.1"
 
 react-slick@~0.25.2:
   version "0.25.2"
@@ -11140,6 +11107,11 @@ wbuf@^1.7.3:
 webidl-conversions@^4.0.2:
   version "4.0.2"
   resolved "http://registry.npm.taobao.org/webidl-conversions/download/webidl-conversions-4.0.2.tgz#a855980b1f0b6b359ba1d5d9fb39ae941faa63ad"
+
+webpack-ant-icon-loader@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.npm.taobao.org/webpack-ant-icon-loader/download/webpack-ant-icon-loader-1.0.8.tgz#92ecfe6421066d27dee8d4cb0cf0630109283b6a"
+  integrity sha1-kuz+ZCEGbSfe6NTLDPBjAQkoO2o=
 
 webpack-dev-middleware@^3.5.1:
   version "3.7.0"
