@@ -17,18 +17,22 @@
     gud "^1.0.0"
     warning "^4.0.3"
 
-"@ant-design/icons-react@~2.0.1":
-  version "2.0.1"
-  resolved "https://registry.npm.taobao.org/@ant-design/icons-react/download/@ant-design/icons-react-2.0.1.tgz#17a2513571ab317aca2927e58cea25dd31e536fb"
-  integrity sha1-F6JRNXGrMXrKKSfljOol3THlNvs=
+"@ant-design/icons-svg@^4.0.0-alpha.0":
+  version "4.0.0-alpha.0"
+  resolved "https://registry.npm.taobao.org/@ant-design/icons-svg/download/@ant-design/icons-svg-4.0.0-alpha.0.tgz#c9e2607f463291a1fc73418969b7708cceceffb9"
+  integrity sha1-yeJgf0YykaH8c0GJabdwjM7O/7k=
+
+"@ant-design/icons@^4.0.0-alpha.7", "@ant-design/icons@^4.0.0-alpha.8":
+  version "4.0.0-alpha.8"
+  resolved "https://registry.npm.taobao.org/@ant-design/icons/download/@ant-design/icons-4.0.0-alpha.8.tgz#d6e7ccd93c7541b332fa8d834ce1663389ed92ac"
+  integrity sha1-1ufM2Tx1QbMy+o2DTOFmM4ntkqw=
   dependencies:
     "@ant-design/colors" "^3.1.0"
+    "@ant-design/icons-svg" "^4.0.0-alpha.0"
     babel-runtime "^6.26.0"
-
-"@ant-design/icons@~2.1.1":
-  version "2.1.1"
-  resolved "https://registry.npm.taobao.org/@ant-design/icons/download/@ant-design/icons-2.1.1.tgz#7b9c08dffd4f5d41db667d9dbe5e0107d0bd9a4a"
-  integrity sha1-e5wI3/1PXUHbZn2dvl4BB9C9mko=
+    classnames "^2.2.6"
+    insert-css "^2.0.0"
+    rc-util "^4.9.0"
 
 "@babel/code-frame@7.5.5", "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.5.5":
   version "7.5.5"
@@ -1736,14 +1740,14 @@ ansi-styles@^3.2.1:
   dependencies:
     color-convert "^1.9.0"
 
-antd@^3.22.0:
-  version "3.22.0"
-  resolved "https://registry.npm.taobao.org/antd/download/antd-3.22.0.tgz#07828fddd40db3516e92868b5e4689215c67a197"
-  integrity sha1-B4KP3dQNs1FukoaLXkaJIVxnoZc=
+antd@^4.0.0-alpha.2:
+  version "4.0.0-alpha.2"
+  resolved "https://registry.npm.taobao.org/antd/download/antd-4.0.0-alpha.2.tgz#3723f2dab9cf8610b7489162f46d1d689fdea604"
+  integrity sha1-NyPy2rnPhhC3SJFi9G0daJ/epgQ=
   dependencies:
     "@ant-design/create-react-context" "^0.2.4"
-    "@ant-design/icons" "~2.1.1"
-    "@ant-design/icons-react" "~2.0.1"
+    "@ant-design/icons" "^4.0.0-alpha.7"
+    "@ant-design/icons-svg" "^4.0.0-alpha.0"
     "@types/react-slick" "^0.23.4"
     array-tree-filter "^2.1.0"
     babel-runtime "6.x"
@@ -1751,6 +1755,7 @@ antd@^3.22.0:
     copy-to-clipboard "^3.2.0"
     css-animation "^1.5.0"
     dom-closest "^0.2.0"
+    dom-scroll-into-view "^1.2.1"
     enquire.js "^2.1.6"
     lodash "^4.17.13"
     moment "^2.24.0"
@@ -1766,9 +1771,10 @@ antd@^3.22.0:
     rc-drawer "~2.0.1"
     rc-dropdown "~2.4.1"
     rc-editor-mention "^1.1.13"
+    rc-field-form "^0.0.0-alpha.17"
     rc-form "^2.4.5"
     rc-input-number "~4.4.5"
-    rc-mentions "~0.4.0"
+    rc-mentions "~0.3.1"
     rc-menu "~7.4.23"
     rc-notification "~3.3.1"
     rc-pagination "~1.20.5"
@@ -1776,20 +1782,20 @@ antd@^3.22.0:
     rc-rate "~2.5.0"
     rc-select "~9.2.0"
     rc-slider "~8.6.11"
-    rc-steps "~3.5.0"
+    rc-steps "~3.4.1"
     rc-switch "~1.9.0"
     rc-table "~6.7.0"
     rc-tabs "~9.6.4"
     rc-time-picker "~3.7.1"
     rc-tooltip "~3.7.3"
-    rc-tree "~2.1.0"
+    rc-tree "~3.0.0-alpha.9"
     rc-tree-select "~2.9.1"
     rc-trigger "^2.6.2"
     rc-upload "~2.7.0"
-    rc-util "^4.10.0"
+    rc-util "^4.6.0"
     react-lazy-load "^3.0.13"
     react-lifecycles-compat "^3.0.4"
-    react-slick "~0.25.2"
+    react-slick "~0.24.0"
     resize-observer-polyfill "^1.5.1"
     shallowequal "^1.1.0"
     warning "~4.0.3"
@@ -1961,6 +1967,11 @@ async-limiter@~1.0.0:
   version "1.0.1"
   resolved "https://registry.npm.taobao.org/async-limiter/download/async-limiter-1.0.1.tgz#dd379e94f0db8310b08291f9d64c3209766617fd"
   integrity sha1-3TeelPDbgxCwgpH51kwyCXZmF/0=
+
+async-validator@^3.0.3:
+  version "3.0.4"
+  resolved "https://registry.npm.taobao.org/async-validator/download/async-validator-3.0.4.tgz#515c55bafee40b1366f477a79fe678753c8828e3"
+  integrity sha1-UVxVuv7kCxNm9Henn+Z4dTyIKOM=
 
 async-validator@~1.11.3:
   version "1.11.5"
@@ -5245,6 +5256,11 @@ inquirer@^6.4.1:
     string-width "^4.1.0"
     strip-ansi "^5.1.0"
     through "^2.3.6"
+
+insert-css@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npm.taobao.org/insert-css/download/insert-css-2.0.0.tgz#eb5d1097b7542f4c79ea3060d3aee07d053880f4"
+  integrity sha1-610Ql7dUL0x56jBg067gfQU4gPQ=
 
 internal-ip@^4.2.0:
   version "4.3.0"
@@ -8616,7 +8632,7 @@ rc-animate@2.x, rc-animate@^2.3.0:
     css-animation "^1.3.2"
     prop-types "15.x"
 
-rc-animate@^2.6.0, rc-animate@^2.8.2, rc-animate@^2.8.3:
+rc-animate@^2.6.0, rc-animate@^2.8.2, rc-animate@^2.8.3, rc-animate@^2.9.2:
   version "2.9.2"
   resolved "https://registry.npm.taobao.org/rc-animate/download/rc-animate-2.9.2.tgz#5964767805c886f1bdc7563d3935a74912a0b78f"
   integrity sha1-WWR2eAXIhvG9x1Y9OTWnSRKgt48=
@@ -8747,6 +8763,16 @@ rc-editor-mention@^1.1.13:
     rc-animate "^2.3.0"
     rc-editor-core "~0.8.3"
 
+rc-field-form@^0.0.0-alpha.17:
+  version "0.0.0-alpha.21"
+  resolved "https://registry.npm.taobao.org/rc-field-form/download/rc-field-form-0.0.0-alpha.21.tgz#df2a05dd448699885c3801015b124e0f5db33e0f"
+  integrity sha1-3yoF3USGmYhcOAEBWxJOD12zPg8=
+  dependencies:
+    async-validator "^3.0.3"
+    lodash "^4.17.4"
+    rc-util "^4.6.0"
+    warning "^4.0.3"
+
 rc-form@^2.4.5:
   version "2.4.8"
   resolved "https://registry.npm.taobao.org/rc-form/download/rc-form-2.4.8.tgz#79a1f124d4fa81dff2af2992e94aa3e58cad683c"
@@ -8779,12 +8805,13 @@ rc-input-number@~4.4.5:
     rc-util "^4.5.1"
     rmc-feedback "^2.0.0"
 
-rc-mentions@~0.4.0:
-  version "0.4.0"
-  resolved "https://registry.npm.taobao.org/rc-mentions/download/rc-mentions-0.4.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Frc-mentions%2Fdownload%2Frc-mentions-0.4.0.tgz#483552c088290dbcddd059a0846e9f207ecc3539"
-  integrity sha1-SDVSwIgpDbzd0FmghG6fIH7MNTk=
+rc-mentions@~0.3.1:
+  version "0.3.1"
+  resolved "https://registry.npm.taobao.org/rc-mentions/download/rc-mentions-0.3.1.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Frc-mentions%2Fdownload%2Frc-mentions-0.3.1.tgz#7c54f8fbd2e203c56ff4e0a0191ce4a2c9a88c86"
+  integrity sha1-fFT4+9LiA8Vv9OCgGRzkosmojIY=
   dependencies:
     "@ant-design/create-react-context" "^0.2.4"
+    babel-runtime "^6.23.0"
     classnames "^2.2.6"
     rc-menu "^7.4.22"
     rc-trigger "^2.6.2"
@@ -8878,10 +8905,10 @@ rc-slider@~8.6.11:
     shallowequal "^1.0.1"
     warning "^4.0.3"
 
-rc-steps@~3.5.0:
-  version "3.5.0"
-  resolved "https://registry.npm.taobao.org/rc-steps/download/rc-steps-3.5.0.tgz#36b2a7f1f49907b0d90363884b18623caf9fb600"
-  integrity sha1-NrKn8fSZB7DZA2OISxhiPK+ftgA=
+rc-steps@~3.4.1:
+  version "3.4.1"
+  resolved "https://registry.npm.taobao.org/rc-steps/download/rc-steps-3.4.1.tgz#7f7d127dd60f9fa92ece27c06035c9319c5cab8e"
+  integrity sha1-f30SfdYPn6kuzifAYDXJMZxcq44=
   dependencies:
     babel-runtime "^6.23.0"
     classnames "^2.2.3"
@@ -8988,16 +9015,16 @@ rc-tree@~2.0.0:
     react-lifecycles-compat "^3.0.4"
     warning "^3.0.0"
 
-rc-tree@~2.1.0:
-  version "2.1.2"
-  resolved "https://registry.npm.taobao.org/rc-tree/download/rc-tree-2.1.2.tgz#c70546cf1081e1c27bffa314a966e2e4d06b3f2b"
-  integrity sha1-xwVGzxCB4cJ7/6MUqWbi5NBrPys=
+rc-tree@~3.0.0-alpha.9:
+  version "3.0.0-alpha.15"
+  resolved "https://registry.npm.taobao.org/rc-tree/download/rc-tree-3.0.0-alpha.15.tgz#ffb662e46e510aa40e128cef00fa6a14964eef9a"
+  integrity sha1-/7Zi5G5RCqQOEozvAPpqFJZO75o=
   dependencies:
-    "@ant-design/create-react-context" "^0.2.4"
     classnames "2.x"
     prop-types "^15.5.8"
-    rc-animate "^2.6.0"
-    rc-util "^4.5.1"
+    rc-animate "^2.9.2"
+    rc-util "^4.9.0"
+    rc-virtual-list "^0.0.0-alpha.18"
     react-lifecycles-compat "^3.0.4"
     warning "^4.0.3"
 
@@ -9056,7 +9083,7 @@ rc-util@^4.0.4, rc-util@^4.1.0, rc-util@^4.1.1, rc-util@^4.3.0, rc-util@^4.4.0:
     prop-types "^15.5.10"
     shallowequal "^0.2.2"
 
-rc-util@^4.10.0, rc-util@^4.5.0, rc-util@^4.5.1, rc-util@^4.6.0, rc-util@^4.7.0, rc-util@^4.8.0, rc-util@^4.8.1:
+rc-util@^4.5.0, rc-util@^4.5.1, rc-util@^4.6.0, rc-util@^4.7.0, rc-util@^4.8.0, rc-util@^4.8.1:
   version "4.10.0"
   resolved "https://registry.npm.taobao.org/rc-util/download/rc-util-4.10.0.tgz#25da93c78f996a23998c76922f75d54387c9e9fc"
   integrity sha1-JdqTx4+ZaiOZjHaSL3XVQ4fJ6fw=
@@ -9067,6 +9094,25 @@ rc-util@^4.10.0, rc-util@^4.5.0, rc-util@^4.5.1, rc-util@^4.6.0, rc-util@^4.7.0,
     react-lifecycles-compat "^3.0.4"
     shallowequal "^0.2.2"
     warning "^4.0.3"
+
+rc-util@^4.9.0:
+  version "4.11.0"
+  resolved "https://registry.npm.taobao.org/rc-util/download/rc-util-4.11.0.tgz#cf437dcff74ca08a8565ae14f0368acb3a650796"
+  integrity sha1-z0N9z/dMoIqFZa4U8DaKyzplB5Y=
+  dependencies:
+    add-dom-event-listener "^1.1.0"
+    babel-runtime "6.x"
+    prop-types "^15.5.10"
+    react-lifecycles-compat "^3.0.4"
+    shallowequal "^0.2.2"
+
+rc-virtual-list@^0.0.0-alpha.18:
+  version "0.0.0-alpha.22"
+  resolved "https://registry.npm.taobao.org/rc-virtual-list/download/rc-virtual-list-0.0.0-alpha.22.tgz#6bd234de57253d9f79dbdfc09d11e5210e1283d9"
+  integrity sha1-a9I03lclPZ9529/AnRHlIQ4Sg9k=
+  dependencies:
+    classnames "^2.2.6"
+    rc-util "^4.8.0"
 
 rc@^1.2.7:
   version "1.2.8"
@@ -9267,10 +9313,10 @@ react-scripts@^3.1.1:
   optionalDependencies:
     fsevents "2.0.7"
 
-react-slick@~0.25.2:
-  version "0.25.2"
-  resolved "https://registry.npm.taobao.org/react-slick/download/react-slick-0.25.2.tgz#56331b67d47d8bcfe2dceb6acab1c8fd5bd1f6bc"
-  integrity sha1-VjMbZ9R9i8/i3OtqyrHI/VvR9rw=
+react-slick@~0.24.0:
+  version "0.24.0"
+  resolved "https://registry.npm.taobao.org/react-slick/download/react-slick-0.24.0.tgz#1a4e078a82de4e9458255d9ce26aa6f3b17b168b"
+  integrity sha1-Gk4HioLeTpRYJV2c4mqm87F7Fos=
   dependencies:
     classnames "^2.2.5"
     enquire.js "^2.1.6"
@@ -11146,11 +11192,6 @@ wbuf@^1.7.3:
 webidl-conversions@^4.0.2:
   version "4.0.2"
   resolved "http://registry.npm.taobao.org/webidl-conversions/download/webidl-conversions-4.0.2.tgz#a855980b1f0b6b359ba1d5d9fb39ae941faa63ad"
-
-webpack-ant-icon-loader@^1.0.8:
-  version "1.0.8"
-  resolved "https://registry.npm.taobao.org/webpack-ant-icon-loader/download/webpack-ant-icon-loader-1.0.8.tgz#92ecfe6421066d27dee8d4cb0cf0630109283b6a"
-  integrity sha1-kuz+ZCEGbSfe6NTLDPBjAQkoO2o=
 
 webpack-dev-middleware@^3.5.1:
   version "3.7.0"

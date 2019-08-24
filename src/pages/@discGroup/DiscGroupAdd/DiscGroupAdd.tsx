@@ -1,5 +1,6 @@
 import React from 'react'
-import { Button, Icon, Input, Modal, PageHeader, Radio } from 'antd'
+import { Button, Input, Modal, PageHeader, Radio } from 'antd'
+import { Key as KeyIcon, Tag as TagIcon } from '@ant-design/icons'
 import { useAjax } from '../../../hooks/useAjax'
 import { viewTypes } from '../discGroup'
 
@@ -43,7 +44,7 @@ export default function DiscGroupAdd() {
       <PageHeader title="添加列表" onBack={() => window.history.back()}/>
       <div className="input-wrapper">
         <Input
-          prefix={<Icon type="key"/>}
+          prefix={<KeyIcon/>}
           defaultValue={form.key}
           onChange={(e) => form.key = e.target.value}
           placeholder={`请输入列表索引`}
@@ -51,7 +52,7 @@ export default function DiscGroupAdd() {
       </div>
       <div className="input-wrapper">
         <Input
-          prefix={<Icon type="tag-o"/>}
+          prefix={<TagIcon/>}
           defaultValue={form.title}
           onChange={(e) => form.title = e.target.value}
           placeholder={`请输入列表标题`}

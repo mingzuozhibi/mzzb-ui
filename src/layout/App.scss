@@ -5,6 +5,14 @@ $style-background-color: #fff;
 
 .app-root {
 
+  .svg-icon {
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+  }
+
   .app-sider {
     background: $style-background-color;
 
@@ -19,7 +27,7 @@ $style-background-color: #fff;
       font-size: 14px;
       margin-right: 10px;
 
-      .icon-font {
+      .svg-icon {
         margin-right: 10px;
       }
     }

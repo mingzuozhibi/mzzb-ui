@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Layout, Menu } from 'antd'
 import { RouteComponentProps } from 'react-router-dom'
 import { MenuInfo, menuInfos } from '../../@menus'
-import { Icon } from '../../comps/@icon/Icon'
+import { WarpIcon } from '../../comps/@icon/WarpIcon'
 
 interface AppSiderProps {
   viewSider: boolean
@@ -36,33 +36,25 @@ export function AppSider(props: AppSiderProps & RouteComponentProps<void>) {
     }
   }
 
-  function renderLabel(text: string, icon?: string) {
-    if (icon) {
-      return <span><Icon className="sider-icon" type={icon}/>{text}</span>
-    } else {
-      return <span>{text}</span>
+  function renderLabel({iconType, iconNode, menuTitle}: MenuInfo) {
+    if (iconNode) {
+      return <span><WarpIcon className="sider-icon" iconNode={iconNode}/>{menuTitle}</span>
     }
+    if (iconType) {
+      return <span><WarpIcon className="sider-icon" iconType={iconType}/>{menuTitle}</span>
+    }
+    return <span>{menuTitle}</span>
   }
 
   function renderMenu(menuInfo: MenuInfo, userRoles: string[]): React.ReactNode {
-    if (menuInfo.role && !userRoles.some(role => role === menuInfo.role)) {
+    if (menuInfo.menuRole && !userRoles.some(role => role === menuInfo.menuRole)) {
       return null
     }
-    if (menuInfo.subMenus) {
-      return (
-        <Menu.SubMenu key={menuInfo.path} title={renderLabel(menuInfo.text, menuInfo.icon)}>
-          {menuInfo.subMenus.map(subRoute => renderMenu(subRoute, userRoles))}
-        </Menu.SubMenu>
-      )
-    } else {
-      return (
-        <Menu.Item key={menuInfo.path}>
-          <span onMouseDown={e => e.button === 1 && window.open(menuInfo.path)}>
-            {renderLabel(menuInfo.text, menuInfo.icon)}
-          </span>
-        </Menu.Item>
-      )
-    }
+    return (
+      <Menu.Item key={menuInfo.matchPath}>
+        <span onMouseDown={open(menuInfo)}>{renderLabel(menuInfo)}</span>
+      </Menu.Item>
+    )
   }
 
   return (
@@ -87,4 +79,8 @@ export function AppSider(props: AppSiderProps & RouteComponentProps<void>) {
       </Menu>
     </Layout.Sider>
   )
+}
+
+function open(menuInfo: MenuInfo) {
+  return (e: any) => e.button === 1 && window.open(menuInfo.matchPath)
 }

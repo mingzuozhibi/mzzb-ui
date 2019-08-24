@@ -1,15 +1,18 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Alert, Button, Divider, Icon } from 'antd'
 import classNames from 'classnames'
+import { Alert, Button, Divider } from 'antd'
+import { ArrowLeft } from '@ant-design/icons'
+
+import { Handler } from '../../../reducers/@domain'
 import { Column, Table } from '../../../comps/@table/Table'
+import { ClosableMessage } from '../../../comps/CustomMessage'
 import { formatNumber, formatTimeout } from '../../../funcs/format'
 import { isJustUpdated, isSlowUpdated } from '../../../funcs/domain'
 import { composeCompares, safeCompare } from '../../../funcs/compare'
+
 import { compareSurp, compareTitle, Disc, DiscList, titleString } from '../disc'
 import './Discs.scss'
-import { ClosableMessage } from '../../../comps/CustomMessage'
-import { Handler } from '../../../reducers/@domain'
 
 interface Props {
   data?: DiscList
@@ -35,7 +38,7 @@ export function Discs(props: Props) {
       {data && (
         <>
           <div className="custom-header">
-            <Icon type="arrow-left" onClick={() => window.history.back()}/>
+            <ArrowLeft onClick={() => window.history.back()}/>
             <Divider type="vertical"/>
             {data.modifyTime && (
               <span>更新于{formatTimeout(data.modifyTime)}前</span>

@@ -1,6 +1,7 @@
 import React from 'react'
 import { RouteComponentProps } from 'react-router-dom'
-import { Alert, Button, Checkbox, Icon, Input, Modal, PageHeader } from 'antd'
+import { Alert, Button, Checkbox, Input, Modal, PageHeader } from 'antd'
+import { Key as KeyIcon, User as UserIcon } from '@ant-design/icons'
 import { useData } from '../../../hooks/useData'
 import { md5Password } from '../../../funcs/manager'
 import { User } from '../user'
@@ -46,7 +47,7 @@ export default function UserDetail({match}: RouteComponentProps<{ id: string }>)
         <>
           <div className="input-wrapper">
             <Input
-              prefix={<Icon type="user"/>}
+              prefix={<UserIcon/>}
               defaultValue={form.username}
               onChange={e => form.username = e.target.value}
               placeholder={`请输入用户名称`}
@@ -55,7 +56,7 @@ export default function UserDetail({match}: RouteComponentProps<{ id: string }>)
           <div className="input-wrapper">
             <Input
               type="password"
-              prefix={<Icon type="key"/>}
+              prefix={<KeyIcon/>}
               onChange={e => form.password = e.target.value}
               placeholder={`如不需修改用户密码可留空`}
             />

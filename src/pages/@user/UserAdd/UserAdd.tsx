@@ -1,5 +1,6 @@
 import React from 'react'
-import { Button, Icon, Input, Modal, PageHeader } from 'antd'
+import { Button, Input, Modal, PageHeader } from 'antd'
+import { Key as KeyIcon, User as UserIcon } from '@ant-design/icons'
 import { useAjax } from '../../../hooks/useAjax'
 import { md5Password } from '../../../funcs/manager'
 
@@ -39,7 +40,7 @@ export default function UserAdd() {
       <PageHeader title="添加用户" onBack={() => window.history.back()}/>
       <div className="input-wrapper">
         <Input
-          prefix={<Icon type="user"/>}
+          prefix={<UserIcon/>}
           defaultValue={form.username}
           onChange={e => form.username = e.target.value}
           placeholder={`请输入用户名称`}
@@ -48,7 +49,7 @@ export default function UserAdd() {
       <div className="input-wrapper">
         <Input
           type="password"
-          prefix={<Icon type="key"/>}
+          prefix={<KeyIcon/>}
           defaultValue={form.password}
           onChange={e => form.password = e.target.value}
           placeholder={`请输入用户密码`}

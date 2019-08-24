@@ -1,15 +1,18 @@
 import React, { useRef } from 'react'
 import { Link, RouteComponentProps } from 'react-router-dom'
-import { Alert, Button, Icon, Input, Modal, PageHeader } from 'antd'
-import produce from 'immer'
+import { Alert, Button, Input, Modal, PageHeader } from 'antd'
+import { Delete as DeleteIcon, FileAdd as FileAddIcon } from '@ant-design/icons'
+
 import { useData } from '../../../hooks/useData'
 import { useAjax } from '../../../hooks/useAjax'
 import { Column, Table } from '../../../comps/@table/Table'
 import { formatTimeout } from '../../../funcs/format'
 import { composeCompares } from '../../../funcs/compare'
+
 import { compareSurp, compareTitle, Disc, titleString } from '../../@disc/disc'
 import { DiscGroup } from '../discGroup'
 import './DiscGroupItems.scss'
+import produce from 'immer'
 
 interface Data extends DiscGroup {
   discs: Disc[]
@@ -88,7 +91,7 @@ export function DiscGroupItems(props: Props & RouteComponentProps<{ key: string 
     return {
       key: 'command',
       title: '添加',
-      format: (t: Disc) => <Icon type="file-add" onClick={() => pushDisc(data!.id, t.id)}/>
+      format: (t: Disc) => <FileAddIcon onClick={() => pushDisc(data!.id, t.id)}/>
     }
   }
 
@@ -96,7 +99,7 @@ export function DiscGroupItems(props: Props & RouteComponentProps<{ key: string 
     return {
       key: 'command',
       title: '移除',
-      format: (t: Disc) => <Icon type="delete" onClick={() => dropDisc(data!.id, t.id)}/>
+      format: (t: Disc) => <DeleteIcon onClick={() => dropDisc(data!.id, t.id)}/>
     }
   }
 

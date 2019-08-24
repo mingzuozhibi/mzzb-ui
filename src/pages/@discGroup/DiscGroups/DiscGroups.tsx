@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link, RouteComponentProps } from 'react-router-dom'
-import { Alert, Button, Icon } from 'antd'
+import { Alert, Button } from 'antd'
+import { Edit as EditIcon, UnorderedList } from '@ant-design/icons'
 
 import { useData } from '../../../hooks/useData'
 import { useDocumentTitle } from '../../../hooks/hooks'
@@ -112,11 +113,11 @@ function formatLastUpdate(row: DiscGroup) {
 }
 
 function formatEdit(t: DiscGroup) {
-  return <Link to={`/disc_groups/${t.key}`}><Icon type="edit"/></Link>
+  return <Link to={`/disc_groups/${t.key}`}><EditIcon/></Link>
 }
 
 function formatItem(t: DiscGroup) {
-  return <Link to={`/disc_groups/${t.key}/discs`}><Icon type="unordered-list"/></Link>
+  return <Link to={`/disc_groups/${t.key}/discs`}><UnorderedList/></Link>
 }
 
 const viewTpyes = ['SakuraList', 'PublicList', 'PrivateList']

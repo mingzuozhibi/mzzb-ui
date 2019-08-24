@@ -1,6 +1,8 @@
 import React from 'react'
 import { RouteComponentProps } from 'react-router-dom'
-import { Alert, Button, Checkbox, Icon, Input, Modal, PageHeader, Popconfirm, Radio } from 'antd'
+import { Alert, Button, Checkbox, Input, Modal, PageHeader, Popconfirm, Radio } from 'antd'
+import { Key as KeyIcon, Tag as TagIcon } from '@ant-design/icons'
+
 import { useData } from '../../../hooks/useData'
 import { useAjax } from '../../../hooks/useAjax'
 import { useDocumentTitle } from '../../../hooks/hooks'
@@ -64,7 +66,7 @@ export function DiscGroupDetail(props: Props & RouteComponentProps<{ key: string
         <>
           <div className="input-wrapper">
             <Input
-              prefix={<Icon type="key"/>}
+              prefix={<KeyIcon/>}
               defaultValue={form.key}
               onChange={e => form.key = e.target.value}
               placeholder={`请输入列表索引`}
@@ -72,7 +74,7 @@ export function DiscGroupDetail(props: Props & RouteComponentProps<{ key: string
           </div>
           <div className="input-wrapper">
             <Input
-              prefix={<Icon type="tag-o"/>}
+              prefix={<TagIcon/>}
               defaultValue={form.title}
               onChange={e => form.title = e.target.value}
               placeholder={`请输入列表标题`}
