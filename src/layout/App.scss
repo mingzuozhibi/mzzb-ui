@@ -1,6 +1,17 @@
-@import "../global";
+$mobile-max-width: 600px;
+$sider-menu-close: 768px;
+$sider-menu-width: 200px;
+$style-background-color: #fff;
 
 .app-root {
+
+  .svg-icon {
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+  }
 
   .app-sider {
     background: $style-background-color;
@@ -15,7 +26,8 @@
     .sider-icon {
       font-size: 14px;
       margin-right: 10px;
-      .icon-font {
+
+      .svg-icon {
         margin-right: 10px;
       }
     }

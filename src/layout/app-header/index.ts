@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { RootState } from '../../reducers'
+import { RootState } from '../../@reducer'
 import { AppHeader } from './app-header'
 
 function mapStateToProps(state: RootState) {

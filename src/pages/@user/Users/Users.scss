@@ -1,0 +1,22 @@
+@import '../../function';
+
+.Users {
+  .table {
+    th,
+    td {
+      @include columnCenter();
+
+      &.id {
+        @include columnWidth(40px, 40px);
+      }
+
+      &.enabled {
+        @include columnWidth(45px, 40px);
+      }
+
+      &.command {
+        @include columnWidth(45px, 40px);
+      }
+    }
+  }
+}

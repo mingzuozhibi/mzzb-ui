@@ -10,8 +10,8 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import createSagaMiddleware from 'redux-saga'
 
 import App from './layout/App'
-import { sagas } from './sagas'
-import { createRootReducer } from './reducers'
+import { sagas } from './@sagas'
+import { createRootReducer } from './@reducer'
 
 const history = createBrowserHistory()
 const routerMid = routerMiddleware(history)

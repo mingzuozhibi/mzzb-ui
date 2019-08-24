@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { debounce } from 'lodash'
+import debounce from 'lodash.debounce'
 
 export function useDocumentTitle(title: string) {
   useEffect(() => {
