@@ -1,0 +1,85 @@
+@import '../../function';
+
+.Discs {
+  .custom-header {
+    padding: 4px;
+    font-size: 16px;
+
+    & > * {
+      margin: 4px;
+    }
+  }
+
+  .pc-mode-warpper {
+    overflow-x: auto;
+
+    .pc-mode {
+      min-width: 1200px;
+
+      table {
+        th, td {
+          display: table-cell !important;
+        }
+      }
+    }
+  }
+
+  .table {
+    table-layout: fixed;
+
+    td,
+    th {
+      &.idx {
+        @include columnCenter();
+        @include columnWidth(40px, 35px);
+        @include columnHide(400px);
+      }
+
+      &.rank {
+        @include columnWidth(130px, 115px);
+      }
+
+      &.addPt {
+        width: 75px;
+        @include columnHide(750px);
+      }
+
+      &.sumPt {
+        @include columnWidth(75px, 68px);
+        @include columnHide(500px);
+      }
+
+      &.gusPt {
+        width: 75px;
+        @include columnHide(675px);
+      }
+
+      &.surp {
+        @include columnWidth(65px, 55px);
+        @include columnHide(550px);
+      }
+    }
+
+    td {
+      &.rank {
+        word-break: keep-all;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        text-align: center;
+      }
+
+      &.addPt,
+      &.sumPt,
+      &.gusPt {
+        word-break: keep-all;
+        white-space: nowrap;
+        text-align: right;
+      }
+
+      &.surp {
+        text-align: right;
+      }
+    }
+  }
+}

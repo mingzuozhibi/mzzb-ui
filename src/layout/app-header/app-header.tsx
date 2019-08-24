@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Layout, Popconfirm } from 'antd'
-import { Icon } from '../../comps/icon/Icon'
-import { SessionState } from '../session'
+import { Icon } from '../../comps/@icon/Icon'
+import { SessionState } from '../../reducers/session'
 
 interface AppHeaderProps {
   session: SessionState

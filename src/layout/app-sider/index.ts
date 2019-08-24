@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { RootState } from '../../reducers'
+import { RootState } from '../../@reducer'
 import { AppSider } from './app-sider'
 import { withRouter } from 'react-router-dom'
 

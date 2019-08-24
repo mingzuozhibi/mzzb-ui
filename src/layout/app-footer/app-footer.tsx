@@ -1,6 +1,6 @@
 import React from 'react'
 import { Input, Layout, Modal } from 'antd'
-import { Icon } from '../../comps/icon/Icon'
+import { Icon } from '../../comps/@icon/Icon'
 
 interface FormLogin {
   username?: string

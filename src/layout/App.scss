@@ -1,4 +1,7 @@
-@import "../global";
+$mobile-max-width: 600px;
+$sider-menu-close: 768px;
+$sider-menu-width: 200px;
+$style-background-color: #fff;
 
 .app-root {
 
@@ -15,6 +18,7 @@
     .sider-icon {
       font-size: 14px;
       margin-right: 10px;
+
       .icon-font {
         margin-right: 10px;
       }

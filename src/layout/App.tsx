@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
 import { Layout, Spin } from 'antd'
-import { RouteInfo, routes } from '../routes'
+import { RouteInfo, routes } from '../@routes'
 import './App.scss'
 
 import AppSider from './app-sider'

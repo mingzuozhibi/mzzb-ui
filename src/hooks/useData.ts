@@ -1,15 +1,9 @@
 import { useEffect, useReducer, useState } from 'react'
 import { message, Modal } from 'antd'
-import { Handler } from '../comps/table/Table'
+import { Handler, Page } from '../reducers/@domain'
 import request from '../funcs/request'
 
-export interface Page {
-  pageSize: number
-  currentPage: number
-  totalElements: number
-}
-
-export interface State<T> {
+interface State<T> {
   data?: T
   page?: Page
   error?: string

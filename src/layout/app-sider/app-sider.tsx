@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { Layout, Menu } from 'antd'
 import { RouteComponentProps } from 'react-router-dom'
-import { MenuInfo, menuInfos } from '../../menus'
-import { Icon } from '../../comps/icon/Icon'
+import { MenuInfo, menuInfos } from '../../@menus'
+import { Icon } from '../../comps/@icon/Icon'
 
 interface AppSiderProps {
   viewSider: boolean
