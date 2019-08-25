@@ -59,8 +59,7 @@ function DiscDetail(props: Props) {
       Modal.warning({title: '请检查输入项', content: `你输入的发售日期格式不正确，应该为：yyyy-MM-dd`})
       return
     }
-    //TODO: /api/discs/{id}
-    doEdit(`/api/discs2/${data!.id}`, form)
+    doEdit(`/api/discs/${data!.id}`, form)
   }
 
   return (

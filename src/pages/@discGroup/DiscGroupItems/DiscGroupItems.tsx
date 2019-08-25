@@ -30,7 +30,7 @@ export function DiscGroupItems(props: Props & RouteComponentProps<{ key: string 
 
   const {toAdds, pushToAdds, dropToAdds, fetchCount, setFetchCount, match} = props
   const [{error, data}, , {modify}] = useData<Data>(`/api/sakuras/key/${match.params.key}/discs`)
-  const [discSearching, doSearchDisc] = useAjax<Disc[]>('get')
+  const [discSearching, doSearchDisc] = useAjax<Disc>('get')
   const [countSearching, doSearchCount] = useAjax<number>('get')
   const [, doPush] = useAjax<Disc>('post')
   const [, doDrop] = useAjax<Disc>('delete')
@@ -54,11 +54,8 @@ export function DiscGroupItems(props: Props & RouteComponentProps<{ key: string 
       return
     }
 
-    //TODO: /api/admin/searchDisc/{asin}
-    doSearchDisc(`/api/discs/search/${asin}`, '查询碟片', {
-      onSuccess(discs) {
-        discs.forEach(pushToAdds)
-      }
+    doSearchDisc(`/api/admin/searchDisc/${asin}`, '查询碟片', {
+      onSuccess: pushToAdds
     })
   }
 
@@ -84,9 +81,8 @@ export function DiscGroupItems(props: Props & RouteComponentProps<{ key: string 
     })
   }
 
-  //TODO: /api/admin/fetchCount
   function fetchActiveCount() {
-    doSearchCount('/api/discs/activeCount', '查询抓取中的碟片数量', {onSuccess: setFetchCount})
+    doSearchCount('/api/admin/fetchCount', '查询抓取中的碟片数量', {onSuccess: setFetchCount})
   }
 
   function getPushCommand() {
