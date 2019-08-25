@@ -13,7 +13,7 @@ const initState: AdminState = {
   ...JSON.parse(localStorage['adminState'] || '{}')
 }
 
-export const admin = (state = initState, action: AnyAction) => {
+export const adminReducer = (state = initState, action: AnyAction) => {
   switch (action.type) {
     case 'pushToAdds':
       return saveState({...state, toAdds: [action.disc, ...state.toAdds]})

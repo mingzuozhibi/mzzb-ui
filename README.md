@@ -1,6 +1,6 @@
 **项目说明**
 
-**mingzuozhibi/mzzb-ui** 是一个网站项目的前端模块，本项目是为方便[名作之壁吧][home]的吧友而创建的。本网站以名作之壁吧宗旨和愿景作为指引，在与贴吧功能不冲突的前提下，寻找自己的定位和发展方向。
+**mingzuozhibi/mzzb-ui** 是一个网站项目的前端模块，本项目是为方便[**名作之壁吧**][home]的吧友而创建的。本网站以名作之壁吧宗旨和愿景作为指引，在与贴吧功能不冲突的前提下，寻找自己的定位和发展方向。
 
 **名作之壁吧宗旨**
 
@@ -17,7 +17,6 @@
 ```bash
 $ git clone https://github.com/mingzuozhibi/mzzb-ui.git
 $ cd mzzi-ui
-# 1. Change package.json proxy = "https://mingzuozhibi.com"
-# 2. Or Configure your Nginx listen 5443 port with ssl and proxy_pass mzzb-server
+$ yarn
 $ yarn start
 ```
