@@ -1,9 +1,3 @@
-export interface DiscList {
-  title: string
-  discs: Disc[]
-  modifyTime?: number
-}
-
 export interface Disc {
   id: number
   asin: string
@@ -23,9 +17,9 @@ export function compareSurp(a: Disc, b: Disc) {
 }
 
 export function compareTitle(a: Disc, b: Disc) {
-  return titleString(a).localeCompare(titleString(b))
+  return discTitle(a).localeCompare(discTitle(b))
 }
 
-export function titleString(disc: Disc) {
+export function discTitle(disc: Disc) {
   return disc.titlePc || disc.title
 }

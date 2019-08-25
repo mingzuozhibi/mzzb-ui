@@ -11,11 +11,17 @@ import { formatNumber, formatTimeout } from '../../../funcs/format'
 import { isJustUpdated, isSlowUpdated } from '../../../funcs/domain'
 import { composeCompares, safeCompare } from '../../../funcs/compare'
 
-import { compareSurp, compareTitle, Disc, DiscList, titleString } from '../disc'
+import { compareSurp, compareTitle, Disc, discTitle } from '../disc'
 import './Discs.scss'
 
+export interface Data {
+  title: string
+  discs: Disc[]
+  modifyTime?: number
+}
+
 interface Props {
-  data?: DiscList
+  data?: Data
   error?: string
   handler: Handler
 }
@@ -62,7 +68,7 @@ export function Discs(props: Props) {
                     + ` 共${(disc.totalPt || 0)}pt`
                     + ` 预${(disc.guessPt || 0)}pt`
                     + ` 剩${disc.surplusDays}天`
-                    + ` [${titleString(disc)}]`
+                    + ` [${discTitle(disc)}]`
                 })}
               />
             </div>
@@ -128,7 +134,7 @@ function formatRank(disc: Disc) {
 }
 
 function formatTitle(disc: Disc) {
-  return <Link to={`/discs/${disc.id}`}>{titleString(disc)}</Link>
+  return <Link to={`/discs/${disc.id}`}>{discTitle(disc)}</Link>
 }
 
 function tdClassRank(disc: Disc) {

@@ -2,7 +2,7 @@ import React from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import { Alert, PageHeader } from 'antd'
 import { useData } from '../../../hooks/useData'
-import { useDocumentTitle } from '../../../hooks/hooks'
+import { useTitle } from '../../../hooks/hooks'
 import { Column, Table } from '../../../comps/@table/Table'
 import { formatNumber } from '../../../funcs/format'
 
@@ -26,7 +26,7 @@ export default function DiscRecords({match}: RouteComponentProps<{ id: string }>
 
   const [{error, data}] = useData<Data>(`/api/discs/${match.params.id}/records`)
 
-  useDocumentTitle(data ? `所有排名：${formatTitle(data)}` : '排名载入中')
+  useTitle(data ? `所有排名：${formatTitle(data)}` : '排名载入中')
 
   return (
     <div className="DiscRecords">

@@ -9,7 +9,7 @@ import { Column, Table } from '../../../comps/@table/Table'
 import { formatTimeout } from '../../../funcs/format'
 import { composeCompares } from '../../../funcs/compare'
 
-import { compareSurp, compareTitle, Disc, titleString } from '../../@disc/disc'
+import { compareSurp, compareTitle, Disc, discTitle } from '../../@disc/disc'
 import { DiscGroup } from '../discGroup'
 import './DiscGroupItems.scss'
 import produce from 'immer'
@@ -54,6 +54,7 @@ export function DiscGroupItems(props: Props & RouteComponentProps<{ key: string 
       return
     }
 
+    //TODO: /api/admin/searchDisc/{asin}
     doSearchDisc(`/api/discs/search/${asin}`, '查询碟片', {
       onSuccess(discs) {
         discs.forEach(pushToAdds)
@@ -83,6 +84,7 @@ export function DiscGroupItems(props: Props & RouteComponentProps<{ key: string 
     })
   }
 
+  //TODO: /api/admin/fetchCount
   function fetchActiveCount() {
     doSearchCount('/api/discs/activeCount', '查询抓取中的碟片数量', {onSuccess: setFetchCount})
   }
@@ -167,5 +169,5 @@ function getColumns(extraColumn: Column<Disc>): Column<Disc>[] {
 }
 
 function formatTitle(disc: Disc) {
-  return <Link to={`/discs/${disc.id}`}>{titleString(disc)}</Link>
+  return <Link to={`/discs/${disc.id}`}>{discTitle(disc)}</Link>
 }

@@ -4,7 +4,7 @@ import { Alert, Button } from 'antd'
 import { Edit as EditIcon, UnorderedList } from '@ant-design/icons'
 
 import { useData } from '../../../hooks/useData'
-import { useDocumentTitle } from '../../../hooks/hooks'
+import { useTitle } from '../../../hooks/hooks'
 import { Column, Table } from '../../../comps/@table/Table'
 import { isJustUpdated } from '../../../funcs/domain'
 import { formatTimeout } from '../../../funcs/format'
@@ -26,7 +26,7 @@ export function DiscGroups(props: Props & RouteComponentProps<void>) {
 
   const {hasRole, isAdminMode, setAdminMode, history} = props
 
-  useDocumentTitle('推荐列表')
+  useTitle('推荐列表')
 
   const url = isAdminMode ? '/api/sakuras?public=false' : '/api/sakuras'
   const [{error, data}, handler] = useData<DiscGroup[]>(url)
