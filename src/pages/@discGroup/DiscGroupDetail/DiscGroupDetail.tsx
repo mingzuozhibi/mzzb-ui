@@ -5,7 +5,7 @@ import { Key as KeyIcon, Tag as TagIcon } from '@ant-design/icons'
 
 import { useData } from '../../../hooks/useData'
 import { useAjax } from '../../../hooks/useAjax'
-import { useDocumentTitle } from '../../../hooks/hooks'
+import { useTitle } from '../../../hooks/hooks'
 import { DiscGroup, viewTypes } from '../discGroup'
 
 interface Form {
@@ -21,7 +21,7 @@ interface Props {
 
 export function DiscGroupDetail(props: Props & RouteComponentProps<{ key: string }>) {
 
-  useDocumentTitle('列表信息')
+  useTitle('列表信息')
 
   const {hasAdminRole, match} = props
 

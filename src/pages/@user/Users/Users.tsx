@@ -4,18 +4,18 @@ import { Alert, Button } from 'antd'
 import { Edit as EditIcon } from '@ant-design/icons'
 
 import { useData } from '../../../hooks/useData'
-import { useClientWidth, useDocumentTitle } from '../../../hooks/hooks'
+import { useWidth, useTitle } from '../../../hooks/hooks'
 import { Column, Table } from '../../../comps/@table/Table'
 import { User } from '../user'
 import './Users.scss'
 
 export default function Users({history}: RouteComponentProps<void>) {
 
-  useDocumentTitle('用户管理')
+  useTitle('用户管理')
 
   const [{error, data}, handler] = useData<User[]>(`/api/users`)
 
-  const width = useClientWidth('.Users')
+  const width = useWidth('.Users')
   const cols = useMemo(() => getColumns(width), [width])
   const addUserButton = (
     <span className="table-buttons">

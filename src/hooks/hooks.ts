@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
 import debounce from 'lodash.debounce'
 
-export function useDocumentTitle(title: string) {
+export function useTitle(title: string) {
   useEffect(() => {
     document.title = `${title} - mingzuozhibi.com`
   }, [title])
 }
 
-export function useClientWidth(selector: string) {
+export function useWidth(selector: string) {
   const [width, setWidth] = useState(0)
 
   useEffect(() => {

@@ -1,27 +1,19 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Alert, Button, Input, Modal, PageHeader, Radio } from 'antd'
-import { useDocumentTitle } from '../../../hooks/hooks'
+import { RootState } from '../../../@reducer'
+import { useTitle } from '../../../hooks/hooks'
 import { Outlink } from '../../../comps/html'
 import { formatNumber } from '../../../funcs/format'
+import { Disc, discTitle } from '../disc'
 
-export interface Disc {
-  id: number
-  asin: string
-  title: string
-  titlePc?: string
-  todayPt?: number
-  totalPt?: number
-  guessPt?: number
+export interface Data extends Disc {
   nicoBook?: number
-  thisRank?: number
-  prevRank?: number
   discType: string
   createTime: number
-  updateTime?: number
   modifyTime?: number
   releaseDate: string
-  surplusDays: number
 }
 
 interface Form {
@@ -31,18 +23,24 @@ interface Form {
 }
 
 interface Props {
-  data?: Disc
+  data?: Data
   error?: string
   loading: boolean
   hasRole: boolean
   doEdit: (url: string, form: any) => void
 }
 
-export function DiscDetail(props: Props) {
+export default connect(function (state: RootState) {
+  return {
+    hasRole: state.session.userRoles.includes('ROLE_BASIC'),
+  }
+})(DiscDetail)
+
+function DiscDetail(props: Props) {
 
   const {error, data, loading, hasRole, doEdit} = props
 
-  useDocumentTitle(data ? formatTitle(data) : '碟片信息载入中')
+  useTitle(data ? formatTitle(data) : '碟片信息载入中')
 
   const form: Form = {}
 
@@ -61,7 +59,7 @@ export function DiscDetail(props: Props) {
       Modal.warning({title: '请检查输入项', content: `你输入的发售日期格式不正确，应该为：yyyy-MM-dd`})
       return
     }
-    doEdit(`/api/discs2/${data!.id}`, form)
+    doEdit(`/api/discs/${data!.id}`, form)
   }
 
   return (
@@ -230,8 +228,8 @@ function formatRank(rank?: number) {
   return `${(rank ? formatNumber(rank, '****') : '----')}位`
 }
 
-function formatTitle(t: Disc) {
-  return `碟片信息：${t.titlePc || t.title}`
+function formatTitle(t: Data) {
+  return `碟片信息：${discTitle(t)}`
 }
 
 function toAmazon(asin: string) {
