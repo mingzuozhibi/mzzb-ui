@@ -30,7 +30,7 @@ export default function UserAdd() {
 
     doAdd('/api/users', '添加用户', {
       body: form, onSuccess() {
-        window.history.back()
+        setTimeout(() => window.history.back(), 500)
       }
     })
   }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Input, Modal, PageHeader, Radio } from 'antd'
+import { Button, Checkbox, Input, Modal, PageHeader, Radio } from 'antd'
 import { Key as KeyIcon, Tag as TagIcon } from '@ant-design/icons'
 import { useAjax } from '../../../hooks/useAjax'
 import { viewTypes } from '../discGroup'
@@ -7,14 +7,18 @@ import { viewTypes } from '../discGroup'
 interface Form {
   key?: string
   title?: string
+  enabled?: boolean
   viewType?: string
 }
 
 export default function DiscGroupAdd() {
 
-  const [loading, doAddList] = useAjax('post')
+  const [loading, doAdd] = useAjax('post')
 
-  const form: Form = {}
+  const form: Form = {
+    enabled: true,
+    viewType: 'PublicList',
+  }
 
   function addList() {
     if (!form.key) {
@@ -27,14 +31,9 @@ export default function DiscGroupAdd() {
       return
     }
 
-    if (!form.viewType) {
-      Modal.warning({title: '请检查输入项', content: '你必须选择一个列表类型'})
-      return
-    }
-
-    doAddList('/api/sakuras', '添加列表', {
+    doAdd('/api/discGroups', '添加列表', {
       body: form, onSuccess() {
-        window.history.back()
+        setTimeout(() => window.history.back(), 500)
       }
     })
   }
@@ -64,6 +63,13 @@ export default function DiscGroupAdd() {
           options={viewTypes}
           defaultValue={form.viewType}
           onChange={e => form.viewType = e.target.value}
+        />
+      </div>
+      <div className="input-wrapper">
+        <Checkbox
+          defaultChecked={form.enabled}
+          onChange={e => form.enabled = e.target.checked}
+          children="启用"
         />
       </div>
       <div className="input-wrapper">

@@ -10,10 +10,10 @@ export interface AdminState {
 const initState: AdminState = {
   toAdds: [],
   isAdminMode: false,
-  ...JSON.parse(localStorage['adminState'] || '{}')
+  ...JSON.parse(sessionStorage['adminState'] || '{}')
 }
 
-export const admin = (state = initState, action: AnyAction) => {
+export const adminReducer = (state = initState, action: AnyAction) => {
   switch (action.type) {
     case 'pushToAdds':
       return saveState({...state, toAdds: [action.disc, ...state.toAdds]})
@@ -29,6 +29,6 @@ export const admin = (state = initState, action: AnyAction) => {
 }
 
 function saveState(state: AdminState) {
-  localStorage['adminState'] = JSON.stringify(state)
+  sessionStorage['adminState'] = JSON.stringify(state)
   return state
 }
