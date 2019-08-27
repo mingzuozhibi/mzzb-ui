@@ -26,10 +26,13 @@ interface Props {
   setFetchCount: (fetchCount: number) => void
 }
 
+const columns = 'id,asin,title,titlePc,surplusDays'
+
 export function DiscGroupItems(props: Props & RouteComponentProps<{ key: string }>) {
 
   const {toAdds, pushToAdds, dropToAdds, fetchCount, setFetchCount, match} = props
-  const [{error, data}, , {modify}] = useData<Data>(`/api/sakuras/key/${match.params.key}/discs`)
+  const findDiscsUrl = `/api/discGroups/key/${match.params.key}/discs?discColumns=${columns}`
+  const [{error, data}, , {modify}] = useData<Data>(findDiscsUrl)
   const [discSearching, doSearchDisc] = useAjax<Disc>('get')
   const [countSearching, doSearchCount] = useAjax<number>('get')
   const [, doPush] = useAjax<Disc>('post')
@@ -60,7 +63,7 @@ export function DiscGroupItems(props: Props & RouteComponentProps<{ key: string 
   }
 
   function pushDisc(discGroupId: number, discId: number) {
-    doPush(`/api/sakuras/${discGroupId}/discs/${discId}`, '添加碟片到列表', {
+    doPush(`/api/discGroups/${discGroupId}/discs/${discId}`, '添加碟片到列表', {
       onSuccess(disc: Disc) {
         dropToAdds(disc)
         modify(produce(data!, (draft: Data) => {
@@ -71,7 +74,7 @@ export function DiscGroupItems(props: Props & RouteComponentProps<{ key: string 
   }
 
   function dropDisc(discGroupId: number, discId: number) {
-    doDrop(`/api/sakuras/${discGroupId}/discs/${discId}`, '从列表移除碟片', {
+    doDrop(`/api/discGroups/${discGroupId}/discs/${discId}`, '从列表移除碟片', {
       onSuccess(disc: Disc) {
         pushToAdds(disc)
         modify(produce(data!, (draft: Data) => {

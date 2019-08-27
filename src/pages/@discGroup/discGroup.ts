@@ -4,7 +4,7 @@ export interface DiscGroup {
   title: string
   enabled: boolean
   viewType: string
-  discsSize: number
+  discCount: number
   modifyTime: number
 }
 

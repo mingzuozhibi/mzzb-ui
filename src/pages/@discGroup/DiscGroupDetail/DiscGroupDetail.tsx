@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import { Alert, Button, Checkbox, Input, Modal, PageHeader, Popconfirm, Radio } from 'antd'
 import { Key as KeyIcon, Tag as TagIcon } from '@ant-design/icons'
@@ -22,10 +22,10 @@ interface Props {
 export function DiscGroupDetail(props: Props & RouteComponentProps<{ key: string }>) {
 
   useTitle('列表信息')
-
   const {hasAdminRole, match} = props
 
-  const [{error, data}, {loading, refresh}, {doEdit}] = useData<DiscGroup>(`/api/sakuras/key/${match.params.key}`)
+  const [{error, data}, {loading}, {doEdit}] =
+    useData<DiscGroup>(`/api/discGroups/key/${match.params.key}`)
 
   const form: Form = {}
 
@@ -47,13 +47,18 @@ export function DiscGroupDetail(props: Props & RouteComponentProps<{ key: string
       return
     }
 
-    doEdit(`/api/sakuras/${data!.id}`, form)
+    doEdit(`/api/discGroups/${data!.id}`, form)
   }
 
   const [deleting, doDelete] = useAjax('delete')
+  const [deleted, setDeleted] = useState(false)
 
   function deleteThis() {
-    doDelete(`/api/sakuras/${data!.id}`, '删除列表', {onSuccess: refresh})
+    doDelete(`/api/discGroups/${data!.id}`, '删除列表', {
+      onSuccess() {
+        setDeleted(true)
+      }
+    })
   }
 
   return (
@@ -89,22 +94,32 @@ export function DiscGroupDetail(props: Props & RouteComponentProps<{ key: string
             />
           </div>
           <div className="input-wrapper">
-            <Checkbox defaultChecked={form.enabled} onChange={e => form.enabled = e.target.checked}>启用</Checkbox>
+            <Checkbox
+              defaultChecked={form.enabled}
+              onChange={e => form.enabled = e.target.checked}
+              children="启用"
+            />
           </div>
-          <div className="input-wrapper">
-            <Button type="primary" loading={loading} onClick={editData}>提交修改</Button>
-            {hasAdminRole && (
-              <Popconfirm
-                title="你确定要删除这个列表吗？"
-                placement="bottomRight"
-                okText="Yes"
-                cancelText="No"
-                onConfirm={deleteThis}
-              >
-                <Button type="danger" loading={deleting} style={{marginLeft: 20}}>删除列表</Button>
-              </Popconfirm>
-            )}
-          </div>
+          {deleted ? (
+            <div className="input-wrapper">
+              <Button type="primary" onClick={() => window.history.back()}>点击返回</Button>
+            </div>
+          ) : (
+            <div className="input-wrapper">
+              <Button type="primary" loading={loading} onClick={editData}>提交修改</Button>
+              {hasAdminRole && (
+                <Popconfirm
+                  title="你确定要删除这个列表吗？"
+                  placement="bottomRight"
+                  okText="Yes"
+                  cancelText="No"
+                  onConfirm={deleteThis}
+                >
+                  <Button type="danger" loading={deleting} style={{marginLeft: 20}}>删除列表</Button>
+                </Popconfirm>
+              )}
+            </div>
+          )}
         </>
       )}
     </div>

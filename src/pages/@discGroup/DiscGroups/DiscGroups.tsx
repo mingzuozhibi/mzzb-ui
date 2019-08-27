@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link, RouteComponentProps } from 'react-router-dom'
-import { Alert, Button } from 'antd'
 import { Edit as EditIcon, UnorderedList } from '@ant-design/icons'
+import { Alert, Button } from 'antd'
 
 import { useData } from '../../../hooks/useData'
 import { useTitle } from '../../../hooks/hooks'
@@ -28,7 +28,7 @@ export function DiscGroups(props: Props & RouteComponentProps<void>) {
 
   useTitle('推荐列表')
 
-  const url = isAdminMode ? '/api/sakuras?public=false' : '/api/sakuras'
+  const url = isAdminMode ? '/api/discGroups?hasPrivate=true' : '/api/discGroups'
   const [{error, data}, handler] = useData<DiscGroup[]>(url)
 
   const finalCols = cols.filter(col => isAdminMode || !['edit', 'item'].includes(col.key))
@@ -102,7 +102,7 @@ function formatLinkedTitle(row: DiscGroup) {
   return (
     <>
       <Link to={`/discs/disc_groups/${row.key}`}>{row.title}</Link>
-      <span style={{color, marginLeft: 8}}>({row.discsSize})</span>
+      <span style={{color, marginLeft: 8}}>({row.discCount})</span>
     </>
   )
 }
