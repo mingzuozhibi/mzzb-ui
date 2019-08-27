@@ -23,4 +23,4 @@ const Connected = connect(
   mapDispatchToProps
 )(AppSider)
 
-export default withRouter<any>(Connected)
+export default withRouter(Connected)
