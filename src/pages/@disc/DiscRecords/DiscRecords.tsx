@@ -47,8 +47,13 @@ export default function DiscRecords({match}: RouteComponentProps<{ id: string }>
         tooltip: {
           trigger: 'axis',
           formatter: '{c0}位 {c1}pt<br>{b}',
-          position: function (point, params, dom, rect, size) {
-            return [point[0], '10%'];
+          position: function (point, params, dom, rect, size: any) {
+            const mouseX = point[0] as number
+            const mouseY = point[1] as number
+            const contentW = size.contentSize[0]
+            const contentH = size.contentSize[1]
+            const isLeft = mouseX < size.viewSize[0] / 2
+            return {top: mouseY - contentH - 50, left: isLeft ? mouseX + 30 : mouseX - contentW - 30}
           }
         },
         grid: {
