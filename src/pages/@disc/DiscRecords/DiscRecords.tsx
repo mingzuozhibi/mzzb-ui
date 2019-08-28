@@ -46,7 +46,10 @@ export default function DiscRecords({match}: RouteComponentProps<{ id: string }>
         },
         tooltip: {
           trigger: 'axis',
-          formatter: '{c0}位 {c1}pt<br>{b}'
+          formatter: '{c0}位 {c1}pt<br>{b}',
+          position: function (point, params, dom, rect, size) {
+            return [point[0], '10%'];
+          }
         },
         grid: {
           left: 60,
