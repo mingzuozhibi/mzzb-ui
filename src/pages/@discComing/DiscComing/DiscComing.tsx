@@ -24,7 +24,7 @@ export default function DiscComing({location, history}: RouteComponentProps<void
 
   useTitle('上架追踪')
 
-  const [{data, page, error}, handler] = useData<DiscComing[]>(`/api/newdiscs${location.search}`)
+  const [{data, page, error}, handler] = useData<DiscComing[]>(`/api/discComing${location.search}`)
 
   function onPaginationChange(page: number, pageSize?: number) {
     if (pageSize === 20) {
