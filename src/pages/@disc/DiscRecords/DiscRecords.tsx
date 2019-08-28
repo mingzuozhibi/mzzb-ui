@@ -18,6 +18,7 @@ interface Record {
   date: string
   todayPt?: number
   totalPt?: number
+  guessPt?: number
   averRank?: number
 }
 
@@ -30,7 +31,8 @@ export default function DiscRecords({match}: RouteComponentProps<{ id: string }>
   useEffect(() => {
     if (data) {
       const dates = data.records.map(record => record.date)
-      const pts = data.records.map(record => record.totalPt)
+      const sumPts = data.records.map(record => record.totalPt)
+      const gesPts = data.records.map(record => record.guessPt)
       const ranks = data.records.map(record => {
         if (record.averRank) {
           return record.averRank < 10000 ? record.averRank : 10000
@@ -42,11 +44,11 @@ export default function DiscRecords({match}: RouteComponentProps<{ id: string }>
       const myChart = echarts.init(document.getElementById('echarts') as HTMLDivElement)
       myChart.setOption({
         legend: {
-          data: ['排位', '累积']
+          data: ['排位', '累积', '预测']
         },
         tooltip: {
           trigger: 'axis',
-          formatter: '{c0}位 {c1}pt<br>{b}',
+          formatter: '排名：{c0}位<br>累积：{c1}pt<br>预测：{c2}pt<br>{b}',
           position: function (point, params, dom, rect, size: any) {
             const mouseX = point[0] as number
             const mouseY = point[1] as number
@@ -75,7 +77,7 @@ export default function DiscRecords({match}: RouteComponentProps<{ id: string }>
             }
           },
           {
-            name: '累积 (pt)',
+            name: 'PT',
             type: 'value',
             splitLine: {
               show: false
@@ -92,7 +94,13 @@ export default function DiscRecords({match}: RouteComponentProps<{ id: string }>
             type: 'line',
             name: '累积',
             yAxisIndex: 1,
-            data: pts
+            data: sumPts
+          },
+          {
+            type: 'line',
+            name: '预测',
+            yAxisIndex: 1,
+            data: gesPts
           }
         ]
       })
@@ -137,6 +145,11 @@ function getColumns(): Column<Record>[] {
       key: 'totalPt',
       title: '累积PT',
       format: (t) => `${(t.totalPt || '----')} pt`
+    },
+    {
+      key: 'guessPt',
+      title: '预测PT',
+      format: (t) => `${(t.guessPt || '----')} pt`
     },
     {
       key: 'averRank',
