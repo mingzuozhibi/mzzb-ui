@@ -13,6 +13,7 @@ interface Data {
   title: string
   titlePc: string
   records: Record[]
+  releaseDate: string
 }
 
 interface Record {
@@ -44,6 +45,7 @@ export default function DiscRecords({match}: RouteComponentProps<{ id: string }>
         <Table
           rows={data.records}
           cols={cols}
+          trClass={trClass(data)}
           handler={handler}
           extraCaption={<span style={{marginLeft: 8}}>如果图表显示错误，请尝试刷新</span>}
         />
@@ -51,6 +53,10 @@ export default function DiscRecords({match}: RouteComponentProps<{ id: string }>
     </div>
   )
 
+}
+
+function trClass(data: Data) {
+  return (t: Record) => ({warning: t.date.localeCompare(data.releaseDate) >= 0})
 }
 
 function getColumns(): Column<Record>[] {
