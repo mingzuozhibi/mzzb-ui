@@ -32,7 +32,7 @@ export default function DiscRecords({match}: RouteComponentProps<{ id: string }>
     data && initEchart(data)
   }, [data])
 
-  const title = data ? `碟片历史数据：${data.titlePc || data.title}` : `数据载入中`
+  const title = data ? `碟片历史数据：${data.titlePc || data.title}` : `载入中`
 
   return (
     <div className="DiscRecords">

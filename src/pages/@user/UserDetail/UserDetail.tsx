@@ -1,10 +1,11 @@
 import React from 'react'
 import { RouteComponentProps } from 'react-router-dom'
-import { Alert, Button, Checkbox, Input, Modal, PageHeader } from 'antd'
+import { Button, Checkbox, Input, Modal } from 'antd'
 import { Key as KeyIcon, User as UserIcon } from '@ant-design/icons'
 import { useData } from '../../../hooks/useData'
 import { md5Password } from '../../../funcs/manager'
 import { User } from '../user'
+import { CustomHeader } from '../../../comps/CustomHeader'
 
 interface Form {
   username?: string
@@ -37,12 +38,11 @@ export default function UserDetail({match}: RouteComponentProps<{ id: string }>)
     form.password = ''
   }
 
+  const tilte = data ? `用户信息「${data.username}」` : '载入中'
+
   return (
     <div className="UserDetail">
-      <PageHeader title="用户信息" onBack={() => window.history.back()}/>
-      {error && (
-        <Alert message={error} type="error"/>
-      )}
+      <CustomHeader header="用户信息" title={tilte} error={error}/>
       {data && (
         <>
           <div className="input-wrapper">

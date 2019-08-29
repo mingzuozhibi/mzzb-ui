@@ -1,8 +1,9 @@
 import React from 'react'
-import { Button, Checkbox, Input, Modal, PageHeader, Radio } from 'antd'
+import { Button, Checkbox, Input, Modal, Radio } from 'antd'
 import { Key as KeyIcon, Tag as TagIcon } from '@ant-design/icons'
 import { useAjax } from '../../../hooks/useAjax'
 import { viewTypes } from '../discGroup'
+import { CustomHeader } from '../../../comps/CustomHeader'
 
 interface Form {
   key?: string
@@ -40,7 +41,7 @@ export default function DiscGroupAdd() {
 
   return (
     <div className="admin-sakura-save-content">
-      <PageHeader title="添加列表" onBack={() => window.history.back()}/>
+      <CustomHeader header="添加列表"/>
       <div className="input-wrapper">
         <Input
           prefix={<KeyIcon/>}

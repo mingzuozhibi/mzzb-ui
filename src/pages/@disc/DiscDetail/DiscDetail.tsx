@@ -1,10 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Alert, Button, Input, Modal, PageHeader, Radio } from 'antd'
+import { Button, Input, Modal, Radio } from 'antd'
 import { RootState } from '../../../@reducer'
-import { useTitle } from '../../../hooks/hooks'
 import { CustomLink } from '../../../comps/CustomLink'
+import { CustomHeader } from '../../../comps/CustomHeader'
 import { formatNumber } from '../../../funcs/format'
 import { Disc, discTitle } from '../disc'
 
@@ -40,8 +40,6 @@ function DiscDetail(props: Props) {
 
   const {error, data, loading, hasRole, doEdit} = props
 
-  useTitle(data ? formatTitle(data) : '碟片信息载入中')
-
   const form: Form = {}
 
   if (data) {
@@ -62,12 +60,11 @@ function DiscDetail(props: Props) {
     doEdit(`/api/discs/${data!.id}`, form)
   }
 
+  const title = data ? `碟片信息：${discTitle(data)}` : '载入中'
+
   return (
     <div className="DiscDetail">
-      <PageHeader title="碟片信息" onBack={() => window.history.back()}/>
-      {error && (
-        <Alert message={error} type="error"/>
-      )}
+      <CustomHeader header="碟片信息" title={title} error={error}/>
       {data && (
         <>
           <div className="input-wrapper">
@@ -226,10 +223,6 @@ function formatDate(time?: number) {
 
 function formatRank(rank?: number) {
   return `${(rank ? formatNumber(rank, '****') : '----')}位`
-}
-
-function formatTitle(t: Data) {
-  return `碟片信息：${discTitle(t)}`
 }
 
 function toAmazon(asin: string) {

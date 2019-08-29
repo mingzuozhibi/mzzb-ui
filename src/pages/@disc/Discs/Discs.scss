@@ -1,14 +1,6 @@
 @import '../../function';
 
 .Discs {
-  .custom-header {
-    padding: 4px;
-    font-size: 16px;
-
-    & > * {
-      margin: 4px;
-    }
-  }
 
   .pc-mode-warpper {
     overflow-x: auto;

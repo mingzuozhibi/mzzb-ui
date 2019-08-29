@@ -48,7 +48,7 @@ export function Table<T extends BaseRow>(props: Props<T>) {
 
   return (
     <div className="table-warpper">
-      {(title || copyFmt || handler) && renderCaption()}
+      {(title || copyFmt || handler || extraCaption) && renderCaption()}
       <table className="table table-bordered table-hover">
         <thead>
         <tr>
@@ -108,21 +108,23 @@ export function Table<T extends BaseRow>(props: Props<T>) {
     return (
       <div className="table-caption">
         {title && (
-          <span className="table-title">{title}</span>
+          <span className="caption-title">{title}</span>
         )}
         {copyFmt && (
-          <span className="table-buttons">
+          <span className="caption-copybtn">
             {!copyMode ? renderViewButtons() : renderCopyButtons()}
           </span>
         )}
         {handler && (
-          <span className="table-buttons">
+          <span className="caption-refresh">
             <Button.Group>
               <Button onClick={handler.refresh} loading={handler.loading}>刷新</Button>
             </Button.Group>
           </span>
         )}
-        {extraCaption}
+        {extraCaption && (
+          <span className="caption-extra">{extraCaption}</span>
+        )}
       </div>
     )
   }

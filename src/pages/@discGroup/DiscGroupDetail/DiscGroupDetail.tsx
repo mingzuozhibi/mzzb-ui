@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
-import { Alert, Button, Checkbox, Input, Modal, PageHeader, Popconfirm, Radio } from 'antd'
+import { Button, Checkbox, Input, Modal, Popconfirm, Radio } from 'antd'
 import { Key as KeyIcon, Tag as TagIcon } from '@ant-design/icons'
 
 import { useData } from '../../../hooks/useData'
 import { useAjax } from '../../../hooks/useAjax'
-import { useTitle } from '../../../hooks/hooks'
 import { DiscGroup, viewTypes } from '../discGroup'
+import { CustomHeader } from '../../../comps/CustomHeader'
 
 interface Form {
   key?: string
@@ -21,7 +21,6 @@ interface Props {
 
 export function DiscGroupDetail(props: Props & RouteComponentProps<{ key: string }>) {
 
-  useTitle('列表信息')
   const {hasAdminRole, match} = props
 
   const [{error, data}, {loading}, {doEdit}] =
@@ -61,12 +60,11 @@ export function DiscGroupDetail(props: Props & RouteComponentProps<{ key: string
     })
   }
 
+  const title = data ? `列表信息：${data.title}` : '载入中'
+
   return (
     <div className="DiscGroupDtail">
-      <PageHeader title="列表信息" onBack={() => window.history.back()}/>
-      {error && (
-        <Alert message={error} type="error"/>
-      )}
+      <CustomHeader header="列表信息" title={title} error={error}/>
       {data && (
         <>
           <div className="input-wrapper">

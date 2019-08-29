@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import classNames from 'classnames'
-import { Alert, Button, Divider } from 'antd'
-import { ArrowLeft } from '@ant-design/icons'
+import { Button } from 'antd'
 
 import { Handler } from '../../../reducers/@domain'
 import { Column, Table } from '../../../comps/@table/Table'
@@ -13,6 +12,7 @@ import { composeCompares, safeCompare } from '../../../funcs/compare'
 
 import { compareSurp, compareTitle, Disc, discTitle } from '../disc'
 import './Discs.scss'
+import { CustomHeader } from '../../../comps/CustomHeader'
 
 export interface Data {
   title: string
@@ -34,25 +34,25 @@ export function Discs(props: Props) {
 
   const {error, data, handler} = props
   const [pcMode, setPcMode] = useState(false)
+  const title = data ? data.title : '载入中'
+
+  const replace = data && (
+    <>
+      {data.modifyTime && (
+        <span>更新于{formatTimeout(data.modifyTime)}前</span>
+      )}
+      <Button onClick={() => setPcMode(!pcMode)}>
+        {pcMode ? '智能隐藏列' : '显示所有列'}
+      </Button>
+    </>
+  )
 
   return (
     <div className="Discs">
-      <CustomMessage unikey="copymode" message={message}/>
-      {error && (
-        <Alert message={error} type="error"/>
-      )}
+      <CustomHeader header="载入中" title={title} error={error} replace={replace}/>
       {data && (
         <>
-          <div className="custom-header">
-            <ArrowLeft onClick={() => window.history.back()}/>
-            <Divider type="vertical"/>
-            {data.modifyTime && (
-              <span>更新于{formatTimeout(data.modifyTime)}前</span>
-            )}
-            <Button onClick={() => setPcMode(!pcMode)}>
-              {pcMode ? '智能隐藏列' : '显示所有列'}
-            </Button>
-          </div>
+          <CustomMessage unikey="copymode" message={message}/>
           <div className="pc-mode-warpper">
             <div className={classNames({'pc-mode': pcMode})}>
               <Table

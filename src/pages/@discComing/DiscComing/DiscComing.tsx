@@ -22,8 +22,6 @@ const cols = getColumns()
 
 export default function DiscComing({location, history}: RouteComponentProps<void>) {
 
-  useTitle('上架追踪')
-
   const [{data, page, error}, handler] = useData<DiscComing[]>(`/api/discComing${location.search}`)
 
   function onPaginationChange(page: number, pageSize?: number) {
@@ -33,6 +31,8 @@ export default function DiscComing({location, history}: RouteComponentProps<void
       history.push(`/disc_coming?page=${page}&pageSize=${pageSize}`)
     }
   }
+
+  useTitle('上架追踪')
 
   return (
     <div className="DiscComing">
