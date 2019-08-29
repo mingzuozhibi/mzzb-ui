@@ -7,6 +7,7 @@ import { useData } from '../../../hooks/useData'
 import { formatNumber } from '../../../funcs/format'
 import { CustomHeader } from '../../../comps/CustomHeader'
 import { Column, Table } from '../../../comps/@table/Table'
+import { formatPt } from '../../@funcs'
 
 interface Data {
   title: string
@@ -67,17 +68,17 @@ function getColumns(): Column<Record>[] {
     {
       key: 'todayPt',
       title: '日增PT',
-      format: (t) => `${(t.todayPt || '----')} pt`
+      format: (t) => formatPt(t.todayPt)
     },
     {
       key: 'totalPt',
       title: '累积PT',
-      format: (t) => `${(t.totalPt || '----')} pt`
+      format: (t) => formatPt(t.totalPt)
     },
     {
       key: 'guessPt',
       title: '预测PT',
-      format: (t) => `${(t.guessPt || '----')} pt`
+      format: (t) => formatPt(t.guessPt)
     },
     {
       key: 'averRank',

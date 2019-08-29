@@ -11,7 +11,7 @@ import { CustomMessage } from '../../../comps/CustomMessage'
 import { formatNumber, formatTimeout } from '../../../funcs/format'
 import { isJustUpdated, isSlowUpdated } from '../../../funcs/domain'
 import { composeCompares, safeCompare } from '../../../funcs/compare'
-import { compareSurp, compareTitle, discTitle } from '../../@funcs'
+import { compareSurp, compareTitle, discTitle, formatPt } from '../../@funcs'
 import { Disc } from '../../@types'
 import './Discs.scss'
 
@@ -97,19 +97,19 @@ function getColumns(): Column<Disc>[] {
     {
       key: 'addPt',
       title: '日增',
-      format: (disc) => `${(disc.todayPt || '----')}点`,
+      format: (disc) => formatPt(disc.todayPt),
       compare: createComparePt(disc => disc.todayPt),
     },
     {
       key: 'sumPt',
       title: '累积',
-      format: (disc) => `${(disc.totalPt || '----')}点`,
+      format: (disc) => formatPt(disc.totalPt),
       compare: createComparePt(disc => disc.totalPt),
     },
     {
       key: 'gusPt',
       title: '预测',
-      format: (disc) => `${(disc.guessPt || '----')}点`,
+      format: (disc) => formatPt(disc.guessPt),
       compare: createComparePt(disc => disc.guessPt),
     },
     {
