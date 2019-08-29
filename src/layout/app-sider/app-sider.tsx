@@ -16,8 +16,9 @@ export function AppSider(props: AppSiderProps & RouteComponentProps<void>) {
 
   function onCollapse(hideSider: boolean, type: string) {
     if (type === 'responsive') {
+      setResponsive(!hideSider)
       setTimeout(() => {
-        setResponsive(!hideSider)
+        props.setViewSider(!hideSider)
       }, 200)
     }
   }
@@ -60,7 +61,7 @@ export function AppSider(props: AppSiderProps & RouteComponentProps<void>) {
   return (
     <Layout.Sider
       className="app-sider"
-      collapsed={!props.viewSider && !responsive}
+      collapsed={!props.viewSider}
       onCollapse={onCollapse}
       collapsedWidth={0}
       breakpoint="md"
