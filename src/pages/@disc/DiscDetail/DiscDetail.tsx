@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { Alert, Button, Input, Modal, PageHeader, Radio } from 'antd'
 import { RootState } from '../../../@reducer'
 import { useTitle } from '../../../hooks/hooks'
-import { Outlink } from '../../../comps/html'
+import { CustomLink } from '../../../comps/CustomLink'
 import { formatNumber } from '../../../funcs/format'
 import { Disc, discTitle } from '../disc'
 
@@ -233,7 +233,7 @@ function formatTitle(t: Data) {
 }
 
 function toAmazon(asin: string) {
-  return <Outlink href={`http://www.amazon.co.jp/dp/${asin}`} title="点击打开日亚页面"/>
+  return <CustomLink href={`http://www.amazon.co.jp/dp/${asin}`} title="点击打开日亚页面"/>
 }
 
 function toRecords(id: number) {

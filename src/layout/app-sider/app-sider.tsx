@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Layout, Menu } from 'antd'
 import { RouteComponentProps } from 'react-router-dom'
 import { MenuInfo, menuInfos } from '../../@menus'
-import { WarpIcon } from '../../comps/@icon/WarpIcon'
+import { CustomIcon } from '../../comps/CustomIcon'
 
 interface AppSiderProps {
   viewSider: boolean
@@ -38,10 +38,10 @@ export function AppSider(props: AppSiderProps & RouteComponentProps<void>) {
 
   function renderLabel({iconType, iconNode, menuTitle}: MenuInfo) {
     if (iconNode) {
-      return <span><WarpIcon className="sider-icon" iconNode={iconNode}/>{menuTitle}</span>
+      return <span><CustomIcon className="sider-icon" iconNode={iconNode}/>{menuTitle}</span>
     }
     if (iconType) {
-      return <span><WarpIcon className="sider-icon" iconType={iconType}/>{menuTitle}</span>
+      return <span><CustomIcon className="sider-icon" iconType={iconType}/>{menuTitle}</span>
     }
     return <span>{menuTitle}</span>
   }

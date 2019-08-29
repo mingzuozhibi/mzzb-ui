@@ -6,7 +6,7 @@ import { useTitle } from '../../../hooks/hooks'
 import { useData } from '../../../hooks/useData'
 import { Column, Table } from '../../../comps/@table/Table'
 import { CustomPagination } from '../../../comps/CustomPagination'
-import { Outlink } from '../../../comps/html'
+import { CustomLink } from '../../../comps/CustomLink'
 
 import './DiscComing.scss'
 
@@ -78,7 +78,7 @@ function getColumns(): Column<DiscComing>[] {
     {
       key: 'title',
       title: '碟片标题',
-      format: (t) => <Outlink href={`http://www.amazon.co.jp/dp/${t.asin}`} title={t.title}/>
+      format: (t) => <CustomLink href={`http://www.amazon.co.jp/dp/${t.asin}`} title={t.title}/>
     },
   ]
 }

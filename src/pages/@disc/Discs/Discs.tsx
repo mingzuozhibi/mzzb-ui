@@ -6,7 +6,7 @@ import { ArrowLeft } from '@ant-design/icons'
 
 import { Handler } from '../../../reducers/@domain'
 import { Column, Table } from '../../../comps/@table/Table'
-import { ClosableMessage } from '../../../comps/CustomMessage'
+import { CustomMessage } from '../../../comps/CustomMessage'
 import { formatNumber, formatTimeout } from '../../../funcs/format'
 import { isJustUpdated, isSlowUpdated } from '../../../funcs/domain'
 import { composeCompares, safeCompare } from '../../../funcs/compare'
@@ -37,7 +37,7 @@ export function Discs(props: Props) {
 
   return (
     <div className="Discs">
-      <ClosableMessage unikey="copymode" message={message}/>
+      <CustomMessage unikey="copymode" message={message}/>
       {error && (
         <Alert message={error} type="error"/>
       )}

@@ -1,10 +1,10 @@
 import React from 'react'
 
-interface OutlinkProps {
+interface Props {
   href: string
   title: string
 }
 
-export function Outlink({href, title}: OutlinkProps) {
+export function CustomLink({href, title}: Props) {
   return <a href={href} target="_blank" rel="noopener noreferrer">{title}</a>
 }

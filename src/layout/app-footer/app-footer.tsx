@@ -1,7 +1,7 @@
 import React from 'react'
 import { Input, Layout, Modal } from 'antd'
 import { Key as KeyIcon, User as UserIcon } from '@ant-design/icons'
-import { WarpIcon } from '../../comps/@icon/WarpIcon'
+import { CustomIcon } from '../../comps/CustomIcon'
 
 interface FormLogin {
   username?: string
@@ -57,7 +57,7 @@ export function AppFooter(props: AppFooterProps) {
       >
         <div style={{padding: 10}}>
           <Input
-            prefix={<WarpIcon iconNode={<UserIcon style={{color: 'rgba(0,0,0,.25)'}}/>}/>}
+            prefix={<CustomIcon iconNode={<UserIcon style={{color: 'rgba(0,0,0,.25)'}}/>}/>}
             autoFocus={true}
             onChange={e => formLogin.username = e.target.value}
             placeholder="请输入用户名称"
@@ -68,7 +68,7 @@ export function AppFooter(props: AppFooterProps) {
           <Input
             type="password"
             onChange={e => formLogin.password = e.target.value}
-            prefix={<WarpIcon iconNode={<KeyIcon style={{color: 'rgba(0,0,0,.25)'}}/>}/>}
+            prefix={<CustomIcon iconNode={<KeyIcon style={{color: 'rgba(0,0,0,.25)'}}/>}/>}
             placeholder="请输入用户密码"
           />
         </div>

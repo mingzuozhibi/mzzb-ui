@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Layout, Popconfirm } from 'antd'
 import { MenuFold, MenuUnfold } from '@ant-design/icons'
-import { WarpIcon } from '../../comps/@icon/WarpIcon'
+import { CustomIcon } from '../../comps/CustomIcon'
 import { SessionState } from '../../reducers/session'
 
 interface AppHeaderProps {
@@ -25,15 +25,15 @@ export function AppHeader(props: AppHeaderProps) {
 
   return (
     <Layout.Header className="app-header">
-      <WarpIcon iconNode={viewSider ? <MenuFold/> : <MenuUnfold/>}
-                className="header-icon" onClick={() => setViewSider(!viewSider)}/>
+      <CustomIcon iconNode={viewSider ? <MenuFold/> : <MenuUnfold/>}
+                  className="header-icon" onClick={() => setViewSider(!viewSider)}/>
       <span style={{marginLeft: 24}}>在线人数: {session.userCount}</span>
       {session.isLogged ? (
         <Popconfirm title="你确定要登出吗？" okText="OK" cancelText="Cancel" placement="bottomRight" onConfirm={sessionLogout}>
-          <WarpIcon iconType="icon-user" className="header-icon float-right"/>
+          <CustomIcon iconType="icon-user" className="header-icon float-right"/>
         </Popconfirm>
       ) : (
-        <WarpIcon iconType="icon-login" className="header-icon float-right" onClick={showLogin}/>
+        <CustomIcon iconType="icon-login" className="header-icon float-right" onClick={showLogin}/>
       )}
     </Layout.Header>
   )

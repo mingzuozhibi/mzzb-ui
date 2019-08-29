@@ -8,7 +8,7 @@ interface Props {
   className?: string
 }
 
-export const WarpIcon = ({iconNode, iconType, className, ...props}: Props) => {
+export const CustomIcon = ({iconNode, iconType, className, ...props}: Props) => {
   if (iconNode) {
     return (
       <span className={`icon-wrapper ${className}`}  {...props}>{iconNode}</span>
