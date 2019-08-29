@@ -1,8 +1,9 @@
 import React from 'react'
-import { Button, Input, Modal, PageHeader } from 'antd'
+import { Button, Input, Modal } from 'antd'
 import { Key as KeyIcon, User as UserIcon } from '@ant-design/icons'
 import { useAjax } from '../../../hooks/useAjax'
 import { md5Password } from '../../../funcs/manager'
+import { CustomHeader } from '../../../comps/CustomHeader'
 
 interface Form {
   username?: string
@@ -37,7 +38,7 @@ export default function UserAdd() {
 
   return (
     <div className="UserAdd">
-      <PageHeader title="添加用户" onBack={() => window.history.back()}/>
+      <CustomHeader header="添加用户"/>
       <div className="input-wrapper">
         <Input
           prefix={<UserIcon/>}

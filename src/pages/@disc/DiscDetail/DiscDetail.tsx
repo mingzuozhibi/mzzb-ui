@@ -1,20 +1,14 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Alert, Button, Input, Modal, PageHeader, Radio } from 'antd'
-import { RootState } from '../../../@reducer'
-import { useTitle } from '../../../hooks/hooks'
-import { Outlink } from '../../../comps/html'
+import { Button, Input, Modal, Radio } from 'antd'
+import { UseData } from '../../../hooks/useData'
 import { formatNumber } from '../../../funcs/format'
-import { Disc, discTitle } from '../disc'
+import { CustomLink } from '../../../comps/CustomLink'
+import { CustomHeader } from '../../../comps/CustomHeader'
+import { discTitle } from '../../@funcs'
+import { Disc } from '../../@types'
 
-export interface Data extends Disc {
-  nicoBook?: number
-  discType: string
-  createTime: number
-  modifyTime?: number
-  releaseDate: string
-}
+export type Data = Disc
 
 interface Form {
   titlePc?: string
@@ -23,25 +17,13 @@ interface Form {
 }
 
 interface Props {
-  data?: Data
-  error?: string
-  loading: boolean
-  hasRole: boolean
-  doEdit: (url: string, form: any) => void
+  useDate: UseData<Data>
+  isBasic: boolean
 }
 
-export default connect(function (state: RootState) {
-  return {
-    hasRole: state.session.userRoles.includes('ROLE_BASIC'),
-  }
-})(DiscDetail)
+export function DiscDetail({useDate, isBasic}: Props) {
 
-function DiscDetail(props: Props) {
-
-  const {error, data, loading, hasRole, doEdit} = props
-
-  useTitle(data ? formatTitle(data) : '碟片信息载入中')
-
+  const [{data, error}, {loading}, {doEdit}] = useDate
   const form: Form = {}
 
   if (data) {
@@ -62,12 +44,11 @@ function DiscDetail(props: Props) {
     doEdit(`/api/discs/${data!.id}`, form)
   }
 
+  const title = data ? `碟片信息：${discTitle(data)}` : '载入中'
+
   return (
     <div className="DiscDetail">
-      <PageHeader title="碟片信息" onBack={() => window.history.back()}/>
-      {error && (
-        <Alert message={error} type="error"/>
-      )}
+      <CustomHeader header="碟片信息" title={title} error={error}/>
       {data && (
         <>
           <div className="input-wrapper">
@@ -208,7 +189,7 @@ function DiscDetail(props: Props) {
               <Radio.Button value="Auto">自动</Radio.Button>
               <Radio.Button value="Other">未知</Radio.Button>
             </Radio.Group>
-            {hasRole && (
+            {isBasic && (
               <div style={{marginTop: 20}}>
                 <Button loading={loading} type="primary" onClick={submitForm}>提交修改</Button>
               </div>
@@ -228,12 +209,8 @@ function formatRank(rank?: number) {
   return `${(rank ? formatNumber(rank, '****') : '----')}位`
 }
 
-function formatTitle(t: Data) {
-  return `碟片信息：${discTitle(t)}`
-}
-
 function toAmazon(asin: string) {
-  return <Outlink href={`http://www.amazon.co.jp/dp/${asin}`} title="点击打开日亚页面"/>
+  return <CustomLink href={`http://www.amazon.co.jp/dp/${asin}`} title="点击打开日亚页面"/>
 }
 
 function toRecords(id: number) {

@@ -1,38 +1,34 @@
 import React, { useRef } from 'react'
 import { Link, RouteComponentProps } from 'react-router-dom'
-import { Alert, Button, Input, Modal, PageHeader } from 'antd'
-import { Delete as DeleteIcon, FileAdd as FileAddIcon } from '@ant-design/icons'
+import { Delete, FileAdd } from '@ant-design/icons'
+import { Button, Input, Modal } from 'antd'
+import produce from 'immer'
 
 import { useData } from '../../../hooks/useData'
 import { useAjax } from '../../../hooks/useAjax'
-import { Column, Table } from '../../../comps/@table/Table'
 import { formatTimeout } from '../../../funcs/format'
 import { composeCompares } from '../../../funcs/compare'
+import { CustomHeader } from '../../../comps/CustomHeader'
+import { Column, Table } from '../../../comps/@table/Table'
 
-import { compareSurp, compareTitle, Disc, discTitle } from '../../@disc/disc'
-import { DiscGroup } from '../discGroup'
+import { compareSurp, compareTitle, discTitle } from '../../@funcs'
+import { InjectToAdds, injectToAdds } from '../../@inject'
+import { Disc, DiscGroup } from '../../@types'
 import './DiscGroupItems.scss'
-import produce from 'immer'
 
 interface Data extends DiscGroup {
   discs: Disc[]
 }
 
-interface Props {
-  toAdds: Disc[]
-  pushToAdds: (disc: Disc) => void
-  dropToAdds: (disc: Disc) => void
-  fetchCount?: number
-  setFetchCount: (fetchCount: number) => void
-}
-
 const columns = 'id,asin,title,titlePc,surplusDays'
 
-export function DiscGroupItems(props: Props & RouteComponentProps<{ key: string }>) {
+export default injectToAdds(DiscGroupItems)
+
+function DiscGroupItems(props: InjectToAdds & RouteComponentProps<{ key: string }>) {
 
   const {toAdds, pushToAdds, dropToAdds, fetchCount, setFetchCount, match} = props
   const findDiscsUrl = `/api/discGroups/key/${match.params.key}/discs?discColumns=${columns}`
-  const [{error, data}, , {modify}] = useData<Data>(findDiscsUrl)
+  const [{error, data}, handler, {modify}] = useData<Data>(findDiscsUrl)
   const [discSearching, doSearchDisc] = useAjax<Disc>('get')
   const [countSearching, doSearchCount] = useAjax<number>('get')
   const [, doPush] = useAjax<Disc>('post')
@@ -92,7 +88,7 @@ export function DiscGroupItems(props: Props & RouteComponentProps<{ key: string 
     return {
       key: 'command',
       title: '添加',
-      format: (t: Disc) => <FileAddIcon onClick={() => pushDisc(data!.id, t.id)}/>
+      format: (t: Disc) => <FileAdd onClick={() => pushDisc(data!.id, t.id)}/>
     }
   }
 
@@ -100,16 +96,15 @@ export function DiscGroupItems(props: Props & RouteComponentProps<{ key: string 
     return {
       key: 'command',
       title: '移除',
-      format: (t: Disc) => <DeleteIcon onClick={() => dropDisc(data!.id, t.id)}/>
+      format: (t: Disc) => <Delete onClick={() => dropDisc(data!.id, t.id)}/>
     }
   }
 
+  const title = data ? `管理碟片：${data.title}` : '载入中'
+
   return (
     <div className="DiscGroupItems">
-      <PageHeader title="增减碟片" onBack={() => window.history.back()}/>
-      {error && (
-        <Alert message={error} type="error"/>
-      )}
+      <CustomHeader header="管理碟片" title={title} error={error} handler={handler}/>
       {data && (
         <>
           <div className="input-wrapper">
@@ -134,7 +129,7 @@ export function DiscGroupItems(props: Props & RouteComponentProps<{ key: string 
             rows={data.discs}
             cols={getColumns(getDropCommand())}
             title={data.title}
-            extraCaption={formatTimeout(data.modifyTime)}
+            extraCaption={`更新于${formatTimeout(data.modifyTime)}前`}
             defaultSort={composeCompares([compareSurp, compareTitle])}
           />
         </>

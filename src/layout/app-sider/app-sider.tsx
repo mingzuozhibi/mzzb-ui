@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Layout, Menu } from 'antd'
 import { RouteComponentProps } from 'react-router-dom'
 import { MenuInfo, menuInfos } from '../../@menus'
-import { WarpIcon } from '../../comps/@icon/WarpIcon'
+import { CustomIcon } from '../../comps/CustomIcon'
 
 interface AppSiderProps {
   viewSider: boolean
@@ -16,8 +16,9 @@ export function AppSider(props: AppSiderProps & RouteComponentProps<void>) {
 
   function onCollapse(hideSider: boolean, type: string) {
     if (type === 'responsive') {
+      setResponsive(!hideSider)
       setTimeout(() => {
-        setResponsive(!hideSider)
+        props.setViewSider(!hideSider)
       }, 200)
     }
   }
@@ -38,10 +39,10 @@ export function AppSider(props: AppSiderProps & RouteComponentProps<void>) {
 
   function renderLabel({iconType, iconNode, menuTitle}: MenuInfo) {
     if (iconNode) {
-      return <span><WarpIcon className="sider-icon" iconNode={iconNode}/>{menuTitle}</span>
+      return <span><CustomIcon className="sider-icon" iconNode={iconNode}/>{menuTitle}</span>
     }
     if (iconType) {
-      return <span><WarpIcon className="sider-icon" iconType={iconType}/>{menuTitle}</span>
+      return <span><CustomIcon className="sider-icon" iconType={iconType}/>{menuTitle}</span>
     }
     return <span>{menuTitle}</span>
   }
@@ -60,7 +61,7 @@ export function AppSider(props: AppSiderProps & RouteComponentProps<void>) {
   return (
     <Layout.Sider
       className="app-sider"
-      collapsed={!props.viewSider && !responsive}
+      collapsed={!props.viewSider}
       onCollapse={onCollapse}
       collapsedWidth={0}
       breakpoint="md"

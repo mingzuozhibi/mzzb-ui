@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
-import { Alert, Button, Checkbox, Input, Modal, PageHeader, Popconfirm, Radio } from 'antd'
 import { Key as KeyIcon, Tag as TagIcon } from '@ant-design/icons'
+import { Button, Checkbox, Input, Modal, Popconfirm, Radio } from 'antd'
 
 import { useData } from '../../../hooks/useData'
 import { useAjax } from '../../../hooks/useAjax'
-import { useTitle } from '../../../hooks/hooks'
-import { DiscGroup, viewTypes } from '../discGroup'
+import { CustomHeader } from '../../../comps/CustomHeader'
+import { InjectRole, injectRole } from '../../@inject'
+import { DiscGroup, viewTypes } from '../../@types'
 
 interface Form {
   key?: string
@@ -15,14 +16,11 @@ interface Form {
   viewType?: string
 }
 
-interface Props {
-  hasAdminRole: boolean
-}
+export default injectRole(DiscGroupDetail)
 
-export function DiscGroupDetail(props: Props & RouteComponentProps<{ key: string }>) {
+function DiscGroupDetail(props: InjectRole & RouteComponentProps<{ key: string }>) {
 
-  useTitle('列表信息')
-  const {hasAdminRole, match} = props
+  const {isAdmin, match} = props
 
   const [{error, data}, {loading}, {doEdit}] =
     useData<DiscGroup>(`/api/discGroups/key/${match.params.key}`)
@@ -61,12 +59,11 @@ export function DiscGroupDetail(props: Props & RouteComponentProps<{ key: string
     })
   }
 
+  const title = data ? `列表信息：${data.title}` : '载入中'
+
   return (
     <div className="DiscGroupDtail">
-      <PageHeader title="列表信息" onBack={() => window.history.back()}/>
-      {error && (
-        <Alert message={error} type="error"/>
-      )}
+      <CustomHeader header="列表信息" title={title} error={error}/>
       {data && (
         <>
           <div className="input-wrapper">
@@ -107,7 +104,7 @@ export function DiscGroupDetail(props: Props & RouteComponentProps<{ key: string
           ) : (
             <div className="input-wrapper">
               <Button type="primary" loading={loading} onClick={editData}>提交修改</Button>
-              {hasAdminRole && (
+              {isAdmin && (
                 <Popconfirm
                   title="你确定要删除这个列表吗？"
                   placement="bottomRight"

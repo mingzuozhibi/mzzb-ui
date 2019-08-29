@@ -10,45 +10,40 @@ import { isJustUpdated } from '../../../funcs/domain'
 import { formatTimeout } from '../../../funcs/format'
 import { composeCompares } from '../../../funcs/compare'
 
-import { DiscGroup } from '../discGroup'
+import { InjectAdminMode, injectAdminMode, InjectRole, injectRole } from '../../@inject'
+import { DiscGroup, viewTypes } from '../../@types'
 import './DiscGroups.scss'
 
-interface Props {
-  hasRole: boolean
-  isAdminMode: boolean
-  setAdminMode: (isAdminMode: boolean) => void
-}
+const adminCols = getColumns()
+const guestCols = adminCols.filter(col => !['edit', 'item'].includes(col.key))
 
-const cols = getColumns()
-const sort = compareDiscGroups()
+const defaultSort = compareDiscGroups()
 
-export function DiscGroups(props: Props & RouteComponentProps<void>) {
+export default injectRole(injectAdminMode(DiscGroups))
 
-  const {hasRole, isAdminMode, setAdminMode, history} = props
+function DiscGroups(props: InjectRole & InjectAdminMode & RouteComponentProps<void>) {
 
-  useTitle('推荐列表')
+  const {isBasic, isAdminMode, setAdminMode, history} = props
 
-  const url = isAdminMode ? '/api/discGroups?hasPrivate=true' : '/api/discGroups'
+  const showExtraButtons = isBasic
+  const showExtraColumns = isBasic && isAdminMode
+  const fetchPrivateData = isBasic && isAdminMode
+
+  const url = fetchPrivateData ? '/api/discGroups?hasPrivate=true' : '/api/discGroups'
   const [{error, data}, handler] = useData<DiscGroup[]>(url)
 
-  const finalCols = cols.filter(col => isAdminMode || !['edit', 'item'].includes(col.key))
-
-  const extraButtons = hasRole && (
-    <>
-      <span className="table-buttons">
-        {isAdminMode ? (
-          <Button.Group>
-            <Button onClick={() => setAdminMode(false)}>浏览模式</Button>
-            <Button onClick={() => history.push('/disc_groups/add')}>添加列表</Button>
-          </Button.Group>
-        ) : (
-          <Button.Group>
-            <Button onClick={() => setAdminMode(true)}>管理模式</Button>
-          </Button.Group>
-        )}
-      </span>
-    </>
+  const extraButtons = isAdminMode ? (
+    <Button.Group>
+      <Button onClick={() => setAdminMode(false)}>浏览模式</Button>
+      <Button onClick={() => history.push('/disc_groups/add')}>添加列表</Button>
+    </Button.Group>
+  ) : (
+    <Button.Group>
+      <Button onClick={() => setAdminMode(true)}>管理模式</Button>
+    </Button.Group>
   )
+
+  useTitle('推荐列表')
 
   return (
     <div className="DiscGroups">
@@ -56,8 +51,15 @@ export function DiscGroups(props: Props & RouteComponentProps<void>) {
         <Alert message={error} type="error"/>
       )}
       {data && (
-        <Table rows={data} cols={finalCols} title="推荐列表" handler={handler}
-               trClass={trClass} defaultSort={sort} extraCaption={extraButtons}/>
+        <Table
+          rows={data}
+          cols={showExtraColumns ? adminCols : guestCols}
+          title="推荐列表"
+          trClass={trClass}
+          handler={handler}
+          defaultSort={defaultSort}
+          extraCaption={showExtraButtons && extraButtons}
+        />
       )}
     </div>
   )
@@ -120,11 +122,10 @@ function formatItem(t: DiscGroup) {
   return <Link to={`/disc_groups/${t.key}/discs`}><UnorderedList/></Link>
 }
 
-const viewTpyes = ['SakuraList', 'PublicList', 'PrivateList']
-
 function compareDiscGroups() {
+  const sorts = viewTypes.map(e => e.value)
   return composeCompares<DiscGroup>([
-    (a, b) => viewTpyes.indexOf(a.viewType) - viewTpyes.indexOf(b.viewType),
+    (a, b) => sorts.indexOf(a.viewType) - sorts.indexOf(b.viewType),
     (a, b) => b.key.localeCompare(a.key),
   ])
 }

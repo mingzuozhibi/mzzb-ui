@@ -1,0 +1,9 @@
+@import '../../function';
+
+.DiscRecords {
+  .table {
+    th, td {
+      @include columnCenter();
+    }
+  }
+}
