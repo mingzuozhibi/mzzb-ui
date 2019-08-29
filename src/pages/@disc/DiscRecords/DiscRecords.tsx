@@ -89,8 +89,8 @@ function getColumns(): Column<Record>[] {
 }
 
 function formatRank(t: Record) {
-  const averRank = t.averRank ? formatNumber(t.averRank, '***,***') : '---,---'
-  return `${averRank}位`
+  const averRank = t.averRank ? formatNumber(t.averRank, '###,###') : '---'
+  return `${averRank} 位`
 }
 
 function initEchart(data?: Data) {
