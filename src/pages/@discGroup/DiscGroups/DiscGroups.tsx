@@ -10,27 +10,24 @@ import { isJustUpdated } from '../../../funcs/domain'
 import { formatTimeout } from '../../../funcs/format'
 import { composeCompares } from '../../../funcs/compare'
 
-import { DiscGroup } from '../discGroup'
+import { InjectAdminMode, injectAdminMode, InjectRole, injectRole } from '../../@inject'
+import { DiscGroup, viewTypes } from '../../@types'
 import './DiscGroups.scss'
-
-interface Props {
-  hasRole: boolean
-  isAdminMode: boolean
-  setAdminMode: (isAdminMode: boolean) => void
-}
 
 const adminCols = getColumns()
 const guestCols = adminCols.filter(col => !['edit', 'item'].includes(col.key))
 
-const sort = compareDiscGroups()
+const defaultSort = compareDiscGroups()
 
-export function DiscGroups(props: Props & RouteComponentProps<void>) {
+export default injectRole(injectAdminMode(DiscGroups))
 
-  const {hasRole, isAdminMode, setAdminMode, history} = props
+function DiscGroups(props: InjectRole & InjectAdminMode & RouteComponentProps<void>) {
 
-  const showExtraButtons = hasRole
-  const showExtraColumns = hasRole && isAdminMode
-  const fetchPrivateData = hasRole && isAdminMode
+  const {isBasic, isAdminMode, setAdminMode, history} = props
+
+  const showExtraButtons = isBasic
+  const showExtraColumns = isBasic && isAdminMode
+  const fetchPrivateData = isBasic && isAdminMode
 
   const url = fetchPrivateData ? '/api/discGroups?hasPrivate=true' : '/api/discGroups'
   const [{error, data}, handler] = useData<DiscGroup[]>(url)
@@ -60,7 +57,7 @@ export function DiscGroups(props: Props & RouteComponentProps<void>) {
           title="推荐列表"
           trClass={trClass}
           handler={handler}
-          defaultSort={sort}
+          defaultSort={defaultSort}
           extraCaption={showExtraButtons && extraButtons}
         />
       )}
@@ -125,11 +122,10 @@ function formatItem(t: DiscGroup) {
   return <Link to={`/disc_groups/${t.key}/discs`}><UnorderedList/></Link>
 }
 
-const viewTpyes = ['SakuraList', 'PublicList', 'PrivateList']
-
 function compareDiscGroups() {
+  const sorts = viewTypes.map(e => e.value)
   return composeCompares<DiscGroup>([
-    (a, b) => viewTpyes.indexOf(a.viewType) - viewTpyes.indexOf(b.viewType),
+    (a, b) => sorts.indexOf(a.viewType) - sorts.indexOf(b.viewType),
     (a, b) => b.key.localeCompare(a.key),
   ])
 }

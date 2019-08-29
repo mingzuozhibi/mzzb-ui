@@ -2,8 +2,8 @@ import React from 'react'
 import { Button, Checkbox, Input, Modal, Radio } from 'antd'
 import { Key as KeyIcon, Tag as TagIcon } from '@ant-design/icons'
 import { useAjax } from '../../../hooks/useAjax'
-import { viewTypes } from '../discGroup'
 import { CustomHeader } from '../../../comps/CustomHeader'
+import { viewTypes } from '../../@types'
 
 interface Form {
   key?: string

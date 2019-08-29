@@ -1,18 +1,19 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import classNames from 'classnames'
 import { Button } from 'antd'
+import classNames from 'classnames'
 
 import { Handler } from '../../../reducers/@domain'
 import { Column, Table } from '../../../comps/@table/Table'
+import { CustomHeader } from '../../../comps/CustomHeader'
 import { CustomMessage } from '../../../comps/CustomMessage'
+
 import { formatNumber, formatTimeout } from '../../../funcs/format'
 import { isJustUpdated, isSlowUpdated } from '../../../funcs/domain'
 import { composeCompares, safeCompare } from '../../../funcs/compare'
-
-import { compareSurp, compareTitle, Disc, discTitle } from '../disc'
+import { compareSurp, compareTitle, discTitle } from '../../@funcs'
+import { Disc } from '../../@types'
 import './Discs.scss'
-import { CustomHeader } from '../../../comps/CustomHeader'
 
 export interface Data {
   title: string
@@ -49,10 +50,10 @@ export function Discs(props: Props) {
 
   return (
     <div className="Discs">
+      <CustomMessage unikey="copymode" message={message}/>
       <CustomHeader header="载入中" title={title} error={error} replace={replace}/>
       {data && (
         <>
-          <CustomMessage unikey="copymode" message={message}/>
           <div className="pc-mode-warpper">
             <div className={classNames({'pc-mode': pcMode})}>
               <Table

@@ -1,20 +1,14 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Button, Input, Modal, Radio } from 'antd'
-import { RootState } from '../../../@reducer'
+import { UseData } from '../../../hooks/useData'
+import { formatNumber } from '../../../funcs/format'
 import { CustomLink } from '../../../comps/CustomLink'
 import { CustomHeader } from '../../../comps/CustomHeader'
-import { formatNumber } from '../../../funcs/format'
-import { Disc, discTitle } from '../disc'
+import { discTitle } from '../../@funcs'
+import { Disc } from '../../@types'
 
-export interface Data extends Disc {
-  nicoBook?: number
-  discType: string
-  createTime: number
-  modifyTime?: number
-  releaseDate: string
-}
+export type Data = Disc
 
 interface Form {
   titlePc?: string
@@ -23,23 +17,13 @@ interface Form {
 }
 
 interface Props {
-  data?: Data
-  error?: string
-  loading: boolean
-  hasRole: boolean
-  doEdit: (url: string, form: any) => void
+  useDate: UseData<Data>
+  isBasic: boolean
 }
 
-export default connect(function (state: RootState) {
-  return {
-    hasRole: state.session.userRoles.includes('ROLE_BASIC'),
-  }
-})(DiscDetail)
+export function DiscDetail({useDate, isBasic}: Props) {
 
-function DiscDetail(props: Props) {
-
-  const {error, data, loading, hasRole, doEdit} = props
-
+  const [{data, error}, {loading}, {doEdit}] = useDate
   const form: Form = {}
 
   if (data) {
@@ -205,7 +189,7 @@ function DiscDetail(props: Props) {
               <Radio.Button value="Auto">自动</Radio.Button>
               <Radio.Button value="Other">未知</Radio.Button>
             </Radio.Group>
-            {hasRole && (
+            {isBasic && (
               <div style={{marginTop: 20}}>
                 <Button loading={loading} type="primary" onClick={submitForm}>提交修改</Button>
               </div>

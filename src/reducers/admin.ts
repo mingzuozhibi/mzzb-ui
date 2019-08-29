@@ -1,5 +1,5 @@
 import { AnyAction } from 'redux'
-import { Disc } from '../pages/@disc/disc'
+import { Disc } from '../pages/@types'
 
 export interface AdminState {
   toAdds: Disc[]
@@ -20,7 +20,7 @@ export const adminReducer = (state = initState, action: AnyAction) => {
     case 'dropToAdds':
       return saveState({...state, toAdds: state.toAdds.filter(t => t.id !== action.disc.id)})
     case 'setAdminMode':
-      return saveState({...state, isAdminMode: action.isAdminMode})
+      return saveState({...state, isAdminMode: action.adminMode})
     case 'setFetchCount':
       return saveState({...state, fetchCount: action.fetchCount})
     default:

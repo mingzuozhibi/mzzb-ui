@@ -1,16 +1,4 @@
-export interface Disc {
-  id: number
-  asin: string
-  title: string
-  titlePc?: string
-  thisRank?: number
-  prevRank?: number
-  todayPt?: number
-  totalPt?: number
-  guessPt?: number
-  updateTime?: number
-  surplusDays: number
-}
+import { Disc } from './@types'
 
 export function compareSurp(a: Disc, b: Disc) {
   return a.surplusDays - b.surplusDays

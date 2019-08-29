@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import echarts from 'echarts'
+import './DiscRecords.scss'
+
 import { useData } from '../../../hooks/useData'
+import { formatNumber } from '../../../funcs/format'
 import { CustomHeader } from '../../../comps/CustomHeader'
 import { Column, Table } from '../../../comps/@table/Table'
-import { formatNumber } from '../../../funcs/format'
-import './DiscRecords.scss'
 
 interface Data {
   title: string

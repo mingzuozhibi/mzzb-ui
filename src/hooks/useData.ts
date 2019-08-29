@@ -9,6 +9,13 @@ interface State<T> {
   error?: string
 }
 
+interface ModifyMethod<T> {
+  doEdit: (url: string, form: any) => void
+  modify: (state: T) => void
+}
+
+export type UseData<T> = [State<T>, Handler, ModifyMethod<T>]
+
 export function useData<T>(url: string, initialState: State<T> = {}) {
   const [loading, setLoading] = useState(true)
   const [state, dispatch] = useReducer((prevState: State<T>, action) => {
@@ -56,11 +63,5 @@ export function useData<T>(url: string, initialState: State<T> = {}) {
     dispatch({type: 'Modified', data})
   }
 
-  return [state, {loading, refresh}, {doEdit, modify}] as
-    [State<T>, Handler, ModifyMethod<T>]
-}
-
-interface ModifyMethod<T> {
-  doEdit: (url: string, form: any) => void
-  modify: (state: T) => void
+  return [state, {loading, refresh}, {doEdit, modify}] as UseData<T>
 }

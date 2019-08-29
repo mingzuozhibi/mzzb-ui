@@ -6,8 +6,8 @@ import { Edit as EditIcon } from '@ant-design/icons'
 import { useData } from '../../../hooks/useData'
 import { useTitle, useWidth } from '../../../hooks/hooks'
 import { Column, Table } from '../../../comps/@table/Table'
-import { User } from '../user'
 import './Users.scss'
+import { User } from '../../@types'
 
 export default function Users({history}: RouteComponentProps<void>) {
 

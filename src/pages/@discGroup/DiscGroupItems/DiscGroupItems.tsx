@@ -11,33 +11,20 @@ import { composeCompares } from '../../../funcs/compare'
 import { CustomHeader } from '../../../comps/CustomHeader'
 import { Column, Table } from '../../../comps/@table/Table'
 
-import { compareSurp, compareTitle, discTitle } from '../../@disc/disc'
-import { DiscGroup } from '../discGroup'
+import { compareSurp, compareTitle, discTitle } from '../../@funcs'
+import { InjectToAdds, injectToAdds } from '../../@inject'
+import { Disc, DiscGroup } from '../../@types'
 import './DiscGroupItems.scss'
-
-interface Disc {
-  id: number
-  asin: string
-  title: string
-  titlePc?: string
-  surplusDays: number
-}
 
 interface Data extends DiscGroup {
   discs: Disc[]
 }
 
-interface Props {
-  toAdds: Disc[]
-  pushToAdds: (disc: Disc) => void
-  dropToAdds: (disc: Disc) => void
-  fetchCount?: number
-  setFetchCount: (fetchCount: number) => void
-}
-
 const columns = 'id,asin,title,titlePc,surplusDays'
 
-export function DiscGroupItems(props: Props & RouteComponentProps<{ key: string }>) {
+export default injectToAdds(DiscGroupItems)
+
+function DiscGroupItems(props: InjectToAdds & RouteComponentProps<{ key: string }>) {
 
   const {toAdds, pushToAdds, dropToAdds, fetchCount, setFetchCount, match} = props
   const findDiscsUrl = `/api/discGroups/key/${match.params.key}/discs?discColumns=${columns}`
