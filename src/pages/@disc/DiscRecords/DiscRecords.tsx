@@ -7,11 +7,13 @@ import { useData } from '../../../hooks/useData'
 import { formatNumber } from '../../../funcs/format'
 import { CustomHeader } from '../../../comps/CustomHeader'
 import { Column, Table } from '../../../comps/@table/Table'
+import { formatPt } from '../../@funcs'
 
 interface Data {
   title: string
   titlePc: string
   records: Record[]
+  releaseDate: string
 }
 
 interface Record {
@@ -43,6 +45,7 @@ export default function DiscRecords({match}: RouteComponentProps<{ id: string }>
         <Table
           rows={data.records}
           cols={cols}
+          trClass={trClass(data)}
           handler={handler}
           extraCaption={<span style={{marginLeft: 8}}>如果图表显示错误，请尝试刷新</span>}
         />
@@ -50,6 +53,10 @@ export default function DiscRecords({match}: RouteComponentProps<{ id: string }>
     </div>
   )
 
+}
+
+function trClass(data: Data) {
+  return (t: Record) => ({warning: t.date.localeCompare(data.releaseDate) >= 0})
 }
 
 function getColumns(): Column<Record>[] {
@@ -67,17 +74,17 @@ function getColumns(): Column<Record>[] {
     {
       key: 'todayPt',
       title: '日增PT',
-      format: (t) => `${(t.todayPt || '----')} pt`
+      format: (t) => formatPt(t.todayPt)
     },
     {
       key: 'totalPt',
       title: '累积PT',
-      format: (t) => `${(t.totalPt || '----')} pt`
+      format: (t) => formatPt(t.totalPt)
     },
     {
       key: 'guessPt',
       title: '预测PT',
-      format: (t) => `${(t.guessPt || '----')} pt`
+      format: (t) => formatPt(t.guessPt)
     },
     {
       key: 'averRank',
@@ -88,8 +95,8 @@ function getColumns(): Column<Record>[] {
 }
 
 function formatRank(t: Record) {
-  const averRank = t.averRank ? formatNumber(t.averRank, '***,***') : '---,---'
-  return `${averRank}位`
+  const averRank = t.averRank ? formatNumber(t.averRank, '###,###') : '---'
+  return `${averRank} 位`
 }
 
 function initEchart(data?: Data) {
@@ -98,7 +105,9 @@ function initEchart(data?: Data) {
   const dates = data.records.map(record => record.date)
   const sumPts = data.records.map(record => record.totalPt)
   const gesPts = data.records.map(record => record.guessPt)
-  const ranks = data.records.map(record => record.averRank && record.averRank > 10000 ? 10000 : record.averRank)
+  const ranks = data.records.map(record => record.averRank)
+
+  const maxRank = getMaxRank(data.records.filter(r => r !== undefined).map(r => r.averRank!))
 
   const echartWarp = document.getElementById('echart_warp') as HTMLDivElement
   const divElement = document.createElement('div')
@@ -136,14 +145,14 @@ function initEchart(data?: Data) {
     yAxis: [
       {
         type: 'value',
-        name: '排位',
+        max: maxRank,
         inverse: true,
         axisLabel: {
           formatter: '{value}位'
         }
       },
       {
-        name: 'PT',
+        name: '(PT)',
         type: 'value',
         splitLine: {
           show: false
@@ -170,4 +179,22 @@ function initEchart(data?: Data) {
       }
     ]
   })
+}
+
+function getMaxRank(ranks: number[]) {
+  if (ranks.length === 0) return 0
+  ranks.sort((a, b) => a - b)
+  const midNum = getMidNum(ranks)
+  const max = upToNum(midNum * 2, 100)
+  if (max > 10000) return 10000
+  if (max < 100) return 100
+  return max
+
+  function getMidNum(nums: number[]) {
+    return nums[Math.floor((nums.length + 1) / 2)]
+  }
+
+  function upToNum(num: number, upToNum: number) {
+    return (Math.floor((num - 1) / upToNum) + 1) * upToNum
+  }
 }
