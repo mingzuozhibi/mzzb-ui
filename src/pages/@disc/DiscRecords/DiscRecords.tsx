@@ -105,7 +105,9 @@ function initEchart(data?: Data) {
   const dates = data.records.map(record => record.date)
   const sumPts = data.records.map(record => record.totalPt)
   const gesPts = data.records.map(record => record.guessPt)
-  const ranks = data.records.map(record => record.averRank && record.averRank > 10000 ? 10000 : record.averRank)
+  const ranks = data.records.map(record => record.averRank)
+
+  const maxRank = getMaxRank(data.records.filter(r => r !== undefined).map(r => r.averRank!))
 
   const echartWarp = document.getElementById('echart_warp') as HTMLDivElement
   const divElement = document.createElement('div')
@@ -143,14 +145,14 @@ function initEchart(data?: Data) {
     yAxis: [
       {
         type: 'value',
-        name: '排位',
+        max: maxRank,
         inverse: true,
         axisLabel: {
           formatter: '{value}位'
         }
       },
       {
-        name: 'PT',
+        name: '(PT)',
         type: 'value',
         splitLine: {
           show: false
@@ -177,4 +179,22 @@ function initEchart(data?: Data) {
       }
     ]
   })
+}
+
+function getMaxRank(ranks: number[]) {
+  if (ranks.length === 0) return 0
+  ranks.sort((a, b) => a - b)
+  const midNum = getMidNum(ranks)
+  const max = upToNum(midNum * 2, 100)
+  if (max > 10000) return 10000
+  if (max < 100) return 100
+  return max
+
+  function getMidNum(nums: number[]) {
+    return nums[Math.floor((nums.length + 1) / 2)]
+  }
+
+  function upToNum(num: number, upToNum: number) {
+    return (Math.floor((num - 1) / upToNum) + 1) * upToNum
+  }
 }
