@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Layout, Menu } from 'antd'
 import { RouteComponentProps } from 'react-router-dom'
 import { MenuInfo, menuInfos } from '../../@menus'
@@ -12,14 +12,23 @@ interface AppSiderProps {
 
 export function AppSider(props: AppSiderProps & RouteComponentProps<void>) {
 
-  const [responsive, setResponsive] = useState(false)
+  const collapsed = !props.viewSider
+  const setCollapsed = (collapse: boolean) => props.setViewSider(!collapse)
 
-  function onCollapse(hideSider: boolean, type: string) {
+  const [autoCollapse, setAutoCollapse] = useState(true)
+  const firstRun = useRef(true)
+
+  function onCollapse(collapse: boolean, type: string) {
     if (type === 'responsive') {
-      setResponsive(!hideSider)
-      setTimeout(() => {
-        props.setViewSider(!hideSider)
-      }, 200)
+      setAutoCollapse(collapse)
+      if (firstRun.current) {
+        firstRun.current = false
+        setCollapsed(collapse)
+      } else {
+        setTimeout(() => {
+          setCollapsed(collapse)
+        }, 200)
+      }
     }
   }
 
@@ -27,13 +36,24 @@ export function AppSider(props: AppSiderProps & RouteComponentProps<void>) {
     if (key === props.location.pathname) {
       return
     }
-    if (!responsive) {
-      props.setViewSider(false)
+    if (autoCollapse) {
+      setCollapsed(true)
     }
     if (key.charAt(0) === '/') {
       props.history.push(key)
     } else {
       window.open(key)
+    }
+  }
+
+  function midButtonDown(menuInfo: MenuInfo) {
+    return (e: any) => {
+      if (e.button === 1) {
+        if (autoCollapse) {
+          setCollapsed(true)
+        }
+        window.open(menuInfo.matchPath)
+      }
     }
   }
 
@@ -52,8 +72,8 @@ export function AppSider(props: AppSiderProps & RouteComponentProps<void>) {
       return null
     }
     return (
-      <Menu.Item key={menuInfo.matchPath}>
-        <span onMouseDown={open(menuInfo)}>{renderLabel(menuInfo)}</span>
+      <Menu.Item key={menuInfo.matchPath} onMouseDown={midButtonDown(menuInfo)}>
+        {renderLabel(menuInfo)}
       </Menu.Item>
     )
   }
@@ -61,7 +81,7 @@ export function AppSider(props: AppSiderProps & RouteComponentProps<void>) {
   return (
     <Layout.Sider
       className="app-sider"
-      collapsed={!props.viewSider}
+      collapsed={collapsed}
       onCollapse={onCollapse}
       collapsedWidth={0}
       breakpoint="md"
@@ -80,8 +100,4 @@ export function AppSider(props: AppSiderProps & RouteComponentProps<void>) {
       </Menu>
     </Layout.Sider>
   )
-}
-
-function open(menuInfo: MenuInfo) {
-  return (e: any) => e.button === 1 && window.open(menuInfo.matchPath)
 }
