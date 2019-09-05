@@ -59,7 +59,8 @@ function getColumns(): Column<DiscComing>[] {
     {
       key: 'asin',
       title: 'ASIN',
-      format: (t) => t.asin
+      format: (t) => t.asin,
+      tdClass: createJustUpdateTdClass()
     },
     {
       key: 'followed',
@@ -70,10 +71,7 @@ function getColumns(): Column<DiscComing>[] {
       key: 'createTime',
       title: '抓取时间',
       format: (t) => formatCreateTime(t),
-      tdClass: (t) => ({
-        'just-update-in-6-hour': justUpdateIn6Hour(t),
-        'just-update-in-12-hour': justUpdateIn12Hour(t),
-      })
+      tdClass: createJustUpdateTdClass()
     },
     {
       key: 'title',
@@ -86,6 +84,13 @@ function getColumns(): Column<DiscComing>[] {
 function formatCreateTime(t: DiscComing) {
   const date = new Date(t.createTime)
   return `${date.toLocaleDateString()} ${date.getHours()}时${date.getMinutes()}分`
+}
+
+function createJustUpdateTdClass() {
+  return (t: DiscComing) => ({
+    'just-update-in-6-hour': justUpdateIn6Hour(t),
+    'just-update-in-12-hour': justUpdateIn12Hour(t),
+  })
 }
 
 function justUpdateIn6Hour(t: DiscComing) {

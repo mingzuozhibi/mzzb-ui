@@ -4,22 +4,33 @@
   .just-update-in-6-hour {
     color: red;
   }
+
   .just-update-in-12-hour:not(.just-update-in-6-hour) {
     color: blue;
   }
+
   .table {
-    th {
+    th, td {
       &.id {
         @include columnCenter();
+        @include columnHide(600px);
+        width: 45px;
       }
+
       &.asin {
         @include columnCenter();
+        @include columnWidth(105px, 100px);
       }
+
       &.followed {
         @include columnCenter();
+        @include columnWidth(30px, 25px)
       }
+
       &.createTime {
         @include columnCenter();
+        @include columnHide(600px);
+        width: 65px;
       }
     }
   }
