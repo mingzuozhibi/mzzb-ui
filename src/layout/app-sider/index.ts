@@ -5,15 +5,15 @@ import { withRouter } from 'react-router-dom'
 
 function mapStateToProps(state: RootState) {
   return {
-    viewSider: state.layout.viewSider,
+    collapsed: !state.layout.viewSider,
     userRoles: state.session.userRoles,
   }
 }
 
 function mapDispatchToProps(dispatch: any) {
   return {
-    setViewSider(viewSider: boolean) {
-      dispatch({type: 'setViewSider', viewSider})
+    setCollapsed(collapse: boolean) {
+      dispatch({type: 'setViewSider', viewSider: !collapse})
     },
   }
 }
