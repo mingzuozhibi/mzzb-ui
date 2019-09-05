@@ -1,11 +1,11 @@
 @import '../../function';
 
 .DiscComing {
-  .just-update-in-6-hour {
+  .just-update-in-06-hour {
     color: red;
   }
 
-  .just-update-in-12-hour:not(.just-update-in-6-hour) {
+  .just-update-in-24-hour:not(.just-update-in-06-hour) {
     color: blue;
   }
 
@@ -13,8 +13,7 @@
     th, td {
       &.id {
         @include columnCenter();
-        @include columnHide(600px);
-        width: 45px;
+        @include columnHideWidth(600px, 45px);
       }
 
       &.asin {
@@ -30,7 +29,7 @@
       &.createTime {
         @include columnCenter();
         @include columnHide(600px);
-        width: 65px;
+        @include columnWidthSwitch(130px, 65px, 1000px);
       }
     }
   }

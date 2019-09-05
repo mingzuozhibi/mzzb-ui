@@ -1,18 +1,32 @@
-@mixin columnWidth($width, $width_min) {
-  width: $width;
-  @media screen and (max-width: 600px) {
-    width: $width_min;
-  }
-}
-
-@mixin columnHide($max-width) {
-  @media screen and (max-width: $max-width) {
-    display: none;
-  }
-}
-
 @mixin columnCenter() {
   text-align: center;
   padding-left: 0;
   padding-right: 0;
+}
+
+@mixin columnHide($switch) {
+  @media screen and (max-width: $switch) {
+    display: none;
+  }
+}
+
+@mixin columnHideWidth($switch, $width_pc) {
+  width: $width_pc;
+  @media screen and (max-width: $switch) {
+    display: none;
+  }
+}
+
+@mixin columnWidth($width_pc, $width_mo) {
+  width: $width_pc;
+  @media screen and (max-width: 600px) {
+    width: $width_mo;
+  }
+}
+
+@mixin columnWidthSwitch($width_pc, $width_mo, $switch) {
+  width: $width_pc;
+  @media screen and (max-width: $switch) {
+    width: $width_mo;
+  }
 }
