@@ -8,6 +8,6 @@ if [[ $1 != '-q' ]]; then
   yarn build
 fi
 
-ssh q "rm -rf html/mzzb-ui; mkdir -p html/mzzb-ui;"
+ssh q "rm -rf nginx/www/mzzb-ui-pro; mkdir -p nginx/www/mzzb-ui-pro;"
 
-tar -czf - -C build . | ssh q "tar -xzpvf - -C html/mzzb-ui"
+tar -czf - -C build . | ssh q "tar -xzpvf - -C nginx/www/mzzb-ui-pro"
