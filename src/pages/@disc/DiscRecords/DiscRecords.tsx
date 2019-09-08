@@ -142,10 +142,17 @@ function initEchart(data?: Data) {
     },
     yAxis: [
       {
+        min: 1,
+        max: 1e5,
         type: 'log',
         inverse: true,
         axisLabel: {
           formatter: (rank: number) => rank <= 10000 ? `${rank}位` : `${rank / 10000}万位`
+        },
+        splitLine: {
+          lineStyle: {
+            color: ['#AAA', '#AAA', 'red', '#AAA', '#AAA'] as any
+          }
         }
       },
       {
