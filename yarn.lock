@@ -1224,10 +1224,10 @@
   resolved "https://registry.npm.taobao.org/@types/classnames/download/@types/classnames-2.2.9.tgz#d868b6febb02666330410fe7f58f3c4b8258be7b"
   integrity sha1-2Gi2/rsCZmMwQQ/n9Y88S4JYvns=
 
-"@types/echarts@^4.1.11":
-  version "4.1.11"
-  resolved "https://registry.npm.taobao.org/@types/echarts/download/@types/echarts-4.1.11.tgz#32e9ad4e390f28e44cb29121de07aa0e357e04c0"
-  integrity sha1-MumtTjkPKORMspEh3geqDjV+BMA=
+"@types/echarts@^4.1.12":
+  version "4.1.12"
+  resolved "https://registry.npm.taobao.org/@types/echarts/download/@types/echarts-4.1.12.tgz?cache=0&sync_timestamp=1567988975223&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fecharts%2Fdownload%2F%40types%2Fecharts-4.1.12.tgz#5d013096301cd696b098f7ff3a1cd96d7ea1a680"
+  integrity sha1-XQEwljAc1pawmPf/OhzZbX6hpoA=
   dependencies:
     "@types/zrender" "*"
 

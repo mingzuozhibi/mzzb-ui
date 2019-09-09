@@ -32,8 +32,7 @@
       }
 
       &.addPt {
-        width: 75px;
-        @include columnHide(750px);
+        @include columnHideWidth(750px, 75px);
       }
 
       &.sumPt {
@@ -42,8 +41,7 @@
       }
 
       &.gusPt {
-        width: 75px;
-        @include columnHide(675px);
+        @include columnHideWidth(675px, 75px);
       }
 
       &.surp {

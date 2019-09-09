@@ -88,15 +88,15 @@ function formatCreateTime(t: DiscComing) {
 
 function createJustUpdateTdClass() {
   return (t: DiscComing) => ({
-    'just-update-in-6-hour': justUpdateIn6Hour(t),
-    'just-update-in-12-hour': justUpdateIn12Hour(t),
+    'just-update-in-06-hour': justUpdateIn06Hour(t),
+    'just-update-in-24-hour': justUpdateIn24Hour(t),
   })
 }
 
-function justUpdateIn6Hour(t: DiscComing) {
+function justUpdateIn06Hour(t: DiscComing) {
   return Date.now() - t.createTime < 6 * 3600 * 1000
 }
 
-function justUpdateIn12Hour(t: DiscComing) {
-  return Date.now() - t.createTime < 12 * 3600 * 1000
+function justUpdateIn24Hour(t: DiscComing) {
+  return Date.now() - t.createTime < 24 * 3600 * 1000
 }
