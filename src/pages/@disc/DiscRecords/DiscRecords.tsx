@@ -151,7 +151,7 @@ function initEchart(data?: Data) {
         },
         splitLine: {
           lineStyle: {
-            color: ['#AAA', '#AAA', 'red', '#AAA', '#AAA'] as any
+            color: ['#AAA', '#AAA', 'red', '#AAA', '#AAA']
           }
         }
       },
