@@ -64,7 +64,7 @@ export function Discs(props: Props) {
                 defaultSort={createCompareRank()}
                 copyFmt={((disc, idx) => {
                   return `${idx + 1})`
-                    + ` ${formatRank(disc)}`
+                    + ` ${discRank(disc)}`
                     + ` 增${(disc.todayPt || 0)}pt`
                     + ` 共${(disc.totalPt || 0)}pt`
                     + ` 预${(disc.guessPt || 0)}pt`
@@ -128,10 +128,14 @@ function getColumns(): Column<Disc>[] {
 
 }
 
-function formatRank(disc: Disc) {
+function discRank(disc: Disc) {
   const thisRank = disc.thisRank ? formatNumber(disc.thisRank, '****') : '----'
   const prevRank = disc.prevRank ? formatNumber(disc.prevRank, '****') : '----'
-  return <Link to={`/discs/${disc.id}/records`}>{`${thisRank}位/${prevRank}位`}</Link>
+  return `${thisRank}位/${prevRank}位`
+}
+
+function formatRank(disc: Disc) {
+  return <Link to={`/discs/${disc.id}/records`}>{discRank(disc)}</Link>
 }
 
 function formatTitle(disc: Disc) {
