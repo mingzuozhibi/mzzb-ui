@@ -5,6 +5,7 @@ import { Column, Table } from '../../comps/@table/Table'
 import { CustomPagination } from '../../comps/CustomPagination'
 import './Console.scss'
 import { formatNumber } from '../../funcs/format'
+import { Alert } from 'antd'
 
 interface Data {
   id: number
@@ -16,7 +17,7 @@ interface Data {
 
 export default function Console({location, history, match}: RouteComponentProps<{ name: string }>) {
 
-  const [{data, page}, handler] = useData<Data[]>(`/gateway/moduleMessages/${match.params.name}${location.search}`)
+  const [{error, data, page}, handler] = useData<Data[]>(`/gateway/moduleMessages/${match.params.name}${location.search}`)
 
   data && data.forEach((d, i) => {
     d.id = i
@@ -45,6 +46,9 @@ export default function Console({location, history, match}: RouteComponentProps<
 
   return (
     <div className="Console">
+      {error && (
+        <Alert message={error} type="error"/>
+      )}
       {data && (
         <Table
           title="系统日志"
