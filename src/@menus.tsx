@@ -1,5 +1,5 @@
 import React from 'react'
-import { Github as GithubIcon } from '@ant-design/icons'
+import { BarChart, Github } from '@ant-design/icons'
 
 type Role = 'ROLE_ADMIN' | 'ROLE_BASIC'
 
@@ -29,9 +29,15 @@ export const menuInfos: MenuInfo[] = [
     menuRole: 'ROLE_ADMIN'
   },
   {
-    iconType: 'icon-user',
-    menuTitle: '系统日志',
-    matchPath: '/console',
+    iconNode: <BarChart/>,
+    menuTitle: '排名抓取日志',
+    matchPath: '/console/mzzb-disc-spider',
+    menuRole: 'ROLE_BASIC'
+  },
+  {
+    iconNode: <BarChart/>,
+    menuTitle: '上架抓取日志',
+    matchPath: '/console/mzzb-disc-shelfs',
     menuRole: 'ROLE_BASIC'
   },
   {
@@ -45,11 +51,11 @@ export const menuInfos: MenuInfo[] = [
     matchPath: 'https://tieba.baidu.com/f?kw=%E5%A3%81%E5%90%A7%E4%B8%93%E6%A5%BC',
   },
   {
-    iconNode: <GithubIcon/>,
+    iconNode: <Github/>,
     menuTitle: 'Github - UI',
     matchPath: 'https://github.com/mingzuozhibi/mzzb-ui',
   }, {
-    iconNode: <GithubIcon/>,
+    iconNode: <Github/>,
     menuTitle: 'Github - Server',
     matchPath: 'https://github.com/mingzuozhibi/mzzb-server',
   },

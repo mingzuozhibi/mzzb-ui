@@ -12,9 +12,9 @@ interface Data {
   acceptOn: number,
 }
 
-export default function Console({location, history}: RouteComponentProps<void>) {
+export default function Console({location, history, match}: RouteComponentProps<{name: string}>) {
 
-  const [{data, page}, handler] = useData<Data[]>(`/gateway/moduleMessages/mzzb-disc-spider${location.search}`)
+  const [{data, page}, handler] = useData<Data[]>(`/gateway/moduleMessages/${match.params.name}${location.search}`)
 
   data && data.forEach((d, i) => {
     d.id = i
