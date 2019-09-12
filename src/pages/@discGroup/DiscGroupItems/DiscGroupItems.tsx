@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { Link, RouteComponentProps } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Delete, FileAdd } from '@ant-design/icons'
 import { Button, Input, Modal } from 'antd'
 import produce from 'immer'
@@ -13,7 +13,7 @@ import { Column, Table } from '../../../comps/@table/Table'
 
 import { compareSurp, compareTitle, discTitle } from '../../@funcs'
 import { InjectToAdds, injectToAdds } from '../../@inject'
-import { Disc, DiscGroup } from '../../@types'
+import { Disc, DiscGroup, RouteProps } from '../../@types'
 import './DiscGroupItems.scss'
 
 interface Data extends DiscGroup {
@@ -24,7 +24,7 @@ const columns = 'id,asin,title,titlePc,surplusDays'
 
 export default injectToAdds(DiscGroupItems)
 
-function DiscGroupItems(props: InjectToAdds & RouteComponentProps<{ key: string }>) {
+function DiscGroupItems(props: InjectToAdds & RouteProps<{ key: string }>) {
 
   const {toAdds, pushToAdds, dropToAdds, fetchCount, setFetchCount, match} = props
   const findDiscsUrl = `/api/discGroups/key/${match.params.key}/discs?discColumns=${columns}`

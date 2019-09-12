@@ -1,15 +1,15 @@
 import React, { useMemo } from 'react'
-import { Link, RouteComponentProps } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Alert, Button } from 'antd'
 import { Edit as EditIcon } from '@ant-design/icons'
 
 import { useData } from '../../../hooks/useData'
 import { useTitle, useWidth } from '../../../hooks/hooks'
 import { Column, Table } from '../../../comps/@table/Table'
+import { RouteProps, User } from '../../@types'
 import './Users.scss'
-import { User } from '../../@types'
 
-export default function Users({history}: RouteComponentProps<void>) {
+export default function Users({history}: RouteProps<void>) {
 
   const [{error, data}, handler] = useData<User[]>(`/api/users`)
 

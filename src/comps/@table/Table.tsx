@@ -12,7 +12,7 @@ interface BaseRow {
 
 export interface Column<T> {
   key: string
-  title: string
+  title: React.ReactNode
   format: (row: T, idx: number) => React.ReactNode
   tdClass?: (row: T) => string | object
   compare?: (a: T, b: T) => number
@@ -21,7 +21,7 @@ export interface Column<T> {
 interface Props<T> {
   rows: T[]
   cols: Column<T>[]
-  title?: string
+  title?: React.ReactNode
   trClass?: (row: T) => string | object
   copyFmt?: (row: T, idx: number) => string
   handler?: Handler

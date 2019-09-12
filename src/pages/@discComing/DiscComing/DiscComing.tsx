@@ -1,13 +1,13 @@
 import React from 'react'
-import { Link, RouteComponentProps } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Alert } from 'antd'
-
-import { useTitle } from '../../../hooks/hooks'
+import { Question } from '@ant-design/icons/lib'
 import { useData } from '../../../hooks/useData'
+import { useTitle } from '../../../hooks/hooks'
+import { CustomLink } from '../../../comps/CustomLink'
 import { Column, Table } from '../../../comps/@table/Table'
 import { CustomPagination } from '../../../comps/CustomPagination'
-import { CustomLink } from '../../../comps/CustomLink'
-
+import { RouteProps } from '../../@types'
 import './DiscComing.scss'
 
 interface DiscComing {
@@ -20,7 +20,7 @@ interface DiscComing {
 
 const cols = getColumns()
 
-export default function DiscComing({location, history}: RouteComponentProps<void>) {
+export default function DiscComing({location, history}: RouteProps<void>) {
 
   const [{data, page, error}, handler] = useData<DiscComing[]>(`/gateway/discComing${location.search}`)
 
@@ -64,13 +64,13 @@ function getColumns(): Column<DiscComing>[] {
     },
     {
       key: 'followed',
-      title: '%',
+      title: <Question/>,
       format: (t) => t.tracked ? <Link to={`/discs/asin/${t.asin}`}>有</Link> : '无'
     },
     {
       key: 'createTime',
       title: '抓取时间',
-      format: (t) => formatCreateTime(t),
+      format: formatCreateTime,
       tdClass: createJustUpdateTdClass()
     },
     {
@@ -83,7 +83,7 @@ function getColumns(): Column<DiscComing>[] {
 
 function formatCreateTime(t: DiscComing) {
   const date = new Date(t.createOn)
-  return `${date.toLocaleDateString()} ${date.getHours()}时`
+  return `${date.toLocaleDateString()}-${date.getHours()}时${date.getMinutes()}分`
 }
 
 function createJustUpdateTdClass() {

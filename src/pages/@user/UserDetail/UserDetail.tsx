@@ -1,11 +1,10 @@
 import React from 'react'
-import { RouteComponentProps } from 'react-router-dom'
 import { Button, Checkbox, Input, Modal } from 'antd'
 import { Key as KeyIcon, User as UserIcon } from '@ant-design/icons'
 import { useData } from '../../../hooks/useData'
 import { md5Password } from '../../../funcs/manager'
 import { CustomHeader } from '../../../comps/CustomHeader'
-import { User } from '../../@types'
+import { RouteProps, User } from '../../@types'
 
 interface Form {
   username?: string
@@ -15,7 +14,7 @@ interface Form {
 
 const form: Form = {}
 
-export default function UserDetail({match}: RouteComponentProps<{ id: string }>) {
+export default function UserDetail({match}: RouteProps<{ id: string }>) {
 
   const [{error, data}, {loading}, {doEdit}] = useData<User>(`/api/users/${match.params.id}`)
 

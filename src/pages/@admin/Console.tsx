@@ -1,8 +1,11 @@
 import React from 'react'
+import { Alert } from 'antd'
 import { useData } from '../../hooks/useData'
+import { formatNumber } from '../../funcs/format'
 import { Column, Table } from '../../comps/@table/Table'
-import { RouteComponentProps } from 'react-router'
 import { CustomPagination } from '../../comps/CustomPagination'
+import { RouteProps } from '../@types'
+import './Console.scss'
 
 interface Data {
   id: number
@@ -12,9 +15,10 @@ interface Data {
   acceptOn: number,
 }
 
-export default function Console({location, history, match}: RouteComponentProps<{name: string}>) {
+export default function Console({location, history, match}: RouteProps<{ name: string }>) {
 
-  const [{data, page}, handler] = useData<Data[]>(`/gateway/moduleMessages/${match.params.name}${location.search}`)
+  const url = `/gateway/moduleMessages/${match.params.name}${location.search}`
+  const [{error, data, page}, handler] = useData<Data[]>(url)
 
   data && data.forEach((d, i) => {
     d.id = i
@@ -24,11 +28,11 @@ export default function Console({location, history, match}: RouteComponentProps<
     {
       key: 'time',
       title: '时间',
-      format: t => new Date(t.createOn).toLocaleString()
+      format: formatDate
     },
     {
       key: 'text',
-      title: '消息',
+      title: '消息内容',
       format: t => t.text
     },
   ]
@@ -37,12 +41,15 @@ export default function Console({location, history, match}: RouteComponentProps<
     if (pageSize === 20) {
       history.push(`/console?page=${page}`)
     } else {
-      history.push(`/console?page=${page}&pageSize=${pageSize}`)
+      history.push(`/console/${match.params.name}?page=${page}&pageSize=${pageSize}`)
     }
   }
 
   return (
     <div className="Console">
+      {error && (
+        <Alert message={error} type="error"/>
+      )}
       {data && (
         <Table
           title="系统日志"
@@ -57,4 +64,14 @@ export default function Console({location, history, match}: RouteComponentProps<
       )}
     </div>
   )
+}
+
+function formatDate(t: Data) {
+  const date = new Date(t.createOn)
+  const months = formatNumber(date.getMonth(), '00')
+  const dates = formatNumber(date.getDate(), '00')
+  const hours = formatNumber(date.getHours(), '00')
+  const minutes = formatNumber(date.getMinutes(), '00')
+  const seconds = formatNumber(date.getSeconds(), '00')
+  return `${months}/${dates} ${hours}:${minutes}:${seconds}`
 }

@@ -1,0 +1,16 @@
+@import '../function';
+
+.Console {
+  .table {
+    table-layout: fixed;
+    th, td {
+      &.time {
+        @include columnCenter();
+        @include columnWidth(65px, 60px);
+      }
+    }
+    td.time {
+      padding: 0 auto;
+    }
+  }
+}
