@@ -14,15 +14,15 @@ interface DiscComing {
   id: number
   asin: string
   title: string
-  followed: boolean
-  createTime: number
+  tracked: boolean
+  createOn: number
 }
 
 const cols = getColumns()
 
 export default function DiscComing({location, history}: RouteComponentProps<void>) {
 
-  const [{data, page, error}, handler] = useData<DiscComing[]>(`/api/discComing${location.search}`)
+  const [{data, page, error}, handler] = useData<DiscComing[]>(`/gateway/discComing${location.search}`)
 
   function onPaginationChange(page: number, pageSize?: number) {
     if (pageSize === 20) {
@@ -65,7 +65,7 @@ function getColumns(): Column<DiscComing>[] {
     {
       key: 'followed',
       title: '%',
-      format: (t) => t.followed ? <Link to={`/discs/asin/${t.asin}`}>有</Link> : '无'
+      format: (t) => t.tracked ? <Link to={`/discs/asin/${t.asin}`}>有</Link> : '无'
     },
     {
       key: 'createTime',
@@ -82,8 +82,8 @@ function getColumns(): Column<DiscComing>[] {
 }
 
 function formatCreateTime(t: DiscComing) {
-  const date = new Date(t.createTime)
-  return `${date.toLocaleDateString()} ${date.getHours()}时${date.getMinutes()}分`
+  const date = new Date(t.createOn)
+  return `${date.toLocaleDateString()} ${date.getHours()}时`
 }
 
 function createJustUpdateTdClass() {
@@ -94,9 +94,9 @@ function createJustUpdateTdClass() {
 }
 
 function justUpdateIn06Hour(t: DiscComing) {
-  return Date.now() - t.createTime < 6 * 3600 * 1000
+  return Date.now() - t.createOn < 6 * 3600 * 1000
 }
 
 function justUpdateIn24Hour(t: DiscComing) {
-  return Date.now() - t.createTime < 24 * 3600 * 1000
+  return Date.now() - t.createOn < 24 * 3600 * 1000
 }
