@@ -1,13 +1,11 @@
 import React, { useState } from 'react'
-import { RouteComponentProps } from 'react-router-dom'
 import { Key as KeyIcon, Tag as TagIcon } from '@ant-design/icons'
 import { Button, Checkbox, Input, Modal, Popconfirm, Radio } from 'antd'
-
 import { useData } from '../../../hooks/useData'
 import { useAjax } from '../../../hooks/useAjax'
 import { CustomHeader } from '../../../comps/CustomHeader'
 import { InjectRole, injectRole } from '../../@inject'
-import { DiscGroup, viewTypes } from '../../@types'
+import { DiscGroup, RouteProps, viewTypes } from '../../@types'
 
 interface Form {
   key?: string
@@ -18,7 +16,7 @@ interface Form {
 
 export default injectRole(DiscGroupDetail)
 
-function DiscGroupDetail(props: InjectRole & RouteComponentProps<{ key: string }>) {
+function DiscGroupDetail(props: InjectRole & RouteProps<{ key: string }>) {
 
   const {isAdmin, match} = props
 

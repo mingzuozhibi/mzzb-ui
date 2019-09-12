@@ -1,11 +1,11 @@
 import React from 'react'
-import { RouteComponentProps } from 'react-router'
+import { Alert } from 'antd'
 import { useData } from '../../hooks/useData'
+import { formatNumber } from '../../funcs/format'
 import { Column, Table } from '../../comps/@table/Table'
 import { CustomPagination } from '../../comps/CustomPagination'
+import { RouteProps } from '../@types'
 import './Console.scss'
-import { formatNumber } from '../../funcs/format'
-import { Alert } from 'antd'
 
 interface Data {
   id: number
@@ -15,9 +15,10 @@ interface Data {
   acceptOn: number,
 }
 
-export default function Console({location, history, match}: RouteComponentProps<{ name: string }>) {
+export default function Console({location, history, match}: RouteProps<{ name: string }>) {
 
-  const [{error, data, page}, handler] = useData<Data[]>(`/gateway/moduleMessages/${match.params.name}${location.search}`)
+  const url = `/gateway/moduleMessages/${match.params.name}${location.search}`
+  const [{error, data, page}, handler] = useData<Data[]>(url)
 
   data && data.forEach((d, i) => {
     d.id = i

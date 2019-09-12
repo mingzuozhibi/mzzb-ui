@@ -1,13 +1,12 @@
 import React from 'react'
-import { Link, RouteComponentProps } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Alert } from 'antd'
-
-import { useTitle } from '../../../hooks/hooks'
 import { useData } from '../../../hooks/useData'
+import { useTitle } from '../../../hooks/hooks'
+import { CustomLink } from '../../../comps/CustomLink'
 import { Column, Table } from '../../../comps/@table/Table'
 import { CustomPagination } from '../../../comps/CustomPagination'
-import { CustomLink } from '../../../comps/CustomLink'
-
+import { RouteProps } from '../../@types'
 import './DiscComing.scss'
 
 interface DiscComing {
@@ -20,7 +19,7 @@ interface DiscComing {
 
 const cols = getColumns()
 
-export default function DiscComing({location, history}: RouteComponentProps<void>) {
+export default function DiscComing({location, history}: RouteProps<void>) {
 
   const [{data, page, error}, handler] = useData<DiscComing[]>(`/gateway/discComing${location.search}`)
 

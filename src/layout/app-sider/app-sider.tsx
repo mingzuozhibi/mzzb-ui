@@ -1,8 +1,8 @@
 import React, { useReducer } from 'react'
-import { RouteComponentProps } from 'react-router-dom'
 import { Layout, Menu } from 'antd'
 import { MenuInfo, menuInfos } from '../../@menus'
 import { CustomIcon } from '../../comps/CustomIcon'
+import { RouteProps } from '../../pages/@types'
 
 interface AppSiderProps {
   userRoles: string[]
@@ -15,7 +15,7 @@ interface State {
   mustQuickSet: boolean
 }
 
-export function AppSider(props: AppSiderProps & RouteComponentProps<void>) {
+export function AppSider(props: AppSiderProps & RouteProps<void>) {
 
   const {userRoles, collapsed, setCollapsed, location, history} = props
 

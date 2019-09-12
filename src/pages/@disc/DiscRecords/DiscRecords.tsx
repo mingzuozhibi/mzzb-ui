@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import { RouteComponentProps } from 'react-router-dom'
 import echarts from 'echarts'
 import './DiscRecords.scss'
 
@@ -8,6 +7,7 @@ import { formatNumber } from '../../../funcs/format'
 import { CustomHeader } from '../../../comps/CustomHeader'
 import { Column, Table } from '../../../comps/@table/Table'
 import { formatPt } from '../../@funcs'
+import { RouteProps } from '../../@types'
 
 interface Data {
   title: string
@@ -27,7 +27,7 @@ interface Record {
 
 const cols = getColumns()
 
-export default function DiscRecords({match}: RouteComponentProps<{ id: string }>) {
+export default function DiscRecords({match}: RouteProps<{ id: string }>) {
 
   const [{error, data}, handler] = useData<Data>(`/api/discs/${match.params.id}/records`)
 

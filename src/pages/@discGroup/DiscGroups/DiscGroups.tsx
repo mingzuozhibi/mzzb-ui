@@ -1,7 +1,7 @@
 import React from 'react'
-import { Link, RouteComponentProps } from 'react-router-dom'
-import { Edit as EditIcon, UnorderedList } from '@ant-design/icons'
+import { Link } from 'react-router-dom'
 import { Alert, Button } from 'antd'
+import { Edit as EditIcon, UnorderedList } from '@ant-design/icons'
 
 import { useData } from '../../../hooks/useData'
 import { useTitle } from '../../../hooks/hooks'
@@ -11,7 +11,7 @@ import { formatTimeout } from '../../../funcs/format'
 import { composeCompares } from '../../../funcs/compare'
 
 import { InjectAdminMode, injectAdminMode, InjectRole, injectRole } from '../../@inject'
-import { DiscGroup, viewTypes } from '../../@types'
+import { DiscGroup, RouteProps, viewTypes } from '../../@types'
 import './DiscGroups.scss'
 
 const adminCols = getColumns()
@@ -21,7 +21,7 @@ const defaultSort = compareDiscGroups()
 
 export default injectRole(injectAdminMode(DiscGroups))
 
-function DiscGroups(props: InjectRole & InjectAdminMode & RouteComponentProps<void>) {
+function DiscGroups(props: InjectRole & InjectAdminMode & RouteProps<void>) {
 
   const {isBasic, isAdminMode, setAdminMode, history} = props
 
