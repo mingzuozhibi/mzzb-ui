@@ -10,6 +10,8 @@
   }
 
   .table {
+    table-layout: fixed;
+
     th, td {
       &.id {
         @include columnCenter();
@@ -18,18 +20,17 @@
 
       &.asin {
         @include columnCenter();
-        @include columnWidth(105px, 100px);
+        @include columnWidth(100px, 95px);
       }
 
       &.followed {
         @include columnCenter();
-        @include columnWidth(30px, 25px)
+        @include columnWidth(30px, 25px);
       }
 
       &.createTime {
         @include columnCenter();
-        @include columnHide(600px);
-        @include columnWidthSwitch(130px, 65px, 1000px);
+        @include columnHideWidth(600px, 75px);
       }
     }
   }
