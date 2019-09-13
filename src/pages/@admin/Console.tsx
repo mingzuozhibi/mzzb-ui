@@ -17,7 +17,7 @@ interface Data {
 
 export default function Console({location, history, match}: RouteProps<{ name: string }>) {
 
-  const url = `/gateway/moduleMessages/${match.params.name}${location.search}`
+  const url = `/gateway/messages/${match.params.name}${location.search}`
   const [{error, data, page}, handler] = useData<Data[]>(url)
 
   data && data.forEach((d, i) => {
