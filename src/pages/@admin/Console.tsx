@@ -9,10 +9,19 @@ import './Console.scss'
 
 interface Data {
   id: number
-  type: 'info' | 'warn',
+  type: 'info' | 'success' | 'notify' | 'warning' | 'danger',
   text: string,
   createOn: number,
   acceptOn: number,
+}
+
+function trClass(t: Data) {
+  return {
+    'warning': t.type === 'warning',
+    'success': t.type === 'success',
+    'danger': t.type === 'danger',
+    'info': t.type === 'notify',
+  }
 }
 
 export default function Console({location, history, match}: RouteProps<{ name: string }>) {
@@ -56,7 +65,7 @@ export default function Console({location, history, match}: RouteProps<{ name: s
           cols={cols}
           rows={data}
           handler={handler}
-          trClass={(t: Data) => ({'warning': t.type === 'warn'})}
+          trClass={trClass}
         />
       )}
       {page && (
