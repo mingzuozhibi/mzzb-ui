@@ -6,7 +6,7 @@
     th, td {
       &.time {
         @include columnCenter();
-        @include columnWidth(65px, 60px);
+        @include columnWidth(70px, 65px);
       }
     }
     td.time {

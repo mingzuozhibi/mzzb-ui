@@ -22,7 +22,7 @@ const cols = getColumns()
 
 export default function DiscComing({location, history}: RouteProps<void>) {
 
-  const [{data, page, error}, handler] = useData<DiscComing[]>(`/gateway/discComing${location.search}`)
+  const [{data, page, error}, handler] = useData<DiscComing[]>(`/gateway/discShelfs${location.search}`)
 
   function onPaginationChange(page: number, pageSize?: number) {
     if (pageSize === 20) {

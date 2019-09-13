@@ -32,11 +32,19 @@ export const menuInfos: MenuInfo[] = [
     iconNode: <BarChart/>,
     menuTitle: '排名抓取日志',
     matchPath: '/console/mzzb-disc-spider',
+    menuRole: 'ROLE_BASIC'
   },
   {
     iconNode: <BarChart/>,
     menuTitle: '上架抓取日志',
     matchPath: '/console/mzzb-disc-shelfs',
+    menuRole: 'ROLE_BASIC'
+  },
+  {
+    iconNode: <BarChart/>,
+    menuTitle: '网关运行日志',
+    matchPath: '/console/mzzb-gateway',
+    menuRole: 'ROLE_BASIC'
   },
   {
     iconType: 'icon-social-tieba',
