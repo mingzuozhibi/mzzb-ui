@@ -64,9 +64,9 @@ function getColumns(): Column<DiscComing>[] {
       tdClass: createJustUpdateTdClass()
     },
     {
-      key: 'createTime',
+      key: 'createOn',
       title: '抓取时间',
-      format: formatCreateTime,
+      format: formatCreateOn,
       tdClass: createJustUpdateTdClass()
     },
     {
@@ -77,7 +77,7 @@ function getColumns(): Column<DiscComing>[] {
     {
       key: 'type',
       title: '类型',
-      format: (t) => t.type || '---'
+      format: formatType
     },
     {
       key: 'title',
@@ -87,9 +87,14 @@ function getColumns(): Column<DiscComing>[] {
   ]
 }
 
-function formatCreateTime(t: DiscComing) {
+function formatCreateOn(t: DiscComing) {
   const date = new Date(t.createOn)
   return <>{date.toLocaleDateString()}<br/>{date.getHours()}时{date.getMinutes()}分</>
+}
+
+function formatType(t: DiscComing) {
+  if (t.type === undefined) return '---'
+  return t.type === 'Blu-ray' ? 'BD' : t.type
 }
 
 function createJustUpdateTdClass() {

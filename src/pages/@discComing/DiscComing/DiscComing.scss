@@ -20,10 +20,11 @@
 
       &.asin {
         @include columnCenter();
-        @include columnWidth(100px, 95px);
+        @include columnWidth(110px, 55px);
+        word-break: break-all;
       }
 
-      &.createTime {
+      &.createOn {
         @include columnCenter();
         @include columnHideWidth(600px, 80px);
       }
