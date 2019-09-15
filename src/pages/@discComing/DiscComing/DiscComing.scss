@@ -23,14 +23,19 @@
         @include columnWidth(100px, 95px);
       }
 
-      &.followed {
-        @include columnCenter();
-        @include columnWidth(30px, 25px);
-      }
-
       &.createTime {
         @include columnCenter();
-        @include columnHideWidth(600px, 75px);
+        @include columnHideWidth(600px, 80px);
+      }
+
+      &.followed {
+        @include columnCenter();
+        @include columnWidth(50px, 45px);
+      }
+
+      &.type {
+        @include columnCenter();
+        @include columnWidth(50px, 45px);
       }
     }
   }
