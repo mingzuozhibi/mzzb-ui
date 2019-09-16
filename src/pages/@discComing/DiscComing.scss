@@ -20,7 +20,7 @@
 
       &.asin {
         @include columnCenter();
-        @include columnWidth(110px, 55px);
+        @include columnWidth(110px, 65px);
         word-break: break-all;
       }
 

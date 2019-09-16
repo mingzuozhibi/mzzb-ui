@@ -30,9 +30,8 @@ export const menuInfos: MenuInfo[] = [
   },
   {
     iconNode: <BarChart/>,
-    menuTitle: '系统控制台',
+    menuTitle: '系统日志',
     matchPath: '/console',
-    menuRole: 'ROLE_BASIC'
   },
   {
     iconType: 'icon-social-tieba',
@@ -48,9 +47,25 @@ export const menuInfos: MenuInfo[] = [
     iconNode: <Github/>,
     menuTitle: 'Github - UI',
     matchPath: 'https://github.com/mingzuozhibi/mzzb-ui',
-  }, {
+  },
+  {
     iconNode: <Github/>,
     menuTitle: 'Github - Server',
     matchPath: 'https://github.com/mingzuozhibi/mzzb-server',
+  },
+  {
+    iconNode: <Github/>,
+    menuTitle: 'Gateway',
+    matchPath: 'https://github.com/mingzuozhibi/mzzb-gateway',
+  },
+  {
+    iconNode: <Github/>,
+    menuTitle: 'DiscSpider',
+    matchPath: 'https://github.com/mingzuozhibi/mzzb-disc-spider',
+  },
+  {
+    iconNode: <Github/>,
+    menuTitle: 'DiscShelfs',
+    matchPath: 'https://github.com/mingzuozhibi/mzzb-disc-shelfs',
   },
 ]
