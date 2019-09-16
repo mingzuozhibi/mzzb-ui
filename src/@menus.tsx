@@ -30,9 +30,8 @@ export const menuInfos: MenuInfo[] = [
   },
   {
     iconNode: <BarChart/>,
-    menuTitle: '系统控制台',
+    menuTitle: '系统日志',
     matchPath: '/console',
-    menuRole: 'ROLE_BASIC'
   },
   {
     iconType: 'icon-social-tieba',

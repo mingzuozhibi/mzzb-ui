@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Alert, Button } from 'antd'
 import { useData } from '../../hooks/useData'
-import { useTitle } from '../../hooks/hooks'
 import { CustomDate } from '../../comps/CustomDate'
 import { Column, Table } from '../../comps/@table/Table'
 import { CustomPagination } from '../../comps/CustomPagination'
@@ -17,10 +16,9 @@ interface Data {
 
 interface Props {
   moduleName: string
-  tableTitle: string
 }
 
-export default function Messages({moduleName, tableTitle}: Props) {
+export default function Messages({moduleName}: Props) {
 
   const [{pageNumber, pageSize}, setPage] = useState({pageNumber: 1, pageSize: 40})
   const url = `/gateway/messages/${moduleName}?page=${pageNumber}&pageSize=${pageSize}`
@@ -29,8 +27,6 @@ export default function Messages({moduleName, tableTitle}: Props) {
   data && data.forEach((e, i) => e.id = i)
 
   const cols = getCols()
-
-  useTitle(tableTitle)
 
   function onPaginationChange(page: number, pageSize?: number) {
     setPage({pageNumber: page, pageSize: pageSize || 40})
