@@ -1,12 +1,10 @@
-import React from 'react'
-import { withRouter } from 'react-router-dom'
-import { Alert } from 'antd'
+import React, { useState } from 'react'
+import { Alert, Button } from 'antd'
 import { useData } from '../../hooks/useData'
 import { useTitle } from '../../hooks/hooks'
 import { CustomDate } from '../../comps/CustomDate'
 import { Column, Table } from '../../comps/@table/Table'
 import { CustomPagination } from '../../comps/CustomPagination'
-import { RouteProps } from '../@types'
 import './Messages.scss'
 
 interface Data {
@@ -22,28 +20,21 @@ interface Props {
   tableTitle: string
 }
 
-export default withRouter(Messages)
+export default function Messages({moduleName, tableTitle}: Props) {
 
-function Messages(props: Props & RouteProps<{ name: string }>) {
-
-  const {moduleName, tableTitle, location, history, match} = props
-  const url = `/gateway/messages/${moduleName}${location.search}`
+  const [{pageNumber, pageSize}, setPage] = useState({pageNumber: 1, pageSize: 40})
+  const url = `/gateway/messages/${moduleName}?page=${pageNumber}&pageSize=${pageSize}`
   const [{error, data, page}, handler] = useData<Data[]>(url)
 
-  data && data.forEach((d, i) => {
-    d.id = i
-  })
+  data && data.forEach((e, i) => e.id = i)
 
   const cols = getCols()
 
   useTitle(tableTitle)
 
   function onPaginationChange(page: number, pageSize?: number) {
-    if (pageSize === 20) {
-      history.push(`/console?page=${page}`)
-    } else {
-      history.push(`/console/${match.params.name}?page=${page}&pageSize=${pageSize}`)
-    }
+    setPage({pageNumber: page, pageSize: pageSize || 40})
+    window.scroll(0, 0)
   }
 
   return (
@@ -52,11 +43,24 @@ function Messages(props: Props & RouteProps<{ name: string }>) {
         <Alert message={error} type="error"/>
       )}
       {data && (
+        <div style={{marginBottom: 10}}>
+          <Button
+            children={'刷新'}
+            onClick={handler.refresh}
+            loading={handler.loading}
+            style={{marginRight: 10}}
+          />
+        </div>
+      )}
+      {page && (
+        <div style={{marginBottom: 10}}>
+          <CustomPagination page={page} onChange={onPaginationChange}/>
+        </div>
+      )}
+      {data && (
         <Table
-          title={tableTitle}
           cols={cols}
           rows={data}
-          handler={handler}
           trClass={trClass}
         />
       )}
