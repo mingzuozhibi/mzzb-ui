@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Alert, Button } from 'antd'
+import { Alert, Button, Radio } from 'antd'
 import { useData } from '../../hooks/useData'
 import { CustomDate } from '../../comps/CustomDate'
 import { Column, Table } from '../../comps/@table/Table'
@@ -20,8 +20,9 @@ interface Props {
 
 export default function Messages({moduleName}: Props) {
 
+  const [messageType, setMessageType] = useState('info')
   const [{pageNumber, pageSize}, setPage] = useState({pageNumber: 1, pageSize: 40})
-  const url = `/gateway/messages/${moduleName}?page=${pageNumber}&pageSize=${pageSize}`
+  const url = `/gateway/messages/${moduleName}?type=${messageType}&page=${pageNumber}&pageSize=${pageSize}`
   const [{error, data, page}, handler] = useData<Data[]>(url)
 
   data && data.forEach((e, i) => e.id = i)
@@ -31,6 +32,10 @@ export default function Messages({moduleName}: Props) {
   function onPaginationChange(page: number, pageSize?: number) {
     setPage({pageNumber: page, pageSize: pageSize || 40})
     window.scroll(0, 0)
+  }
+
+  function onChangeType(e: any) {
+    setMessageType(e.target.value)
   }
 
   return (
@@ -46,6 +51,13 @@ export default function Messages({moduleName}: Props) {
             loading={handler.loading}
             style={{marginRight: 10}}
           />
+          <Radio.Group onChange={onChangeType} value={messageType}>
+            <Radio.Button value="info">所有</Radio.Button>
+            <Radio.Button value="notify">通知</Radio.Button>
+            <Radio.Button value="success">成功</Radio.Button>
+            <Radio.Button value="warning">警告</Radio.Button>
+            <Radio.Button value="danger">错误</Radio.Button>
+          </Radio.Group>
         </div>
       )}
       {page && (
