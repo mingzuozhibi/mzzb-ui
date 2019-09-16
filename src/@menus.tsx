@@ -47,9 +47,25 @@ export const menuInfos: MenuInfo[] = [
     iconNode: <Github/>,
     menuTitle: 'Github - UI',
     matchPath: 'https://github.com/mingzuozhibi/mzzb-ui',
-  }, {
+  },
+  {
     iconNode: <Github/>,
     menuTitle: 'Github - Server',
     matchPath: 'https://github.com/mingzuozhibi/mzzb-server',
+  },
+  {
+    iconNode: <Github/>,
+    menuTitle: 'Gateway',
+    matchPath: 'https://github.com/mingzuozhibi/mzzb-gateway',
+  },
+  {
+    iconNode: <Github/>,
+    menuTitle: 'DiscSpider',
+    matchPath: 'https://github.com/mingzuozhibi/mzzb-disc-spider',
+  },
+  {
+    iconNode: <Github/>,
+    menuTitle: 'DiscShelfs',
+    matchPath: 'https://github.com/mingzuozhibi/mzzb-disc-shelfs',
   },
 ]
