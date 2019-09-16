@@ -2,12 +2,13 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Alert } from 'antd'
 import { Question } from '@ant-design/icons/lib'
-import { useData } from '../../../hooks/useData'
-import { useTitle } from '../../../hooks/hooks'
-import { CustomLink } from '../../../comps/CustomLink'
-import { Column, Table } from '../../../comps/@table/Table'
-import { CustomPagination } from '../../../comps/CustomPagination'
-import { RouteProps } from '../../@types'
+import { useData } from '../../hooks/useData'
+import { useTitle } from '../../hooks/hooks'
+import { CustomDate } from '../../comps/CustomDate'
+import { CustomLink } from '../../comps/CustomLink'
+import { Column, Table } from '../../comps/@table/Table'
+import { CustomPagination } from '../../comps/CustomPagination'
+import { RouteProps } from '../@types'
 import './DiscComing.scss'
 
 interface DiscComing {
@@ -66,7 +67,7 @@ function getColumns(): Column<DiscComing>[] {
     {
       key: 'createOn',
       title: '抓取时间',
-      format: formatCreateOn,
+      format: (t) => <CustomDate time={t.createOn}/>,
       tdClass: createJustUpdateTdClass()
     },
     {
@@ -85,11 +86,6 @@ function getColumns(): Column<DiscComing>[] {
       format: (t) => <CustomLink href={`http://www.amazon.co.jp/dp/${t.asin}`} title={t.title}/>
     },
   ]
-}
-
-function formatCreateOn(t: DiscComing) {
-  const date = new Date(t.createOn)
-  return <>{date.toLocaleDateString()}<br/>{date.getHours()}时{date.getMinutes()}分</>
 }
 
 function formatType(t: DiscComing) {

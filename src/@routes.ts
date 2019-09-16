@@ -9,7 +9,7 @@ export interface RouteInfo {
 export const routes: RouteInfo[] = [
   {
     path: '/disc_coming',
-    loader: () => import(/* webpackChunkName: "disc_coming" */ './pages/@discComing/DiscComing/DiscComing')
+    loader: () => import(/* webpackChunkName: "disc_coming" */ './pages/@discComing/DiscComing')
   },
   {
     path: '/disc_groups',

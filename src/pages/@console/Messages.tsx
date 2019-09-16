@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 import { Alert } from 'antd'
 import { useData } from '../../hooks/useData'
 import { useTitle } from '../../hooks/hooks'
-import { formatNumber } from '../../funcs/format'
+import { CustomDate } from '../../comps/CustomDate'
 import { Column, Table } from '../../comps/@table/Table'
 import { CustomPagination } from '../../comps/CustomPagination'
 import { RouteProps } from '../@types'
@@ -72,7 +72,7 @@ function getCols(): Column<Data>[] {
     {
       key: 'time',
       title: '时间',
-      format: formatDate
+      format: t => <CustomDate time={t.createOn}/>
     },
     {
       key: 'text',
@@ -80,16 +80,6 @@ function getCols(): Column<Data>[] {
       format: t => t.text
     },
   ]
-}
-
-function formatDate(t: Data) {
-  const date = new Date(t.createOn)
-  const months = formatNumber(date.getMonth(), '00')
-  const dates = formatNumber(date.getDate(), '00')
-  const hours = formatNumber(date.getHours(), '00')
-  const minutes = formatNumber(date.getMinutes(), '00')
-  const seconds = formatNumber(date.getSeconds(), '00')
-  return `${months}/${dates} ${hours}:${minutes}:${seconds}`
 }
 
 function trClass(t: Data) {

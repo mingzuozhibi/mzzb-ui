@@ -1,4 +1,4 @@
-@import '../../function';
+@import '../function';
 
 .DiscComing {
   .just-update-in-06-hour {
@@ -26,7 +26,7 @@
 
       &.createOn {
         @include columnCenter();
-        @include columnHideWidth(600px, 80px);
+        @include columnHideWidth(600px, 75px);
       }
 
       &.followed {
