@@ -2,17 +2,19 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Alert } from 'antd'
 import { Question } from '@ant-design/icons/lib'
-import { useData } from '../../../hooks/useData'
-import { useTitle } from '../../../hooks/hooks'
-import { CustomLink } from '../../../comps/CustomLink'
-import { Column, Table } from '../../../comps/@table/Table'
-import { CustomPagination } from '../../../comps/CustomPagination'
-import { RouteProps } from '../../@types'
+import { useData } from '../../hooks/useData'
+import { useTitle } from '../../hooks/hooks'
+import { CustomDate } from '../../comps/CustomDate'
+import { CustomLink } from '../../comps/CustomLink'
+import { Column, Table } from '../../comps/@table/Table'
+import { CustomPagination } from '../../comps/CustomPagination'
+import { RouteProps } from '../@types'
 import './DiscComing.scss'
 
 interface DiscComing {
   id: number
   asin: string
+  type?: string
   title: string
   tracked: boolean
   createOn: number
@@ -63,15 +65,20 @@ function getColumns(): Column<DiscComing>[] {
       tdClass: createJustUpdateTdClass()
     },
     {
-      key: 'followed',
-      title: <Question/>,
-      format: (t) => t.tracked ? <Link to={`/discs/asin/${t.asin}`}>有</Link> : '无'
+      key: 'createOn',
+      title: '抓取时间',
+      format: (t) => <CustomDate time={t.createOn}/>,
+      tdClass: createJustUpdateTdClass()
     },
     {
-      key: 'createTime',
-      title: '抓取时间',
-      format: formatCreateTime,
-      tdClass: createJustUpdateTdClass()
+      key: 'followed',
+      title: <Question/>,
+      format: (t) => t.tracked ? <Link to={`/discs/asin/${t.asin}`}>已有</Link> : '暂无'
+    },
+    {
+      key: 'type',
+      title: '类型',
+      format: formatType
     },
     {
       key: 'title',
@@ -81,9 +88,9 @@ function getColumns(): Column<DiscComing>[] {
   ]
 }
 
-function formatCreateTime(t: DiscComing) {
-  const date = new Date(t.createOn)
-  return `${date.toLocaleDateString()}-${date.getHours()}时${date.getMinutes()}分`
+function formatType(t: DiscComing) {
+  if (t.type === undefined) return '---'
+  return t.type === 'Blu-ray' ? 'BD' : t.type
 }
 
 function createJustUpdateTdClass() {

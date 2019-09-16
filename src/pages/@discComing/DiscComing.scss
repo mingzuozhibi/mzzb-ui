@@ -1,4 +1,4 @@
-@import '../../function';
+@import '../function';
 
 .DiscComing {
   .just-update-in-06-hour {
@@ -20,17 +20,23 @@
 
       &.asin {
         @include columnCenter();
-        @include columnWidth(100px, 95px);
+        @include columnWidth(110px, 55px);
+        word-break: break-all;
+      }
+
+      &.createOn {
+        @include columnCenter();
+        @include columnHideWidth(600px, 75px);
       }
 
       &.followed {
         @include columnCenter();
-        @include columnWidth(30px, 25px);
+        @include columnWidth(50px, 45px);
       }
 
-      &.createTime {
+      &.type {
         @include columnCenter();
-        @include columnHideWidth(600px, 75px);
+        @include columnWidth(50px, 45px);
       }
     }
   }

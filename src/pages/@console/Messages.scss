@@ -1,14 +1,16 @@
 @import '../function';
 
-.Console {
+.Messages {
   .table {
     table-layout: fixed;
+
     th, td {
       &.time {
         @include columnCenter();
         @include columnWidth(70px, 65px);
       }
     }
+
     td.time {
       padding: 0 auto;
     }

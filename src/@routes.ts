@@ -9,7 +9,7 @@ export interface RouteInfo {
 export const routes: RouteInfo[] = [
   {
     path: '/disc_coming',
-    loader: () => import(/* webpackChunkName: "disc_coming" */ './pages/@discComing/DiscComing/DiscComing')
+    loader: () => import(/* webpackChunkName: "disc_coming" */ './pages/@discComing/DiscComing')
   },
   {
     path: '/disc_groups',
@@ -56,7 +56,7 @@ export const routes: RouteInfo[] = [
     loader: () => import(/* webpackChunkName: "user_detail" */'./pages/@user/UserDetail/UserDetail')
   },
   {
-    path: '/console/:name',
-    loader: () => import(/* webpackChunkName: "console" */'./pages/@admin/Console')
+    path: '/console',
+    loader: () => import(/* webpackChunkName: "console" */'./pages/@console/Console')
   },
 ]
