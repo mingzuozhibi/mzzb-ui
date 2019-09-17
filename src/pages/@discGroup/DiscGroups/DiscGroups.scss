@@ -11,7 +11,7 @@
 
       &.update {
         @include columnCenter();
-        @include columnWidth(95px, 85px);
+        @include columnWidth(95px, 90px);
       }
 
       &.edit {
