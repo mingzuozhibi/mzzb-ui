@@ -21,6 +21,8 @@
       &.asin {
         @include columnCenter();
         @include columnWidth(110px, 65px);
+        padding-left: 5px;
+        padding-right: 5px;
         word-break: break-all;
       }
 
