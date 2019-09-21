@@ -1,6 +1,6 @@
 @import '../../function';
 
-.DiscRecords {
+#root .DiscRecords {
   .table {
     th, td {
       @include columnCenter();

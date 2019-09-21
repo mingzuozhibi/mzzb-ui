@@ -1,6 +1,6 @@
 @import '../function';
 
-.DiscComing {
+#root .DiscComing {
   .just-update-in-06-hour {
     color: red;
   }
@@ -21,6 +21,8 @@
       &.asin {
         @include columnCenter();
         @include columnWidth(110px, 65px);
+        padding-left: 5px;
+        padding-right: 5px;
         word-break: break-all;
       }
 

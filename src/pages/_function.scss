@@ -1,5 +1,7 @@
 @mixin columnCenter() {
   text-align: center;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 @mixin columnHide($switch) {

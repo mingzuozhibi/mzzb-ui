@@ -74,7 +74,7 @@ function getColumns(): Column<Record>[] {
     {
       key: 'todayPt',
       title: '日增PT',
-      format: (t) => formatPt(t.todayPt)
+      format: formatTodayPt
     },
     {
       key: 'totalPt',
@@ -94,7 +94,17 @@ function getColumns(): Column<Record>[] {
   ]
 }
 
+function formatTodayPt(t: Record) {
+  if (t.todayPt !== undefined && t.todayPt < 10) {
+    return t.todayPt.toFixed(1) + ' pt'
+  }
+  return formatPt(t.todayPt)
+}
+
 function formatRank(t: Record) {
+  if (t.averRank !== undefined && t.averRank < 10) {
+    return t.averRank.toFixed(1) + ' 位'
+  }
   const averRank = t.averRank ? formatNumber(t.averRank, '###,###') : '---'
   return `${averRank} 位`
 }
@@ -105,7 +115,12 @@ function initEchart(data?: Data) {
   const dates = data.records.map(record => record.date)
   const sumPts = data.records.map(record => record.totalPt)
   const gesPts = data.records.map(record => record.guessPt)
-  const ranks = data.records.map(record => record.averRank)
+  const ranks = data.records.map(record => {
+    if (record.averRank !== undefined && record.averRank < 10) {
+      record.averRank = Math.floor(record.averRank * 10) / 10
+    }
+    return record.averRank
+  })
 
   const echartWarp = document.getElementById('echart_warp') as HTMLDivElement
   const divElement = document.createElement('div')
