@@ -6,11 +6,15 @@ import Messages from './Messages'
 const modules = [
   {
     moduleName: 'mzzb-disc-spider',
-    tableTitle: '排名日志'
+    tableTitle: '排名抓取'
   },
   {
     moduleName: 'mzzb-disc-shelfs',
-    tableTitle: '上架日志'
+    tableTitle: '上架抓取'
+  },
+  {
+    moduleName: 'mzzb-server',
+    tableTitle: '碟片模块'
   },
   {
     moduleName: 'mzzb-gateway',
