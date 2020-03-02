@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Alert, Button, Radio } from 'antd'
 import { useData } from '../../hooks/useData'
 import { CustomDate } from '../../comps/CustomDate'
+import { CustomLink } from '../../comps/CustomLink'
 import { Column, Table } from '../../comps/@table/Table'
 import { CustomPagination } from '../../comps/CustomPagination'
 import './Messages.scss'
@@ -89,7 +90,7 @@ function getCols(): Column<Data>[] {
     {
       key: 'text',
       title: '消息内容',
-      format: t => t.text
+      format: formatText
     },
   ]
 }
@@ -100,5 +101,20 @@ function trClass(t: Data) {
     'success': t.type === 'success',
     'danger': t.type === 'danger',
     'info': t.type === 'notify',
+  }
+}
+
+const re = /\[([A-Z0-9]{10})\]/
+
+function formatText(t: Data) {
+  const result = re.exec(t.text)
+  if (result) {
+    return <>
+      {t.text.substring(0, result.index + 1)}
+      <CustomLink href={`/discs/asin/${result[1]}`} title={result[1]} />
+      {t.text.substring(result.index + 11)}
+    </>
+  } else {
+    return t.text
   }
 }
