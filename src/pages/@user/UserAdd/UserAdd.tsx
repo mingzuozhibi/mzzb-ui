@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Input, Modal } from 'antd'
-import { Key as KeyIcon, User as UserIcon } from '@ant-design/icons'
+import { KeyOutlined, UserOutlined } from '@ant-design/icons'
 import { useAjax } from '../../../hooks/useAjax'
 import { md5Password } from '../../../funcs/manager'
 import { CustomHeader } from '../../../comps/CustomHeader'
@@ -41,7 +41,7 @@ export default function UserAdd() {
       <CustomHeader header="添加用户"/>
       <div className="input-wrapper">
         <Input
-          prefix={<UserIcon/>}
+          prefix={<UserOutlined/>}
           defaultValue={form.username}
           onChange={e => form.username = e.target.value}
           placeholder={`请输入用户名称`}
@@ -50,7 +50,7 @@ export default function UserAdd() {
       <div className="input-wrapper">
         <Input
           type="password"
-          prefix={<KeyIcon/>}
+          prefix={<KeyOutlined/>}
           defaultValue={form.password}
           onChange={e => form.password = e.target.value}
           placeholder={`请输入用户密码`}

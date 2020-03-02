@@ -184,7 +184,7 @@ export function Table<T extends BaseRow>(props: Props<T>) {
         title: '请手动复制数据', content: (
           <Input.TextArea
             value={resultText}
-            autosize={{minRows: 2, maxRows: 6}}
+            autoSize={{minRows: 2, maxRows: 6}}
           />
         )
       })

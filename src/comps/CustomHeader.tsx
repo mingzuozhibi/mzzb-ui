@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import ArrowLeft from '@ant-design/icons/ArrowLeft'
+import { ArrowLeftOutlined } from '@ant-design/icons'
 import { Alert, Button, Divider, PageHeader } from 'antd'
 import { Handler } from '../reducers/@domain'
 
@@ -40,7 +40,7 @@ function renderPageHeader(header: string, handler?: Handler) {
 function renderCustomHeader(replace: React.ReactNode) {
   return (
     <div className="custom-header">
-      <ArrowLeft onClick={() => window.history.back()}/>
+      <ArrowLeftOutlined onClick={() => window.history.back()}/>
       <Divider type="vertical"/>
       {replace}
     </div>

@@ -62,7 +62,7 @@ function trClass(data: Data) {
 function getColumns(): Column<Record>[] {
   return [
     {
-      key: 'id',
+      key: 'idx',
       title: '#',
       format: (t, i) => i + 1
     },
@@ -72,17 +72,17 @@ function getColumns(): Column<Record>[] {
       format: (t) => t.date
     },
     {
-      key: 'todayPt',
+      key: 'addPt',
       title: '日增PT',
       format: formatTodayPt
     },
     {
-      key: 'totalPt',
+      key: 'sumPt',
       title: '累积PT',
       format: (t) => formatPt(t.totalPt)
     },
     {
-      key: 'guessPt',
+      key: 'powPt',
       title: '预测PT',
       format: (t) => formatPt(t.guessPt)
     },

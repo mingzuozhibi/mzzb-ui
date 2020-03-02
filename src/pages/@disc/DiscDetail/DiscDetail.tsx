@@ -58,7 +58,7 @@ export function DiscDetail({useDate, isBasic}: Props) {
             </div>
             <Input.TextArea
               readOnly={true}
-              autosize={true}
+              autoSize={true}
               value={data.title}
             />
           </div>
@@ -69,7 +69,7 @@ export function DiscDetail({useDate, isBasic}: Props) {
             </div>
 
             <Input.TextArea
-              autosize={true}
+              autoSize={true}
               onChange={e => form.titlePc = e.target.value}
               defaultValue={form.titlePc}
             />

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Key as KeyIcon, Tag as TagIcon } from '@ant-design/icons'
+import { KeyOutlined, TagOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Input, Modal, Popconfirm, Radio } from 'antd'
 import { useData } from '../../../hooks/useData'
 import { useAjax } from '../../../hooks/useAjax'
@@ -66,7 +66,7 @@ function DiscGroupDetail(props: InjectRole & RouteProps<{ key: string }>) {
         <>
           <div className="input-wrapper">
             <Input
-              prefix={<KeyIcon/>}
+              prefix={<KeyOutlined/>}
               defaultValue={form.key}
               onChange={e => form.key = e.target.value}
               placeholder={`请输入列表索引`}
@@ -74,7 +74,7 @@ function DiscGroupDetail(props: InjectRole & RouteProps<{ key: string }>) {
           </div>
           <div className="input-wrapper">
             <Input
-              prefix={<TagIcon/>}
+              prefix={<TagOutlined/>}
               defaultValue={form.title}
               onChange={e => form.title = e.target.value}
               placeholder={`请输入列表标题`}

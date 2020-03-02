@@ -4,6 +4,9 @@
   .table {
     th, td {
       @include columnCenter();
+      &.idx {
+        @include columnWidth(40px, 35px);
+      }
     }
   }
 }

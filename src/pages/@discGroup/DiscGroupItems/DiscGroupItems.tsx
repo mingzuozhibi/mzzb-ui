@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { Delete, FileAdd } from '@ant-design/icons'
+import { DeleteOutlined, FileAddOutlined } from '@ant-design/icons'
 import { Button, Input, Modal } from 'antd'
 import produce from 'immer'
 
@@ -88,7 +88,7 @@ function DiscGroupItems(props: InjectToAdds & RouteProps<{ key: string }>) {
     return {
       key: 'command',
       title: '添加',
-      format: (t: Disc) => <FileAdd onClick={() => pushDisc(data!.id, t.id)}/>
+      format: (t: Disc) => <FileAddOutlined onClick={() => pushDisc(data!.id, t.id)}/>
     }
   }
 
@@ -96,7 +96,7 @@ function DiscGroupItems(props: InjectToAdds & RouteProps<{ key: string }>) {
     return {
       key: 'command',
       title: '移除',
-      format: (t: Disc) => <Delete onClick={() => dropDisc(data!.id, t.id)}/>
+      format: (t: Disc) => <DeleteOutlined onClick={() => dropDisc(data!.id, t.id)}/>
     }
   }
 

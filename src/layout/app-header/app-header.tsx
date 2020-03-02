@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Layout, Popconfirm } from 'antd'
-import { MenuFold, MenuUnfold } from '@ant-design/icons'
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import { CustomIcon } from '../../comps/CustomIcon'
 import { SessionState } from '../../reducers/session'
 
@@ -25,7 +25,7 @@ export function AppHeader(props: AppHeaderProps) {
 
   return (
     <Layout.Header className="app-header">
-      <CustomIcon iconNode={viewSider ? <MenuFold/> : <MenuUnfold/>}
+      <CustomIcon iconNode={viewSider ? <MenuFoldOutlined/> : <MenuUnfoldOutlined/>}
                   className="header-icon" onClick={() => setViewSider(!viewSider)}/>
       <span style={{marginLeft: 24}}>在线人数: {session.userCount}</span>
       {session.isLogged ? (

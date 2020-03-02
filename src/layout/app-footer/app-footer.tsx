@@ -1,6 +1,6 @@
 import React from 'react'
 import { Input, Layout, Modal } from 'antd'
-import { Key as KeyIcon, User as UserIcon } from '@ant-design/icons'
+import { KeyOutlined, UserOutlined } from '@ant-design/icons'
 import { CustomIcon } from '../../comps/CustomIcon'
 
 interface FormLogin {
@@ -57,7 +57,7 @@ export function AppFooter(props: AppFooterProps) {
       >
         <div style={{padding: 10}}>
           <Input
-            prefix={<CustomIcon iconNode={<UserIcon style={{color: 'rgba(0,0,0,.25)'}}/>}/>}
+            prefix={<CustomIcon iconNode={<UserOutlined style={{color: 'rgba(0,0,0,.25)'}}/>}/>}
             autoFocus={true}
             onChange={e => formLogin.username = e.target.value}
             placeholder="请输入用户名称"
@@ -68,7 +68,7 @@ export function AppFooter(props: AppFooterProps) {
           <Input
             type="password"
             onChange={e => formLogin.password = e.target.value}
-            prefix={<CustomIcon iconNode={<KeyIcon style={{color: 'rgba(0,0,0,.25)'}}/>}/>}
+            prefix={<CustomIcon iconNode={<KeyOutlined style={{color: 'rgba(0,0,0,.25)'}}/>}/>}
             placeholder="请输入用户密码"
           />
         </div>
