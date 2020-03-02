@@ -18,7 +18,7 @@ export type UseData<T> = [State<T>, Handler, ModifyMethod<T>]
 
 export function useData<T>(url: string, initialState: State<T> = {}) {
   const [loading, setLoading] = useState(true)
-  const [state, dispatch] = useReducer((prevState: State<T>, action) => {
+  const [state, dispatch] = useReducer((prevState: State<T>, action: any) => {
     switch (action.type) {
       case 'Receive':
         setLoading(false)

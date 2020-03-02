@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { Alert, Button } from 'antd'
-import { Edit as EditIcon } from '@ant-design/icons'
+import { EditOutlined } from '@ant-design/icons'
 
 import { useData } from '../../../hooks/useData'
 import { useTitle, useWidth } from '../../../hooks/hooks'
@@ -89,5 +89,5 @@ function justLogged(t: User) {
 }
 
 function formatCommand(t: User) {
-  return <Link to={`/users/${t.id}`}><EditIcon/></Link>
+  return <Link to={`/users/${t.id}`}><EditOutlined/></Link>
 }

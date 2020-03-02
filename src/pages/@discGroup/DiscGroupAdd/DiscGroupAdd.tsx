@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Checkbox, Input, Modal, Radio } from 'antd'
-import { Key as KeyIcon, Tag as TagIcon } from '@ant-design/icons'
+import { KeyOutlined, TagOutlined } from '@ant-design/icons'
 import { useAjax } from '../../../hooks/useAjax'
 import { CustomHeader } from '../../../comps/CustomHeader'
 import { viewTypes } from '../../@types'
@@ -44,7 +44,7 @@ export default function DiscGroupAdd() {
       <CustomHeader header="添加列表"/>
       <div className="input-wrapper">
         <Input
-          prefix={<KeyIcon/>}
+          prefix={<KeyOutlined/>}
           defaultValue={form.key}
           onChange={(e) => form.key = e.target.value}
           placeholder={`请输入列表索引`}
@@ -52,7 +52,7 @@ export default function DiscGroupAdd() {
       </div>
       <div className="input-wrapper">
         <Input
-          prefix={<TagIcon/>}
+          prefix={<TagOutlined/>}
           defaultValue={form.title}
           onChange={(e) => form.title = e.target.value}
           placeholder={`请输入列表标题`}

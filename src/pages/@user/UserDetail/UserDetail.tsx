@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Checkbox, Input, Modal } from 'antd'
-import { Key as KeyIcon, User as UserIcon } from '@ant-design/icons'
+import { KeyOutlined, UserOutlined } from '@ant-design/icons'
 import { useData } from '../../../hooks/useData'
 import { md5Password } from '../../../funcs/manager'
 import { CustomHeader } from '../../../comps/CustomHeader'
@@ -46,7 +46,7 @@ export default function UserDetail({match}: RouteProps<{ id: string }>) {
         <>
           <div className="input-wrapper">
             <Input
-              prefix={<UserIcon/>}
+              prefix={<UserOutlined/>}
               defaultValue={form.username}
               onChange={e => form.username = e.target.value}
               placeholder={`请输入用户名称`}
@@ -55,7 +55,7 @@ export default function UserDetail({match}: RouteProps<{ id: string }>) {
           <div className="input-wrapper">
             <Input
               type="password"
-              prefix={<KeyIcon/>}
+              prefix={<KeyOutlined/>}
               onChange={e => form.password = e.target.value}
               placeholder={`如不需修改用户密码可留空`}
             />

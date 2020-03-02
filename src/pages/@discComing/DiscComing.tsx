@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Alert } from 'antd'
-import { Question } from '@ant-design/icons/lib'
+import { QuestionOutlined } from '@ant-design/icons'
 import { useData } from '../../hooks/useData'
 import { useTitle } from '../../hooks/hooks'
 import { CustomDate } from '../../comps/CustomDate'
@@ -72,7 +72,7 @@ function getColumns(): Column<DiscComing>[] {
     },
     {
       key: 'followed',
-      title: <Question/>,
+      title: <QuestionOutlined/>,
       format: (t) => t.tracked ? <Link to={`/discs/asin/${t.asin}`}>已有</Link> : '暂无'
     },
     {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { BarChart, Github } from '@ant-design/icons'
+import { BarChartOutlined, GithubOutlined } from '@ant-design/icons'
 
 type Role = 'ROLE_ADMIN' | 'ROLE_BASIC'
 
@@ -29,7 +29,7 @@ export const menuInfos: MenuInfo[] = [
     menuRole: 'ROLE_ADMIN'
   },
   {
-    iconNode: <BarChart/>,
+    iconNode: <BarChartOutlined/>,
     menuTitle: '系统日志',
     matchPath: '/console',
   },
@@ -44,27 +44,27 @@ export const menuInfos: MenuInfo[] = [
     matchPath: 'https://tieba.baidu.com/f?kw=%E5%A3%81%E5%90%A7%E4%B8%93%E6%A5%BC',
   },
   {
-    iconNode: <Github/>,
+    iconNode: <GithubOutlined/>,
     menuTitle: 'Github - UI',
     matchPath: 'https://github.com/mingzuozhibi/mzzb-ui',
   },
   {
-    iconNode: <Github/>,
+    iconNode: <GithubOutlined/>,
     menuTitle: 'Github - Server',
     matchPath: 'https://github.com/mingzuozhibi/mzzb-server',
   },
   {
-    iconNode: <Github/>,
+    iconNode: <GithubOutlined/>,
     menuTitle: 'Gateway',
     matchPath: 'https://github.com/mingzuozhibi/mzzb-gateway',
   },
   {
-    iconNode: <Github/>,
+    iconNode: <GithubOutlined/>,
     menuTitle: 'DiscSpider',
     matchPath: 'https://github.com/mingzuozhibi/mzzb-disc-spider',
   },
   {
-    iconNode: <Github/>,
+    iconNode: <GithubOutlined/>,
     menuTitle: 'DiscShelfs',
     matchPath: 'https://github.com/mingzuozhibi/mzzb-disc-shelfs',
   },

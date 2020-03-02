@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Alert, Button } from 'antd'
-import { Edit as EditIcon, UnorderedList } from '@ant-design/icons'
+import { EditOutlined, UnorderedListOutlined } from '@ant-design/icons'
 
 import { useData } from '../../../hooks/useData'
 import { useTitle } from '../../../hooks/hooks'
@@ -115,11 +115,11 @@ function formatLastUpdate(row: DiscGroup) {
 }
 
 function formatEdit(t: DiscGroup) {
-  return <Link to={`/disc_groups/${t.key}`}><EditIcon/></Link>
+  return <Link to={`/disc_groups/${t.key}`}><EditOutlined/></Link>
 }
 
 function formatItem(t: DiscGroup) {
-  return <Link to={`/disc_groups/${t.key}/discs`}><UnorderedList/></Link>
+  return <Link to={`/disc_groups/${t.key}/discs`}><UnorderedListOutlined/></Link>
 }
 
 function compareDiscGroups() {
