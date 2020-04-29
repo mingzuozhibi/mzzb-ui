@@ -4,7 +4,7 @@
   "version": "1.2.2",
   "license": "Apache-2.0",
   "description": "ui for mingzuozhibi",
-  "proxy": "http://127.0.0.1:9090",
+  "proxy": "https://mingzuozhibi.com",
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
