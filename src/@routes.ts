@@ -56,7 +56,7 @@ export const routes: RouteInfo[] = [
     loader: () => import(/* webpackChunkName: "user_detail" */'./pages/@user/UserDetail/UserDetail')
   },
   {
-    path: '/console',
+    path: '/console/:index',
     loader: () => import(/* webpackChunkName: "console" */'./pages/@console/Console')
   },
 ]

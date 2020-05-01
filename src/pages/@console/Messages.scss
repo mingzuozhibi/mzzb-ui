@@ -4,8 +4,16 @@
   .table {
     table-layout: fixed;
 
+    tr.debug {
+      background-color: rgba(220, 220, 220, 0.5);
+    }
+
     th, td {
       &.time {
+        @include columnCenter();
+        @include columnWidth(75px, 70px);
+      }
+      &.level {
         @include columnCenter();
         @include columnWidth(75px, 70px);
       }

@@ -31,7 +31,7 @@ export const menuInfos: MenuInfo[] = [
   {
     iconNode: <BarChartOutlined/>,
     menuTitle: '系统日志',
-    matchPath: '/console',
+    matchPath: '/console/Default',
   },
   {
     iconType: 'icon-social-tieba',
