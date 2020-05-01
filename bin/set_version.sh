@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 
 # 项目根目录
-basepath=$(cd `dirname $0`; pwd)/..
+cd `dirname $0`/..
 
 # 准备发布新版本
-cd ${basepath}
 git flow release start "v$1"
 
 # 更新 package.json 版本号

@@ -2,6 +2,7 @@ import React from 'react'
 import { Input, Layout, Modal } from 'antd'
 import { KeyOutlined, UserOutlined } from '@ant-design/icons'
 import { CustomIcon } from '../../comps/CustomIcon'
+import { CustomLink } from '../../comps/CustomLink'
 
 interface FormLogin {
   username?: string
@@ -46,6 +47,9 @@ export function AppFooter(props: AppFooterProps) {
 
   return (
     <Layout.Footer className="app-footer">
+      <div id="beian" style={{textAlign: 'center'}}>
+        <CustomLink href="http://beian.miit.gov.cn" title="鲁ICP备16016069号-1" />
+      </div>
       <Modal
         title="用户登入"
         okText="登入"
