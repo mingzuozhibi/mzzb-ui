@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom'
 import { Alert, Button } from 'antd'
 import { EditOutlined } from '@ant-design/icons'
 
-import { useData } from '../../../../hooks/useData'
-import { useTitle } from '../../../../hooks/hooks'
-import { Column, Table } from '../../../../comps/@table/Table'
-import { RouteProps } from '../../../../pages/@types'
+import { useData } from '../../../hooks/useData'
+import { useTitle } from '../../../hooks/hooks'
+import { Column, Table } from '../../../comps/@table/Table'
+import { RouteProps } from '../../@types'
 import './Users.scss'
 
-import { User } from '../../../token'
-import { formatTime } from '../../../../funcs/format'
+import { User } from '../../../@version/token'
+import { formatTime } from '../../../funcs/format'
 
 const cols = getColumns()
 

@@ -1,12 +1,12 @@
 import React from 'react'
 import { Button, Checkbox, Input, Modal } from 'antd'
 import { KeyOutlined, UserOutlined } from '@ant-design/icons'
-import { useData } from '../../../../hooks/useData'
-import { CustomHeader } from '../../../../comps/CustomHeader'
-import { RouteProps } from '../../../../pages/@types'
+import { useData } from '../../../hooks/useData'
+import { CustomHeader } from '../../../comps/CustomHeader'
+import { RouteProps } from '../../@types'
 
-import { User } from '../../../token'
-import { encodePasswd } from '../../../passwd'
+import { User } from '../../../@version/token'
+import { encodePasswd } from '../../../@version/passwd'
 
 interface Form {
   username?: string

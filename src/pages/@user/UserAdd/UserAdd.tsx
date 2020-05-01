@@ -1,9 +1,9 @@
 import React from 'react'
 import { Button, Input, Modal } from 'antd'
 import { KeyOutlined, UserOutlined } from '@ant-design/icons'
-import { useAjax } from '../../../../hooks/useAjax'
-import { CustomHeader } from '../../../../comps/CustomHeader'
-import { encodePasswd } from '../../../passwd'
+import { useAjax } from '../../../hooks/useAjax'
+import { CustomHeader } from '../../../comps/CustomHeader'
+import { encodePasswd } from '../../../@version/passwd'
 
 interface Form {
   username?: string

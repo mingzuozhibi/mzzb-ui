@@ -45,15 +45,15 @@ export const routes: RouteInfo[] = [
   },
   {
     path: '/users',
-    loader: () => import(/* webpackChunkName: "users" */'./@version/@pages/@user/Users/Users')
+    loader: () => import(/* webpackChunkName: "users" */'./pages/@user/Users/Users')
   },
   {
     path: '/users/add',
-    loader: () => import(/* webpackChunkName: "user_add" */'./@version/@pages/@user/UserAdd/UserAdd')
+    loader: () => import(/* webpackChunkName: "user_add" */'./pages/@user/UserAdd/UserAdd')
   },
   {
     path: '/users/:id',
-    loader: () => import(/* webpackChunkName: "user_detail" */'./@version/@pages/@user/UserDetail/UserDetail')
+    loader: () => import(/* webpackChunkName: "user_detail" */'./pages/@user/UserDetail/UserDetail')
   },
   {
     path: '/console',
