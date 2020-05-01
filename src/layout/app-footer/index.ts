@@ -1,21 +1,22 @@
 import { connect } from 'react-redux'
 import { RootState } from '../../@reducer'
 import { AppFooter } from './app-footer'
+import { encodePasswd } from '../../@version/passwd'
 
 function mapStateToProps(state: RootState) {
   return {
     viewLogin: state.layout.viewLogin,
-    submiting: state.session.submiting,
   }
 }
 
 function mapDispatchToProps(dispatch: any) {
   return {
     setViewLogin(viewLogin: boolean) {
-      dispatch({type: 'setViewLogin', viewLogin})
+      dispatch({ type: 'setViewLogin', viewLogin })
     },
     sessionLogin(username: string, password: string) {
-      dispatch({type: 'sessionLoginRequest', username, password})
+      const encode = encodePasswd(username, password)
+      dispatch({ type: 'login_request', username, password: encode })
     },
   }
 }

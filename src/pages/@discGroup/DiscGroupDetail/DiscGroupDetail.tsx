@@ -18,7 +18,7 @@ export default injectRole(DiscGroupDetail)
 
 function DiscGroupDetail(props: InjectRole & RouteProps<{ key: string }>) {
 
-  const {isAdmin, match} = props
+  const {isDiscAdmin, match} = props
 
   const [{error, data}, {loading}, {doEdit}] =
     useData<DiscGroup>(`/api/discGroups/key/${match.params.key}`)
@@ -102,7 +102,7 @@ function DiscGroupDetail(props: InjectRole & RouteProps<{ key: string }>) {
           ) : (
             <div className="input-wrapper">
               <Button type="primary" loading={loading} onClick={editData}>提交修改</Button>
-              {isAdmin && (
+              {isDiscAdmin && (
                 <Popconfirm
                   title="你确定要删除这个列表吗？"
                   placement="bottomRight"

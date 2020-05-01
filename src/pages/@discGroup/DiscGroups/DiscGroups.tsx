@@ -23,11 +23,11 @@ export default injectRole(injectAdminMode(DiscGroups))
 
 function DiscGroups(props: InjectRole & InjectAdminMode & RouteProps<void>) {
 
-  const {isBasic, isAdminMode, setAdminMode, history} = props
+  const {isDiscAdmin, isAdminMode, setAdminMode, history} = props
 
-  const showExtraButtons = isBasic
-  const showExtraColumns = isBasic && isAdminMode
-  const fetchPrivateData = isBasic && isAdminMode
+  const showExtraButtons = isDiscAdmin
+  const showExtraColumns = isDiscAdmin && isAdminMode
+  const fetchPrivateData = isDiscAdmin && isAdminMode
 
   const url = fetchPrivateData ? '/api/discGroups?hasPrivate=true' : '/api/discGroups'
   const [{error, data}, handler] = useData<DiscGroup[]>(url)

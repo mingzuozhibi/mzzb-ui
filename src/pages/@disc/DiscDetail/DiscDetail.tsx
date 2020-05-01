@@ -18,10 +18,10 @@ interface Form {
 
 interface Props {
   useDate: UseData<Data>
-  isBasic: boolean
+  isDiscAdmin: boolean
 }
 
-export function DiscDetail({useDate, isBasic}: Props) {
+export function DiscDetail({useDate, isDiscAdmin}: Props) {
 
   const [{data, error}, {loading}, {doEdit}] = useDate
   const form: Form = {}
@@ -189,7 +189,7 @@ export function DiscDetail({useDate, isBasic}: Props) {
               <Radio.Button value="Auto">自动</Radio.Button>
               <Radio.Button value="Other">未知</Radio.Button>
             </Radio.Group>
-            {isBasic && (
+            {isDiscAdmin && (
               <div style={{marginTop: 20}}>
                 <Button loading={loading} type="primary" onClick={submitForm}>提交修改</Button>
               </div>

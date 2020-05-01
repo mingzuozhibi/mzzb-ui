@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom'
 function mapStateToProps(state: RootState) {
   return {
     collapsed: !state.layout.viewSider,
-    userRoles: state.session.userRoles,
+    userRoles: state.token?.user?.roles || [],
   }
 }
 
