@@ -1,10 +1,12 @@
 import React from 'react'
 import { Button, Checkbox, Input, Modal } from 'antd'
 import { KeyOutlined, UserOutlined } from '@ant-design/icons'
-import { useData } from '../../../hooks/useData'
-import { md5Password } from '../../../funcs/manager'
-import { CustomHeader } from '../../../comps/CustomHeader'
-import { RouteProps, User } from '../../@types'
+import { useData } from '../../../../hooks/useData'
+import { CustomHeader } from '../../../../comps/CustomHeader'
+import { RouteProps } from '../../../../pages/@types'
+
+import { User } from '../../../token'
+import { encodePasswd } from '../../../passwd'
 
 interface Form {
   username?: string
@@ -14,18 +16,18 @@ interface Form {
 
 const form: Form = {}
 
-export default function UserDetail({match}: RouteProps<{ id: string }>) {
+export default function UserDetail({ match }: RouteProps<{ id: string }>) {
 
-  const [{error, data}, {loading}, {doEdit}] = useData<User>(`/api/users/${match.params.id}`)
+  const [{ error, data }, { loading }, { doEdit }] = useData<User>(`/api/users/${match.params.id}`)
 
   function submitForm() {
     if (!form.username) {
-      Modal.warning({title: '请检查输入项', content: `你必须输入用户名称`})
+      Modal.warning({ title: '请检查输入项', content: `你必须输入用户名称` })
       return
     }
 
     if (form.password) {
-      form.password = md5Password(form.username, form.password)
+      form.password = encodePasswd(form.username, form.password)
     }
 
     doEdit(`/api/users/${data!.id}`, form)
@@ -41,12 +43,12 @@ export default function UserDetail({match}: RouteProps<{ id: string }>) {
 
   return (
     <div className="UserDetail">
-      <CustomHeader header="用户信息" title={tilte} error={error}/>
+      <CustomHeader header="用户信息" title={tilte} error={error} />
       {data && (
         <>
           <div className="input-wrapper">
             <Input
-              prefix={<UserOutlined/>}
+              prefix={<UserOutlined />}
               defaultValue={form.username}
               onChange={e => form.username = e.target.value}
               placeholder={`请输入用户名称`}
@@ -55,7 +57,7 @@ export default function UserDetail({match}: RouteProps<{ id: string }>) {
           <div className="input-wrapper">
             <Input
               type="password"
-              prefix={<KeyOutlined/>}
+              prefix={<KeyOutlined />}
               onChange={e => form.password = e.target.value}
               placeholder={`如不需修改用户密码可留空`}
             />
