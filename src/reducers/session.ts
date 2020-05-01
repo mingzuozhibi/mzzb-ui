@@ -11,7 +11,6 @@ export interface Session {
 
 export interface SessionState extends Session {
   submiting: boolean
-  userCount: number
 }
 
 const initSession = {
@@ -19,7 +18,6 @@ const initSession = {
   isLogged: false,
   userRoles: ['NONE'],
   submiting: false,
-  userCount: 0
 }
 
 export const sessionReducer = (state: SessionState = initSession, action: AnyAction) => {
@@ -28,8 +26,7 @@ export const sessionReducer = (state: SessionState = initSession, action: AnyAct
       return {...state, submiting: true}
     case 'sessionSucceed':
       action.message && message.success(action.message)
-      const {onlineUserCount: userCount, ...session} = action.session
-      return {...session, userCount, submiting: false}
+      return {...action.session, submiting: false}
     case 'sessionFailed':
       Modal.error({title: action.title, content: action.content})
       return {...state, submiting: false}
