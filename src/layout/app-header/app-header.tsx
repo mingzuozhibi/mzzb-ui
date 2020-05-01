@@ -20,7 +20,7 @@ export function AppHeader(props: AppHeaderProps) {
   useEffect(() => {
     refreshSession()
     const id: any = setInterval(refreshSession, 10 * 60 * 1000)
-    return clearInterval(id)
+    return () => clearInterval(id)
   }, [refreshSession])
 
   return (
