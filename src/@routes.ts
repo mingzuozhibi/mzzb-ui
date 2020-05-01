@@ -20,7 +20,7 @@ export const routes: RouteInfo[] = [
     loader: () => import(/* webpackChunkName: "disc_group_add" */'./pages/@discGroup/DiscGroupAdd/DiscGroupAdd')
   },
   {
-    path: '/disc_groups/:key',
+    path: '/disc_groups/:index',
     loader: () => import(/* webpackChunkName: "disc_group_detail" */'./pages/@discGroup/DiscGroupDetail/DiscGroupDetail')
   },
   {

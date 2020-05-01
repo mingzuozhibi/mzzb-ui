@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import { KeyOutlined, TagOutlined } from '@ant-design/icons'
-import { Button, Input, Modal, Popconfirm } from 'antd'
+import { Button, Input, Modal, Popconfirm, Radio } from 'antd'
 import { useData } from '../../../hooks/useData'
 import { useAjax } from '../../../hooks/useAjax'
 import { CustomHeader } from '../../../comps/CustomHeader'
@@ -10,24 +9,28 @@ import { DiscGroup, RouteProps } from '../../@types'
 interface Form {
   index?: string
   title?: string
-  enabled?: boolean
-  viewType?: string
+  status?: string
+  update?: string
+  updateDate?: string
 }
 
 export default injectRole(DiscGroupDetail)
 
-function DiscGroupDetail(props: InjectRole & RouteProps<{ key: string }>) {
+function DiscGroupDetail(props: InjectRole & RouteProps<{ index: string }>) {
 
   const { isDiscAdmin, match } = props
 
   const [{ error, data }, { loading }, { doEdit }] =
-    useData<DiscGroup>(`/api/discGroups/key/${match.params.key}`)
+    useData<DiscGroup>(`/api/groups/find/index/${match.params.index}`)
 
   const form: Form = {}
 
   if (data) {
     form.index = data.index
     form.title = data.title
+    form.status = data.status
+    form.update = data.update
+    form.updateDate = data.updateDate
   }
 
   function editData() {
@@ -64,7 +67,7 @@ function DiscGroupDetail(props: InjectRole & RouteProps<{ key: string }>) {
         <>
           <div className="input-wrapper">
             <Input
-              prefix={<KeyOutlined />}
+              addonBefore="列表索引"
               defaultValue={form.index}
               onChange={e => form.index = e.target.value}
               placeholder={`请输入列表索引`}
@@ -72,27 +75,36 @@ function DiscGroupDetail(props: InjectRole & RouteProps<{ key: string }>) {
           </div>
           <div className="input-wrapper">
             <Input
-              prefix={<TagOutlined />}
+              addonBefore="列表标题"
               defaultValue={form.title}
               onChange={e => form.title = e.target.value}
               placeholder={`请输入列表标题`}
             />
           </div>
-          {/* <div className="input-wrapper">
+          <div className="input-wrapper">
             <span className="input-label">列表类型</span>
-            <Radio.Group
-              options={viewTypes}
-              defaultValue={form.viewType}
-              onChange={e => form.viewType = e.target.value}
+            <Radio.Group defaultValue={form.status} onChange={e => form.status = e.target.value}>
+              <Radio value="Current">当前</Radio>
+              <Radio value="History">历史</Radio>
+              <Radio value="Private">私有</Radio>
+            </Radio.Group>
+          </div>
+          <div className="input-wrapper">
+            <span className="input-label">更新类型</span>
+            <Radio.Group defaultValue={form.update} onChange={e => form.update = e.target.value}>
+              <Radio value="Always">总是</Radio>
+              <Radio value="Never">从不</Radio>
+              <Radio value="Utils">直到更新日前</Radio>
+            </Radio.Group>
+          </div>
+          <div className="input-wrapper">
+            <Input
+              addonBefore="更新日期"
+              defaultValue={form.updateDate}
+              onChange={e => form.updateDate = e.target.value}
+              placeholder={`请输入更新日期`}
             />
-          </div> */}
-          {/* <div className="input-wrapper">
-            <Checkbox
-              defaultChecked={form.enabled}
-              onChange={e => form.enabled = e.target.checked}
-              children="启用"
-            />
-          </div> */}
+          </div>
           {deleted ? (
             <div className="input-wrapper">
               <Button type="primary" onClick={() => window.history.back()}>点击返回</Button>
