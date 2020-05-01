@@ -129,7 +129,7 @@ function DiscGroupItems(props: InjectToAdds & RouteProps<{ key: string }>) {
             rows={data.discs}
             cols={getColumns(getDropCommand())}
             title={data.title}
-            extraCaption={`更新于${formatTimeout(data.modifyTime)}前`}
+            extraCaption={`更新于${formatTimeout(data.lastUpdate)}前`}
             defaultSort={composeCompares([compareSurp, compareTitle])}
           />
         </>

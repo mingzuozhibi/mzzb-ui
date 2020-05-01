@@ -2,14 +2,6 @@ import { RouteComponentProps } from 'react-router-dom'
 
 export type RouteProps<T> = RouteComponentProps<T>
 
-export interface User {
-  id: number
-  enabled: boolean
-  username: string
-  registerDate: string
-  lastLoggedIn: string | undefined
-}
-
 export interface Disc {
   id: number
   asin: string
@@ -31,16 +23,11 @@ export interface Disc {
 
 export interface DiscGroup {
   id: number
-  key: string
+  index: string
   title: string
-  enabled: boolean
-  viewType: string
+  status: string
+  update: string
   discCount: number
-  modifyTime: number
+  lastUpdate: number
+  updateDate: string
 }
-
-export const viewTypes = [
-  {label: '日亚实时', value: 'SakuraList'},
-  {label: '公开列表', value: 'PublicList'},
-  {label: '私有列表', value: 'PrivateList'},
-]
