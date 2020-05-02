@@ -2,14 +2,14 @@ interface Compare<T> {
   (a: T, b: T): number
 }
 
-interface Props<T, E> {
-  apply: (model: T) => E | undefined
-  empty?: (value?: E) => boolean
-  compare: Compare<E>
+interface Props<T, U> {
+  apply: (model: T) => U | undefined
+  empty?: (value?: U) => boolean
+  compare: Compare<U>
 }
 
-export function safeCompare<T, E>(props: Props<T, E>) {
-  const defaultEmptyFunc = (e?: E) => e === undefined
+export function safeCompare<T, U>(props: Props<T, U>) {
+  const defaultEmptyFunc = (e?: U) => e === undefined
   const {apply, empty = defaultEmptyFunc, compare} = props
   return (a: T, b: T) => {
     const valueA = apply(a)

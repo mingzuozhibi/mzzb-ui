@@ -6,22 +6,21 @@ export interface Disc {
   id: number
   asin: string
   title: string
-  titlePc?: string
-  todayPt?: number
-  totalPt?: number
-  guessPt?: number
+  titleCN?: string
+  addPoint?: number
+  sumPoint?: number
+  powPoint?: number
   thisRank?: number
   prevRank?: number
-  nicoBook?: number
   discType: string
-  createTime: number
-  updateTime?: number
-  modifyTime?: number
-  releaseDate: string
-  surplusDays: number
+  createOn: number
+  updateOn?: number
+  modifyOn?: number
+  releaseDate?: string
+  releaseDays?: number
 }
 
-export interface DiscGroup {
+export interface Group {
   id: number
   index: string
   title: string

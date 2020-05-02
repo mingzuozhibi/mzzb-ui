@@ -18,7 +18,7 @@ import './Discs.scss'
 export interface Data {
   title: string
   discs: Disc[]
-  modifyTime?: number
+  lastUpdate?: number
 }
 
 interface Props {
@@ -33,14 +33,14 @@ const message = '点击复制按钮可进入复制模式，选中想要复制的
 
 export function Discs(props: Props) {
 
-  const {error, data, handler} = props
+  const { error, data, handler } = props
   const [pcMode, setPcMode] = useState(false)
   const title = data ? data.title : '载入中'
 
   const replace = data && (
     <>
-      {data.modifyTime && (
-        <span>更新于{formatTimeout(data.modifyTime)}前</span>
+      {data.lastUpdate && (
+        <span>更新于{formatTimeout(data.lastUpdate)}前</span>
       )}
       <Button onClick={() => setPcMode(!pcMode)}>
         {pcMode ? '智能隐藏列' : '显示所有列'}
@@ -50,12 +50,12 @@ export function Discs(props: Props) {
 
   return (
     <div className="Discs">
-      <CustomMessage unikey="copymode" message={message}/>
-      <CustomHeader header="载入中" title={title} error={error} replace={replace}/>
+      <CustomMessage unikey="copymode" message={message} />
+      <CustomHeader header="载入中" title={title} error={error} replace={replace} />
       {data && (
         <>
           <div className="pc-mode-warpper">
-            <div className={classNames({'pc-mode': pcMode})}>
+            <div className={classNames({ 'pc-mode': pcMode })}>
               <Table
                 rows={data.discs}
                 cols={cols}
@@ -65,10 +65,10 @@ export function Discs(props: Props) {
                 copyFmt={((disc, idx) => {
                   return `${idx + 1})`
                     + ` ${discRank(disc)}`
-                    + ` 增${(disc.todayPt || 0)}pt`
-                    + ` 共${(disc.totalPt || 0)}pt`
-                    + ` 预${(disc.guessPt || 0)}pt`
-                    + ` 剩${disc.surplusDays}天`
+                    + ` 增${(disc.addPoint || 0)}pt`
+                    + ` 共${(disc.sumPoint || 0)}pt`
+                    + ` 预${(disc.powPoint || 0)}pt`
+                    + ` 剩${disc.releaseDays}天`
                     + ` [${discTitle(disc)}]`
                 })}
               />
@@ -78,6 +78,7 @@ export function Discs(props: Props) {
       )}
     </div>
   )
+
 }
 
 function getColumns(): Column<Disc>[] {
@@ -97,25 +98,25 @@ function getColumns(): Column<Disc>[] {
     {
       key: 'addPt',
       title: '日增',
-      format: (disc) => formatPt(disc.todayPt),
-      compare: createComparePt(disc => disc.todayPt),
+      format: (disc) => formatPt(disc.addPoint),
+      compare: createComparePt(disc => disc.addPoint),
     },
     {
       key: 'sumPt',
       title: '累积',
-      format: (disc) => formatPt(disc.totalPt),
-      compare: createComparePt(disc => disc.totalPt),
+      format: (disc) => formatPt(disc.sumPoint),
+      compare: createComparePt(disc => disc.sumPoint),
     },
     {
       key: 'gusPt',
       title: '预测',
-      format: (disc) => formatPt(disc.guessPt),
-      compare: createComparePt(disc => disc.guessPt),
+      format: (disc) => formatPt(disc.powPoint),
+      compare: createComparePt(disc => disc.powPoint),
     },
     {
       key: 'surp',
       title: '发售',
-      format: (disc) => `${disc.surplusDays}天`,
+      format: formatSurp,
       compare: composeCompares([compareSurp, compareTitle]),
     },
     {
@@ -138,15 +139,23 @@ function formatRank(disc: Disc) {
   return <Link to={`/discs/${disc.id}/records`}>{discRank(disc)}</Link>
 }
 
+function formatSurp(disc: Disc) {
+  if (disc.releaseDays) {
+    return `${disc.releaseDays}天`
+  } else {
+    return `未知`
+  }
+}
+
 function formatTitle(disc: Disc) {
   return <Link to={`/discs/${disc.id}`}>{discTitle(disc)}</Link>
 }
 
 function tdClassRank(disc: Disc) {
-  if (isJustUpdated(disc.updateTime)) {
+  if (isJustUpdated(disc.updateOn)) {
     return 'success'
   }
-  if (isSlowUpdated(disc.updateTime)) {
+  if (isSlowUpdated(disc.updateOn)) {
     return 'warning'
   }
   return ''
@@ -160,6 +169,6 @@ function createCompareRank() {
 }
 
 function createComparePt(apply: (disc: Disc) => number | undefined) {
-  return safeCompare<Disc, number>({apply, compare: (a, b) => b - a})
+  return safeCompare<Disc, number>({ apply, compare: (a, b) => b - a })
 }
 

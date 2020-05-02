@@ -27,7 +27,7 @@ export function DiscDetail({useDate, isDiscAdmin}: Props) {
   const form: Form = {}
 
   if (data) {
-    form.titlePc = data.titlePc
+    form.titlePc = data.titleCN
     form.discType = data.discType
     form.releaseDate = data.releaseDate
   }
@@ -112,13 +112,13 @@ export function DiscDetail({useDate, isDiscAdmin}: Props) {
                 readOnly={true}
                 addonBefore="累积PT"
                 style={{width: 140}}
-                value={data.totalPt}
+                value={data.sumPoint}
               />
               <Input
                 readOnly={true}
                 addonBefore="预测PT"
                 style={{width: 140, marginLeft: 12}}
-                value={data.guessPt}
+                value={data.powPoint}
               />
             </div>
           </Input.Group>
@@ -128,13 +128,7 @@ export function DiscDetail({useDate, isDiscAdmin}: Props) {
                 readOnly={true}
                 addonBefore="日增PT"
                 style={{width: 140}}
-                value={data.todayPt}
-              />
-              <Input
-                readOnly={true}
-                addonBefore="Nico预约"
-                style={{width: 140, marginLeft: 12}}
-                value={data.nicoBook}
+                value={data.addPoint}
               />
             </div>
           </Input.Group>
@@ -150,7 +144,7 @@ export function DiscDetail({useDate, isDiscAdmin}: Props) {
                 readOnly={true}
                 addonBefore="天数"
                 style={{width: 120, marginLeft: 12}}
-                value={data.surplusDays}
+                value={data.releaseDays}
               />
             </div>
           </Input.Group>
@@ -159,7 +153,7 @@ export function DiscDetail({useDate, isDiscAdmin}: Props) {
               readOnly={true}
               addonBefore="创建时间"
               style={{width: 270}}
-              value={formatDate(data.createTime)}
+              value={formatDate(data.createOn)}
             />
           </div>
           <div className="input-wrapper">
@@ -167,7 +161,7 @@ export function DiscDetail({useDate, isDiscAdmin}: Props) {
               readOnly={true}
               addonBefore="刷新时间"
               style={{width: 270}}
-              value={formatDate(data.updateTime)}
+              value={formatDate(data.updateOn)}
             />
           </div>
           <div className="input-wrapper">
@@ -175,7 +169,7 @@ export function DiscDetail({useDate, isDiscAdmin}: Props) {
               readOnly={true}
               addonBefore="修改时间"
               style={{width: 270}}
-              value={formatDate(data.modifyTime)}
+              value={formatDate(data.modifyOn)}
             />
           </div>
           <div className="input-wrapper">

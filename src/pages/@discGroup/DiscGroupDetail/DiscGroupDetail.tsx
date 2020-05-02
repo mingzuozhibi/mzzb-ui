@@ -4,7 +4,7 @@ import { useData } from '../../../hooks/useData'
 import { useAjax } from '../../../hooks/useAjax'
 import { CustomHeader } from '../../../comps/CustomHeader'
 import { InjectRole, injectRole } from '../../@inject'
-import { DiscGroup, RouteProps } from '../../@types'
+import { Group, RouteProps } from '../../@types'
 
 interface Form {
   index?: string
@@ -21,7 +21,7 @@ function DiscGroupDetail(props: InjectRole & RouteProps<{ index: string }>) {
   const { isDiscAdmin, match } = props
 
   const [{ error, data }, { loading }, { doEdit }] =
-    useData<DiscGroup>(`/api/groups/find/index/${match.params.index}`)
+    useData<Group>(`/api/groups/find/index/${match.params.index}`)
 
   const form: Form = {}
 

@@ -11,7 +11,7 @@ import { formatTimeout } from '../../../funcs/format'
 import { composeCompares } from '../../../funcs/compare'
 
 import { InjectAdminMode, injectAdminMode, InjectRole, injectRole } from '../../@inject'
-import { DiscGroup, RouteProps } from '../../@types'
+import { Group, RouteProps } from '../../@types'
 import './DiscGroups.scss'
 
 const adminCols = getColumns()
@@ -30,7 +30,7 @@ function DiscGroups(props: InjectRole & InjectAdminMode & RouteProps<void>) {
   const fetchPrivateData = isDiscAdmin && isAdminMode
 
   const url = fetchPrivateData ? '/api/groups' : '/api/groups/find/status/Current'
-  const [{ error, data }, handler] = useData<DiscGroup[]>(url)
+  const [{ error, data }, handler] = useData<Group[]>(url)
 
   const extraButtons = isAdminMode ?
     (
@@ -65,7 +65,7 @@ function DiscGroups(props: InjectRole & InjectAdminMode & RouteProps<void>) {
   )
 }
 
-function getColumns(): Column<DiscGroup>[] {
+function getColumns(): Column<Group>[] {
   return [
     {
       key: 'idx',
@@ -105,7 +105,7 @@ function getColumns(): Column<DiscGroup>[] {
   ]
 }
 
-function formatLinkedTitle(row: DiscGroup) {
+function formatLinkedTitle(row: Group) {
   let color = isJustUpdated(row.lastUpdate) ? 'red' : '#C67532'
   return (
     <>
@@ -115,21 +115,21 @@ function formatLinkedTitle(row: DiscGroup) {
   )
 }
 
-function formatLastUpdate(row: DiscGroup) {
+function formatLastUpdate(row: Group) {
   if (!row.lastUpdate) return '停止更新'
   return `${formatTimeout(row.lastUpdate)}前`
 }
 
-function formatEdit(t: DiscGroup) {
+function formatEdit(t: Group) {
   return <Link to={`/disc_groups/${t.index}`}><EditOutlined /></Link>
 }
 
-function formatItem(t: DiscGroup) {
+function formatItem(t: Group) {
   return <Link to={`/disc_groups/${t.index}/discs`}><UnorderedListOutlined /></Link>
 }
 
 function compareDiscGroups() {
-  return composeCompares<DiscGroup>([
+  return composeCompares<Group>([
     (a, b) => a.status.localeCompare(b.status),
     (a, b) => a.update.localeCompare(b.update),
     (a, b) => b.index.localeCompare(a.index)

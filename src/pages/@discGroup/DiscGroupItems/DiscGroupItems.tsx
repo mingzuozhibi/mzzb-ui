@@ -13,10 +13,10 @@ import { Column, Table } from '../../../comps/@table/Table'
 
 import { compareSurp, compareTitle, discTitle } from '../../@funcs'
 import { InjectToAdds, injectToAdds } from '../../@inject'
-import { Disc, DiscGroup, RouteProps } from '../../@types'
+import { Disc, Group, RouteProps } from '../../@types'
 import './DiscGroupItems.scss'
 
-interface Data extends DiscGroup {
+interface Data extends Group {
   discs: Disc[]
 }
 
@@ -149,7 +149,7 @@ function getColumns(extraColumn: Column<Disc>): Column<Disc>[] {
     {
       key: 'surp',
       title: '天数',
-      format: (t) => `${t.surplusDays}天`,
+      format: (t) => `${t.releaseDays}天`,
       compare: composeCompares([compareSurp, compareTitle]),
     },
     {

@@ -24,11 +24,11 @@ export const routes: RouteInfo[] = [
     loader: () => import(/* webpackChunkName: "disc_group_detail" */'./pages/@discGroup/DiscGroupDetail/DiscGroupDetail')
   },
   {
-    path: '/disc_groups/:key/discs',
+    path: '/disc_groups/:index/discs',
     loader: () => import(/* webpackChunkName: "disc_group_items" */'./pages/@discGroup/DiscGroupItems/DiscGroupItems')
   },
   {
-    path: '/discs/disc_groups/:key',
+    path: '/discs/disc_groups/:index',
     loader: () => import(/* webpackChunkName: "discs_of_disc_group" */'./pages/@disc/Discs/DiscsOfDiscGroup')
   },
   {
