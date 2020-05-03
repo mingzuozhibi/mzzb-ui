@@ -28,6 +28,7 @@ interface Props {
   page?: Page
   error?: string
   handler: Handler
+  sortButtos: React.ReactNode
   setPageParams: (PageParams: PageParams) => void
 }
 
@@ -35,7 +36,7 @@ const message = '点击复制按钮可进入复制模式，选中想要复制的
 
 export function Discs(props: Props) {
 
-  const { error, data, page, handler, setPageParams } = props
+  const { error, data, page, handler, sortButtos, setPageParams } = props
   const [pcMode, setPcMode] = useState(false)
   const title = data ? data.title : '载入中'
 
@@ -47,6 +48,7 @@ export function Discs(props: Props) {
       <Button onClick={() => setPcMode(!pcMode)}>
         {pcMode ? '智能隐藏列' : '显示所有列'}
       </Button>
+      {sortButtos}
     </>
   )
 
@@ -73,7 +75,6 @@ export function Discs(props: Props) {
                 cols={getColumns(page)}
                 title={data.title}
                 handler={handler}
-                defaultSort={createCompareRank()}
                 copyFmt={((disc, idx) => {
                   return `${idx + 1})`
                     + ` ${discRank(disc)}`
