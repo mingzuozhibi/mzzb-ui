@@ -2,8 +2,8 @@ import React from 'react'
 import { Button, Input, Modal } from 'antd'
 import { KeyOutlined, UserOutlined } from '@ant-design/icons'
 import { useAjax } from '../../../hooks/useAjax'
-import { md5Password } from '../../../funcs/manager'
 import { CustomHeader } from '../../../comps/CustomHeader'
+import { encodePasswd } from '../../../@version/passwd'
 
 interface Form {
   username?: string
@@ -18,16 +18,16 @@ export default function UserAdd() {
 
   function saveModel() {
     if (!form.username) {
-      Modal.warning({title: '请检查输入项', content: `你必须输入用户名称`})
+      Modal.warning({ title: '请检查输入项', content: `你必须输入用户名称` })
       return
     }
 
     if (!form.password) {
-      Modal.warning({title: '请检查输入项', content: `你必须输入用户密码`})
+      Modal.warning({ title: '请检查输入项', content: `你必须输入用户密码` })
       return
     }
 
-    form.password = md5Password(form.username, form.password)
+    form.password = encodePasswd(form.username, form.password)
 
     doAdd('/api/users', '添加用户', {
       body: form, onSuccess() {
@@ -38,10 +38,10 @@ export default function UserAdd() {
 
   return (
     <div className="UserAdd">
-      <CustomHeader header="添加用户"/>
+      <CustomHeader header="添加用户" />
       <div className="input-wrapper">
         <Input
-          prefix={<UserOutlined/>}
+          prefix={<UserOutlined />}
           defaultValue={form.username}
           onChange={e => form.username = e.target.value}
           placeholder={`请输入用户名称`}
@@ -50,7 +50,7 @@ export default function UserAdd() {
       <div className="input-wrapper">
         <Input
           type="password"
-          prefix={<KeyOutlined/>}
+          prefix={<KeyOutlined />}
           defaultValue={form.password}
           onChange={e => form.password = e.target.value}
           placeholder={`请输入用户密码`}

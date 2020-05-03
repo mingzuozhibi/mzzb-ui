@@ -13,22 +13,21 @@ import { Column, Table } from '../../../comps/@table/Table'
 
 import { compareSurp, compareTitle, discTitle } from '../../@funcs'
 import { InjectToAdds, injectToAdds } from '../../@inject'
-import { Disc, DiscGroup, RouteProps } from '../../@types'
+import { Disc, Group, RouteProps } from '../../@types'
 import './DiscGroupItems.scss'
 
-interface Data extends DiscGroup {
+interface Data extends Group {
   discs: Disc[]
 }
 
-const columns = 'id,asin,title,titlePc,surplusDays'
-
 export default injectToAdds(DiscGroupItems)
 
-function DiscGroupItems(props: InjectToAdds & RouteProps<{ key: string }>) {
+function DiscGroupItems(props: InjectToAdds & RouteProps<{ index: string }>) {
 
-  const {toAdds, pushToAdds, dropToAdds, fetchCount, setFetchCount, match} = props
-  const findDiscsUrl = `/api/discGroups/key/${match.params.key}/discs?discColumns=${columns}`
-  const [{error, data}, handler, {modify}] = useData<Data>(findDiscsUrl)
+  const index = props.match.params.index
+  const { toAdds, pushToAdds, dropToAdds, fetchCount, setFetchCount } = props
+  const findDiscsUrl = `/api/groups/find/index/${index}/with/discs`
+  const [{ error, data }, handler, { modify }] = useData<Data>(findDiscsUrl)
   const [discSearching, doSearchDisc] = useAjax<Disc>('get')
   const [countSearching, doSearchCount] = useAjax<number>('get')
   const [, doPush] = useAjax<Disc>('post')
@@ -39,17 +38,17 @@ function DiscGroupItems(props: InjectToAdds & RouteProps<{ key: string }>) {
     const asin = asinRef.current
 
     if (!asin) {
-      Modal.warning({title: '请检查输入项', content: `碟片ASIN必须输入`})
+      Modal.warning({ title: '请检查输入项', content: `碟片ASIN必须输入` })
       return
     }
 
     if (toAdds.some(t => t.asin === asin)) {
-      Modal.warning({title: '请检查输入项', content: `该碟片已存在于待选列表`})
+      Modal.warning({ title: '请检查输入项', content: `该碟片已存在于待选列表` })
       return
     }
 
     if (data!.discs.some(t => t.asin === asin)) {
-      Modal.warning({title: '请检查输入项', content: `该碟片已存在于当前列表`})
+      Modal.warning({ title: '请检查输入项', content: `该碟片已存在于当前列表` })
       return
     }
 
@@ -81,14 +80,14 @@ function DiscGroupItems(props: InjectToAdds & RouteProps<{ key: string }>) {
   }
 
   function fetchActiveCount() {
-    doSearchCount('/api/admin/fetchCount', '查询抓取中的碟片数量', {onSuccess: setFetchCount})
+    doSearchCount('/api/admin/fetchCount', '查询抓取中的碟片数量', { onSuccess: setFetchCount })
   }
 
   function getPushCommand() {
     return {
       key: 'command',
       title: '添加',
-      format: (t: Disc) => <FileAddOutlined onClick={() => pushDisc(data!.id, t.id)}/>
+      format: (t: Disc) => <FileAddOutlined onClick={() => pushDisc(data!.id, t.id)} />
     }
   }
 
@@ -96,7 +95,7 @@ function DiscGroupItems(props: InjectToAdds & RouteProps<{ key: string }>) {
     return {
       key: 'command',
       title: '移除',
-      format: (t: Disc) => <DeleteOutlined onClick={() => dropDisc(data!.id, t.id)}/>
+      format: (t: Disc) => <DeleteOutlined onClick={() => dropDisc(data!.id, t.id)} />
     }
   }
 
@@ -104,7 +103,7 @@ function DiscGroupItems(props: InjectToAdds & RouteProps<{ key: string }>) {
 
   return (
     <div className="DiscGroupItems">
-      <CustomHeader header="管理碟片" title={title} error={error} handler={handler}/>
+      <CustomHeader header="管理碟片" title={title} error={error} handler={handler} />
       {data && (
         <>
           <div className="input-wrapper">
@@ -129,7 +128,7 @@ function DiscGroupItems(props: InjectToAdds & RouteProps<{ key: string }>) {
             rows={data.discs}
             cols={getColumns(getDropCommand())}
             title={data.title}
-            extraCaption={`更新于${formatTimeout(data.modifyTime)}前`}
+            extraCaption={`更新于${formatTimeout(data.lastUpdate)}前`}
             defaultSort={composeCompares([compareSurp, compareTitle])}
           />
         </>
@@ -149,7 +148,7 @@ function getColumns(extraColumn: Column<Disc>): Column<Disc>[] {
     {
       key: 'surp',
       title: '天数',
-      format: (t) => `${t.surplusDays}天`,
+      format: (t) => `${t.releaseDays}天`,
       compare: composeCompares([compareSurp, compareTitle]),
     },
     {

@@ -16,21 +16,22 @@ interface DiscComing {
   asin: string
   type?: string
   title: string
-  tracked: boolean
+  discId?: number
   createOn: number
 }
 
 const cols = getColumns()
 
-export default function DiscComing({location, history}: RouteProps<void>) {
+export default function DiscComing({ location, history }: RouteProps<void>) {
 
-  const [{data, page, error}, handler] = useData<DiscComing[]>(`/gateway/discShelfs${location.search}`)
+  const query = location.search ? location.search + '&sort=id,desc' : '?sort=id,desc'
+  const [{ data, page, error }, handler] = useData<DiscComing[]>(`/api/shelfs${query}`)
 
   function onPaginationChange(page: number, pageSize?: number) {
     if (pageSize === 20) {
       history.push(`/disc_coming?page=${page}`)
     } else {
-      history.push(`/disc_coming?page=${page}&pageSize=${pageSize}`)
+      history.push(`/disc_coming?page=${page}&size=${pageSize}`)
     }
   }
 
@@ -39,13 +40,13 @@ export default function DiscComing({location, history}: RouteProps<void>) {
   return (
     <div className="DiscComing">
       {error && (
-        <Alert message={error} type="error"/>
+        <Alert message={error} type="error" />
       )}
       {data && (
-        <Table cols={cols} rows={data} title="上架追踪" handler={handler}/>
+        <Table cols={cols} rows={data} title="上架追踪" handler={handler} />
       )}
       {page && (
-        <CustomPagination page={page} onChange={onPaginationChange}/>
+        <CustomPagination page={page} onChange={onPaginationChange} />
       )}
     </div>
   )
@@ -67,13 +68,13 @@ function getColumns(): Column<DiscComing>[] {
     {
       key: 'createOn',
       title: '抓取时间',
-      format: (t) => <CustomDate time={t.createOn}/>,
+      format: (t) => <CustomDate time={t.createOn} />,
       tdClass: createJustUpdateTdClass()
     },
     {
       key: 'followed',
-      title: <QuestionOutlined/>,
-      format: (t) => t.tracked ? <Link to={`/discs/asin/${t.asin}`}>已有</Link> : '暂无'
+      title: <QuestionOutlined />,
+      format: (t) => t.discId ? <Link to={`/discs/${t.discId}`}>已有</Link> : '暂无'
     },
     {
       key: 'type',
@@ -83,7 +84,7 @@ function getColumns(): Column<DiscComing>[] {
     {
       key: 'title',
       title: '碟片标题',
-      format: (t) => <CustomLink href={`http://www.amazon.co.jp/dp/${t.asin}`} title={t.title}/>
+      format: (t) => <CustomLink href={`http://www.amazon.co.jp/dp/${t.asin}`} title={t.title} />
     },
   ]
 }

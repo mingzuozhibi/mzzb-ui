@@ -4,8 +4,8 @@ import { AppHeader } from './app-header'
 
 function mapStateToProps(state: RootState) {
   return {
-    session: state.session,
     viewSider: state.layout.viewSider,
+    isLogged: state.token?.user?.roles?.includes('Login') || false,
   }
 }
 
@@ -17,12 +17,6 @@ function mapDispatchToProps(dispatch: any) {
     setViewSider(viewSider: boolean) {
       dispatch({type: 'setViewSider', viewSider})
     },
-    sessionLogout() {
-      dispatch({type: 'sessionLogoutRequest'})
-    },
-    refreshSession() {
-      dispatch({type: 'sessionQueryRequest'})
-    }
   }
 }
 

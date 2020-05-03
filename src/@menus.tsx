@@ -1,7 +1,7 @@
 import React from 'react'
 import { BarChartOutlined, GithubOutlined } from '@ant-design/icons'
 
-type Role = 'ROLE_ADMIN' | 'ROLE_BASIC'
+type Role = 'RootAdmin' | 'UserAdmin' | 'DiscAdmin' | 'Login' | 'Guest'
 
 export interface MenuInfo {
   matchPath: string
@@ -26,12 +26,12 @@ export const menuInfos: MenuInfo[] = [
     iconType: 'icon-user',
     menuTitle: '用户管理',
     matchPath: '/users',
-    menuRole: 'ROLE_ADMIN'
+    menuRole: 'UserAdmin'
   },
   {
     iconNode: <BarChartOutlined/>,
     menuTitle: '系统日志',
-    matchPath: '/console',
+    matchPath: '/console/Default',
   },
   {
     iconType: 'icon-social-tieba',

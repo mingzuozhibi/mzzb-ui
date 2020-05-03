@@ -11,7 +11,7 @@ import { formatTimeout } from '../../../funcs/format'
 import { composeCompares } from '../../../funcs/compare'
 
 import { InjectAdminMode, injectAdminMode, InjectRole, injectRole } from '../../@inject'
-import { DiscGroup, RouteProps, viewTypes } from '../../@types'
+import { Group, RouteProps } from '../../@types'
 import './DiscGroups.scss'
 
 const adminCols = getColumns()
@@ -23,39 +23,39 @@ export default injectRole(injectAdminMode(DiscGroups))
 
 function DiscGroups(props: InjectRole & InjectAdminMode & RouteProps<void>) {
 
-  const {isBasic, isAdminMode, setAdminMode, history} = props
+  const { isDiscAdmin, isAdminMode, setAdminMode, history } = props
 
-  const showExtraButtons = isBasic
-  const showExtraColumns = isBasic && isAdminMode
-  const fetchPrivateData = isBasic && isAdminMode
+  const showExtraButtons = isDiscAdmin
+  const showExtraColumns = isDiscAdmin && isAdminMode
+  const fetchPrivateData = isDiscAdmin && isAdminMode
 
-  const url = fetchPrivateData ? '/api/discGroups?hasPrivate=true' : '/api/discGroups'
-  const [{error, data}, handler] = useData<DiscGroup[]>(url)
+  const url = fetchPrivateData ? '/api/groups' : '/api/groups/find/status/Current'
+  const [{ error, data }, handler] = useData<Group[]>(url)
 
-  const extraButtons = isAdminMode ? (
-    <Button.Group>
-      <Button onClick={() => setAdminMode(false)}>浏览模式</Button>
-      <Button onClick={() => history.push('/disc_groups/add')}>添加列表</Button>
-    </Button.Group>
-  ) : (
-    <Button.Group>
-      <Button onClick={() => setAdminMode(true)}>管理模式</Button>
-    </Button.Group>
-  )
+  const extraButtons = isAdminMode ?
+    (
+      <Button.Group>
+        <Button onClick={() => setAdminMode(false)}>浏览模式</Button>
+        <Button onClick={() => history.push('/disc_groups/add')}>添加列表</Button>
+      </Button.Group>
+    ) : (
+      <Button.Group>
+        <Button onClick={() => setAdminMode(true)}>管理模式</Button>
+      </Button.Group>
+    )
 
   useTitle('推荐列表')
 
   return (
     <div className="DiscGroups">
       {error && (
-        <Alert message={error} type="error"/>
+        <Alert message={error} type="error" />
       )}
       {data && (
         <Table
           rows={data}
           cols={showExtraColumns ? adminCols : guestCols}
           title="推荐列表"
-          trClass={trClass}
           handler={handler}
           defaultSort={defaultSort}
           extraCaption={showExtraButtons && extraButtons}
@@ -65,11 +65,7 @@ function DiscGroups(props: InjectRole & InjectAdminMode & RouteProps<void>) {
   )
 }
 
-function trClass(t: DiscGroup) {
-  return {'warning': t.viewType === 'PrivateList'}
-}
-
-function getColumns(): Column<DiscGroup>[] {
+function getColumns(): Column<Group>[] {
   return [
     {
       key: 'idx',
@@ -82,7 +78,17 @@ function getColumns(): Column<DiscGroup>[] {
       format: formatLinkedTitle
     },
     {
-      key: 'update',
+      key: 'status_type',
+      title: '类型',
+      format: t => t.status
+    },
+    {
+      key: 'update_type',
+      title: '更新',
+      format: t => t.update
+    },
+    {
+      key: 'last_update',
       title: '最后更新',
       format: formatLastUpdate
     },
@@ -99,33 +105,33 @@ function getColumns(): Column<DiscGroup>[] {
   ]
 }
 
-function formatLinkedTitle(row: DiscGroup) {
-  let color = isJustUpdated(row.modifyTime) ? 'red' : '#C67532'
+function formatLinkedTitle(row: Group) {
+  let color = isJustUpdated(row.lastUpdate) ? 'red' : '#C67532'
   return (
     <>
-      <Link to={`/discs/disc_groups/${row.key}`}>{row.title}</Link>
-      <span style={{color, marginLeft: 8}}>({row.discCount})</span>
+      <Link to={`/discs/disc_groups/${row.index}`}>{row.title}</Link>
+      <span style={{ color, marginLeft: 8 }}>({row.discCount})</span>
     </>
   )
 }
 
-function formatLastUpdate(row: DiscGroup) {
-  if (!row.modifyTime) return '停止更新'
-  return `${formatTimeout(row.modifyTime)}前`
+function formatLastUpdate(row: Group) {
+  if (!row.lastUpdate) return '停止更新'
+  return `${formatTimeout(row.lastUpdate)}前`
 }
 
-function formatEdit(t: DiscGroup) {
-  return <Link to={`/disc_groups/${t.key}`}><EditOutlined/></Link>
+function formatEdit(t: Group) {
+  return <Link to={`/disc_groups/${t.index}`}><EditOutlined /></Link>
 }
 
-function formatItem(t: DiscGroup) {
-  return <Link to={`/disc_groups/${t.key}/discs`}><UnorderedListOutlined/></Link>
+function formatItem(t: Group) {
+  return <Link to={`/disc_groups/${t.index}/discs`}><UnorderedListOutlined /></Link>
 }
 
 function compareDiscGroups() {
-  const sorts = viewTypes.map(e => e.value)
-  return composeCompares<DiscGroup>([
-    (a, b) => sorts.indexOf(a.viewType) - sorts.indexOf(b.viewType),
-    (a, b) => b.key.localeCompare(a.key),
+  return composeCompares<Group>([
+    (a, b) => a.status.localeCompare(b.status),
+    (a, b) => a.update.localeCompare(b.update),
+    (a, b) => b.index.localeCompare(a.index)
   ])
 }

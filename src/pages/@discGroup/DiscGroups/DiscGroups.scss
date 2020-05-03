@@ -9,9 +9,19 @@
         @include columnWidth(40px, 35px);
       }
 
-      &.update {
+      &.status_type {
         @include columnCenter();
-        @include columnWidth(95px, 90px);
+        @include columnWidth(70px, 60px);
+      }
+
+      &.update_type {
+        @include columnCenter();
+        @include columnHideWidth(600px, 70px);
+      }
+
+      &.last_update {
+        @include columnCenter();
+        @include columnWidth(90px, 80px);
       }
 
       &.edit {

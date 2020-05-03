@@ -13,7 +13,6 @@ const formLogin: FormLogin = {}
 
 interface AppFooterProps {
   viewLogin: boolean
-  submiting: boolean
   setViewLogin: (viewLogin: boolean) => void
   sessionLogin: (username: string, password: string) => void
 }
@@ -54,10 +53,9 @@ export function AppFooter(props: AppFooterProps) {
         title="用户登入"
         okText="登入"
         cancelText="取消"
-        visible={props.viewLogin}
-        confirmLoading={props.submiting}
         onOk={submitLogin}
         onCancel={hideLogin}
+        visible={props.viewLogin}
       >
         <div style={{padding: 10}}>
           <Input

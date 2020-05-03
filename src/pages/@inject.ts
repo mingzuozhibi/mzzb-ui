@@ -4,15 +4,19 @@ import { RootState } from '../@reducer'
 import { Disc } from './@types'
 
 export interface InjectRole {
-  isAdmin: boolean
-  isBasic: boolean
+  isRootAdmin: boolean
+  isUserAdmin: boolean
+  isDiscAdmin: boolean
+  isLogin: boolean
 }
 
 export const injectRole = connect(
   function (state: RootState) {
     return {
-      isAdmin: state.session.userRoles.includes('ROLE_ADMIN'),
-      isBasic: state.session.userRoles.includes('ROLE_BASIC'),
+      isRootAdmin: state.token?.user?.roles?.includes('RootAdmin') || false,
+      isUserAdmin: state.token?.user?.roles?.includes('UserAdmin') || false,
+      isDiscAdmin: state.token?.user?.roles?.includes('DiscAdmin') || false,
+      isLogin: state.token?.user?.roles?.includes('Login') || false,
     }
   }
 )
@@ -31,7 +35,7 @@ export const injectAdminMode = connect(
   function (dispatch: Dispatch) {
     return {
       setAdminMode(adminMode: boolean) {
-        dispatch({type: 'setAdminMode', adminMode})
+        dispatch({ type: 'setAdminMode', adminMode })
       }
     }
   }
@@ -55,13 +59,13 @@ export const injectToAdds = connect(
   function (dispatch: Dispatch) {
     return {
       pushToAdds(disc: Disc) {
-        dispatch({type: 'pushToAdds', disc})
+        dispatch({ type: 'pushToAdds', disc })
       },
       dropToAdds(disc: Disc) {
-        dispatch({type: 'dropToAdds', disc})
+        dispatch({ type: 'dropToAdds', disc })
       },
       setFetchCount(fetchCount: number) {
-        dispatch({type: 'setFetchCount', fetchCount})
+        dispatch({ type: 'setFetchCount', fetchCount })
       }
     }
   }

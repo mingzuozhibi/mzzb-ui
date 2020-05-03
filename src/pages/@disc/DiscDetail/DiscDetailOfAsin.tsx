@@ -6,7 +6,7 @@ import { RouteProps } from '../../@types'
 
 export default injectRole(DiscDetailOfAsin)
 
-function DiscDetailOfAsin({isBasic, match}: InjectRole & RouteProps<{ asin: string }>) {
+function DiscDetailOfAsin({isDiscAdmin, match}: InjectRole & RouteProps<{ asin: string }>) {
   const _useData = useData<Data>(`/api/discs/asin/${match.params.asin}`)
-  return <DiscDetail useDate={_useData} isBasic={isBasic}/>
+  return <DiscDetail useDate={_useData} isDiscAdmin={isDiscAdmin}/>
 }

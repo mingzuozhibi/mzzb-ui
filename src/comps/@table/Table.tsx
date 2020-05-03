@@ -44,7 +44,7 @@ export function Table<T extends BaseRow>(props: Props<T>) {
   })
   const {sortKey, sortAsc, copyMode, selected} = state
 
-  applySort()
+  const sorted = sortedRows()
 
   return (
     <div className="table-warpper">
@@ -64,7 +64,7 @@ export function Table<T extends BaseRow>(props: Props<T>) {
         </tr>
         </thead>
         <tbody>
-        {rows.map((row, idx) => (
+        {sorted.map((row, idx) => (
           <tr
             key={row.id}
             id={`row-${row.id}`}
@@ -84,6 +84,23 @@ export function Table<T extends BaseRow>(props: Props<T>) {
       </table>
     </div>
   )
+
+  function sortedRows() {
+    const sorted = [...rows]
+    if (sortKey) {
+      const findCol = cols.find(col => col.key === sortKey)
+      if (findCol && findCol.compare) {
+        const compare = findCol.compare
+        sorted.sort((a, b) => {
+          return sortAsc ? compare(a, b) : -compare(a, b)
+        })
+      }
+    }
+    else if (defaultSort) {
+      sorted.sort(defaultSort)
+    }
+    return sorted
+  }
 
   function renderSelectTh() {
     return (
@@ -120,6 +137,12 @@ export function Table<T extends BaseRow>(props: Props<T>) {
             <Button.Group>
               <Button onClick={handler.refresh} loading={handler.loading}>刷新</Button>
             </Button.Group>
+            <Button.Group>
+              <Button onClick={() => {
+                const {sortKey, sortAsc, ...other } = state
+                setState(other)
+              }}>重置排序</Button>
+            </Button.Group>
           </span>
         )}
         {extraCaption && (
@@ -144,20 +167,6 @@ export function Table<T extends BaseRow>(props: Props<T>) {
         <Button onClick={() => setCopyMode(false)}>取消</Button>
       </Button.Group>
     )
-  }
-
-  function applySort() {
-    if (sortKey) {
-      const findCol = cols.find(col => col.key === sortKey)
-      if (findCol && findCol.compare) {
-        const compare = findCol.compare
-        rows.sort((a, b) => {
-          return sortAsc ? compare(a, b) : -compare(a, b)
-        })
-      }
-    } else if (defaultSort) {
-      rows.sort(defaultSort)
-    }
   }
 
   function setCopyMode(copyMode: boolean) {
