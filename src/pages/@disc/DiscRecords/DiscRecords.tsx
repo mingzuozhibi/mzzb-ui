@@ -6,48 +6,46 @@ import { useData } from '../../../hooks/useData'
 import { formatNumber } from '../../../funcs/format'
 import { CustomHeader } from '../../../comps/CustomHeader'
 import { Column, Table } from '../../../comps/@table/Table'
-import { formatPt } from '../../@funcs'
 import { RouteProps } from '../../@types'
 
 interface Data {
   title: string
-  titlePc: string
+  release: string
   records: Record[]
-  releaseDate: string
 }
 
 interface Record {
   id: number
   date: string
-  todayPt?: number
-  totalPt?: number
-  guessPt?: number
+  addPoint?: number
+  sumPoint?: number
+  powPoint?: number
   averRank?: number
 }
 
 const cols = getColumns()
 
-export default function DiscRecords({match}: RouteProps<{ id: string }>) {
+export default function DiscRecords({ match }: RouteProps<{ id: string }>) {
 
-  const [{error, data}, handler] = useData<Data>(`/api/discs/${match.params.id}/records`)
+  const [{ error, data }, handler] = useData<Data>(`/api/records/find/disc/${match.params.id}`)
 
   useEffect(() => {
     data && initEchart(data)
   }, [data])
 
-  const title = data ? `碟片历史数据：${data.titlePc || data.title}` : `载入中`
+  const title = data ? `碟片历史数据：${data.title}` : `载入中`
 
   return (
     <div className="DiscRecords">
-      <CustomHeader header={title} error={error}/>
-      <div id="echart_warp"/>
+      <CustomHeader header={title} error={error} />
+      <div id="echart_warp" />
       {data && (
         <Table
           rows={data.records}
           cols={cols}
           trClass={trClass(data)}
           handler={handler}
-          extraCaption={<span style={{marginLeft: 8}}>如果图表显示错误，请尝试刷新</span>}
+          extraCaption={<span style={{ marginLeft: 8 }}>如果图表显示错误，请尝试刷新</span>}
         />
       )}
     </div>
@@ -56,7 +54,7 @@ export default function DiscRecords({match}: RouteProps<{ id: string }>) {
 }
 
 function trClass(data: Data) {
-  return (t: Record) => ({warning: t.date.localeCompare(data.releaseDate) >= 0})
+  return (t: Record) => ({ warning: t.date.localeCompare(data.release) >= 0 })
 }
 
 function getColumns(): Column<Record>[] {
@@ -74,17 +72,17 @@ function getColumns(): Column<Record>[] {
     {
       key: 'addPt',
       title: '日增PT',
-      format: formatTodayPt
+      format: (t) => formatPt(t.addPoint)
     },
     {
       key: 'sumPt',
       title: '累积PT',
-      format: (t) => formatPt(t.totalPt)
+      format: (t) => formatPt(t.sumPoint)
     },
     {
       key: 'powPt',
       title: '预测PT',
-      format: (t) => formatPt(t.guessPt)
+      format: (t) => formatPt(t.powPoint)
     },
     {
       key: 'averRank',
@@ -94,27 +92,31 @@ function getColumns(): Column<Record>[] {
   ]
 }
 
-function formatTodayPt(t: Record) {
-  if (t.todayPt !== undefined && t.todayPt < 10) {
-    return t.todayPt.toFixed(1) + ' pt'
+function formatDouble(double?: number) {
+  if (double === undefined) return undefined
+  if (double < 10) {
+    return double.toFixed(1)
   }
-  return formatPt(t.todayPt)
+  return formatNumber(Math.floor(double), '###,###')
 }
 
+function formatPt(pt?: number) {
+  const format = formatDouble(pt)
+  return format === undefined ? '---' : `${format} pt`
+}
+
+
 function formatRank(t: Record) {
-  if (t.averRank !== undefined && t.averRank < 10) {
-    return t.averRank.toFixed(1) + ' 位'
-  }
-  const averRank = t.averRank ? formatNumber(t.averRank, '###,###') : '---'
-  return `${averRank} 位`
+  const format = formatDouble(t.averRank)
+  return format === undefined ? '---' : `${format} 位`
 }
 
 function initEchart(data?: Data) {
   if (!data) return
 
   const dates = data.records.map(record => record.date)
-  const sumPts = data.records.map(record => record.totalPt)
-  const gesPts = data.records.map(record => record.guessPt)
+  const sumPts = data.records.map(record => record.sumPoint)
+  const powPts = data.records.map(record => record.powPoint)
   const ranks = data.records.map(record => {
     if (record.averRank !== undefined && record.averRank < 10) {
       record.averRank = Math.floor(record.averRank * 10) / 10
@@ -143,7 +145,7 @@ function initEchart(data?: Data) {
         const contentW = size.contentSize[0]
         const contentH = size.contentSize[1]
         const isLeft = mouseX < size.viewSize[0] / 2
-        return {top: mouseY - contentH - 50, left: isLeft ? mouseX + 30 : mouseX - contentW - 30}
+        return { top: mouseY - contentH - 50, left: isLeft ? mouseX + 30 : mouseX - contentW - 30 }
       }
     },
     grid: {
@@ -194,7 +196,7 @@ function initEchart(data?: Data) {
         type: 'line',
         name: '预测',
         yAxisIndex: 1,
-        data: gesPts
+        data: powPts
       }
     ]
   })
