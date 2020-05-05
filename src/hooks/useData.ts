@@ -1,7 +1,7 @@
 import { useEffect, useReducer, useState } from 'react'
 import { message, Modal } from 'antd'
 import { Handler, Page } from '../reducers/@domain'
-import request from '../funcs/request'
+import request from '../@version/request'
 
 interface State<T> {
   data?: T

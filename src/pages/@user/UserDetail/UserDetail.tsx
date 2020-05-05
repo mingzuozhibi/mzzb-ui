@@ -1,42 +1,48 @@
 import React from 'react'
-import { Button, Checkbox, Input, Modal } from 'antd'
-import { KeyOutlined, UserOutlined } from '@ant-design/icons'
+import { Checkbox, Input, Modal, Select, Switch, Radio } from 'antd'
 import { useData } from '../../../hooks/useData'
 import { CustomHeader } from '../../../comps/CustomHeader'
 import { RouteProps } from '../../@types'
 
+import { InputAddonBefore } from '../../../comps/InputAddonBefore'
 import { User } from '../../../@version/token'
-import { encodePasswd } from '../../../@version/passwd'
-
-interface Form {
-  username?: string
-  password?: string
-  enabled?: boolean
-}
-
-const form: Form = {}
+import request from '../../../@version/request'
 
 export default function UserDetail({ match }: RouteProps<{ id: string }>) {
 
-  const [{ error, data }, { loading }, { doEdit }] = useData<User>(`/api/users/${match.params.id}`)
+  const [{ error, data }, { refresh }] = useData<User>(`/api/users/${match.params.id}`)
 
-  function submitForm() {
-    if (!form.username) {
-      Modal.warning({ title: '请检查输入项', content: `你必须输入用户名称` })
-      return
-    }
-
-    if (form.password) {
-      form.password = encodePasswd(form.username, form.password)
-    }
-
-    doEdit(`/api/users/${data!.id}`, form)
+  function setEnabled(userId: number, enabled: boolean) {
+    const body = JSON.stringify({ enabled })
+    request(`/api/users/${userId}/enabled`, { body, method: 'put' }).then(json => {
+      if (json.success) {
+        refresh()
+      } else {
+        Modal.error({ title: '操作失败', content: json.message })
+      }
+    })
   }
 
-  if (data) {
-    form.username = data.username
-    form.enabled = data.enabled
-    form.password = ''
+  function pushRole(userId: number, role: string) {
+    const body = JSON.stringify({ targetRole: role })
+    request(`/api/users/${userId}/roles`, { body }).then(json => {
+      if (json.success) {
+        refresh()
+      } else {
+        Modal.error({ title: '操作失败', content: json.message })
+      }
+    })
+  }
+
+  function dropRole(userId: number, role: string) {
+    const body = JSON.stringify({ targetRole: role })
+    request(`/api/users/${userId}/roles`, { body, method: 'delete' }).then(json => {
+      if (json.success) {
+        refresh()
+      } else {
+        Modal.error({ title: '操作失败', content: json.message })
+      }
+    })
   }
 
   const tilte = data ? `用户信息「${data.username}」` : '载入中'
@@ -48,30 +54,41 @@ export default function UserDetail({ match }: RouteProps<{ id: string }>) {
         <>
           <div className="input-wrapper">
             <Input
-              prefix={<UserOutlined />}
-              defaultValue={form.username}
-              onChange={e => form.username = e.target.value}
-              placeholder={`请输入用户名称`}
+              addonBefore="用户名称"
+              readOnly={true}
+              value={data.username}
             />
           </div>
           <div className="input-wrapper">
-            <Input
-              type="password"
-              prefix={<KeyOutlined />}
-              onChange={e => form.password = e.target.value}
-              placeholder={`如不需修改用户密码可留空`}
-            />
+            <InputAddonBefore addonBefore="用户权限">
+              <Select
+                mode="multiple"
+                style={{ width: '100%' }}
+                placeholder="Please select"
+                value={data.roles}
+                onSelect={(value) => pushRole(data.id, value)}
+                onDeselect={(value) => dropRole(data.id, value)}
+              >
+                <Select.Option value="RootAdmin">RootAdmin</Select.Option>
+                <Select.Option value="UserAdmin">UserAdmin</Select.Option>
+                <Select.Option value="DiscAdmin">DiscAdmin</Select.Option>
+                <Select.Option value="Login">Login</Select.Option>
+              </Select>
+            </InputAddonBefore>
           </div>
           <div className="input-wrapper">
-            <Checkbox
-              defaultChecked={form.enabled}
-              onChange={e => form.enabled = e.target.checked}
-            >
-              启用
-            </Checkbox>
+            <Input addonBefore="创建日期" value={new Date(data.createOn).toLocaleString()} />
           </div>
           <div className="input-wrapper">
-            <Button type="primary" loading={loading} onClick={submitForm}>提交修改</Button>
+            <Input addonBefore="最后登入" value={new Date(data.loggedOn).toLocaleString()} />
+          </div>
+          <div className="input-wrapper">
+            <InputAddonBefore addonBefore="是否启用">
+              <Radio.Group value={data.enabled} onChange={(e) => setEnabled(data.id, e.target.value)}>
+                <Radio.Button value={true}>启用</Radio.Button>
+                <Radio.Button value={false}>禁用</Radio.Button>
+              </Radio.Group>
+            </InputAddonBefore>
           </div>
         </>
       )}
