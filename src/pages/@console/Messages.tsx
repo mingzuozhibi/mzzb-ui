@@ -26,7 +26,7 @@ export default function Messages({ index }: Props) {
 
   const [levels, setLevels] = useState(LEVELS)
   const [{ pageNumber, pageSize }, setPage] = useState({ pageNumber: 1, pageSize: 50 })
-  const url = `/api/messages/${index}?levels=${levels.join(',')}&page=${pageNumber}&size=${pageSize}`
+  const url = `/api/messages/${index}?levels=${levels.join(',')}&page=${pageNumber}&size=${pageSize}&sort=id,desc`
   const [{ error, data, page }, handler] = useData<Message[]>(url)
 
   data && data.forEach((e, i) => e.id = i)
