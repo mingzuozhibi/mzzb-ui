@@ -7,6 +7,7 @@ import { RouteProps } from '../../@types'
 import { InputAddonBefore } from '../../../comps/InputAddonBefore'
 import { User } from '../../../@version/token'
 import request from '../../../@version/request'
+import { safeCompare } from '../../../funcs/compare'
 
 export default function UserDetail({ match }: RouteProps<{ id: string }>) {
 
@@ -65,7 +66,7 @@ export default function UserDetail({ match }: RouteProps<{ id: string }>) {
                 mode="multiple"
                 style={{ width: '100%' }}
                 placeholder="Please select"
-                value={data.roles}
+                value={sortRoles(data.roles)}
                 onSelect={(value) => pushRole(data.id, value)}
                 onDeselect={(value) => dropRole(data.id, value)}
               >
@@ -94,4 +95,17 @@ export default function UserDetail({ match }: RouteProps<{ id: string }>) {
       )}
     </div>
   )
+}
+
+const all_roles = ['RootAdmin', 'UserAdmin', 'DiscAdmin', 'Login', 'Guest']
+const compare = safeCompare<string, number>({
+  apply: t => all_roles.indexOf(t),
+  empty: u => u === -1,
+  compare: (a, b) => a - b
+})
+
+function sortRoles(roles: string[]) {
+  const sorted = [...roles]
+  sorted.sort(compare)
+  return sorted
 }
