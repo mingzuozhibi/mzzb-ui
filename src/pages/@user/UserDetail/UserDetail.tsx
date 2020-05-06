@@ -1,5 +1,5 @@
 import React from 'react'
-import { Checkbox, Input, Modal, Select, Switch, Radio } from 'antd'
+import { Input, Modal, Select, Radio } from 'antd'
 import { useData } from '../../../hooks/useData'
 import { CustomHeader } from '../../../comps/CustomHeader'
 import { RouteProps } from '../../@types'
@@ -83,7 +83,7 @@ export default function UserDetail({ match }: RouteProps<{ id: string }>) {
             <Input addonBefore="最后登入" value={new Date(data.loggedOn).toLocaleString()} />
           </div>
           <div className="input-wrapper">
-            <InputAddonBefore addonBefore="是否启用">
+            <InputAddonBefore addonBefore="是否启用" marginRight={10}>
               <Radio.Group value={data.enabled} onChange={(e) => setEnabled(data.id, e.target.value)}>
                 <Radio.Button value={true}>启用</Radio.Button>
                 <Radio.Button value={false}>禁用</Radio.Button>
