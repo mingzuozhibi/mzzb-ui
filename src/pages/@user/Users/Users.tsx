@@ -1,17 +1,13 @@
-import React, { HTMLProps, useMemo } from 'react'
-import { Link, useHistory } from 'react-router-dom'
-import { Alert, Button, PageHeader } from 'antd'
+import React from 'react'
+import { Link } from 'react-router-dom'
 import { EditOutlined } from '@ant-design/icons'
 
-import { useData, State } from '../../../hooks/useData'
-import { useTitle } from '../../../hooks/hooks'
+import { User } from '../../../@version/token'
+import { useData } from '../../../hooks/useData'
+import { formatTime } from '../../../funcs/format'
+import { StateRender } from '../../../comps/StateRender'
 import { Column, Table } from '../../../comps/@table/Table'
 import './Users.scss'
-
-import { User } from '../../../@version/token'
-import { formatTime } from '../../../funcs/format'
-import { CustomPagination } from '../../../comps/CustomPagination'
-import { Handler } from '../../../reducers/@domain'
 
 export default function Users() {
 
@@ -27,44 +23,6 @@ export default function Users() {
         <Table rows={data} cols={getColumns()} />
       )}
     />
-  )
-}
-
-interface StateRenderProps<T> extends HTMLProps<HTMLDivElement> {
-  state: State<T>
-  handler?: Handler
-  title?: string
-  extra?: React.ReactNode[]
-  render: (data: T) => React.ReactNode
-  onChangePage?: (page: number, size?: number) => void
-}
-
-function StateRender<T>(props: StateRenderProps<T>) {
-  const { state, handler, title, extra = [], render, onChangePage, ...otherProps } = props
-  const { error, data, page } = state
-
-  useTitle(title)
-  const history = useHistory()
-  const extraMemo = useMemo(() => {
-    const refreshButton = handler && (
-      <Button key="refresh" onClick={handler.refresh} loading={handler.loading}>刷新</Button>
-    )
-    return [refreshButton, ...extra]
-  }, [handler, extra])
-
-  return (
-    <div {...otherProps}>
-      {title && (
-        <PageHeader title={title} onBack={() => history.goBack()} extra={extraMemo} />
-      )}
-      {error && (
-        <Alert message={error} type="error" />
-      )}
-      {data && render(data)}
-      {page && onChangePage && (
-        <CustomPagination page={page} onChange={onChangePage} />
-      )}
-    </div>
   )
 }
 
