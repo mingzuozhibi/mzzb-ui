@@ -48,10 +48,6 @@ export const routes: RouteInfo[] = [
     loader: () => import(/* webpackChunkName: "users" */'./pages/@user/Users/Users')
   },
   {
-    path: '/users/add',
-    loader: () => import(/* webpackChunkName: "user_add" */'./pages/@user/UserAdd/UserAdd')
-  },
-  {
     path: '/users/:id',
     loader: () => import(/* webpackChunkName: "user_detail" */'./pages/@user/UserDetail/UserDetail')
   },
