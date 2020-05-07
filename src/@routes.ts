@@ -49,7 +49,7 @@ export const routes: RouteInfo[] = [
   },
   {
     path: '/users/:id',
-    loader: () => import(/* webpackChunkName: "user_detail" */'./pages/@user/UserDetail/UserDetail')
+    loader: () => import(/* webpackChunkName: "users_id" */'./pages/@user/UsersId/UsersId')
   },
   {
     path: '/console/:index',
