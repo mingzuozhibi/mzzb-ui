@@ -20,8 +20,7 @@ function DiscGroupDetail(props: InjectRole & RouteProps<{ index: string }>) {
 
   const { isDiscAdmin, match } = props
 
-  const [{ error, data }, { loading }, { doEdit }] =
-    useData<Group>(`/api/groups/find/index/${match.params.index}`)
+  const [{ error, data }, { loading }] = useData<Group>(`/api/groups/find/index/${match.params.index}`)
 
   const form: Form = {}
 
@@ -44,7 +43,7 @@ function DiscGroupDetail(props: InjectRole & RouteProps<{ index: string }>) {
       return
     }
 
-    doEdit(`/api/discGroups/${data!.id}`, form)
+    // doEdit(`/api/discGroups/${data!.id}`, form)
   }
 
   const [deleting, doDelete] = useAjax('delete')

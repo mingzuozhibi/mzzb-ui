@@ -2,7 +2,6 @@ import React, { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { DeleteOutlined, FileAddOutlined } from '@ant-design/icons'
 import { Button, Input, Modal } from 'antd'
-import produce from 'immer'
 
 import { useData } from '../../../hooks/useData'
 import { useAjax } from '../../../hooks/useAjax'
@@ -27,7 +26,7 @@ function DiscGroupItems(props: InjectToAdds & RouteProps<{ index: string }>) {
   const index = props.match.params.index
   const { toAdds, pushToAdds, dropToAdds, fetchCount, setFetchCount } = props
   const findDiscsUrl = `/api/groups/find/index/${index}/with/discs`
-  const [{ error, data }, handler, { modify }] = useData<Data>(findDiscsUrl)
+  const [{ error, data }, handler] = useData<Data>(findDiscsUrl)
   const [discSearching, doSearchDisc] = useAjax<Disc>('get')
   const [countSearching, doSearchCount] = useAjax<number>('get')
   const [, doPush] = useAjax<Disc>('post')
@@ -61,9 +60,9 @@ function DiscGroupItems(props: InjectToAdds & RouteProps<{ index: string }>) {
     doPush(`/api/discGroups/${discGroupId}/discs/${discId}`, '添加碟片到列表', {
       onSuccess(disc: Disc) {
         dropToAdds(disc)
-        modify(produce(data!, (draft: Data) => {
-          draft.discs = [disc, ...data!.discs]
-        }))
+        // modify(produce(data!, (draft: Data) => {
+          // draft.discs = [disc, ...data!.discs]
+        // }))
       }
     })
   }
@@ -72,9 +71,9 @@ function DiscGroupItems(props: InjectToAdds & RouteProps<{ index: string }>) {
     doDrop(`/api/discGroups/${discGroupId}/discs/${discId}`, '从列表移除碟片', {
       onSuccess(disc: Disc) {
         pushToAdds(disc)
-        modify(produce(data!, (draft: Data) => {
-          draft.discs = data!.discs.filter(e => e.id !== disc.id)
-        }))
+        // modify(produce(data!, (draft: Data) => {
+          // draft.discs = data!.discs.filter(e => e.id !== disc.id)
+        // }))
       }
     })
   }

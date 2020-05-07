@@ -2,14 +2,16 @@ import React from 'react'
 import { Input, Modal, Select, Radio } from 'antd'
 import { useData } from '../../../hooks/useData'
 import { CustomHeader } from '../../../comps/CustomHeader'
-import { RouteProps } from '../../@types'
 
 import { InputAddonBefore } from '../../../comps/InputAddonBefore'
 import { User } from '../../../@version/token'
 import request from '../../../@version/request'
 import { safeCompare } from '../../../funcs/compare'
+import { useRouteMatch } from 'react-router-dom'
 
-export default function UserDetail({ match }: RouteProps<{ id: string }>) {
+export default function UserDetail() {
+
+  const match = useRouteMatch<{ id: string }>()
 
   const [{ error, data }, { refresh }] = useData<User>(`/api/users/${match.params.id}`)
 
@@ -46,7 +48,7 @@ export default function UserDetail({ match }: RouteProps<{ id: string }>) {
     })
   }
 
-  const tilte = data ? `用户信息「${data.username}」` : '载入中'
+  const tilte = data ? `用户信息「${data.username}」` : '用户信息「载入中」'
 
   return (
     <div className="UserDetail">
