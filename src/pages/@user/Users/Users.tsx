@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import { EditOutlined } from '@ant-design/icons'
 
@@ -12,16 +12,16 @@ import './Users.scss'
 export default function Users() {
 
   const [state, handler] = useData<User[]>(`/api/users`)
+  const cols = useMemo(getColumns, [])
+  const render = useCallback((data: User[]) => (<Table rows={data} cols={cols} />), [cols])
 
   return (
     <StateRender
       title="用户管理"
       className="Users"
       state={state}
+      render={render}
       handler={handler}
-      render={data => (
-        <Table rows={data} cols={getColumns()} />
-      )}
     />
   )
 }
