@@ -7,11 +7,19 @@
       @include columnCenter();
 
       &.id {
-        @include columnWidth(40px, 40px);
+        @include columnWidth(45px, 40px);
+      }
+
+      &.username {
+        @include columnWidth(75px, 70px);
       }
 
       &.enabled {
         @include columnWidth(45px, 40px);
+      }
+
+      &.createOn {
+        @include columnHide(600px);
       }
 
       &.command {

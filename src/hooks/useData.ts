@@ -3,7 +3,7 @@ import { message, Modal } from 'antd'
 import { Handler, Page } from '../reducers/@domain'
 import request from '../@version/request'
 
-interface State<T> {
+export interface State<T> {
   data?: T
   page?: Page
   error?: string
