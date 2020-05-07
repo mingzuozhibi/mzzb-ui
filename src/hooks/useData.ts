@@ -1,20 +1,14 @@
-import { useEffect, useReducer, useState } from 'react'
-import { message, Modal } from 'antd'
+import { useEffect, useReducer, useState, useCallback, useMemo } from 'react'
 import { Handler, Page } from '../reducers/@domain'
-import request from '../funcs/request'
+import request from '../@version/request'
 
-interface State<T> {
+export interface State<T> {
   data?: T
   page?: Page
   error?: string
 }
 
-interface ModifyMethod<T> {
-  doEdit: (url: string, form: any) => void
-  modify: (state: T) => void
-}
-
-export type UseData<T> = [State<T>, Handler, ModifyMethod<T>]
+export type UseData<T> = [State<T>, Handler]
 
 export function useData<T>(url: string, initialState: State<T> = {}) {
   const [loading, setLoading] = useState(true)
@@ -22,46 +16,29 @@ export function useData<T>(url: string, initialState: State<T> = {}) {
     switch (action.type) {
       case 'Receive':
         setLoading(false)
-        return {data: action.data, page: action.page}
+        return { data: action.data, page: action.page }
       case 'Message':
         setLoading(false)
-        return {error: action.error}
-      case 'Modified':
-        return {data: action.data}
+        return { error: action.error }
       default:
         return prevState
     }
   }, initialState)
 
-  useEffect(refresh, [url, dispatch])
-
-  function refresh() {
+  const refresh = useCallback(() => {
     setLoading(true)
     request(url).then((result) => {
       if (result.success) {
-        dispatch({type: 'Receive', data: result.data, page: result.page})
+        dispatch({ type: 'Receive', data: result.data, page: result.page })
       } else {
-        dispatch({type: 'Message', error: result.message})
+        dispatch({ type: 'Message', error: result.message })
       }
     })
-  }
+  }, [url, setLoading, dispatch])
 
-  function doEdit(url: string, form: any) {
-    setLoading(true)
-    request(url, {method: 'put', body: JSON.stringify(form)}).then(result => {
-      setLoading(false)
-      if (result.success) {
-        message.success('提交修改成功')
-        modify(result.data)
-      } else {
-        Modal.error({title: '提交修改失败', content: result.message})
-      }
-    })
-  }
+  useEffect(refresh, [url, refresh])
 
-  function modify(data: T) {
-    dispatch({type: 'Modified', data})
-  }
+  const handler = useMemo(() => ({ loading, refresh }), [loading, refresh])
 
-  return [state, {loading, refresh}, {doEdit, modify}] as UseData<T>
+  return [state, handler] as UseData<T>
 }

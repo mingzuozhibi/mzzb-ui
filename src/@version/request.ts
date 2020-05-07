@@ -25,6 +25,7 @@ type Result = { success: true, [extraProps: string]: any } | { success: false, m
 
 export default function request(url: string, props: RequestInit = {}): Promise<Result> {
   props.credentials = props.credentials || 'include'
+  props.headers = { 'x-token': localStorage['x-token'], ...props.headers }
   if (props.body !== undefined) {
     props.method = props.method || 'post'
     props.headers = { 'Content-Type': 'application/json', ...props.headers }

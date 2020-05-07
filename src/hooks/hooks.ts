@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 import debounce from 'lodash.debounce'
 
-export function useTitle(title: string) {
+export function useTitle(title?: string) {
   useEffect(() => {
-    document.title = `${title} - mingzuozhibi.com`
+    if (title)
+      document.title = `${title} - mingzuozhibi.com`
   }, [title])
 }
 
@@ -12,7 +13,7 @@ export function useWidth(selector: string) {
 
   useEffect(() => {
     const updateWidth = () => setWidth(document.querySelector(selector)!.clientWidth)
-    const handleWindowResize = debounce(updateWidth, 100, {leading: true, maxWait: 200})
+    const handleWindowResize = debounce(updateWidth, 100, { leading: true, maxWait: 200 })
 
     updateWidth()
 

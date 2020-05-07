@@ -1,40 +1,28 @@
-import React from 'react'
+import React, { useMemo, useCallback } from 'react'
 import { Link } from 'react-router-dom'
-import { Alert, Button } from 'antd'
 import { EditOutlined } from '@ant-design/icons'
 
+import { User } from '../../../@version/token'
 import { useData } from '../../../hooks/useData'
-import { useTitle } from '../../../hooks/hooks'
+import { formatTime } from '../../../funcs/format'
+import { StateRender } from '../../../comps/StateRender'
 import { Column, Table } from '../../../comps/@table/Table'
-import { RouteProps } from '../../@types'
 import './Users.scss'
 
-import { User } from '../../../@version/token'
-import { formatTime } from '../../../funcs/format'
+export default function Users() {
 
-const cols = getColumns()
-
-export default function Users({ history }: RouteProps<void>) {
-
-  const [{ error, data }, handler] = useData<User[]>(`/api/users`)
-
-  const addUserButton = (
-    <Button.Group>
-      <Button onClick={() => history.push(`/users/add`)}>添加用户</Button>
-    </Button.Group>
-  )
-
-  useTitle('用户管理')
+  const [state, handler] = useData<User[]>(`/api/users`)
+  const cols = useMemo(getColumns, [])
+  const render = useCallback((data: User[]) => (<Table rows={data} cols={cols} />), [cols])
 
   return (
-    <div className="Users">
-      {error && (
-        <Alert message={error} type="error" />
-      )}
-      {data && (
-        <Table rows={data} cols={cols} title="用户管理" handler={handler} extraCaption={addUserButton} />
-      )}
-    </div>
+    <StateRender
+      title="用户管理"
+      className="Users"
+      state={state}
+      render={render}
+      handler={handler}
+    />
   )
 }
 
@@ -56,14 +44,14 @@ function getColumns(): Column<User>[] {
       format: (t) => t.enabled ? '是' : '--'
     },
     {
-      key: 'registerDate',
+      key: 'createOn',
       title: '注册时间',
-      format: (t) => formatRegisterDate(t)
+      format: (t) => formatCreateOn(t)
     },
     {
-      key: 'lastLoggedIn',
+      key: 'loggedOn',
       title: '最后登入',
-      format: (t) => formatLastLoggedIn(t),
+      format: (t) => formatLoggedOn(t),
       tdClass: (t) => justLogged(t) ? 'info' : ''
     },
     {
@@ -74,11 +62,11 @@ function getColumns(): Column<User>[] {
   ]
 }
 
-function formatRegisterDate(t: User) {
+function formatCreateOn(t: User) {
   return formatTime(t.loggedOn)
 }
 
-function formatLastLoggedIn(t: User) {
+function formatLoggedOn(t: User) {
   return formatTime(t.loggedOn)
 }
 

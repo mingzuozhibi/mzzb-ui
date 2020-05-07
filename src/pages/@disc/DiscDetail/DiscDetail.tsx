@@ -23,7 +23,7 @@ interface Props {
 
 export function DiscDetail({useDate, isDiscAdmin}: Props) {
 
-  const [{data, error}, {loading}, {doEdit}] = useDate
+  const [{data, error}, {loading}] = useDate
   const form: Form = {}
 
   if (data) {
@@ -41,7 +41,7 @@ export function DiscDetail({useDate, isDiscAdmin}: Props) {
       Modal.warning({title: '请检查输入项', content: `你输入的发售日期格式不正确，应该为：yyyy-MM-dd`})
       return
     }
-    doEdit(`/api/discs/${data!.id}`, form)
+    // doEdit(`/api/discs/${data!.id}`, form)
   }
 
   const title = data ? `碟片信息：${discTitle(data)}` : '载入中'
