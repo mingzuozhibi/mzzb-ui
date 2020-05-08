@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { Alert, Button } from 'antd'
 import { EditOutlined, UnorderedListOutlined } from '@ant-design/icons'
 
@@ -10,22 +10,22 @@ import { isJustUpdated } from '../../../funcs/domain'
 import { formatTimeout } from '../../../funcs/format'
 import { composeCompares } from '../../../funcs/compare'
 
-import { InjectAdminMode, injectAdminMode } from '../../@inject'
-import { Group, RouteProps } from '../../@types'
+import { Group } from '../../@types'
 import './DiscGroups.scss'
 import { useTokenSelector } from '../../../@version/token'
+import { useAdminSelector, setAdminMode } from '../../../reducers/admin'
+import { useDispatch } from 'react-redux'
 
 const adminCols = getColumns()
 const guestCols = adminCols.filter(col => !['edit', 'item'].includes(col.key))
 
 const defaultSort = compareDiscGroups()
 
-export default injectAdminMode(DiscGroups)
+export default function DiscGroups() {
 
-function DiscGroups(props: InjectAdminMode & RouteProps<void>) {
-
-  const { isAdminMode, setAdminMode, history } = props
-
+  const history = useHistory()
+  const dispatch = useDispatch()
+  const isAdminMode = useAdminSelector(state => state.isAdminMode)
   const isDiscAdmin = useTokenSelector(state => state.roles.isDiscAdmin)
 
   const showExtraButtons = isDiscAdmin
@@ -38,12 +38,12 @@ function DiscGroups(props: InjectAdminMode & RouteProps<void>) {
   const extraButtons = isAdminMode ?
     (
       <Button.Group>
-        <Button onClick={() => setAdminMode(false)}>浏览模式</Button>
+        <Button onClick={() => dispatch(setAdminMode(false))}>浏览模式</Button>
         <Button onClick={() => history.push('/disc_groups/add')}>添加列表</Button>
       </Button.Group>
     ) : (
       <Button.Group>
-        <Button onClick={() => setAdminMode(true)}>管理模式</Button>
+        <Button onClick={() => dispatch(setAdminMode(true))}>管理模式</Button>
       </Button.Group>
     )
 

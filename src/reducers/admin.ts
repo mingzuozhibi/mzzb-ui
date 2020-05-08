@@ -1,4 +1,6 @@
-import { AnyAction } from 'redux'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { useSelector } from 'react-redux'
+import { RootState } from '../@reducer'
 import { Disc } from '../pages/@types'
 
 export interface AdminState {
@@ -7,28 +9,43 @@ export interface AdminState {
   isAdminMode: boolean
 }
 
-const initState: AdminState = {
+const initialState: AdminState = {
   toAdds: [],
   isAdminMode: false,
   ...JSON.parse(sessionStorage['adminState'] || '{}')
 }
 
-export const adminReducer = (state = initState, action: AnyAction) => {
-  switch (action.type) {
-    case 'pushToAdds':
-      return saveState({...state, toAdds: [action.disc, ...state.toAdds]})
-    case 'dropToAdds':
-      return saveState({...state, toAdds: state.toAdds.filter(t => t.id !== action.disc.id)})
-    case 'setAdminMode':
-      return saveState({...state, isAdminMode: action.adminMode})
-    case 'setFetchCount':
-      return saveState({...state, fetchCount: action.fetchCount})
-    default:
-      return state
+const adminSlice = createSlice({
+  name: 'admin',
+  initialState,
+  reducers: {
+    pushToAdds: (state, action: PayloadAction<Disc>) => {
+      state.toAdds.unshift(action.payload)
+      saveAdminStateToSessionStorage(state)
+    },
+    dropToAdds: (state, action: PayloadAction<Disc>) => {
+      state.toAdds = state.toAdds.filter(t => t.id !== action.payload.id)
+      saveAdminStateToSessionStorage(state)
+    },
+    setAdminMode: (state, action: PayloadAction<boolean>) => {
+      state.isAdminMode = action.payload
+      saveAdminStateToSessionStorage(state)
+    },
+    setFetchCount: (state, action: PayloadAction<number>) => {
+      state.fetchCount = action.payload
+      saveAdminStateToSessionStorage(state)
+    },
   }
+})
+
+export function useAdminSelector<T>(selector: (state: AdminState) => T) {
+  return useSelector((state: RootState) => selector(state.admin))
 }
 
-function saveState(state: AdminState) {
+export const adminReducer = adminSlice.reducer
+
+export const { pushToAdds, dropToAdds, setAdminMode, setFetchCount } = adminSlice.actions
+
+function saveAdminStateToSessionStorage(state: AdminState) {
   sessionStorage['adminState'] = JSON.stringify(state)
-  return state
 }
