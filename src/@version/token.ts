@@ -2,6 +2,8 @@ import { call, put } from "redux-saga/effects";
 import { createSlice, PayloadAction, createAction } from "@reduxjs/toolkit";
 import { message } from "antd";
 import request, { Result } from "./request";
+import { useSelector } from "react-redux";
+import { RootState } from "../@reducer";
 
 export interface TokenState {
   loading: boolean
@@ -75,6 +77,10 @@ const tokenSlice = createSlice({
     }
   }
 })
+
+export function useTokenSelector<T>(selector: (state: TokenState) => T) {
+  return useSelector((state: RootState) => selector(state.token))
+}
 
 export const tokenReducer = tokenSlice.reducer
 

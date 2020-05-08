@@ -3,8 +3,8 @@ import { Button, Input, Modal, Popconfirm, Radio } from 'antd'
 import { useData } from '../../../hooks/useData'
 import { useAjax } from '../../../hooks/useAjax'
 import { CustomHeader } from '../../../comps/CustomHeader'
-import { InjectRole, injectRole } from '../../@inject'
 import { Group, RouteProps } from '../../@types'
+import { useTokenSelector } from '../../../@version/token'
 
 interface Form {
   index?: string
@@ -14,11 +14,13 @@ interface Form {
   updateDate?: string
 }
 
-export default injectRole(DiscGroupDetail)
+export default DiscGroupDetail
 
-function DiscGroupDetail(props: InjectRole & RouteProps<{ index: string }>) {
+function DiscGroupDetail(props: RouteProps<{ index: string }>) {
 
-  const { isDiscAdmin, match } = props
+  const { match } = props
+
+  const isDiscAdmin = useTokenSelector(state => state.roles.isDiscAdmin)
 
   const [{ error, data }, { loading }] = useData<Group>(`/api/groups/find/index/${match.params.index}`)
 

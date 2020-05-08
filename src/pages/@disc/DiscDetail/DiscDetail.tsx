@@ -7,6 +7,7 @@ import { CustomLink } from '../../../comps/CustomLink'
 import { CustomHeader } from '../../../comps/CustomHeader'
 import { discTitle } from '../../@funcs'
 import { Disc } from '../../@types'
+import { useTokenSelector } from '../../../@version/token'
 
 export type Data = Disc
 
@@ -18,11 +19,11 @@ interface Form {
 
 interface Props {
   useDate: UseData<Data>
-  isDiscAdmin: boolean
 }
 
-export function DiscDetail({useDate, isDiscAdmin}: Props) {
+export function DiscDetail({useDate}: Props) {
 
+  const isDiscAdmin = useTokenSelector(state => state.roles.isDiscAdmin)
   const [{data, error}, {loading}] = useDate
   const form: Form = {}
 

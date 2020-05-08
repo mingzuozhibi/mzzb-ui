@@ -5,7 +5,6 @@ import { AppHeader } from './app-header'
 function mapStateToProps(state: RootState) {
   return {
     viewSider: state.layout.viewSider,
-    isLogged: state.token?.user?.roles?.includes('Login') || false,
   }
 }
 

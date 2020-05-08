@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import { RootState } from '../../@reducer'
 import { AppFooter } from './app-footer'
 import { encodePasswd } from '../../@version/passwd'
+import { loginRequest } from '../../@version/token'
 
 function mapStateToProps(state: RootState) {
   return {
@@ -16,7 +17,7 @@ function mapDispatchToProps(dispatch: any) {
     },
     sessionLogin(username: string, password: string) {
       const encode = encodePasswd(username, password)
-      dispatch({ type: 'login_request', username, password: encode })
+      dispatch(loginRequest({ username, password: encode }))
     },
   }
 }

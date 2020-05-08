@@ -3,10 +3,9 @@ import { Layout, Popconfirm } from 'antd'
 import { MenuFoldOutlined, MenuUnfoldOutlined, SyncOutlined } from '@ant-design/icons'
 import { CustomIcon } from '../../comps/CustomIcon'
 import { useDispatch } from 'react-redux'
-import { tokenRequest, logoutRequest } from '../../@version/token'
+import { tokenRequest, logoutRequest, useTokenSelector } from '../../@version/token'
 
 interface AppHeaderProps {
-  isLogged: boolean
   viewSider: boolean
   showLogin: () => void
   setViewSider: (viewSider: boolean) => void
@@ -14,7 +13,8 @@ interface AppHeaderProps {
 
 export function AppHeader(props: AppHeaderProps) {
 
-  const { isLogged, viewSider, showLogin, setViewSider } = props
+  const { viewSider, showLogin, setViewSider } = props
+  const isLogin = useTokenSelector(state => state.roles.isLogin)
 
   const dispatch = useDispatch()
 
@@ -48,7 +48,7 @@ export function AppHeader(props: AppHeaderProps) {
       <span style={{ marginLeft: 24 }}>在线人数: TODO</span>
       <span style={{ float: 'right', paddingRight: 24 }}>
         <HeaderIcon iconNode={<SyncOutlined />} onClick={doTokenRequest} />
-        {isLogged ? loggedIcon : logoutIcon}
+        {isLogin ? loggedIcon : logoutIcon}
       </span>
     </Layout.Header>
   )

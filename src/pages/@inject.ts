@@ -3,24 +3,6 @@ import { Dispatch } from 'redux'
 import { RootState } from '../@reducer'
 import { Disc } from './@types'
 
-export interface InjectRole {
-  isRootAdmin: boolean
-  isUserAdmin: boolean
-  isDiscAdmin: boolean
-  isLogin: boolean
-}
-
-export const injectRole = connect(
-  function (state: RootState) {
-    return {
-      isRootAdmin: state.token?.user?.roles?.includes('RootAdmin') || false,
-      isUserAdmin: state.token?.user?.roles?.includes('UserAdmin') || false,
-      isDiscAdmin: state.token?.user?.roles?.includes('DiscAdmin') || false,
-      isLogin: state.token?.user?.roles?.includes('Login') || false,
-    }
-  }
-)
-
 export interface InjectAdminMode {
   isAdminMode: boolean
   setAdminMode: (adminMode: boolean) => void

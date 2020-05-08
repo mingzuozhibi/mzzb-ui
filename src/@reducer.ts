@@ -2,13 +2,13 @@ import { combineReducers } from 'redux'
 import { adminReducer, AdminState } from './reducers/admin'
 import { connectRouter, RouterState } from 'connected-react-router'
 import { layoutReducer, LayoutState } from './reducers/layout'
-import { Token, tokenReducer } from './@version/token'
+import { tokenReducer, TokenState } from './@version/token'
 
 export interface RootState {
   admin: AdminState
   router: RouterState
   layout: LayoutState
-  token?: Token
+  token: TokenState
 }
 
 export function createRootReducer(history: any) {

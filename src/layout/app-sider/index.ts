@@ -6,14 +6,13 @@ import { withRouter } from 'react-router-dom'
 function mapStateToProps(state: RootState) {
   return {
     collapsed: !state.layout.viewSider,
-    userRoles: state.token?.user?.roles || [],
   }
 }
 
 function mapDispatchToProps(dispatch: any) {
   return {
     setCollapsed(collapse: boolean) {
-      dispatch({type: 'setViewSider', viewSider: !collapse})
+      dispatch({ type: 'setViewSider', viewSider: !collapse })
     },
   }
 }

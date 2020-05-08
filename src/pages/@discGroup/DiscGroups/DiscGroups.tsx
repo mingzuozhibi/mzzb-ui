@@ -10,20 +10,23 @@ import { isJustUpdated } from '../../../funcs/domain'
 import { formatTimeout } from '../../../funcs/format'
 import { composeCompares } from '../../../funcs/compare'
 
-import { InjectAdminMode, injectAdminMode, InjectRole, injectRole } from '../../@inject'
+import { InjectAdminMode, injectAdminMode } from '../../@inject'
 import { Group, RouteProps } from '../../@types'
 import './DiscGroups.scss'
+import { useTokenSelector } from '../../../@version/token'
 
 const adminCols = getColumns()
 const guestCols = adminCols.filter(col => !['edit', 'item'].includes(col.key))
 
 const defaultSort = compareDiscGroups()
 
-export default injectRole(injectAdminMode(DiscGroups))
+export default injectAdminMode(DiscGroups)
 
-function DiscGroups(props: InjectRole & InjectAdminMode & RouteProps<void>) {
+function DiscGroups(props: InjectAdminMode & RouteProps<void>) {
 
-  const { isDiscAdmin, isAdminMode, setAdminMode, history } = props
+  const { isAdminMode, setAdminMode, history } = props
+
+  const isDiscAdmin = useTokenSelector(state => state.roles.isDiscAdmin)
 
   const showExtraButtons = isDiscAdmin
   const showExtraColumns = isDiscAdmin && isAdminMode
