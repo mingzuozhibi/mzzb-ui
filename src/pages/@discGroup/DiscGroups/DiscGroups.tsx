@@ -12,7 +12,7 @@ import { composeCompares } from '../../../funcs/compare'
 
 import { Group } from '../../@types'
 import './DiscGroups.scss'
-import { useTokenSelector } from '../../../@version/token'
+import { useTokenSelector } from '../../../reducers/token'
 import { useAdminSelector, setAdminMode } from '../../../reducers/admin'
 import { useDispatch } from 'react-redux'
 

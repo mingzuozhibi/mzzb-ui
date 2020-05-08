@@ -5,7 +5,7 @@ import { Layout, Menu } from 'antd'
 import { MenuInfo, menuInfos } from '../@menus'
 import { CustomIcon } from '../comps/CustomIcon'
 import { useLayoutSelector, setViewSider } from '../reducers/layout'
-import { useTokenSelector } from '../@version/token'
+import { useTokenSelector } from '../reducers/token'
 
 interface State {
   autoCollapse: boolean

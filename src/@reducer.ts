@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 import { adminReducer, AdminState } from './reducers/admin'
 import { connectRouter, RouterState } from 'connected-react-router'
 import { layoutReducer, LayoutState } from './reducers/layout'
-import { tokenReducer, TokenState } from './@version/token'
+import { tokenReducer, TokenState } from './reducers/token'
 
 export interface RootState {
   admin: AdminState

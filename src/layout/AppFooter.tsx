@@ -1,12 +1,14 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
+import { useLayoutSelector, setViewLogin } from '../reducers/layout'
+import { encodePasswd } from '../@version/passwd'
+import { loginRequest } from '../reducers/token'
+
 import { Input, Layout, Modal } from 'antd'
 import { KeyOutlined, UserOutlined } from '@ant-design/icons'
 import { CustomIcon } from '../comps/CustomIcon'
 import { CustomLink } from '../comps/CustomLink'
-import { useLayoutSelector, setViewLogin } from '../reducers/layout'
-import { encodePasswd } from '../@version/passwd'
-import { useDispatch } from 'react-redux'
-import { loginRequest } from '../@version/token'
+
 
 interface FormLogin {
   username?: string
@@ -34,8 +36,7 @@ export default function AppFooter() {
       return
     }
 
-    const encode = encodePasswd(username, password)
-    dispatch(loginRequest({ username, password: encode }))
+    dispatch(loginRequest(username, encodePasswd(username, password)))
   }
 
   function focusPassword() {

@@ -4,7 +4,7 @@ import { useData } from '../../../hooks/useData'
 import { useAjax } from '../../../hooks/useAjax'
 import { CustomHeader } from '../../../comps/CustomHeader'
 import { Group, RouteProps } from '../../@types'
-import { useTokenSelector } from '../../../@version/token'
+import { useTokenSelector } from '../../../reducers/token'
 
 interface Form {
   index?: string

@@ -1,35 +1,30 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import './index.scss'
-
 import { createBrowserHistory } from 'history'
-import { ConnectedRouter, routerMiddleware } from 'connected-react-router'
-import createSagaMiddleware from 'redux-saga'
 
-import App from './layout/App'
-import { sagas } from './@sagas'
-import { createRootReducer } from './@reducer'
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import { ConnectedRouter, routerMiddleware } from 'connected-react-router'
 import { enableAllPlugins } from 'immer'
-import { configureStore } from "@reduxjs/toolkit";
+
+import { createRootReducer } from './@reducer'
+import App from './layout/App'
+import './index.scss'
 
 enableAllPlugins()
 
 const history = createBrowserHistory()
 const routerMid = routerMiddleware(history)
-const sagaMid = createSagaMiddleware()
 
 const store = configureStore({
   reducer: createRootReducer(history),
-  middleware: [routerMid, sagaMid]
+  middleware: [routerMid, ...getDefaultMiddleware()]
 })
-
-sagaMid.run(sagas)
 
 ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <App/>
+      <App />
     </ConnectedRouter>
   </Provider>,
   document.getElementById('root') as HTMLElement

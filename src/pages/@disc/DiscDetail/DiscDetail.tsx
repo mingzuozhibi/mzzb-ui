@@ -7,7 +7,7 @@ import { CustomLink } from '../../../comps/CustomLink'
 import { CustomHeader } from '../../../comps/CustomHeader'
 import { discTitle } from '../../@funcs'
 import { Disc } from '../../@types'
-import { useTokenSelector } from '../../../@version/token'
+import { useTokenSelector } from '../../../reducers/token'
 
 export type Data = Disc
 
