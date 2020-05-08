@@ -10,15 +10,15 @@ interface Options<T> {
 export function useAjax<T>(method: 'get' | 'put' | 'post' | 'delete') {
   const [loading, setLoading] = useState(false)
 
-  function doAjax(url: string, title: string, {body, onSuccess}: Options<T>) {
+  function doAjax(url: string, title: string, { body, onSuccess }: Options<T>) {
     setLoading(true)
-    request(url, {method, body: body && JSON.stringify(body)}).then(result => {
+    request(url, { method, body: body && JSON.stringify(body) }).then(result => {
       setLoading(false)
       if (result.success) {
         message.success(`${title}成功`)
         onSuccess(result.data)
       } else {
-        Modal.error({title: `${title}失败`, content: result.message})
+        Modal.error({ title: `${title}失败`, content: result.message })
       }
     })
   }

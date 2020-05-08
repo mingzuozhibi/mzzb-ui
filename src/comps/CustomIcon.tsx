@@ -8,7 +8,7 @@ interface Props {
   className?: string
 }
 
-export const CustomIcon = ({iconNode, iconType, className, ...props}: Props) => {
+export const CustomIcon = ({ iconNode, iconType, className, ...props }: Props) => {
   if (iconNode) {
     return (
       <span className={`icon-wrapper ${className}`}  {...props}>{iconNode}</span>
@@ -27,7 +27,7 @@ function svgIcon(type: string) {
     <svg
       className="svg-icon"
       aria-hidden="true"
-      dangerouslySetInnerHTML={{__html: `<use xlink:href="${'#' + type}" />`}}
+      dangerouslySetInnerHTML={{ __html: `<use xlink:href="${'#' + type}" />` }}
     />
   )
 }

@@ -1,9 +1,8 @@
 import React, { HTMLProps, useMemo, useCallback } from "react"
 import { useHistory } from "react-router-dom"
 import { Button, PageHeader, Alert } from "antd"
-import { State } from "../hooks/useData"
 import { useTitle } from "../hooks/hooks"
-import { Handler } from "../reducers/@domain"
+import { Handler, State } from "../@domain"
 import { CustomPagination } from "./CustomPagination"
 
 export interface StateRenderProps<T> extends HTMLProps<HTMLDivElement> {

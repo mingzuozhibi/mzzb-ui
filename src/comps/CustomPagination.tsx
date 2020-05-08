@@ -1,6 +1,6 @@
 import React from 'react'
 import { Pagination } from 'antd'
-import { Page } from '../reducers/@domain'
+import { Page } from '../@domain'
 
 interface Props {
   page: Page

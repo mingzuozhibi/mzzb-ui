@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Button } from 'antd'
 import classNames from 'classnames'
 
-import { Handler, Page } from '../../../reducers/@domain'
+import { Handler, Page } from '../../../@domain'
 import { Column, Table } from '../../../comps/@table/Table'
 import { CustomHeader } from '../../../comps/CustomHeader'
 import { CustomMessage } from '../../../comps/CustomMessage'
