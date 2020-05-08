@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { message } from "antd";
 import { RootState } from "../@reducer";
 import { setViewLogin } from "./layout";
-import request, { Result } from "../@version/request";
+import request, { Result } from "../funcs/request";
 
 export interface TokenState {
   loading: boolean

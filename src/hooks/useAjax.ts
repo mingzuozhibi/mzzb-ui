@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { message, Modal } from 'antd'
-import request from '../@version/request'
+import request from '../funcs/request'
 
 interface Options<T> {
   body?: any

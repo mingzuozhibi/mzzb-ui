@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { useLayoutSelector, setViewLogin } from '../reducers/layout'
-import { encodePasswd } from '../@version/passwd'
+import { encodePasswd } from '../funcs/passwd'
 import { loginRequest } from '../reducers/token'
 
 import { Input, Layout, Modal } from 'antd'
