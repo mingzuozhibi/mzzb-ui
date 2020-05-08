@@ -1,26 +1,38 @@
-import { AnyAction } from 'redux'
 import { LOCATION_CHANGE } from 'connected-react-router'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { useSelector } from 'react-redux'
+import { RootState } from '../@reducer'
 
 export interface LayoutState {
   viewSider: boolean
   viewLogin: boolean
 }
 
-const initState: LayoutState = {
+const initialState: LayoutState = {
   viewSider: false,
   viewLogin: false,
 }
 
-export const layoutReducer = (state: LayoutState = initState, action: AnyAction) => {
-  switch (action.type) {
-    case 'setViewSider':
-      return {...state, viewSider: action.viewSider}
-    case 'setViewLogin':
-      return {...state, viewLogin: action.viewLogin}
-    case LOCATION_CHANGE:
-      window.scrollTo(0, 0)
-      return state
-    default:
-      return state
-  }
+const layoutSlice = createSlice({
+  name: 'layout',
+  initialState,
+  reducers: {
+    setViewSider(state, action: PayloadAction<boolean>) {
+      state.viewSider = action.payload
+    },
+    setViewLogin(state, action: PayloadAction<boolean>) {
+      state.viewLogin = action.payload
+    },
+  },
+  extraReducers: (builder) => builder.addCase(LOCATION_CHANGE, () => {
+    window.scrollTo(0, 0)
+  })
+})
+
+export const layoutReducer = layoutSlice.reducer
+
+export const { setViewSider, setViewLogin } = layoutSlice.actions
+
+export function useLayoutSelector<T>(selector: (state: LayoutState) => T) {
+  return useSelector((state: RootState) => selector(state.layout))
 }

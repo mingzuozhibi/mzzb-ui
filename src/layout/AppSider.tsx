@@ -1,23 +1,23 @@
 import React, { useReducer } from 'react'
+import { useDispatch } from 'react-redux'
+import { useLocation, useHistory } from 'react-router-dom'
 import { Layout, Menu } from 'antd'
-import { MenuInfo, menuInfos } from '../../@menus'
-import { CustomIcon } from '../../comps/CustomIcon'
-import { RouteProps } from '../../pages/@types'
-import { useTokenSelector } from '../../@version/token'
-
-interface AppSiderProps {
-  collapsed: boolean
-  setCollapsed: (collapse: boolean) => void
-}
+import { MenuInfo, menuInfos } from '../@menus'
+import { CustomIcon } from '../comps/CustomIcon'
+import { useLayoutSelector, setViewSider } from '../reducers/layout'
+import { useTokenSelector } from '../@version/token'
 
 interface State {
   autoCollapse: boolean
   mustQuickSet: boolean
 }
 
-export function AppSider(props: AppSiderProps & RouteProps<void>) {
+export default function AppSider() {
 
-  const { collapsed, setCollapsed, location, history } = props
+  const dispatch = useDispatch()
+  const location = useLocation()
+  const history = useHistory()
+  const collapsed = useLayoutSelector(state => !state.viewSider)
   const userRoles = useTokenSelector(state => state.token?.user.roles || [])
 
   const reducer = (state: State, collapse: boolean) => {
@@ -57,10 +57,10 @@ export function AppSider(props: AppSiderProps & RouteProps<void>) {
     if (type === 'responsive') {
       setAutoCollapse(collapse)
       if (mustQuickSet) {
-        setCollapsed(collapse)
+        dispatch(setViewSider(!collapse))
       } else {
         setTimeout(() => {
-          setCollapsed(collapse)
+          dispatch(setViewSider(!collapse))
         }, 200)
       }
     }
@@ -71,7 +71,7 @@ export function AppSider(props: AppSiderProps & RouteProps<void>) {
       return
     }
     if (autoCollapse) {
-      setCollapsed(true)
+      dispatch(setViewSider(false))
     }
     if (path.startsWith('/')) {
       history.push(path)
@@ -84,7 +84,7 @@ export function AppSider(props: AppSiderProps & RouteProps<void>) {
     return (e: any) => {
       if (e.button === 1) {
         if (autoCollapse) {
-          setCollapsed(true)
+          dispatch(setViewSider(false))
         }
         window.open(menuInfo.matchPath)
       }
