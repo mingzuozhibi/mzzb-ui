@@ -40,13 +40,14 @@ export function StateRender<T>(props: StateRenderProps<T>) {
   return (
     <div {...otherProps}>
       {title && (
-        <PageHeader title={title} onBack={() => history.goBack()} extra={extraMemo} >
-          {children}
-        </PageHeader>
+        <PageHeader title={title} onBack={() => history.goBack()} extra={extraMemo} />
       )}
       {error && (
         <Alert message={error} type="error" />
       )}
+      <div style={{ marginBottom: 10 }}>
+        {children}
+      </div>
       {page && headerPage && (
         <CustomPagination page={page} onChange={onChangePage || handleChangePage} />
       )}

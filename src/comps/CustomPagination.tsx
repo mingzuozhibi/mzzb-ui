@@ -7,9 +7,10 @@ interface Props {
   onChange: (page: number, pageSize?: number) => void
 }
 
-export function CustomPagination({page, onChange}: Props) {
+export function CustomPagination({ page, onChange }: Props) {
   return (
     <Pagination
+      style={{ marginBottom: 10 }}
       showSizeChanger
       showQuickJumper
       pageSize={page.pageSize}

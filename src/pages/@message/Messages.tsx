@@ -39,19 +39,16 @@ export default function Messages() {
     params.set('page', String(page))
     params.set('size', String(size))
     history.push(location.pathname + '?' + params)
-    window.scroll(0, 0)
   }
 
   function onChangeLevels(levels: any[]) {
     params.set('levels', join(levels))
     history.push(location.pathname + '?' + params)
-    window.scroll(0, 0)
   }
 
   const onChangeIndex = (e: any) => {
     params.set('index', e.target.value)
     history.push(location.pathname + '?' + params)
-    window.scroll(0, 0)
   }
 
   const cols = useMemo(getCols, [])
@@ -61,6 +58,7 @@ export default function Messages() {
       title="系统日志"
       className="Messages"
       state={state}
+      showPage="both"
       onChangePage={onChangePage}
       children={(
         <div>
