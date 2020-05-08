@@ -1,4 +1,4 @@
-import React, { HTMLProps, useMemo } from "react"
+import React, { HTMLProps, useMemo, useCallback } from "react"
 import { useHistory } from "react-router-dom"
 import { Button, PageHeader, Alert } from "antd"
 import { State } from "../hooks/useData"
@@ -12,11 +12,13 @@ export interface StateRenderProps<T> extends HTMLProps<HTMLDivElement> {
   title?: string
   extra?: React.ReactNode[]
   render: (data: T) => React.ReactNode
+  children?: React.ReactNode
+  showPage?: 'header' | 'footer' | 'both' | 'none'
   onChangePage?: (page: number, size?: number) => void
 }
 
 export function StateRender<T>(props: StateRenderProps<T>) {
-  const { state, handler, title, extra = [], render, onChangePage, ...otherProps } = props
+  const { state, handler, title, extra = [], render, children, showPage = 'footer', onChangePage, ...otherProps } = props
   const { error, data, page } = state
 
   useTitle(title)
@@ -28,17 +30,29 @@ export function StateRender<T>(props: StateRenderProps<T>) {
     return [refreshButton, ...extra]
   }, [handler, extra])
 
+  const handleChangePage = useCallback((page: number, size: number = 20) => {
+    history.push(history.location.pathname + `?page=${page}&size=${size}`)
+  }, [history])
+
+  const headerPage = showPage === 'header' || showPage === 'both'
+  const footerPage = showPage === 'footer' || showPage === 'both'
+
   return (
     <div {...otherProps}>
       {title && (
-        <PageHeader title={title} onBack={() => history.goBack()} extra={extraMemo} />
+        <PageHeader title={title} onBack={() => history.goBack()} extra={extraMemo} >
+          {children}
+        </PageHeader>
       )}
       {error && (
         <Alert message={error} type="error" />
       )}
+      {page && headerPage && (
+        <CustomPagination page={page} onChange={onChangePage || handleChangePage} />
+      )}
       {data && render(data)}
-      {page && onChangePage && (
-        <CustomPagination page={page} onChange={onChangePage} />
+      {page && footerPage && (
+        <CustomPagination page={page} onChange={onChangePage || handleChangePage} />
       )}
     </div>
   )
