@@ -21,7 +21,7 @@ function handleError(error: Error) {
   return { success: false, message: error.message }
 }
 
-type Result = { success: true, [extraProps: string]: any } | { success: false, message: string }
+export type Result = { success: true, [extraProps: string]: any } | { success: false, message: string }
 
 export default function request(url: string, props: RequestInit = {}): Promise<Result> {
   props.credentials = props.credentials || 'include'

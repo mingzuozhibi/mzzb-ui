@@ -3,6 +3,7 @@ import { Layout, Popconfirm } from 'antd'
 import { MenuFoldOutlined, MenuUnfoldOutlined, SyncOutlined } from '@ant-design/icons'
 import { CustomIcon } from '../../comps/CustomIcon'
 import { useDispatch } from 'react-redux'
+import { tokenRequest, logoutRequest } from '../../@version/token'
 
 interface AppHeaderProps {
   isLogged: boolean
@@ -17,24 +18,24 @@ export function AppHeader(props: AppHeaderProps) {
 
   const dispatch = useDispatch()
 
-  const tokenRequest = useCallback(() => {
-    dispatch({ type: 'token_request', isUserRequest: true })
+  const doTokenRequest = useCallback(() => {
+    dispatch(tokenRequest({ isUserRequest: true }))
   }, [dispatch])
 
-  const logoutRequest = useCallback(() => {
-    dispatch({ type: 'logout_request' })
+  const doLogoutRequest = useCallback(() => {
+    dispatch(logoutRequest())
   }, [dispatch])
 
   useEffect(() => {
-    dispatch({ type: 'token_request', isUserRequest: false })
+    dispatch(tokenRequest({ isUserRequest: false }))
   }, [dispatch])
 
   const loggedIcon = useMemo(() => (
     <Popconfirm title="你确定要登出吗？" okText="OK" cancelText="Cancel"
-      placement="bottomRight" onConfirm={logoutRequest}>
+      placement="bottomRight" onConfirm={doLogoutRequest}>
       <HeaderIcon iconType="icon-user" />
     </Popconfirm>
-  ), [logoutRequest])
+  ), [doLogoutRequest])
 
   const logoutIcon = useMemo(() => (
     <HeaderIcon iconType="icon-login" onClick={showLogin} />
@@ -46,7 +47,7 @@ export function AppHeader(props: AppHeaderProps) {
         onClick={() => setViewSider(!viewSider)} />
       <span style={{ marginLeft: 24 }}>在线人数: TODO</span>
       <span style={{ float: 'right', paddingRight: 24 }}>
-        <HeaderIcon iconNode={<SyncOutlined />} onClick={tokenRequest} />
+        <HeaderIcon iconNode={<SyncOutlined />} onClick={doTokenRequest} />
         {isLogged ? loggedIcon : logoutIcon}
       </span>
     </Layout.Header>
