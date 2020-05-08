@@ -6,7 +6,7 @@ type Role = 'RootAdmin' | 'UserAdmin' | 'DiscAdmin' | 'Login' | 'Guest'
 export interface MenuInfo {
   matchPath: string
   menuTitle: string
-  menuRole?: Role
+  menuRole?: Role[]
   iconType?: string
   iconNode?: JSX.Element
 }
@@ -26,12 +26,12 @@ export const menuInfos: MenuInfo[] = [
     iconType: 'icon-user',
     menuTitle: '用户管理',
     matchPath: '/users',
-    menuRole: 'UserAdmin'
+    menuRole: ['UserAdmin', 'RootAdmin']
   },
   {
-    iconNode: <BarChartOutlined/>,
+    iconNode: <BarChartOutlined />,
     menuTitle: '系统日志',
-    matchPath: '/console/Default',
+    matchPath: '/messages/Default/DEBUG,INFO,NOTIFY,SUCCESS,WARN,ERROR',
   },
   {
     iconType: 'icon-social-tieba',
@@ -44,27 +44,27 @@ export const menuInfos: MenuInfo[] = [
     matchPath: 'https://tieba.baidu.com/f?kw=%E5%A3%81%E5%90%A7%E4%B8%93%E6%A5%BC',
   },
   {
-    iconNode: <GithubOutlined/>,
+    iconNode: <GithubOutlined />,
     menuTitle: 'Github - UI',
     matchPath: 'https://github.com/mingzuozhibi/mzzb-ui',
   },
   {
-    iconNode: <GithubOutlined/>,
+    iconNode: <GithubOutlined />,
     menuTitle: 'Github - Server',
     matchPath: 'https://github.com/mingzuozhibi/mzzb-server',
   },
   {
-    iconNode: <GithubOutlined/>,
+    iconNode: <GithubOutlined />,
     menuTitle: 'Gateway',
     matchPath: 'https://github.com/mingzuozhibi/mzzb-gateway',
   },
   {
-    iconNode: <GithubOutlined/>,
+    iconNode: <GithubOutlined />,
     menuTitle: 'DiscSpider',
     matchPath: 'https://github.com/mingzuozhibi/mzzb-disc-spider',
   },
   {
-    iconNode: <GithubOutlined/>,
+    iconNode: <GithubOutlined />,
     menuTitle: 'DiscShelfs',
     matchPath: 'https://github.com/mingzuozhibi/mzzb-disc-shelfs',
   },

@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useRouteMatch } from 'react-router-dom'
 import { DeleteOutlined, FileAddOutlined } from '@ant-design/icons'
 import { Button, Input, Modal } from 'antd'
 
@@ -11,22 +11,24 @@ import { CustomHeader } from '../../../comps/CustomHeader'
 import { Column, Table } from '../../../comps/@table/Table'
 
 import { compareSurp, compareTitle, discTitle } from '../../@funcs'
-import { InjectToAdds, injectToAdds } from '../../@inject'
-import { Disc, Group, RouteProps } from '../../@types'
+import { Disc, Group } from '../../@types'
+import { useAdminSelector, pushToAdds, dropToAdds, setFetchCount } from '../../../reducers/admin'
+import { useDispatch } from 'react-redux'
 import './DiscGroupItems.scss'
 
 interface Data extends Group {
   discs: Disc[]
 }
 
-export default injectToAdds(DiscGroupItems)
+export default function DiscGroupItems() {
 
-function DiscGroupItems(props: InjectToAdds & RouteProps<{ index: string }>) {
+  const match = useRouteMatch<{ index: string }>()
+  const toAdds = useAdminSelector(state => state.toAdds)
+  const fetchCount = useAdminSelector(state => state.fetchCount)
+  const dispatch = useDispatch()
 
-  const index = props.match.params.index
-  const { toAdds, pushToAdds, dropToAdds, fetchCount, setFetchCount } = props
-  const findDiscsUrl = `/api/groups/find/index/${index}/with/discs`
-  const [{ error, data }, handler] = useData<Data>(findDiscsUrl)
+  const url = `/api/groups/find/index/${match.params.index}/with/discs`
+  const [{ error, data }, handler] = useData<Data>(url)
   const [discSearching, doSearchDisc] = useAjax<Disc>('get')
   const [countSearching, doSearchCount] = useAjax<number>('get')
   const [, doPush] = useAjax<Disc>('post')
@@ -52,34 +54,36 @@ function DiscGroupItems(props: InjectToAdds & RouteProps<{ index: string }>) {
     }
 
     doSearchDisc(`/api/admin/searchDisc/${asin}`, '查询碟片', {
-      onSuccess: pushToAdds
+      onSuccess(disc) {
+        dispatch(pushToAdds(disc))
+      }
     })
   }
 
   function pushDisc(discGroupId: number, discId: number) {
     doPush(`/api/discGroups/${discGroupId}/discs/${discId}`, '添加碟片到列表', {
-      onSuccess(disc: Disc) {
-        dropToAdds(disc)
-        // modify(produce(data!, (draft: Data) => {
-          // draft.discs = [disc, ...data!.discs]
-        // }))
+      onSuccess(disc) {
+        dispatch(dropToAdds(disc))
+        handler.refresh()
       }
     })
   }
 
   function dropDisc(discGroupId: number, discId: number) {
     doDrop(`/api/discGroups/${discGroupId}/discs/${discId}`, '从列表移除碟片', {
-      onSuccess(disc: Disc) {
+      onSuccess(disc) {
         pushToAdds(disc)
-        // modify(produce(data!, (draft: Data) => {
-          // draft.discs = data!.discs.filter(e => e.id !== disc.id)
-        // }))
+        handler.refresh()
       }
     })
   }
 
   function fetchActiveCount() {
-    doSearchCount('/api/admin/fetchCount', '查询抓取中的碟片数量', { onSuccess: setFetchCount })
+    doSearchCount('/api/admin/fetchCount', '查询抓取中的碟片数量', {
+      onSuccess(count) {
+        dispatch(setFetchCount(count))
+      }
+    })
   }
 
   function getPushCommand() {

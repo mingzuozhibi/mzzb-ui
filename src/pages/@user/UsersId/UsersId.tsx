@@ -4,8 +4,8 @@ import { Input, Modal, Select, Radio } from 'antd'
 import { useData } from '../../../hooks/useData'
 import { InputAddonBefore } from '../../../comps/InputAddonBefore'
 import { safeCompare } from '../../../funcs/compare'
-import { User } from '../../../@version/token'
-import request from '../../../@version/request'
+import { User } from '../../../reducers/token'
+import request from '../../../funcs/request'
 import { StateRender } from '../../../comps/StateRender'
 
 export default function UsersId() {

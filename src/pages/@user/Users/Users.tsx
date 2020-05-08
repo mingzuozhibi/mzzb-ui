@@ -2,7 +2,7 @@ import React, { useMemo, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import { EditOutlined } from '@ant-design/icons'
 
-import { User } from '../../../@version/token'
+import { User } from '../../../reducers/token'
 import { useData } from '../../../hooks/useData'
 import { formatTime } from '../../../funcs/format'
 import { StateRender } from '../../../comps/StateRender'

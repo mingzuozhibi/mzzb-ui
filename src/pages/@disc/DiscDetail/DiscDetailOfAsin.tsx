@@ -1,12 +1,9 @@
 import React from 'react'
 import { useData } from '../../../hooks/useData'
-import { Data, DiscDetail } from './DiscDetail'
-import { InjectRole, injectRole } from '../../@inject'
 import { RouteProps } from '../../@types'
+import { Data, DiscDetail } from './DiscDetail'
 
-export default injectRole(DiscDetailOfAsin)
-
-function DiscDetailOfAsin({isDiscAdmin, match}: InjectRole & RouteProps<{ asin: string }>) {
+export default function DiscDetailOfAsin({ match }: RouteProps<{ asin: string }>) {
   const _useData = useData<Data>(`/api/discs/asin/${match.params.asin}`)
-  return <DiscDetail useDate={_useData} isDiscAdmin={isDiscAdmin}/>
+  return <DiscDetail useDate={_useData} />
 }

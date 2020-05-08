@@ -1,29 +1,30 @@
 import React, { useReducer } from 'react'
+import { useDispatch } from 'react-redux'
+import { useLocation, useHistory } from 'react-router-dom'
 import { Layout, Menu } from 'antd'
-import { MenuInfo, menuInfos } from '../../@menus'
-import { CustomIcon } from '../../comps/CustomIcon'
-import { RouteProps } from '../../pages/@types'
-
-interface AppSiderProps {
-  userRoles: string[]
-  collapsed: boolean
-  setCollapsed: (collapse: boolean) => void
-}
+import { MenuInfo, menuInfos } from '../@menus'
+import { CustomIcon } from '../comps/CustomIcon'
+import { useLayoutSelector, setViewSider } from '../reducers/layout'
+import { useTokenSelector } from '../reducers/token'
 
 interface State {
   autoCollapse: boolean
   mustQuickSet: boolean
 }
 
-export function AppSider(props: AppSiderProps & RouteProps<void>) {
+export default function AppSider() {
 
-  const {userRoles, collapsed, setCollapsed, location, history} = props
+  const dispatch = useDispatch()
+  const location = useLocation()
+  const history = useHistory()
+  const collapsed = useLayoutSelector(state => !state.viewSider)
+  const userRoles = useTokenSelector(state => state.token?.user.roles || [])
 
   const reducer = (state: State, collapse: boolean) => {
-    return {autoCollapse: collapse, mustQuickSet: false}
+    return { autoCollapse: collapse, mustQuickSet: false }
   }
-  const initialState = {autoCollapse: true, mustQuickSet: true}
-  const [{autoCollapse, mustQuickSet}, setAutoCollapse] = useReducer(reducer, initialState)
+  const initialState = { autoCollapse: true, mustQuickSet: true }
+  const [{ autoCollapse, mustQuickSet }, setAutoCollapse] = useReducer(reducer, initialState)
 
   return (
     <Layout.Sider
@@ -40,7 +41,7 @@ export function AppSider(props: AppSiderProps & RouteProps<void>) {
       <Menu
         mode="inline"
         selectedKeys={[location.pathname]}
-        style={{height: '100%'}}
+        style={{ height: '100%' }}
         onClick={selectItem}
       >
         {menuInfos.filter(hasMenuRole(userRoles)).map(menuInfo => (
@@ -56,21 +57,21 @@ export function AppSider(props: AppSiderProps & RouteProps<void>) {
     if (type === 'responsive') {
       setAutoCollapse(collapse)
       if (mustQuickSet) {
-        setCollapsed(collapse)
+        dispatch(setViewSider(!collapse))
       } else {
         setTimeout(() => {
-          setCollapsed(collapse)
+          dispatch(setViewSider(!collapse))
         }, 200)
       }
     }
   }
 
-  function selectItem({key: path}: { key: string }) {
+  function selectItem({ key: path }: { key: string }) {
     if (path === location.pathname) {
       return
     }
     if (autoCollapse) {
-      setCollapsed(true)
+      dispatch(setViewSider(false))
     }
     if (path.startsWith('/')) {
       history.push(path)
@@ -83,7 +84,7 @@ export function AppSider(props: AppSiderProps & RouteProps<void>) {
     return (e: any) => {
       if (e.button === 1) {
         if (autoCollapse) {
-          setCollapsed(true)
+          dispatch(setViewSider(false))
         }
         window.open(menuInfo.matchPath)
       }
@@ -93,15 +94,24 @@ export function AppSider(props: AppSiderProps & RouteProps<void>) {
 }
 
 function hasMenuRole(userRoles: string[]) {
-  return ({menuRole}: MenuInfo) => menuRole === undefined || userRoles.includes(menuRole)
+  return ({ menuRole }: MenuInfo) => {
+    if (menuRole === undefined)
+      return true
+    for (const role of menuRole) {
+      if (userRoles.includes(role)) {
+        return true
+      }
+    }
+    return false
+  }
 }
 
-function renderLabel({iconType, iconNode, menuTitle}: MenuInfo) {
+function renderLabel({ iconType, iconNode, menuTitle }: MenuInfo) {
   if (iconNode) {
-    return <span><CustomIcon className="sider-icon" iconNode={iconNode}/>{menuTitle}</span>
+    return <span><CustomIcon className="sider-icon" iconNode={iconNode} />{menuTitle}</span>
   }
   if (iconType) {
-    return <span><CustomIcon className="sider-icon" iconType={iconType}/>{menuTitle}</span>
+    return <span><CustomIcon className="sider-icon" iconType={iconType} />{menuTitle}</span>
   }
   return <span>{menuTitle}</span>
 }

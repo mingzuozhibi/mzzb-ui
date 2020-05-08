@@ -1,6 +1,6 @@
 import { useEffect, useReducer, useState, useCallback, useMemo } from 'react'
 import { Handler, Page } from '../reducers/@domain'
-import request from '../@version/request'
+import request from '../funcs/request'
 
 export interface State<T> {
   data?: T
