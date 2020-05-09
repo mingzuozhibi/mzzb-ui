@@ -14,10 +14,10 @@ type Level = 'DEBUG' | 'INFO' | 'NOTIFY' | 'SUCCESS' | 'WARN' | 'ERROR'
 
 export interface Message {
   id: number
-  level: Level,
-  content: string,
-  createOn: number,
-  acceptOn: number,
+  level: Level
+  content: string
+  createOn: number
+  acceptOn: number
 }
 
 const searchs = [
@@ -56,11 +56,12 @@ export default function Messages() {
         <span>
           <Button onClick={handler.refresh}>刷新</Button>
         </span>
+        <span>{handler.loading && <Spin delay={200} />}</span>
         <span>
-          {handler.loading && <Spin delay={200} />}
-        </span>
-        <span>
-          <Radio.Group onChange={onChangeIndex} defaultValue={getParam('index')}>
+          <Radio.Group
+            onChange={onChangeIndex}
+            defaultValue={getParam('index')}
+          >
             <Radio.Button value="Default">系统消息</Radio.Button>
             <Radio.Button value="User">用户消息</Radio.Button>
             <Radio.Button value="Test">测试消息</Radio.Button>
@@ -68,7 +69,10 @@ export default function Messages() {
         </span>
       </div>
       <div>
-        <Checkbox.Group onChange={onChangeLevels} defaultValue={getParam('levels')?.split(',')}>
+        <Checkbox.Group
+          onChange={onChangeLevels}
+          defaultValue={getParam('levels')?.split(',')}
+        >
           <Checkbox value="DEBUG">调试</Checkbox>
           <Checkbox value="INFO">信息</Checkbox>
           <Checkbox value="NOTIFY">通知</Checkbox>
@@ -84,11 +88,11 @@ export default function Messages() {
     <StateRender
       title="系统日志"
       className="Messages"
-      state={state}
       showPage="both"
       onChangePage={onChangePage}
+      state={state}
       children={element}
-      render={data => (
+      render={(data) => (
         <div className="MessagesContent">
           <div style={{ marginBottom: 10 }}>
             <Table cols={cols} rows={data} trClass={trClass} />
@@ -104,17 +108,17 @@ function getCols(): Column<Message>[] {
     {
       key: 'time',
       title: '时间',
-      format: t => <CustomDate time={t.createOn} />
+      format: (t) => <CustomDate time={t.createOn} />,
     },
     {
       key: 'level',
       title: '级别',
-      format: t => t.level
+      format: (t) => t.level,
     },
     {
       key: 'text',
       title: '消息内容',
-      format: t => t.content
+      format: (t) => t.content,
     },
   ]
 }
@@ -137,9 +141,9 @@ function trClass(t: Message) {
 }
 
 const levelsCompare = safeCompare<string, number>({
-  apply: t => LEVELS.indexOf(t),
-  empty: n => n === -1,
-  compare: (a, b) => a - b
+  apply: (t) => LEVELS.indexOf(t),
+  empty: (n) => n === -1,
+  compare: (a, b) => a - b,
 })
 
 function join(levels: string[]) {
