@@ -53,6 +53,6 @@ export const routes: RouteInfo[] = [
   },
   {
     path: '/messages',
-    loader: () => import(/* webpackChunkName: "console" */'./pages/@message/Messages')
+    loader: () => import(/* webpackChunkName: "messages" */'./pages/@message/Messages')
   },
 ]
