@@ -1,80 +1,98 @@
-import React, { useState, useMemo } from 'react'
-import { Button, Checkbox, Radio } from 'antd'
-import { useData } from '../../hooks/useData'
-import { CustomDate } from '../../comps/CustomDate'
-import { Column, Table } from '../../comps/@table/Table'
-import './Messages.scss'
-import { StateRender } from '../../comps/StateRender'
-import { useHistory, useParams } from 'react-router-dom'
+import React, { useMemo } from 'react'
 import { safeCompare } from '../../funcs/compare'
+import { useSearch } from '../../hooks/useSearch'
+import { useData } from '../../hooks/useData'
+
+import { Button, Checkbox, Radio, Spin } from 'antd'
+import { Column, Table } from '../../comps/@table/Table'
+import { CustomDate } from '../../comps/CustomDate'
+import { StateRender } from '../../comps/StateRender'
+import './Messages.scss'
 
 const LEVELS = ['DEBUG', 'INFO', 'NOTIFY', 'SUCCESS', 'WARN', 'ERROR']
 type Level = 'DEBUG' | 'INFO' | 'NOTIFY' | 'SUCCESS' | 'WARN' | 'ERROR'
 
 export interface Message {
   id: number
-  level: Level,
-  content: string,
-  createOn: number,
-  acceptOn: number,
+  level: Level
+  content: string
+  createOn: number
+  acceptOn: number
 }
 
-export default function Messages() {
+const searchs = [
+  { name: 'sort', init: 'id,desc' },
+  { name: 'index', init: 'Default' },
+  { name: 'levels', init: LEVELS.join(',') },
+]
 
-  const history = useHistory()
-  const params = useParams<{ index: string, levels: string }>()
-  const [{ page, size }, setPage] = useState({ page: 1, size: 20 })
-  const url = `/api/messages/${params.index}?levels=${params.levels}&page=${page}&size=${size}&sort=id,desc`
+export default function Messages() {
+  const { search, pushPath, getParam, setParam } = useSearch(searchs)
+
+  const url = `/api/messages?${search}`
   const [state, handler] = useData<Message[]>(url)
 
   function onChangePage(page: number, size: number = 20) {
-    setPage({ page, size })
-    window.scroll(0, 0)
+    setParam('page', String(page))
+    setParam('size', String(size))
+    pushPath()
   }
 
   function onChangeLevels(levels: any[]) {
-    const sorted = [...levels]
-    sorted.sort(levelsCompare)
-    history.push(`/messages/${params.index}/${sorted.join(',')}`)
-    onChangePage(1, size)
+    setParam('levels', join(levels))
+    pushPath()
   }
 
   const onChangeIndex = (e: any) => {
-    history.push(`/messages/${e.target.value}/${params.levels}`)
-    onChangePage(1, size)
+    setParam('index', e.target.value)
+    pushPath()
   }
 
   const cols = useMemo(getCols, [])
+
+  const element = (
+    <div>
+      <div className="margin-spans" style={{ marginBottom: 10 }}>
+        <span>
+          <Button onClick={handler.refresh}>刷新</Button>
+        </span>
+        <span>{handler.loading && <Spin delay={200} />}</span>
+        <span>
+          <Radio.Group
+            onChange={onChangeIndex}
+            defaultValue={getParam('index')}
+          >
+            <Radio.Button value="Default">系统消息</Radio.Button>
+            <Radio.Button value="User">用户消息</Radio.Button>
+            <Radio.Button value="Test">测试消息</Radio.Button>
+          </Radio.Group>
+        </span>
+      </div>
+      <div>
+        <Checkbox.Group
+          onChange={onChangeLevels}
+          defaultValue={getParam('levels')?.split(',')}
+        >
+          <Checkbox value="DEBUG">调试</Checkbox>
+          <Checkbox value="INFO">信息</Checkbox>
+          <Checkbox value="NOTIFY">通知</Checkbox>
+          <Checkbox value="SUCCESS">成功</Checkbox>
+          <Checkbox value="WARN">警告</Checkbox>
+          <Checkbox value="ERROR">错误</Checkbox>
+        </Checkbox.Group>
+      </div>
+    </div>
+  )
 
   return (
     <StateRender
       title="系统日志"
       className="Messages"
-      state={state}
+      showPage="both"
       onChangePage={onChangePage}
-      children={(
-        <div>
-          <div>
-            <Button style={{ marginRight: 20 }} loading={handler.loading} onClick={handler.refresh}>刷新</Button>
-            <Radio.Group defaultValue={params.index} onChange={onChangeIndex} style={{ marginBottom: 10 }}>
-              <Radio.Button value="Default">系统消息</Radio.Button>
-              <Radio.Button value="User">用户消息</Radio.Button>
-              <Radio.Button value="Test">测试消息</Radio.Button>
-            </Radio.Group>
-          </div>
-          <div>
-            <Checkbox.Group key="levels" onChange={onChangeLevels} value={params.levels.split(',')}>
-              <Checkbox value="DEBUG">调试</Checkbox>
-              <Checkbox value="INFO">信息</Checkbox>
-              <Checkbox value="NOTIFY">通知</Checkbox>
-              <Checkbox value="SUCCESS">成功</Checkbox>
-              <Checkbox value="WARN">警告</Checkbox>
-              <Checkbox value="ERROR">错误</Checkbox>
-            </Checkbox.Group>
-          </div>
-        </div>
-      )}
-      render={data => (
+      state={state}
+      children={element}
+      render={(data) => (
         <div className="MessagesContent">
           <div style={{ marginBottom: 10 }}>
             <Table cols={cols} rows={data} trClass={trClass} />
@@ -90,17 +108,17 @@ function getCols(): Column<Message>[] {
     {
       key: 'time',
       title: '时间',
-      format: t => <CustomDate time={t.createOn} />
+      format: (t) => <CustomDate time={t.createOn} />,
     },
     {
       key: 'level',
       title: '级别',
-      format: t => t.level
+      format: (t) => t.level,
     },
     {
       key: 'text',
       title: '消息内容',
-      format: t => t.content
+      format: (t) => t.content,
     },
   ]
 }
@@ -123,7 +141,13 @@ function trClass(t: Message) {
 }
 
 const levelsCompare = safeCompare<string, number>({
-  apply: t => LEVELS.indexOf(t),
-  empty: n => n === -1,
-  compare: (a, b) => a - b
+  apply: (t) => LEVELS.indexOf(t),
+  empty: (n) => n === -1,
+  compare: (a, b) => a - b,
 })
+
+function join(levels: string[]) {
+  const sorted = [...levels]
+  sorted.sort(levelsCompare)
+  return sorted.join(',')
+}

@@ -5,6 +5,6 @@ interface Props {
   title: string
 }
 
-export function CustomLink({href, title}: Props) {
+export function CustomLink({ href, title }: Props) {
   return <a href={href} target="_blank" rel="noopener noreferrer">{title}</a>
 }

@@ -10,7 +10,7 @@ interface Props<T, U> {
 
 export function safeCompare<T, U>(props: Props<T, U>) {
   const defaultEmptyFunc = (e?: U) => e === undefined
-  const {apply, empty = defaultEmptyFunc, compare} = props
+  const { apply, empty = defaultEmptyFunc, compare } = props
   return (a: T, b: T) => {
     const valueA = apply(a)
     const valueB = apply(b)

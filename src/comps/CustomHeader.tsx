@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { ArrowLeftOutlined } from '@ant-design/icons'
 import { Alert, Button, Divider, PageHeader } from 'antd'
-import { Handler } from '../reducers/@domain'
+import { Handler } from '../@domain'
 
 interface Props<T> {
   header: string
@@ -11,7 +11,7 @@ interface Props<T> {
   replace?: React.ReactNode
 }
 
-export function CustomHeader<T>({header, title, error, handler, replace}: Props<T>) {
+export function CustomHeader<T>({ header, title, error, handler, replace }: Props<T>) {
   useEffect(() => {
     document.title = `${title || header} - mingzuozhibi.com`
   }, [header, title])
@@ -19,7 +19,7 @@ export function CustomHeader<T>({header, title, error, handler, replace}: Props<
     <>
       {replace ? renderCustomHeader(replace) : renderPageHeader(header, handler)}
       {error && (
-        <Alert message={error} type="error"/>
+        <Alert message={error} type="error" />
       )}
     </>
   )
@@ -40,8 +40,8 @@ function renderPageHeader(header: string, handler?: Handler) {
 function renderCustomHeader(replace: React.ReactNode) {
   return (
     <div className="custom-header">
-      <ArrowLeftOutlined onClick={() => window.history.back()}/>
-      <Divider type="vertical"/>
+      <ArrowLeftOutlined onClick={() => window.history.back()} />
+      <Divider type="vertical" />
       {replace}
     </div>
   )

@@ -1,9 +1,8 @@
 import React, { HTMLProps, useMemo, useCallback } from "react"
 import { useHistory } from "react-router-dom"
 import { Button, PageHeader, Alert } from "antd"
-import { State } from "../hooks/useData"
 import { useTitle } from "../hooks/hooks"
-import { Handler } from "../reducers/@domain"
+import { Handler, State } from "../@domain"
 import { CustomPagination } from "./CustomPagination"
 
 export interface StateRenderProps<T> extends HTMLProps<HTMLDivElement> {
@@ -40,13 +39,14 @@ export function StateRender<T>(props: StateRenderProps<T>) {
   return (
     <div {...otherProps}>
       {title && (
-        <PageHeader title={title} onBack={() => history.goBack()} extra={extraMemo} >
-          {children}
-        </PageHeader>
+        <PageHeader title={title} onBack={() => history.goBack()} extra={extraMemo} />
       )}
       {error && (
         <Alert message={error} type="error" />
       )}
+      <div style={{ marginBottom: 10 }}>
+        {children}
+      </div>
       {page && headerPage && (
         <CustomPagination page={page} onChange={onChangePage || handleChangePage} />
       )}

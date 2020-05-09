@@ -52,7 +52,7 @@ export const routes: RouteInfo[] = [
     loader: () => import(/* webpackChunkName: "users_id" */'./pages/@user/UsersId/UsersId')
   },
   {
-    path: '/messages/:index/:levels',
+    path: '/messages',
     loader: () => import(/* webpackChunkName: "console" */'./pages/@message/Messages')
   },
 ]

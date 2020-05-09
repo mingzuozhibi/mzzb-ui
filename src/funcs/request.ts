@@ -1,3 +1,5 @@
+import { Result } from "../@domain"
+
 function checkStatus(response: Response) {
   if (!response.ok) {
     if (response.status === 502) {
@@ -20,8 +22,6 @@ function parseToJSON(response: Response) {
 function handleError(error: Error) {
   return { success: false, message: error.message }
 }
-
-export type Result = { success: true, [extraProps: string]: any } | { success: false, message: string }
 
 export default function request(url: string, props: RequestInit = {}): Promise<Result> {
   props.credentials = props.credentials || 'include'

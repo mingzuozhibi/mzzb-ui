@@ -3,7 +3,7 @@ import { Button, Checkbox, Input, message, Modal } from 'antd'
 import copy from 'copy-to-clipboard'
 import produce from 'immer'
 import classNames from 'classnames'
-import { Handler } from '../../reducers/@domain'
+import { Handler } from '../../@domain'
 import './Table.scss'
 
 interface BaseRow {
@@ -37,12 +37,12 @@ interface State {
 }
 
 export function Table<T extends BaseRow>(props: Props<T>) {
-  const {rows, cols, title, handler, trClass, copyFmt, defaultSort, extraCaption} = props
+  const { rows, cols, title, handler, trClass, copyFmt, defaultSort, extraCaption } = props
   const mark = `talbe-state/${window.location.pathname}`
   const [state, setState] = useState<State>(() => {
-    return loadState(mark, {copyMode: false, selected: new Set()})
+    return loadState(mark, { copyMode: false, selected: new Set() })
   })
-  const {sortKey, sortAsc, copyMode, selected} = state
+  const { sortKey, sortAsc, copyMode, selected } = state
 
   const sorted = sortedRows()
 
@@ -51,35 +51,35 @@ export function Table<T extends BaseRow>(props: Props<T>) {
       {(title || copyFmt || handler || extraCaption) && renderCaption()}
       <table className="table table-bordered table-hover">
         <thead>
-        <tr>
-          {copyMode && renderSelectTh()}
-          {cols.map(col => (
-            <th
-              key={col.key}
-              children={col.title}
-              className={thClass(col)}
-              onClick={col.compare && (() => thClick(col))}
-            />
-          ))}
-        </tr>
-        </thead>
-        <tbody>
-        {sorted.map((row, idx) => (
-          <tr
-            key={row.id}
-            id={`row-${row.id}`}
-            className={trClass && classNames(trClass(row))}
-            onClick={() => copyMode && doToggleRow(row.id)}
-          >
-            {copyMode && renderSelectTd(row.id)}
-            {cols.map((col) => (
-              <td key={col.key} className={tdClass(col, row)}>
-                {col.format(row, idx)}
-              </td>
+          <tr>
+            {copyMode && renderSelectTh()}
+            {cols.map(col => (
+              <th
+                key={col.key}
+                children={col.title}
+                className={thClass(col)}
+                onClick={col.compare && (() => thClick(col))}
+              />
             ))}
           </tr>
-        ))
-        }
+        </thead>
+        <tbody>
+          {sorted.map((row, idx) => (
+            <tr
+              key={row.id}
+              id={`row-${row.id}`}
+              className={trClass && classNames(trClass(row))}
+              onClick={() => copyMode && doToggleRow(row.id)}
+            >
+              {copyMode && renderSelectTd(row.id)}
+              {cols.map((col) => (
+                <td key={col.key} className={tdClass(col, row)}>
+                  {col.format(row, idx)}
+                </td>
+              ))}
+            </tr>
+          ))
+          }
         </tbody>
       </table>
     </div>
@@ -116,7 +116,7 @@ export function Table<T extends BaseRow>(props: Props<T>) {
   function renderSelectTd(rowId: number) {
     return (
       <td className="select">
-        <Checkbox checked={selected.has(rowId)}/>
+        <Checkbox checked={selected.has(rowId)} />
       </td>
     )
   }
@@ -139,7 +139,7 @@ export function Table<T extends BaseRow>(props: Props<T>) {
             </Button.Group>
             <Button.Group>
               <Button onClick={() => {
-                const {sortKey, sortAsc, ...other } = state
+                const { sortKey, sortAsc, ...other } = state
                 setState(other)
               }}>重置排序</Button>
             </Button.Group>
@@ -193,7 +193,7 @@ export function Table<T extends BaseRow>(props: Props<T>) {
         title: '请手动复制数据', content: (
           <Input.TextArea
             value={resultText}
-            autoSize={{minRows: 2, maxRows: 6}}
+            autoSize={{ minRows: 2, maxRows: 6 }}
           />
         )
       })
@@ -257,14 +257,14 @@ export function Table<T extends BaseRow>(props: Props<T>) {
 }
 
 function saveState(key: string, state: State) {
-  const saveState = {...state, selected: [...state.selected]}
+  const saveState = { ...state, selected: [...state.selected] }
   sessionStorage[key] = JSON.stringify(saveState)
 }
 
 function loadState(key: string, initState: State): State {
   const stateText = sessionStorage[key]
   const loadState = JSON.parse(stateText || '{}')
-  const nextState = {...initState, ...loadState}
+  const nextState = { ...initState, ...loadState }
   if (Array.isArray(loadState.selected)) {
     nextState.selected = new Set(loadState.selected)
   }

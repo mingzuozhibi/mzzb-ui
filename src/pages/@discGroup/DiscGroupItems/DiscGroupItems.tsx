@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { Link, useRouteMatch } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { DeleteOutlined, FileAddOutlined } from '@ant-design/icons'
 import { Button, Input, Modal } from 'antd'
 
@@ -22,12 +22,12 @@ interface Data extends Group {
 
 export default function DiscGroupItems() {
 
-  const match = useRouteMatch<{ index: string }>()
+  const params = useParams<{ index: string }>()
   const toAdds = useAdminSelector(state => state.toAdds)
   const fetchCount = useAdminSelector(state => state.fetchCount)
   const dispatch = useDispatch()
 
-  const url = `/api/groups/find/index/${match.params.index}/with/discs`
+  const url = `/api/groups/find/index/${params.index}/with/discs`
   const [{ error, data }, handler] = useData<Data>(url)
   const [discSearching, doSearchDisc] = useAjax<Disc>('get')
   const [countSearching, doSearchCount] = useAjax<number>('get')
