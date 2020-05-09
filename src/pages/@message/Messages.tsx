@@ -1,13 +1,13 @@
 import React, { useMemo } from 'react'
-import { useData } from '../../hooks/useData'
 import { safeCompare } from '../../funcs/compare'
+import { useSearch } from '../../hooks/useSearch'
+import { useData } from '../../hooks/useData'
 
 import { Button, Checkbox, Radio } from 'antd'
 import { Column, Table } from '../../comps/@table/Table'
 import { CustomDate } from '../../comps/CustomDate'
 import { StateRender } from '../../comps/StateRender'
 import './Messages.scss'
-import { useSearch } from '../../hooks/useSearch'
 
 const LEVELS = ['DEBUG', 'INFO', 'NOTIFY', 'SUCCESS', 'WARN', 'ERROR']
 type Level = 'DEBUG' | 'INFO' | 'NOTIFY' | 'SUCCESS' | 'WARN' | 'ERROR'
@@ -27,22 +27,25 @@ const searchs = [
 ]
 
 export default function Messages() {
-  const { query, getParam, setParam } = useSearch(searchs)
+  const { search, pushPath, getParam, setParam } = useSearch(searchs)
 
-  const url = `/api/messages?${query}`
+  const url = `/api/messages?${search}`
   const [state, handler] = useData<Message[]>(url)
 
   function onChangePage(page: number, size: number = 20) {
     setParam('page', String(page))
     setParam('size', String(size))
+    pushPath()
   }
 
   function onChangeLevels(levels: any[]) {
     setParam('levels', join(levels))
+    pushPath()
   }
 
   const onChangeIndex = (e: any) => {
     setParam('index', e.target.value)
+    pushPath()
   }
 
   const cols = useMemo(getCols, [])
