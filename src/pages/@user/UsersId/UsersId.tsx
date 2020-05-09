@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import { useRouteMatch } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { Input, Modal, Select, Radio } from 'antd'
 import { useData } from '../../../hooks/useData'
 import { InputAddonBefore } from '../../../comps/InputAddonBefore'
@@ -10,9 +10,9 @@ import { StateRender } from '../../../comps/StateRender'
 
 export default function UsersId() {
 
-  const match = useRouteMatch<{ id: string }>()
+  const params = useParams<{ id: string }>()
 
-  const [state, handler] = useData<User>(`/api/users/${match.params.id}`)
+  const [state, handler] = useData<User>(`/api/users/${params.id}`)
 
   const setEnabled = useCallback((userId: number, enabled: boolean) => {
     const body = JSON.stringify({ enabled })
