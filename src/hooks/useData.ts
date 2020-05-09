@@ -1,4 +1,5 @@
 import { useEffect, useReducer, useState, useCallback, useMemo } from 'react'
+import { unstable_batchedUpdates } from 'react-dom'
 import { Handler, State } from '../@domain'
 import request from '../funcs/request'
 
@@ -20,12 +21,14 @@ export function useData<T>(url: string, initialState: State<T> = {}) {
   const refresh = useCallback(() => {
     setLoading(true)
     request(url).then((result) => {
-      setLoading(false)
-      if (result.success) {
-        dispatch({ type: 'Receive', data: result.data, page: result.page })
-      } else {
-        dispatch({ type: 'Message', error: result.message })
-      }
+      unstable_batchedUpdates(() => {
+        setLoading(false)
+        if (result.success) {
+          dispatch({ type: 'Receive', data: result.data, page: result.page })
+        } else {
+          dispatch({ type: 'Message', error: result.message })
+        }
+      })
     })
   }, [url, setLoading, dispatch])
 
