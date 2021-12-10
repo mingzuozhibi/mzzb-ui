@@ -110,7 +110,7 @@ function DiscGroupDetail(props: InjectRole & RouteProps<{ key: string }>) {
                   cancelText="No"
                   onConfirm={deleteThis}
                 >
-                  <Button type="danger" loading={deleting} style={{marginLeft: 20}}>删除列表</Button>
+                  <Button danger={true} loading={deleting} style={{marginLeft: 20}}>删除列表</Button>
                 </Popconfirm>
               )}
             </div>
