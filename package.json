@@ -28,7 +28,7 @@
     "connected-react-router": "^6.8.0",
     "customize-cra": "^0.9.1",
     "echarts": "^4.7.0",
-    "immer": "^6.0.3",
+    "immer": "^9.0.6",
     "lodash.debounce": "^4.0.8",
     "md5": "^2.2.1",
     "node-sass": "^4.13.1",
