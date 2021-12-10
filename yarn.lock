@@ -5783,10 +5783,10 @@ immer@1.10.0:
   resolved "https://registry.npmmirror.com/immer/download/immer-1.10.0.tgz#bad67605ba9c810275d91e1c2a47d4582e98286d"
   integrity sha1-utZ2BbqcgQJ12R4cKkfUWC6YKG0=
 
-immer@^6.0.3:
-  version "6.0.9"
-  resolved "https://registry.npmmirror.com/immer/download/immer-6.0.9.tgz#b9dd69b8e69b3a12391e87db1e3ff535d1b26485"
-  integrity sha1-ud1puOabOhI5HofbHj/1NdGyZIU=
+immer@^9.0.7:
+  version "9.0.7"
+  resolved "https://registry.npmmirror.com/immer/download/immer-9.0.7.tgz#b6156bd7db55db7abc73fd2fdadf4e579a701075"
+  integrity sha512-KGllzpbamZDvOIxnmJ0jI840g7Oikx58lBPWV0hUh7dtAyZpFqqrBZdKka5GlTwMTZ1Tjc/bKKW4VSFAt6BqMA==
 
 "immutable@^3.8.1 || ^4.0.0":
   version "4.0.0"
