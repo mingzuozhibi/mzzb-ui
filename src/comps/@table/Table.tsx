@@ -37,49 +37,49 @@ interface State {
 }
 
 export function Table<T extends BaseRow>(props: Props<T>) {
-  const {rows, cols, title, handler, trClass, copyFmt, defaultSort, extraCaption} = props
+  const { cols, title, handler, trClass, copyFmt, defaultSort, extraCaption } = props
   const mark = `talbe-state/${window.location.pathname}`
   const [state, setState] = useState<State>(() => {
-    return loadState(mark, {copyMode: false, selected: new Set()})
+    return loadState(mark, { copyMode: false, selected: new Set() })
   })
-  const {sortKey, sortAsc, copyMode, selected} = state
+  const { sortKey, sortAsc, copyMode, selected } = state
 
-  applySort()
+  const rows = sortRows()
 
   return (
     <div className="table-warpper">
       {(title || copyFmt || handler || extraCaption) && renderCaption()}
       <table className="table table-bordered table-hover">
         <thead>
-        <tr>
-          {copyMode && renderSelectTh()}
-          {cols.map(col => (
-            <th
-              key={col.key}
-              children={col.title}
-              className={thClass(col)}
-              onClick={col.compare && (() => thClick(col))}
-            />
-          ))}
-        </tr>
-        </thead>
-        <tbody>
-        {rows.map((row, idx) => (
-          <tr
-            key={row.id}
-            id={`row-${row.id}`}
-            className={trClass && classNames(trClass(row))}
-            onClick={() => copyMode && doToggleRow(row.id)}
-          >
-            {copyMode && renderSelectTd(row.id)}
-            {cols.map((col) => (
-              <td key={col.key} className={tdClass(col, row)}>
-                {col.format(row, idx)}
-              </td>
+          <tr>
+            {copyMode && renderSelectTh()}
+            {cols.map(col => (
+              <th
+                key={col.key}
+                children={col.title}
+                className={thClass(col)}
+                onClick={col.compare && (() => thClick(col))}
+              />
             ))}
           </tr>
-        ))
-        }
+        </thead>
+        <tbody>
+          {rows.map((row, idx) => (
+            <tr
+              key={row.id}
+              id={`row-${row.id}`}
+              className={trClass && classNames(trClass(row))}
+              onClick={() => copyMode && doToggleRow(row.id)}
+            >
+              {copyMode && renderSelectTd(row.id)}
+              {cols.map((col) => (
+                <td key={col.key} className={tdClass(col, row)}>
+                  {col.format(row, idx)}
+                </td>
+              ))}
+            </tr>
+          ))
+          }
         </tbody>
       </table>
     </div>
@@ -99,7 +99,7 @@ export function Table<T extends BaseRow>(props: Props<T>) {
   function renderSelectTd(rowId: number) {
     return (
       <td className="select">
-        <Checkbox checked={selected.has(rowId)}/>
+        <Checkbox checked={selected.has(rowId)} />
       </td>
     )
   }
@@ -146,18 +146,20 @@ export function Table<T extends BaseRow>(props: Props<T>) {
     )
   }
 
-  function applySort() {
+  function sortRows() {
+    const array = [...props.rows]
     if (sortKey) {
       const findCol = cols.find(col => col.key === sortKey)
       if (findCol && findCol.compare) {
         const compare = findCol.compare
-        rows.sort((a, b) => {
+        array.sort((a, b) => {
           return sortAsc ? compare(a, b) : -compare(a, b)
         })
       }
     } else if (defaultSort) {
-      rows.sort(defaultSort)
+      array.sort(defaultSort)
     }
+    return array
   }
 
   function setCopyMode(copyMode: boolean) {
@@ -184,7 +186,7 @@ export function Table<T extends BaseRow>(props: Props<T>) {
         title: '请手动复制数据', content: (
           <Input.TextArea
             value={resultText}
-            autoSize={{minRows: 2, maxRows: 6}}
+            autoSize={{ minRows: 2, maxRows: 6 }}
           />
         )
       })
@@ -248,14 +250,14 @@ export function Table<T extends BaseRow>(props: Props<T>) {
 }
 
 function saveState(key: string, state: State) {
-  const saveState = {...state, selected: [...state.selected]}
+  const saveState = { ...state, selected: [...state.selected] }
   sessionStorage[key] = JSON.stringify(saveState)
 }
 
 function loadState(key: string, initState: State): State {
   const stateText = sessionStorage[key]
   const loadState = JSON.parse(stateText || '{}')
-  const nextState = {...initState, ...loadState}
+  const nextState = { ...initState, ...loadState }
   if (Array.isArray(loadState.selected)) {
     nextState.selected = new Set(loadState.selected)
   }
