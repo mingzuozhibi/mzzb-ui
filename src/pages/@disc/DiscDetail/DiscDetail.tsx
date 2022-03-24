@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Button, Input, Modal, Radio } from 'antd'
+import request from '../../../funcs/request'
 import { UseData } from '../../../hooks/useData'
 import { formatNumber } from '../../../funcs/format'
 import { CustomLink } from '../../../comps/CustomLink'
@@ -22,8 +23,9 @@ interface Props {
 }
 
 export function DiscDetail({ useDate, isBasic }: Props) {
-  const [{ data, error }, { loading }, { doEdit }] = useDate
+  const [{ data, error }, { loading, refresh }, { doEdit }] = useDate
   const form: Form = {}
+  const [rank, setRank] = useState<number>()
 
   if (data) {
     form.titlePc = data.titlePc
@@ -46,6 +48,20 @@ export function DiscDetail({ useDate, isBasic }: Props) {
     doEdit(`/api/discs/${data!.id}`, form)
   }
 
+  function updateRank() {
+    if (data?.asin && rank) {
+      request(`/api/updateRank/${data?.asin}/${rank}`, {
+        method: 'post',
+      })
+        .then(() => {
+          refresh()
+        })
+        .catch((e) => {
+          Modal.warning({ title: '操作失败', content: e.message })
+        })
+    }
+  }
+
   const title = data ? `碟片信息：${discTitle(data)}` : '载入中'
 
   return (
@@ -60,6 +76,19 @@ export function DiscDetail({ useDate, isBasic }: Props) {
             </div>
             <Input.TextArea readOnly={true} autoSize={true} value={data.title} />
           </div>
+          {isBasic && (
+            <div className="input-wrapper">
+              <div className="input-label">
+                <span>手动更新</span>
+                <span style={{ marginLeft: 20 }}>
+                  <Button type="primary" onClick={() => updateRank()}>
+                    提交排名
+                  </Button>
+                </span>
+              </div>
+              <Input type="number" onChange={(e) => setRank(parseInt(e.target.value))} />
+            </div>
+          )}
           <div className="input-wrapper">
             <div className="input-label">
               <span>中文标题</span>
