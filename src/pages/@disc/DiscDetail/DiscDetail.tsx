@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Button, Input, Modal, Radio } from 'antd'
+import { Button, Input, message, Modal, Radio } from 'antd'
 import request from '../../../funcs/request'
 import { UseData } from '../../../hooks/useData'
 import { formatNumber } from '../../../funcs/format'
@@ -54,6 +54,7 @@ export function DiscDetail({ useDate, isBasic }: Props) {
         method: 'post',
       })
         .then(() => {
+          message.success('提交排名成功')
           refresh()
         })
         .catch((e) => {
