@@ -72,6 +72,13 @@ function DiscGroupItems(props: InjectToAdds & RouteProps<{ key: string }>) {
       Modal.warning({ title: '请检查输入项', content: `碟片ASIN必须输入` })
       return
     }
+    if (!asin.match(/[A-Z0-9]{10}/)) {
+      Modal.warning({
+        title: '请检查输入项',
+        content: `你输入的ASIN格式不正确`,
+      })
+      return
+    }
     if (!title) {
       Modal.warning({ title: '请检查输入项', content: `碟片标题必须输入` })
       return
