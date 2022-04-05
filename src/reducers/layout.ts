@@ -14,9 +14,9 @@ const initState: LayoutState = {
 export const layoutReducer = (state: LayoutState = initState, action: AnyAction) => {
   switch (action.type) {
     case 'setViewSider':
-      return {...state, viewSider: action.viewSider}
+      return { ...state, viewSider: action.viewSider }
     case 'setViewLogin':
-      return {...state, viewLogin: action.viewLogin}
+      return { ...state, viewLogin: action.viewLogin }
     case LOCATION_CHANGE:
       window.scrollTo(0, 0)
       return state

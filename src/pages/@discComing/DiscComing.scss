@@ -12,7 +12,8 @@
   .table {
     table-layout: fixed;
 
-    th, td {
+    th,
+    td {
       &.id {
         @include columnCenter();
         @include columnHideWidth(600px, 45px);

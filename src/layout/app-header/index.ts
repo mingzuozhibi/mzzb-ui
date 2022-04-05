@@ -12,16 +12,16 @@ function mapStateToProps(state: RootState) {
 function mapDispatchToProps(dispatch: any) {
   return {
     showLogin() {
-      dispatch({type: 'setViewLogin', viewLogin: true})
+      dispatch({ type: 'setViewLogin', viewLogin: true })
     },
     setViewSider(viewSider: boolean) {
-      dispatch({type: 'setViewSider', viewSider})
+      dispatch({ type: 'setViewSider', viewSider })
     },
     sessionLogout() {
-      dispatch({type: 'sessionLogoutRequest'})
+      dispatch({ type: 'sessionLogoutRequest' })
     },
     refreshSession() {
-      dispatch({type: 'sessionQueryRequest'})
+      dispatch({ type: 'sessionQueryRequest' })
     }
   }
 }

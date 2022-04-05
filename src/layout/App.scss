@@ -1,10 +1,11 @@
+@import '~antd/dist/antd.css';
+
 $mobile-max-width: 600px;
 $sider-menu-close: 768px;
 $sider-menu-width: 200px;
 $style-background-color: #fff;
 
 .app-root {
-
   .svg-icon {
     width: 1em;
     height: 1em;
@@ -28,7 +29,7 @@ $style-background-color: #fff;
     .sider-logo {
       height: 32px;
       text-align: center;
-      background: rgba(255, 255, 255, .2);
+      background: rgba(255, 255, 255, 0.2);
       margin: 16px;
     }
 
@@ -46,7 +47,7 @@ $style-background-color: #fff;
       font-size: 18px;
       line-height: 64px;
       cursor: pointer;
-      transition: color .3s;
+      transition: color 0.3s;
     }
 
     .header-icon:not(.float-right) {

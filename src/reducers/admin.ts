@@ -16,13 +16,13 @@ const initState: AdminState = {
 export const adminReducer = (state = initState, action: AnyAction) => {
   switch (action.type) {
     case 'pushToAdds':
-      return saveState({...state, toAdds: [action.disc, ...state.toAdds]})
+      return saveState({ ...state, toAdds: [action.disc, ...state.toAdds] })
     case 'dropToAdds':
-      return saveState({...state, toAdds: state.toAdds.filter(t => t.id !== action.disc.id)})
+      return saveState({ ...state, toAdds: state.toAdds.filter(t => t.id !== action.disc.id) })
     case 'setAdminMode':
-      return saveState({...state, isAdminMode: action.adminMode})
+      return saveState({ ...state, isAdminMode: action.adminMode })
     case 'setFetchCount':
-      return saveState({...state, fetchCount: action.fetchCount})
+      return saveState({ ...state, fetchCount: action.fetchCount })
     default:
       return state
   }

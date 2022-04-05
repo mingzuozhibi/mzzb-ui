@@ -1,5 +1,4 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory, useLocation } from 'react-router-dom'
 import { Alert, Button } from 'antd'
 import { EditOutlined, UnorderedListOutlined } from '@ant-design/icons'
 
@@ -11,26 +10,26 @@ import { formatTimeout } from '../../../funcs/format'
 import { composeCompares } from '../../../funcs/compare'
 
 import { InjectAdminMode, injectAdminMode, InjectRole, injectRole } from '../../@inject'
-import { DiscGroup, RouteProps, viewTypes } from '../../@types'
+import { DiscGroup, viewTypes } from '../../@types'
 import './DiscGroups.scss'
 
 const adminCols = getColumns()
-const guestCols = adminCols.filter(col => !['edit', 'item'].includes(col.key))
+const guestCols = adminCols.filter((col) => !['edit', 'item'].includes(col.key))
 
 const defaultSort = compareDiscGroups()
 
 export default injectRole(injectAdminMode(DiscGroups))
 
-function DiscGroups(props: InjectRole & InjectAdminMode & RouteProps<void>) {
-
-  const {isBasic, isAdminMode, setAdminMode, history} = props
+function DiscGroups(props: InjectRole & InjectAdminMode) {
+  const history = useHistory()
+  const { isBasic, isAdminMode, setAdminMode } = props
 
   const showExtraButtons = isBasic
   const showExtraColumns = isBasic && isAdminMode
   const fetchPrivateData = isBasic && isAdminMode
 
   const url = fetchPrivateData ? '/api/discGroups?hasPrivate=true' : '/api/discGroups'
-  const [{error, data}, handler] = useData<DiscGroup[]>(url)
+  const [{ error, data }, handler] = useData<DiscGroup[]>(url)
 
   const extraButtons = isAdminMode ? (
     <Button.Group>
@@ -47,9 +46,7 @@ function DiscGroups(props: InjectRole & InjectAdminMode & RouteProps<void>) {
 
   return (
     <div className="DiscGroups">
-      {error && (
-        <Alert message={error} type="error"/>
-      )}
+      {error && <Alert message={error} type="error" />}
       {data && (
         <Table
           rows={data}
@@ -66,7 +63,7 @@ function DiscGroups(props: InjectRole & InjectAdminMode & RouteProps<void>) {
 }
 
 function trClass(t: DiscGroup) {
-  return {'warning': t.viewType === 'PrivateList'}
+  return { warning: t.viewType === 'PrivateList' }
 }
 
 function getColumns(): Column<DiscGroup>[] {
@@ -74,28 +71,28 @@ function getColumns(): Column<DiscGroup>[] {
     {
       key: 'idx',
       title: '#',
-      format: (_, idx) => idx + 1
+      format: (_, idx) => idx + 1,
     },
     {
       key: 'title',
       title: '列表标题',
-      format: formatLinkedTitle
+      format: formatLinkedTitle,
     },
     {
       key: 'update',
       title: '最后更新',
-      format: formatLastUpdate
+      format: formatLastUpdate,
     },
     {
       key: 'edit',
       title: '编辑列表',
-      format: formatEdit
+      format: formatEdit,
     },
     {
       key: 'item',
       title: '增减碟片',
-      format: formatItem
-    }
+      format: formatItem,
+    },
   ]
 }
 
@@ -104,7 +101,7 @@ function formatLinkedTitle(row: DiscGroup) {
   return (
     <>
       <Link to={`/discs/disc_groups/${row.key}`}>{row.title}</Link>
-      <span style={{color, marginLeft: 8}}>({row.discCount})</span>
+      <span style={{ color, marginLeft: 8 }}>({row.discCount})</span>
     </>
   )
 }
@@ -115,15 +112,23 @@ function formatLastUpdate(row: DiscGroup) {
 }
 
 function formatEdit(t: DiscGroup) {
-  return <Link to={`/disc_groups/${t.key}`}><EditOutlined/></Link>
+  return (
+    <Link to={`/disc_groups/${t.key}`}>
+      <EditOutlined />
+    </Link>
+  )
 }
 
 function formatItem(t: DiscGroup) {
-  return <Link to={`/disc_groups/${t.key}/discs`}><UnorderedListOutlined/></Link>
+  return (
+    <Link to={`/disc_groups/${t.key}/discs`}>
+      <UnorderedListOutlined />
+    </Link>
+  )
 }
 
 function compareDiscGroups() {
-  const sorts = viewTypes.map(e => e.value)
+  const sorts = viewTypes.map((e) => e.value)
   return composeCompares<DiscGroup>([
     (a, b) => sorts.indexOf(a.viewType) - sorts.indexOf(b.viewType),
     (a, b) => b.key.localeCompare(a.key),

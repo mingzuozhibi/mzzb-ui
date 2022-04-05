@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from 'antd'
 import classNames from 'classnames'
@@ -29,48 +29,46 @@ interface Props {
 
 const cols = getColumns()
 
-const message = '点击复制按钮可进入复制模式，选中想要复制的碟片，然后再次点击复制即可将排名复制到剪贴板'
+const message =
+  '点击复制按钮可进入复制模式，选中想要复制的碟片，然后再次点击复制即可将排名复制到剪贴板'
 
 export function Discs(props: Props) {
-
-  const {error, data, handler} = props
+  const { error, data, handler } = props
   const [pcMode, setPcMode] = useState(false)
   const title = data ? data.title : '载入中'
 
   const replace = data && (
     <>
-      {data.modifyTime && (
-        <span>更新于{formatTimeout(data.modifyTime)}前</span>
-      )}
-      <Button onClick={() => setPcMode(!pcMode)}>
-        {pcMode ? '智能隐藏列' : '显示所有列'}
-      </Button>
+      {data.modifyTime && <span>更新于{formatTimeout(data.modifyTime)}前</span>}
+      <Button onClick={() => setPcMode(!pcMode)}>{pcMode ? '智能隐藏列' : '显示所有列'}</Button>
     </>
   )
 
   return (
     <div className="Discs">
-      <CustomMessage unikey="copymode" message={message}/>
-      <CustomHeader header="载入中" title={title} error={error} replace={replace}/>
+      <CustomMessage unikey="copymode" message={message} />
+      <CustomHeader header="载入中" title={title} error={error} replace={replace} />
       {data && (
         <>
           <div className="pc-mode-warpper">
-            <div className={classNames({'pc-mode': pcMode})}>
+            <div className={classNames({ 'pc-mode': pcMode })}>
               <Table
                 rows={data.discs}
                 cols={cols}
                 title={data.title}
                 handler={handler}
                 defaultSort={createCompareRank()}
-                copyFmt={((disc, idx) => {
-                  return `${idx + 1})`
-                    + ` ${discRank(disc)}`
-                    + ` 增${(disc.todayPt || 0)}pt`
-                    + ` 共${(disc.totalPt || 0)}pt`
-                    + ` 预${(disc.guessPt || 0)}pt`
-                    + ` 剩${disc.surplusDays}天`
-                    + ` [${discTitle(disc)}]`
-                })}
+                copyFmt={(disc, idx) => {
+                  return (
+                    `${idx + 1})` +
+                    ` ${discRank(disc)}` +
+                    ` 增${disc.todayPt || 0}pt` +
+                    ` 共${disc.totalPt || 0}pt` +
+                    ` 预${disc.guessPt || 0}pt` +
+                    ` 剩${disc.surplusDays}天` +
+                    ` [${discTitle(disc)}]`
+                  )
+                }}
               />
             </div>
           </div>
@@ -92,25 +90,25 @@ function getColumns(): Column<Disc>[] {
       title: '日亚排名',
       format: formatRank,
       tdClass: tdClassRank,
-      compare: createCompareRank()
+      compare: createCompareRank(),
     },
     {
       key: 'addPt',
       title: '日增',
       format: (disc) => formatPt(disc.todayPt),
-      compare: createComparePt(disc => disc.todayPt),
+      compare: createComparePt((disc) => disc.todayPt),
     },
     {
       key: 'sumPt',
       title: '累积',
       format: (disc) => formatPt(disc.totalPt),
-      compare: createComparePt(disc => disc.totalPt),
+      compare: createComparePt((disc) => disc.totalPt),
     },
     {
       key: 'gusPt',
       title: '预测',
       format: (disc) => formatPt(disc.guessPt),
-      compare: createComparePt(disc => disc.guessPt),
+      compare: createComparePt((disc) => disc.guessPt),
     },
     {
       key: 'surp',
@@ -125,7 +123,6 @@ function getColumns(): Column<Disc>[] {
       compare: compareTitle,
     },
   ]
-
 }
 
 function discRank(disc: Disc) {
@@ -154,12 +151,11 @@ function tdClassRank(disc: Disc) {
 
 function createCompareRank() {
   return safeCompare<Disc, number>({
-    apply: disc => disc.thisRank,
-    compare: (a, b) => a - b
+    apply: (disc) => disc.thisRank,
+    compare: (a, b) => a - b,
   })
 }
 
 function createComparePt(apply: (disc: Disc) => number | undefined) {
-  return safeCompare<Disc, number>({apply, compare: (a, b) => b - a})
+  return safeCompare<Disc, number>({ apply, compare: (a, b) => b - a })
 }
-

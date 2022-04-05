@@ -1,4 +1,3 @@
-import React from 'react'
 import { formatNumber } from '../funcs/format'
 
 interface Props {

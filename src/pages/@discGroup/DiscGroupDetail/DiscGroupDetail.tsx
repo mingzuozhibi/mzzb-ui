@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { KeyOutlined, TagOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Input, Modal, Popconfirm, Radio } from 'antd'
 import { useData } from '../../../hooks/useData'
 import { useAjax } from '../../../hooks/useAjax'
 import { CustomHeader } from '../../../comps/CustomHeader'
 import { InjectRole, injectRole } from '../../@inject'
-import { DiscGroup, RouteProps, viewTypes } from '../../@types'
+import { DiscGroup, viewTypes } from '../../@types'
+import { useRouteMatch } from 'react-router-dom'
 
 interface Form {
   key?: string
@@ -16,12 +17,13 @@ interface Form {
 
 export default injectRole(DiscGroupDetail)
 
-function DiscGroupDetail(props: InjectRole & RouteProps<{ key: string }>) {
+function DiscGroupDetail(props: InjectRole) {
+  const { isAdmin } = props
+  const match = useRouteMatch<{ key: string }>()
 
-  const {isAdmin, match} = props
-
-  const [{error, data}, {loading}, {doEdit}] =
-    useData<DiscGroup>(`/api/discGroups/key/${match.params.key}`)
+  const [{ error, data }, { loading }, { doEdit }] = useData<DiscGroup>(
+    `/api/discGroups/key/${match.params.key}`
+  )
 
   const form: Form = {}
 
@@ -34,12 +36,12 @@ function DiscGroupDetail(props: InjectRole & RouteProps<{ key: string }>) {
 
   function editData() {
     if (!form.key) {
-      Modal.warning({title: '请检查输入项', content: `你必须输入列表索引`})
+      Modal.warning({ title: '请检查输入项', content: `你必须输入列表索引` })
       return
     }
 
     if (!form.title) {
-      Modal.warning({title: '请检查输入项', content: `你必须输入列表索引`})
+      Modal.warning({ title: '请检查输入项', content: `你必须输入列表索引` })
       return
     }
 
@@ -53,7 +55,7 @@ function DiscGroupDetail(props: InjectRole & RouteProps<{ key: string }>) {
     doDelete(`/api/discGroups/${data!.id}`, '删除列表', {
       onSuccess() {
         setDeleted(true)
-      }
+      },
     })
   }
 
@@ -61,22 +63,22 @@ function DiscGroupDetail(props: InjectRole & RouteProps<{ key: string }>) {
 
   return (
     <div className="DiscGroupDtail">
-      <CustomHeader header="列表信息" title={title} error={error}/>
+      <CustomHeader header="列表信息" title={title} error={error} />
       {data && (
         <>
           <div className="input-wrapper">
             <Input
-              prefix={<KeyOutlined/>}
+              prefix={<KeyOutlined />}
               defaultValue={form.key}
-              onChange={e => form.key = e.target.value}
+              onChange={(e) => (form.key = e.target.value)}
               placeholder={`请输入列表索引`}
             />
           </div>
           <div className="input-wrapper">
             <Input
-              prefix={<TagOutlined/>}
+              prefix={<TagOutlined />}
               defaultValue={form.title}
-              onChange={e => form.title = e.target.value}
+              onChange={(e) => (form.title = e.target.value)}
               placeholder={`请输入列表标题`}
             />
           </div>
@@ -85,23 +87,27 @@ function DiscGroupDetail(props: InjectRole & RouteProps<{ key: string }>) {
             <Radio.Group
               options={viewTypes}
               defaultValue={form.viewType}
-              onChange={e => form.viewType = e.target.value}
+              onChange={(e) => (form.viewType = e.target.value)}
             />
           </div>
           <div className="input-wrapper">
             <Checkbox
               defaultChecked={form.enabled}
-              onChange={e => form.enabled = e.target.checked}
+              onChange={(e) => (form.enabled = e.target.checked)}
               children="启用"
             />
           </div>
           {deleted ? (
             <div className="input-wrapper">
-              <Button type="primary" onClick={() => window.history.back()}>点击返回</Button>
+              <Button type="primary" onClick={() => window.history.back()}>
+                点击返回
+              </Button>
             </div>
           ) : (
             <div className="input-wrapper">
-              <Button type="primary" loading={loading} onClick={editData}>提交修改</Button>
+              <Button type="primary" loading={loading} onClick={editData}>
+                提交修改
+              </Button>
               {isAdmin && (
                 <Popconfirm
                   title="你确定要删除这个列表吗？"
@@ -110,7 +116,9 @@ function DiscGroupDetail(props: InjectRole & RouteProps<{ key: string }>) {
                   cancelText="No"
                   onConfirm={deleteThis}
                 >
-                  <Button danger={true} loading={deleting} style={{marginLeft: 20}}>删除列表</Button>
+                  <Button danger={true} loading={deleting} style={{ marginLeft: 20 }}>
+                    删除列表
+                  </Button>
                 </Popconfirm>
               )}
             </div>

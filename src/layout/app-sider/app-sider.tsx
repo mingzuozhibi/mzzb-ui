@@ -1,8 +1,8 @@
-import React, { useReducer } from 'react'
+import { useReducer } from 'react'
 import { Layout, Menu } from 'antd'
 import { MenuInfo, menuInfos } from '../../@menus'
 import { CustomIcon } from '../../comps/CustomIcon'
-import { RouteProps } from '../../pages/@types'
+import { useHistory, useLocation } from 'react-router-dom'
 
 interface AppSiderProps {
   userRoles: string[]
@@ -15,15 +15,16 @@ interface State {
   mustQuickSet: boolean
 }
 
-export function AppSider(props: AppSiderProps & RouteProps<void>) {
-
-  const {userRoles, collapsed, setCollapsed, location, history} = props
+export function AppSider(props: AppSiderProps) {
+  const { userRoles, collapsed, setCollapsed } = props
+  const history = useHistory()
+  const location = useLocation()
 
   const reducer = (state: State, collapse: boolean) => {
-    return {autoCollapse: collapse, mustQuickSet: false}
+    return { autoCollapse: collapse, mustQuickSet: false }
   }
-  const initialState = {autoCollapse: true, mustQuickSet: true}
-  const [{autoCollapse, mustQuickSet}, setAutoCollapse] = useReducer(reducer, initialState)
+  const initialState = { autoCollapse: true, mustQuickSet: true }
+  const [{ autoCollapse, mustQuickSet }, setAutoCollapse] = useReducer(reducer, initialState)
 
   return (
     <Layout.Sider
@@ -40,10 +41,10 @@ export function AppSider(props: AppSiderProps & RouteProps<void>) {
       <Menu
         mode="inline"
         selectedKeys={[location.pathname]}
-        style={{height: '100%'}}
+        style={{ height: '100%' }}
         onClick={selectItem}
       >
-        {menuInfos.filter(hasMenuRole(userRoles)).map(menuInfo => (
+        {menuInfos.filter(hasMenuRole(userRoles)).map((menuInfo) => (
           <Menu.Item key={menuInfo.matchPath} onMouseDown={midButtonDown(menuInfo)}>
             {renderLabel(menuInfo)}
           </Menu.Item>
@@ -65,7 +66,7 @@ export function AppSider(props: AppSiderProps & RouteProps<void>) {
     }
   }
 
-  function selectItem({key: path}: { key: string }) {
+  function selectItem({ key: path }: { key: string }) {
     if (path === location.pathname) {
       return
     }
@@ -89,19 +90,28 @@ export function AppSider(props: AppSiderProps & RouteProps<void>) {
       }
     }
   }
-
 }
 
 function hasMenuRole(userRoles: string[]) {
-  return ({menuRole}: MenuInfo) => menuRole === undefined || userRoles.includes(menuRole)
+  return ({ menuRole }: MenuInfo) => menuRole === undefined || userRoles.includes(menuRole)
 }
 
-function renderLabel({iconType, iconNode, menuTitle}: MenuInfo) {
+function renderLabel({ iconType, iconNode, menuTitle }: MenuInfo) {
   if (iconNode) {
-    return <span><CustomIcon className="sider-icon" iconNode={iconNode}/>{menuTitle}</span>
+    return (
+      <span>
+        <CustomIcon className="sider-icon" iconNode={iconNode} />
+        {menuTitle}
+      </span>
+    )
   }
   if (iconType) {
-    return <span><CustomIcon className="sider-icon" iconType={iconType}/>{menuTitle}</span>
+    return (
+      <span>
+        <CustomIcon className="sider-icon" iconType={iconType} />
+        {menuTitle}
+      </span>
+    )
   }
   return <span>{menuTitle}</span>
 }

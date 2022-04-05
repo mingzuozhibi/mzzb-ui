@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react'
-import echarts from 'echarts'
+import { useEffect } from 'react'
 import './DiscRecords.scss'
 
 import { useData } from '../../../hooks/useData'
@@ -7,7 +6,7 @@ import { formatNumber } from '../../../funcs/format'
 import { CustomHeader } from '../../../comps/CustomHeader'
 import { Column, Table } from '../../../comps/@table/Table'
 import { formatPt } from '../../@funcs'
-import { RouteProps } from '../../@types'
+import { useRouteMatch } from 'react-router-dom'
 
 interface Data {
   title: string
@@ -27,9 +26,9 @@ interface Record {
 
 const cols = getColumns()
 
-export default function DiscRecords({match}: RouteProps<{ id: string }>) {
-
-  const [{error, data}, handler] = useData<Data>(`/api/discs/${match.params.id}/records`)
+export default function DiscRecords() {
+  const match = useRouteMatch<{ id: string }>()
+  const [{ error, data }, handler] = useData<Data>(`/api/discs/${match.params.id}/records`)
 
   useEffect(() => {
     data && initEchart(data)
@@ -39,24 +38,23 @@ export default function DiscRecords({match}: RouteProps<{ id: string }>) {
 
   return (
     <div className="DiscRecords">
-      <CustomHeader header={title} error={error}/>
-      <div id="echart_warp"/>
+      <CustomHeader header={title} error={error} />
+      <div id="echart_warp" />
       {data && (
         <Table
           rows={data.records}
           cols={cols}
           trClass={trClass(data)}
           handler={handler}
-          extraCaption={<span style={{marginLeft: 8}}>如果图表显示错误，请尝试刷新</span>}
+          extraCaption={<span style={{ marginLeft: 8 }}>如果图表显示错误，请尝试刷新</span>}
         />
       )}
     </div>
   )
-
 }
 
 function trClass(data: Data) {
-  return (t: Record) => ({warning: t.date.localeCompare(data.releaseDate) >= 0})
+  return (t: Record) => ({ warning: t.date.localeCompare(data.releaseDate) >= 0 })
 }
 
 function getColumns(): Column<Record>[] {
@@ -64,32 +62,32 @@ function getColumns(): Column<Record>[] {
     {
       key: 'idx',
       title: '#',
-      format: (t, i) => i + 1
+      format: (t, i) => i + 1,
     },
     {
       key: 'date',
       title: '日期',
-      format: (t) => t.date
+      format: (t) => t.date,
     },
     {
       key: 'addPt',
       title: '日增PT',
-      format: formatTodayPt
+      format: formatTodayPt,
     },
     {
       key: 'sumPt',
       title: '累积PT',
-      format: (t) => formatPt(t.totalPt)
+      format: (t) => formatPt(t.totalPt),
     },
     {
       key: 'powPt',
       title: '预测PT',
-      format: (t) => formatPt(t.guessPt)
+      format: (t) => formatPt(t.guessPt),
     },
     {
       key: 'averRank',
       title: '平均排名',
-      format: (t) => formatRank(t)
+      format: (t) => formatRank(t),
     },
   ]
 }
@@ -112,10 +110,10 @@ function formatRank(t: Record) {
 function initEchart(data?: Data) {
   if (!data) return
 
-  const dates = data.records.map(record => record.date)
-  const sumPts = data.records.map(record => record.totalPt)
-  const gesPts = data.records.map(record => record.guessPt)
-  const ranks = data.records.map(record => {
+  const dates = data.records.map((record) => record.date)
+  const sumPts = data.records.map((record) => record.totalPt)
+  const gesPts = data.records.map((record) => record.guessPt)
+  const ranks = data.records.map((record) => {
     if (record.averRank !== undefined && record.averRank < 10) {
       record.averRank = Math.floor(record.averRank * 10) / 10
     }
@@ -132,7 +130,7 @@ function initEchart(data?: Data) {
   const myChart = echarts.init(divElement)
   myChart.setOption({
     legend: {
-      data: ['排位', '累积', '预测']
+      data: ['排位', '累积', '预测'],
     },
     tooltip: {
       trigger: 'axis',
@@ -143,17 +141,17 @@ function initEchart(data?: Data) {
         const contentW = size.contentSize[0]
         const contentH = size.contentSize[1]
         const isLeft = mouseX < size.viewSize[0] / 2
-        return {top: mouseY - contentH - 50, left: isLeft ? mouseX + 30 : mouseX - contentW - 30}
-      }
+        return { top: mouseY - contentH - 50, left: isLeft ? mouseX + 30 : mouseX - contentW - 30 }
+      },
     },
     grid: {
       left: 60,
-      right: 50
+      right: 50,
     },
     xAxis: {
       type: 'category',
       data: dates,
-      inverse: true
+      inverse: true,
     },
     yAxis: [
       {
@@ -162,40 +160,40 @@ function initEchart(data?: Data) {
         type: 'log',
         inverse: true,
         axisLabel: {
-          formatter: (rank: number) => rank <= 10000 ? `${rank}位` : `${rank / 10000}万位`
+          formatter: (rank: number) => (rank <= 10000 ? `${rank}位` : `${rank / 10000}万位`),
         },
         splitLine: {
           lineStyle: {
-            color: ['#AAA', '#AAA', 'red', '#AAA', '#AAA']
-          }
-        }
+            color: ['#AAA', '#AAA', 'red', '#AAA', '#AAA'],
+          },
+        },
       },
       {
         name: '(PT)',
         type: 'value',
         splitLine: {
-          show: false
-        }
-      }
+          show: false,
+        },
+      },
     ],
     series: [
       {
         type: 'line',
         name: '排位',
-        data: ranks
+        data: ranks,
       },
       {
         type: 'line',
         name: '累积',
         yAxisIndex: 1,
-        data: sumPts
+        data: sumPts,
       },
       {
         type: 'line',
         name: '预测',
         yAxisIndex: 1,
-        data: gesPts
-      }
-    ]
+        data: gesPts,
+      },
+    ],
   })
 }

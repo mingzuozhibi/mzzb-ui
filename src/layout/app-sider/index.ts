@@ -1,7 +1,6 @@
 import { connect } from 'react-redux'
 import { RootState } from '../../@reducer'
 import { AppSider } from './app-sider'
-import { withRouter } from 'react-router-dom'
 
 function mapStateToProps(state: RootState) {
   return {
@@ -13,14 +12,12 @@ function mapStateToProps(state: RootState) {
 function mapDispatchToProps(dispatch: any) {
   return {
     setCollapsed(collapse: boolean) {
-      dispatch({type: 'setViewSider', viewSider: !collapse})
+      dispatch({ type: 'setViewSider', viewSider: !collapse })
     },
   }
 }
 
-const Connected = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(AppSider)
-
-export default withRouter(Connected)

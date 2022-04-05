@@ -1,7 +1,6 @@
 @import '../../function';
 
 #root .Discs {
-
   .pc-mode-warpper {
     overflow-x: auto;
 
@@ -9,7 +8,8 @@
       min-width: 1200px;
 
       table {
-        th, td {
+        th,
+        td {
           display: table-cell !important;
         }
       }

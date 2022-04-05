@@ -12,10 +12,10 @@ function mapStateToProps(state: RootState) {
 function mapDispatchToProps(dispatch: any) {
   return {
     setViewLogin(viewLogin: boolean) {
-      dispatch({type: 'setViewLogin', viewLogin})
+      dispatch({ type: 'setViewLogin', viewLogin })
     },
     sessionLogin(username: string, password: string) {
-      dispatch({type: 'sessionLoginRequest', username, password})
+      dispatch({ type: 'sessionLoginRequest', username, password })
     },
   }
 }
