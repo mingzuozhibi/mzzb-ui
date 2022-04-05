@@ -36,7 +36,7 @@ function SearchDisc(params: Params) {
       return
     }
 
-    if (!asin.match(/[A-Z0-9]{10}/)) {
+    if (!asin.match(/^[A-Z0-9]{10}$/)) {
       Modal.warning({ title: '请检查输入项', content: `你输入的ASIN格式不正确` })
       return
     }
