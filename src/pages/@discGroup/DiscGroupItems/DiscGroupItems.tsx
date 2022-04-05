@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { DeleteOutlined, FileAddOutlined } from '@ant-design/icons'
 import { Button, Input, Modal, Radio, Tabs } from 'antd'
@@ -16,6 +16,7 @@ import { InjectToAdds, injectToAdds } from '../../@inject'
 import { Disc, DiscGroup, RouteProps } from '../../@types'
 import './DiscGroupItems.scss'
 import request from '../../../funcs/request'
+import SearchDisc from './SearchDisc'
 
 interface Data extends DiscGroup {
   discs: Disc[]
@@ -33,38 +34,12 @@ const columns = 'id,asin,title,titlePc,surplusDays'
 export default injectToAdds(DiscGroupItems)
 
 function DiscGroupItems(props: InjectToAdds & RouteProps<{ key: string }>) {
-  const { toAdds, pushToAdds, dropToAdds, fetchCount, setFetchCount, match } = props
+  const { toAdds, pushToAdds, dropToAdds, match } = props
   const findDiscsUrl = `/api/discGroups/key/${match.params.key}/discs?discColumns=${columns}`
   const [{ error, data }, handler, { modify }] = useData<Data>(findDiscsUrl)
-  const [discSearching, doSearchDisc] = useAjax<Disc>('get')
-  const [countSearching, doSearchCount] = useAjax<number>('get')
   const [, doPush] = useAjax<Disc>('post')
   const [, doDrop] = useAjax<Disc>('delete')
-  const asinRef = useRef<string>()
   const [formCreate, setFormCreate] = useState<FormCreate>({})
-
-  function searchDisc() {
-    const asin = asinRef.current
-
-    if (!asin) {
-      Modal.warning({ title: '请检查输入项', content: `碟片ASIN必须输入` })
-      return
-    }
-
-    if (toAdds.some((t) => t.asin === asin)) {
-      Modal.warning({ title: '请检查输入项', content: `该碟片已存在于待选列表` })
-      return
-    }
-
-    if (data!.discs.some((t) => t.asin === asin)) {
-      Modal.warning({ title: '请检查输入项', content: `该碟片已存在于当前列表` })
-      return
-    }
-
-    doSearchDisc(`/api/admin/searchDisc/${asin}`, '查询碟片', {
-      onSuccess: pushToAdds,
-    })
-  }
 
   function createDisc() {
     const { asin, title, releaseDate, discType } = formCreate
@@ -141,10 +116,6 @@ function DiscGroupItems(props: InjectToAdds & RouteProps<{ key: string }>) {
     })
   }
 
-  function fetchActiveCount() {
-    doSearchCount('/api/admin/fetchCount', '查询抓取中的碟片数量', { onSuccess: setFetchCount })
-  }
-
   function getPushCommand() {
     return {
       key: 'command',
@@ -170,23 +141,7 @@ function DiscGroupItems(props: InjectToAdds & RouteProps<{ key: string }>) {
         <>
           <Tabs>
             <Tabs.TabPane tab="查询碟片" key="1">
-              <div className="input-wrapper">
-                <Input
-                  addonBefore="ASIN"
-                  onChange={(e) => (asinRef.current = e.target.value)}
-                  placeholder="请输入ASIN"
-                />
-              </div>
-              <div className="input-wrapper button-group">
-                <Button loading={discSearching} onClick={searchDisc}>
-                  查找碟片
-                </Button>
-                <Button loading={countSearching} onClick={fetchActiveCount}>
-                  {fetchCount !== undefined
-                    ? `抓取中碟片数量(${fetchCount})`
-                    : '查询抓取中的碟片数量'}
-                </Button>
-              </div>
+              <SearchDisc theDiscs={data.discs} addDiscs={toAdds} pushDisc={pushToAdds} />
             </Tabs.TabPane>
             <Tabs.TabPane tab="手动创建" key="2">
               <div className="input-wrapper">
