@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { Button, Input, Modal } from 'antd'
+import { isEmpty } from '../../../funcs/domain'
 import { useAjax } from '../../../hooks/useAjax'
-import { Disc } from '../../@types'
 import { RootState } from '../../../@reducer'
+import { Disc } from '../../@types'
 
 interface Params {
   theDiscs: Disc[]
@@ -30,8 +31,13 @@ function SearchDisc(params: Params) {
   const [loadingCount, fetchCount] = useAjax<number>('get')
 
   function doFetchDisc() {
-    if (!asin) {
+    if (!isEmpty(asin)) {
       Modal.warning({ title: '请检查输入项', content: `碟片ASIN必须输入` })
+      return
+    }
+
+    if (!asin.match(/[A-Z0-9]{10}/)) {
+      Modal.warning({ title: '请检查输入项', content: `你输入的ASIN格式不正确` })
       return
     }
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Button, Input, Modal, Radio } from 'antd'
+import { isEmpty } from '../../../funcs/domain'
 import { useAjax } from '../../../hooks/useAjax'
 import { Disc } from '../../@types'
 
@@ -20,25 +21,27 @@ export default function CreateDisc(params: Params) {
 
   function doCreateDisc() {
     const { asin, title, releaseDate, discType } = form
-    if (!title) {
+
+    if (!isEmpty(title)) {
       Modal.warning({ title: '请检查输入项', content: `碟片标题必须输入` })
       return
     }
-    if (!asin) {
+
+    if (!isEmpty(asin)) {
       Modal.warning({ title: '请检查输入项', content: `碟片ASIN必须输入` })
       return
     }
+
     if (!asin.match(/[A-Z0-9]{10}/)) {
-      Modal.warning({
-        title: '请检查输入项',
-        content: `你输入的ASIN格式不正确`,
-      })
+      Modal.warning({ title: '请检查输入项', content: `你输入的ASIN格式不正确` })
       return
     }
-    if (!releaseDate) {
+
+    if (!isEmpty(releaseDate)) {
       Modal.warning({ title: '请检查输入项', content: `发售日期必须输入` })
       return
     }
+
     if (!releaseDate.match(/\d{4}\/\d{1,2}\/\d{1,2}/)) {
       Modal.warning({
         title: '请检查输入项',
@@ -46,10 +49,12 @@ export default function CreateDisc(params: Params) {
       })
       return
     }
-    if (!discType) {
+
+    if (!isEmpty(discType)) {
       Modal.warning({ title: '请检查输入项', content: `碟片类型必须选择` })
       return
     }
+
     createDisc('/api/discs', '创建碟片', {
       body: form,
       onSuccess: params.pushToAdds,
@@ -57,7 +62,7 @@ export default function CreateDisc(params: Params) {
   }
 
   return (
-    <>
+    <div className="CreateDisc">
       <div className="input-wrapper">
         <div className="input-label">
           <span>日文标题</span>
@@ -65,7 +70,7 @@ export default function CreateDisc(params: Params) {
         <Input.TextArea
           autoSize={true}
           value={form.title}
-          onChange={(e) => setForm({ ...form, title: e.target.value })}
+          onChange={(e) => setForm({ ...form, title: e.target.value.trim() })}
         />
       </div>
       <div className="input-wrapper">
@@ -73,19 +78,19 @@ export default function CreateDisc(params: Params) {
           addonBefore="Asin"
           style={{ width: 180, marginRight: 12 }}
           value={form.asin}
-          onChange={(e) => setForm({ ...form, asin: e.target.value })}
+          onChange={(e) => setForm({ ...form, asin: e.target.value.trim() })}
         />
         <Input
           addonBefore="日期"
           style={{ width: 180 }}
           value={form.releaseDate}
-          onChange={(e) => setForm({ ...form, releaseDate: e.target.value })}
+          onChange={(e) => setForm({ ...form, releaseDate: e.target.value.trim() })}
         />
       </div>
       <div className="input-wrapper">
         <Radio.Group
           value={form.discType}
-          onChange={(e) => setForm({ ...form, discType: e.target.value })}
+          onChange={(e) => setForm({ ...form, discType: e.target.value.trim() })}
         >
           <Radio.Button value="Cd">CD</Radio.Button>
           <Radio.Button value="Bluray">BD</Radio.Button>
@@ -99,6 +104,6 @@ export default function CreateDisc(params: Params) {
           </Button>
         </div>
       </div>
-    </>
+    </div>
   )
 }
