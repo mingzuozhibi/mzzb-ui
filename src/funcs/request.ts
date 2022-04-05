@@ -43,8 +43,8 @@ function saveOfToken(response: Response) {
 function parseToJSON(response: Response) {
   try {
     return response.json()
-  } catch (err) {
-    throw new Error(`错误的JSON格式, error=${err.message}, text=${response.text()}`)
+  } catch (e: any) {
+    throw new Error(`错误的JSON格式, error=${e.message}, text=${response.text()}`)
   }
 }
 
@@ -52,7 +52,7 @@ function handleError(error: Error) {
   return {success: false, message: error.message}
 }
 
-type Result = { success: true, [extraProps: string]: any } | { success: false, message: string }
+export type Result = { success: true, [extraProps: string]: any } | { success: false, message: string }
 
 export default function request(url: string, props: RequestInit = {}): Promise<Result> {
   url = url.replace('??', '?')

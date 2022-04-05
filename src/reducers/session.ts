@@ -2,6 +2,7 @@ import { AnyAction } from 'redux'
 import { call, put } from 'redux-saga/effects'
 import { message, Modal } from 'antd'
 import { sessionManager } from '../funcs/manager'
+import { Result } from '../funcs/request'
 
 export interface Session {
   userName: string
@@ -39,7 +40,7 @@ export const sessionReducer = (state: SessionState = initSession, action: AnyAct
 }
 
 function* sessionQuery() {
-  const result = yield call(sessionManager.query)
+  const result: Result = yield call(sessionManager.query)
   if (result.success) {
     yield put({type: 'sessionSucceed', session: result.data})
   } else {
@@ -48,7 +49,7 @@ function* sessionQuery() {
 }
 
 function* sessionLogin(action: AnyAction) {
-  const result = yield call(sessionManager.login, action.username, action.password)
+  const result: Result = yield call(sessionManager.login, action.username, action.password)
   if (result.success) {
     yield put({type: 'setViewLogin', viewLogin: false})
     yield put({type: 'sessionSucceed', session: result.data, message: '你已成功登入'})
@@ -58,7 +59,7 @@ function* sessionLogin(action: AnyAction) {
 }
 
 function* sessionLogout() {
-  const result = yield call(sessionManager.logout)
+  const result: Result = yield call(sessionManager.logout)
   if (result.success) {
     yield put({type: 'sessionSucceed', session: result.data, message: '你已成功登出'})
   } else {

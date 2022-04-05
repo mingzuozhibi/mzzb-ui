@@ -24,10 +24,12 @@ const store = createStore(
 sagaMid.run(sagas)
 
 ReactDOM.render(
-  <Provider store={store}>
-    <ConnectedRouter history={history}>
-      <App/>
-    </ConnectedRouter>
-  </Provider>,
+  <React.StrictMode>
+    <Provider store={store}>
+      <ConnectedRouter history={history}>
+        <App />
+      </ConnectedRouter>
+    </Provider>
+  </React.StrictMode>,
   document.getElementById('root') as HTMLElement
 )
