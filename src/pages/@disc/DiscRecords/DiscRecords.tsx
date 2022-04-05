@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import echarts from 'echarts'
 import './DiscRecords.scss'
 
 import { useData } from '../../../hooks/useData'
