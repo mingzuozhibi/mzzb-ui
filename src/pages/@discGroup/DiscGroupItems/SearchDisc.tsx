@@ -31,7 +31,7 @@ function SearchDisc(params: Params) {
   const [loadingCount, fetchCount] = useAjax<number>('get')
 
   function doFetchDisc() {
-    if (!isEmpty(asin)) {
+    if (isEmpty(asin)) {
       Modal.warning({ title: '请检查输入项', content: `碟片ASIN必须输入` })
       return
     }

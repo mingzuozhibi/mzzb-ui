@@ -22,12 +22,12 @@ export default function CreateDisc(params: Params) {
   function doCreateDisc() {
     const { asin, title, releaseDate, discType } = form
 
-    if (!isEmpty(title)) {
+    if (isEmpty(title)) {
       Modal.warning({ title: '请检查输入项', content: `碟片标题必须输入` })
       return
     }
 
-    if (!isEmpty(asin)) {
+    if (isEmpty(asin)) {
       Modal.warning({ title: '请检查输入项', content: `碟片ASIN必须输入` })
       return
     }
@@ -37,7 +37,7 @@ export default function CreateDisc(params: Params) {
       return
     }
 
-    if (!isEmpty(releaseDate)) {
+    if (isEmpty(releaseDate)) {
       Modal.warning({ title: '请检查输入项', content: `发售日期必须输入` })
       return
     }
@@ -50,7 +50,7 @@ export default function CreateDisc(params: Params) {
       return
     }
 
-    if (!isEmpty(discType)) {
+    if (isEmpty(discType)) {
       Modal.warning({ title: '请检查输入项', content: `碟片类型必须选择` })
       return
     }
