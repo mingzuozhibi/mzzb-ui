@@ -8,7 +8,7 @@ import { RootState } from '../../../@reducer'
 interface Params {
   theDiscs: Disc[]
   addDiscs: Disc[]
-  pushDisc: (disc: Disc) => void
+  pushToAdds: (disc: Disc) => void
   count?: number
   setCount: (count: number) => void
 }
@@ -46,7 +46,7 @@ function SearchDisc(params: Params) {
     }
 
     fetchDisc(`/api/admin/searchDisc/${asin}`, '查询碟片', {
-      onSuccess: params.pushDisc,
+      onSuccess: params.pushToAdds,
     })
   }
 
