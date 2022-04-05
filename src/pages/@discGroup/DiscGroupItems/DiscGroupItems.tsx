@@ -82,7 +82,7 @@ function DiscGroupItems(props: InjectToAdds & RouteProps<{ key: string }>) {
       <CustomHeader header="管理碟片" title={title} error={error} handler={handler} />
       {data && (
         <>
-          <Tabs>
+          <Tabs type="card">
             <Tabs.TabPane tab="查询碟片" key="1">
               <SearchDisc theDiscs={data.discs} addDiscs={toAdds} pushToAdds={pushToAdds} />
             </Tabs.TabPane>

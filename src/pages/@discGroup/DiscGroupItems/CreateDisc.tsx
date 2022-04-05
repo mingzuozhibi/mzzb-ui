@@ -71,6 +71,7 @@ export default function CreateDisc(params: Params) {
           autoSize={true}
           value={form.title}
           onChange={(e) => setForm({ ...form, title: e.target.value.trim() })}
+          placeholder="请输入碟片标题"
         />
       </div>
       <div className="input-wrapper">
@@ -79,12 +80,14 @@ export default function CreateDisc(params: Params) {
           style={{ width: 180, marginRight: 12 }}
           value={form.asin}
           onChange={(e) => setForm({ ...form, asin: e.target.value.trim() })}
+          placeholder="请输入ASIN"
         />
         <Input
           addonBefore="日期"
           style={{ width: 180 }}
           value={form.releaseDate}
           onChange={(e) => setForm({ ...form, releaseDate: e.target.value.trim() })}
+          placeholder="请输入发售日期"
         />
       </div>
       <div className="input-wrapper">
