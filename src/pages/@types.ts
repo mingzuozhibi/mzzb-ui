@@ -1,7 +1,5 @@
 import { RouteComponentProps } from 'react-router-dom'
 
-export type RouteProps<T> = RouteComponentProps<T>
-
 export interface User {
   id: number
   enabled: boolean

@@ -1,17 +1,17 @@
-import React, { useMemo } from 'react'
-import { Link } from 'react-router-dom'
+import { useMemo } from 'react'
+import { Link, useHistory } from 'react-router-dom'
 import { Alert, Button } from 'antd'
 import { EditOutlined } from '@ant-design/icons'
 
 import { useData } from '../../../hooks/useData'
 import { useTitle, useWidth } from '../../../hooks/hooks'
 import { Column, Table } from '../../../comps/@table/Table'
-import { RouteProps, User } from '../../@types'
+import { User } from '../../@types'
 import './Users.scss'
 
-export default function Users({history}: RouteProps<void>) {
-
-  const [{error, data}, handler] = useData<User[]>(`/api/users`)
+export default function Users() {
+  const history = useHistory()
+  const [{ error, data }, handler] = useData<User[]>(`/api/users`)
 
   const width = useWidth('.Users')
   const cols = useMemo(() => getColumns(width), [width])
@@ -25,11 +25,15 @@ export default function Users({history}: RouteProps<void>) {
 
   return (
     <div className="Users">
-      {error && (
-        <Alert message={error} type="error"/>
-      )}
+      {error && <Alert message={error} type="error" />}
       {data && (
-        <Table rows={data} cols={cols} title="用户管理" handler={handler} extraCaption={addUserButton}/>
+        <Table
+          rows={data}
+          cols={cols}
+          title="用户管理"
+          handler={handler}
+          extraCaption={addUserButton}
+        />
       )}
     </div>
   )
@@ -40,34 +44,34 @@ function getColumns(width: number): Column<User>[] {
     {
       key: 'id',
       title: 'ID',
-      format: (t) => t.id
+      format: (t) => t.id,
     },
     {
       key: 'username',
       title: `用户名`,
-      format: (t) => t.username
+      format: (t) => t.username,
     },
     {
       key: 'enabled',
       title: '启用',
-      format: (t) => t.enabled ? '是' : '--'
+      format: (t) => (t.enabled ? '是' : '--'),
     },
     {
       key: 'registerDate',
       title: '注册时间',
-      format: (t) => formatRegisterDate(t, width)
+      format: (t) => formatRegisterDate(t, width),
     },
     {
       key: 'lastLoggedIn',
       title: '最后登入',
       format: (t) => formatLastLoggedIn(t, width),
-      tdClass: (t) => justLogged(t) ? 'info' : ''
+      tdClass: (t) => (justLogged(t) ? 'info' : ''),
     },
     {
       key: 'command',
       title: '操作',
-      format: formatCommand
-    }
+      format: formatCommand,
+    },
   ]
 }
 
@@ -89,5 +93,9 @@ function justLogged(t: User) {
 }
 
 function formatCommand(t: User) {
-  return <Link to={`/users/${t.id}`}><EditOutlined/></Link>
+  return (
+    <Link to={`/users/${t.id}`}>
+      <EditOutlined />
+    </Link>
+  )
 }

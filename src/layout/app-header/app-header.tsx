@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { Layout, Popconfirm } from 'antd'
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import { CustomIcon } from '../../comps/CustomIcon'
@@ -14,8 +14,7 @@ interface AppHeaderProps {
 }
 
 export function AppHeader(props: AppHeaderProps) {
-
-  const {session, viewSider, showLogin, setViewSider, sessionLogout, refreshSession} = props
+  const { session, viewSider, showLogin, setViewSider, sessionLogout, refreshSession } = props
 
   useEffect(() => {
     refreshSession()
@@ -25,15 +24,24 @@ export function AppHeader(props: AppHeaderProps) {
 
   return (
     <Layout.Header className="app-header">
-      <CustomIcon iconNode={viewSider ? <MenuFoldOutlined/> : <MenuUnfoldOutlined/>}
-                  className="header-icon" onClick={() => setViewSider(!viewSider)}/>
-      <span style={{marginLeft: 24}}>在线人数: {session.userCount}</span>
+      <CustomIcon
+        iconNode={viewSider ? <MenuFoldOutlined /> : <MenuUnfoldOutlined />}
+        className="header-icon"
+        onClick={() => setViewSider(!viewSider)}
+      />
+      <span style={{ marginLeft: 24 }}>在线人数: {session.userCount}</span>
       {session.isLogged ? (
-        <Popconfirm title="你确定要登出吗？" okText="OK" cancelText="Cancel" placement="bottomRight" onConfirm={sessionLogout}>
-          <CustomIcon iconType="icon-user" className="header-icon float-right"/>
+        <Popconfirm
+          title="你确定要登出吗？"
+          okText="OK"
+          cancelText="Cancel"
+          placement="bottomRight"
+          onConfirm={sessionLogout}
+        >
+          <CustomIcon iconType="icon-user" className="header-icon float-right" />
         </Popconfirm>
       ) : (
-        <CustomIcon iconType="icon-login" className="header-icon float-right" onClick={showLogin}/>
+        <CustomIcon iconType="icon-login" className="header-icon float-right" onClick={showLogin} />
       )}
     </Layout.Header>
   )

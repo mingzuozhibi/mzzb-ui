@@ -1,5 +1,4 @@
 import { Alert } from 'antd'
-import React from 'react'
 
 interface Props {
   unikey?: string

@@ -1,5 +1,4 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory, useLocation } from 'react-router-dom'
 import { Alert } from 'antd'
 import { QuestionOutlined } from '@ant-design/icons'
 import { useData } from '../../hooks/useData'
@@ -8,7 +7,6 @@ import { CustomDate } from '../../comps/CustomDate'
 import { CustomLink } from '../../comps/CustomLink'
 import { Column, Table } from '../../comps/@table/Table'
 import { CustomPagination } from '../../comps/CustomPagination'
-import { RouteProps } from '../@types'
 import './DiscComing.scss'
 
 interface DiscComing {
@@ -22,9 +20,13 @@ interface DiscComing {
 
 const cols = getColumns()
 
-export default function DiscComing({location, history}: RouteProps<void>) {
+export default function DiscComing() {
+  const history = useHistory()
+  const location = useLocation()
 
-  const [{data, page, error}, handler] = useData<DiscComing[]>(`/gateway/discShelfs${location.search}`)
+  const [{ data, page, error }, handler] = useData<DiscComing[]>(
+    `/gateway/discShelfs${location.search}`
+  )
 
   function onPaginationChange(page: number, pageSize?: number) {
     if (pageSize === 20) {
@@ -38,15 +40,9 @@ export default function DiscComing({location, history}: RouteProps<void>) {
 
   return (
     <div className="DiscComing">
-      {error && (
-        <Alert message={error} type="error"/>
-      )}
-      {data && (
-        <Table cols={cols} rows={data} title="上架追踪" handler={handler}/>
-      )}
-      {page && (
-        <CustomPagination page={page} onChange={onPaginationChange}/>
-      )}
+      {error && <Alert message={error} type="error" />}
+      {data && <Table cols={cols} rows={data} title="上架追踪" handler={handler} />}
+      {page && <CustomPagination page={page} onChange={onPaginationChange} />}
     </div>
   )
 }
@@ -56,34 +52,34 @@ function getColumns(): Column<DiscComing>[] {
     {
       key: 'id',
       title: 'ID',
-      format: (t) => t.id
+      format: (t) => t.id,
     },
     {
       key: 'asin',
       title: 'ASIN',
       format: (t) => t.asin,
-      tdClass: createJustUpdateTdClass()
+      tdClass: createJustUpdateTdClass(),
     },
     {
       key: 'createOn',
       title: '抓取时间',
-      format: (t) => <CustomDate time={t.createOn}/>,
-      tdClass: createJustUpdateTdClass()
+      format: (t) => <CustomDate time={t.createOn} />,
+      tdClass: createJustUpdateTdClass(),
     },
     {
       key: 'followed',
-      title: <QuestionOutlined/>,
-      format: (t) => t.tracked ? <Link to={`/discs/asin/${t.asin}`}>已有</Link> : '暂无'
+      title: <QuestionOutlined />,
+      format: (t) => (t.tracked ? <Link to={`/discs/asin/${t.asin}`}>已有</Link> : '暂无'),
     },
     {
       key: 'type',
       title: '类型',
-      format: formatType
+      format: formatType,
     },
     {
       key: 'title',
       title: '碟片标题',
-      format: (t) => <CustomLink href={`http://www.amazon.co.jp/dp/${t.asin}`} title={t.title}/>
+      format: (t) => <CustomLink href={`http://www.amazon.co.jp/dp/${t.asin}`} title={t.title} />,
     },
   ]
 }

@@ -4,7 +4,8 @@
   .table {
     table-layout: fixed;
 
-    th, td {
+    th,
+    td {
       &.time {
         @include columnCenter();
         @include columnWidth(75px, 70px);

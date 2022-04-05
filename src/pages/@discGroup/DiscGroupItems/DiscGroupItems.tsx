@@ -1,5 +1,4 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useRouteMatch } from 'react-router-dom'
 import { DeleteOutlined, FileAddOutlined } from '@ant-design/icons'
 import { Tabs } from 'antd'
 import produce from 'immer'
@@ -13,7 +12,7 @@ import { Column, Table } from '../../../comps/@table/Table'
 
 import { compareSurp, compareTitle, discTitle } from '../../@funcs'
 import { InjectToAdds, injectToAdds } from '../../@inject'
-import { Disc, DiscGroup, RouteProps } from '../../@types'
+import { Disc, DiscGroup } from '../../@types'
 import SearchDisc from './SearchDisc'
 import CreateDisc from './CreateDisc'
 import './DiscGroupItems.scss'
@@ -26,8 +25,9 @@ const columns = 'id,asin,title,titlePc,surplusDays'
 
 export default injectToAdds(DiscGroupItems)
 
-function DiscGroupItems(props: InjectToAdds & RouteProps<{ key: string }>) {
-  const { toAdds, pushToAdds, dropToAdds, match } = props
+function DiscGroupItems(props: InjectToAdds) {
+  const match = useRouteMatch<{ key: string }>()
+  const { toAdds, pushToAdds, dropToAdds } = props
   const findDiscsUrl = `/api/discGroups/key/${match.params.key}/discs?discColumns=${columns}`
   const [{ error, data }, handler, { modify }] = useData<Data>(findDiscsUrl)
   const [, pushDisc] = useAjax<Disc>('post')

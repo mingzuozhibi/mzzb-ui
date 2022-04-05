@@ -18,7 +18,8 @@ const routerMid = routerMiddleware(history)
 const sagaMid = createSagaMiddleware()
 
 const store = createStore(
-  createRootReducer(history), composeWithDevTools(applyMiddleware(routerMid, sagaMid))
+  createRootReducer(history),
+  composeWithDevTools(applyMiddleware(routerMid, sagaMid))
 )
 
 sagaMid.run(sagas)

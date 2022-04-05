@@ -2,7 +2,8 @@
 
 #root .DiscRecords {
   .table {
-    th, td {
+    th,
+    td {
       @include columnCenter();
       &.idx {
         @include columnWidth(40px, 35px);
