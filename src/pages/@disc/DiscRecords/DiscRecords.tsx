@@ -1,12 +1,12 @@
+import { useParams } from 'react-router-dom'
 import { useEffect } from 'react'
+import { formatPt } from '../../@funcs'
 import './DiscRecords.scss'
 
 import { useData } from '../../../hooks/useData'
 import { formatNumber } from '../../../funcs/format'
 import { CustomHeader } from '../../../comps/CustomHeader'
 import { Column, Table } from '../../../comps/@table/Table'
-import { formatPt } from '../../@funcs'
-import { useRouteMatch } from 'react-router-dom'
 
 interface Data {
   title: string
@@ -27,8 +27,8 @@ interface Record {
 const cols = getColumns()
 
 export default function DiscRecords() {
-  const match = useRouteMatch<{ id: string }>()
-  const [{ error, data }, handler] = useData<Data>(`/api/discs/${match.params.id}/records`)
+  const params = useParams<{ id: string }>()
+  const [{ error, data }, handler] = useData<Data>(`/api/discs/${params.id}/records`)
 
   useEffect(() => {
     data && initEchart(data)

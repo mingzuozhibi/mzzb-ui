@@ -1,12 +1,13 @@
 import { useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { KeyOutlined, TagOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Input, Modal, Popconfirm, Radio } from 'antd'
+
 import { useData } from '../../../hooks/useData'
 import { useAjax } from '../../../hooks/useAjax'
 import { CustomHeader } from '../../../comps/CustomHeader'
-import { InjectRole, injectRole } from '../../@inject'
 import { DiscGroup, viewTypes } from '../../@types'
-import { useRouteMatch } from 'react-router-dom'
+import { InjectRole, injectRole } from '../../@inject'
 
 interface Form {
   key?: string
@@ -19,10 +20,10 @@ export default injectRole(DiscGroupDetail)
 
 function DiscGroupDetail(props: InjectRole) {
   const { isAdmin } = props
-  const match = useRouteMatch<{ key: string }>()
+  const params = useParams<{ key: string }>()
 
   const [{ error, data }, { loading }, { doEdit }] = useData<DiscGroup>(
-    `/api/discGroups/key/${match.params.key}`
+    `/api/discGroups/key/${params.key}`
   )
 
   const form: Form = {}

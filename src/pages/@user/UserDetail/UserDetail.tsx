@@ -1,10 +1,11 @@
-import { Button, Checkbox, Input, Modal } from 'antd'
+import { useParams } from 'react-router-dom'
 import { KeyOutlined, UserOutlined } from '@ant-design/icons'
+import { Button, Checkbox, Input, Modal } from 'antd'
+import { User } from '../../@types'
+
 import { useData } from '../../../hooks/useData'
 import { md5Password } from '../../../funcs/manager'
 import { CustomHeader } from '../../../comps/CustomHeader'
-import { User } from '../../@types'
-import { useRouteMatch } from 'react-router-dom'
 
 interface Form {
   username?: string
@@ -15,8 +16,8 @@ interface Form {
 const form: Form = {}
 
 export default function UserDetail() {
-  const match = useRouteMatch<{ id: string }>()
-  const [{ error, data }, { loading }, { doEdit }] = useData<User>(`/api/users/${match.params.id}`)
+  const params = useParams<{ id: string }>()
+  const [{ error, data }, { loading }, { doEdit }] = useData<User>(`/api/users/${params.id}`)
 
   function submitForm() {
     if (!form.username) {

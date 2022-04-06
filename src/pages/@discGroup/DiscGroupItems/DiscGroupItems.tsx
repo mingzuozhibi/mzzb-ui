@@ -1,7 +1,8 @@
-import { Link, useRouteMatch } from 'react-router-dom'
 import { DeleteOutlined, FileAddOutlined } from '@ant-design/icons'
+import { Link, useParams } from 'react-router-dom'
 import { Tabs } from 'antd'
 import produce from 'immer'
+import './DiscGroupItems.scss'
 
 import { useData } from '../../../hooks/useData'
 import { useAjax } from '../../../hooks/useAjax'
@@ -15,7 +16,6 @@ import { InjectToAdds, injectToAdds } from '../../@inject'
 import { Disc, DiscGroup } from '../../@types'
 import SearchDisc from './SearchDisc'
 import CreateDisc from './CreateDisc'
-import './DiscGroupItems.scss'
 
 interface Data extends DiscGroup {
   discs: Disc[]
@@ -26,9 +26,9 @@ const columns = 'id,asin,title,titlePc,surplusDays'
 export default injectToAdds(DiscGroupItems)
 
 function DiscGroupItems(props: InjectToAdds) {
-  const match = useRouteMatch<{ key: string }>()
+  const params = useParams<{ key: string }>()
   const { toAdds, pushToAdds, dropToAdds } = props
-  const findDiscsUrl = `/api/discGroups/key/${match.params.key}/discs?discColumns=${columns}`
+  const findDiscsUrl = `/api/discGroups/key/${params.key}/discs?discColumns=${columns}`
   const [{ error, data }, handler, { modify }] = useData<Data>(findDiscsUrl)
   const [, pushDisc] = useAjax<Disc>('post')
   const [, dropDisc] = useAjax<Disc>('delete')
