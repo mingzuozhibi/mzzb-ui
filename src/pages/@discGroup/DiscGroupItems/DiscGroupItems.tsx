@@ -1,7 +1,6 @@
 import { DeleteOutlined, FileAddOutlined } from '@ant-design/icons'
 import { Link, useParams } from 'react-router-dom'
 import { Tabs } from 'antd'
-import produce from 'immer'
 import './DiscGroupItems.scss'
 
 import { useData } from '../../../hooks/useData'
@@ -17,7 +16,7 @@ import { Disc, DiscGroup } from '../../@types'
 import SearchDisc from './SearchDisc'
 import CreateDisc from './CreateDisc'
 
-interface Data extends DiscGroup {
+interface IGroup extends DiscGroup {
   discs: Disc[]
 }
 
@@ -26,10 +25,12 @@ const columns = 'id,asin,title,titlePc,surplusDays'
 export default injectToAdds(DiscGroupItems)
 
 function DiscGroupItems(props: InjectToAdds) {
-  const params = useParams<{ key: string }>()
   const { toAdds, pushToAdds, dropToAdds } = props
-  const findDiscsUrl = `/api/discGroups/key/${params.key}/discs?discColumns=${columns}`
-  const [{ error, data }, handler, { modify }] = useData<Data>(findDiscsUrl)
+  const params = useParams<{ key: string }>()
+
+  const [{ error, data: group }, handler, { update: setGroup }] = useData<IGroup>(
+    `/api/discGroups/key/${params.key}/discs?discColumns=${columns}`
+  )
   const [, pushDisc] = useAjax<Disc>('post')
   const [, dropDisc] = useAjax<Disc>('delete')
 
@@ -37,11 +38,9 @@ function DiscGroupItems(props: InjectToAdds) {
     pushDisc(`/api/discGroups/${discGroupId}/discs/${discId}`, '添加碟片到列表', {
       onSuccess(disc: Disc) {
         dropToAdds(disc)
-        modify(
-          produce(data!, (draft: Data) => {
-            draft.discs = [disc, ...data!.discs]
-          })
-        )
+        setGroup((draft) => {
+          draft.discs.unshift(disc)
+        })
       },
     })
   }
@@ -50,11 +49,9 @@ function DiscGroupItems(props: InjectToAdds) {
     dropDisc(`/api/discGroups/${discGroupId}/discs/${discId}`, '从列表移除碟片', {
       onSuccess(disc: Disc) {
         pushToAdds(disc)
-        modify(
-          produce(data!, (draft: Data) => {
-            draft.discs = data!.discs.filter((e) => e.id !== disc.id)
-          })
-        )
+        setGroup((draft) => {
+          draft.discs = draft.discs.filter((e) => e.id !== disc.id)
+        })
       },
     })
   }
@@ -63,7 +60,7 @@ function DiscGroupItems(props: InjectToAdds) {
     return {
       key: 'command',
       title: '添加',
-      format: (t: Disc) => <FileAddOutlined onClick={() => doPushDisc(data!.id, t.id)} />,
+      format: (t: Disc) => <FileAddOutlined onClick={() => doPushDisc(group!.id, t.id)} />,
     }
   }
 
@@ -71,20 +68,20 @@ function DiscGroupItems(props: InjectToAdds) {
     return {
       key: 'command',
       title: '移除',
-      format: (t: Disc) => <DeleteOutlined onClick={() => doDropDisc(data!.id, t.id)} />,
+      format: (t: Disc) => <DeleteOutlined onClick={() => doDropDisc(group!.id, t.id)} />,
     }
   }
 
-  const title = data ? `管理碟片：${data.title}` : '载入中'
+  const title = group ? `管理碟片：${group.title}` : '载入中'
 
   return (
     <div className="DiscGroupItems">
       <CustomHeader header="管理碟片" title={title} error={error} handler={handler} />
-      {data && (
+      {group && (
         <>
           <Tabs type="card">
             <Tabs.TabPane tab="查询碟片" key="1">
-              <SearchDisc theDiscs={data.discs} addDiscs={toAdds} pushToAdds={pushToAdds} />
+              <SearchDisc theDiscs={group.discs} addDiscs={toAdds} pushToAdds={pushToAdds} />
             </Tabs.TabPane>
             <Tabs.TabPane tab="手动创建" key="2">
               <CreateDisc pushToAdds={pushToAdds} />
@@ -92,10 +89,10 @@ function DiscGroupItems(props: InjectToAdds) {
           </Tabs>
           <Table rows={toAdds} cols={getColumns(getPushCommand())} title="待选列表" />
           <Table
-            rows={data.discs}
+            rows={group.discs}
             cols={getColumns(getDropCommand())}
-            title={data.title}
-            extraCaption={`更新于${formatTimeout(data.modifyTime)}前`}
+            title={group.title}
+            extraCaption={`更新于${formatTimeout(group.modifyTime)}前`}
             defaultSort={composeCompares([compareSurp, compareTitle])}
           />
         </>
