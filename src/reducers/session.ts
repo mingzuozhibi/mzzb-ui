@@ -8,6 +8,8 @@ export interface Session {
   userName: string
   isLogged: boolean
   userRoles: string[]
+  hasBasic: boolean
+  hasAdmin: boolean
 }
 
 export interface SessionState extends Session {
@@ -15,22 +17,23 @@ export interface SessionState extends Session {
   userCount: number
 }
 
-const initSession = {
+const initSession: SessionState = {
   userName: 'Guest',
   isLogged: false,
   userRoles: ['NONE'],
   submiting: false,
-  userCount: 0
+  userCount: 0,
+  hasBasic: false,
+  hasAdmin: false,
 }
 
-export const sessionReducer = (state: SessionState = initSession, action: AnyAction) => {
+export const sessionReducer = (state = initSession, action: AnyAction) => {
   switch (action.type) {
     case 'sessionLoginRequest':
       return { ...state, submiting: true }
     case 'sessionSucceed':
       action.message && message.success(action.message)
-      const { onlineUserCount: userCount, ...session } = action.session
-      return { ...session, userCount, submiting: false }
+      return { ...action.session, isLogged: action.session.hasBasic, submiting: false }
     case 'sessionFailed':
       Modal.error({ title: action.title, content: action.content })
       return { ...state, submiting: false }
