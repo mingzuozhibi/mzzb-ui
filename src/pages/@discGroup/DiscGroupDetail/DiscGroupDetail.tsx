@@ -95,7 +95,7 @@ function DiscGroupDetail(props: InjectRole) {
             <Checkbox
               defaultChecked={form.enabled}
               onChange={(e) => (form.enabled = e.target.checked)}
-              children="启用"
+              children="是否更新"
             />
           </div>
           {deleted ? (
