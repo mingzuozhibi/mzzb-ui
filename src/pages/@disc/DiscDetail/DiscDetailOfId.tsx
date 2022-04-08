@@ -1,12 +1,13 @@
-import { useRouteMatch } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
+import { Data, DiscDetail } from './DiscDetail'
+
 import { useData } from '../../../hooks/useData'
 import { InjectRole, injectRole } from '../../@inject'
-import { Data, DiscDetail } from './DiscDetail'
 
 export default injectRole(DiscDetailOfId)
 
 function DiscDetailOfId({ isBasic }: InjectRole) {
-  const match = useRouteMatch<{ id: string }>()
-  const theUse = useData<Data>(`/api/discs/${match.params.id}`)
+  const params = useParams<{ id: string }>()
+  const theUse = useData<Data>(`/api/discs/${params.id}`)
   return <DiscDetail useDate={theUse} isBasic={isBasic} />
 }

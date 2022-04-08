@@ -1,39 +1,43 @@
-import { Button, Checkbox, Input, Modal, Radio } from 'antd'
+import { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { KeyOutlined, TagOutlined } from '@ant-design/icons'
-import { useAjax } from '../../../hooks/useAjax'
+import { Button, Checkbox, Input, Modal, Radio } from 'antd'
+
 import { CustomHeader } from '../../../comps/CustomHeader'
+import { useAjax } from '../../../hooks/useAjax'
+import { isEmpty } from '../../../funcs/domain'
 import { viewTypes } from '../../@types'
 
-interface Form {
+interface FormCreate {
   key?: string
   title?: string
-  enabled?: boolean
-  viewType?: string
+  enabled: boolean
+  viewType: string
 }
 
 export default function DiscGroupAdd() {
-  const [loading, doAdd] = useAjax('post')
-
-  const form: Form = {
+  const history = useHistory()
+  const [form, setForm] = useState<FormCreate>({
     enabled: true,
     viewType: 'PublicList',
-  }
+  })
+  const [posting, createGroup] = useAjax('post')
 
-  function addList() {
-    if (!form.key) {
+  function doCreateGroup() {
+    if (!isEmpty(form.key)) {
       Modal.warning({ title: '请检查输入项', content: `列表索引必须输入` })
       return
     }
 
-    if (!form.title) {
+    if (!isEmpty(form.title)) {
       Modal.warning({ title: '请检查输入项', content: `列表标题必须输入` })
       return
     }
 
-    doAdd('/api/discGroups', '添加列表', {
+    createGroup('/api/discGroups', '添加列表', {
       body: form,
       onSuccess() {
-        setTimeout(() => window.history.back(), 500)
+        setTimeout(() => history.goBack(), 500)
       },
     })
   }
@@ -44,16 +48,16 @@ export default function DiscGroupAdd() {
       <div className="input-wrapper">
         <Input
           prefix={<KeyOutlined />}
-          defaultValue={form.key}
-          onChange={(e) => (form.key = e.target.value)}
+          value={form.key}
+          onChange={(e) => setForm({ ...form, key: e.target.value.trim() })}
           placeholder={`请输入列表索引`}
         />
       </div>
       <div className="input-wrapper">
         <Input
           prefix={<TagOutlined />}
-          defaultValue={form.title}
-          onChange={(e) => (form.title = e.target.value)}
+          value={form.title}
+          onChange={(e) => setForm({ ...form, title: e.target.value.trim() })}
           placeholder={`请输入列表标题`}
         />
       </div>
@@ -61,19 +65,19 @@ export default function DiscGroupAdd() {
         <span className="input-label">列表类型</span>
         <Radio.Group
           options={viewTypes}
-          defaultValue={form.viewType}
-          onChange={(e) => (form.viewType = e.target.value)}
+          value={form.viewType}
+          onChange={(e) => setForm({ ...form, viewType: e.target.value.trim() })}
         />
       </div>
       <div className="input-wrapper">
         <Checkbox
           defaultChecked={form.enabled}
-          onChange={(e) => (form.enabled = e.target.checked)}
+          onChange={(e) => setForm({ ...form, enabled: e.target.checked })}
           children="启用"
         />
       </div>
       <div className="input-wrapper">
-        <Button type="primary" loading={loading} onClick={addList}>
+        <Button type="primary" loading={posting} onClick={doCreateGroup}>
           提交保存
         </Button>
       </div>

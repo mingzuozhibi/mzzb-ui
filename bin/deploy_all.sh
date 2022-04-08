@@ -9,5 +9,7 @@ if [[ $1 != '-q' ]]; then
 fi
 
 ssh q "rm -rf nginx/www/mzzb-ui-dev; mkdir -p nginx/www/mzzb-ui-dev;"
-
 tar -czf - -C build . | ssh q "tar -xzpvf - -C nginx/www/mzzb-ui-dev"
+
+ssh q "rm -rf nginx/www/mzzb-ui-dev; mkdir -p nginx/www/mzzb-ui-pro;"
+tar -czf - -C build . | ssh q "tar -xzpvf - -C nginx/www/mzzb-ui-pro"

@@ -1,12 +1,13 @@
+import { Button, Input, Modal } from 'antd'
 import { useState } from 'react'
 import { connect } from 'react-redux'
-import { Button, Input, Modal } from 'antd'
+import { Disc } from '../../@types'
+
 import { isEmpty } from '../../../funcs/domain'
 import { useAjax } from '../../../hooks/useAjax'
 import { RootState } from '../../../@reducer'
-import { Disc } from '../../@types'
 
-interface Params {
+interface Props {
   theDiscs: Disc[]
   addDiscs: Disc[]
   pushToAdds: (disc: Disc) => void
@@ -25,7 +26,7 @@ export default connect(
   })
 )(SearchDisc)
 
-function SearchDisc(params: Params) {
+function SearchDisc(props: Props) {
   const [asin, setAsin] = useState<string>()
   const [loadingDisc, fetchDisc] = useAjax<Disc>('get')
   const [loadingCount, fetchCount] = useAjax<number>('get')
@@ -41,28 +42,28 @@ function SearchDisc(params: Params) {
       return
     }
 
-    if (params.addDiscs.some((t) => t.asin === asin)) {
+    if (props.addDiscs.some((t) => t.asin === asin)) {
       Modal.warning({ title: '请检查输入项', content: `该碟片已存在于待选列表` })
       return
     }
 
-    if (params.theDiscs.some((t) => t.asin === asin)) {
+    if (props.theDiscs.some((t) => t.asin === asin)) {
       Modal.warning({ title: '请检查输入项', content: `该碟片已存在于当前列表` })
       return
     }
 
     fetchDisc(`/api/admin/searchDisc/${asin}`, '查询碟片', {
-      onSuccess: params.pushToAdds,
+      onSuccess: props.pushToAdds,
     })
   }
 
   function doFetchCount() {
-    fetchCount('/api/admin/fetchCount', '查询抓取中的碟片数量', { onSuccess: params.setCount })
+    fetchCount('/api/admin/fetchCount', '查询抓取中的碟片数量', { onSuccess: props.setCount })
   }
 
   let buttonName = '抓取中的碟片数量'
-  if (params.count !== undefined) {
-    buttonName += `(${params.count})`
+  if (props.count !== undefined) {
+    buttonName += `(${props.count})`
   }
 
   return (

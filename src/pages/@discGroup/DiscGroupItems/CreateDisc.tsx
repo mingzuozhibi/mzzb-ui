@@ -1,8 +1,9 @@
-import { useState } from 'react'
 import { Button, Input, Modal, Radio } from 'antd'
+import { useState } from 'react'
+import { Disc } from '../../@types'
+
 import { isEmpty } from '../../../funcs/domain'
 import { useAjax } from '../../../hooks/useAjax'
-import { Disc } from '../../@types'
 
 interface FormCreate {
   asin?: string
@@ -11,11 +12,11 @@ interface FormCreate {
   releaseDate?: string
 }
 
-interface Params {
+interface Props {
   pushToAdds: (disc: Disc) => void
 }
 
-export default function CreateDisc(params: Params) {
+export default function CreateDisc(Props: Props) {
   const [form, setForm] = useState<FormCreate>({})
   const [posting, createDisc] = useAjax<Disc>('post')
 
@@ -57,7 +58,7 @@ export default function CreateDisc(params: Params) {
 
     createDisc('/api/discs', '创建碟片', {
       body: form,
-      onSuccess: params.pushToAdds,
+      onSuccess: Props.pushToAdds,
     })
   }
 

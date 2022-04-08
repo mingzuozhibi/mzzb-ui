@@ -2,12 +2,14 @@ import { useMemo } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { Alert, Button } from 'antd'
 import { EditOutlined } from '@ant-design/icons'
+import dayjs from 'dayjs'
+import './Users.scss'
 
+import { isEmpty } from '../../../funcs/domain'
 import { useData } from '../../../hooks/useData'
 import { useTitle, useWidth } from '../../../hooks/hooks'
 import { Column, Table } from '../../../comps/@table/Table'
 import { User } from '../../@types'
-import './Users.scss'
 
 export default function Users() {
   const history = useHistory()
@@ -76,14 +78,16 @@ function getColumns(width: number): Column<User>[] {
 }
 
 function formatRegisterDate(t: User, width: number) {
-  const text = t.registerDate
-  return width <= 500 ? text.substr(0, 10) : text
+  return width <= 500
+    ? dayjs(t.registerDate).format('YYYY-MM-DD')
+    : dayjs(t.registerDate).format('YYYY-MM-DD HH:mm:ss')
 }
 
 function formatLastLoggedIn(t: User, width: number) {
-  const text = t.lastLoggedIn
-  if (!text) return '从未登入'
-  return width <= 500 ? text.substr(5, 11) : text
+  if (isEmpty(t.lastLoggedIn)) return '从未登入'
+  return width <= 500
+    ? dayjs(t.lastLoggedIn).format('MM-DD HH:mm')
+    : dayjs(t.lastLoggedIn).format('YYYY-MM-DD HH:mm:ss')
 }
 
 function justLogged(t: User) {
