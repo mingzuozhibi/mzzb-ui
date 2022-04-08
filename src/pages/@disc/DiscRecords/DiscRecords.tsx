@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom'
 import { useEffect } from 'react'
 import { formatPt } from '../../@funcs'
+import * as echarts from 'echarts'
 import './DiscRecords.scss'
 
 import { useData } from '../../../hooks/useData'
