@@ -93,7 +93,7 @@ function trClass(t: Data) {
   }
 }
 
-const re = /\[([A-Z0-9]{10})\]/
+const re = /[\(\[]([A-Z0-9]{10})[\)\]]/
 
 function formatText(t: Data) {
   const result = re.exec(t.text)
