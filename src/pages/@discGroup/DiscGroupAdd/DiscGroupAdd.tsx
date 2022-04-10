@@ -24,12 +24,12 @@ export default function DiscGroupAdd() {
   const [posting, createGroup] = useAjax('post')
 
   function doCreateGroup() {
-    if (!isEmpty(form.key)) {
+    if (isEmpty(form.key)) {
       Modal.warning({ title: '请检查输入项', content: `列表索引必须输入` })
       return
     }
 
-    if (!isEmpty(form.title)) {
+    if (isEmpty(form.title)) {
       Modal.warning({ title: '请检查输入项', content: `列表标题必须输入` })
       return
     }
