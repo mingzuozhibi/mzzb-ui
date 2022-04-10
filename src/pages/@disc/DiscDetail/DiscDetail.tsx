@@ -1,13 +1,15 @@
+import { Button, Input, message, Modal, Radio } from 'antd'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Button, Input, message, Modal, Radio } from 'antd'
+import { discTitle } from '../../@funcs'
+import { Disc } from '../../@types'
+import dayjs from 'dayjs'
+
 import request from '../../../funcs/request'
 import { UseData } from '../../../hooks/useData'
 import { formatNumber } from '../../../funcs/format'
 import { CustomLink } from '../../../comps/CustomLink'
 import { CustomHeader } from '../../../comps/CustomHeader'
-import { discTitle } from '../../@funcs'
-import { Disc } from '../../@types'
 
 export type Data = Disc
 
@@ -38,10 +40,10 @@ export function DiscDetail({ useDate, isBasic }: Props) {
       Modal.warning({ title: '请检查输入项', content: `你必须输入发售日期` })
       return
     }
-    if (!form.releaseDate.match(/\d{4}-\d{2}-\d{2}/)) {
+    if (!form.releaseDate.match(/^\d{4}\/\d{1,2}\/\d{1,2}$/)) {
       Modal.warning({
         title: '请检查输入项',
-        content: `你输入的发售日期格式不正确，应该为：yyyy-MM-dd`,
+        content: `你输入的发售日期格式不正确，应该为：YYYY/M/D`,
       })
       return
     }
@@ -95,10 +97,9 @@ export function DiscDetail({ useDate, isBasic }: Props) {
               <span>中文标题</span>
               <span style={{ marginLeft: 20 }}>{toRecords(data.id)}</span>
             </div>
-
             <Input.TextArea
               autoSize={true}
-              onChange={(e) => (form.titlePc = e.target.value)}
+              onChange={(e) => (form.titlePc = e.target.value.trim())}
               defaultValue={form.titlePc}
             />
           </div>
@@ -167,7 +168,7 @@ export function DiscDetail({ useDate, isBasic }: Props) {
                 addonBefore="发售"
                 style={{ width: 160 }}
                 defaultValue={form.releaseDate}
-                onChange={(e) => (form.releaseDate = e.target.value)}
+                onChange={(e) => (form.releaseDate = e.target.value.trim())}
               />
               <Input
                 readOnly={true}
@@ -227,7 +228,7 @@ export function DiscDetail({ useDate, isBasic }: Props) {
 }
 
 function formatDate(time?: number) {
-  return time == null ? '无' : new Date(time).toLocaleString()
+  return time == null ? '无' : dayjs(time).format('YYYY-MM-DD HH:mm:ss')
 }
 
 function formatRank(rank?: number) {
