@@ -99,7 +99,7 @@ function getColumns(): Column<Record>[] {
     {
       key: 'addPt',
       title: '日增PT',
-      format: formatTodayPt,
+      format: (t) => formatPt(t.todayPt),
     },
     {
       key: 'sumPt',
@@ -119,19 +119,8 @@ function getColumns(): Column<Record>[] {
   ]
 }
 
-function formatTodayPt(t: Record) {
-  if (t.todayPt !== undefined && t.todayPt < 10) {
-    return t.todayPt.toFixed(1) + ' pt'
-  }
-  return formatPt(t.todayPt)
-}
-
 function formatRank(t: Record) {
-  if (t.averRank !== undefined && t.averRank < 10) {
-    return t.averRank.toFixed(1) + ' 位'
-  }
-  const averRank = t.averRank ? formatNumber(t.averRank, '###,###') : '---'
-  return `${averRank} 位`
+  return `${t.averRank ? formatNumber(t.averRank, '###,###') : '---'} 位`
 }
 
 function initEchart(data?: Data) {
