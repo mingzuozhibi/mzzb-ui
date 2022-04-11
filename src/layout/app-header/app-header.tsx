@@ -17,7 +17,9 @@ export function AppHeader(props: AppHeaderProps) {
   const { session, viewSider, showLogin, setViewSider, sessionLogout, refreshSession } = props
 
   useEffect(() => {
-    refreshSession()
+    setTimeout(() => {
+      refreshSession()
+    }, 300)
     const id: any = setInterval(refreshSession, 10 * 60 * 1000)
     return clearInterval(id)
   }, [refreshSession])

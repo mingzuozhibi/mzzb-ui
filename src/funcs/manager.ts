@@ -7,12 +7,12 @@ export const md5Password = (username: string, password: string) => {
 
 export const sessionManager = {
   query: () => {
-    const token = localStorage['X-AUTO-LOGIN']
+    const token = localStorage['session-token']
     if (token && token.length === 36) {
       return request('/api/session', {
         headers: {
-          'X-AUTO-LOGIN': token
-        }
+          'session-token': token,
+        },
       })
     } else {
       return request('/api/session')
@@ -22,7 +22,7 @@ export const sessionManager = {
     password = md5Password(username, password)
     return request('/api/session', {
       method: 'post',
-      body: JSON.stringify({username, password}),
+      body: JSON.stringify({ username, password }),
     })
   },
   logout: () => {

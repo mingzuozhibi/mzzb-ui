@@ -1,11 +1,11 @@
-function prepareCookies({credentials, ...props}: RequestInit) {
+function prepareCookies({ credentials, ...props }: RequestInit) {
   if (!credentials) {
     credentials = 'include'
   }
-  return {credentials, ...props}
+  return { credentials, ...props }
 }
 
-function prepareHeaders({headers = {}, ...prors}: RequestInit) {
+function prepareHeaders({ headers = {}, ...prors }: RequestInit) {
   const name = sessionStorage['X-CSRF-HEADER']
   const value = sessionStorage['X-CSRF-TOKEN']
   if (name && value) {
@@ -16,7 +16,7 @@ function prepareHeaders({headers = {}, ...prors}: RequestInit) {
     // @ts-ignore
     headers['Content-Type'] = 'application/json;charset=UTF-8'
   }
-  return {headers, ...prors}
+  return { headers, ...prors }
 }
 
 function checkStatus(response: Response) {
@@ -34,8 +34,8 @@ function saveOfToken(response: Response) {
   const headers = response.headers
   sessionStorage['X-CSRF-HEADER'] = headers.get('X-CSRF-HEADER')
   sessionStorage['X-CSRF-TOKEN'] = headers.get('X-CSRF-TOKEN')
-  if (headers.has('X-AUTO-LOGIN')) {
-    localStorage['X-AUTO-LOGIN'] = headers.get('X-AUTO-LOGIN')
+  if (headers.has('session-token')) {
+    localStorage['session-token'] = headers.get('session-token')
   }
   return response
 }
@@ -49,18 +49,16 @@ function parseToJSON(response: Response) {
 }
 
 function handleError(error: Error) {
-  return {success: false, message: error.message}
+  return { success: false, message: error.message }
 }
 
-export type Result = { success: true, [extraProps: string]: any } | { success: false, message: string }
+export type Result =
+  | { success: true; [extraProps: string]: any }
+  | { success: false; message: string }
 
 export default function request(url: string, props: RequestInit = {}): Promise<Result> {
   url = url.replace('??', '?')
   props = prepareCookies(props)
   props = prepareHeaders(props)
-  return fetch(url, props)
-    .then(checkStatus)
-    .then(saveOfToken)
-    .then(parseToJSON)
-    .catch(handleError)
+  return fetch(url, props).then(checkStatus).then(saveOfToken).then(parseToJSON).catch(handleError)
 }

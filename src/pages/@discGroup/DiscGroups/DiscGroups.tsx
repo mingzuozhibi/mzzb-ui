@@ -107,7 +107,7 @@ function formatLinkedTitle(row: DiscGroup) {
 }
 
 function formatLastUpdate(row: DiscGroup) {
-  if (!row.modifyTime) return '停止更新'
+  if (!row.enabled || !row.modifyTime) return '停止更新'
   return `${formatTimeout(row.modifyTime)}前`
 }
 

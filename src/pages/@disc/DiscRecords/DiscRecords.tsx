@@ -1,13 +1,14 @@
 import { useParams } from 'react-router-dom'
 import { useEffect } from 'react'
-import { formatPt } from '../../@funcs'
 import * as echarts from 'echarts'
+import dayjs from 'dayjs'
 import './DiscRecords.scss'
 
 import { useData } from '../../../hooks/useData'
 import { formatNumber } from '../../../funcs/format'
 import { CustomHeader } from '../../../comps/CustomHeader'
 import { Column, Table } from '../../../comps/@table/Table'
+import { formatPt } from '../../@funcs'
 
 interface Data {
   title: string
@@ -55,7 +56,7 @@ export default function DiscRecords() {
 }
 
 function trClass(data: Data) {
-  return (t: Record) => ({ warning: t.date.localeCompare(data.releaseDate) >= 0 })
+  return (t: Record) => ({ warning: !dayjs(t.date).isBefore(dayjs(data.releaseDate)) })
 }
 
 function getColumns(): Column<Record>[] {
