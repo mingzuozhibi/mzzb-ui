@@ -1,14 +1,18 @@
+import { Button, Modal } from 'antd'
 import { useParams } from 'react-router-dom'
 import { useEffect } from 'react'
 import * as echarts from 'echarts'
 import dayjs from 'dayjs'
-import './DiscRecords.scss'
 
 import { useData } from '../../../hooks/useData'
 import { formatNumber } from '../../../funcs/format'
 import { CustomHeader } from '../../../comps/CustomHeader'
 import { Column, Table } from '../../../comps/@table/Table'
+import { useAjax } from '../../../hooks/useAjax'
+
+import { InjectRole, injectRole } from '../../@inject'
 import { formatPt } from '../../@funcs'
+import './DiscRecords.scss'
 
 interface Data {
   title: string
@@ -28,15 +32,36 @@ interface Record {
 
 const cols = getColumns()
 
-export default function DiscRecords() {
+export default injectRole(DiscRecords)
+
+function DiscRecords({ isBasic }: InjectRole) {
   const params = useParams<{ id: string }>()
   const [{ error, data }, handler] = useData<Data>(`/api/discs/${params.id}/records`)
+  const [_, doPost] = useAjax<string>('post')
 
   useEffect(() => {
     data && initEchart(data)
   }, [data])
 
+  function reCompute() {
+    doPost(`/api/admin/reComputeDisc2/${params.id}`, '重新计算PT', {
+      onSuccess(text) {
+        Modal.success({ title: '重新计算PT成功', content: text })
+        handler.refresh()
+      },
+    })
+  }
+
   const title = data ? `碟片历史数据：${data.titlePc || data.title}` : `载入中`
+
+  const extraCaption = [
+    <span style={{ marginLeft: 8 }}>如果图表显示错误，请尝试刷新</span>,
+    isBasic ? (
+      <Button style={{ marginLeft: 8 }} onClick={reCompute}>
+        重新计算PT
+      </Button>
+    ) : null,
+  ]
 
   return (
     <div className="DiscRecords">
@@ -48,7 +73,7 @@ export default function DiscRecords() {
           cols={cols}
           trClass={trClass(data)}
           handler={handler}
-          extraCaption={<span style={{ marginLeft: 8 }}>如果图表显示错误，请尝试刷新</span>}
+          extraCaption={extraCaption}
         />
       )}
     </div>
