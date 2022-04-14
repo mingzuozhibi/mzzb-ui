@@ -25,7 +25,7 @@ export default function DiscComing() {
   const location = useLocation()
 
   const [{ data, page, error }, handler] = useData<DiscComing[]>(
-    `/gateway/discShelfs${location.search}`
+    `/api/discShelfs${location.search}`
   )
 
   function onPaginationChange(page: number, pageSize?: number) {

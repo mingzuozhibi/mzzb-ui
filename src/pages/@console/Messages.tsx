@@ -22,7 +22,7 @@ interface Props {
 export default function Messages({ moduleName }: Props) {
   const [messageType, setMessageType] = useState('info')
   const [{ pageNumber, pageSize }, setPage] = useState({ pageNumber: 1, pageSize: 40 })
-  const url = `/gateway/messages/${moduleName}?type=${messageType}&page=${pageNumber}&pageSize=${pageSize}`
+  const url = `/api/messages/${moduleName}?type=${messageType}&page=${pageNumber}&pageSize=${pageSize}`
   const [{ error, data, page }, handler] = useData<Data[]>(url)
 
   data && data.forEach((e, i) => (e.id = i))
