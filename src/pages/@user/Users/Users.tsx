@@ -1,15 +1,13 @@
+import { useData, useTitle, useWidth } from '##/hooks'
+import { Column, Table } from '#C/@table/Table'
+import { isEmpty } from '#F/domain'
+import { EditOutlined } from '@ant-design/icons'
+import { Alert, Button } from 'antd'
+import dayjs from 'dayjs'
 import { useMemo } from 'react'
 import { Link, useHistory } from 'react-router-dom'
-import { Alert, Button } from 'antd'
-import { EditOutlined } from '@ant-design/icons'
-import dayjs from 'dayjs'
-import './Users.scss'
-
-import { isEmpty } from '../../../funcs/domain'
-import { useData } from '../../../hooks/useData'
-import { useTitle, useWidth } from '../../../hooks/hooks'
-import { Column, Table } from '../../../comps/@table/Table'
 import { User } from '../../@types'
+import './Users.scss'
 
 export default function Users() {
   const history = useHistory()

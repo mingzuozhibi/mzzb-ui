@@ -1,13 +1,12 @@
-import React from 'react'
+import { Page } from '##/@domain'
 import { Pagination } from 'antd'
-import { Page } from '../reducers/@domain'
 
 interface Props {
   page: Page
   onChange: (page: number, pageSize?: number) => void
 }
 
-export function CustomPagination({page, onChange}: Props) {
+export function CustomPagination({ page, onChange }: Props) {
   return (
     <Pagination
       showSizeChanger
@@ -20,4 +19,3 @@ export function CustomPagination({page, onChange}: Props) {
     />
   )
 }
-

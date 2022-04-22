@@ -8,15 +8,19 @@ interface Props {
   className?: string
 }
 
-export const CustomIcon = ({iconNode, iconType, className, ...props}: Props) => {
+export const CustomIcon = ({ iconNode, iconType, className, ...props }: Props) => {
   if (iconNode) {
     return (
-      <span className={`icon-wrapper ${className}`}  {...props}>{iconNode}</span>
+      <span className={`icon-wrapper ${className}`} {...props}>
+        {iconNode}
+      </span>
     )
   }
   if (iconType) {
     return (
-      <span className={`icon-wrapper ${className}`} {...props}>{svgIcon(iconType)}</span>
+      <span className={`icon-wrapper ${className}`} {...props}>
+        {svgIcon(iconType)}
+      </span>
     )
   }
   return null
@@ -27,7 +31,7 @@ function svgIcon(type: string) {
     <svg
       className="svg-icon"
       aria-hidden="true"
-      dangerouslySetInnerHTML={{__html: `<use xlink:href="${'#' + type}" />`}}
+      dangerouslySetInnerHTML={{ __html: `<use xlink:href="${'#' + type}" />` }}
     />
   )
 }

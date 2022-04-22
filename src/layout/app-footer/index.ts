@@ -1,5 +1,5 @@
+import { RootState } from '##/@reducer'
 import { connect } from 'react-redux'
-import { RootState } from '../../@reducer'
 import { AppFooter } from './app-footer'
 
 function mapStateToProps(state: RootState) {
@@ -20,7 +20,4 @@ function mapDispatchToProps(dispatch: any) {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AppFooter)
+export default connect(mapStateToProps, mapDispatchToProps)(AppFooter)

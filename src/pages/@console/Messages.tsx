@@ -1,10 +1,10 @@
-import { useState } from 'react'
+import { useData } from '##/hooks'
+import { Column, Table } from '#C/@table/Table'
+import { CustomDate } from '#C/CustomDate'
+import { CustomLink } from '#C/CustomLink'
+import { CustomPagination } from '#C/CustomPagination'
 import { Alert, Button, Radio } from 'antd'
-import { useData } from '../../hooks/useData'
-import { CustomDate } from '../../comps/CustomDate'
-import { CustomLink } from '../../comps/CustomLink'
-import { Column, Table } from '../../comps/@table/Table'
-import { CustomPagination } from '../../comps/CustomPagination'
+import { useState } from 'react'
 import './Messages.scss'
 
 interface Data {
@@ -22,7 +22,7 @@ interface Props {
 export default function Messages({ moduleName }: Props) {
   const [messageType, setMessageType] = useState('info')
   const [{ pageNumber, pageSize }, setPage] = useState({ pageNumber: 1, pageSize: 40 })
-  const url = `/gateway/messages/${moduleName}?type=${messageType}&page=${pageNumber}&pageSize=${pageSize}`
+  const url = `/api/messages/${moduleName}?type=${messageType}&page=${pageNumber}&pageSize=${pageSize}`
   const [{ error, data, page }, handler] = useData<Data[]>(url)
 
   data && data.forEach((e, i) => (e.id = i))

@@ -1,5 +1,5 @@
+import { useTitle } from '##/hooks'
 import { Tabs } from 'antd'
-import { useTitle } from '../../hooks/hooks'
 import Messages from './Messages'
 
 const modules = [
@@ -13,11 +13,7 @@ const modules = [
   },
   {
     moduleName: 'mzzb-server',
-    tableTitle: '碟片模块',
-  },
-  {
-    moduleName: 'mzzb-gateway',
-    tableTitle: '网关日志',
+    tableTitle: '核心模块',
   },
 ]
 

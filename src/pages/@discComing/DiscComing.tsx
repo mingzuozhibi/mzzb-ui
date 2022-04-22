@@ -1,12 +1,11 @@
-import { Link, useHistory, useLocation } from 'react-router-dom'
-import { Alert } from 'antd'
+import { useData, useTitle } from '##/hooks'
+import { Column, Table } from '#C/@table/Table'
+import { CustomDate } from '#C/CustomDate'
+import { CustomLink } from '#C/CustomLink'
+import { CustomPagination } from '#C/CustomPagination'
 import { QuestionOutlined } from '@ant-design/icons'
-import { useData } from '../../hooks/useData'
-import { useTitle } from '../../hooks/hooks'
-import { CustomDate } from '../../comps/CustomDate'
-import { CustomLink } from '../../comps/CustomLink'
-import { Column, Table } from '../../comps/@table/Table'
-import { CustomPagination } from '../../comps/CustomPagination'
+import { Alert } from 'antd'
+import { Link, useHistory, useLocation } from 'react-router-dom'
 import './DiscComing.scss'
 
 interface DiscComing {
@@ -25,7 +24,7 @@ export default function DiscComing() {
   const location = useLocation()
 
   const [{ data, page, error }, handler] = useData<DiscComing[]>(
-    `/gateway/discShelfs${location.search}`
+    `/api/discShelfs${location.search}`
   )
 
   function onPaginationChange(page: number, pageSize?: number) {

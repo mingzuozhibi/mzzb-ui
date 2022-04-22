@@ -1,5 +1,3 @@
-import { RouteComponentProps } from 'react-router-dom'
-
 export interface User {
   id: number
   enabled: boolean
@@ -38,7 +36,7 @@ export interface DiscGroup {
 }
 
 export const viewTypes = [
-  {label: '日亚实时', value: 'SakuraList'},
-  {label: '公开列表', value: 'PublicList'},
-  {label: '私有列表', value: 'PrivateList'},
+  { label: '日亚实时', value: 'SakuraList' },
+  { label: '公开列表', value: 'PublicList' },
+  { label: '私有列表', value: 'PrivateList' },
 ]

@@ -1,7 +1,7 @@
-import { Input, Layout, Modal } from 'antd'
+import { CustomIcon } from '#C/CustomIcon'
+import { CustomLink } from '#C/CustomLink'
 import { KeyOutlined, UserOutlined } from '@ant-design/icons'
-import { CustomIcon } from '../../comps/CustomIcon'
-import { CustomLink } from '../../comps/CustomLink'
+import { Input, Layout, Modal } from 'antd'
 
 interface FormLogin {
   username?: string

@@ -1,12 +1,11 @@
-import { useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useAjax } from '##/hooks'
+import { CustomHeader } from '#C/CustomHeader'
+import { isEmpty } from '#F/domain'
+import { viewTypes } from '#P/@types'
 import { KeyOutlined, TagOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Input, Modal, Radio } from 'antd'
-
-import { CustomHeader } from '../../../comps/CustomHeader'
-import { useAjax } from '../../../hooks/useAjax'
-import { isEmpty } from '../../../funcs/domain'
-import { viewTypes } from '../../@types'
+import { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 
 interface FormCreate {
   key?: string

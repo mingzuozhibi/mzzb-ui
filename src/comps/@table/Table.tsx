@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import { Handler } from '##/@domain'
 import { Button, Checkbox, Input, message, Modal } from 'antd'
+import classNames from 'classnames'
 import copy from 'copy-to-clipboard'
 import produce from 'immer'
-import classNames from 'classnames'
-import { Handler } from '../../reducers/@domain'
+import React, { useState } from 'react'
 import './Table.scss'
 
 interface BaseRow {
@@ -53,7 +53,7 @@ export function Table<T extends BaseRow>(props: Props<T>) {
         <thead>
           <tr>
             {copyMode && renderSelectTh()}
-            {cols.map(col => (
+            {cols.map((col) => (
               <th
                 key={col.key}
                 children={col.title}
@@ -78,8 +78,7 @@ export function Table<T extends BaseRow>(props: Props<T>) {
                 </td>
               ))}
             </tr>
-          ))
-          }
+          ))}
         </tbody>
       </table>
     </div>
@@ -90,7 +89,7 @@ export function Table<T extends BaseRow>(props: Props<T>) {
       <th className="select">
         <Checkbox
           checked={selected.size === rows.length}
-          onChange={e => doSelectAll(e.target.checked)}
+          onChange={(e) => doSelectAll(e.target.checked)}
         />
       </th>
     )
@@ -107,9 +106,7 @@ export function Table<T extends BaseRow>(props: Props<T>) {
   function renderCaption() {
     return (
       <div className="table-caption">
-        {title && (
-          <span className="caption-title">{title}</span>
-        )}
+        {title && <span className="caption-title">{title}</span>}
         {copyFmt && (
           <span className="caption-copybtn">
             {!copyMode ? renderViewButtons() : renderCopyButtons()}
@@ -118,13 +115,13 @@ export function Table<T extends BaseRow>(props: Props<T>) {
         {handler && (
           <span className="caption-refresh">
             <Button.Group>
-              <Button onClick={handler.refresh} loading={handler.loading}>刷新</Button>
+              <Button onClick={handler.refresh} loading={handler.loading}>
+                刷新
+              </Button>
             </Button.Group>
           </span>
         )}
-        {extraCaption && (
-          <span className="caption-extra">{extraCaption}</span>
-        )}
+        {extraCaption && <span className="caption-extra">{extraCaption}</span>}
       </div>
     )
   }
@@ -149,7 +146,7 @@ export function Table<T extends BaseRow>(props: Props<T>) {
   function sortRows() {
     const array = [...props.rows]
     if (sortKey) {
-      const findCol = cols.find(col => col.key === sortKey)
+      const findCol = cols.find((col) => col.key === sortKey)
       if (findCol && findCol.compare) {
         const compare = findCol.compare
         array.sort((a, b) => {
@@ -163,7 +160,7 @@ export function Table<T extends BaseRow>(props: Props<T>) {
   }
 
   function setCopyMode(copyMode: boolean) {
-    update(draft => {
+    update((draft) => {
       draft.copyMode = copyMode
     })
   }
@@ -173,9 +170,10 @@ export function Table<T extends BaseRow>(props: Props<T>) {
       console.warn('call doCopy() but copyFmt is empty')
       return
     }
-    let idx = 0, result: Array<String> = []
-    selected.forEach(id => {
-      const row = rows.find(t => t.id === id)
+    let idx = 0,
+      result: Array<String> = []
+    selected.forEach((id) => {
+      const row = rows.find((t) => t.id === id)
       row && result.push(copyFmt(row, idx++))
     })
     const resultText = result.join('\n')
@@ -183,12 +181,8 @@ export function Table<T extends BaseRow>(props: Props<T>) {
       message.success(`已复制到剪贴板，共${result.length}条数据`)
     } else {
       Modal.info({
-        title: '请手动复制数据', content: (
-          <Input.TextArea
-            value={resultText}
-            autoSize={{ minRows: 2, maxRows: 6 }}
-          />
-        )
+        title: '请手动复制数据',
+        content: <Input.TextArea value={resultText} autoSize={{ minRows: 2, maxRows: 6 }} />,
       })
     }
   }
@@ -198,7 +192,7 @@ export function Table<T extends BaseRow>(props: Props<T>) {
   }
 
   function doSelectRow(id: number, checked: boolean) {
-    update(draft => {
+    update((draft) => {
       if (checked) {
         draft.selected.add(id)
         draft.selected = new Set(draft.selected)
@@ -210,9 +204,9 @@ export function Table<T extends BaseRow>(props: Props<T>) {
   }
 
   function doSelectAll(checked: boolean) {
-    update(draft => {
+    update((draft) => {
       if (checked) {
-        draft.selected = new Set(rows.map(row => row.id))
+        draft.selected = new Set(rows.map((row) => row.id))
       } else {
         draft.selected = new Set()
       }
@@ -220,7 +214,7 @@ export function Table<T extends BaseRow>(props: Props<T>) {
   }
 
   function thClick(col: Column<T>) {
-    update(draft => {
+    update((draft) => {
       if (sortKey === col.key) {
         draft.sortAsc = draft.sortAsc !== true
       } else {

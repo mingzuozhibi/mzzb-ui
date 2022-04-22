@@ -1,8 +1,8 @@
+import { sessionManager } from '#F/manager'
+import { Result } from '#F/request'
+import { message, Modal } from 'antd'
 import { AnyAction } from 'redux'
 import { call, put } from 'redux-saga/effects'
-import { message, Modal } from 'antd'
-import { sessionManager } from '../funcs/manager'
-import { Result } from '../funcs/request'
 
 export interface Session {
   userName: string

@@ -1,5 +1,5 @@
+import { sessionSaga } from '#R/session'
 import { all, takeEvery } from 'redux-saga/effects'
-import { sessionSaga } from './reducers/session'
 
 export function* sagas() {
   yield all([

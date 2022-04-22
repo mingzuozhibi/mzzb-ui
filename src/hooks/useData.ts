@@ -1,8 +1,8 @@
-import { useEffect, useReducer, useState } from 'react'
+import { Handler, Page } from '##/@domain'
+import { request } from '#F/request'
 import { message, Modal } from 'antd'
-import { Handler, Page } from '../reducers/@domain'
-import request from '../funcs/request'
 import produce from 'immer'
+import { useEffect, useReducer, useState } from 'react'
 
 interface State<T> {
   data?: T

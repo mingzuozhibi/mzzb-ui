@@ -1,12 +1,11 @@
+import { RouteInfo, routes } from '##/@routes'
+import { Layout, Spin } from 'antd'
 import { lazy, Suspense } from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
-import { Layout, Spin } from 'antd'
-import { RouteInfo, routes } from '../@routes'
-import './App.scss'
-
-import AppSider from './app-sider'
-import AppHeader from './app-header'
 import AppFooter from './app-footer'
+import AppHeader from './app-header'
+import AppSider from './app-sider'
+import './App.scss'
 
 export default function App() {
   return (

@@ -1,5 +1,5 @@
+import { RootState } from '##/@reducer'
 import { connect } from 'react-redux'
-import { RootState } from '../../@reducer'
 import { AppHeader } from './app-header'
 
 function mapStateToProps(state: RootState) {
@@ -22,11 +22,8 @@ function mapDispatchToProps(dispatch: any) {
     },
     refreshSession() {
       dispatch({ type: 'sessionQueryRequest' })
-    }
+    },
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AppHeader)
+export default connect(mapStateToProps, mapDispatchToProps)(AppHeader)

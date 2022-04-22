@@ -1,9 +1,8 @@
+import { useAjax } from '##/hooks'
+import { isEmpty } from '#F/domain'
+import { Disc } from '#P/@types'
 import { Button, Input, Modal, Radio } from 'antd'
 import { useState } from 'react'
-import { Disc } from '../../@types'
-
-import { isEmpty } from '../../../funcs/domain'
-import { useAjax } from '../../../hooks/useAjax'
 
 interface FormCreate {
   asin?: string

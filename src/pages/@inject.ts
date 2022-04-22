@@ -1,7 +1,7 @@
+import { RootState } from '##/@reducer'
+import { Disc } from '#P/@types'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
-import { RootState } from '../@reducer'
-import { Disc } from './@types'
 
 export interface InjectRole {
   isAdmin: boolean

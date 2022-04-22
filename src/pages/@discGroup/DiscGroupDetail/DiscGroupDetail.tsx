@@ -1,13 +1,11 @@
-import { useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useAjax, useData } from '##/hooks'
+import { CustomHeader } from '#C/CustomHeader'
+import { InjectRole, injectRole } from '#P/@inject'
+import { DiscGroup, viewTypes } from '#P/@types'
 import { KeyOutlined, TagOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Input, Modal, Popconfirm, Radio } from 'antd'
-
-import { useData } from '../../../hooks/useData'
-import { useAjax } from '../../../hooks/useAjax'
-import { CustomHeader } from '../../../comps/CustomHeader'
-import { DiscGroup, viewTypes } from '../../@types'
-import { InjectRole, injectRole } from '../../@inject'
+import { useState } from 'react'
+import { useParams } from 'react-router-dom'
 
 interface Form {
   key?: string
