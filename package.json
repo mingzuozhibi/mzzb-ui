@@ -9,7 +9,10 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "c1": "sed -i 's/http:/https:/g' yarn.lock",
+    "c2": "sed -i 's/mirrors.cloud.tencent.com/mirrors.tencent.com/g' yarn.lock",
+    "ca": "yarn c1 && yarn c2"
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
