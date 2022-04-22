@@ -1,8 +1,8 @@
-import { useEffect } from 'react'
-import { Layout, Popconfirm } from 'antd'
+import { CustomIcon } from '#C/CustomIcon'
+import { SessionState } from '#R/session'
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
-import { CustomIcon } from '../../comps/CustomIcon'
-import { SessionState } from '../../reducers/session'
+import { Layout, Popconfirm } from 'antd'
+import { useEffect } from 'react'
 
 interface AppHeaderProps {
   session: SessionState

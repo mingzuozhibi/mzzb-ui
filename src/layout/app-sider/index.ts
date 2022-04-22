@@ -1,5 +1,5 @@
+import { RootState } from '##/@reducer'
 import { connect } from 'react-redux'
-import { RootState } from '../../@reducer'
 import { AppSider } from './app-sider'
 
 function mapStateToProps(state: RootState) {
@@ -17,7 +17,4 @@ function mapDispatchToProps(dispatch: any) {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AppSider)
+export default connect(mapStateToProps, mapDispatchToProps)(AppSider)

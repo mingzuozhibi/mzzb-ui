@@ -1,5 +1,5 @@
+import { useTitle } from '##/hooks'
 import { Tabs } from 'antd'
-import { useTitle } from '../../hooks/hooks'
 import Messages from './Messages'
 
 const modules = [

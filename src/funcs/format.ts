@@ -5,8 +5,7 @@ times.unshift([times[0][0] * 24, '日'])
 
 export function formatTimeout(time: number) {
   let timeout = Date.now() - time
-  if (timeout < 0)
-    return formatTime(time)
+  if (timeout < 0) return formatTime(time)
 
   const result: string[] = []
   for (const [milis, name] of times) {

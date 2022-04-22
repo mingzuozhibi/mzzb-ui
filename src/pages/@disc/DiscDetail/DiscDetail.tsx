@@ -1,15 +1,14 @@
+import { UseData } from '##/hooks'
+import { CustomHeader } from '#C/CustomHeader'
+import { CustomLink } from '#C/CustomLink'
+import { formatNumber } from '#F/format'
+import { request } from '#F/request'
+import { discTitle } from '#P/@funcs'
+import { Disc } from '#P/@types'
 import { Button, Input, message, Modal, Radio } from 'antd'
+import dayjs from 'dayjs'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { discTitle } from '../../@funcs'
-import { Disc } from '../../@types'
-import dayjs from 'dayjs'
-
-import request from '../../../funcs/request'
-import { UseData } from '../../../hooks/useData'
-import { formatNumber } from '../../../funcs/format'
-import { CustomLink } from '../../../comps/CustomLink'
-import { CustomHeader } from '../../../comps/CustomHeader'
 
 export type Data = Disc
 

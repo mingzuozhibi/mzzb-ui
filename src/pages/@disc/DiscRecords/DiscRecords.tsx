@@ -1,17 +1,14 @@
+import { useAjax, useData } from '##/hooks'
+import { Column, Table } from '#C/@table/Table'
+import { CustomHeader } from '#C/CustomHeader'
+import { formatNumber } from '#F/format'
+import { formatPt } from '#P/@funcs'
+import { InjectRole, injectRole } from '#P/@inject'
 import { Button, Modal } from 'antd'
-import { useParams } from 'react-router-dom'
-import { useEffect } from 'react'
-import * as echarts from 'echarts'
 import dayjs from 'dayjs'
-
-import { useData } from '../../../hooks/useData'
-import { formatNumber } from '../../../funcs/format'
-import { CustomHeader } from '../../../comps/CustomHeader'
-import { Column, Table } from '../../../comps/@table/Table'
-import { useAjax } from '../../../hooks/useAjax'
-
-import { InjectRole, injectRole } from '../../@inject'
-import { formatPt } from '../../@funcs'
+import * as echarts from 'echarts'
+import { useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 import './DiscRecords.scss'
 
 interface Data {

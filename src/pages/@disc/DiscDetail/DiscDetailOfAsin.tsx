@@ -1,6 +1,6 @@
+import { useData } from '##/hooks'
+import { InjectRole, injectRole } from '#P/@inject'
 import { useParams } from 'react-router-dom'
-import { useData } from '../../../hooks/useData'
-import { InjectRole, injectRole } from '../../@inject'
 import { Data, DiscDetail } from './DiscDetail'
 
 export default injectRole(DiscDetailOfAsin)

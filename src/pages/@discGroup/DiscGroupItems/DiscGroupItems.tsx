@@ -1,20 +1,17 @@
+import { useAjax, useData } from '##/hooks'
+import { Column, Table } from '#C/@table/Table'
+import { CustomHeader } from '#C/CustomHeader'
+import { composeCompares } from '#F/compare'
+import { formatTimeout } from '#F/format'
+import { compareSurp, compareTitle, discTitle } from '#P/@funcs'
+import { InjectToAdds, injectToAdds } from '#P/@inject'
+import { Disc, DiscGroup } from '#P/@types'
 import { DeleteOutlined, FileAddOutlined } from '@ant-design/icons'
-import { Link, useParams } from 'react-router-dom'
 import { Tabs } from 'antd'
-import './DiscGroupItems.scss'
-
-import { useData } from '../../../hooks/useData'
-import { useAjax } from '../../../hooks/useAjax'
-import { formatTimeout } from '../../../funcs/format'
-import { composeCompares } from '../../../funcs/compare'
-import { CustomHeader } from '../../../comps/CustomHeader'
-import { Column, Table } from '../../../comps/@table/Table'
-
-import { compareSurp, compareTitle, discTitle } from '../../@funcs'
-import { InjectToAdds, injectToAdds } from '../../@inject'
-import { Disc, DiscGroup } from '../../@types'
-import SearchDisc from './SearchDisc'
+import { Link, useParams } from 'react-router-dom'
 import CreateDisc from './CreateDisc'
+import './DiscGroupItems.scss'
+import SearchDisc from './SearchDisc'
 
 interface IGroup extends DiscGroup {
   discs: Disc[]

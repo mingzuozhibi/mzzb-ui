@@ -1,7 +1,7 @@
-import { useReducer } from 'react'
+import { MenuInfo, menuInfos } from '##/@menus'
+import { CustomIcon } from '#C/CustomIcon'
 import { Layout, Menu } from 'antd'
-import { MenuInfo, menuInfos } from '../../@menus'
-import { CustomIcon } from '../../comps/CustomIcon'
+import { useReducer } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 
 interface AppSiderProps {

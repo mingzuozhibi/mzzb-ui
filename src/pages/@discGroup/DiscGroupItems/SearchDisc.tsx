@@ -1,11 +1,10 @@
+import { RootState } from '##/@reducer'
+import { useAjax } from '##/hooks'
+import { isEmpty } from '#F/domain'
+import { Disc } from '#P/@types'
 import { Button, Input, Modal } from 'antd'
 import { useState } from 'react'
 import { connect } from 'react-redux'
-import { Disc } from '../../@types'
-
-import { isEmpty } from '../../../funcs/domain'
-import { useAjax } from '../../../hooks/useAjax'
-import { RootState } from '../../../@reducer'
 
 interface Props {
   theDiscs: Disc[]

@@ -1,4 +1,4 @@
-import { Disc } from './@types'
+import { Disc } from '#P/@types'
 
 export function compareSurp(a: Disc, b: Disc) {
   return a.surplusDays - b.surplusDays

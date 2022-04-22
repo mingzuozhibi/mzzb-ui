@@ -1,8 +1,8 @@
-import { combineReducers } from 'redux'
-import { adminReducer, AdminState } from './reducers/admin'
+import { adminReducer, AdminState } from '#R/admin'
+import { layoutReducer, LayoutState } from '#R/layout'
+import { sessionReducer, SessionState } from '#R/session'
 import { connectRouter, RouterState } from 'connected-react-router'
-import { layoutReducer, LayoutState } from './reducers/layout'
-import { sessionReducer, SessionState } from './reducers/session'
+import { combineReducers } from 'redux'
 
 export interface RootState {
   admin: AdminState
@@ -16,6 +16,6 @@ export function createRootReducer(history: any) {
     admin: adminReducer,
     router: connectRouter(history),
     layout: layoutReducer,
-    session: sessionReducer
+    session: sessionReducer,
   })
 }

@@ -1,11 +1,10 @@
-import { useParams } from 'react-router-dom'
+import { useData } from '##/hooks'
+import { CustomHeader } from '#C/CustomHeader'
+import { md5Password } from '#F/manager'
+import { User } from '#P/@types'
 import { KeyOutlined, UserOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Input, Modal } from 'antd'
-import { User } from '../../@types'
-
-import { useData } from '../../../hooks/useData'
-import { md5Password } from '../../../funcs/manager'
-import { CustomHeader } from '../../../comps/CustomHeader'
+import { useParams } from 'react-router-dom'
 
 interface Form {
   username?: string

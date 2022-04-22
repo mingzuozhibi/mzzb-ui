@@ -1,5 +1,5 @@
+import { useData } from '##/hooks'
 import { useParams } from 'react-router-dom'
-import { useData } from '../../../hooks/useData'
 import { Data, Discs } from './Discs'
 
 const columns =

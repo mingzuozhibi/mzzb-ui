@@ -1,10 +1,10 @@
-import { useState } from 'react'
+import { useData } from '##/hooks'
+import { Column, Table } from '#C/@table/Table'
+import { CustomDate } from '#C/CustomDate'
+import { CustomLink } from '#C/CustomLink'
+import { CustomPagination } from '#C/CustomPagination'
 import { Alert, Button, Radio } from 'antd'
-import { useData } from '../../hooks/useData'
-import { CustomDate } from '../../comps/CustomDate'
-import { CustomLink } from '../../comps/CustomLink'
-import { Column, Table } from '../../comps/@table/Table'
-import { CustomPagination } from '../../comps/CustomPagination'
+import { useState } from 'react'
 import './Messages.scss'
 
 interface Data {
