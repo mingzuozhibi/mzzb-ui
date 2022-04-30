@@ -27,7 +27,7 @@ export default function DiscComing() {
     `/api/discShelfs${location.search}`
   )
 
-  function onPaginationChange(page: number, pageSize?: number) {
+  function onPaginationChange(page: number, pageSize: number = 20) {
     if (pageSize === 20) {
       history.push(`/disc_coming?page=${page}`)
     } else {
@@ -48,11 +48,6 @@ export default function DiscComing() {
 
 function getColumns(): Column<DiscComing>[] {
   return [
-    {
-      key: 'id',
-      title: 'ID',
-      format: (t) => t.id,
-    },
     {
       key: 'asin',
       title: 'ASIN',

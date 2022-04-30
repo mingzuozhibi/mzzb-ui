@@ -4,7 +4,7 @@ import { CustomDate } from '#C/CustomDate'
 import { CustomLink } from '#C/CustomLink'
 import { CustomPagination } from '#C/CustomPagination'
 import { Alert, Button, Checkbox } from 'antd'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import './Messages.scss'
 
 interface Data {
@@ -29,22 +29,29 @@ const options: any[] = [
   { label: '错误', value: 'ERROR' },
 ]
 
+const cols = getCols()
+
 export default function Messages({ name }: Props) {
   const [types, setTypes] = useState('DEBUG,INFO,NOTIFY,SUCCESS,WARNING,ERROR')
-  const [{ pageNumber, pageSize }, setPage] = useState({ pageNumber: 0, pageSize: 20 })
-  const url = `/api/messages/${name}?types=${types}&page=${pageNumber}&pageSize=${pageSize}`
+  const [param, setParam] = useState({ page: 1, size: 20 })
+  const url = `/api/messages/${name}?types=${types}&page=${param.page}&size=${param.size}`
   const [{ error, data, page }, handler] = useData<Data[]>(url)
 
-  const cols = getCols()
+  const onChangePage = useCallback(
+    (page: number, size: number = 20) => {
+      setParam({ page, size })
+      window.scroll(0, 0)
+    },
+    [setParam]
+  )
 
-  function onPaginationChange(page: number, pageSize?: number) {
-    setPage({ pageNumber: page - 1, pageSize: pageSize || 20 })
-    window.scroll(0, 0)
-  }
-
-  function onChangeType(checked: any[]) {
-    setTypes(checked.join(','))
-  }
+  const onChangeType = useCallback(
+    (checked: any[]) => {
+      setTypes(checked.join(','))
+      window.scroll(0, 0)
+    },
+    [setTypes]
+  )
 
   return (
     <div className="Messages">
@@ -62,11 +69,11 @@ export default function Messages({ name }: Props) {
       )}
       {page && (
         <div style={{ marginBottom: 10 }}>
-          <CustomPagination page={page} onChange={onPaginationChange} />
+          <CustomPagination page={page} onChange={onChangePage} />
         </div>
       )}
       {data && <Table cols={cols} rows={data} trClass={trClass} />}
-      {page && <CustomPagination page={page} onChange={onPaginationChange} />}
+      {page && <CustomPagination page={page} onChange={onChangePage} />}
     </div>
   )
 }
