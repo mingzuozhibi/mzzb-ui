@@ -48,9 +48,9 @@ export default function Messages({ name }: Props) {
   const onChangeType = useCallback(
     (checked: any[]) => {
       setTypes(checked.join(','))
-      window.scroll(0, 0)
+      onChangePage(1)
     },
-    [setTypes]
+    [setTypes, onChangePage]
   )
 
   return (
