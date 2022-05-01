@@ -26,7 +26,7 @@ interface Props<T> {
   copyFmt?: (row: T, idx: number) => string
   handler?: Handler
   defaultSort?: (a: T, b: T) => number
-  extraCaption?: React.ReactNode | React.ReactNodeArray
+  extraCaption?: React.ReactNode
 }
 
 interface State {

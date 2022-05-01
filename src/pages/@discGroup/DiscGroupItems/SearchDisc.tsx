@@ -51,13 +51,13 @@ function SearchDisc(props: Props) {
       return
     }
 
-    fetchDisc(`/api/admin/searchDisc/${asin}`, '查询碟片', {
+    fetchDisc(`/api/spider/searchDisc/${asin}`, '查询碟片', {
       onSuccess: props.pushToAdds,
     })
   }
 
   function doFetchCount() {
-    fetchCount('/api/admin/fetchCount', '查询抓取中的碟片数量', { onSuccess: props.setCount })
+    fetchCount('/api/spider/fetchCount', '查询抓取中的碟片数量', { onSuccess: props.setCount })
   }
 
   let buttonName = '抓取中的碟片数量'

@@ -24,10 +24,10 @@ export default function DiscComing() {
   const location = useLocation()
 
   const [{ data, page, error }, handler] = useData<DiscComing[]>(
-    `/api/discShelfs${location.search}`
+    `/api/spider/discShelfs${location.search}`
   )
 
-  function onPaginationChange(page: number, pageSize?: number) {
+  function onPaginationChange(page: number, pageSize: number = 20) {
     if (pageSize === 20) {
       history.push(`/disc_coming?page=${page}`)
     } else {
@@ -49,15 +49,9 @@ export default function DiscComing() {
 function getColumns(): Column<DiscComing>[] {
   return [
     {
-      key: 'id',
-      title: 'ID',
-      format: (t) => t.id,
-    },
-    {
       key: 'asin',
       title: 'ASIN',
-      format: (t) => t.asin,
-      tdClass: createJustUpdateTdClass(),
+      format: (t) => createAmazonLink(t.asin),
     },
     {
       key: 'createOn',
@@ -74,6 +68,7 @@ function getColumns(): Column<DiscComing>[] {
       key: 'type',
       title: '类型',
       format: formatType,
+      tdClass: createJustUpdateTdClass(),
     },
     {
       key: 'title',
@@ -90,15 +85,19 @@ function formatType(t: DiscComing) {
 
 function createJustUpdateTdClass() {
   return (t: DiscComing) => ({
-    'just-update-in-06-hour': justUpdateIn06Hour(t),
-    'just-update-in-24-hour': justUpdateIn24Hour(t),
+    'just-update-in-1': justUpdateIn12Hour(t),
+    'just-update-in-2': justUpdateIn24Hour(t),
   })
 }
 
-function justUpdateIn06Hour(t: DiscComing) {
-  return Date.now() - t.createOn < 6 * 3600 * 1000
+function justUpdateIn12Hour(t: DiscComing) {
+  return Date.now() - t.createOn < 12 * 3600 * 1000
 }
 
 function justUpdateIn24Hour(t: DiscComing) {
   return Date.now() - t.createOn < 24 * 3600 * 1000
+}
+
+function createAmazonLink(asin: string) {
+  return <CustomLink href={`http://www.amazon.co.jp/dp/${asin}`} title={asin} />
 }

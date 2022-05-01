@@ -1,11 +1,11 @@
 @import '../function';
 
 #root .DiscComing {
-  .just-update-in-06-hour {
+  .just-update-in-1 {
     color: red;
   }
 
-  .just-update-in-24-hour:not(.just-update-in-06-hour) {
+  .just-update-in-2:not(.just-update-in-1) {
     color: blue;
   }
 
@@ -14,14 +14,9 @@
 
     th,
     td {
-      &.id {
-        @include columnCenter();
-        @include columnHideWidth(600px, 45px);
-      }
-
       &.asin {
         @include columnCenter();
-        @include columnWidth(110px, 65px);
+        @include columnWidth(120px, 75px);
         padding-left: 5px;
         padding-right: 5px;
         word-break: break-all;

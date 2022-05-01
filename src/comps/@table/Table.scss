@@ -33,6 +33,9 @@
         background-image: url('../../../public/images/table-desc.gif');
       }
     }
+    tr.debug {
+      font-style: italic;
+    }
 
     .select {
       width: 40px;

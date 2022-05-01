@@ -3,40 +3,55 @@ import { Column, Table } from '#C/@table/Table'
 import { CustomDate } from '#C/CustomDate'
 import { CustomLink } from '#C/CustomLink'
 import { CustomPagination } from '#C/CustomPagination'
-import { Alert, Button, Radio } from 'antd'
-import { useState } from 'react'
+import { Alert, Button, Checkbox } from 'antd'
+import { useCallback, useState } from 'react'
 import './Messages.scss'
 
 interface Data {
   id: number
-  type: 'info' | 'success' | 'notify' | 'warning' | 'danger'
+  name: string
+  type: 'DEBUG' | 'INFO' | 'NOTIFY' | 'SUCCESS' | 'WARNING' | 'ERROR'
   text: string
   createOn: number
   acceptOn: number
 }
 
 interface Props {
-  moduleName: string
+  name: string
 }
 
-export default function Messages({ moduleName }: Props) {
-  const [messageType, setMessageType] = useState('info')
-  const [{ pageNumber, pageSize }, setPage] = useState({ pageNumber: 1, pageSize: 40 })
-  const url = `/api/messages/${moduleName}?type=${messageType}&page=${pageNumber}&pageSize=${pageSize}`
+const options: any[] = [
+  { label: '调试', value: 'DEBUG' },
+  { label: '信息', value: 'INFO' },
+  { label: '通知', value: 'NOTIFY' },
+  { label: '成功', value: 'SUCCESS' },
+  { label: '警告', value: 'WARNING' },
+  { label: '错误', value: 'ERROR' },
+]
+
+const cols = getCols()
+
+export default function Messages({ name }: Props) {
+  const [types, setTypes] = useState('DEBUG,INFO,NOTIFY,SUCCESS,WARNING,ERROR')
+  const [param, setParam] = useState({ page: 1, size: 20 })
+  const url = `/api/messages/${name}?types=${types}&page=${param.page}&size=${param.size}`
   const [{ error, data, page }, handler] = useData<Data[]>(url)
 
-  data && data.forEach((e, i) => (e.id = i))
+  const onChangePage = useCallback(
+    (page: number, size: number = 20) => {
+      setParam({ page, size })
+      window.scroll(0, 0)
+    },
+    [setParam]
+  )
 
-  const cols = getCols()
-
-  function onPaginationChange(page: number, pageSize?: number) {
-    setPage({ pageNumber: page, pageSize: pageSize || 40 })
-    window.scroll(0, 0)
-  }
-
-  function onChangeType(e: any) {
-    setMessageType(e.target.value)
-  }
+  const onChangeType = useCallback(
+    (checked: any[]) => {
+      setTypes(checked.join(','))
+      onChangePage(1)
+    },
+    [setTypes, onChangePage]
+  )
 
   return (
     <div className="Messages">
@@ -49,22 +64,16 @@ export default function Messages({ moduleName }: Props) {
             loading={handler.loading}
             style={{ marginRight: 10 }}
           />
-          <Radio.Group onChange={onChangeType} value={messageType}>
-            <Radio.Button value="info">所有</Radio.Button>
-            <Radio.Button value="notify">通知</Radio.Button>
-            <Radio.Button value="success">成功</Radio.Button>
-            <Radio.Button value="warning">警告</Radio.Button>
-            <Radio.Button value="danger">错误</Radio.Button>
-          </Radio.Group>
+          <Checkbox.Group onChange={onChangeType} options={options} value={types.split(',')} />
         </div>
       )}
       {page && (
         <div style={{ marginBottom: 10 }}>
-          <CustomPagination page={page} onChange={onPaginationChange} />
+          <CustomPagination page={page} onChange={onChangePage} />
         </div>
       )}
       {data && <Table cols={cols} rows={data} trClass={trClass} />}
-      {page && <CustomPagination page={page} onChange={onPaginationChange} />}
+      {page && <CustomPagination page={page} onChange={onChangePage} />}
     </div>
   )
 }
@@ -86,10 +95,11 @@ function getCols(): Column<Data>[] {
 
 function trClass(t: Data) {
   return {
-    warning: t.type === 'warning',
-    success: t.type === 'success',
-    danger: t.type === 'danger',
-    info: t.type === 'notify',
+    debug: t.type === 'DEBUG',
+    info: t.type === 'NOTIFY',
+    success: t.type === 'SUCCESS',
+    warning: t.type === 'WARNING',
+    danger: t.type === 'ERROR',
   }
 }
 
