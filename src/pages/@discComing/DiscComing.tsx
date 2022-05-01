@@ -51,7 +51,8 @@ function getColumns(): Column<DiscComing>[] {
     {
       key: 'asin',
       title: 'ASIN',
-      format: (t) => createAmazonLink(t.asin),
+      format: (t) => t.asin,
+      tdClass: createJustUpdateTdClass(),
     },
     {
       key: 'createOn',
@@ -68,7 +69,6 @@ function getColumns(): Column<DiscComing>[] {
       key: 'type',
       title: '类型',
       format: formatType,
-      tdClass: createJustUpdateTdClass(),
     },
     {
       key: 'title',
@@ -96,8 +96,4 @@ function justUpdateIn12Hour(t: DiscComing) {
 
 function justUpdateIn24Hour(t: DiscComing) {
   return Date.now() - t.createOn < 24 * 3600 * 1000
-}
-
-function createAmazonLink(asin: string) {
-  return <CustomLink href={`http://www.amazon.co.jp/dp/${asin}`} title={asin} />
 }
