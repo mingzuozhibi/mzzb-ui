@@ -51,8 +51,7 @@ function getColumns(): Column<DiscComing>[] {
     {
       key: 'asin',
       title: 'ASIN',
-      format: (t) => t.asin,
-      tdClass: createJustUpdateTdClass(),
+      format: (t) => createAmazonLink(t.asin),
     },
     {
       key: 'createOn',
@@ -69,6 +68,7 @@ function getColumns(): Column<DiscComing>[] {
       key: 'type',
       title: '类型',
       format: formatType,
+      tdClass: createJustUpdateTdClass(),
     },
     {
       key: 'title',
@@ -85,15 +85,19 @@ function formatType(t: DiscComing) {
 
 function createJustUpdateTdClass() {
   return (t: DiscComing) => ({
-    'just-update-in-06-hour': justUpdateIn06Hour(t),
-    'just-update-in-24-hour': justUpdateIn24Hour(t),
+    'just-update-in-1': justUpdateIn12Hour(t),
+    'just-update-in-2': justUpdateIn24Hour(t),
   })
 }
 
-function justUpdateIn06Hour(t: DiscComing) {
-  return Date.now() - t.createOn < 6 * 3600 * 1000
+function justUpdateIn12Hour(t: DiscComing) {
+  return Date.now() - t.createOn < 12 * 3600 * 1000
 }
 
 function justUpdateIn24Hour(t: DiscComing) {
   return Date.now() - t.createOn < 24 * 3600 * 1000
+}
+
+function createAmazonLink(asin: string) {
+  return <CustomLink href={`http://www.amazon.co.jp/dp/${asin}`} title={asin} />
 }

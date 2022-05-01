@@ -1,11 +1,11 @@
 @import '../function';
 
 #root .DiscComing {
-  .just-update-in-06-hour {
+  .just-update-in-1 {
     color: red;
   }
 
-  .just-update-in-24-hour:not(.just-update-in-06-hour) {
+  .just-update-in-2:not(.just-update-in-1) {
     color: blue;
   }
 
