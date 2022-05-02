@@ -1,4 +1,5 @@
 import { Handler } from '##/@domain'
+import { InjectRole, injectRole } from '##/pages/@inject'
 import { Column, Table } from '#C/@table/Table'
 import { CustomHeader } from '#C/CustomHeader'
 import { CustomMessage } from '#C/CustomMessage'
@@ -10,17 +11,18 @@ import { Disc } from '#P/@types'
 import { Button } from 'antd'
 import classNames from 'classnames'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import './Discs.scss'
 
-export interface Data {
+export interface IGroup {
+  key: string
   title: string
   discs: Disc[]
   modifyTime?: number
 }
 
 interface Props {
-  data?: Data
+  data?: IGroup
   error?: string
   handler: Handler
 }
@@ -30,15 +32,25 @@ const cols = getColumns()
 const message =
   '点击复制按钮可进入复制模式，选中想要复制的碟片，然后再次点击复制即可将排名复制到剪贴板'
 
-export function Discs(props: Props) {
-  const { error, data, handler } = props
-  const [pcMode, setPcMode] = useState(false)
-  const title = data ? data.title : '载入中'
+export default injectRole(Discs)
 
-  const replace = data && (
+export function Discs(props: Props & InjectRole) {
+  const { error, data: group, handler, isBasic } = props
+  const history = useHistory()
+
+  const [pcMode, setPcMode] = useState(false)
+  const title = group ? group.title : '载入中'
+
+  const replace = group && (
     <>
-      {data.modifyTime && <span>更新于{formatTimeout(data.modifyTime)}前</span>}
+      {group.modifyTime && <span>更新于{formatTimeout(group.modifyTime)}前</span>}
       <Button onClick={() => setPcMode(!pcMode)}>{pcMode ? '智能隐藏列' : '显示所有列'}</Button>
+      {isBasic && (
+        <Button onClick={() => history.push(`/disc_groups/${group.key}`)}>编辑列表</Button>
+      )}
+      {isBasic && (
+        <Button onClick={() => history.push(`/disc_groups/${group.key}/discs`)}>管理碟片</Button>
+      )}
     </>
   )
 
@@ -46,14 +58,14 @@ export function Discs(props: Props) {
     <div className="Discs">
       <CustomMessage unikey="copymode" message={message} />
       <CustomHeader header="载入中" title={title} error={error} replace={replace} />
-      {data && (
+      {group && (
         <>
           <div className="pc-mode-warpper">
             <div className={classNames({ 'pc-mode': pcMode })}>
               <Table
-                rows={data.discs}
+                rows={group.discs}
                 cols={cols}
-                title={data.title}
+                title={group.title}
                 handler={handler}
                 defaultSort={createCompareRank()}
                 copyFmt={(disc, idx) => {

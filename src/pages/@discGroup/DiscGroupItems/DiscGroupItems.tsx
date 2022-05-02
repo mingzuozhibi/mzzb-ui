@@ -7,8 +7,8 @@ import { compareSurp, compareTitle, discTitle } from '#P/@funcs'
 import { InjectToAdds, injectToAdds } from '#P/@inject'
 import { Disc, DiscGroup } from '#P/@types'
 import { DeleteOutlined, FileAddOutlined } from '@ant-design/icons'
-import { Tabs } from 'antd'
-import { Link, useParams } from 'react-router-dom'
+import { Button, Tabs } from 'antd'
+import { Link, useHistory, useParams } from 'react-router-dom'
 import CreateDisc from './CreateDisc'
 import './DiscGroupItems.scss'
 import SearchDisc from './SearchDisc'
@@ -23,6 +23,7 @@ export default injectToAdds(DiscGroupItems)
 
 function DiscGroupItems(props: InjectToAdds) {
   const { toAdds, pushToAdds, dropToAdds } = props
+  const history = useHistory()
   const params = useParams<{ key: string }>()
 
   const [{ error, data: group }, handler, { update: setGroup }] = useData<IGroup>(
@@ -71,6 +72,16 @@ function DiscGroupItems(props: InjectToAdds) {
 
   const title = group ? `管理碟片：${group.title}` : '载入中'
 
+  const replace = group && (
+    <>
+      <span style={{ marginRight: 8 }}>更新于{formatTimeout(group.modifyTime)}前</span>
+      <Button style={{ marginRight: 8 }} onClick={() => history.push(`/disc_groups/${group.key}`)}>
+        编辑列表
+      </Button>
+      <Button onClick={() => history.push(`/discs/disc_groups/${group.key}`)}>浏览碟片</Button>
+    </>
+  )
+
   return (
     <div className="DiscGroupItems">
       <CustomHeader header="管理碟片" title={title} error={error} handler={handler} />
@@ -89,7 +100,7 @@ function DiscGroupItems(props: InjectToAdds) {
             rows={group.discs}
             cols={getColumns(getDropCommand())}
             title={group.title}
-            extraCaption={`更新于${formatTimeout(group.modifyTime)}前`}
+            extraCaption={replace}
             defaultSort={composeCompares([compareSurp, compareTitle])}
           />
         </>
