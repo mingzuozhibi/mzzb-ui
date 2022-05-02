@@ -2,7 +2,7 @@ import { BarChartOutlined, GithubOutlined } from '@ant-design/icons'
 import { ItemType } from 'antd/lib/menu/hooks/useItems'
 import { CustomIcon } from './comps/CustomIcon'
 
-export function getItems(userRoles: string[]): ItemType[] {
+export function useItems(userRoles: string[]): ItemType[] {
   return [
     { label: '推荐列表', icon: <CustomIcon iconType="icon-yinghua" />, key: '/disc_groups' },
     { label: '上架追踪', icon: <CustomIcon iconType="icon-yinghua" />, key: '/disc_coming' },
@@ -43,5 +43,5 @@ export function getItems(userRoles: string[]): ItemType[] {
       icon: <GithubOutlined />,
       key: 'https://github.com/mingzuozhibi/mzzb-admin',
     },
-  ]
+  ].filter((e) => e.disabled !== true)
 }
