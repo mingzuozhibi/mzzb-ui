@@ -55,11 +55,11 @@ export const menuInfos: MenuInfo[] = [
   {
     iconNode: <GithubOutlined />,
     menuTitle: 'Github - Spider',
-    matchPath: 'https://github.com/mingzuozhibi/mzzb-disc-spider',
+    matchPath: 'https://github.com/mingzuozhibi/mzzb-spider',
   },
   {
     iconNode: <GithubOutlined />,
-    menuTitle: 'Github - Shelfs',
-    matchPath: 'https://github.com/mingzuozhibi/mzzb-disc-shelfs',
+    menuTitle: 'Github - Admin',
+    matchPath: 'https://github.com/mingzuozhibi/mzzb-admin',
   },
 ]
