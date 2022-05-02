@@ -1,65 +1,47 @@
 import { BarChartOutlined, GithubOutlined } from '@ant-design/icons'
+import { ItemType } from 'antd/lib/menu/hooks/useItems'
+import { CustomIcon } from './comps/CustomIcon'
 
-type Role = 'ROLE_ADMIN' | 'ROLE_BASIC'
-
-export interface MenuInfo {
-  matchPath: string
-  menuTitle: string
-  menuRole?: Role
-  iconType?: string
-  iconNode?: JSX.Element
+export function getItems(userRoles: string[]): ItemType[] {
+  return [
+    { label: '推荐列表', icon: <CustomIcon iconType="icon-yinghua" />, key: '/disc_groups' },
+    { label: '上架追踪', icon: <CustomIcon iconType="icon-yinghua" />, key: '/disc_coming' },
+    {
+      label: '用户管理',
+      icon: <CustomIcon iconType="icon-user" />,
+      key: '/users',
+      disabled: !userRoles.includes('ROLE_ADMIN'),
+    },
+    { label: '系统日志', icon: <BarChartOutlined />, key: '/console' },
+    {
+      label: '名作之壁吧',
+      icon: <CustomIcon iconType="icon-social-tieba" />,
+      key: 'https://tieba.baidu.com/f?kw=%E5%90%8D%E4%BD%9C%E4%B9%8B%E5%A3%81',
+    },
+    {
+      label: '壁吧专楼吧',
+      icon: <CustomIcon iconType="icon-social-tieba" />,
+      key: 'https://tieba.baidu.com/f?kw=%E5%A3%81%E5%90%A7%E4%B8%93%E6%A5%BC',
+    },
+    {
+      label: 'Github - UI',
+      icon: <GithubOutlined />,
+      key: 'https://github.com/mingzuozhibi/mzzb-ui',
+    },
+    {
+      label: 'Github - Server',
+      icon: <GithubOutlined />,
+      key: 'https://github.com/mingzuozhibi/mzzb-server',
+    },
+    {
+      label: 'Github - Spider',
+      icon: <GithubOutlined />,
+      key: 'https://github.com/mingzuozhibi/mzzb-spider',
+    },
+    {
+      label: 'Github - Admin',
+      icon: <GithubOutlined />,
+      key: 'https://github.com/mingzuozhibi/mzzb-admin',
+    },
+  ]
 }
-
-export const menuInfos: MenuInfo[] = [
-  {
-    iconType: 'icon-yinghua',
-    menuTitle: '推荐列表',
-    matchPath: '/disc_groups',
-  },
-  {
-    iconType: 'icon-yinghua',
-    menuTitle: '上架追踪',
-    matchPath: '/disc_coming',
-  },
-  {
-    iconType: 'icon-user',
-    menuTitle: '用户管理',
-    matchPath: '/users',
-    menuRole: 'ROLE_ADMIN',
-  },
-  {
-    iconNode: <BarChartOutlined />,
-    menuTitle: '系统日志',
-    matchPath: '/console',
-  },
-  {
-    iconType: 'icon-social-tieba',
-    menuTitle: '名作之壁吧',
-    matchPath: 'https://tieba.baidu.com/f?kw=%E5%90%8D%E4%BD%9C%E4%B9%8B%E5%A3%81',
-  },
-  {
-    iconType: 'icon-social-tieba',
-    menuTitle: '壁吧专楼吧',
-    matchPath: 'https://tieba.baidu.com/f?kw=%E5%A3%81%E5%90%A7%E4%B8%93%E6%A5%BC',
-  },
-  {
-    iconNode: <GithubOutlined />,
-    menuTitle: 'Github - UI',
-    matchPath: 'https://github.com/mingzuozhibi/mzzb-ui',
-  },
-  {
-    iconNode: <GithubOutlined />,
-    menuTitle: 'Github - Server',
-    matchPath: 'https://github.com/mingzuozhibi/mzzb-server',
-  },
-  {
-    iconNode: <GithubOutlined />,
-    menuTitle: 'Github - Spider',
-    matchPath: 'https://github.com/mingzuozhibi/mzzb-disc-spider',
-  },
-  {
-    iconNode: <GithubOutlined />,
-    menuTitle: 'Github - Shelfs',
-    matchPath: 'https://github.com/mingzuozhibi/mzzb-disc-shelfs',
-  },
-]

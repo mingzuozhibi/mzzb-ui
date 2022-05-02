@@ -1,6 +1,6 @@
-import { MenuInfo, menuInfos } from '##/@menus'
-import { CustomIcon } from '#C/CustomIcon'
+import { getItems } from '##/@menus'
 import { Layout, Menu } from 'antd'
+import { MenuInfo } from 'rc-menu/lib/interface'
 import { useReducer } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 
@@ -43,13 +43,8 @@ export function AppSider(props: AppSiderProps) {
         selectedKeys={[location.pathname]}
         style={{ height: '100%' }}
         onClick={selectItem}
-      >
-        {menuInfos.filter(hasMenuRole(userRoles)).map((menuInfo) => (
-          <Menu.Item key={menuInfo.matchPath} onMouseDown={midButtonDown(menuInfo)}>
-            {renderLabel(menuInfo)}
-          </Menu.Item>
-        ))}
-      </Menu>
+        items={getItems(userRoles)}
+      />
     </Layout.Sider>
   )
 
@@ -65,53 +60,14 @@ export function AppSider(props: AppSiderProps) {
       }
     }
   }
-
-  function selectItem({ key: path }: { key: string }) {
-    if (path === location.pathname) {
-      return
+  function selectItem({ key, domEvent }: MenuInfo) {
+    if (domEvent.ctrlKey || key.startsWith('http')) {
+      window.open(key)
+    } else if (key !== location.pathname) {
+      history.push(key)
     }
     if (autoCollapse) {
       setCollapsed(true)
     }
-    if (path.startsWith('/')) {
-      history.push(path)
-    } else {
-      window.open(path)
-    }
   }
-
-  function midButtonDown(menuInfo: MenuInfo) {
-    return (e: any) => {
-      if (e.button === 1) {
-        if (autoCollapse) {
-          setCollapsed(true)
-        }
-        window.open(menuInfo.matchPath)
-      }
-    }
-  }
-}
-
-function hasMenuRole(userRoles: string[]) {
-  return ({ menuRole }: MenuInfo) => menuRole === undefined || userRoles.includes(menuRole)
-}
-
-function renderLabel({ iconType, iconNode, menuTitle }: MenuInfo) {
-  if (iconNode) {
-    return (
-      <span>
-        <CustomIcon className="sider-icon" iconNode={iconNode} />
-        {menuTitle}
-      </span>
-    )
-  }
-  if (iconType) {
-    return (
-      <span>
-        <CustomIcon className="sider-icon" iconType={iconType} />
-        {menuTitle}
-      </span>
-    )
-  }
-  return <span>{menuTitle}</span>
 }
