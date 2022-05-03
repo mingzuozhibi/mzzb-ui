@@ -1,13 +1,14 @@
 import { useData } from '##/hooks'
 import { Column, Table } from '#C/@table/Table'
+import { CustomCheckbox } from '#C/CustomCheckbox'
 import { CustomDate } from '#C/CustomDate'
 import { CustomLink } from '#C/CustomLink'
 import { CustomPagination } from '#C/CustomPagination'
-import { Alert, Button, Checkbox } from 'antd'
-import { useCallback, useState } from 'react'
+import { Alert, Button, CheckboxOptionType } from 'antd'
+import { useState } from 'react'
 import './Messages.scss'
 
-interface Data {
+interface IMsg {
   id: number
   name: string
   type: 'DEBUG' | 'INFO' | 'NOTIFY' | 'SUCCESS' | 'WARNING' | 'ERROR'
@@ -20,7 +21,7 @@ interface Props {
   name: string
 }
 
-const options: any[] = [
+const options: CheckboxOptionType[] = [
   { label: '调试', value: 'DEBUG' },
   { label: '信息', value: 'INFO' },
   { label: '通知', value: 'NOTIFY' },
@@ -29,56 +30,52 @@ const options: any[] = [
   { label: '错误', value: 'ERROR' },
 ]
 
+const defaultTypes = options.map((e) => e.value)
 const cols = getCols()
 
 export default function Messages({ name }: Props) {
-  const [types, setTypes] = useState('DEBUG,INFO,NOTIFY,SUCCESS,WARNING,ERROR')
+  const [types, setTypes] = useState(defaultTypes)
   const [param, setParam] = useState({ page: 1, size: 20 })
-  const url = `/api/messages/${name}?types=${types}&page=${param.page}&size=${param.size}`
-  const [{ error, data, page }, handler] = useData<Data[]>(url)
+  const url = `/api/messages/${name}?types=${types.join(',')}&page=${param.page}&size=${param.size}`
+  const [{ error, data: msgs, page }, handler] = useData<IMsg[]>(url)
 
-  const onChangePage = useCallback(
-    (page: number, size: number = 20) => {
-      setParam({ page, size })
-      window.scroll(0, 0)
-    },
-    [setParam]
-  )
+  function onChangePage(page: number, size: number = 20) {
+    setParam({ page, size })
+    window.scroll(0, 0)
+  }
 
-  const onChangeType = useCallback(
-    (checked: any[]) => {
-      setTypes(checked.join(','))
-      onChangePage(1)
-    },
-    [setTypes, onChangePage]
-  )
+  function onChangeTypes(checked: any[]) {
+    setTypes(checked)
+    setParam({ page: 1, size: param.size })
+  }
 
   return (
     <div className="Messages">
       {error && <Alert message={error} type="error" />}
-      {data && (
-        <div style={{ marginBottom: 10 }}>
-          <Button
-            children={'刷新'}
-            onClick={handler.refresh}
-            loading={handler.loading}
-            style={{ marginRight: 10 }}
-          />
-          <Checkbox.Group onChange={onChangeType} options={options} value={types.split(',')} />
+      {msgs && (
+        <div className="format">
+          <span className="more">
+            <Button children={'刷新'} onClick={handler.refresh} loading={handler.loading} />
+          </span>
+          <CustomCheckbox options={options} value={types} onChange={onChangeTypes} />
         </div>
       )}
       {page && (
-        <div style={{ marginBottom: 10 }}>
+        <div className="format">
           <CustomPagination page={page} onChange={onChangePage} />
         </div>
       )}
-      {data && <Table cols={cols} rows={data} trClass={trClass} />}
-      {page && <CustomPagination page={page} onChange={onChangePage} />}
+      {msgs && <Table cols={cols} rows={msgs} trClass={trClass} />}
+      {page && (
+        <div className="format">
+          <CustomPagination page={page} onChange={onChangePage} />
+        </div>
+      )}
     </div>
   )
 }
 
-function getCols(): Column<Data>[] {
+function getCols(): Column<IMsg>[] {
   return [
     {
       key: 'time',
@@ -93,7 +90,7 @@ function getCols(): Column<Data>[] {
   ]
 }
 
-function trClass(t: Data) {
+function trClass(t: IMsg) {
   return {
     debug: t.type === 'DEBUG',
     info: t.type === 'NOTIFY',
@@ -105,7 +102,7 @@ function trClass(t: Data) {
 
 const re = /[\(\[]([A-Z0-9]{10})[\)\]]/
 
-function formatText(t: Data) {
+function formatText(t: IMsg) {
   const result = re.exec(t.text)
   if (result) {
     return (
