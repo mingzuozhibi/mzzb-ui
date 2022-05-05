@@ -3,7 +3,6 @@
 # 环境准备
 DirName=$(dirname "$0")
 HomeDir=$(realpath "$DirName"/..)
-ExecMvn="bash ./mvnw"
 cd "$HomeDir" || exit
 
 # 版本发布
