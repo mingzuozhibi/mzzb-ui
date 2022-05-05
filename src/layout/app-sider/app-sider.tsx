@@ -1,7 +1,7 @@
-import { getItems } from '##/@menus'
+import { useItems } from '##/@menus'
 import { Layout, Menu } from 'antd'
 import { MenuInfo } from 'rc-menu/lib/interface'
-import { useReducer } from 'react'
+import { useMemo, useReducer } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 
 interface AppSiderProps {
@@ -17,8 +17,11 @@ interface State {
 
 export function AppSider(props: AppSiderProps) {
   const { userRoles, collapsed, setCollapsed } = props
+
   const history = useHistory()
   const location = useLocation()
+
+  const items = useMemo(() => useItems(userRoles), [userRoles])
 
   const reducer = (state: State, collapse: boolean) => {
     return { autoCollapse: collapse, mustQuickSet: false }
@@ -43,7 +46,7 @@ export function AppSider(props: AppSiderProps) {
         selectedKeys={[location.pathname]}
         style={{ height: '100%' }}
         onClick={selectItem}
-        items={getItems(userRoles)}
+        items={items}
       />
     </Layout.Sider>
   )

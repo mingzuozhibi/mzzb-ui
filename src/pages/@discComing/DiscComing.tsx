@@ -27,11 +27,11 @@ export default function DiscComing() {
     `/api/spider/discShelfs${location.search}`
   )
 
-  function onPaginationChange(page: number, pageSize: number = 20) {
-    if (pageSize === 20) {
+  function onPaginationChange(page: number, size: number = 20) {
+    if (size === 20) {
       history.push(`/disc_coming?page=${page}`)
     } else {
-      history.push(`/disc_coming?page=${page}&pageSize=${pageSize}`)
+      history.push(`/disc_coming?page=${page}&size=${size}`)
     }
   }
 

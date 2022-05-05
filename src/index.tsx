@@ -12,6 +12,9 @@ import createSagaMiddleware from 'redux-saga'
 import App from './layout/App'
 import { sagas } from './@sagas'
 import { createRootReducer } from './@reducer'
+import { enableMapSet } from 'immer'
+
+enableMapSet()
 
 const history = createBrowserHistory()
 const routerMid = routerMiddleware(history)

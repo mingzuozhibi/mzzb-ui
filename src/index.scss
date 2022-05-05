@@ -42,3 +42,13 @@ body {
     padding-bottom: 5px;
   }
 }
+
+div.format {
+  margin-bottom: 10px;
+  & > span {
+    margin-right: 8px;
+  }
+  & > span.more {
+    margin-right: 16px;
+  }
+}
