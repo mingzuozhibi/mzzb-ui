@@ -1,5 +1,6 @@
 import { BarChartOutlined, GithubOutlined } from '@ant-design/icons'
 import { ItemType } from 'antd/lib/menu/hooks/useItems'
+import { NavLink } from 'react-router-dom'
 import { CustomIcon } from './comps/CustomIcon'
 
 export function useItems(userRoles: string[]): ItemType[] {
@@ -43,5 +44,22 @@ export function useItems(userRoles: string[]): ItemType[] {
       icon: <GithubOutlined />,
       key: 'https://github.com/mingzuozhibi/mzzb-admin',
     },
-  ].filter((e) => e.disabled !== true)
+  ]
+    .filter((e) => e.disabled !== true)
+    .map(addNavLink)
+}
+
+function addNavLink(item: any) {
+  if (item.children) {
+    item.children.forEach(addNavLink)
+  } else if (item.key.startsWith('http')) {
+    item.label = (
+      <a href={item.key} target="_blank" rel="noopener noreferrer">
+        {item.label}
+      </a>
+    )
+  } else {
+    item.label = <NavLink to={item.key}>{item.label}</NavLink>
+  }
+  return item
 }

@@ -1,8 +1,7 @@
 import { useItems } from '##/@menus'
 import { Layout, Menu } from 'antd'
-import { MenuInfo } from 'rc-menu/lib/interface'
 import { useMemo, useReducer } from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 
 interface AppSiderProps {
   userRoles: string[]
@@ -18,12 +17,11 @@ interface State {
 export function AppSider(props: AppSiderProps) {
   const { userRoles, collapsed, setCollapsed } = props
 
-  const history = useHistory()
   const location = useLocation()
 
   const items = useMemo(() => useItems(userRoles), [userRoles])
 
-  const reducer = (state: State, collapse: boolean) => {
+  const reducer = (_state: State, collapse: boolean) => {
     return { autoCollapse: collapse, mustQuickSet: false }
   }
   const initialState = { autoCollapse: true, mustQuickSet: true }
@@ -63,12 +61,7 @@ export function AppSider(props: AppSiderProps) {
       }
     }
   }
-  function selectItem({ key, domEvent }: MenuInfo) {
-    if (domEvent.ctrlKey || key.startsWith('http')) {
-      window.open(key)
-    } else if (key !== location.pathname) {
-      history.push(key)
-    }
+  function selectItem() {
     if (autoCollapse) {
       setCollapsed(true)
     }
