@@ -1,6 +1,5 @@
 import { useTitle } from '##/hooks'
 import { Tabs } from 'antd'
-import { useLocation } from 'react-router-dom'
 import Messages from './Messages'
 
 const modules = [
@@ -37,21 +36,23 @@ export default function Console() {
     window.location.hash = activeKey
   }
 
+  const activeKey = getActiveKey()
+
   return (
-    <Tabs type="card" activeKey={getDefaultValue()} onChange={onChange}>
+    <Tabs type="card" activeKey={activeKey} onChange={onChange}>
       {modules.map(({ value, label }) => (
         <Tabs.TabPane key={value} tab={label}>
-          <Messages name={value} />
+          <Messages name={value} activeKey={activeKey} />
         </Tabs.TabPane>
       ))}
     </Tabs>
   )
 }
 
-function getDefaultValue() {
-  const value = window.location.hash
-  if (value.length > 0) {
-    return value.substring(1)
+function getActiveKey() {
+  const hash = window.location.hash
+  if (hash.length > 0) {
+    return hash.substring(1)
   } else {
     return modules[0].value
   }

@@ -5,7 +5,7 @@ import { CustomDate } from '#C/CustomDate'
 import { CustomLink } from '#C/CustomLink'
 import { CustomPagination } from '#C/CustomPagination'
 import { Alert, Button, CheckboxOptionType } from 'antd'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './Messages.scss'
 
 interface IMsg {
@@ -19,6 +19,7 @@ interface IMsg {
 
 interface Props {
   name: string
+  activeKey: string
 }
 
 const options: CheckboxOptionType[] = [
@@ -33,11 +34,17 @@ const options: CheckboxOptionType[] = [
 const defaultTypes = options.map((e) => e.value)
 const cols = getCols()
 
-export default function Messages({ name }: Props) {
+export default function Messages({ name, activeKey }: Props) {
   const [types, setTypes] = useState(defaultTypes)
   const [param, setParam] = useState({ page: 1, size: 20 })
   const url = `/api/messages/${name}?types=${types.join(',')}&page=${param.page}&size=${param.size}`
   const [{ error, data: msgs, page }, handler] = useData<IMsg[]>(url)
+
+  useEffect(() => {
+    if (activeKey === name && !handler.loading) {
+      handler.refresh()
+    }
+  }, [activeKey])
 
   function onChangePage(page: number, size: number = 20) {
     setParam({ page, size })
