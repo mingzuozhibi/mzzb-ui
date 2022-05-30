@@ -21,6 +21,7 @@ export function CustomPagination({ page, onChange }: Props) {
       total={page.totalElements}
       onChange={onChangePage}
       onShowSizeChange={onChangePage}
+      pageSizeOptions={[10,20,30,40]}
     />
   )
 }
