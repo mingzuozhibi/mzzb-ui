@@ -12,5 +12,6 @@ if [[ $1 != '-q' ]]; then
     yarn build
 fi
 
-ssh q "rm -rf nginx/www/mzzb-ui-dev; mkdir -p nginx/www/mzzb-ui-dev;"
-tar -czf - -C build . | ssh q "tar -xzpvf - -C nginx/www/mzzb-ui-dev"
+target=mzzb-admin/nginx/www/dev
+ssh q "rm -rf $target; mkdir -p $target;"
+tar -czf - -C build . | ssh q "tar -xzpvf - -C $target"
