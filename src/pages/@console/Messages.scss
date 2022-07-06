@@ -11,5 +11,9 @@
         @include columnWidth(75px, 70px);
       }
     }
+
+    td.text {
+      word-break: break-all;
+    }
   }
 }
