@@ -72,7 +72,7 @@ function DiscGroupItems(props: InjectToAdds) {
 
   const title = group ? `管理碟片：${group.title}` : '载入中'
 
-  const replace = group && (
+  const extraCaption = group ? (
     <>
       <span style={{ marginRight: 8 }}>更新于{formatTimeout(group.modifyTime)}前</span>
       <Button style={{ marginRight: 8 }} onClick={() => history.push(`/disc_groups/${group.key}`)}>
@@ -80,7 +80,7 @@ function DiscGroupItems(props: InjectToAdds) {
       </Button>
       <Button onClick={() => history.push(`/discs/disc_groups/${group.key}`)}>浏览碟片</Button>
     </>
-  )
+  ) : null
 
   return (
     <div className="DiscGroupItems">
@@ -100,7 +100,7 @@ function DiscGroupItems(props: InjectToAdds) {
             rows={group.discs}
             cols={getColumns(getDropCommand())}
             title={group.title}
-            extraCaption={replace}
+            extraCaption={extraCaption}
             defaultSort={composeCompares([compareSurp, compareTitle])}
           />
         </>

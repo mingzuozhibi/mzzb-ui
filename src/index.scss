@@ -52,3 +52,9 @@ div.format {
     margin-right: 16px;
   }
 }
+
+span.format {
+  & > * {
+    margin-right: 8px;
+  }
+}
