@@ -45,14 +45,16 @@ export function Discs(props: Props & InjectRole) {
     <>
       {group.modifyTime && <span>更新于{formatTimeout(group.modifyTime)}前</span>}
       <Button onClick={() => setPcMode(!pcMode)}>{pcMode ? '智能隐藏列' : '显示所有列'}</Button>
-      {isBasic && (
-        <Button onClick={() => history.push(`/disc_groups/${group.key}`)}>编辑列表</Button>
-      )}
-      {isBasic && (
-        <Button onClick={() => history.push(`/disc_groups/${group.key}/discs`)}>管理碟片</Button>
-      )}
     </>
   )
+
+  const extraCaption =
+    group && isBasic ? (
+      <span className="format">
+        <Button onClick={() => history.push(`/disc_groups/${group.key}`)}>编辑列表</Button>
+        <Button onClick={() => history.push(`/disc_groups/${group.key}/discs`)}>管理碟片</Button>
+      </span>
+    ) : null
 
   return (
     <div className="Discs">
@@ -67,6 +69,7 @@ export function Discs(props: Props & InjectRole) {
                 cols={cols}
                 title={group.title}
                 handler={handler}
+                extraCaption={extraCaption}
                 defaultSort={createCompareRank()}
                 copyFmt={(disc, idx) => {
                   return (
