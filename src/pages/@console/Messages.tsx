@@ -1,10 +1,11 @@
+import { UrlBuilder } from '##/funcs/urlBuilder'
 import { useData } from '##/hooks'
 import { Column, Table } from '#C/@table/Table'
 import { CustomCheckbox } from '#C/CustomCheckbox'
 import { CustomDate } from '#C/CustomDate'
 import { CustomLink } from '#C/CustomLink'
 import { CustomPagination } from '#C/CustomPagination'
-import { Alert, Button, CheckboxOptionType } from 'antd'
+import { Alert, Button, CheckboxOptionType, Input } from 'antd'
 import { useEffect, useState } from 'react'
 import './Messages.scss'
 
@@ -37,7 +38,15 @@ const cols = getCols()
 export default function Messages({ name, activeKey }: Props) {
   const [types, setTypes] = useState(defaultTypes)
   const [param, setParam] = useState({ page: 1, size: 20 })
-  const url = `/api/messages/${name}?types=${types.join(',')}&page=${param.page}&size=${param.size}`
+  const [query, setQuery] = useState('')
+
+  const url = new UrlBuilder(`/api/messages/${name}`)
+    .append('types', types.join(','))
+    .append('page', `${param.page}`)
+    .append('size', `${param.size}`)
+    .append('search', query)
+    .toString()
+
   const [{ error, data: msgs, page }, handler] = useData<IMsg[]>(url)
 
   useEffect(() => {
@@ -56,16 +65,32 @@ export default function Messages({ name, activeKey }: Props) {
     setParam({ page: 1, size: param.size })
   }
 
+  function onSearch(value: string) {
+    setQuery(value)
+    setParam({ page: 1, size: param.size })
+  }
+
   return (
     <div className="Messages">
       {error && <Alert message={error} type="error" />}
       {msgs && (
-        <div className="format">
-          <span className="more">
-            <Button children={'刷新'} onClick={handler.refresh} loading={handler.loading} />
-          </span>
-          <CustomCheckbox options={options} value={types} onChange={onChangeTypes} />
-        </div>
+        <>
+          <div className="format">
+            <span className="more">
+              <Button children={'刷新'} onClick={handler.refresh} loading={handler.loading} />
+            </span>
+            <CustomCheckbox options={options} value={types} onChange={onChangeTypes} />
+          </div>
+          <div className="format">
+            <Input.Search
+              placeholder="input search text"
+              allowClear
+              enterButton="Search"
+              size="large"
+              onSearch={onSearch}
+            />
+          </div>
+        </>
       )}
       {page && (
         <div className="format">
