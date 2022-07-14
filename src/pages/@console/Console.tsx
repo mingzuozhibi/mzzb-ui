@@ -52,7 +52,7 @@ export default function Console() {
 function getActiveKey() {
   const hash = window.location.hash
   if (hash.length > 0) {
-    return hash.substring(1)
+    return hash.slice(1)
   } else {
     return modules[0].value
   }

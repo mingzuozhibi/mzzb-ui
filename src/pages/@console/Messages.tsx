@@ -114,9 +114,9 @@ function formatText(t: IMsg) {
   if (result) {
     return (
       <>
-        {t.text.substring(0, result.index + 1)}
+        {t.text.slice(0, result.index + 1)}
         <CustomLink href={`/discs/asin/${result[1]}`} title={result[1]} />
-        {t.text.substring(result.index + 11)}
+        {t.text.slice(result.index + 11)}
       </>
     )
   } else {
