@@ -39,17 +39,18 @@ export function Discs(props: Props & InjectRole) {
   const history = useHistory()
 
   const [pcMode, setPcMode] = useState(false)
-  const title = group ? group.title : '载入中'
-
+  const [quMode, setQuMode] = useState(false)
   const [query, setQuery] = useState('')
+
+  const title = group ? group.title : '载入中'
 
   function onSearch(value: string) {
     setQuery(value)
   }
 
   let lastDiscs = group?.discs
-  if (query.length > 0 && group != undefined) {
-    lastDiscs = group.discs.filter((d) => {
+  if (query.length > 0 && quMode === true) {
+    lastDiscs = group?.discs.filter((d) => {
       if (d.titlePc?.includes(query)) return true
       if (d.title.includes(query)) return true
       if (`${d.surplusDays}天`.includes(query)) return true
@@ -60,7 +61,8 @@ export function Discs(props: Props & InjectRole) {
   const replace = group && (
     <>
       {group.modifyTime && <span>更新于{formatTimeout(group.modifyTime)}前</span>}
-      <Button onClick={() => setPcMode(!pcMode)}>{pcMode ? '智能隐藏列' : '显示所有列'}</Button>
+      <Button onClick={() => setPcMode(!pcMode)}>{pcMode ? '默认列' : '所有列'}</Button>
+      <Button onClick={() => setQuMode(!quMode)}>{quMode ? '查询关' : '查询开'}</Button>
     </>
   )
 
@@ -78,13 +80,16 @@ export function Discs(props: Props & InjectRole) {
       <CustomHeader header="载入中" title={title} error={error} replace={replace} />
       {group && (
         <>
-          <Input.Search
-            placeholder="input search text"
-            allowClear
-            enterButton="Search"
-            size="large"
-            onSearch={onSearch}
-          />
+          {quMode && (
+            <Input.Search
+              placeholder="input search text"
+              allowClear
+              enterButton="Search"
+              size="large"
+              onSearch={onSearch}
+              defaultValue={query}
+            />
+          )}
           <div className="pc-mode-warpper">
             <div className={classNames({ 'pc-mode': pcMode })}>
               <Table
