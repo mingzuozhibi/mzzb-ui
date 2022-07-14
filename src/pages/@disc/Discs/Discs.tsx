@@ -8,7 +8,7 @@ import { isJustUpdated, isSlowUpdated } from '#F/domain'
 import { formatNumber, formatTimeout } from '#F/format'
 import { compareSurp, compareTitle, discTitle, formatPt } from '#P/@funcs'
 import { Disc } from '#P/@types'
-import { Button } from 'antd'
+import { Button, Input } from 'antd'
 import classNames from 'classnames'
 import { useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
@@ -41,6 +41,22 @@ export function Discs(props: Props & InjectRole) {
   const [pcMode, setPcMode] = useState(false)
   const title = group ? group.title : '载入中'
 
+  const [query, setQuery] = useState('')
+
+  function onSearch(value: string) {
+    setQuery(value)
+  }
+
+  let lastDiscs = group?.discs
+  if (query.length > 0 && group != undefined) {
+    lastDiscs = group.discs.filter((d) => {
+      if (d.titlePc?.includes(query)) return true
+      if (d.title.includes(query)) return true
+      if (`${d.surplusDays}天`.includes(query)) return true
+      return false
+    })
+  }
+
   const replace = group && (
     <>
       {group.modifyTime && <span>更新于{formatTimeout(group.modifyTime)}前</span>}
@@ -62,10 +78,17 @@ export function Discs(props: Props & InjectRole) {
       <CustomHeader header="载入中" title={title} error={error} replace={replace} />
       {group && (
         <>
+          <Input.Search
+            placeholder="input search text"
+            allowClear
+            enterButton="Search"
+            size="large"
+            onSearch={onSearch}
+          />
           <div className="pc-mode-warpper">
             <div className={classNames({ 'pc-mode': pcMode })}>
               <Table
-                rows={group.discs}
+                rows={lastDiscs!}
                 cols={cols}
                 title={group.title}
                 handler={handler}
