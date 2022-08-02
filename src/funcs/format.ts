@@ -39,7 +39,7 @@ export function formatNumber(input: number, format: string) {
     }
   }
   if (indexNumber >= 0) {
-    result = numstr.substr(0, indexNumber + 1) + result
+    result = numstr.slice(0, indexNumber + 1) + result
   }
   while (indexFormat >= 0) {
     if (/[#]/.test(format[indexFormat])) {
@@ -48,5 +48,5 @@ export function formatNumber(input: number, format: string) {
     result = format[indexFormat] + result
     indexFormat--
   }
-  return /^,.*/.test(result) ? result.substr(1, result.length - 1) : result
+  return /^,.*/.test(result) ? result.slice(1, result.length) : result
 }
