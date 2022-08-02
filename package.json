@@ -4,8 +4,8 @@
   "version": "1.9.0",
   "license": "Apache-2.0",
   "description": "ui for mingzuozhibi",
-  "#proxy": "https://mingzuozhibi.com",
-  "proxy": "http://localhost:9000",
+  "proxy": "https://mingzuozhibi.com",
+  "#proxy": "http://localhost:9000",
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
