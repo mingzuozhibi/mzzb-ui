@@ -1,4 +1,5 @@
 import { Handler } from '##/@domain'
+import { useLocal } from '##/hooks/useLocal'
 import { InjectRole, injectRole } from '##/pages/@inject'
 import { Column, Table } from '#C/@table/Table'
 import { CustomHeader } from '#C/CustomHeader'
@@ -10,7 +11,6 @@ import { compareSurp, compareTitle, discTitle, formatPt } from '#P/@funcs'
 import { Disc } from '#P/@types'
 import { Button, Input } from 'antd'
 import classNames from 'classnames'
-import { useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import './Discs.scss'
 
@@ -25,6 +25,7 @@ interface Props {
   data?: IGroup
   error?: string
   handler: Handler
+  lowerKey: string
 }
 
 const cols = getColumns()
@@ -35,12 +36,12 @@ const message =
 export default injectRole(Discs)
 
 export function Discs(props: Props & InjectRole) {
-  const { error, data: group, handler, isBasic } = props
+  const { error, data: group, handler, lowerKey, isBasic } = props
   const history = useHistory()
 
-  const [pcMode, setPcMode] = useState(false)
-  const [quMode, setQuMode] = useState(false)
-  const [query, setQuery] = useState('')
+  const [pcMode, setPcMode] = useLocal(`local-discs/pc-mode`, false)
+  const [quMode, setQuMode] = useLocal(`local-discs/qu-mode`, false)
+  const [query, setQuery] = useLocal(`local-discs/${lowerKey}/query`, '')
 
   const title = group ? group.title : '载入中'
 
@@ -49,13 +50,14 @@ export function Discs(props: Props & InjectRole) {
   }
 
   let lastDiscs = group?.discs
-  if (query.length > 0 && quMode === true) {
-    lastDiscs = group?.discs.filter((d) => {
-      if (d.titlePc?.includes(query)) return true
-      if (d.title.includes(query)) return true
-      if (`${d.surplusDays}天`.includes(query)) return true
-      return false
-    })
+  if (query.length > 0 && quMode === true && lastDiscs !== undefined) {
+    for (const key of query.split(' ')) {
+      lastDiscs = lastDiscs.filter((d) => {
+        if (d.title.includes(key)) return true
+        if (d.titlePc?.includes(key)) return true
+        return false
+      })
+    }
   }
 
   const replace = group && (

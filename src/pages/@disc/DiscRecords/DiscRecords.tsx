@@ -117,7 +117,11 @@ function getColumns(): Column<Record>[] {
 }
 
 function formatRank(t: Record) {
-  return `${t.averRank ? formatNumber(t.averRank, '###,###') : '---'} 位`
+  if (t.averRank != undefined && t.averRank < 10) {
+    return <><span style={{ color: 'red' }}>{t.averRank.toFixed(1)}</span> 位</>
+  } else {
+    return `${t.averRank ? formatNumber(t.averRank, '###,###') : '---'} 位`
+  }
 }
 
 function initEchart(data?: Data) {
