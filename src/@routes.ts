@@ -1,62 +1,78 @@
+import { lazy } from 'react'
+import Console from './pages/@console/Console'
+import DiscDetailOfAsin from './pages/@disc/DiscDetail/DiscDetailOfAsin'
+import DiscDetailOfId from './pages/@disc/DiscDetail/DiscDetailOfId'
+import DiscsOfDiscGroup from './pages/@disc/Discs/DiscsOfDiscGroup'
+import DiscComing from './pages/@discComing/DiscComing'
+import DiscGroupAdd from './pages/@discGroup/DiscGroupAdd/DiscGroupAdd'
+import DiscGroupDetail from './pages/@discGroup/DiscGroupDetail/DiscGroupDetail'
+import DiscGroupItems from './pages/@discGroup/DiscGroupItems/DiscGroupItems'
+import DiscGroups from './pages/@discGroup/DiscGroups/DiscGroups'
+import UserAdd from './pages/@user/UserAdd/UserAdd'
+import UserDetail from './pages/@user/UserDetail/UserDetail'
+import Users from './pages/@user/Users/Users'
+
 export interface RouteInfo {
   path: string
   role?: string
   exact?: boolean
   title?: string
-  loader: () => Promise<any>
+  loader: any
 }
 
 export const routes: RouteInfo[] = [
   {
     path: '/disc_coming',
-    loader: () => import(/* webpackChunkName: "disc_coming" */ './pages/@discComing/DiscComing')
+    loader: DiscComing,
   },
   {
     path: '/disc_groups',
-    loader: () => import(/* webpackChunkName: "disc_groups" */'./pages/@discGroup/DiscGroups/DiscGroups')
+    loader: DiscGroups,
   },
   {
     path: '/disc_groups/add',
-    loader: () => import(/* webpackChunkName: "disc_group_add" */'./pages/@discGroup/DiscGroupAdd/DiscGroupAdd')
+    loader: DiscGroupAdd,
   },
   {
     path: '/disc_groups/:key',
-    loader: () => import(/* webpackChunkName: "disc_group_detail" */'./pages/@discGroup/DiscGroupDetail/DiscGroupDetail')
+    loader: DiscGroupDetail,
   },
   {
     path: '/disc_groups/:key/discs',
-    loader: () => import(/* webpackChunkName: "disc_group_items" */'./pages/@discGroup/DiscGroupItems/DiscGroupItems')
+    loader: DiscGroupItems,
   },
   {
     path: '/discs/disc_groups/:key',
-    loader: () => import(/* webpackChunkName: "discs_of_disc_group" */'./pages/@disc/Discs/DiscsOfDiscGroup')
+    loader: DiscsOfDiscGroup,
   },
   {
     path: '/discs/asin/:asin',
-    loader: () => import(/* webpackChunkName: "disc_detail_of_asin" */'./pages/@disc/DiscDetail/DiscDetailOfAsin')
+    loader: DiscDetailOfAsin,
   },
   {
     path: '/discs/:id',
-    loader: () => import(/* webpackChunkName: "disc_detail_of_id" */'./pages/@disc/DiscDetail/DiscDetailOfId')
+    loader: DiscDetailOfId,
   },
   {
     path: '/discs/:id/records',
-    loader: () => import(/* webpackChunkName: "disc_records" */'./pages/@disc/DiscRecords/DiscRecords')
+    loader: lazy(
+      () => import(/* webpackChunkName: "disc_records" */ './pages/@disc/DiscRecords/DiscRecords')
+    ),
   },
   {
     path: '/users',
-    loader: () => import(/* webpackChunkName: "users" */'./pages/@user/Users/Users')
+    loader: Users,
   },
   {
     path: '/users/add',
-    loader: () => import(/* webpackChunkName: "user_add" */'./pages/@user/UserAdd/UserAdd')
+    loader: UserAdd,
   },
   {
     path: '/users/:id',
-    loader: () => import(/* webpackChunkName: "user_detail" */'./pages/@user/UserDetail/UserDetail')
+    loader: UserDetail,
   },
   {
     path: '/console',
-    loader: () => import(/* webpackChunkName: "console" */'./pages/@console/Console')
+    loader: Console,
   },
 ]

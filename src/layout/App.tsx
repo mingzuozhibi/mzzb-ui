@@ -36,7 +36,7 @@ function renderRoute(route: RouteInfo, index: number) {
       key={index}
       path={route.path}
       exact={route.exact !== false}
-      component={lazy(route.loader)}
+      component={route.loader}
     />
   )
 }
