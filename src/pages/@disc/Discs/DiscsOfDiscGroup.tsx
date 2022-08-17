@@ -12,7 +12,12 @@ export default function DiscsOfDiscGroup() {
   )
   return (
     <div className="DiscsSakura">
-      <Discs error={state.error} data={state.data} handler={handler} />
+      <Discs
+        error={state.error}
+        data={state.data}
+        handler={handler}
+        lowerKey={params.key.toLocaleLowerCase()}
+      />
     </div>
   )
 }
