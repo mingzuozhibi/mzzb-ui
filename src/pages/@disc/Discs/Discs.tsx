@@ -39,8 +39,8 @@ export function Discs(props: Props & InjectRole) {
   const { error, data: group, handler, lowerKey, isBasic } = props
   const history = useHistory()
 
-  const [pcMode, setPcMode] = useLocal(`local-discs/pc-mode`, false)
-  const [quMode, setQuMode] = useLocal(`local-discs/qu-mode`, false)
+  const [pcMode, setPcMode] = useLocal(`local-discs/${lowerKey}/pc-mode`, false)
+  const [quMode, setQuMode] = useLocal(`local-discs/${lowerKey}/qu-mode`, false)
   const [query, setQuery] = useLocal(`local-discs/${lowerKey}/query`, '')
 
   const title = group ? group.title : '载入中'
