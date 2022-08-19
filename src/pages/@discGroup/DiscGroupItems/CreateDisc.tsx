@@ -1,5 +1,5 @@
 import { useAjax } from '##/hooks'
-import { isEmpty } from '#F/domain'
+import { isEmpty } from '#U/domain'
 import { Disc } from '#P/@types'
 import { Button, Input, Modal, Radio } from 'antd'
 import { useState } from 'react'

@@ -1,5 +1,5 @@
 import { Handler, Page } from '##/@domain'
-import { request } from '#F/request'
+import { request } from '#U/request'
 import { message, Modal } from 'antd'
 import produce from 'immer'
 import { useEffect, useReducer, useState } from 'react'

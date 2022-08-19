@@ -1,6 +1,6 @@
 import { RootState } from '##/@reducer'
 import { useAjax } from '##/hooks'
-import { isEmpty } from '#F/domain'
+import { isEmpty } from '#U/domain'
 import { Disc } from '#P/@types'
 import { Button, Input, Modal } from 'antd'
 import { useState } from 'react'

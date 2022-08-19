@@ -22,9 +22,9 @@
       "#A/*": ["src/app/*"],
       "#C/*": ["src/comps/*"],
       "#H/*": ["src/hooks/*"],
-      "#F/*": ["src/funcs/*"],
       "#P/*": ["src/pages/*"],
-      "#R/*": ["src/reducers/*"]
+      "#R/*": ["src/reducers/*"],
+      "#U/*": ["src/utils/*"]
     }
   },
   "include": ["src"]

@@ -1,5 +1,5 @@
-import { sessionManager } from '#F/manager'
-import { Result } from '#F/request'
+import { sessionManager } from '#U/manager'
+import { Result } from '#U/request'
 import { message, Modal } from 'antd'
 import { AnyAction } from 'redux'
 import { call, put } from 'redux-saga/effects'

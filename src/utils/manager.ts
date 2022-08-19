@@ -1,4 +1,4 @@
-import { request } from '#F/request'
+import { request } from './request'
 import md5 from 'md5'
 
 export const md5Password = (username: string, password: string) => {

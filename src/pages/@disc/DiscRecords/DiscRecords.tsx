@@ -1,7 +1,7 @@
 import { MzHeader } from '##/comps/header/MzHeader'
 import { MzColumn, MzTable } from '##/comps/table/MzTable'
 import { useAjax, useData } from '##/hooks'
-import { formatNumber } from '#F/format'
+import { formatNumber } from '#U/format'
 import { formatPt } from '#P/@funcs'
 import { InjectRole, injectRole } from '#P/@inject'
 import { Button, Modal } from 'antd'

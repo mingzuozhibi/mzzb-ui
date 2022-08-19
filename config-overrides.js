@@ -7,8 +7,8 @@ module.exports = override(
     ['#A']: path.resolve(__dirname, 'src/app'),
     ['#C']: path.resolve(__dirname, 'src/comps'),
     ['#H']: path.resolve(__dirname, 'src/hooks'),
-    ['#F']: path.resolve(__dirname, 'src/funcs'),
     ['#P']: path.resolve(__dirname, 'src/pages'),
     ['#R']: path.resolve(__dirname, 'src/reducers'),
+    ['#U']: path.resolve(__dirname, 'src/utils'),
   })
 )

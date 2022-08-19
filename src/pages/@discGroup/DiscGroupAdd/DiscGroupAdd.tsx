@@ -1,6 +1,6 @@
 import { MzHeader } from '##/comps/header/MzHeader'
 import { useAjax } from '##/hooks'
-import { isEmpty } from '#F/domain'
+import { isEmpty } from '#U/domain'
 import { viewTypes } from '#P/@types'
 import { KeyOutlined, TagOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Input, Modal, Radio } from 'antd'

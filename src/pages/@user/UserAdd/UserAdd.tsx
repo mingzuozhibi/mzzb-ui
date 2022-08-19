@@ -1,6 +1,6 @@
 import { MzHeader } from '##/comps/header/MzHeader'
 import { useAjax, useForm } from '##/hooks'
-import { md5Password } from '#F/manager'
+import { md5Password } from '#U/manager'
 import { User } from '#P/@types'
 import { KeyOutlined, UserOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Input, Modal } from 'antd'

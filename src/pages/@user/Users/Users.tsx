@@ -1,6 +1,6 @@
 import { MzColumn, MzTable } from '##/comps/table/MzTable'
 import { useData, useTitle, useWidth } from '##/hooks'
-import { isEmpty } from '#F/domain'
+import { isEmpty } from '#U/domain'
 import { EditOutlined } from '@ant-design/icons'
 import { Alert, Button } from 'antd'
 import dayjs from 'dayjs'

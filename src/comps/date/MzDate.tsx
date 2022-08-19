@@ -1,4 +1,4 @@
-import { formatNumber } from '#F/format'
+import { formatNumber } from '#U/format'
 
 interface Props {
   time: number
