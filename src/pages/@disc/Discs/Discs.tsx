@@ -1,9 +1,9 @@
 import { Handler } from '##/@domain'
+import { MzHeader } from '##/comps/header/MzHeader'
+import { MzMessage } from '##/comps/message/MzMessage'
+import { MzColumn, MzTable } from '##/comps/table/MzTable'
 import { useLocal } from '##/hooks/useLocal'
 import { InjectRole, injectRole } from '##/pages/@inject'
-import { Column, Table } from '#C/@table/Table'
-import { CustomHeader } from '#C/CustomHeader'
-import { CustomMessage } from '#C/CustomMessage'
 import { composeCompares, safeCompare } from '#F/compare'
 import { isJustUpdated, isSlowUpdated } from '#F/domain'
 import { formatNumber, formatTimeout } from '#F/format'
@@ -78,8 +78,8 @@ export function Discs(props: Props & InjectRole) {
 
   return (
     <div className="Discs">
-      <CustomMessage unikey="copymode" message={message} />
-      <CustomHeader header="载入中" title={title} error={error} replace={replace} />
+      <MzMessage unikey="copymode" message={message} />
+      <MzHeader header="载入中" title={title} error={error} replace={replace} />
       {group && (
         <>
           {quMode && (
@@ -94,7 +94,7 @@ export function Discs(props: Props & InjectRole) {
           )}
           <div className="pc-mode-warpper">
             <div className={classNames({ 'pc-mode': pcMode })}>
-              <Table
+              <MzTable
                 rows={lastDiscs!}
                 cols={cols}
                 title={group.title}
@@ -121,7 +121,7 @@ export function Discs(props: Props & InjectRole) {
   )
 }
 
-function getColumns(): Column<Disc>[] {
+function getColumns(): MzColumn<Disc>[] {
   return [
     {
       key: 'idx',

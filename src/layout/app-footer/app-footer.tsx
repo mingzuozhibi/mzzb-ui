@@ -1,5 +1,5 @@
-import { CustomIcon } from '#C/CustomIcon'
-import { CustomLink } from '#C/CustomLink'
+import { MzIcon } from '##/comps/icon/MzIcon'
+import { MzLink } from '##/comps/link/MzLink'
 import { KeyOutlined, UserOutlined } from '@ant-design/icons'
 import { Input, Layout, Modal } from 'antd'
 
@@ -46,7 +46,7 @@ export function AppFooter(props: AppFooterProps) {
   return (
     <Layout.Footer className="app-footer">
       <div id="beian" style={{ textAlign: 'center' }}>
-        <CustomLink href="http://beian.miit.gov.cn" title="鲁ICP备16016069号-1" />
+        <MzLink href="http://beian.miit.gov.cn" title="鲁ICP备16016069号-1" />
       </div>
       <Modal
         title="用户登入"
@@ -59,7 +59,7 @@ export function AppFooter(props: AppFooterProps) {
       >
         <div style={{ padding: 10 }}>
           <Input
-            prefix={<CustomIcon iconNode={<UserOutlined style={{ color: 'rgba(0,0,0,.25)' }} />} />}
+            prefix={<MzIcon iconNode={<UserOutlined style={{ color: 'rgba(0,0,0,.25)' }} />} />}
             autoFocus={true}
             onChange={(e) => (formLogin.username = e.target.value)}
             placeholder="请输入用户名称"
@@ -70,7 +70,7 @@ export function AppFooter(props: AppFooterProps) {
           <Input
             type="password"
             onChange={(e) => (formLogin.password = e.target.value)}
-            prefix={<CustomIcon iconNode={<KeyOutlined style={{ color: 'rgba(0,0,0,.25)' }} />} />}
+            prefix={<MzIcon iconNode={<KeyOutlined style={{ color: 'rgba(0,0,0,.25)' }} />} />}
             placeholder="请输入用户密码"
           />
         </div>

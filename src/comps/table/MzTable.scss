@@ -23,14 +23,14 @@
       cursor: pointer;
       text-align: left;
       padding-left: 20px;
-      background: url('../../../public/images/table-normal.gif') no-repeat center left;
+      background: url('./images/table-normal.gif') no-repeat center left;
 
       &.asc {
-        background-image: url('../../../public/images/table-asc.gif');
+        background-image: url('./images/table-asc.gif');
       }
 
       &.desc {
-        background-image: url('../../../public/images/table-desc.gif');
+        background-image: url('./images/table-desc.gif');
       }
     }
     tr.debug {

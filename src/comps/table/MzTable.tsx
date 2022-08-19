@@ -4,13 +4,13 @@ import classNames from 'classnames'
 import copy from 'copy-to-clipboard'
 import produce from 'immer'
 import React, { useState } from 'react'
-import './Table.scss'
+import './MzTable.scss'
 
 interface BaseRow {
   id: number
 }
 
-export interface Column<T> {
+export interface MzColumn<T> {
   key: string
   title: React.ReactNode
   format: (row: T, idx: number) => React.ReactNode
@@ -20,7 +20,7 @@ export interface Column<T> {
 
 interface Props<T> {
   rows: T[]
-  cols: Column<T>[]
+  cols: MzColumn<T>[]
   title?: React.ReactNode
   trClass?: (row: T) => string | object
   copyFmt?: (row: T, idx: number) => string
@@ -36,7 +36,7 @@ interface State {
   selected: Set<number>
 }
 
-export function Table<T extends BaseRow>(props: Props<T>) {
+export function MzTable<T extends BaseRow>(props: Props<T>) {
   const { cols, title, handler, trClass, copyFmt, defaultSort, extraCaption } = props
   const mark = `talbe-state/${window.location.pathname}`
   const [state, setState] = useState<State>(() => {
@@ -213,7 +213,7 @@ export function Table<T extends BaseRow>(props: Props<T>) {
     })
   }
 
-  function thClick(col: Column<T>) {
+  function thClick(col: MzColumn<T>) {
     update((draft) => {
       if (sortKey === col.key) {
         draft.sortAsc = draft.sortAsc !== true
@@ -224,7 +224,7 @@ export function Table<T extends BaseRow>(props: Props<T>) {
     })
   }
 
-  function thClass(col: Column<T>) {
+  function thClass(col: MzColumn<T>) {
     return classNames(col.key, {
       sortable: col.compare !== undefined,
       asc: sortKey === col.key && sortAsc === true,
@@ -232,7 +232,7 @@ export function Table<T extends BaseRow>(props: Props<T>) {
     })
   }
 
-  function tdClass(col: Column<T>, row: T) {
+  function tdClass(col: MzColumn<T>, row: T) {
     return classNames(col.key, col.tdClass && col.tdClass(row))
   }
 

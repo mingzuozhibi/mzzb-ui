@@ -1,5 +1,5 @@
+import { MzHeader } from '##/comps/header/MzHeader'
 import { useData } from '##/hooks'
-import { CustomHeader } from '#C/CustomHeader'
 import { md5Password } from '#F/manager'
 import { User } from '#P/@types'
 import { KeyOutlined, UserOutlined } from '@ant-design/icons'
@@ -41,7 +41,7 @@ export default function UserDetail() {
 
   return (
     <div className="UserDetail">
-      <CustomHeader header="用户信息" title={tilte} error={error} />
+      <MzHeader header="用户信息" title={tilte} error={error} />
       {data && (
         <>
           <div className="input-wrapper">

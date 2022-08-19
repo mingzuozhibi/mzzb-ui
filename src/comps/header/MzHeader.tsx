@@ -11,7 +11,7 @@ interface Props<T> {
   replace?: React.ReactNode
 }
 
-export function CustomHeader<T>({ header, title, error, handler, replace }: Props<T>) {
+export function MzHeader<T>({ header, title, error, handler, replace }: Props<T>) {
   useEffect(() => {
     document.title = `${title || header} - mingzuozhibi.com`
   }, [header, title])

@@ -1,5 +1,5 @@
+import { MzHeader } from '##/comps/header/MzHeader'
 import { useAjax, useForm } from '##/hooks'
-import { CustomHeader } from '#C/CustomHeader'
 import { md5Password } from '#F/manager'
 import { User } from '#P/@types'
 import { KeyOutlined, UserOutlined } from '@ant-design/icons'
@@ -42,7 +42,7 @@ export default function UserAdd() {
 
   return (
     <div className="UserAdd">
-      <CustomHeader header="添加用户" />
+      <MzHeader header="添加用户" />
       <div className="input-wrapper">
         <Input
           prefix={<UserOutlined />}

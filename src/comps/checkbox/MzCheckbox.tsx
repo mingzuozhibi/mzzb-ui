@@ -7,7 +7,7 @@ interface Props {
   onChange: (value: CheckboxValueType[]) => void
 }
 
-export function CustomCheckbox(props: Props) {
+export function MzCheckbox(props: Props) {
   const { value, options, onChange } = props
   const defaultValue = options.map((e) => e.value)
 

@@ -16,7 +16,7 @@ function getFormatString(_d: Date) {
   return { year, month, date, hour, minute, second }
 }
 
-export function CustomDate({ time, hasYear = false, addWarp = true }: Props) {
+export function MzDate({ time, hasYear = false, addWarp = true }: Props) {
   const { year, month, date, hour, minute, second } = getFormatString(new Date(time))
   const dateTextOfNoYear = `${month}/${date}`
   const dateText = `${year}/${month}/${date}`

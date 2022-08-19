@@ -1,5 +1,5 @@
+import { MzColumn, MzTable } from '##/comps/table/MzTable'
 import { useData, useTitle, useWidth } from '##/hooks'
-import { Column, Table } from '#C/@table/Table'
 import { isEmpty } from '#F/domain'
 import { EditOutlined } from '@ant-design/icons'
 import { Alert, Button } from 'antd'
@@ -27,7 +27,7 @@ export default function Users() {
     <div className="Users">
       {error && <Alert message={error} type="error" />}
       {data && (
-        <Table
+        <MzTable
           rows={data}
           cols={cols}
           title="用户管理"
@@ -39,7 +39,7 @@ export default function Users() {
   )
 }
 
-function getColumns(width: number): Column<User>[] {
+function getColumns(width: number): MzColumn<User>[] {
   return [
     {
       key: 'id',

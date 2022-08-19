@@ -1,5 +1,5 @@
+import { MzColumn, MzTable } from '##/comps/table/MzTable'
 import { useData, useTitle } from '##/hooks'
-import { Column, Table } from '#C/@table/Table'
 import { composeCompares } from '#F/compare'
 import { isJustUpdated } from '#F/domain'
 import { formatTimeout } from '#F/format'
@@ -45,7 +45,7 @@ function DiscGroups(props: InjectRole & InjectAdminMode) {
     <div className="DiscGroups">
       {error && <Alert message={error} type="error" />}
       {data && (
-        <Table
+        <MzTable
           rows={data}
           cols={showExtraColumns ? adminCols : guestCols}
           title="推荐列表"
@@ -63,7 +63,7 @@ function trClass(t: DiscGroup) {
   return { warning: t.viewType === 'PrivateList' }
 }
 
-function getColumns(): Column<DiscGroup>[] {
+function getColumns(): MzColumn<DiscGroup>[] {
   return [
     {
       key: 'idx',

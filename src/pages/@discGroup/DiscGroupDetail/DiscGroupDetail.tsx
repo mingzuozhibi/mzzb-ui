@@ -1,5 +1,5 @@
+import { MzHeader } from '##/comps/header/MzHeader'
 import { useAjax, useData } from '##/hooks'
-import { CustomHeader } from '#C/CustomHeader'
 import { InjectRole, injectRole } from '#P/@inject'
 import { DiscGroup, viewTypes } from '#P/@types'
 import { KeyOutlined, TagOutlined } from '@ant-design/icons'
@@ -62,7 +62,7 @@ function DiscGroupDetail(props: InjectRole) {
 
   return (
     <div className="DiscGroupDtail">
-      <CustomHeader header="列表信息" title={title} error={error} />
+      <MzHeader header="列表信息" title={title} error={error} />
       {data && (
         <>
           <div className="input-wrapper">

@@ -1,4 +1,4 @@
-import { CustomIcon } from '#C/CustomIcon'
+import { MzIcon } from '##/comps/icon/MzIcon'
 import { SessionState } from '#R/session'
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import { Layout, Popconfirm } from 'antd'
@@ -26,7 +26,7 @@ export function AppHeader(props: AppHeaderProps) {
 
   return (
     <Layout.Header className="app-header">
-      <CustomIcon
+      <MzIcon
         iconNode={viewSider ? <MenuFoldOutlined /> : <MenuUnfoldOutlined />}
         className="header-icon"
         onClick={() => setViewSider(!viewSider)}
@@ -40,10 +40,10 @@ export function AppHeader(props: AppHeaderProps) {
           placement="bottomRight"
           onConfirm={sessionLogout}
         >
-          <CustomIcon iconType="icon-user" className="header-icon float-right" />
+          <MzIcon iconType="icon-user" className="header-icon float-right" />
         </Popconfirm>
       ) : (
-        <CustomIcon iconType="icon-login" className="header-icon float-right" onClick={showLogin} />
+        <MzIcon iconType="icon-login" className="header-icon float-right" onClick={showLogin} />
       )}
     </Layout.Header>
   )

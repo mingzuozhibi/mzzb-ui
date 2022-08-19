@@ -1,6 +1,6 @@
+import { MzHeader } from '##/comps/header/MzHeader'
+import { MzColumn, MzTable } from '##/comps/table/MzTable'
 import { useAjax, useData } from '##/hooks'
-import { Column, Table } from '#C/@table/Table'
-import { CustomHeader } from '#C/CustomHeader'
 import { composeCompares } from '#F/compare'
 import { formatTimeout } from '#F/format'
 import { compareSurp, compareTitle, discTitle } from '#P/@funcs'
@@ -84,7 +84,7 @@ function DiscGroupItems(props: InjectToAdds) {
 
   return (
     <div className="DiscGroupItems">
-      <CustomHeader header="管理碟片" title={title} error={error} handler={handler} />
+      <MzHeader header="管理碟片" title={title} error={error} handler={handler} />
       {group && (
         <>
           <Tabs type="card">
@@ -95,8 +95,8 @@ function DiscGroupItems(props: InjectToAdds) {
               <CreateDisc pushToAdds={pushToAdds} />
             </Tabs.TabPane>
           </Tabs>
-          <Table rows={toAdds} cols={getColumns(getPushCommand())} title="待选列表" />
-          <Table
+          <MzTable rows={toAdds} cols={getColumns(getPushCommand())} title="待选列表" />
+          <MzTable
             rows={group.discs}
             cols={getColumns(getDropCommand())}
             title={group.title}
@@ -109,7 +109,7 @@ function DiscGroupItems(props: InjectToAdds) {
   )
 }
 
-function getColumns(extraColumn: Column<Disc>): Column<Disc>[] {
+function getColumns(extraColumn: MzColumn<Disc>): MzColumn<Disc>[] {
   return [
     {
       key: 'asin',

@@ -7,7 +7,7 @@ interface Props {
   onChange: (page: number, size?: number) => void
 }
 
-export function CustomPagination({ page, onChange }: Props) {
+export function MzPagination({ page, onChange }: Props) {
   const onChangePage = useCallback(
     (page: number, size?: number) => onChange(page, size),
     [onChange]
@@ -21,7 +21,7 @@ export function CustomPagination({ page, onChange }: Props) {
       total={page.totalElements}
       onChange={onChangePage}
       onShowSizeChange={onChangePage}
-      pageSizeOptions={[10,20,30,40]}
+      pageSizeOptions={[10, 20, 30, 40]}
     />
   )
 }
