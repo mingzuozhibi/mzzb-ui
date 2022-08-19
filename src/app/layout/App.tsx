@@ -1,6 +1,6 @@
 import { RouteInfo, routes } from '##/@routes'
 import { Layout, Spin } from 'antd'
-import { lazy, Suspense } from 'react'
+import { Suspense } from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
 import AppFooter from './app-footer'
 import AppHeader from './app-header'
@@ -32,11 +32,6 @@ export default function App() {
 
 function renderRoute(route: RouteInfo, index: number) {
   return (
-    <Route
-      key={index}
-      path={route.path}
-      exact={route.exact !== false}
-      component={route.loader}
-    />
+    <Route key={index} path={route.path} exact={route.exact !== false} component={route.loader} />
   )
 }

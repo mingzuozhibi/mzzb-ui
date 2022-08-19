@@ -19,10 +19,10 @@
     "baseUrl": "./",
     "paths": {
       "##/*": ["src/*"],
+      "#A/*": ["src/app/*"],
       "#C/*": ["src/comps/*"],
       "#H/*": ["src/hooks/*"],
       "#F/*": ["src/funcs/*"],
-      "#L/*": ["src/layout/*"],
       "#P/*": ["src/pages/*"],
       "#R/*": ["src/reducers/*"]
     }
