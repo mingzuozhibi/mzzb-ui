@@ -1,6 +1,6 @@
-import { adminReducer, AdminState } from '#R/admin'
-import { layoutReducer, LayoutState } from '#R/layout'
-import { sessionReducer, SessionState } from '#R/session'
+import { adminReducer, AdminState } from '#F/admin'
+import { layoutReducer, LayoutState } from '#F/layout'
+import { sessionReducer, SessionState } from '#F/session'
 import { connectRouter, RouterState } from 'connected-react-router'
 import { combineReducers } from 'redux'
 

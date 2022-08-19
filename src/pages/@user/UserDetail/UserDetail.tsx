@@ -1,7 +1,7 @@
-import { MzHeader } from '##/comps/header/MzHeader'
-import { useData } from '##/hooks'
+import { MzHeader } from '#C/header/MzHeader'
+import { useData } from '#H/useData'
+import { IUser } from '#T/user'
 import { md5Password } from '#U/manager'
-import { User } from '#P/@types'
 import { KeyOutlined, UserOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Input, Modal } from 'antd'
 import { useParams } from 'react-router-dom'
@@ -16,7 +16,7 @@ const form: Form = {}
 
 export default function UserDetail() {
   const params = useParams<{ id: string }>()
-  const [{ error, data }, { loading }, { doEdit }] = useData<User>(`/api/users/${params.id}`)
+  const [{ error, data }, { loading }, { doEdit }] = useData<IUser>(`/api/users/${params.id}`)
 
   function submitForm() {
     if (!form.username) {

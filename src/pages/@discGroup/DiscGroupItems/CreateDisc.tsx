@@ -1,6 +1,6 @@
-import { useAjax } from '##/hooks'
+import { useAjax } from '#H/useAjax'
+import { IDisc } from '#T/disc'
 import { isEmpty } from '#U/domain'
-import { Disc } from '#P/@types'
 import { Button, Input, Modal, Radio } from 'antd'
 import { useState } from 'react'
 
@@ -12,12 +12,12 @@ interface FormCreate {
 }
 
 interface Props {
-  pushToAdds: (disc: Disc) => void
+  pushToAdds: (disc: IDisc) => void
 }
 
 export default function CreateDisc(Props: Props) {
   const [form, setForm] = useState<FormCreate>({})
-  const [posting, createDisc] = useAjax<Disc>('post')
+  const [posting, createDisc] = useAjax<IDisc>('post')
 
   function doCreateDisc() {
     const { asin, title, releaseDate, discType } = form

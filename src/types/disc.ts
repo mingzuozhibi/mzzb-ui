@@ -1,12 +1,4 @@
-export interface User {
-  id: number
-  enabled: boolean
-  username: string
-  registerDate: string
-  lastLoggedIn: string | undefined
-}
-
-export interface Disc {
+export interface IDisc {
   id: number
   asin: string
   title: string
@@ -25,7 +17,7 @@ export interface Disc {
   surplusDays: number
 }
 
-export interface DiscGroup {
+export interface IGroup {
   id: number
   key: string
   title: string
@@ -35,8 +27,6 @@ export interface DiscGroup {
   modifyTime: number
 }
 
-export const viewTypes = [
-  { label: '日亚实时', value: 'SakuraList' },
-  { label: '公开列表', value: 'PublicList' },
-  { label: '私有列表', value: 'PrivateList' },
-]
+export interface IGroupItems extends Omit<IGroup, 'discCount'> {
+  discs: IDisc[]
+}

@@ -1,5 +1,5 @@
-import { MzIcon } from '##/comps/icon/MzIcon'
-import { MzLink } from '##/comps/link/MzLink'
+import { MzIcon } from '#C/icon/MzIcon'
+import { MzLink } from '#C/link/MzLink'
 import { KeyOutlined, UserOutlined } from '@ant-design/icons'
 import { Input, Layout, Modal } from 'antd'
 

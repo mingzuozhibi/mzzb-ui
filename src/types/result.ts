@@ -1,10 +1,10 @@
-export interface Page {
+export interface IPage {
   pageSize: number
   currentPage: number
   totalElements: number
 }
 
-export interface Handler {
+export interface ILoad {
   loading: boolean
   refresh: () => void
 }

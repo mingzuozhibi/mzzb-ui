@@ -1,4 +1,4 @@
-import { useItems } from '##/@menus'
+import { buildItems } from '#A/menus'
 import { Layout, Menu } from 'antd'
 import { useMemo, useReducer } from 'react'
 import { useLocation } from 'react-router-dom'
@@ -19,7 +19,7 @@ export function AppSider(props: AppSiderProps) {
 
   const location = useLocation()
 
-  const items = useMemo(() => useItems(userRoles), [userRoles])
+  const items = useMemo(() => buildItems(userRoles), [userRoles])
 
   const reducer = (_state: State, collapse: boolean) => {
     return { autoCollapse: collapse, mustQuickSet: false }

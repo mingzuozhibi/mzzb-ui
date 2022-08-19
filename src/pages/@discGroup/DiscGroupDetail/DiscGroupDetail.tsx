@@ -1,7 +1,9 @@
-import { MzHeader } from '##/comps/header/MzHeader'
-import { useAjax, useData } from '##/hooks'
+import { MzHeader } from '#C/header/MzHeader'
+import { useAjax } from '#H/useAjax'
+import { useData } from '#H/useData'
 import { InjectRole, injectRole } from '#P/@inject'
-import { DiscGroup, viewTypes } from '#P/@types'
+import { IGroup } from '#T/disc'
+import { viewTypes } from '#T/meta'
 import { KeyOutlined, TagOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Input, Modal, Popconfirm, Radio } from 'antd'
 import { useState } from 'react'
@@ -20,7 +22,7 @@ function DiscGroupDetail(props: InjectRole) {
   const { isAdmin } = props
   const params = useParams<{ key: string }>()
 
-  const [{ error, data }, { loading }, { doEdit }] = useData<DiscGroup>(
+  const [{ error, data }, { loading }, { doEdit }] = useData<IGroup>(
     `/api/discGroups/key/${params.key}`
   )
 

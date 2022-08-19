@@ -1,18 +1,16 @@
+import { composeWithDevTools } from '@redux-devtools/extension'
+import { ConnectedRouter, routerMiddleware } from 'connected-react-router'
+import { createBrowserHistory } from 'history'
+import { enableMapSet } from 'immer'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import './index.scss'
-
-import { createBrowserHistory } from 'history'
 import { applyMiddleware, createStore } from 'redux'
-import { ConnectedRouter, routerMiddleware } from 'connected-react-router'
-import { composeWithDevTools } from '@redux-devtools/extension'
 import createSagaMiddleware from 'redux-saga'
-
 import App from './app/layout/App'
-import { sagas } from './@sagas'
-import { createRootReducer } from './@reducer'
-import { enableMapSet } from 'immer'
+import { createRootReducer } from './app/reducer'
+import { sagas } from './app/sagas'
+import './index.scss'
 
 enableMapSet()
 

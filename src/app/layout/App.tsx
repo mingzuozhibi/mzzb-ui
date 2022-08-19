@@ -1,4 +1,4 @@
-import { RouteInfo, routes } from '##/@routes'
+import { RouteInfo, routes } from '#A/routes'
 import { Layout, Spin } from 'antd'
 import { Suspense } from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'

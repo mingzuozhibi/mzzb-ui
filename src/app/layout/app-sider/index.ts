@@ -1,4 +1,4 @@
-import { RootState } from '##/@reducer'
+import { RootState } from '#A/reducer'
 import { connect } from 'react-redux'
 import { AppSider } from './app-sider'
 

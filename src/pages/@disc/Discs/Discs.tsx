@@ -1,30 +1,23 @@
-import { Handler } from '##/@domain'
-import { MzHeader } from '##/comps/header/MzHeader'
-import { MzMessage } from '##/comps/message/MzMessage'
-import { MzColumn, MzTable } from '##/comps/table/MzTable'
-import { useLocal } from '##/hooks/useLocal'
-import { InjectRole, injectRole } from '##/pages/@inject'
+import { MzHeader } from '#C/header/MzHeader'
+import { MzMessage } from '#C/message/MzMessage'
+import { MzColumn, MzTable } from '#C/table/MzTable'
+import { useLocal } from '#H/useLocal'
+import { compareSurp, compareTitle, discTitle, formatPt } from '#P/@funcs'
+import { InjectRole, injectRole } from '#P/@inject'
+import { IDisc, IGroupItems } from '#T/disc'
+import { ILoad } from '#T/result'
 import { composeCompares, safeCompare } from '#U/compare'
 import { isJustUpdated, isSlowUpdated } from '#U/domain'
 import { formatNumber, formatTimeout } from '#U/format'
-import { compareSurp, compareTitle, discTitle, formatPt } from '#P/@funcs'
-import { Disc } from '#P/@types'
 import { Button, Input } from 'antd'
 import classNames from 'classnames'
 import { Link, useHistory } from 'react-router-dom'
 import './Discs.scss'
 
-export interface IGroup {
-  key: string
-  title: string
-  discs: Disc[]
-  modifyTime?: number
-}
-
 interface Props {
-  data?: IGroup
+  data?: IGroupItems
   error?: string
-  handler: Handler
+  handler: ILoad
   lowerKey: string
 }
 
@@ -121,7 +114,7 @@ export function Discs(props: Props & InjectRole) {
   )
 }
 
-function getColumns(): MzColumn<Disc>[] {
+function getColumns(): MzColumn<IDisc>[] {
   return [
     {
       key: 'idx',
@@ -168,21 +161,21 @@ function getColumns(): MzColumn<Disc>[] {
   ]
 }
 
-function discRank(disc: Disc) {
+function discRank(disc: IDisc) {
   const thisRank = disc.thisRank ? formatNumber(disc.thisRank, '****') : '----'
   const prevRank = disc.prevRank ? formatNumber(disc.prevRank, '****') : '----'
   return `${thisRank}位/${prevRank}位`
 }
 
-function formatRank(disc: Disc) {
+function formatRank(disc: IDisc) {
   return <Link to={`/discs/${disc.id}/records`}>{discRank(disc)}</Link>
 }
 
-function formatTitle(disc: Disc) {
+function formatTitle(disc: IDisc) {
   return <Link to={`/discs/${disc.id}`}>{discTitle(disc)}</Link>
 }
 
-function tdClassRank(disc: Disc) {
+function tdClassRank(disc: IDisc) {
   if (isJustUpdated(disc.updateTime)) {
     return 'success'
   }
@@ -193,12 +186,12 @@ function tdClassRank(disc: Disc) {
 }
 
 function createCompareRank() {
-  return safeCompare<Disc, number>({
+  return safeCompare<IDisc, number>({
     apply: (disc) => disc.thisRank,
     compare: (a, b) => a - b,
   })
 }
 
-function createComparePt(apply: (disc: Disc) => number | undefined) {
-  return safeCompare<Disc, number>({ apply, compare: (a, b) => b - a })
+function createComparePt(apply: (disc: IDisc) => number | undefined) {
+  return safeCompare<IDisc, number>({ apply, compare: (a, b) => b - a })
 }

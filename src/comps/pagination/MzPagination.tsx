@@ -1,9 +1,9 @@
-import { Page } from '##/@domain'
+import { IPage } from '#T/result'
 import { Pagination } from 'antd'
 import { useCallback } from 'react'
 
 interface Props {
-  page: Page
+  page: IPage
   onChange: (page: number, size?: number) => void
 }
 

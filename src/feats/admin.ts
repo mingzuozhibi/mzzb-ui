@@ -1,8 +1,8 @@
-import { Disc } from '#P/@types'
+import { IDisc } from '#T/disc'
 import { AnyAction } from 'redux'
 
 export interface AdminState {
-  toAdds: Disc[]
+  toAdds: IDisc[]
   fetchCount?: number
   isAdminMode: boolean
 }

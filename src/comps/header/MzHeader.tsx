@@ -1,17 +1,17 @@
-import { Handler } from '##/@domain'
+import { ILoad } from '#T/result'
 import { ArrowLeftOutlined } from '@ant-design/icons'
 import { Alert, Button, Divider, PageHeader } from 'antd'
 import React, { useEffect } from 'react'
 
-interface Props<T> {
+interface Props {
   header: string
   title?: string
   error?: string
-  handler?: Handler
+  handler?: ILoad
   replace?: React.ReactNode
 }
 
-export function MzHeader<T>({ header, title, error, handler, replace }: Props<T>) {
+export function MzHeader({ header, title, error, handler, replace }: Props) {
   useEffect(() => {
     document.title = `${title || header} - mingzuozhibi.com`
   }, [header, title])
@@ -23,7 +23,7 @@ export function MzHeader<T>({ header, title, error, handler, replace }: Props<T>
   )
 }
 
-function renderPageHeader(header: string, handler?: Handler) {
+function renderPageHeader(header: string, handler?: ILoad) {
   return (
     <PageHeader
       title={header}

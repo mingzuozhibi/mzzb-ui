@@ -1,4 +1,4 @@
-import { Handler } from '##/@domain'
+import { ILoad } from '#T/result'
 import { Button, Checkbox, Input, message, Modal } from 'antd'
 import classNames from 'classnames'
 import copy from 'copy-to-clipboard'
@@ -24,7 +24,7 @@ interface Props<T> {
   title?: React.ReactNode
   trClass?: (row: T) => string | object
   copyFmt?: (row: T, idx: number) => string
-  handler?: Handler
+  handler?: ILoad
   defaultSort?: (a: T, b: T) => number
   extraCaption?: React.ReactNode
 }

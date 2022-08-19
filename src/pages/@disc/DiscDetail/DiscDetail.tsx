@@ -1,16 +1,14 @@
-import { MzHeader } from '##/comps/header/MzHeader'
-import { MzLink } from '##/comps/link/MzLink'
-import { UseData } from '##/hooks'
+import { MzHeader } from '#C/header/MzHeader'
+import { MzLink } from '#C/link/MzLink'
+import { UseData } from '#H/useData'
+import { discTitle } from '#P/@funcs'
+import { IDisc } from '#T/disc'
 import { formatNumber } from '#U/format'
 import { request } from '#U/request'
-import { discTitle } from '#P/@funcs'
-import { Disc } from '#P/@types'
 import { Button, Input, message, Modal, Radio } from 'antd'
 import dayjs from 'dayjs'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-
-export type Data = Disc
 
 interface Form {
   titlePc?: string
@@ -19,7 +17,7 @@ interface Form {
 }
 
 interface Props {
-  useDate: UseData<Data>
+  useDate: UseData<IDisc>
   isBasic: boolean
 }
 

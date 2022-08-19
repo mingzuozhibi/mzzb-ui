@@ -1,5 +1,5 @@
-import { AnyAction } from 'redux'
 import { LOCATION_CHANGE } from 'connected-react-router'
+import { AnyAction } from 'redux'
 
 export interface LayoutState {
   viewSider: boolean

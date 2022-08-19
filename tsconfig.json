@@ -18,12 +18,12 @@
     "jsx": "react-jsx",
     "baseUrl": "./",
     "paths": {
-      "##/*": ["src/*"],
       "#A/*": ["src/app/*"],
       "#C/*": ["src/comps/*"],
+      "#F/*": ["src/feats/*"],
       "#H/*": ["src/hooks/*"],
       "#P/*": ["src/pages/*"],
-      "#R/*": ["src/reducers/*"],
+      "#T/*": ["src/types/*"],
       "#U/*": ["src/utils/*"]
     }
   },

@@ -1,4 +1,4 @@
-import { sessionSaga } from '#R/session'
+import { sessionSaga } from '#F/session'
 import { all, takeEvery } from 'redux-saga/effects'
 
 export function* sagas() {

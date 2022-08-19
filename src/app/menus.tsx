@@ -1,9 +1,9 @@
+import { MzIcon } from '#C/icon/MzIcon'
 import { BarChartOutlined, GithubOutlined } from '@ant-design/icons'
 import { ItemType } from 'antd/lib/menu/hooks/useItems'
 import { NavLink } from 'react-router-dom'
-import { MzIcon } from './comps/icon/MzIcon'
 
-export function useItems(userRoles: string[]): ItemType[] {
+export function buildItems(userRoles: string[]): ItemType[] {
   return [
     { label: '推荐列表', icon: <MzIcon iconType="icon-yinghua" />, key: '/disc_groups' },
     { label: '上架追踪', icon: <MzIcon iconType="icon-yinghua" />, key: '/disc_coming' },

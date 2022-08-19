@@ -1,5 +1,5 @@
-import { MzIcon } from '##/comps/icon/MzIcon'
-import { SessionState } from '#R/session'
+import { MzIcon } from '#C/icon/MzIcon'
+import { SessionState } from '#F/session'
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import { Layout, Popconfirm } from 'antd'
 import { useEffect } from 'react'
