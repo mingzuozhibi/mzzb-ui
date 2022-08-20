@@ -30,6 +30,7 @@ export const layoutSlice = createSlice({
     })
     builder.addCase(sessionLogin.fulfilled, (state) => {
       state.submiting = false
+      state.viewLogin = false
     })
     builder.addCase(sessionLogin.rejected, (state) => {
       state.submiting = false

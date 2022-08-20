@@ -1,8 +1,7 @@
 import { ISession } from '#T/user'
-import { sessionManager } from '#U/manager'
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { fetchResult } from '#U/fetchResult'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { message as Msg, Modal } from 'antd'
-import { setViewLogin } from './layout'
 
 interface SessionState extends ISession {}
 
@@ -14,44 +13,12 @@ const initialState: SessionState = {
   hasAdmin: false,
 }
 
-type SuccessAction = PayloadAction<{
-  session: ISession
-  message?: string
-}>
-
-type FailedAction = PayloadAction<{
-  title: string
-  content: string
-}>
-
-export const sessionSlice = createSlice({
-  name: 'session',
-  initialState,
-  reducers: {
-    sessionSucceed(state, action: SuccessAction) {
-      const { session, message } = action.payload
-      if (message && !state.hasBasic) Msg.success(message)
-      return { ...session, isLogged: session.hasBasic, submiting: false }
-    },
-    sessionFailed(state, action: FailedAction) {
-      const { title, content } = action.payload
-      Modal.error({ title, content })
-    },
-    sessionReset(state) {
-      return initialState
-    },
-  },
-})
-
-const { sessionSucceed, sessionFailed, sessionReset } = sessionSlice.actions
-
-export const sessionQuery = createAsyncThunk('session/query', async (_, thunkAPI) => {
-  const result = await sessionManager.query()
-  if (result.success) {
-    thunkAPI.dispatch(sessionSucceed({ session: result.data! }))
-  } else {
-    thunkAPI.dispatch(sessionFailed({ title: '获取当前登入状态异常', content: result.message! }))
-  }
+export const sessionQuery = createAsyncThunk('session/query', async () => {
+  const token = localStorage['session-token']
+  const result = await fetchResult<SessionState>('/api/session', {
+    headers: { 'session-token': token },
+  })
+  return result.data!
 })
 
 interface LoginParams {
@@ -59,27 +26,35 @@ interface LoginParams {
   password: string
 }
 
-export const sessionLogin = createAsyncThunk(
-  'session/login',
-  async (params: LoginParams, thunkAPI) => {
-    const result = await sessionManager.login(params.username, params.password)
-    if (result.success) {
-      thunkAPI.dispatch(setViewLogin(false))
-      thunkAPI.dispatch(sessionSucceed({ session: result.data!, message: '你已成功登入' }))
-    } else {
-      thunkAPI.dispatch(sessionFailed({ title: '登入错误', content: result.message! }))
-    }
-  }
-)
+export const sessionLogin = createAsyncThunk('session/login', async (params: LoginParams) => {
+  const result = await fetchResult<SessionState>('/api/session', {
+    method: 'POST',
+    body: JSON.stringify(params),
+    failureName: '登入失败',
+    successText: '你已成功登入',
+  })
+  return result.data!
+})
 
-export const sessionLogout = createAsyncThunk('session/logout', async (_, thunkAPI) => {
-  const result = await sessionManager.logout()
-  if (result.success) {
-    thunkAPI.dispatch(sessionSucceed({ session: result.data!, message: '你已成功登出' }))
-  } else {
-    thunkAPI.dispatch(sessionFailed({ title: '登出错误', content: result.message! }))
-    thunkAPI.dispatch(sessionReset())
-  }
+export const sessionLogout = createAsyncThunk('session/logout', async () => {
+  const result = await fetchResult<SessionState>('/api/session', {
+    method: 'DELETE',
+  })
+  return result.data!
+})
+
+export const sessionSlice = createSlice({
+  name: 'session',
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(sessionQuery.fulfilled, (_, action) => action.payload)
+    builder.addCase(sessionLogin.fulfilled, (_, action) => action.payload)
+    builder.addCase(sessionLogout.fulfilled, (_, action) => action.payload)
+    builder.addCase(sessionLogout.rejected, (state) => {
+      return { ...initialState, userCount: state.userCount }
+    })
+  },
 })
 
 export const sessionReducer = sessionSlice.reducer

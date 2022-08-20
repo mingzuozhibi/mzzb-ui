@@ -3,6 +3,7 @@ import { MzIcon } from '#C/icon/MzIcon'
 import { MzLink } from '#C/link/MzLink'
 import { setViewLogin } from '#F/layout'
 import { sessionLogin } from '#F/session'
+import { encodePassword } from '#U/domain'
 import { KeyOutlined, UserOutlined } from '@ant-design/icons'
 import { Input, Layout, Modal } from 'antd'
 import { useCallback, useRef } from 'react'
@@ -34,7 +35,8 @@ export default function AppFooter() {
       return
     }
 
-    dispatch(sessionLogin({ username, password }))
+    const encode = encodePassword(username, password)
+    dispatch(sessionLogin({ username, password: encode }))
   }
 
   return (
