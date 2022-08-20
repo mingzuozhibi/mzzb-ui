@@ -1,6 +1,5 @@
 import { RootState } from '#A/store'
 import { connect } from 'react-redux'
-import { Dispatch } from 'redux'
 
 export interface InjectRole {
   isAdmin: boolean

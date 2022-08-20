@@ -1,32 +1,25 @@
-import { RootState } from '#A/reducer'
 import { useAjax } from '#H/useAjax'
+import { useLocal } from '#H/useLocal'
 import { IDisc } from '#T/disc'
 import { isEmpty } from '#U/domain'
 import { Button, Input, Modal } from 'antd'
 import { useState } from 'react'
-import { connect } from 'react-redux'
 
 interface Props {
   theDiscs: IDisc[]
   addDiscs: IDisc[]
   pushToAdds: (disc: IDisc) => void
-  count?: number
-  setCount: (count: number) => void
 }
 
-export default connect(
-  (state: RootState) => ({
-    count: state.admin.fetchCount,
-  }),
-  (dispatch) => ({
-    setCount(count: number) {
-      dispatch({ type: 'setFetchCount', fetchCount: count })
-    },
-  })
-)(SearchDisc)
+interface FetchCount {
+  value?: number
+  timestamp?: number
+}
 
-function SearchDisc(props: Props) {
+export default function SearchDisc(props: Props) {
   const [asin, setAsin] = useState<string>()
+  const [count, setCount] = useLocal<FetchCount>('local-fetchcount', {})
+
   const [loadingDisc, fetchDisc] = useAjax<IDisc>('get')
   const [loadingCount, fetchCount] = useAjax<number>('get')
 
@@ -57,12 +50,16 @@ function SearchDisc(props: Props) {
   }
 
   function doFetchCount() {
-    fetchCount('/api/spider/fetchCount', '查询抓取中的碟片数量', { onSuccess: props.setCount })
+    fetchCount('/api/spider/fetchCount', '查询抓取中的碟片数量', {
+      onSuccess: (count) => {
+        setCount({ value: count, timestamp: Date.now() })
+      },
+    })
   }
 
   let buttonName = '抓取中的碟片数量'
-  if (props.count !== undefined) {
-    buttonName += `(${props.count})`
+  if (count.timestamp && Date.now() - count.timestamp < 3600) {
+    buttonName += `(${count.value})`
   }
 
   return (

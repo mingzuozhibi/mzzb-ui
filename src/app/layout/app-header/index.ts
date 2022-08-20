@@ -1,4 +1,4 @@
-import { RootState } from '#A/reducer'
+import { RootState } from '#A/store'
 import { connect } from 'react-redux'
 import { AppHeader } from './app-header'
 

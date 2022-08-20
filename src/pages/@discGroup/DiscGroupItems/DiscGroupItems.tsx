@@ -2,8 +2,8 @@ import { MzHeader } from '#C/header/MzHeader'
 import { MzColumn, MzTable } from '#C/table/MzTable'
 import { useAjax } from '#H/useAjax'
 import { useData } from '#H/useData'
+import { useLocal } from '#H/useLocal'
 import { compareSurp, compareTitle, discTitle } from '#P/@funcs'
-import { InjectToAdds, injectToAdds } from '#P/@inject'
 import { IDisc, IGroupItems } from '#T/disc'
 import { composeCompares } from '#U/compare'
 import { formatTimeout } from '#U/format'
@@ -14,10 +14,17 @@ import CreateDisc from './CreateDisc'
 import './DiscGroupItems.scss'
 import SearchDisc from './SearchDisc'
 
-export default injectToAdds(DiscGroupItems)
+export default function DiscGroupItems() {
+  const [toAdds, setToAdds] = useLocal<IDisc[]>('local-toadds', [])
 
-function DiscGroupItems(props: InjectToAdds) {
-  const { toAdds, pushToAdds, dropToAdds } = props
+  function pushToAdds(disc: IDisc) {
+    setToAdds([disc, ...toAdds])
+  }
+
+  function dropToAdds(disc: IDisc) {
+    setToAdds(toAdds.filter((e) => e.id !== disc.id))
+  }
+
   const history = useHistory()
   const params = useParams<{ key: string }>()
 
