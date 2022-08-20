@@ -1,26 +1,14 @@
+import { ISession } from '#T/user'
 import { sessionManager } from '#U/manager'
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { message as Msg, Modal } from 'antd'
 import { setViewLogin } from './layout'
 
-export interface ISession {
-  userName: string
-  userRoles: string[]
-  userCount: number
-  hasBasic: boolean
-  hasAdmin: boolean
-}
-
-export interface SessionState extends ISession {
-  isLogged: boolean
-  submiting: boolean
-}
+interface SessionState extends ISession {}
 
 const initialState: SessionState = {
   userName: 'Guest',
-  isLogged: false,
   userRoles: ['NONE'],
-  submiting: false,
   userCount: 0,
   hasBasic: false,
   hasAdmin: false,
@@ -40,24 +28,18 @@ export const sessionSlice = createSlice({
   name: 'session',
   initialState,
   reducers: {
-    sessionSucceed: (state, action: SuccessAction) => {
+    sessionSucceed(state, action: SuccessAction) {
       const { session, message } = action.payload
-      if (message && !state.isLogged) Msg.success(message)
+      if (message && !state.hasBasic) Msg.success(message)
       return { ...session, isLogged: session.hasBasic, submiting: false }
     },
-    sessionFailed: (state, action: FailedAction) => {
+    sessionFailed(state, action: FailedAction) {
       const { title, content } = action.payload
       Modal.error({ title, content })
-      state.submiting = false
     },
-    sessionReset: (state) => {
+    sessionReset(state) {
       return initialState
     },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(sessionLogin.pending, (state) => {
-      state.submiting = true
-    })
   },
 })
 

@@ -1,4 +1,4 @@
-import { ISession } from '#F/session'
+import { ISession } from '#T/user'
 import md5 from 'md5'
 import { request } from './request'
 

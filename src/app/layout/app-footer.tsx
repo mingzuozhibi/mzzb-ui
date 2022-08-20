@@ -14,7 +14,7 @@ interface Form {
 
 export default function AppFooter() {
   const viewLogin = useAppSelector((state) => state.layout.viewLogin)
-  const submiting = useAppSelector((state) => state.session.submiting)
+  const submiting = useAppSelector((state) => state.layout.submiting)
   const form = useRef<Form>({})
 
   const dispatch = useAppDispatch()
@@ -23,8 +23,6 @@ export default function AppFooter() {
   function submitLogin() {
     const username = form.current.username
     const password = form.current.password
-
-    console.log(form)
 
     if (!username) {
       Modal.warning({ title: '请检查输入项', content: '你必须输入用户名称' })
@@ -57,17 +55,22 @@ export default function AppFooter() {
           <Input
             prefix={<MzIcon iconNode={<UserOutlined style={{ color: 'rgba(0,0,0,.25)' }} />} />}
             autoFocus={true}
-            onChange={(e) => form.current.username = e.target.value.trim()}
+            onChange={(e) => {
+              form.current.username = e.target.value.trim()
+            }}
             placeholder="请输入用户名称"
             onPressEnter={focusPassword}
           />
         </div>
         <div style={{ padding: 10 }}>
           <Input
-            type="password"
-            onChange={(e) => form.current.password = e.target.value.trim()}
             prefix={<MzIcon iconNode={<KeyOutlined style={{ color: 'rgba(0,0,0,.25)' }} />} />}
+            type="password"
+            onChange={(e) => {
+              form.current.password = e.target.value.trim()
+            }}
             placeholder="请输入用户密码"
+            onPressEnter={submitLogin}
           />
         </div>
       </Modal>
@@ -76,5 +79,5 @@ export default function AppFooter() {
 }
 
 function focusPassword() {
-  ;(document.querySelector(':password') as HTMLInputElement).focus()
+  ;(document.querySelector('input[type=password]') as HTMLInputElement).focus()
 }

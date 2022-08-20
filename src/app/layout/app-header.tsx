@@ -34,7 +34,7 @@ export default function AppHeader() {
         onClick={handleClick}
       />
       <span style={{ marginLeft: 24 }}>在线人数: {session.userCount}</span>
-      {session.isLogged ? (
+      {session.hasBasic ? (
         <Popconfirm
           title="你确定要登出吗？"
           okText="OK"
