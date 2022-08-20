@@ -1064,7 +1064,7 @@
     core-js-pure "^3.20.2"
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.1.2", "@babel/runtime@^7.10.1", "@babel/runtime@^7.10.2", "@babel/runtime@^7.10.4", "@babel/runtime@^7.11.1", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.1", "@babel/runtime@^7.12.13", "@babel/runtime@^7.12.5", "@babel/runtime@^7.15.4", "@babel/runtime@^7.16.3", "@babel/runtime@^7.18.0", "@babel/runtime@^7.18.3", "@babel/runtime@^7.18.9", "@babel/runtime@^7.6.3", "@babel/runtime@^7.8.4", "@babel/runtime@^7.9.2":
+"@babel/runtime@^7.1.2", "@babel/runtime@^7.10.1", "@babel/runtime@^7.10.2", "@babel/runtime@^7.10.4", "@babel/runtime@^7.11.1", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.1", "@babel/runtime@^7.12.13", "@babel/runtime@^7.12.5", "@babel/runtime@^7.15.4", "@babel/runtime@^7.16.3", "@babel/runtime@^7.18.0", "@babel/runtime@^7.18.3", "@babel/runtime@^7.18.9", "@babel/runtime@^7.8.4", "@babel/runtime@^7.9.2":
   version "7.18.9"
   resolved "https://mirrors.tencent.com/npm/@babel%2fruntime/-/runtime-7.18.9.tgz#b4fcfce55db3d2e5e080d2490f608a3b9f407f4a"
   integrity sha512-lkqXDcvlFT5rvEjiu6+QYO+1GXrEHRo2LOtS7E4GtX5ESIZOgepqsZBVIj6Pv+a6zqsya9VCgiK1KAK4BvJDAw==
@@ -1574,50 +1574,6 @@
     loader-utils "^2.0.0"
     schema-utils "^3.0.0"
     source-map "^0.7.3"
-
-"@redux-saga/core@^1.2.0":
-  version "1.2.0"
-  resolved "https://mirrors.tencent.com/npm/@redux-saga%2fcore/-/core-1.2.0.tgz#275dc4f87cac178ed26a2bd08c9c7c1314cfab48"
-  integrity sha512-9n8PeOJT2gyVutH5LUKbCiPFkUZLOM4LWtt5zhbXJa77gzXj9LuEqDj1CVOsfPM0NcHVEhVUQ/Cr++ZZfCNjFg==
-  dependencies:
-    "@babel/runtime" "^7.6.3"
-    "@redux-saga/deferred" "^1.2.0"
-    "@redux-saga/delay-p" "^1.2.0"
-    "@redux-saga/is" "^1.1.2"
-    "@redux-saga/symbols" "^1.1.2"
-    "@redux-saga/types" "^1.2.0"
-    redux "^4.0.4"
-    typescript-tuple "^2.2.1"
-
-"@redux-saga/deferred@^1.2.0":
-  version "1.2.0"
-  resolved "https://mirrors.tencent.com/npm/@redux-saga%2fdeferred/-/deferred-1.2.0.tgz#bfc5e75671fec5dda0d0f7f1dfc658a9f73657ea"
-  integrity sha512-PJrcqMPN/WdmNyJvI1xwPnktaqEd2F3Lc79bRpjupX5zDO+RgLTekuoWv+cgyfGBVW2iaMTEYhUVlZqvCkGAIg==
-
-"@redux-saga/delay-p@^1.2.0":
-  version "1.2.0"
-  resolved "https://mirrors.tencent.com/npm/@redux-saga%2fdelay-p/-/delay-p-1.2.0.tgz#95ced004b67843224039d2710f660647eb198978"
-  integrity sha512-neR2QbTZbwNkQ3/LVdltEdfLVyoxmP7OcUys68KgieCuaWBDpfDeXqxkTRz/biCjYqJGezRDgSfTu6wx/44Lfg==
-  dependencies:
-    "@redux-saga/symbols" "^1.1.2"
-
-"@redux-saga/is@^1.1.2":
-  version "1.1.2"
-  resolved "https://mirrors.tencent.com/npm/@redux-saga%2fis/-/is-1.1.2.tgz#ae6c8421f58fcba80faf7cadb7d65b303b97e58e"
-  integrity sha512-OLbunKVsCVNTKEf2cH4TYyNbbPgvmZ52iaxBD4I1fTif4+MTXMa4/Z07L83zW/hTCXwpSZvXogqMqLfex2Tg6w==
-  dependencies:
-    "@redux-saga/symbols" "^1.1.2"
-    "@redux-saga/types" "^1.1.0"
-
-"@redux-saga/symbols@^1.1.2":
-  version "1.1.2"
-  resolved "https://mirrors.tencent.com/npm/@redux-saga%2fsymbols/-/symbols-1.1.2.tgz#216a672a487fc256872b8034835afc22a2d0595d"
-  integrity sha512-EfdGnF423glv3uMwLsGAtE6bg+R9MdqlHEzExnfagXPrIiuxwr3bdiAwz3gi+PsrQ3yBlaBpfGLtDG8rf3LgQQ==
-
-"@redux-saga/types@^1.1.0", "@redux-saga/types@^1.2.0":
-  version "1.2.0"
-  resolved "https://mirrors.tencent.com/npm/@redux-saga%2ftypes/-/types-1.2.0.tgz#50c80041f6d21a538d7763d9bf73604f0efdddc8"
-  integrity sha512-SCZVqXX4l3WwVM58eXFtXabJdxGQKY7hvSToV+xivtPwmutCbhOhgJ53JwKGX3HCBwEkzn4t9WItBQKbzNNxyw==
 
 "@reduxjs/toolkit@^1.8.5":
   version "1.8.5"
@@ -7983,19 +7939,12 @@ recursive-readdir@^2.2.2:
   dependencies:
     minimatch "3.0.4"
 
-redux-saga@^1.2.0:
-  version "1.2.0"
-  resolved "https://mirrors.tencent.com/npm/redux-saga/-/redux-saga-1.2.0.tgz#43312da5c7df1c598f78097bd2f9d2cf7d87297d"
-  integrity sha512-hA/PxsilEYU/t1+LM5ea9Mih18r5r/iIixUesfeEmZCZem8qXs0Wk95OcVIzPp1rLHkikUp4fPpJ7AqZ56wV9w==
-  dependencies:
-    "@redux-saga/core" "^1.2.0"
-
 redux-thunk@^2.4.1:
   version "2.4.1"
   resolved "https://mirrors.tencent.com/npm/redux-thunk/-/redux-thunk-2.4.1.tgz#0dd8042cf47868f4b29699941de03c9301a75714"
   integrity sha512-OOYGNY5Jy2TWvTL1KgAlVy6dcx3siPJ1wTq741EPyUKfn6W6nChdICjZwCd0p8AZBs5kWpZlbkXW2nE/zjUa+Q==
 
-redux@^4.0.0, redux@^4.0.4, redux@^4.1.2, redux@^4.2.0:
+redux@^4.0.0, redux@^4.1.2, redux@^4.2.0:
   version "4.2.0"
   resolved "https://mirrors.tencent.com/npm/redux/-/redux-4.2.0.tgz#46f10d6e29b6666df758780437651eeb2b969f13"
   integrity sha512-oSBmcKKIuIR4ME29/AeNUnl5L+hvBq7OaJWzaptTQJAntaPvxIJqfnjbaEiCzzaIz+XmVILfqAM3Ob0aXLPfjA==
@@ -9041,25 +8990,6 @@ typedarray-to-buffer@^3.1.5:
   integrity sha512-zdu8XMNEDepKKR+XYOXAVPtWui0ly0NtohUscw+UmaHiAWT8hrV1rr//H6V+0DvJ3OQ19S979M0laLfX8rm82Q==
   dependencies:
     is-typedarray "^1.0.0"
-
-typescript-compare@^0.0.2:
-  version "0.0.2"
-  resolved "https://mirrors.tencent.com/npm/typescript-compare/-/typescript-compare-0.0.2.tgz#7ee40a400a406c2ea0a7e551efd3309021d5f425"
-  integrity sha512-8ja4j7pMHkfLJQO2/8tut7ub+J3Lw2S3061eJLFQcvs3tsmJKp8KG5NtpLn7KcY2w08edF74BSVN7qJS0U6oHA==
-  dependencies:
-    typescript-logic "^0.0.0"
-
-typescript-logic@^0.0.0:
-  version "0.0.0"
-  resolved "https://mirrors.tencent.com/npm/typescript-logic/-/typescript-logic-0.0.0.tgz#66ebd82a2548f2b444a43667bec120b496890196"
-  integrity sha512-zXFars5LUkI3zP492ls0VskH3TtdeHCqu0i7/duGt60i5IGPIpAHE/DWo5FqJ6EjQ15YKXrt+AETjv60Dat34Q==
-
-typescript-tuple@^2.2.1:
-  version "2.2.1"
-  resolved "https://mirrors.tencent.com/npm/typescript-tuple/-/typescript-tuple-2.2.1.tgz#7d9813fb4b355f69ac55032e0363e8bb0f04dad2"
-  integrity sha512-Zcr0lbt8z5ZdEzERHAMAniTiIKerFCMgd7yjq1fPnDJ43et/k9twIFQMUYff9k5oXcsQ0WpvFcgzK2ZKASoW6Q==
-  dependencies:
-    typescript-compare "^0.0.2"
 
 typescript@^4.7.4:
   version "4.7.4"

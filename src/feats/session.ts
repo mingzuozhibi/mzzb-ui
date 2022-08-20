@@ -1,23 +1,22 @@
 import { sessionManager } from '#U/manager'
-import { Result } from '#U/request'
-import { message, Modal } from 'antd'
-import { AnyAction } from 'redux'
-import { call, put } from 'redux-saga/effects'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { message as Msg, Modal } from 'antd'
+import { setViewLogin } from './layout'
 
-export interface Session {
+export interface ISession {
   userName: string
-  isLogged: boolean
   userRoles: string[]
+  userCount: number
   hasBasic: boolean
   hasAdmin: boolean
 }
 
-export interface SessionState extends Session {
+export interface SessionState extends ISession {
+  isLogged: boolean
   submiting: boolean
-  userCount: number
 }
 
-const initSession: SessionState = {
+const initialState: SessionState = {
   userName: 'Guest',
   isLogged: false,
   userRoles: ['NONE'],
@@ -27,47 +26,78 @@ const initSession: SessionState = {
   hasAdmin: false,
 }
 
-export const sessionReducer = (state = initSession, action: AnyAction) => {
-  switch (action.type) {
-    case 'sessionLoginRequest':
-      return { ...state, submiting: true }
-    case 'sessionSucceed':
-      action.message && message.success(action.message)
-      return { ...action.session, isLogged: action.session.hasBasic, submiting: false }
-    case 'sessionFailed':
-      Modal.error({ title: action.title, content: action.content })
-      return { ...state, submiting: false }
-    default:
-      return state
-  }
-}
+type SuccessAction = PayloadAction<{
+  session: ISession
+  message?: string
+}>
 
-function* sessionQuery() {
-  const result: Result = yield call(sessionManager.query)
+type FailedAction = PayloadAction<{
+  title: string
+  content: string
+}>
+
+export const sessionSlice = createSlice({
+  name: 'session',
+  initialState,
+  reducers: {
+    sessionSucceed: (state, action: SuccessAction) => {
+      const { session, message } = action.payload
+      if (message && !state.isLogged) Msg.success(message)
+      return { ...session, isLogged: session.hasBasic, submiting: false }
+    },
+    sessionFailed: (state, action: FailedAction) => {
+      const { title, content } = action.payload
+      Modal.error({ title, content })
+      state.submiting = false
+    },
+    sessionReset: (state) => {
+      return initialState
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(sessionLogin.pending, (state) => {
+      state.submiting = true
+    })
+  },
+})
+
+const { sessionSucceed, sessionFailed, sessionReset } = sessionSlice.actions
+
+export const sessionQuery = createAsyncThunk('session/query', async (_, thunkAPI) => {
+  const result = await sessionManager.query()
   if (result.success) {
-    yield put({ type: 'sessionSucceed', session: result.data })
+    thunkAPI.dispatch(sessionSucceed({ session: result.data! }))
   } else {
-    yield put({ type: 'sessionFailed', title: '获取当前登入状态异常', content: result.message })
+    thunkAPI.dispatch(sessionFailed({ title: '获取当前登入状态异常', content: result.message! }))
   }
+})
+
+interface LoginParams {
+  username: string
+  password: string
 }
 
-function* sessionLogin(action: AnyAction) {
-  const result: Result = yield call(sessionManager.login, action.username, action.password)
+export const sessionLogin = createAsyncThunk(
+  'session/login',
+  async (params: LoginParams, thunkAPI) => {
+    const result = await sessionManager.login(params.username, params.password)
+    if (result.success) {
+      thunkAPI.dispatch(setViewLogin(false))
+      thunkAPI.dispatch(sessionSucceed({ session: result.data!, message: '你已成功登入' }))
+    } else {
+      thunkAPI.dispatch(sessionFailed({ title: '登入错误', content: result.message! }))
+    }
+  }
+)
+
+export const sessionLogout = createAsyncThunk('session/logout', async (_, thunkAPI) => {
+  const result = await sessionManager.logout()
   if (result.success) {
-    yield put({ type: 'setViewLogin', viewLogin: false })
-    yield put({ type: 'sessionSucceed', session: result.data, message: '你已成功登入' })
+    thunkAPI.dispatch(sessionSucceed({ session: result.data!, message: '你已成功登出' }))
   } else {
-    yield put({ type: 'sessionFailed', title: '登入错误', content: result.message })
+    thunkAPI.dispatch(sessionFailed({ title: '登出错误', content: result.message! }))
+    thunkAPI.dispatch(sessionReset())
   }
-}
+})
 
-function* sessionLogout() {
-  const result: Result = yield call(sessionManager.logout)
-  if (result.success) {
-    yield put({ type: 'sessionSucceed', session: result.data, message: '你已成功登出' })
-  } else {
-    yield put({ type: 'sessionFailed', title: '登出错误', content: result.message })
-  }
-}
-
-export const sessionSaga = { sessionQuery, sessionLogin, sessionLogout }
+export const sessionReducer = sessionSlice.reducer

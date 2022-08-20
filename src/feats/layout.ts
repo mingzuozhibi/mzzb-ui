@@ -1,22 +1,28 @@
-import { AnyAction } from 'redux'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface LayoutState {
   viewSider: boolean
   viewLogin: boolean
 }
 
-const initState: LayoutState = {
+const initialState: LayoutState = {
   viewSider: false,
   viewLogin: false,
 }
 
-export const layoutReducer = (state: LayoutState = initState, action: AnyAction) => {
-  switch (action.type) {
-    case 'setViewSider':
-      return { ...state, viewSider: action.viewSider }
-    case 'setViewLogin':
-      return { ...state, viewLogin: action.viewLogin }
-    default:
-      return state
-  }
-}
+export const layoutSlice = createSlice({
+  name: 'layout',
+  initialState,
+  reducers: {
+    setViewSider: (state, action: PayloadAction<boolean>) => {
+      state.viewSider = action.payload
+    },
+    setViewLogin: (state, action: PayloadAction<boolean>) => {
+      state.viewLogin = action.payload
+    },
+  },
+})
+
+export const { setViewSider, setViewLogin } = layoutSlice.actions
+
+export const layoutReducer = layoutSlice.reducer

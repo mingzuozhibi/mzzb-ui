@@ -1,3 +1,5 @@
+import { IResult } from '#T/result'
+
 function prepareCookies({ credentials, ...props }: RequestInit) {
   if (!credentials) {
     credentials = 'include'
@@ -52,11 +54,7 @@ function handleError(error: Error) {
   return { success: false, message: error.message }
 }
 
-export type Result =
-  | { success: true; [extraProps: string]: any }
-  | { success: false; message: string }
-
-export function request(url: string, props: RequestInit = {}): Promise<Result> {
+export function request<T>(url: string, props: RequestInit = {}): Promise<IResult<T>> {
   url = url.replace('??', '?')
   props = prepareCookies(props)
   props = prepareHeaders(props)

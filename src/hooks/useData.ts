@@ -39,7 +39,7 @@ export function useData<T>(url: string, initialState: State<T> = {}) {
 
   function refresh() {
     setLoading(true)
-    request(url).then((result) => {
+    request<T>(url).then((result) => {
       if (result.success) {
         dispatch({ type: 'Receive', data: result.data, page: result.page })
       } else {
@@ -50,11 +50,11 @@ export function useData<T>(url: string, initialState: State<T> = {}) {
 
   function doEdit(url: string, form: any) {
     setLoading(true)
-    request(url, { method: 'put', body: JSON.stringify(form) }).then((result) => {
+    request<T>(url, { method: 'put', body: JSON.stringify(form) }).then((result) => {
       setLoading(false)
       if (result.success) {
         message.success('提交修改成功')
-        setter(result.data)
+        setter(result.data!)
       } else {
         Modal.error({ title: '提交修改失败', content: result.message })
       }
