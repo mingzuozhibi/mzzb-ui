@@ -1,7 +1,7 @@
 import { MzHeader } from '#C/header/MzHeader'
 import { useData } from '#H/useData'
 import { IUser } from '#T/user'
-import { md5Password } from '#U/manager'
+import { encodePassword } from '#U/domain'
 import { KeyOutlined, UserOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Input, Modal } from 'antd'
 import { useParams } from 'react-router-dom'
@@ -25,7 +25,7 @@ export default function UserDetail() {
     }
 
     if (form.password) {
-      form.password = md5Password(form.username, form.password)
+      form.password = encodePassword(form.username, form.password)
     }
 
     doEdit(`/api/users/${data!.id}`, form)

@@ -1,3 +1,9 @@
+export interface IResult<T> {
+  success: boolean
+  message?: string
+  data?: T
+  page?: IPage
+}
 export interface IPage {
   pageSize: number
   currentPage: number

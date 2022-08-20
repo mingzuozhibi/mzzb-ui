@@ -53,9 +53,11 @@ function DiscRecords({ isBasic }: InjectRole) {
   const title = data ? `碟片历史数据：${data.titlePc || data.title}` : `载入中`
 
   const extraCaption = [
-    <span style={{ marginLeft: 8 }}>如果图表显示错误，请尝试刷新</span>,
+    <span key="1" style={{ marginLeft: 8 }}>
+      如果图表显示错误，请尝试刷新
+    </span>,
     isBasic ? (
-      <Button style={{ marginLeft: 8 }} onClick={reCompute}>
+      <Button key="2" style={{ marginLeft: 8 }} onClick={reCompute}>
         重新计算PT
       </Button>
     ) : null,

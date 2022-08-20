@@ -1,73 +1,60 @@
-import { sessionManager } from '#U/manager'
-import { Result } from '#U/request'
-import { message, Modal } from 'antd'
-import { AnyAction } from 'redux'
-import { call, put } from 'redux-saga/effects'
+import { ISession } from '#T/user'
+import { fetchResult } from '#U/fetchResult'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { message as Msg, Modal } from 'antd'
 
-export interface Session {
-  userName: string
-  isLogged: boolean
-  userRoles: string[]
-  hasBasic: boolean
-  hasAdmin: boolean
-}
+interface SessionState extends ISession {}
 
-export interface SessionState extends Session {
-  submiting: boolean
-  userCount: number
-}
-
-const initSession: SessionState = {
+const initialState: SessionState = {
   userName: 'Guest',
-  isLogged: false,
   userRoles: ['NONE'],
-  submiting: false,
   userCount: 0,
   hasBasic: false,
   hasAdmin: false,
 }
 
-export const sessionReducer = (state = initSession, action: AnyAction) => {
-  switch (action.type) {
-    case 'sessionLoginRequest':
-      return { ...state, submiting: true }
-    case 'sessionSucceed':
-      action.message && message.success(action.message)
-      return { ...action.session, isLogged: action.session.hasBasic, submiting: false }
-    case 'sessionFailed':
-      Modal.error({ title: action.title, content: action.content })
-      return { ...state, submiting: false }
-    default:
-      return state
-  }
+export const sessionQuery = createAsyncThunk('session/query', async () => {
+  const token = localStorage['session-token']
+  const result = await fetchResult<SessionState>('/api/session', {
+    headers: { 'session-token': token },
+  })
+  return result.data!
+})
+
+interface LoginParams {
+  username: string
+  password: string
 }
 
-function* sessionQuery() {
-  const result: Result = yield call(sessionManager.query)
-  if (result.success) {
-    yield put({ type: 'sessionSucceed', session: result.data })
-  } else {
-    yield put({ type: 'sessionFailed', title: '获取当前登入状态异常', content: result.message })
-  }
-}
+export const sessionLogin = createAsyncThunk('session/login', async (params: LoginParams) => {
+  const result = await fetchResult<SessionState>('/api/session', {
+    method: 'POST',
+    body: JSON.stringify(params),
+    failureName: '登入失败',
+    successText: '你已成功登入',
+  })
+  return result.data!
+})
 
-function* sessionLogin(action: AnyAction) {
-  const result: Result = yield call(sessionManager.login, action.username, action.password)
-  if (result.success) {
-    yield put({ type: 'setViewLogin', viewLogin: false })
-    yield put({ type: 'sessionSucceed', session: result.data, message: '你已成功登入' })
-  } else {
-    yield put({ type: 'sessionFailed', title: '登入错误', content: result.message })
-  }
-}
+export const sessionLogout = createAsyncThunk('session/logout', async () => {
+  const result = await fetchResult<SessionState>('/api/session', {
+    method: 'DELETE',
+  })
+  return result.data!
+})
 
-function* sessionLogout() {
-  const result: Result = yield call(sessionManager.logout)
-  if (result.success) {
-    yield put({ type: 'sessionSucceed', session: result.data, message: '你已成功登出' })
-  } else {
-    yield put({ type: 'sessionFailed', title: '登出错误', content: result.message })
-  }
-}
+export const sessionSlice = createSlice({
+  name: 'session',
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(sessionQuery.fulfilled, (_, action) => action.payload)
+    builder.addCase(sessionLogin.fulfilled, (_, action) => action.payload)
+    builder.addCase(sessionLogout.fulfilled, (_, action) => action.payload)
+    builder.addCase(sessionLogout.rejected, (state) => {
+      return { ...initialState, userCount: state.userCount }
+    })
+  },
+})
 
-export const sessionSaga = { sessionQuery, sessionLogin, sessionLogout }
+export const sessionReducer = sessionSlice.reducer

@@ -1,26 +1,29 @@
+import { useAppDispatch, useAppSelector } from '#A/hooks'
 import { MzIcon } from '#C/icon/MzIcon'
 import { MzLink } from '#C/link/MzLink'
+import { setViewLogin } from '#F/layout'
+import { sessionLogin } from '#F/session'
+import { encodePassword } from '#U/domain'
 import { KeyOutlined, UserOutlined } from '@ant-design/icons'
 import { Input, Layout, Modal } from 'antd'
+import { useCallback, useRef } from 'react'
 
-interface FormLogin {
+interface Form {
   username?: string
   password?: string
 }
 
-const formLogin: FormLogin = {}
+export default function AppFooter() {
+  const viewLogin = useAppSelector((state) => state.layout.viewLogin)
+  const submiting = useAppSelector((state) => state.layout.submiting)
+  const form = useRef<Form>({})
 
-interface AppFooterProps {
-  viewLogin: boolean
-  submiting: boolean
-  setViewLogin: (viewLogin: boolean) => void
-  sessionLogin: (username: string, password: string) => void
-}
+  const dispatch = useAppDispatch()
+  const hideLogin = useCallback(() => dispatch(setViewLogin(false)), [dispatch])
 
-export function AppFooter(props: AppFooterProps) {
   function submitLogin() {
-    const username = formLogin.username
-    const password = formLogin.password
+    const username = form.current.username
+    const password = form.current.password
 
     if (!username) {
       Modal.warning({ title: '请检查输入项', content: '你必须输入用户名称' })
@@ -32,15 +35,8 @@ export function AppFooter(props: AppFooterProps) {
       return
     }
 
-    props.sessionLogin(username, password)
-  }
-
-  function hideLogin() {
-    props.setViewLogin(false)
-  }
-
-  function focusPassword() {
-    ;(document.querySelector(':password') as HTMLInputElement).focus()
+    const encode = encodePassword(username, password)
+    dispatch(sessionLogin({ username, password: encode }))
   }
 
   return (
@@ -52,8 +48,8 @@ export function AppFooter(props: AppFooterProps) {
         title="用户登入"
         okText="登入"
         cancelText="取消"
-        visible={props.viewLogin}
-        confirmLoading={props.submiting}
+        visible={viewLogin}
+        confirmLoading={submiting}
         onOk={submitLogin}
         onCancel={hideLogin}
       >
@@ -61,20 +57,29 @@ export function AppFooter(props: AppFooterProps) {
           <Input
             prefix={<MzIcon iconNode={<UserOutlined style={{ color: 'rgba(0,0,0,.25)' }} />} />}
             autoFocus={true}
-            onChange={(e) => (formLogin.username = e.target.value)}
+            onChange={(e) => {
+              form.current.username = e.target.value.trim()
+            }}
             placeholder="请输入用户名称"
             onPressEnter={focusPassword}
           />
         </div>
         <div style={{ padding: 10 }}>
           <Input
-            type="password"
-            onChange={(e) => (formLogin.password = e.target.value)}
             prefix={<MzIcon iconNode={<KeyOutlined style={{ color: 'rgba(0,0,0,.25)' }} />} />}
+            type="password"
+            onChange={(e) => {
+              form.current.password = e.target.value.trim()
+            }}
             placeholder="请输入用户密码"
+            onPressEnter={submitLogin}
           />
         </div>
       </Modal>
     </Layout.Footer>
   )
+}
+
+function focusPassword() {
+  ;(document.querySelector('input[type=password]') as HTMLInputElement).focus()
 }

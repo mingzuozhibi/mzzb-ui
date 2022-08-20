@@ -1,7 +1,8 @@
 import { MzColumn, MzTable } from '#C/table/MzTable'
 import { useData } from '#H/useData'
+import { useLocal } from '#H/useLocal'
 import { useTitle } from '#H/useTitle'
-import { InjectAdminMode, injectAdminMode, InjectRole, injectRole } from '#P/@inject'
+import { InjectRole, injectRole } from '#P/@inject'
 import { IGroup } from '#T/disc'
 import { viewTypes } from '#T/meta'
 import { composeCompares } from '#U/compare'
@@ -17,11 +18,13 @@ const guestCols = adminCols.filter((col) => !['edit', 'item'].includes(col.key))
 
 const defaultSort = compareDiscGroups()
 
-export default injectRole(injectAdminMode(DiscGroups))
+export default injectRole(DiscGroups)
 
-function DiscGroups(props: InjectRole & InjectAdminMode) {
+function DiscGroups(props: InjectRole) {
   const history = useHistory()
-  const { isBasic, isAdminMode, setAdminMode } = props
+  const { isBasic } = props
+
+  const [isAdminMode, setAdminMode] = useLocal('local-isadmin', false)
 
   const showExtraButtons = isBasic
   const showExtraColumns = isBasic && isAdminMode

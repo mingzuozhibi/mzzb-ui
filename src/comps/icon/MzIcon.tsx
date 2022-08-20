@@ -1,4 +1,5 @@
 import { CSSProperties } from 'react'
+import './MzIcon.scss'
 
 interface Props {
   style?: CSSProperties

@@ -1,5 +1,4 @@
-import { RootState } from '#A/reducer'
-import { IDisc } from '#T/disc'
+import { RootState } from '#A/store'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 
@@ -14,47 +13,3 @@ export const injectRole = connect(function (state: RootState) {
     isBasic: state.session.userRoles.includes('ROLE_BASIC'),
   }
 })
-
-export interface InjectAdminMode {
-  isAdminMode: boolean
-  setAdminMode: (adminMode: boolean) => void
-}
-
-export const injectAdminMode = connect(
-  function (state: RootState) {
-    return {
-      isAdminMode: state.admin.isAdminMode,
-    }
-  },
-  function (dispatch: Dispatch) {
-    return {
-      setAdminMode(adminMode: boolean) {
-        dispatch({ type: 'setAdminMode', adminMode })
-      },
-    }
-  }
-)
-
-export interface InjectToAdds {
-  toAdds: IDisc[]
-  pushToAdds: (disc: IDisc) => void
-  dropToAdds: (disc: IDisc) => void
-}
-
-export const injectToAdds = connect(
-  function (state: RootState) {
-    return {
-      toAdds: state.admin.toAdds,
-    }
-  },
-  function (dispatch: Dispatch) {
-    return {
-      pushToAdds(disc: IDisc) {
-        dispatch({ type: 'pushToAdds', disc })
-      },
-      dropToAdds(disc: IDisc) {
-        dispatch({ type: 'dropToAdds', disc })
-      },
-    }
-  }
-)

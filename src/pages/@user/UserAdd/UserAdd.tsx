@@ -2,7 +2,7 @@ import { MzHeader } from '#C/header/MzHeader'
 import { useAjax } from '#H/useAjax'
 import { useForm } from '#H/useFrom'
 import { IUser } from '#T/user'
-import { md5Password } from '#U/manager'
+import { encodePassword } from '#U/domain'
 import { KeyOutlined, UserOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Input, Modal } from 'antd'
 import { useHistory } from 'react-router-dom'
@@ -31,7 +31,7 @@ export default function UserAdd() {
       return
     }
 
-    const body = { ...form, password: md5Password(form.username, form.password) }
+    const body = { ...form, password: encodePassword(form.username, form.password) }
 
     doPost('/api/users', '添加用户', {
       body,
