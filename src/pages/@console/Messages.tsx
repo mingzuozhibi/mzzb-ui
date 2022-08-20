@@ -1,10 +1,10 @@
-import { UrlBuilder } from '##/funcs/urlBuilder'
-import { useData } from '##/hooks'
-import { Column, Table } from '#C/@table/Table'
-import { CustomCheckbox } from '#C/CustomCheckbox'
-import { CustomDate } from '#C/CustomDate'
-import { CustomLink } from '#C/CustomLink'
-import { CustomPagination } from '#C/CustomPagination'
+import { MzCheckbox } from '#C/checkbox/MzCheckbox'
+import { MzDate } from '#C/date/MzDate'
+import { MzLink } from '#C/link/MzLink'
+import { MzPagination } from '#C/pagination/MzPagination'
+import { MzColumn, MzTable } from '#C/table/MzTable'
+import { useData } from '#H/useData'
+import { UrlBuilder } from '#U/urlBuilder'
 import { Alert, Button, CheckboxOptionType, Input } from 'antd'
 import { useEffect, useState } from 'react'
 import './Messages.scss'
@@ -79,7 +79,7 @@ export default function Messages({ name, activeKey }: Props) {
             <span className="more">
               <Button children={'刷新'} onClick={handler.refresh} loading={handler.loading} />
             </span>
-            <CustomCheckbox options={options} value={types} onChange={onChangeTypes} />
+            <MzCheckbox options={options} value={types} onChange={onChangeTypes} />
           </div>
           <div className="format">
             <Input.Search
@@ -94,25 +94,25 @@ export default function Messages({ name, activeKey }: Props) {
       )}
       {page && (
         <div className="format">
-          <CustomPagination page={page} onChange={onChangePage} />
+          <MzPagination page={page} onChange={onChangePage} />
         </div>
       )}
-      {msgs && <Table cols={cols} rows={msgs} trClass={trClass} />}
+      {msgs && <MzTable cols={cols} rows={msgs} trClass={trClass} />}
       {page && (
         <div className="format">
-          <CustomPagination page={page} onChange={onChangePage} />
+          <MzPagination page={page} onChange={onChangePage} />
         </div>
       )}
     </div>
   )
 }
 
-function getCols(): Column<IMsg>[] {
+function getCols(): MzColumn<IMsg>[] {
   return [
     {
       key: 'time',
       title: '时间',
-      format: (t) => <CustomDate time={t.createOn} />,
+      format: (t) => <MzDate time={t.createOn} />,
     },
     {
       key: 'text',
@@ -140,7 +140,7 @@ function formatText(t: IMsg) {
     return (
       <>
         {t.text.slice(0, result.index + 1)}
-        <CustomLink href={`/discs/asin/${result[1]}`} title={result[1]} />
+        <MzLink href={`/discs/asin/${result[1]}`} title={result[1]} />
         {t.text.slice(result.index + 11)}
       </>
     )

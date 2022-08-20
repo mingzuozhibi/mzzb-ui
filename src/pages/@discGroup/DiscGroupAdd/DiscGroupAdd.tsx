@@ -1,7 +1,7 @@
-import { useAjax } from '##/hooks'
-import { CustomHeader } from '#C/CustomHeader'
-import { isEmpty } from '#F/domain'
-import { viewTypes } from '#P/@types'
+import { MzHeader } from '#C/header/MzHeader'
+import { useAjax } from '#H/useAjax'
+import { viewTypes } from '#T/meta'
+import { isEmpty } from '#U/domain'
 import { KeyOutlined, TagOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Input, Modal, Radio } from 'antd'
 import { useState } from 'react'
@@ -43,7 +43,7 @@ export default function DiscGroupAdd() {
 
   return (
     <div className="admin-sakura-save-content">
-      <CustomHeader header="添加列表" />
+      <MzHeader header="添加列表" />
       <div className="input-wrapper">
         <Input
           prefix={<KeyOutlined />}

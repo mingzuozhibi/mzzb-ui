@@ -1,17 +1,19 @@
-import { useData, useTitle, useWidth } from '##/hooks'
-import { Column, Table } from '#C/@table/Table'
-import { isEmpty } from '#F/domain'
+import { MzColumn, MzTable } from '#C/table/MzTable'
+import { useData } from '#H/useData'
+import { useTitle } from '#H/useTitle'
+import { useWidth } from '#H/useWidth'
+import { IUser } from '#T/user'
+import { isEmpty } from '#U/domain'
 import { EditOutlined } from '@ant-design/icons'
 import { Alert, Button } from 'antd'
 import dayjs from 'dayjs'
 import { useMemo } from 'react'
 import { Link, useHistory } from 'react-router-dom'
-import { User } from '../../@types'
 import './Users.scss'
 
 export default function Users() {
   const history = useHistory()
-  const [{ error, data }, handler] = useData<User[]>(`/api/users`)
+  const [{ error, data }, handler] = useData<IUser[]>(`/api/users`)
 
   const width = useWidth('.Users')
   const cols = useMemo(() => getColumns(width), [width])
@@ -27,7 +29,7 @@ export default function Users() {
     <div className="Users">
       {error && <Alert message={error} type="error" />}
       {data && (
-        <Table
+        <MzTable
           rows={data}
           cols={cols}
           title="用户管理"
@@ -39,7 +41,7 @@ export default function Users() {
   )
 }
 
-function getColumns(width: number): Column<User>[] {
+function getColumns(width: number): MzColumn<IUser>[] {
   return [
     {
       key: 'id',
@@ -75,26 +77,26 @@ function getColumns(width: number): Column<User>[] {
   ]
 }
 
-function formatRegisterDate(t: User, width: number) {
+function formatRegisterDate(t: IUser, width: number) {
   return width <= 500
     ? dayjs(t.registerDate).format('YYYY-MM-DD')
     : dayjs(t.registerDate).format('YYYY-MM-DD HH:mm:ss')
 }
 
-function formatLastLoggedIn(t: User, width: number) {
+function formatLastLoggedIn(t: IUser, width: number) {
   if (isEmpty(t.lastLoggedIn)) return '从未登入'
   return width <= 500
     ? dayjs(t.lastLoggedIn).format('MM-DD HH:mm')
     : dayjs(t.lastLoggedIn).format('YYYY-MM-DD HH:mm:ss')
 }
 
-function justLogged(t: User) {
+function justLogged(t: IUser) {
   if (!t.lastLoggedIn) return false
   const time = new Date(t.lastLoggedIn).getTime()
   return Date.now() - time < 2 * 86400 * 1000
 }
 
-function formatCommand(t: User) {
+function formatCommand(t: IUser) {
   return (
     <Link to={`/users/${t.id}`}>
       <EditOutlined />

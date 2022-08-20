@@ -1,13 +1,15 @@
-import { useData, useTitle } from '##/hooks'
-import { Column, Table } from '#C/@table/Table'
-import { composeCompares } from '#F/compare'
-import { isJustUpdated } from '#F/domain'
-import { formatTimeout } from '#F/format'
+import { MzColumn, MzTable } from '#C/table/MzTable'
+import { useData } from '#H/useData'
+import { useTitle } from '#H/useTitle'
+import { InjectAdminMode, injectAdminMode, InjectRole, injectRole } from '#P/@inject'
+import { IGroup } from '#T/disc'
+import { viewTypes } from '#T/meta'
+import { composeCompares } from '#U/compare'
+import { isJustUpdated } from '#U/domain'
+import { formatTimeout } from '#U/format'
 import { EditOutlined, UnorderedListOutlined } from '@ant-design/icons'
 import { Alert, Button } from 'antd'
 import { Link, useHistory } from 'react-router-dom'
-import { InjectAdminMode, injectAdminMode, InjectRole, injectRole } from '../../@inject'
-import { DiscGroup, viewTypes } from '../../@types'
 import './DiscGroups.scss'
 
 const adminCols = getColumns()
@@ -26,7 +28,7 @@ function DiscGroups(props: InjectRole & InjectAdminMode) {
   const fetchPrivateData = isBasic && isAdminMode
 
   const url = fetchPrivateData ? '/api/discGroups?hasPrivate=true' : '/api/discGroups'
-  const [{ error, data }, handler] = useData<DiscGroup[]>(url)
+  const [{ error, data }, handler] = useData<IGroup[]>(url)
 
   const extraButtons = isAdminMode ? (
     <Button.Group>
@@ -45,7 +47,7 @@ function DiscGroups(props: InjectRole & InjectAdminMode) {
     <div className="DiscGroups">
       {error && <Alert message={error} type="error" />}
       {data && (
-        <Table
+        <MzTable
           rows={data}
           cols={showExtraColumns ? adminCols : guestCols}
           title="推荐列表"
@@ -59,11 +61,11 @@ function DiscGroups(props: InjectRole & InjectAdminMode) {
   )
 }
 
-function trClass(t: DiscGroup) {
+function trClass(t: IGroup) {
   return { warning: t.viewType === 'PrivateList' }
 }
 
-function getColumns(): Column<DiscGroup>[] {
+function getColumns(): MzColumn<IGroup>[] {
   return [
     {
       key: 'idx',
@@ -93,7 +95,7 @@ function getColumns(): Column<DiscGroup>[] {
   ]
 }
 
-function formatLinkedTitle(row: DiscGroup) {
+function formatLinkedTitle(row: IGroup) {
   let color = isJustUpdated(row.modifyTime) ? 'red' : '#C67532'
   return (
     <>
@@ -103,12 +105,12 @@ function formatLinkedTitle(row: DiscGroup) {
   )
 }
 
-function formatLastUpdate(row: DiscGroup) {
+function formatLastUpdate(row: IGroup) {
   if (!row.enabled || !row.modifyTime) return '停止更新'
   return `${formatTimeout(row.modifyTime)}前`
 }
 
-function formatEdit(t: DiscGroup) {
+function formatEdit(t: IGroup) {
   return (
     <Link to={`/disc_groups/${t.key}`}>
       <EditOutlined />
@@ -116,7 +118,7 @@ function formatEdit(t: DiscGroup) {
   )
 }
 
-function formatItem(t: DiscGroup) {
+function formatItem(t: IGroup) {
   return (
     <Link to={`/disc_groups/${t.key}/discs`}>
       <UnorderedListOutlined />
@@ -126,7 +128,7 @@ function formatItem(t: DiscGroup) {
 
 function compareDiscGroups() {
   const sorts = viewTypes.map((e) => e.value)
-  return composeCompares<DiscGroup>([
+  return composeCompares<IGroup>([
     (a, b) => sorts.indexOf(a.viewType) - sorts.indexOf(b.viewType),
     (a, b) => b.key.localeCompare(a.key),
   ])

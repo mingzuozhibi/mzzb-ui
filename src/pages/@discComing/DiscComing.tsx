@@ -1,8 +1,9 @@
-import { useData, useTitle } from '##/hooks'
-import { Column, Table } from '#C/@table/Table'
-import { CustomDate } from '#C/CustomDate'
-import { CustomLink } from '#C/CustomLink'
-import { CustomPagination } from '#C/CustomPagination'
+import { MzDate } from '#C/date/MzDate'
+import { MzLink } from '#C/link/MzLink'
+import { MzPagination } from '#C/pagination/MzPagination'
+import { MzColumn, MzTable } from '#C/table/MzTable'
+import { useData } from '#H/useData'
+import { useTitle } from '#H/useTitle'
 import { QuestionOutlined } from '@ant-design/icons'
 import { Alert } from 'antd'
 import { Link, useHistory, useLocation } from 'react-router-dom'
@@ -40,13 +41,13 @@ export default function DiscComing() {
   return (
     <div className="DiscComing">
       {error && <Alert message={error} type="error" />}
-      {data && <Table cols={cols} rows={data} title="上架追踪" handler={handler} />}
-      {page && <CustomPagination page={page} onChange={onPaginationChange} />}
+      {data && <MzTable cols={cols} rows={data} title="上架追踪" handler={handler} />}
+      {page && <MzPagination page={page} onChange={onPaginationChange} />}
     </div>
   )
 }
 
-function getColumns(): Column<DiscComing>[] {
+function getColumns(): MzColumn<DiscComing>[] {
   return [
     {
       key: 'asin',
@@ -57,7 +58,7 @@ function getColumns(): Column<DiscComing>[] {
     {
       key: 'createOn',
       title: '抓取时间',
-      format: (t) => <CustomDate time={t.createOn} />,
+      format: (t) => <MzDate time={t.createOn} />,
       tdClass: createJustUpdateTdClass(),
     },
     {
@@ -73,7 +74,7 @@ function getColumns(): Column<DiscComing>[] {
     {
       key: 'title',
       title: '碟片标题',
-      format: (t) => <CustomLink href={`http://www.amazon.co.jp/dp/${t.asin}`} title={t.title} />,
+      format: (t) => <MzLink href={`http://www.amazon.co.jp/dp/${t.asin}`} title={t.title} />,
     },
   ]
 }

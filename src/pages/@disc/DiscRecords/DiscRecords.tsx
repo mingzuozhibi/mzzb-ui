@@ -1,9 +1,10 @@
-import { useAjax, useData } from '##/hooks'
-import { Column, Table } from '#C/@table/Table'
-import { CustomHeader } from '#C/CustomHeader'
-import { formatNumber } from '#F/format'
+import { MzHeader } from '#C/header/MzHeader'
+import { MzColumn, MzTable } from '#C/table/MzTable'
+import { useAjax } from '#H/useAjax'
+import { useData } from '#H/useData'
 import { formatPt } from '#P/@funcs'
 import { InjectRole, injectRole } from '#P/@inject'
+import { formatNumber } from '#U/format'
 import { Button, Modal } from 'antd'
 import dayjs from 'dayjs'
 import * as echarts from 'echarts'
@@ -62,10 +63,10 @@ function DiscRecords({ isBasic }: InjectRole) {
 
   return (
     <div className="DiscRecords">
-      <CustomHeader header={title} error={error} />
+      <MzHeader header={title} error={error} />
       <div id="echart_warp" />
       {data && (
-        <Table
+        <MzTable
           rows={data.records}
           cols={cols}
           trClass={trClass(data)}
@@ -81,7 +82,7 @@ function trClass(data: Data) {
   return (t: Record) => ({ warning: !dayjs(t.date).isBefore(dayjs(data.releaseDate)) })
 }
 
-function getColumns(): Column<Record>[] {
+function getColumns(): MzColumn<Record>[] {
   return [
     {
       key: 'idx',
@@ -118,7 +119,11 @@ function getColumns(): Column<Record>[] {
 
 function formatRank(t: Record) {
   if (t.averRank != undefined && t.averRank < 10) {
-    return <><span style={{ color: 'red' }}>{t.averRank.toFixed(1)}</span> 位</>
+    return (
+      <>
+        <span style={{ color: 'red' }}>{t.averRank.toFixed(1)}</span> 位
+      </>
+    )
   } else {
     return `${t.averRank ? formatNumber(t.averRank, '###,###') : '---'} 位`
   }

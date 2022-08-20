@@ -1,15 +1,15 @@
-import { RootState } from '##/@reducer'
-import { useAjax } from '##/hooks'
-import { isEmpty } from '#F/domain'
-import { Disc } from '#P/@types'
+import { RootState } from '#A/reducer'
+import { useAjax } from '#H/useAjax'
+import { IDisc } from '#T/disc'
+import { isEmpty } from '#U/domain'
 import { Button, Input, Modal } from 'antd'
 import { useState } from 'react'
 import { connect } from 'react-redux'
 
 interface Props {
-  theDiscs: Disc[]
-  addDiscs: Disc[]
-  pushToAdds: (disc: Disc) => void
+  theDiscs: IDisc[]
+  addDiscs: IDisc[]
+  pushToAdds: (disc: IDisc) => void
   count?: number
   setCount: (count: number) => void
 }
@@ -27,7 +27,7 @@ export default connect(
 
 function SearchDisc(props: Props) {
   const [asin, setAsin] = useState<string>()
-  const [loadingDisc, fetchDisc] = useAjax<Disc>('get')
+  const [loadingDisc, fetchDisc] = useAjax<IDisc>('get')
   const [loadingCount, fetchCount] = useAjax<number>('get')
 
   function doFetchDisc() {

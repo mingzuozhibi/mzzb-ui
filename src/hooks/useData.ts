@@ -1,12 +1,12 @@
-import { Handler, Page } from '##/@domain'
-import { request } from '#F/request'
+import { ILoad, IPage } from '#T/result'
+import { request } from '#U/request'
 import { message, Modal } from 'antd'
 import produce from 'immer'
 import { useEffect, useReducer, useState } from 'react'
 
 interface State<T> {
   data?: T
-  page?: Page
+  page?: IPage
   error?: string
 }
 
@@ -16,7 +16,7 @@ interface ModifyMethod<T> {
   update: (recipe: (draft: T) => void) => void
 }
 
-export type UseData<T> = [State<T>, Handler, ModifyMethod<T>]
+export type UseData<T> = [State<T>, ILoad, ModifyMethod<T>]
 
 export function useData<T>(url: string, initialState: State<T> = {}) {
   const [loading, setLoading] = useState(true)

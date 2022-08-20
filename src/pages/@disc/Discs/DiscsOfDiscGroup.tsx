@@ -1,17 +1,13 @@
-import { useData } from '##/hooks'
+import { useData } from '#H/useData'
+import { IGroupItems } from '#T/disc'
 import { useParams } from 'react-router-dom'
-import Discs, { IGroup } from './Discs'
-
-const columns =
-  'id,asin,title,titlePc,thisRank,prevRank,todayPt,totalPt,guessPt,updateTime,surplusDays'
+import Discs from './Discs'
 
 export default function DiscsOfDiscGroup() {
   const params = useParams<{ key: string }>()
-  const [state, handler] = useData<IGroup>(
-    `/api/discGroups/key/${params.key}/discs?discColumns=${columns}`
-  )
+  const [state, handler] = useData<IGroupItems>(`/api/discGroups/key/${params.key}/discs`)
   return (
-    <div className="DiscsSakura">
+    <div className="DiscsOfDiscGroup">
       <Discs
         error={state.error}
         data={state.data}

@@ -1,7 +1,7 @@
-import { useData } from '##/hooks'
-import { CustomHeader } from '#C/CustomHeader'
-import { md5Password } from '#F/manager'
-import { User } from '#P/@types'
+import { MzHeader } from '#C/header/MzHeader'
+import { useData } from '#H/useData'
+import { IUser } from '#T/user'
+import { md5Password } from '#U/manager'
 import { KeyOutlined, UserOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Input, Modal } from 'antd'
 import { useParams } from 'react-router-dom'
@@ -16,7 +16,7 @@ const form: Form = {}
 
 export default function UserDetail() {
   const params = useParams<{ id: string }>()
-  const [{ error, data }, { loading }, { doEdit }] = useData<User>(`/api/users/${params.id}`)
+  const [{ error, data }, { loading }, { doEdit }] = useData<IUser>(`/api/users/${params.id}`)
 
   function submitForm() {
     if (!form.username) {
@@ -41,7 +41,7 @@ export default function UserDetail() {
 
   return (
     <div className="UserDetail">
-      <CustomHeader header="用户信息" title={tilte} error={error} />
+      <MzHeader header="用户信息" title={tilte} error={error} />
       {data && (
         <>
           <div className="input-wrapper">

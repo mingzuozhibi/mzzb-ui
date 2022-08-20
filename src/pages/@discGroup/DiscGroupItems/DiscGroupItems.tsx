@@ -1,23 +1,18 @@
-import { useAjax, useData } from '##/hooks'
-import { Column, Table } from '#C/@table/Table'
-import { CustomHeader } from '#C/CustomHeader'
-import { composeCompares } from '#F/compare'
-import { formatTimeout } from '#F/format'
+import { MzHeader } from '#C/header/MzHeader'
+import { MzColumn, MzTable } from '#C/table/MzTable'
+import { useAjax } from '#H/useAjax'
+import { useData } from '#H/useData'
 import { compareSurp, compareTitle, discTitle } from '#P/@funcs'
 import { InjectToAdds, injectToAdds } from '#P/@inject'
-import { Disc, DiscGroup } from '#P/@types'
+import { IDisc, IGroupItems } from '#T/disc'
+import { composeCompares } from '#U/compare'
+import { formatTimeout } from '#U/format'
 import { DeleteOutlined, FileAddOutlined } from '@ant-design/icons'
 import { Button, Tabs } from 'antd'
 import { Link, useHistory, useParams } from 'react-router-dom'
 import CreateDisc from './CreateDisc'
 import './DiscGroupItems.scss'
 import SearchDisc from './SearchDisc'
-
-interface IGroup extends DiscGroup {
-  discs: Disc[]
-}
-
-const columns = 'id,asin,title,titlePc,surplusDays'
 
 export default injectToAdds(DiscGroupItems)
 
@@ -26,15 +21,15 @@ function DiscGroupItems(props: InjectToAdds) {
   const history = useHistory()
   const params = useParams<{ key: string }>()
 
-  const [{ error, data: group }, handler, { update: setGroup }] = useData<IGroup>(
-    `/api/discGroups/key/${params.key}/discs?discColumns=${columns}`
+  const [{ error, data: group }, handler, { update: setGroup }] = useData<IGroupItems>(
+    `/api/discGroups/key/${params.key}/discs`
   )
-  const [, pushDisc] = useAjax<Disc>('post')
-  const [, dropDisc] = useAjax<Disc>('delete')
+  const [, pushDisc] = useAjax<IDisc>('post')
+  const [, dropDisc] = useAjax<IDisc>('delete')
 
   function doPushDisc(discGroupId: number, discId: number) {
     pushDisc(`/api/discGroups/${discGroupId}/discs/${discId}`, '添加碟片到列表', {
-      onSuccess(disc: Disc) {
+      onSuccess(disc: IDisc) {
         dropToAdds(disc)
         setGroup((draft) => {
           draft.discs.unshift(disc)
@@ -45,7 +40,7 @@ function DiscGroupItems(props: InjectToAdds) {
 
   function doDropDisc(discGroupId: number, discId: number) {
     dropDisc(`/api/discGroups/${discGroupId}/discs/${discId}`, '从列表移除碟片', {
-      onSuccess(disc: Disc) {
+      onSuccess(disc: IDisc) {
         pushToAdds(disc)
         setGroup((draft) => {
           draft.discs = draft.discs.filter((e) => e.id !== disc.id)
@@ -58,7 +53,7 @@ function DiscGroupItems(props: InjectToAdds) {
     return {
       key: 'command',
       title: '添加',
-      format: (t: Disc) => <FileAddOutlined onClick={() => doPushDisc(group!.id, t.id)} />,
+      format: (t: IDisc) => <FileAddOutlined onClick={() => doPushDisc(group!.id, t.id)} />,
     }
   }
 
@@ -66,7 +61,7 @@ function DiscGroupItems(props: InjectToAdds) {
     return {
       key: 'command',
       title: '移除',
-      format: (t: Disc) => <DeleteOutlined onClick={() => doDropDisc(group!.id, t.id)} />,
+      format: (t: IDisc) => <DeleteOutlined onClick={() => doDropDisc(group!.id, t.id)} />,
     }
   }
 
@@ -84,7 +79,7 @@ function DiscGroupItems(props: InjectToAdds) {
 
   return (
     <div className="DiscGroupItems">
-      <CustomHeader header="管理碟片" title={title} error={error} handler={handler} />
+      <MzHeader header="管理碟片" title={title} error={error} handler={handler} />
       {group && (
         <>
           <Tabs type="card">
@@ -95,8 +90,8 @@ function DiscGroupItems(props: InjectToAdds) {
               <CreateDisc pushToAdds={pushToAdds} />
             </Tabs.TabPane>
           </Tabs>
-          <Table rows={toAdds} cols={getColumns(getPushCommand())} title="待选列表" />
-          <Table
+          <MzTable rows={toAdds} cols={getColumns(getPushCommand())} title="待选列表" />
+          <MzTable
             rows={group.discs}
             cols={getColumns(getDropCommand())}
             title={group.title}
@@ -109,7 +104,7 @@ function DiscGroupItems(props: InjectToAdds) {
   )
 }
 
-function getColumns(extraColumn: Column<Disc>): Column<Disc>[] {
+function getColumns(extraColumn: MzColumn<IDisc>): MzColumn<IDisc>[] {
   return [
     {
       key: 'asin',
@@ -133,6 +128,6 @@ function getColumns(extraColumn: Column<Disc>): Column<Disc>[] {
   ]
 }
 
-function formatTitle(disc: Disc) {
+function formatTitle(disc: IDisc) {
   return <Link to={`/discs/${disc.id}`}>{discTitle(disc)}</Link>
 }

@@ -1,7 +1,8 @@
-import { useAjax, useForm } from '##/hooks'
-import { CustomHeader } from '#C/CustomHeader'
-import { md5Password } from '#F/manager'
-import { User } from '#P/@types'
+import { MzHeader } from '#C/header/MzHeader'
+import { useAjax } from '#H/useAjax'
+import { useForm } from '#H/useFrom'
+import { IUser } from '#T/user'
+import { md5Password } from '#U/manager'
 import { KeyOutlined, UserOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Input, Modal } from 'antd'
 import { useHistory } from 'react-router-dom'
@@ -17,7 +18,7 @@ export default function UserAdd() {
   const { form, onChange, onSelect } = useForm<FormCreate>({
     enabled: true,
   })
-  const [inPost, doPost] = useAjax<User>('post')
+  const [inPost, doPost] = useAjax<IUser>('post')
 
   function submitCreate() {
     if (!form.username) {
@@ -42,7 +43,7 @@ export default function UserAdd() {
 
   return (
     <div className="UserAdd">
-      <CustomHeader header="添加用户" />
+      <MzHeader header="添加用户" />
       <div className="input-wrapper">
         <Input
           prefix={<UserOutlined />}

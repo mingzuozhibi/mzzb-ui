@@ -1,16 +1,14 @@
-import { UseData } from '##/hooks'
-import { CustomHeader } from '#C/CustomHeader'
-import { CustomLink } from '#C/CustomLink'
-import { formatNumber } from '#F/format'
-import { request } from '#F/request'
+import { MzHeader } from '#C/header/MzHeader'
+import { MzLink } from '#C/link/MzLink'
+import { UseData } from '#H/useData'
 import { discTitle } from '#P/@funcs'
-import { Disc } from '#P/@types'
+import { IDisc } from '#T/disc'
+import { formatNumber } from '#U/format'
+import { request } from '#U/request'
 import { Button, Input, message, Modal, Radio } from 'antd'
 import dayjs from 'dayjs'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-
-export type Data = Disc
 
 interface Form {
   titlePc?: string
@@ -19,7 +17,7 @@ interface Form {
 }
 
 interface Props {
-  useDate: UseData<Data>
+  useDate: UseData<IDisc>
   isBasic: boolean
 }
 
@@ -68,7 +66,7 @@ export function DiscDetail({ useDate, isBasic }: Props) {
 
   return (
     <div className="DiscDetail">
-      <CustomHeader header="碟片信息" title={title} error={error} />
+      <MzHeader header="碟片信息" title={title} error={error} />
       {data && (
         <>
           <div className="input-wrapper">
@@ -235,7 +233,7 @@ function formatRank(rank?: number) {
 }
 
 function toAmazon(asin: string) {
-  return <CustomLink href={`http://www.amazon.co.jp/dp/${asin}`} title="点击打开日亚页面" />
+  return <MzLink href={`http://www.amazon.co.jp/dp/${asin}`} title="点击打开日亚页面" />
 }
 
 function toRecords(id: number) {
