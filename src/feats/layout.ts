@@ -1,4 +1,3 @@
-import { LOCATION_CHANGE } from 'connected-react-router'
 import { AnyAction } from 'redux'
 
 export interface LayoutState {
@@ -17,9 +16,6 @@ export const layoutReducer = (state: LayoutState = initState, action: AnyAction)
       return { ...state, viewSider: action.viewSider }
     case 'setViewLogin':
       return { ...state, viewLogin: action.viewLogin }
-    case LOCATION_CHANGE:
-      window.scrollTo(0, 0)
-      return state
     default:
       return state
   }
