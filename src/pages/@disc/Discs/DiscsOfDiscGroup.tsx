@@ -5,6 +5,7 @@ import Discs from './Discs'
 
 export default function DiscsOfDiscGroup() {
   const params = useParams<{ key: string }>()
+
   const [state, handler] = useData<IGroupItems>(`/api/discGroups/key/${params.key}/discs`)
   return (
     <div className="DiscsOfDiscGroup">
@@ -12,7 +13,7 @@ export default function DiscsOfDiscGroup() {
         error={state.error}
         data={state.data}
         handler={handler}
-        lowerKey={params.key.toLocaleLowerCase()}
+        lowerKey={params.key!.toLocaleLowerCase()}
       />
     </div>
   )

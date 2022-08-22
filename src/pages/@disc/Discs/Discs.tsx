@@ -11,7 +11,7 @@ import { isJustUpdated, isSlowUpdated } from '#U/domain'
 import { formatNumber, formatTimeout } from '#U/format'
 import { Button, Input } from 'antd'
 import classNames from 'classnames'
-import { Link, useHistory } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import './Discs.scss'
 
 interface Props {
@@ -29,8 +29,9 @@ const message =
 export default injectRole(Discs)
 
 export function Discs(props: Props & InjectRole) {
+  const navigate = useNavigate()
+
   const { error, data: group, handler, lowerKey, isBasic } = props
-  const history = useHistory()
 
   const [pcMode, setPcMode] = useLocal(`local-discs/${lowerKey}/pc-mode`, false)
   const [quMode, setQuMode] = useLocal(`local-discs/${lowerKey}/qu-mode`, false)
@@ -64,8 +65,8 @@ export function Discs(props: Props & InjectRole) {
   const extraCaption =
     group && isBasic ? (
       <span className="format">
-        <Button onClick={() => history.push(`/disc_groups/${group.key}`)}>编辑列表</Button>
-        <Button onClick={() => history.push(`/disc_groups/${group.key}/discs`)}>管理碟片</Button>
+        <Button onClick={() => navigate(`/disc_groups/${group.key}`)}>编辑列表</Button>
+        <Button onClick={() => navigate(`/disc_groups/${group.key}/discs`)}>管理碟片</Button>
       </span>
     ) : null
 

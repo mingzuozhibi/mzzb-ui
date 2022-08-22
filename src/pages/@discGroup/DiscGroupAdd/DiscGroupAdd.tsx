@@ -5,7 +5,7 @@ import { isEmpty } from '#U/domain'
 import { KeyOutlined, TagOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Input, Modal, Radio } from 'antd'
 import { useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 interface FormCreate {
   key?: string
@@ -15,7 +15,8 @@ interface FormCreate {
 }
 
 export default function DiscGroupAdd() {
-  const history = useHistory()
+  const navigate = useNavigate()
+
   const [form, setForm] = useState<FormCreate>({
     enabled: true,
     viewType: 'PublicList',
@@ -36,7 +37,7 @@ export default function DiscGroupAdd() {
     createGroup('/api/discGroups', '添加列表', {
       body: form,
       onSuccess() {
-        setTimeout(() => history.goBack(), 500)
+        setTimeout(() => navigate(-1), 500)
       },
     })
   }

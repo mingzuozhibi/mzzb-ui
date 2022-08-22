@@ -1,5 +1,6 @@
 import { useTitle } from '#H/useTitle'
 import { Tabs } from 'antd'
+import { useLocation, useNavigate } from 'react-router-dom'
 import Messages from './Messages'
 
 const modules = [
@@ -30,13 +31,20 @@ const modules = [
 ]
 
 export default function Console() {
+  const location = useLocation()
+  const navigate = useNavigate()
+
   useTitle('系统日志')
 
-  function onChange(activeKey: string) {
-    window.location.hash = activeKey
+  let activeKey = modules[0].value
+  const hash = location.hash
+  if (hash.length > 0) {
+    activeKey = hash.slice(1)
   }
 
-  const activeKey = getActiveKey()
+  function onChange(key: string) {
+    navigate(`${location.pathname}#${key}`)
+  }
 
   return (
     <Tabs type="card" activeKey={activeKey} onChange={onChange}>
@@ -47,13 +55,4 @@ export default function Console() {
       ))}
     </Tabs>
   )
-}
-
-function getActiveKey() {
-  const hash = window.location.hash
-  if (hash.length > 0) {
-    return hash.slice(1)
-  } else {
-    return modules[0].value
-  }
 }

@@ -10,7 +10,7 @@ import { isJustUpdated } from '#U/domain'
 import { formatTimeout } from '#U/format'
 import { EditOutlined, UnorderedListOutlined } from '@ant-design/icons'
 import { Alert, Button } from 'antd'
-import { Link, useHistory } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import './DiscGroups.scss'
 
 const adminCols = getColumns()
@@ -21,7 +21,8 @@ const defaultSort = compareDiscGroups()
 export default injectRole(DiscGroups)
 
 function DiscGroups(props: InjectRole) {
-  const history = useHistory()
+  const navigate = useNavigate()
+
   const { isBasic } = props
 
   const [isAdminMode, setAdminMode] = useLocal('local-isadmin', false)
@@ -36,7 +37,7 @@ function DiscGroups(props: InjectRole) {
   const extraButtons = isAdminMode ? (
     <Button.Group>
       <Button onClick={() => setAdminMode(false)}>浏览模式</Button>
-      <Button onClick={() => history.push('/disc_groups/add')}>添加列表</Button>
+      <Button onClick={() => navigate('/disc_groups/add')}>添加列表</Button>
     </Button.Group>
   ) : (
     <Button.Group>

@@ -9,12 +9,22 @@ import { composeCompares } from '#U/compare'
 import { formatTimeout } from '#U/format'
 import { DeleteOutlined, FileAddOutlined } from '@ant-design/icons'
 import { Button, Tabs } from 'antd'
-import { Link, useHistory, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import CreateDisc from './CreateDisc'
 import './DiscGroupItems.scss'
 import SearchDisc from './SearchDisc'
 
 export default function DiscGroupItems() {
+  const navigate = useNavigate()
+  const params = useParams<{ key: string }>()
+
+  const [{ error, data: group }, handler, { update: setGroup }] = useData<IGroupItems>(
+    `/api/discGroups/key/${params.key}/discs`
+  )
+
+  const [, pushDisc] = useAjax<IDisc>('post')
+  const [, dropDisc] = useAjax<IDisc>('delete')
+
   const [toAdds, setToAdds] = useLocal<IDisc[]>('local-toadds', [])
 
   function pushToAdds(disc: IDisc) {
@@ -24,15 +34,6 @@ export default function DiscGroupItems() {
   function dropToAdds(disc: IDisc) {
     setToAdds(toAdds.filter((e) => e.id !== disc.id))
   }
-
-  const history = useHistory()
-  const params = useParams<{ key: string }>()
-
-  const [{ error, data: group }, handler, { update: setGroup }] = useData<IGroupItems>(
-    `/api/discGroups/key/${params.key}/discs`
-  )
-  const [, pushDisc] = useAjax<IDisc>('post')
-  const [, dropDisc] = useAjax<IDisc>('delete')
 
   function doPushDisc(discGroupId: number, discId: number) {
     pushDisc(`/api/discGroups/${discGroupId}/discs/${discId}`, '添加碟片到列表', {
@@ -77,10 +78,10 @@ export default function DiscGroupItems() {
   const extraCaption = group ? (
     <>
       <span style={{ marginRight: 8 }}>更新于{formatTimeout(group.modifyTime)}前</span>
-      <Button style={{ marginRight: 8 }} onClick={() => history.push(`/disc_groups/${group.key}`)}>
+      <Button style={{ marginRight: 8 }} onClick={() => navigate(`/disc_groups/${group.key}`)}>
         编辑列表
       </Button>
-      <Button onClick={() => history.push(`/discs/disc_groups/${group.key}`)}>浏览碟片</Button>
+      <Button onClick={() => navigate(`/discs/disc_groups/${group.key}`)}>浏览碟片</Button>
     </>
   ) : null
 
