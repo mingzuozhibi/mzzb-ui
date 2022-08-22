@@ -8,18 +8,19 @@ import { EditOutlined } from '@ant-design/icons'
 import { Alert, Button } from 'antd'
 import dayjs from 'dayjs'
 import { useMemo } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import './Users.scss'
 
 export default function Users() {
-  const history = useHistory()
+  const navigate = useNavigate()
+
   const [{ error, data }, handler] = useData<IUser[]>(`/api/users`)
 
   const width = useWidth('.Users')
   const cols = useMemo(() => getColumns(width), [width])
   const addUserButton = (
     <Button.Group>
-      <Button onClick={() => history.push(`/users/add`)}>添加用户</Button>
+      <Button onClick={() => navigate(`/users/add`)}>添加用户</Button>
     </Button.Group>
   )
 

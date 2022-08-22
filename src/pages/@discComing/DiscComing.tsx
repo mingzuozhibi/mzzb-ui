@@ -6,7 +6,7 @@ import { useData } from '#H/useData'
 import { useTitle } from '#H/useTitle'
 import { QuestionOutlined } from '@ant-design/icons'
 import { Alert } from 'antd'
-import { Link, useHistory, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import './DiscComing.scss'
 
 interface DiscComing {
@@ -21,8 +21,8 @@ interface DiscComing {
 const cols = getColumns()
 
 export default function DiscComing() {
-  const history = useHistory()
   const location = useLocation()
+  const navigate = useNavigate()
 
   const [{ data, page, error }, handler] = useData<DiscComing[]>(
     `/api/spider/discShelfs${location.search}`
@@ -30,9 +30,9 @@ export default function DiscComing() {
 
   function onPaginationChange(page: number, size: number = 20) {
     if (size === 20) {
-      history.push(`/disc_coming?page=${page}`)
+      navigate(`/disc_coming?page=${page}`)
     } else {
-      history.push(`/disc_coming?page=${page}&size=${size}`)
+      navigate(`/disc_coming?page=${page}&size=${size}`)
     }
   }
 

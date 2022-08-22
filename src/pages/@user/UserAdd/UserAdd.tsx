@@ -5,7 +5,7 @@ import { IUser } from '#T/user'
 import { encodePassword } from '#U/domain'
 import { KeyOutlined, UserOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Input, Modal } from 'antd'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 interface FormCreate {
   username?: string
@@ -14,7 +14,8 @@ interface FormCreate {
 }
 
 export default function UserAdd() {
-  const history = useHistory()
+  const navigate = useNavigate()
+
   const { form, onChange, onSelect } = useForm<FormCreate>({
     enabled: true,
   })
@@ -36,7 +37,7 @@ export default function UserAdd() {
     doPost('/api/users', '添加用户', {
       body,
       onSuccess() {
-        setTimeout(() => history.goBack(), 500)
+        setTimeout(() => navigate(-1), 500)
       },
     })
   }

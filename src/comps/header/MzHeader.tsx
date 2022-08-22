@@ -2,6 +2,7 @@ import { ILoad } from '#T/result'
 import { ArrowLeftOutlined } from '@ant-design/icons'
 import { Alert, Button, Divider, PageHeader } from 'antd'
 import React, { useEffect } from 'react'
+import './MzHeader.scss'
 
 interface Props {
   header: string
@@ -16,10 +17,10 @@ export function MzHeader({ header, title, error, handler, replace }: Props) {
     document.title = `${title || header} - mingzuozhibi.com`
   }, [header, title])
   return (
-    <>
+    <div className="MzHeader">
       {replace ? renderCustomHeader(replace) : renderPageHeader(header, handler)}
       {error && <Alert message={error} type="error" />}
-    </>
+    </div>
   )
 }
 
