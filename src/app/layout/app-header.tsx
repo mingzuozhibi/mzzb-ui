@@ -28,11 +28,11 @@ export default function AppHeader() {
 
   return (
     <Layout.Header className="app-header">
-      <MzIcon
-        iconNode={viewSider ? <MenuFoldOutlined /> : <MenuUnfoldOutlined />}
-        className="header-icon"
-        onClick={handleClick}
-      />
+      {viewSider ? (
+        <MenuFoldOutlined className="header-icon" onClick={handleClick} />
+      ) : (
+        <MenuUnfoldOutlined className="header-icon" onClick={handleClick} />
+      )}
       <span style={{ marginLeft: 24 }}>在线人数: {session.userCount}</span>
       {session.hasBasic ? (
         <Popconfirm
@@ -42,10 +42,10 @@ export default function AppHeader() {
           placement="bottomRight"
           onConfirm={doLogout}
         >
-          <MzIcon iconType="icon-user" className="header-icon float-right" />
+          <MzIcon type="icon-user" className="header-icon float-right" />
         </Popconfirm>
       ) : (
-        <MzIcon iconType="icon-login" className="header-icon float-right" onClick={showLogin} />
+        <MzIcon type="icon-login" className="header-icon float-right" onClick={showLogin} />
       )}
     </Layout.Header>
   )

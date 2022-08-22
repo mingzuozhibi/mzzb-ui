@@ -13,10 +13,6 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
-}
-
-#root {
   font-family: 'Monospaced Number', 'Chinese Quote', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial,
     sans-serif;
@@ -24,6 +20,12 @@ body {
   line-height: 1.5;
   color: rgba(0, 0, 0, 0.65);
   background-color: #fff;
+}
+
+.ant-input-prefix {
+  .anticon {
+    color: rgba(0, 0, 0, 0.25);
+  }
 }
 
 .input-wrapper {

@@ -6,14 +6,6 @@ $sider-menu-width: 200px;
 $style-background-color: #fff;
 
 .app-root {
-  .svg-icon {
-    width: 1em;
-    height: 1em;
-    vertical-align: -0.15em;
-    fill: currentColor;
-    overflow: hidden;
-  }
-
   .custom-header {
     padding: 4px;
     font-size: 16px;
@@ -31,11 +23,6 @@ $style-background-color: #fff;
       text-align: center;
       background: rgba(255, 255, 255, 0.2);
       margin: 16px;
-    }
-
-    .sider-icon {
-      font-size: 14px;
-      margin-right: 10px;
     }
   }
 

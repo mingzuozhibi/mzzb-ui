@@ -5,23 +5,23 @@ import { NavLink } from 'react-router-dom'
 
 export function buildItems(userRoles: string[]): ItemType[] {
   return [
-    { label: '推荐列表', icon: <MzIcon iconType="icon-yinghua" />, key: '/disc_groups' },
-    { label: '上架追踪', icon: <MzIcon iconType="icon-yinghua" />, key: '/disc_coming' },
+    { label: '推荐列表', icon: <MzIcon type="icon-yinghua" />, key: '/disc_groups' },
+    { label: '上架追踪', icon: <MzIcon type="icon-yinghua" />, key: '/disc_coming' },
     {
       label: '用户管理',
-      icon: <MzIcon iconType="icon-user" />,
+      icon: <MzIcon type="icon-user" />,
       key: '/users',
       disabled: !userRoles.includes('ROLE_ADMIN'),
     },
     { label: '系统日志', icon: <BarChartOutlined />, key: '/console' },
     {
       label: '名作之壁吧',
-      icon: <MzIcon iconType="icon-social-tieba" />,
+      icon: <MzIcon type="icon-social-tieba" />,
       key: 'https://tieba.baidu.com/f?kw=%E5%90%8D%E4%BD%9C%E4%B9%8B%E5%A3%81',
     },
     {
       label: '壁吧专楼吧',
-      icon: <MzIcon iconType="icon-social-tieba" />,
+      icon: <MzIcon type="icon-social-tieba" />,
       key: 'https://tieba.baidu.com/f?kw=%E5%A3%81%E5%90%A7%E4%B8%93%E6%A5%BC',
     },
     {

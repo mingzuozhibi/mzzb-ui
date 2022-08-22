@@ -1,5 +1,4 @@
 import { useAppDispatch, useAppSelector } from '#A/hooks'
-import { MzIcon } from '#C/icon/MzIcon'
 import { MzLink } from '#C/link/MzLink'
 import { setViewLogin } from '#F/layout'
 import { sessionLogin } from '#F/session'
@@ -55,7 +54,7 @@ export default function AppFooter() {
       >
         <div style={{ padding: 10 }}>
           <Input
-            prefix={<MzIcon iconNode={<UserOutlined style={{ color: 'rgba(0,0,0,.25)' }} />} />}
+            prefix={<UserOutlined />}
             autoFocus={true}
             onChange={(e) => {
               form.current.username = e.target.value.trim()
@@ -66,7 +65,7 @@ export default function AppFooter() {
         </div>
         <div style={{ padding: 10 }}>
           <Input
-            prefix={<MzIcon iconNode={<KeyOutlined style={{ color: 'rgba(0,0,0,.25)' }} />} />}
+            prefix={<KeyOutlined />}
             type="password"
             onChange={(e) => {
               form.current.password = e.target.value.trim()
