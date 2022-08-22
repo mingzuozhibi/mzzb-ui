@@ -14,3 +14,9 @@ export interface ILoad {
   loading: boolean
   refresh: () => void
 }
+
+export interface IState {
+  error?: Error
+  loading: boolean
+  refresh: () => void
+}

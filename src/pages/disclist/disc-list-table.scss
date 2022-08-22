@@ -1,0 +1,58 @@
+@import '../_function.scss';
+
+.disc-list-table table {
+  table-layout: fixed;
+
+  td,
+  th {
+    &.index {
+      @include columnCenter();
+      @include columnWidth(40px, 35px);
+      @include columnHide(400px);
+    }
+
+    &.rank {
+      @include columnWidth(130px, 115px);
+    }
+
+    &.today-pt {
+      @include columnHideWidth(750px, 75px);
+    }
+
+    &.total-pt {
+      @include columnWidth(75px, 68px);
+      @include columnHide(500px);
+    }
+
+    &.guess-pt {
+      @include columnHideWidth(675px, 75px);
+    }
+
+    &.release {
+      @include columnWidth(65px, 55px);
+      @include columnHide(550px);
+    }
+  }
+
+  td {
+    &.rank {
+      word-break: keep-all;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    &.today-pt,
+    &.total-pt,
+    &.guess-pt {
+      word-break: keep-all;
+      white-space: nowrap;
+      text-align: right;
+    }
+
+    &.release {
+      text-align: right;
+    }
+  }
+}

@@ -5,10 +5,12 @@ import { useData } from '#H/useData'
 import { useLocal } from '#H/useLocal'
 import { compareSurp, compareTitle, discTitle } from '#P/@funcs'
 import { IDisc, IGroupItems } from '#T/disc'
+import { linkToGroup, linkToGroupViewList } from '#T/link'
 import { composeCompares } from '#U/compare'
 import { formatTimeout } from '#U/format'
 import { DeleteOutlined, FileAddOutlined } from '@ant-design/icons'
-import { Button, Tabs } from 'antd'
+import { Button, Space, Tabs } from 'antd'
+import dayjs from 'dayjs'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import CreateDisc from './CreateDisc'
 import './DiscGroupItems.scss'
@@ -76,13 +78,11 @@ export default function DiscGroupItems() {
   const title = group ? `管理碟片：${group.title}` : '载入中'
 
   const extraCaption = group ? (
-    <>
-      <span style={{ marginRight: 8 }}>更新于{formatTimeout(group.modifyTime)}前</span>
-      <Button style={{ marginRight: 8 }} onClick={() => navigate(`/disc_groups/${group.key}`)}>
-        编辑列表
-      </Button>
-      <Button onClick={() => navigate(`/discs/disc_groups/${group.key}`)}>浏览碟片</Button>
-    </>
+    <Space>
+      <span>更新于 {dayjs(group.modifyTime).fromNow()}</span>
+      <Button onClick={() => navigate(linkToGroup(group.key))}>编辑列表</Button>
+      <Button onClick={() => navigate(linkToGroupViewList(group.key))}>浏览碟片</Button>
+    </Space>
   ) : null
 
   return (

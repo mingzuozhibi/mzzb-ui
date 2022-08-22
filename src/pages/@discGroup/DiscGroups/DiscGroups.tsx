@@ -4,6 +4,7 @@ import { useLocal } from '#H/useLocal'
 import { useTitle } from '#H/useTitle'
 import { InjectRole, injectRole } from '#P/@inject'
 import { IGroup } from '#T/disc'
+import { linkToGroupViewList } from '#T/link'
 import { viewTypes } from '#T/meta'
 import { composeCompares } from '#U/compare'
 import { isJustUpdated } from '#U/domain'
@@ -103,7 +104,7 @@ function formatLinkedTitle(row: IGroup) {
   let color = isJustUpdated(row.modifyTime) ? 'red' : '#C67532'
   return (
     <>
-      <Link to={`/discs/disc_groups/${row.key}`}>{row.title}</Link>
+      <Link to={linkToGroupViewList(row.key)}>{row.title}</Link>
       <span style={{ color, marginLeft: 8 }}>({row.discCount})</span>
     </>
   )

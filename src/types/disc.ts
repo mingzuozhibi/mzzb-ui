@@ -24,7 +24,7 @@ export interface IGroup {
   enabled: boolean
   viewType: string
   discCount: number
-  modifyTime: number
+  modifyTime?: number
 }
 
 export interface IGroupItems extends Omit<IGroup, 'discCount'> {
