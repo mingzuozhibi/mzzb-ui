@@ -1,7 +1,6 @@
 import { SearchOutlined } from '@ant-design/icons'
 import { Button, Empty, Input } from 'antd'
 import classNames from 'classnames'
-import dayjs from 'dayjs'
 import './disc-list.scss'
 
 import { MzTopbar } from '#C/topbar/MzTopbar'
@@ -9,6 +8,7 @@ import { useLocal } from '#H/useLocal'
 import { IDisc } from '#T/disc'
 import { IState } from '#T/result'
 
+import { formatTimeout } from '#U/format'
 import { DiscListTable } from './disc-list-table'
 
 interface Props {
@@ -57,7 +57,7 @@ export function DiscList(props: Props) {
       <MzTopbar
         title={title}
         error={state.error?.message}
-        subTitle={updateOn && <span>更新于 {dayjs(updateOn).fromNow()}</span>}
+        subTitle={<span>更新于 {formatTimeout(updateOn)}</span>}
         extra={lastButtons}
       />
       {quMode && (

@@ -1,20 +1,18 @@
 @import '../../_function.scss';
 
-#root .Users {
+.Users {
+  max-width: 500px;
+
   .table {
     th,
     td {
       @include columnCenter();
 
       &.id {
-        @include columnWidth(40px, 40px);
+        @include columnWidth(40px, 35px);
       }
 
       &.enabled {
-        @include columnWidth(45px, 40px);
-      }
-
-      &.command {
         @include columnWidth(45px, 40px);
       }
     }

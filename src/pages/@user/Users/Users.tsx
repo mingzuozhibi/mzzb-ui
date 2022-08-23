@@ -4,7 +4,6 @@ import { useTitle } from '#H/useTitle'
 import { useWidth } from '#H/useWidth'
 import { IUser } from '#T/user'
 import { isEmpty } from '#U/domain'
-import { EditOutlined } from '@ant-design/icons'
 import { Alert, Button } from 'antd'
 import dayjs from 'dayjs'
 import { useMemo } from 'react'
@@ -52,7 +51,7 @@ function getColumns(width: number): MzColumn<IUser>[] {
     {
       key: 'username',
       title: `用户名`,
-      format: (row) => row.username,
+      format: (row) => formatUsername(row),
     },
     {
       key: 'enabled',
@@ -70,12 +69,11 @@ function getColumns(width: number): MzColumn<IUser>[] {
       format: (row) => formatLastLoggedIn(row, width),
       tdClass: (row) => (justLogged(row) ? 'info' : ''),
     },
-    {
-      key: 'command',
-      title: '操作',
-      format: formatCommand,
-    },
   ]
+}
+
+function formatUsername(row: IUser) {
+  return <Link to={`/users/${row.id}`}>{row.username}</Link>
 }
 
 function formatRegisterDate(row: IUser, width: number) {
@@ -86,21 +84,11 @@ function formatRegisterDate(row: IUser, width: number) {
 
 function formatLastLoggedIn(row: IUser, width: number) {
   if (isEmpty(row.lastLoggedIn)) return '从未登入'
-  return width <= 500
-    ? dayjs(row.lastLoggedIn).format('MM-DD HH:mm')
-    : dayjs(row.lastLoggedIn).format('YYYY-MM-DD HH:mm:ss')
+  return dayjs(row.lastLoggedIn).fromNow()
 }
 
 function justLogged(row: IUser) {
   if (!row.lastLoggedIn) return false
   const time = new Date(row.lastLoggedIn).getTime()
   return Date.now() - time < 2 * 86400 * 1000
-}
-
-function formatCommand(row: IUser) {
-  return (
-    <Link to={`/users/${row.id}`}>
-      <EditOutlined />
-    </Link>
-  )
 }
