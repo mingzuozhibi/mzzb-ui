@@ -15,7 +15,7 @@ import UserDetail from '#P/@user/UserDetail/UserDetail'
 import Users from '#P/@user/Users/Users'
 import NotFound from '#P/notfound/NotFound'
 
-import DiscListOfGroup from '#P/disclist/DiscListOfGroup'
+import DiscGroupViewList from '#P/disc-group-view-list/DiscGroupViewList'
 
 const LazyDiscRecords = lazy(
   () => import(/* webpackChunkName: "disc_records" */ '#P/@disc/DiscRecords/DiscRecords')
@@ -28,7 +28,6 @@ export const routes = (
 
       <Route path="/disc_groups" element={<DiscGroups />} />
       <Route path="/disc_groups/add" element={<DiscGroupAdd />} />
-      <Route path="/disc_groups/:key" element={<DiscGroupDetail />} />
       <Route path="/discs/asin/:asin" element={<DiscDetailOfAsin />} />
       <Route path="/discs/:id" element={<DiscDetailOfId />} />
       <Route path="/discs/:id/records" element={<LazyDiscRecords />} />
@@ -38,11 +37,39 @@ export const routes = (
       <Route path="/users/:id" element={<UserDetail />} />
       <Route path="/console" element={<Console />} />
 
-      <Route path="/disclist/group/:key/edit" element={<DiscGroupItems />} />
-
-      <Route path="/disclist/group/:key" element={<DiscListOfGroup />} />
+      <Route path="/disc_groups/:key" element={<DiscGroupDetail />} />
+      <Route path="/disc_groups/:key/discs" element={<DiscGroupViewList />} />
+      <Route path="/disc_groups/:key/discs/edit" element={<DiscGroupItems />} />
 
       <Route path="*" element={<NotFound />} />
     </Routes>
   </Suspense>
 )
+
+export function linkToDisc(id: number) {
+  return `/discs/${id}`
+}
+
+export function linkToRecords(id: number) {
+  return `/discs/${id}/records`
+}
+
+export function linkToAsin(asin: string) {
+  return `/discs/asin/${asin}`
+}
+
+export function linkToAmazon(asin: string) {
+  return `https://www.amazon.co.jp/dp/${asin}`
+}
+
+export function linkToGroup(key: string) {
+  return `/disc_groups/${key}`
+}
+
+export function linkToGroupViewList(key: string) {
+  return `/disc_groups/${key}/discs`
+}
+
+export function linkToGroupEditList(key: string) {
+  return `/disc_groups/${key}/discs/edit`
+}

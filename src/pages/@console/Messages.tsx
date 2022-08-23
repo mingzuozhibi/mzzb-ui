@@ -1,3 +1,8 @@
+import { Alert, Button, CheckboxOptionType, Input } from 'antd'
+import { useEffect, useState } from 'react'
+import './Messages.scss'
+
+import { linkToAsin } from '#A/routes'
 import { MzCheckbox } from '#C/checkbox/MzCheckbox'
 import { MzDate } from '#C/date/MzDate'
 import { MzLink } from '#C/link/MzLink'
@@ -5,9 +10,6 @@ import { MzPagination } from '#C/pagination/MzPagination'
 import { MzColumn, MzTable } from '#C/table/MzTable'
 import { useData } from '#H/useData'
 import { UrlBuilder } from '#U/urlBuilder'
-import { Alert, Button, CheckboxOptionType, Input } from 'antd'
-import { useEffect, useState } from 'react'
-import './Messages.scss'
 
 interface IMsg {
   id: number
@@ -112,7 +114,7 @@ function getCols(): MzColumn<IMsg>[] {
     {
       key: 'time',
       title: '时间',
-      format: (t) => <MzDate time={t.createOn} />,
+      format: (row) => <MzDate time={row.createOn} />,
     },
     {
       key: 'text',
@@ -122,29 +124,30 @@ function getCols(): MzColumn<IMsg>[] {
   ]
 }
 
-function trClass(t: IMsg) {
+function trClass(row: IMsg) {
   return {
-    debug: t.type === 'DEBUG',
-    info: t.type === 'NOTIFY',
-    success: t.type === 'SUCCESS',
-    warning: t.type === 'WARNING',
-    danger: t.type === 'ERROR',
+    debug: row.type === 'DEBUG',
+    info: row.type === 'NOTIFY',
+    success: row.type === 'SUCCESS',
+    warning: row.type === 'WARNING',
+    danger: row.type === 'ERROR',
   }
 }
 
 const re = /[\(\[]([A-Z0-9]{10})[\)\]]/
 
-function formatText(t: IMsg) {
-  const result = re.exec(t.text)
+function formatText(row: IMsg) {
+  const result = re.exec(row.text)
   if (result) {
+    const asin = result[1]
     return (
       <>
-        {t.text.slice(0, result.index + 1)}
-        <MzLink href={`/discs/asin/${result[1]}`} title={result[1]} />
-        {t.text.slice(result.index + 11)}
+        {row.text.slice(0, result.index + 1)}
+        <MzLink href={linkToAsin(asin)} title={asin} />
+        {row.text.slice(result.index + 11)}
       </>
     )
   } else {
-    return t.text
+    return row.text
   }
 }

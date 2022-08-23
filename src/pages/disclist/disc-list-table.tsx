@@ -1,8 +1,11 @@
+import { Link } from 'react-router-dom'
+import './disc-list-table.scss'
+
+import { linkToDisc, linkToRecords } from '#A/routes'
 import { MyColumn, MyTable } from '#C/table/MyTable'
 import { IDisc } from '#T/disc'
 import { composeCompares, safeCompare } from '#U/compare'
-import { Link } from 'react-router-dom'
-import './disc-list-table.scss'
+
 import { discRank, discTitle } from './disc-utils'
 
 interface Props {
@@ -26,51 +29,51 @@ function buildColumns(): MyColumn<IDisc>[] {
     {
       key: 'index',
       title: '#',
-      format: (_, idx) => idx + 1,
+      format: (row, idx) => idx + 1,
     },
     {
       key: 'rank',
       title: '日亚排名',
-      format: (disc) => <Link to={`/discs/${disc.id}/records`}>{discRank(disc)}</Link>,
+      format: (row) => <Link to={linkToRecords(row.id)}>{discRank(row)}</Link>,
       tdClass: tdClassRank,
       compare: compareRank(),
     },
     {
       key: 'today-pt',
       title: '日增',
-      format: (disc) => formatPt(disc.todayPt),
+      format: (row) => formatPt(row.todayPt),
       compare: comparePt((disc) => disc.todayPt),
     },
     {
       key: 'total-pt',
       title: '累积',
-      format: (disc) => formatPt(disc.totalPt),
+      format: (row) => formatPt(row.totalPt),
       compare: comparePt((disc) => disc.totalPt),
     },
     {
       key: 'guess-pt',
       title: '预测',
-      format: (disc) => formatPt(disc.guessPt),
+      format: (row) => formatPt(row.guessPt),
       compare: comparePt((disc) => disc.guessPt),
     },
     {
       key: 'release',
       title: '发售',
-      format: (disc) => `${disc.surplusDays}天`,
+      format: (row) => `${row.surplusDays}天`,
       compare: composeCompares([compareRelease, compareTitle]),
     },
     {
       key: 'title',
       title: '碟片标题',
-      format: (disc) => <Link to={`/discs/${disc.id}`}>{discTitle(disc)}</Link>,
+      format: (row) => <Link to={linkToDisc(row.id)}>{discTitle(row)}</Link>,
       compare: compareTitle,
     },
   ]
 }
 
-function tdClassRank(disc: IDisc) {
-  if (disc.updateTime === undefined) return null
-  const timeout = Date.now() - disc.updateTime
+function tdClassRank(row: IDisc) {
+  if (row.updateTime === undefined) return null
+  const timeout = Date.now() - row.updateTime
   if (timeout < 3600000) return 'success'
   if (timeout > 21960000) return 'warning'
   return null
@@ -78,7 +81,7 @@ function tdClassRank(disc: IDisc) {
 
 function compareRank() {
   return safeCompare<IDisc, number>({
-    apply: (disc) => disc.thisRank,
+    apply: (row) => row.thisRank,
     compare: (a, b) => a - b,
   })
 }

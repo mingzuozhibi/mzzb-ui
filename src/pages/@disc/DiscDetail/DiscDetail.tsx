@@ -1,3 +1,4 @@
+import { linkToAmazon, linkToRecords } from '#A/routes'
 import { MzHeader } from '#C/header/MzHeader'
 import { MzLink } from '#C/link/MzLink'
 import { UseData } from '#H/useData'
@@ -233,9 +234,9 @@ function formatRank(rank?: number) {
 }
 
 function toAmazon(asin: string) {
-  return <MzLink href={`http://www.amazon.co.jp/dp/${asin}`} title="点击打开日亚页面" />
+  return <MzLink href={linkToAmazon(asin)} title="点击打开日亚页面" />
 }
 
 function toRecords(id: number) {
-  return <Link to={`/discs/${id}/records`}>点击查看所有排名</Link>
+  return <Link to={linkToRecords(id)}>点击查看所有排名</Link>
 }

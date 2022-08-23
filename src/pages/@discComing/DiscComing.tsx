@@ -1,13 +1,15 @@
+import { QuestionOutlined } from '@ant-design/icons'
+import { Alert } from 'antd'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import './DiscComing.scss'
+
+import { linkToAsin } from '#A/routes'
 import { MzDate } from '#C/date/MzDate'
 import { MzLink } from '#C/link/MzLink'
 import { MzPagination } from '#C/pagination/MzPagination'
 import { MzColumn, MzTable } from '#C/table/MzTable'
 import { useData } from '#H/useData'
 import { useTitle } from '#H/useTitle'
-import { QuestionOutlined } from '@ant-design/icons'
-import { Alert } from 'antd'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
-import './DiscComing.scss'
 
 interface DiscComing {
   id: number
@@ -52,19 +54,19 @@ function getColumns(): MzColumn<DiscComing>[] {
     {
       key: 'asin',
       title: 'ASIN',
-      format: (t) => t.asin,
+      format: (row) => row.asin,
       tdClass: createJustUpdateTdClass(),
     },
     {
       key: 'createOn',
       title: '抓取时间',
-      format: (t) => <MzDate time={t.createOn} />,
+      format: (row) => <MzDate time={row.createOn} />,
       tdClass: createJustUpdateTdClass(),
     },
     {
       key: 'followed',
       title: <QuestionOutlined />,
-      format: (t) => (t.tracked ? <Link to={`/discs/asin/${t.asin}`}>已有</Link> : '暂无'),
+      format: (row) => (row.tracked ? <Link to={linkToAsin(row.asin)}>已有</Link> : '暂无'),
     },
     {
       key: 'type',
@@ -74,14 +76,14 @@ function getColumns(): MzColumn<DiscComing>[] {
     {
       key: 'title',
       title: '碟片标题',
-      format: (t) => <MzLink href={`http://www.amazon.co.jp/dp/${t.asin}`} title={t.title} />,
+      format: (row) => <MzLink href={`http://www.amazon.co.jp/dp/${row.asin}`} title={row.title} />,
     },
   ]
 }
 
-function formatType(t: DiscComing) {
-  if (t.type === undefined) return '---'
-  return t.type === 'Blu-ray' ? 'BD' : t.type
+function formatType(row: DiscComing) {
+  if (row.type === undefined) return '---'
+  return row.type === 'Blu-ray' ? 'BD' : row.type
 }
 
 function createJustUpdateTdClass() {

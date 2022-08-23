@@ -47,28 +47,28 @@ function getColumns(width: number): MzColumn<IUser>[] {
     {
       key: 'id',
       title: 'ID',
-      format: (t) => t.id,
+      format: (row) => row.id,
     },
     {
       key: 'username',
       title: `用户名`,
-      format: (t) => t.username,
+      format: (row) => row.username,
     },
     {
       key: 'enabled',
       title: '启用',
-      format: (t) => (t.enabled ? '是' : '--'),
+      format: (row) => (row.enabled ? '是' : '--'),
     },
     {
       key: 'registerDate',
       title: '注册时间',
-      format: (t) => formatRegisterDate(t, width),
+      format: (row) => formatRegisterDate(row, width),
     },
     {
       key: 'lastLoggedIn',
       title: '最后登入',
-      format: (t) => formatLastLoggedIn(t, width),
-      tdClass: (t) => (justLogged(t) ? 'info' : ''),
+      format: (row) => formatLastLoggedIn(row, width),
+      tdClass: (row) => (justLogged(row) ? 'info' : ''),
     },
     {
       key: 'command',
@@ -78,28 +78,28 @@ function getColumns(width: number): MzColumn<IUser>[] {
   ]
 }
 
-function formatRegisterDate(t: IUser, width: number) {
+function formatRegisterDate(row: IUser, width: number) {
   return width <= 500
-    ? dayjs(t.registerDate).format('YYYY-MM-DD')
-    : dayjs(t.registerDate).format('YYYY-MM-DD HH:mm:ss')
+    ? dayjs(row.registerDate).format('YYYY-MM-DD')
+    : dayjs(row.registerDate).format('YYYY-MM-DD HH:mm:ss')
 }
 
-function formatLastLoggedIn(t: IUser, width: number) {
-  if (isEmpty(t.lastLoggedIn)) return '从未登入'
+function formatLastLoggedIn(row: IUser, width: number) {
+  if (isEmpty(row.lastLoggedIn)) return '从未登入'
   return width <= 500
-    ? dayjs(t.lastLoggedIn).format('MM-DD HH:mm')
-    : dayjs(t.lastLoggedIn).format('YYYY-MM-DD HH:mm:ss')
+    ? dayjs(row.lastLoggedIn).format('MM-DD HH:mm')
+    : dayjs(row.lastLoggedIn).format('YYYY-MM-DD HH:mm:ss')
 }
 
-function justLogged(t: IUser) {
-  if (!t.lastLoggedIn) return false
-  const time = new Date(t.lastLoggedIn).getTime()
+function justLogged(row: IUser) {
+  if (!row.lastLoggedIn) return false
+  const time = new Date(row.lastLoggedIn).getTime()
   return Date.now() - time < 2 * 86400 * 1000
 }
 
-function formatCommand(t: IUser) {
+function formatCommand(row: IUser) {
   return (
-    <Link to={`/users/${t.id}`}>
+    <Link to={`/users/${row.id}`}>
       <EditOutlined />
     </Link>
   )

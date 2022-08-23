@@ -1,17 +1,19 @@
+import { SearchOutlined } from '@ant-design/icons'
+import { Button, Empty, Input } from 'antd'
+import classNames from 'classnames'
+import dayjs from 'dayjs'
+import './disc-list.scss'
+
 import { MzTopbar } from '#C/topbar/MzTopbar'
 import { useLocal } from '#H/useLocal'
 import { IDisc } from '#T/disc'
 import { IState } from '#T/result'
-import { SearchOutlined } from '@ant-design/icons'
-import { Button, Input } from 'antd'
-import classNames from 'classnames'
-import dayjs from 'dayjs'
+
 import { DiscListTable } from './disc-list-table'
-import './disc-list.scss'
 
 interface Props {
   name: string
-  rows: IDisc[]
+  rows?: IDisc[]
   state: IState
   title: string
   buttons?: JSX.Element[]
@@ -70,11 +72,15 @@ export function DiscList(props: Props) {
           style={{ marginBottom: 8 }}
         />
       )}
-      <div className="pc-mode-warpper">
-        <div className={classNames({ 'pc-mode': pcMode })}>
-          <DiscListTable name={name} rows={lastRows!} />
+      {lastRows === undefined ? (
+        <Empty />
+      ) : (
+        <div className="pc-mode-warpper">
+          <div className={classNames({ 'pc-mode': pcMode })}>
+            <DiscListTable name={name} rows={lastRows!} />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   )
 }
