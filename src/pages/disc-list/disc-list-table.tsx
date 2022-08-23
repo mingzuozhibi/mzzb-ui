@@ -4,9 +4,9 @@ import './disc-list-table.scss'
 import { linkToDisc, linkToRecords } from '#A/routes'
 import { MyColumn, MyTable } from '#C/table/MyTable'
 import { IDisc } from '#T/disc'
-import { composeCompares, safeCompare } from '#U/compare'
+import { safeCompare } from '#U/compare'
 
-import { discRank, discTitle } from './disc-utils'
+import { compareDisc, compareTitle, discRank, discTitle } from './disc-utils'
 
 interface Props {
   name: string
@@ -60,7 +60,7 @@ function buildColumns(): MyColumn<IDisc>[] {
       key: 'release',
       title: '发售',
       format: (row) => `${row.surplusDays}天`,
-      compare: composeCompares([compareRelease, compareTitle]),
+      compare: compareDisc,
     },
     {
       key: 'title',
@@ -92,12 +92,4 @@ function formatPt(pt?: number) {
 
 function comparePt(apply: (disc: IDisc) => number | undefined) {
   return safeCompare<IDisc, number>({ apply, compare: (a, b) => b - a })
-}
-
-function compareRelease(a: IDisc, b: IDisc) {
-  return a.surplusDays - b.surplusDays
-}
-
-function compareTitle(a: IDisc, b: IDisc) {
-  return discTitle(a).localeCompare(discTitle(b))
 }
