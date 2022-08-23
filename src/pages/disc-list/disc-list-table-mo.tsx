@@ -1,5 +1,6 @@
+import { MinusOutlined, UpOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
-import './disc-list-table.scss'
+import './disc-list-table-mo.scss'
 
 import { linkToDisc, linkToRecords } from '#A/routes'
 import { MyColumn, MyTable } from '#C/table/MyTable'
@@ -16,10 +17,10 @@ interface Props {
 
 const cols = buildColumns()
 
-export function DiscListTable(props: Props) {
+export function DiscListTableMo(props: Props) {
   const { name, rows } = props
   return (
-    <div className="disc-list-table">
+    <div className="disc-list-table-mo">
       <MyTable name={name} rows={rows} cols={cols} defaultSort={compareRank()} />
     </div>
   )
@@ -29,43 +30,87 @@ function buildColumns(): MyColumn<IDisc>[] {
   return [
     {
       key: 'index',
-      title: '#',
+      title: (
+        <div>
+          &nbsp;
+          <br />
+          #
+          <br />
+          &nbsp;
+        </div>
+      ),
       format: (row, idx) => idx + 1,
     },
     {
       key: 'rank',
-      title: '日亚排名',
+      title: (
+        <div>
+          当前
+          <br />
+          <UpOutlined />
+          <br />
+          前回
+        </div>
+      ),
       format: (row) => <Link to={linkToRecords(row.id)}>{discRank(row)}</Link>,
       tdClass: tdClassRank,
       compare: compareRank(),
     },
     {
-      key: 'today-pt',
-      title: '日增',
-      format: (row) => formatPt(row.todayPt),
-      compare: comparePt((disc) => disc.todayPt),
-    },
-    {
-      key: 'total-pt',
-      title: '累积',
-      format: (row) => formatPt(row.totalPt),
+      key: 'point',
+      title: (
+        <div>
+          日增
+          <br />
+          累积
+          <br />
+          预测
+        </div>
+      ),
+      format: (row) => (
+        <div>
+          +{formatPt(row.todayPt)}
+          <br />
+          {formatPt(row.totalPt)}
+          <br />
+          {formatPt(row.guessPt)}
+        </div>
+      ),
       compare: comparePt((disc) => disc.totalPt),
     },
     {
-      key: 'guess-pt',
-      title: '预测',
-      format: (row) => formatPt(row.guessPt),
-      compare: comparePt((disc) => disc.guessPt),
-    },
-    {
       key: 'release',
-      title: '发售',
-      format: (row) => `${row.surplusDays}天`,
+      title: (
+        <div>
+          发售
+          <br />
+          <MinusOutlined />
+          <br />
+          类型
+        </div>
+      ),
+      format: (row) => (
+        <div>
+          {row.surplusDays}天
+          <br />
+          <MinusOutlined />
+          <br />
+          {row.discType}
+        </div>
+      ),
       compare: compareDisc,
     },
     {
       key: 'title',
-      title: '碟片标题',
+      title: (
+        <div>
+          &nbsp;
+          <br />
+          碟片标题
+          <br />
+          &nbsp;
+        </div>
+      ),
       format: (row) => <Link to={linkToDisc(row.id)}>{discTitle(row)}</Link>,
       compare: compareTitle,
     },
@@ -98,5 +143,13 @@ function comparePt(apply: (disc: IDisc) => number | undefined) {
 function discRank(disc: IDisc) {
   const thisRank = disc.thisRank ? formatNumber(disc.thisRank, '****') : '----'
   const prevRank = disc.prevRank ? formatNumber(disc.prevRank, '****') : '----'
-  return `${thisRank}位/${prevRank}位`
+  return (
+    <div>
+      {thisRank}位
+      <br />
+      <UpOutlined />
+      <br />
+      {prevRank}位
+    </div>
+  )
 }

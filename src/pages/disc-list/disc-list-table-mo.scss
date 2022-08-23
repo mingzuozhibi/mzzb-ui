@@ -1,0 +1,47 @@
+@import '../_function.scss';
+
+.disc-list-table-mo table {
+  table-layout: fixed;
+
+  td,
+  th {
+    &.index {
+      @include columnCenter();
+      @include columnWidth(40px, 35px);
+      @include columnHide(400px);
+    }
+
+    &.rank {
+      @include columnWidth(70px, 65px);
+    }
+
+    &.point {
+      @include columnWidth(70px, 65px);
+    }
+
+    &.release {
+      @include columnWidth(65px, 60px);
+    }
+  }
+
+  td {
+    &.rank {
+      word-break: keep-all;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    &.point {
+      word-break: keep-all;
+      white-space: nowrap;
+      text-align: right;
+      padding: 8px;
+    }
+
+    &.release {
+      text-align: center;
+    }
+  }
+}
