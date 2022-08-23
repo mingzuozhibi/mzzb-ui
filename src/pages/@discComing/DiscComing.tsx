@@ -1,10 +1,10 @@
 import { QuestionOutlined } from '@ant-design/icons'
 import { Alert } from 'antd'
+import dayjs from 'dayjs'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import './DiscComing.scss'
 
 import { linkToAsin } from '#A/routes'
-import { MzDate } from '#C/date/MzDate'
 import { MzLink } from '#C/link/MzLink'
 import { MzPagination } from '#C/pagination/MzPagination'
 import { MzColumn, MzTable } from '#C/table/MzTable'
@@ -60,7 +60,13 @@ function getColumns(): MzColumn<DiscComing>[] {
     {
       key: 'createOn',
       title: '抓取时间',
-      format: (row) => <MzDate time={row.createOn} />,
+      format: (row) => (
+        <span>
+          {dayjs(row.createOn).format('MM/DD')}
+          <br />
+          {dayjs(row.createOn).format('HH:mm:ss')}
+        </span>
+      ),
       tdClass: createJustUpdateTdClass(),
     },
     {

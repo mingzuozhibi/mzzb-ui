@@ -1,10 +1,10 @@
 import { Alert, Button, CheckboxOptionType, Input } from 'antd'
+import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
 import './Messages.scss'
 
 import { linkToAsin } from '#A/routes'
 import { MzCheckbox } from '#C/checkbox/MzCheckbox'
-import { MzDate } from '#C/date/MzDate'
 import { MzLink } from '#C/link/MzLink'
 import { MzPagination } from '#C/pagination/MzPagination'
 import { MzColumn, MzTable } from '#C/table/MzTable'
@@ -114,7 +114,13 @@ function getCols(): MzColumn<IMsg>[] {
     {
       key: 'time',
       title: '时间',
-      format: (row) => <MzDate time={row.createOn} />,
+      format: (row) => (
+        <span>
+          {dayjs(row.createOn).format('MM/DD')}
+          <br />
+          {dayjs(row.createOn).format('HH:mm:ss')}
+        </span>
+      ),
     },
     {
       key: 'text',
