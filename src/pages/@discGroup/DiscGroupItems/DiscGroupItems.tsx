@@ -1,3 +1,10 @@
+import { DeleteOutlined, FileAddOutlined } from '@ant-design/icons'
+import { Button, Space, Tabs } from 'antd'
+import dayjs from 'dayjs'
+import { Link, useNavigate, useParams } from 'react-router-dom'
+import './DiscGroupItems.scss'
+
+import { linkToDisc, linkToGroup, linkToGroupViewList } from '#A/routes'
 import { MzHeader } from '#C/header/MzHeader'
 import { MzColumn, MzTable } from '#C/table/MzTable'
 import { useAjax } from '#H/useAjax'
@@ -6,12 +13,8 @@ import { useLocal } from '#H/useLocal'
 import { compareSurp, compareTitle, discTitle } from '#P/@funcs'
 import { IDisc, IGroupItems } from '#T/disc'
 import { composeCompares } from '#U/compare'
-import { formatTimeout } from '#U/format'
-import { DeleteOutlined, FileAddOutlined } from '@ant-design/icons'
-import { Button, Tabs } from 'antd'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+
 import CreateDisc from './CreateDisc'
-import './DiscGroupItems.scss'
 import SearchDisc from './SearchDisc'
 
 export default function DiscGroupItems() {
@@ -61,7 +64,7 @@ export default function DiscGroupItems() {
     return {
       key: 'command',
       title: '添加',
-      format: (t: IDisc) => <FileAddOutlined onClick={() => doPushDisc(group!.id, t.id)} />,
+      format: (row: IDisc) => <FileAddOutlined onClick={() => doPushDisc(group!.id, row.id)} />,
     }
   }
 
@@ -69,20 +72,18 @@ export default function DiscGroupItems() {
     return {
       key: 'command',
       title: '移除',
-      format: (t: IDisc) => <DeleteOutlined onClick={() => doDropDisc(group!.id, t.id)} />,
+      format: (row: IDisc) => <DeleteOutlined onClick={() => doDropDisc(group!.id, row.id)} />,
     }
   }
 
   const title = group ? `管理碟片：${group.title}` : '载入中'
 
   const extraCaption = group ? (
-    <>
-      <span style={{ marginRight: 8 }}>更新于{formatTimeout(group.modifyTime)}前</span>
-      <Button style={{ marginRight: 8 }} onClick={() => navigate(`/disc_groups/${group.key}`)}>
-        编辑列表
-      </Button>
-      <Button onClick={() => navigate(`/discs/disc_groups/${group.key}`)}>浏览碟片</Button>
-    </>
+    <Space>
+      <span>更新于 {dayjs(group.modifyTime).fromNow()}</span>
+      <Button onClick={() => navigate(linkToGroup(group.key))}>编辑列表</Button>
+      <Button onClick={() => navigate(linkToGroupViewList(group.key))}>浏览碟片</Button>
+    </Space>
   ) : null
 
   return (
@@ -117,13 +118,13 @@ function getColumns(extraColumn: MzColumn<IDisc>): MzColumn<IDisc>[] {
     {
       key: 'asin',
       title: 'ASIN',
-      format: (t) => t.asin,
+      format: (row) => row.asin,
       compare: (a, b) => a.asin.localeCompare(b.asin),
     },
     {
       key: 'surp',
       title: '天数',
-      format: (t) => `${t.surplusDays}天`,
+      format: (row) => `${row.surplusDays}天`,
       compare: composeCompares([compareSurp, compareTitle]),
     },
     {
@@ -136,6 +137,6 @@ function getColumns(extraColumn: MzColumn<IDisc>): MzColumn<IDisc>[] {
   ]
 }
 
-function formatTitle(disc: IDisc) {
-  return <Link to={`/discs/${disc.id}`}>{discTitle(disc)}</Link>
+function formatTitle(row: IDisc) {
+  return <Link to={linkToDisc(row.id)}>{discTitle(row)}</Link>
 }

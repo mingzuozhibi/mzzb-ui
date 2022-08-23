@@ -1,3 +1,10 @@
+import { EditOutlined, UnorderedListOutlined } from '@ant-design/icons'
+import { Alert, Button } from 'antd'
+import dayjs from 'dayjs'
+import { Link, useNavigate } from 'react-router-dom'
+import './DiscGroups.scss'
+
+import { linkToGroup, linkToGroupViewList } from '#A/routes'
 import { MzColumn, MzTable } from '#C/table/MzTable'
 import { useData } from '#H/useData'
 import { useLocal } from '#H/useLocal'
@@ -7,11 +14,6 @@ import { IGroup } from '#T/disc'
 import { viewTypes } from '#T/meta'
 import { composeCompares } from '#U/compare'
 import { isJustUpdated } from '#U/domain'
-import { formatTimeout } from '#U/format'
-import { EditOutlined, UnorderedListOutlined } from '@ant-design/icons'
-import { Alert, Button } from 'antd'
-import { Link, useNavigate } from 'react-router-dom'
-import './DiscGroups.scss'
 
 const adminCols = getColumns()
 const guestCols = adminCols.filter((col) => !['edit', 'item'].includes(col.key))
@@ -74,7 +76,7 @@ function getColumns(): MzColumn<IGroup>[] {
     {
       key: 'idx',
       title: '#',
-      format: (_, idx) => idx + 1,
+      format: (row, idx) => idx + 1,
     },
     {
       key: 'title',
@@ -103,7 +105,7 @@ function formatLinkedTitle(row: IGroup) {
   let color = isJustUpdated(row.modifyTime) ? 'red' : '#C67532'
   return (
     <>
-      <Link to={`/discs/disc_groups/${row.key}`}>{row.title}</Link>
+      <Link to={linkToGroupViewList(row.key)}>{row.title}</Link>
       <span style={{ color, marginLeft: 8 }}>({row.discCount})</span>
     </>
   )
@@ -111,20 +113,20 @@ function formatLinkedTitle(row: IGroup) {
 
 function formatLastUpdate(row: IGroup) {
   if (!row.enabled || !row.modifyTime) return '停止更新'
-  return `${formatTimeout(row.modifyTime)}前`
+  return dayjs(row.modifyTime).fromNow()
 }
 
-function formatEdit(t: IGroup) {
+function formatEdit(row: IGroup) {
   return (
-    <Link to={`/disc_groups/${t.key}`}>
+    <Link to={linkToGroup(row.key)}>
       <EditOutlined />
     </Link>
   )
 }
 
-function formatItem(t: IGroup) {
+function formatItem(row: IGroup) {
   return (
-    <Link to={`/disc_groups/${t.key}/discs`}>
+    <Link to={linkToGroupViewList(row.key)}>
       <UnorderedListOutlined />
     </Link>
   )

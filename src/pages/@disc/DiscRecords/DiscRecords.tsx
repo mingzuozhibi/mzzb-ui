@@ -1,3 +1,10 @@
+import { Button, Modal } from 'antd'
+import dayjs from 'dayjs'
+import * as echarts from 'echarts'
+import { useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+import './DiscRecords.scss'
+
 import { MzHeader } from '#C/header/MzHeader'
 import { MzColumn, MzTable } from '#C/table/MzTable'
 import { useAjax } from '#H/useAjax'
@@ -5,12 +12,6 @@ import { useData } from '#H/useData'
 import { formatPt } from '#P/@funcs'
 import { InjectRole, injectRole } from '#P/@inject'
 import { formatNumber } from '#U/format'
-import { Button, Modal } from 'antd'
-import dayjs from 'dayjs'
-import * as echarts from 'echarts'
-import { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-import './DiscRecords.scss'
 
 interface Data {
   title: string
@@ -89,45 +90,45 @@ function getColumns(): MzColumn<Record>[] {
     {
       key: 'idx',
       title: '#',
-      format: (t, i) => i + 1,
+      format: (row, i) => i + 1,
     },
     {
       key: 'date',
       title: '日期',
-      format: (t) => t.date,
+      format: (row) => row.date,
     },
     {
       key: 'addPt',
       title: '日增PT',
-      format: (t) => formatPt(t.todayPt),
+      format: (row) => formatPt(row.todayPt),
     },
     {
       key: 'sumPt',
       title: '累积PT',
-      format: (t) => formatPt(t.totalPt),
+      format: (row) => formatPt(row.totalPt),
     },
     {
       key: 'powPt',
       title: '预测PT',
-      format: (t) => formatPt(t.guessPt),
+      format: (row) => formatPt(row.guessPt),
     },
     {
       key: 'averRank',
       title: '平均排名',
-      format: (t) => formatRank(t),
+      format: (row) => formatRank(row),
     },
   ]
 }
 
-function formatRank(t: Record) {
-  if (t.averRank != undefined && t.averRank < 10) {
+function formatRank(row: Record) {
+  if (row.averRank != undefined && row.averRank < 10) {
     return (
       <>
-        <span style={{ color: 'red' }}>{t.averRank.toFixed(1)}</span> 位
+        <span style={{ color: 'red' }}>{row.averRank.toFixed(1)}</span> 位
       </>
     )
   } else {
-    return `${t.averRank ? formatNumber(t.averRank, '###,###') : '---'} 位`
+    return `${row.averRank ? formatNumber(row.averRank, '###,###') : '---'} 位`
   }
 }
 

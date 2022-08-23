@@ -1,0 +1,16 @@
+.disc-list {
+  .pc-mode-warpper {
+    overflow-x: auto;
+
+    .pc-mode {
+      min-width: 1200px;
+
+      table {
+        th,
+        td {
+          display: table-cell !important;
+        }
+      }
+    }
+  }
+}
