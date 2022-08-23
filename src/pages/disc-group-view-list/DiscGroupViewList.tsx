@@ -5,7 +5,7 @@ import { IGroupItems } from '#T/disc'
 import { fetchResult } from '#U/fetchResult'
 import { Button, Space } from 'antd'
 import { useNavigate, useParams } from 'react-router-dom'
-import { DiscList } from '../disclist/disc-list'
+import { DiscList } from '../disc-list/disc-list'
 
 export default function DiscGroupViewList() {
   const params = useParams<{ key: string }>()

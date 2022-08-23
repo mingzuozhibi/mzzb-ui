@@ -1,5 +1,6 @@
 import { EditOutlined, UnorderedListOutlined } from '@ant-design/icons'
 import { Alert, Button } from 'antd'
+import dayjs from 'dayjs'
 import { Link, useNavigate } from 'react-router-dom'
 import './DiscGroups.scss'
 
@@ -13,7 +14,6 @@ import { IGroup } from '#T/disc'
 import { viewTypes } from '#T/meta'
 import { composeCompares } from '#U/compare'
 import { isJustUpdated } from '#U/domain'
-import { formatTimeout } from '#U/format'
 
 const adminCols = getColumns()
 const guestCols = adminCols.filter((col) => !['edit', 'item'].includes(col.key))
@@ -113,7 +113,7 @@ function formatLinkedTitle(row: IGroup) {
 
 function formatLastUpdate(row: IGroup) {
   if (!row.enabled || !row.modifyTime) return '停止更新'
-  return `${formatTimeout(row.modifyTime)}前`
+  return dayjs(row.modifyTime).fromNow()
 }
 
 function formatEdit(row: IGroup) {
