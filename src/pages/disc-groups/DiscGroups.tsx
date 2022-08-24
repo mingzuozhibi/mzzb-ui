@@ -14,8 +14,12 @@ import './DiscGroups.scss'
 import { linkToGroup, linkToGroupEditList, linkToGroupViewList } from '#A/links'
 import { viewTypes } from '#A/metas'
 import { IGroup } from '#T/disc'
+import { useOnceRequest } from '#H/useOnce'
+import { fetchResult } from '#U/fetchResult'
+import { MzTopbar } from '#C/topbar/MzTopbar'
+import { Refresh } from '#C/button/Refresh'
 
-const adminCols = getColumns()
+const adminCols = buildColumns()
 const guestCols = adminCols.filter((col) => !['edit', 'item'].includes(col.key))
 
 const defaultSort = compareDiscGroups()
@@ -29,34 +33,33 @@ export default function DiscGroups() {
   const fetchPrivateData = hasBasic && isAdminMode
 
   const url = fetchPrivateData ? '/api/discGroups?hasPrivate=true' : '/api/discGroups'
-  const [{ error, data }, handler] = useData<IGroup[]>(url)
+  const { data: groups, ...state } = useOnceRequest(
+    () => fetchResult<IGroup[]>(url).then((result) => result.data),
+    { refreshDeps: [url] }
+  )
 
   const navigate = useNavigate()
-  const extraButtons = isAdminMode ? (
-    <Button.Group>
+  const button = <Refresh key="1" state={state} />
+  const button2 = isAdminMode ? (
+    <Button.Group key="2">
       <Button onClick={() => setAdminMode(false)}>浏览模式</Button>
       <Button onClick={() => navigate('/disc_groups/add')}>添加列表</Button>
     </Button.Group>
   ) : (
-    <Button.Group>
+    <Button.Group key="3">
       <Button onClick={() => setAdminMode(true)}>管理模式</Button>
     </Button.Group>
   )
 
-  useTitle('推荐列表')
-
   return (
     <div className="DiscGroups">
-      {error && <Alert message={error} type="error" />}
-      {data && (
+      <MzTopbar title="推荐列表" error={state.error?.message} extra={[button, button2]} />
+      {groups && (
         <MzTable
-          rows={data}
+          rows={groups}
           cols={showExtraColumns ? adminCols : guestCols}
-          title="推荐列表"
           trClass={trClass}
-          handler={handler}
           defaultSort={defaultSort}
-          extraCaption={showExtraButtons && extraButtons}
         />
       )}
     </div>
@@ -67,7 +70,7 @@ function trClass(t: IGroup) {
   return { warning: t.viewType === 'PrivateList' }
 }
 
-function getColumns(): MzColumn<IGroup>[] {
+function buildColumns(): MzColumn<IGroup>[] {
   return [
     {
       key: 'idx',
