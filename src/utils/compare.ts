@@ -2,31 +2,29 @@ interface Compare<T> {
   (a: T, b: T): number
 }
 
-interface Props<T, E> {
-  apply: (model: T) => E | undefined
-  empty?: (value?: E) => boolean
+export function safeCompare<T, E>(
+  apply: (model: T) => E | undefined,
   compare: Compare<E>
+): Compare<T> {
+  const fn = nullCompare(compare)
+  return (a, b) => fn(apply(a), apply(b))
 }
 
-export function safeCompare<T, E>(props: Props<T, E>) {
-  const defaultEmptyFunc = (e?: E) => e === undefined
-  const { apply, empty = defaultEmptyFunc, compare } = props
-  return (a: T, b: T) => {
-    const valueA = apply(a)
-    const valueB = apply(b)
-    const emptyA = empty(valueA)
-    const emptyB = empty(valueB)
-    if (emptyA && emptyB) return 0
-    if (emptyA || emptyB) return emptyA ? 1 : -1
-    return compare(valueA!, valueB!)
+export function nullCompare<T>(compare: Compare<T>, nullFirst = false): Compare<T | undefined> {
+  return (a, b) => {
+    const ea = a == null
+    const eb = b == null
+    if (ea && eb) return 0
+    if (ea || eb) return ea === nullFirst ? -1 : 1
+    return compare(a!, b!)
   }
 }
 
-export function composeCompares<T>(compares: Compare<T>[]): Compare<T> {
-  return (a: T, b: T) => {
+export function thenCompare<T>(...compares: Compare<T>[]): Compare<T> {
+  return (a, b) => {
     for (const compare of compares) {
-      const c = compare(a, b)
-      if (c !== 0) return c
+      const cmp = compare(a, b)
+      if (cmp !== 0) return cmp
     }
     return 0
   }

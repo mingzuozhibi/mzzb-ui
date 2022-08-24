@@ -3,7 +3,7 @@ import { MzColumn, MzTable } from '#C/table/MzTable'
 import { useData } from '#H/useData'
 import { useLocal } from '#H/useLocal'
 import { useTitle } from '#H/useTitle'
-import { composeCompares } from '#U/compare'
+import { thenCompare } from '#U/compare'
 import { isJustUpdated } from '#U/domain'
 import { formatTimeout } from '#U/format'
 import { EditOutlined, UnorderedListOutlined } from '@ant-design/icons'
@@ -77,61 +77,53 @@ function getColumns(): MzColumn<IGroup>[] {
     {
       key: 'title',
       title: '列表标题',
-      format: formatLinkedTitle,
+      format: (row) => {
+        let color = isJustUpdated(row.modifyTime) ? 'red' : '#C67532'
+        return (
+          <span>
+            <Link to={linkToGroupViewList(row.key)}>{row.title}</Link>
+            <span style={{ color, marginLeft: 8 }}>({row.discCount})</span>
+          </span>
+        )
+      },
     },
     {
       key: 'update',
       title: '最后更新',
-      format: formatLastUpdate,
+      format: (row) => {
+        if (!row.enabled || !row.modifyTime) return '停止更新'
+        return formatTimeout(row.modifyTime)
+      },
     },
     {
       key: 'edit',
       title: '编辑列表',
-      format: formatEdit,
+      format: (row) => {
+        return (
+          <Link to={linkToGroup(row.key)}>
+            <EditOutlined />
+          </Link>
+        )
+      },
     },
     {
       key: 'item',
       title: '增减碟片',
-      format: formatItem,
+      format: (row) => {
+        return (
+          <Link to={linkToGroupEditList(row.key)}>
+            <UnorderedListOutlined />
+          </Link>
+        )
+      },
     },
   ]
 }
 
-function formatLinkedTitle(row: IGroup) {
-  let color = isJustUpdated(row.modifyTime) ? 'red' : '#C67532'
-  return (
-    <span>
-      <Link to={linkToGroupViewList(row.key)}>{row.title}</Link>
-      <span style={{ color, marginLeft: 8 }}>({row.discCount})</span>
-    </span>
-  )
-}
-
-function formatLastUpdate(row: IGroup) {
-  if (!row.enabled || !row.modifyTime) return '停止更新'
-  return formatTimeout(row.modifyTime)
-}
-
-function formatEdit(row: IGroup) {
-  return (
-    <Link to={linkToGroup(row.key)}>
-      <EditOutlined />
-    </Link>
-  )
-}
-
-function formatItem(row: IGroup) {
-  return (
-    <Link to={linkToGroupEditList(row.key)}>
-      <UnorderedListOutlined />
-    </Link>
-  )
-}
-
 function compareDiscGroups() {
   const sorts = viewTypes.map((e) => e.value)
-  return composeCompares<IGroup>([
+  return thenCompare<IGroup>(
     (a, b) => sorts.indexOf(a.viewType) - sorts.indexOf(b.viewType),
-    (a, b) => b.key.localeCompare(a.key),
-  ])
+    (a, b) => b.key.localeCompare(a.key)
+  )
 }
