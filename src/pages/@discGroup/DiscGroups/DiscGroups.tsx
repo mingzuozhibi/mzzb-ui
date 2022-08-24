@@ -8,34 +8,30 @@ import { MzColumn, MzTable } from '#C/table/MzTable'
 import { useData } from '#H/useData'
 import { useLocal } from '#H/useLocal'
 import { useTitle } from '#H/useTitle'
-import { InjectRole, injectRole } from '#P/@inject'
 import { IGroup } from '#T/disc'
 import { viewTypes } from '#T/meta'
 import { composeCompares } from '#U/compare'
 import { isJustUpdated } from '#U/domain'
 import { formatTimeout } from '#U/format'
+import { useAppSelector } from '#A/hooks'
 
 const adminCols = getColumns()
 const guestCols = adminCols.filter((col) => !['edit', 'item'].includes(col.key))
 
 const defaultSort = compareDiscGroups()
 
-export default injectRole(DiscGroups)
-
-function DiscGroups(props: InjectRole) {
-  const navigate = useNavigate()
-
-  const { isBasic } = props
-
+export default function DiscGroups() {
+  const hasBasic = useAppSelector((state) => state.session.hasBasic)
   const [isAdminMode, setAdminMode] = useLocal('local-isadmin', false)
 
-  const showExtraButtons = isBasic
-  const showExtraColumns = isBasic && isAdminMode
-  const fetchPrivateData = isBasic && isAdminMode
+  const showExtraButtons = hasBasic
+  const showExtraColumns = hasBasic && isAdminMode
+  const fetchPrivateData = hasBasic && isAdminMode
 
   const url = fetchPrivateData ? '/api/discGroups?hasPrivate=true' : '/api/discGroups'
   const [{ error, data }, handler] = useData<IGroup[]>(url)
 
+  const navigate = useNavigate()
   const extraButtons = isAdminMode ? (
     <Button.Group>
       <Button onClick={() => setAdminMode(false)}>浏览模式</Button>

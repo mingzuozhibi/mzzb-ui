@@ -1,13 +1,14 @@
 import { MzHeader } from '#C/header/MzHeader'
 import { useAjax } from '#H/useAjax'
 import { useData } from '#H/useData'
-import { InjectRole, injectRole } from '#P/@inject'
-import { IGroup } from '#T/disc'
-import { viewTypes } from '#T/meta'
 import { KeyOutlined, TagOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Input, Modal, Popconfirm, Radio } from 'antd'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
+
+import { IGroup } from '#T/disc'
+import { viewTypes } from '#T/meta'
+import { useAppSelector } from '#A/hooks'
 
 interface Form {
   key?: string
@@ -16,10 +17,7 @@ interface Form {
   viewType?: string
 }
 
-export default injectRole(DiscGroupDetail)
-
-function DiscGroupDetail(props: InjectRole) {
-  const { isAdmin } = props
+export default function DiscGroupDetail() {
   const params = useParams<{ key: string }>()
 
   const [{ error, data }, { loading }, { doEdit }] = useData<IGroup>(
@@ -61,6 +59,7 @@ function DiscGroupDetail(props: InjectRole) {
   }
 
   const title = data ? `列表信息：${data.title}` : '载入中'
+  const hasAdmin = useAppSelector((state) => state.session.hasAdmin)
 
   return (
     <div className="DiscGroupDtail">
@@ -109,7 +108,7 @@ function DiscGroupDetail(props: InjectRole) {
               <Button type="primary" loading={loading} onClick={editData}>
                 提交修改
               </Button>
-              {isAdmin && (
+              {hasAdmin && (
                 <Popconfirm
                   title="你确定要删除这个列表吗？"
                   placement="bottomRight"

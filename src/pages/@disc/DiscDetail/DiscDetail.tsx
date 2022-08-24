@@ -1,15 +1,16 @@
-import { linkToAmazon, linkToRecords } from '#A/links'
 import { MzHeader } from '#C/header/MzHeader'
 import { MzLink } from '#C/link/MzLink'
 import { UseData } from '#H/useData'
-import { discTitle } from '#P/@funcs'
-import { IDisc } from '#T/disc'
 import { formatNumber } from '#U/format'
 import { request } from '#U/request'
 import { Button, Input, message, Modal, Radio } from 'antd'
 import dayjs from 'dayjs'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+
+import { linkToAmazon, linkToRecords } from '#A/links'
+import { IDisc } from '#T/disc'
+import { discTitle } from '#T/disc-utils'
 
 interface Form {
   titlePc?: string

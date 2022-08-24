@@ -9,9 +9,10 @@ import { MzHeader } from '#C/header/MzHeader'
 import { MzColumn, MzTable } from '#C/table/MzTable'
 import { useAjax } from '#H/useAjax'
 import { useData } from '#H/useData'
-import { formatPt } from '#P/@funcs'
-import { InjectRole, injectRole } from '#P/@inject'
 import { formatNumber } from '#U/format'
+
+import { formatPt } from '#T/disc-utils'
+import { useAppSelector } from '#A/hooks'
 
 interface Data {
   title: string
@@ -31,9 +32,7 @@ interface Record {
 
 const cols = getColumns()
 
-export default injectRole(DiscRecords)
-
-function DiscRecords({ isBasic }: InjectRole) {
+export default function DiscRecords() {
   const params = useParams<{ id: string }>()
   const [{ error, data }, handler] = useData<Data>(`/api/discs/${params.id}/records`)
   const [_, doPost] = useAjax<string>('post')
@@ -53,11 +52,12 @@ function DiscRecords({ isBasic }: InjectRole) {
 
   const title = data ? `碟片历史数据：${data.titlePc || data.title}` : `载入中`
 
+  const hasBasic = useAppSelector((state) => state.session.hasBasic)
   const extraCaption = [
     <span key="1" style={{ marginLeft: 8 }}>
       如果图表显示错误，请尝试刷新
     </span>,
-    isBasic ? (
+    hasBasic ? (
       <Button key="2" style={{ marginLeft: 8 }} onClick={reCompute}>
         重新计算PT
       </Button>

@@ -1,13 +1,12 @@
+import { useAppSelector } from '#A/hooks'
 import { useData } from '#H/useData'
-import { InjectRole, injectRole } from '#P/@inject'
 import { IDisc } from '#T/disc'
 import { useParams } from 'react-router-dom'
 import { DiscDetail } from './DiscDetail'
 
-export default injectRole(DiscDetailOfAsin)
-
-function DiscDetailOfAsin({ isBasic }: InjectRole) {
+export default function DiscDetailOfAsin() {
   const params = useParams<{ asin: string }>()
   const theUse = useData<IDisc>(`/api/discs/asin/${params.asin}`)
-  return <DiscDetail useDate={theUse} isBasic={isBasic} />
+  const hasBasic = useAppSelector((state) => state.session.hasBasic)
+  return <DiscDetail useDate={theUse} isBasic={hasBasic} />
 }
