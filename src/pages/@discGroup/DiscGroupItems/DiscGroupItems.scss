@@ -8,17 +8,17 @@
     th {
       &.asin {
         @include columnCenter();
-        @include columnWidth(100px, 95px);
+        @include columnPcMo(100px, 95px);
       }
 
       &.surp {
         @include columnCenter();
-        @include columnWidth(65px, 60px);
+        @include columnPcMo(65px, 60px);
       }
 
       &.command {
         @include columnCenter();
-        @include columnWidth(45px, 40px);
+        @include columnPcMo(45px, 40px);
       }
     }
   }

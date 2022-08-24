@@ -36,7 +36,7 @@ export function MyTable<T extends BaseRow>(props: Props<T>) {
   const rows = sortRows()
 
   return (
-    <div className="table-warpper">
+    <div className="MyTable">
       <table className="table table-bordered table-hover">
         <thead>
           <tr>

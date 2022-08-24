@@ -1,6 +1,5 @@
 import { DeleteOutlined, FileAddOutlined } from '@ant-design/icons'
 import { Button, Space, Tabs } from 'antd'
-import dayjs from 'dayjs'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import './DiscGroupItems.scss'
 
@@ -14,6 +13,7 @@ import { compareSurp, compareTitle, discTitle } from '#P/@funcs'
 import { IDisc, IGroupItems } from '#T/disc'
 import { composeCompares } from '#U/compare'
 
+import { formatTimeout } from '#U/format'
 import CreateDisc from './CreateDisc'
 import SearchDisc from './SearchDisc'
 
@@ -80,7 +80,7 @@ export default function DiscGroupItems() {
 
   const extraCaption = group ? (
     <Space>
-      <span>更新于 {dayjs(group.modifyTime).fromNow()}</span>
+      <span>更新于{formatTimeout(group.modifyTime)}</span>
       <Button onClick={() => navigate(linkToGroup(group.key))}>编辑列表</Button>
       <Button onClick={() => navigate(linkToGroupViewList(group.key))}>浏览碟片</Button>
     </Space>

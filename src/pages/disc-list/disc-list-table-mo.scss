@@ -1,0 +1,50 @@
+@import '../_function.scss';
+
+#root .disc-list-table-mo table {
+  table-layout: fixed;
+
+  th:not(.title) > div {
+    width: 30px;
+    text-align: center;
+  }
+
+  td,
+  th {
+    &.index {
+      @include columnCenter();
+      @include columnPcMo(40px, 35px);
+      @include columnHide(450px);
+    }
+
+    &.rank {
+      @include columnPcMo(80px, 70px);
+    }
+
+    &.point {
+      @include columnPcMo(80px, 70px);
+    }
+
+    &.release {
+      @include columnPcMo(80px, 70px);
+    }
+  }
+
+  td {
+    &.rank {
+      word-break: keep-all;
+      white-space: nowrap;
+      text-align: center;
+    }
+
+    &.point {
+      word-break: keep-all;
+      white-space: nowrap;
+      text-align: right;
+      padding-left: 0;
+    }
+
+    &.release {
+      text-align: center;
+    }
+  }
+}
