@@ -47,7 +47,7 @@ export function MzTable<T extends BaseRow>(props: Props<T>) {
   const rows = sortRows()
 
   return (
-    <div className="table-warpper">
+    <div className="MzTable">
       {(title || copyFmt || handler || extraCaption) && renderCaption()}
       <table className="table table-bordered table-hover">
         <thead>
