@@ -1,8 +1,8 @@
-@import '../../_function.scss';
+@import '../_function.scss';
 
 #root .DiscGroups {
   .table {
-    max-width: 500px;
+    max-width: 550px;
 
     th,
     td {
@@ -17,13 +17,13 @@
       }
 
       &.edit {
-        @include columnPcMo(70px, 65px);
         @include columnCenter();
+        @include columnPcMo(70px, 65px);
       }
 
       &.item {
-        @include columnPcMo(70px, 65px);
         @include columnCenter();
+        @include columnPcMo(70px, 65px);
       }
     }
   }

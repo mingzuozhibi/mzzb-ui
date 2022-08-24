@@ -8,12 +8,12 @@ import DiscDetailOfId from '#P/@disc/DiscDetail/DiscDetailOfId'
 import DiscComing from '#P/@discComing/DiscComing'
 import DiscGroupAdd from '#P/@discGroup/DiscGroupAdd/DiscGroupAdd'
 import DiscGroupDetail from '#P/@discGroup/DiscGroupDetail/DiscGroupDetail'
-import DiscGroups from '#P/@discGroup/DiscGroups/DiscGroups'
 import UserAdd from '#P/@user/UserAdd/UserAdd'
 import UserDetail from '#P/@user/UserDetail/UserDetail'
 import Users from '#P/@user/Users/Users'
 import NotFound from '#P/notfound/NotFound'
 
+import DiscGroups from '#P/disc-groups/DiscGroups'
 import DiscGroupEditList from '#P/disc-group-edit-list/DiscGroupEditList'
 import DiscGroupViewList from '#P/disc-group-view-list/DiscGroupViewList'
 
