@@ -1,7 +1,6 @@
 import { MyColumn, MyTable } from '#C/table/MyTable'
 import { safeCompare } from '#U/compare'
 import { formatNumber } from '#U/format'
-import { MinusOutlined, UpOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import './disc-list-table-mo.scss'
 
@@ -28,14 +27,8 @@ export function DiscListTableMo(props: Props) {
 function buildColumns(): MyColumn<IDisc>[] {
   return [
     {
-      key: 'index',
-      title: (
-        <div>
-          <div>&nbsp;</div>
-          <div>#</div>
-          <div>&nbsp;</div>
-        </div>
-      ),
+      key: 'idx',
+      title: '#',
       format: (row, idx) => idx + 1,
     },
     {
@@ -43,9 +36,6 @@ function buildColumns(): MyColumn<IDisc>[] {
       title: (
         <div>
           <div>当前</div>
-          <div>
-            <UpOutlined />
-          </div>
           <div>前回</div>
         </div>
       ),
@@ -59,14 +49,12 @@ function buildColumns(): MyColumn<IDisc>[] {
         <div>
           <div>日增</div>
           <div>累积</div>
-          <div>预测</div>
         </div>
       ),
       format: (row) => (
         <div>
           <div>+{formatPt(row.todayPt)}</div>
           <div>{formatPt(row.totalPt)}</div>
-          <div>{formatPt(row.guessPt)}</div>
         </div>
       ),
       compare: comparePt((disc) => disc.totalPt),
@@ -76,32 +64,20 @@ function buildColumns(): MyColumn<IDisc>[] {
       title: (
         <div>
           <div>发售</div>
-          <div>
-            <MinusOutlined />
-          </div>
-          <div>类型</div>
+          <div>预测</div>
         </div>
       ),
       format: (row) => (
         <div>
           <div>{row.surplusDays}天</div>
-          <div>
-            <MinusOutlined />
-          </div>
-          <div>{row.discType}</div>
+          <div>{formatPt(row.guessPt)}</div>
         </div>
       ),
       compare: compareRelease,
     },
     {
       key: 'title',
-      title: (
-        <div>
-          <div>&nbsp;</div>
-          <div>碟片标题</div>
-          <div>&nbsp;</div>
-        </div>
-      ),
+      title: '碟片标题',
       format: (row) => <Link to={linkToDisc(row.id)}>{discTitle(row)}</Link>,
       compare: compareTitle,
     },
@@ -137,9 +113,6 @@ function discRank(disc: IDisc) {
   return (
     <div>
       <div>{thisRank}位</div>
-      <div>
-        <UpOutlined />
-      </div>
       <div>{prevRank}位</div>
     </div>
   )
