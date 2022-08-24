@@ -1,9 +1,10 @@
-import { routes } from '#A/routes'
 import { Layout } from 'antd'
-import AppFooter from './app-footer'
-import AppHeader from './app-header'
-import AppSider from './app-sider'
 import './App.scss'
+
+import { AppContent } from './app-content'
+import { AppFooter } from './app-footer'
+import { AppHeader } from './app-header'
+import { AppSider } from './app-sider'
 
 export default function App() {
   return (
@@ -12,7 +13,7 @@ export default function App() {
         <AppSider />
         <Layout>
           <AppHeader />
-          <Layout.Content className="app-content" children={routes} />
+          <AppContent />
           <AppFooter />
         </Layout>
       </Layout>

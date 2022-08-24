@@ -2,7 +2,7 @@ import { MinusOutlined, UpOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import './disc-list-table-mo.scss'
 
-import { linkToDisc, linkToRecords } from '#A/routes'
+import { linkToDisc, linkToRecords } from '#A/links'
 import { MyColumn, MyTable } from '#C/table/MyTable'
 import { IDisc } from '#T/disc'
 import { safeCompare } from '#U/compare'

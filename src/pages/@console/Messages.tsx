@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
 import './Messages.scss'
 
-import { linkToAsin } from '#A/routes'
+import { linkToAsin } from '#A/links'
 import { MzCheckbox } from '#C/checkbox/MzCheckbox'
 import { MzLink } from '#C/link/MzLink'
 import { MzPagination } from '#C/pagination/MzPagination'

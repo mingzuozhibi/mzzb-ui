@@ -1,5 +1,5 @@
 import { useAppSelector } from '#A/hooks'
-import { linkToGroup, linkToGroupEditList } from '#A/routes'
+import { linkToGroup, linkToGroupEditList } from '#A/links'
 import { useOnceRequest } from '#H/useOnce'
 import { IGroupItems } from '#T/disc'
 import { fetchResult } from '#U/fetchResult'

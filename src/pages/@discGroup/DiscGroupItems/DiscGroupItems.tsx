@@ -3,7 +3,7 @@ import { Button, Space, Tabs } from 'antd'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import './DiscGroupItems.scss'
 
-import { linkToDisc, linkToGroup, linkToGroupViewList } from '#A/routes'
+import { linkToDisc, linkToGroup, linkToGroupViewList } from '#A/links'
 import { MzHeader } from '#C/header/MzHeader'
 import { MzColumn, MzTable } from '#C/table/MzTable'
 import { useAjax } from '#H/useAjax'

@@ -1,4 +1,4 @@
-import { linkToAmazon, linkToRecords } from '#A/routes'
+import { linkToAmazon, linkToRecords } from '#A/links'
 import { MzHeader } from '#C/header/MzHeader'
 import { MzLink } from '#C/link/MzLink'
 import { UseData } from '#H/useData'

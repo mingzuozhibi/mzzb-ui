@@ -1,11 +1,11 @@
 import { useAppDispatch, useAppSelector } from '#A/hooks'
-import { buildItems } from '#A/menus'
 import { setViewSider } from '#F/layout'
 import { Layout, Menu } from 'antd'
 import { useCallback, useMemo, useState } from 'react'
 import { useLocation } from 'react-router-dom'
+import { buildItems } from './app-menus'
 
-export default function AppSider() {
+export function AppSider() {
   const location = useLocation()
 
   const collapsed = useAppSelector((state) => !state.layout.viewSider)

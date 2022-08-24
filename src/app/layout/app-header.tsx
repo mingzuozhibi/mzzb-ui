@@ -6,7 +6,7 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import { Layout, Popconfirm } from 'antd'
 import { useCallback, useEffect } from 'react'
 
-export default function AppHeader() {
+export function AppHeader() {
   const session = useAppSelector((state) => state.session)
   const viewSider = useAppSelector((state) => state.layout.viewSider)
 

@@ -3,7 +3,7 @@ import { Alert, Button } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import './DiscGroups.scss'
 
-import { linkToGroup, linkToGroupViewList } from '#A/routes'
+import { linkToGroup, linkToGroupViewList } from '#A/links'
 import { MzColumn, MzTable } from '#C/table/MzTable'
 import { useData } from '#H/useData'
 import { useLocal } from '#H/useLocal'
