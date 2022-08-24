@@ -1,8 +1,13 @@
-import { useDebounceEffect, useRequest } from 'ahooks'
+import { useRequest } from 'ahooks'
+import { useEffect, useRef } from 'react'
 
 export function useOnceService(service: () => void) {
-  useDebounceEffect(service, [service], {
-    wait: 50,
+  const ref = useRef(true)
+  useEffect(() => {
+    if (ref.current) {
+      ref.current = false
+      service()
+    }
   })
 }
 

@@ -1,7 +1,6 @@
 import { ISession } from '#T/user'
 import { fetchResult } from '#U/fetchResult'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { message as Msg, Modal } from 'antd'
 
 interface SessionState extends ISession {}
 

@@ -1,8 +1,9 @@
 import { useAppDispatch, useAppSelector } from '#A/hooks'
-import { setViewSider } from '#F/layout'
 import { Layout, Menu } from 'antd'
 import { useCallback, useMemo, useState } from 'react'
 import { useLocation } from 'react-router-dom'
+
+import { setViewSider } from '#F/layout'
 import { buildItems } from './app-menus'
 
 export function AppSider() {
