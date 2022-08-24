@@ -16,11 +16,13 @@ export interface MyColumn<T> {
 }
 
 interface Props<T> {
-  name: string
+  tag: string
   rows: T[]
   cols: MyColumn<T>[]
+  title?: React.ReactNode
   trClass?: (row: T) => string | object
   defaultSort?: (a: T, b: T) => number
+  extraCaption?: React.ReactNode
 }
 
 interface State {
@@ -29,14 +31,15 @@ interface State {
 }
 
 export function MyTable<T extends BaseRow>(props: Props<T>) {
-  const { name, cols, trClass, defaultSort } = props
+  const { tag, cols, title, trClass, defaultSort, extraCaption } = props
 
-  const [{ sortKey, sortAsc }, setState] = useLocal<State>(`local-table-state-${name}`, {})
+  const [{ sortKey, sortAsc }, setState] = useLocal<State>(`local-table-state-${tag}`, {})
 
   const rows = sortRows()
 
   return (
     <div className="MyTable">
+      {(title || extraCaption) && renderCaption()}
       <table className="table table-bordered table-hover">
         <thead>
           <tr>
@@ -64,6 +67,15 @@ export function MyTable<T extends BaseRow>(props: Props<T>) {
       </table>
     </div>
   )
+
+  function renderCaption() {
+    return (
+      <div className="table-caption">
+        {title && <span className="caption-title">{title}</span>}
+        {extraCaption && <span className="caption-extra">{extraCaption}</span>}
+      </div>
+    )
+  }
 
   function sortRows() {
     const array = [...props.rows]

@@ -19,7 +19,7 @@ export function DiscListTable(props: Props) {
   const { name, rows } = props
   return (
     <div className="disc-list-table">
-      <MyTable name={name} rows={rows} cols={cols} defaultSort={compareRank()} />
+      <MyTable tag={name} rows={rows} cols={cols} defaultSort={compareRank()} />
     </div>
   )
 }
