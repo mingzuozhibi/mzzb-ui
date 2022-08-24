@@ -1,0 +1,41 @@
+@import '../_function.scss';
+
+#root .disc-list-table-mo table {
+  table-layout: fixed;
+
+  th {
+    vertical-align: middle;
+  }
+
+  td {
+    text-align: center;
+
+    &.point {
+      text-align: right;
+      padding-left: 0;
+    }
+
+    &.title {
+      text-align: left;
+    }
+  }
+
+  tr {
+    .idx {
+      @include columnPcMo(40px, 35px);
+      @include columnHide(450px);
+    }
+
+    .rank {
+      @include columnPcMo(80px, 70px);
+    }
+
+    .point {
+      @include columnPcMo(80px, 70px);
+    }
+
+    .release {
+      @include columnPcMo(80px, 70px);
+    }
+  }
+}

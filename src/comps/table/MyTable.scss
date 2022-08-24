@@ -1,4 +1,23 @@
 .MyTable {
+  .table-caption {
+    padding: 4px;
+    margin-bottom: 4px;
+
+    & > span {
+      line-height: 44px;
+      margin: 4px;
+    }
+
+    .caption-title {
+      font-size: 24px;
+      padding-right: 4px;
+    }
+
+    .caption-extra {
+      font-size: 16px;
+    }
+  }
+
   .table {
     th.sortable {
       cursor: pointer;
@@ -14,13 +33,9 @@
         background-image: url('./images/table-desc.gif');
       }
     }
+
     tr.debug {
       font-style: italic;
-    }
-
-    .select {
-      width: 40px;
-      text-align: center;
     }
   }
 

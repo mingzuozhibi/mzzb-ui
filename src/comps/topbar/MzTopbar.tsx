@@ -3,14 +3,25 @@ import { Alert, AlertProps, PageHeader, PageHeaderProps } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import './MzTopbar.scss'
 
-interface Props extends PageHeaderProps {
-  title: string
+interface Props extends Omit<PageHeaderProps, 'title'> {
+  title?: string | { prefix: string; suffix?: string }
   error?: string
 }
 
 export function MzTopbar(props: Props) {
   const { error, title, ...otherProps } = props
-  useTitle(title)
+
+  let lastTitle: string
+  if (title === undefined) {
+    lastTitle = '载入中'
+  } else if (typeof title === 'string') {
+    lastTitle = title
+  } else {
+    const titleSuffix = title.suffix === undefined ? '载入中' : title.suffix
+    lastTitle = `${title.prefix}：${titleSuffix}`
+  }
+
+  useTitle(lastTitle)
 
   const navigate = useNavigate()
   const lastProps: PageHeaderProps = {
@@ -22,7 +33,7 @@ export function MzTopbar(props: Props) {
   return (
     <div className="MzTopbar">
       <SafeAlert type="error" message={error} />
-      <PageHeader title={title} {...lastProps} />
+      <PageHeader title={lastTitle} {...lastProps} />
     </div>
   )
 }

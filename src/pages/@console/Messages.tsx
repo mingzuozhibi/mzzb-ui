@@ -1,15 +1,16 @@
-import { Alert, Button, CheckboxOptionType, Input } from 'antd'
-import dayjs from 'dayjs'
-import { useEffect, useState } from 'react'
-import './Messages.scss'
-
-import { linkToAsin } from '#A/routes'
 import { MzCheckbox } from '#C/checkbox/MzCheckbox'
 import { MzLink } from '#C/link/MzLink'
 import { MzPagination } from '#C/pagination/MzPagination'
 import { MzColumn, MzTable } from '#C/table/MzTable'
 import { useData } from '#H/useData'
 import { UrlBuilder } from '#U/urlBuilder'
+import { Alert, Button, Input } from 'antd'
+import dayjs from 'dayjs'
+import { useEffect, useState } from 'react'
+import './Messages.scss'
+
+import { linkToAsin } from '#A/links'
+import { msgLevels } from '#A/metas'
 
 interface IMsg {
   id: number
@@ -25,20 +26,11 @@ interface Props {
   activeKey: string
 }
 
-const options: CheckboxOptionType[] = [
-  { label: '调试', value: 'DEBUG' },
-  { label: '信息', value: 'INFO' },
-  { label: '通知', value: 'NOTIFY' },
-  { label: '成功', value: 'SUCCESS' },
-  { label: '警告', value: 'WARNING' },
-  { label: '错误', value: 'ERROR' },
-]
-
-const defaultTypes = options.map((e) => e.value)
-const cols = getCols()
+const initTypes = msgLevels.map((e) => e.value)
+const cols = buildColumns()
 
 export default function Messages({ name, activeKey }: Props) {
-  const [types, setTypes] = useState(defaultTypes)
+  const [types, setTypes] = useState(initTypes)
   const [param, setParam] = useState({ page: 1, size: 20 })
   const [query, setQuery] = useState('')
 
@@ -81,7 +73,7 @@ export default function Messages({ name, activeKey }: Props) {
             <span className="more">
               <Button children={'刷新'} onClick={handler.refresh} loading={handler.loading} />
             </span>
-            <MzCheckbox options={options} value={types} onChange={onChangeTypes} />
+            <MzCheckbox options={msgLevels} value={types} onChange={onChangeTypes} />
           </div>
           <div className="format">
             <Input.Search
@@ -109,7 +101,7 @@ export default function Messages({ name, activeKey }: Props) {
   )
 }
 
-function getCols(): MzColumn<IMsg>[] {
+function buildColumns(): MzColumn<IMsg>[] {
   return [
     {
       key: 'time',

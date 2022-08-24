@@ -1,11 +1,12 @@
 import { useAppSelector } from '#A/hooks'
-import { linkToGroup, linkToGroupEditList } from '#A/routes'
 import { useOnceRequest } from '#H/useOnce'
-import { IGroupItems } from '#T/disc'
 import { fetchResult } from '#U/fetchResult'
 import { Button, Space } from 'antd'
 import { useNavigate, useParams } from 'react-router-dom'
-import { DiscList } from '../disc-list/disc-list'
+
+import { linkToGroup, linkToGroupEditList } from '#A/links'
+import { DiscList } from '#P/@disc-list/disc-list'
+import { IGroupItems } from '#T/disc'
 
 export default function DiscGroupViewList() {
   const params = useParams<{ key: string }>()
@@ -30,7 +31,7 @@ export default function DiscGroupViewList() {
     )
   }
 
-  const { discs, title = '载入中', modifyTime } = group ?? {}
+  const { discs, title, modifyTime } = group ?? {}
 
   return (
     <div className="DiscListOfGroup">

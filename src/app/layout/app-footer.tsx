@@ -12,7 +12,7 @@ interface Form {
   password?: string
 }
 
-export default function AppFooter() {
+export function AppFooter() {
   const viewLogin = useAppSelector((state) => state.layout.viewLogin)
   const submiting = useAppSelector((state) => state.layout.submiting)
   const form = useRef<Form>({})

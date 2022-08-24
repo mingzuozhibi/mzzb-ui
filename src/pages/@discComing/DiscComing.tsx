@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import './DiscComing.scss'
 
-import { linkToAsin } from '#A/routes'
+import { linkToAsin } from '#A/links'
 import { MzLink } from '#C/link/MzLink'
 import { MzPagination } from '#C/pagination/MzPagination'
 import { MzColumn, MzTable } from '#C/table/MzTable'

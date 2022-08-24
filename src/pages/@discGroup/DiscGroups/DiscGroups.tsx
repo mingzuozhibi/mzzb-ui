@@ -1,41 +1,37 @@
+import { useAppSelector } from '#A/hooks'
+import { MzColumn, MzTable } from '#C/table/MzTable'
+import { useData } from '#H/useData'
+import { useLocal } from '#H/useLocal'
+import { useTitle } from '#H/useTitle'
+import { composeCompares } from '#U/compare'
+import { isJustUpdated } from '#U/domain'
+import { formatTimeout } from '#U/format'
 import { EditOutlined, UnorderedListOutlined } from '@ant-design/icons'
 import { Alert, Button } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import './DiscGroups.scss'
 
-import { linkToGroup, linkToGroupViewList } from '#A/routes'
-import { MzColumn, MzTable } from '#C/table/MzTable'
-import { useData } from '#H/useData'
-import { useLocal } from '#H/useLocal'
-import { useTitle } from '#H/useTitle'
-import { InjectRole, injectRole } from '#P/@inject'
+import { linkToGroup, linkToGroupEditList, linkToGroupViewList } from '#A/links'
+import { viewTypes } from '#A/metas'
 import { IGroup } from '#T/disc'
-import { viewTypes } from '#T/meta'
-import { composeCompares } from '#U/compare'
-import { isJustUpdated } from '#U/domain'
-import { formatTimeout } from '#U/format'
 
 const adminCols = getColumns()
 const guestCols = adminCols.filter((col) => !['edit', 'item'].includes(col.key))
 
 const defaultSort = compareDiscGroups()
 
-export default injectRole(DiscGroups)
-
-function DiscGroups(props: InjectRole) {
-  const navigate = useNavigate()
-
-  const { isBasic } = props
-
+export default function DiscGroups() {
+  const hasBasic = useAppSelector((state) => state.session.hasBasic)
   const [isAdminMode, setAdminMode] = useLocal('local-isadmin', false)
 
-  const showExtraButtons = isBasic
-  const showExtraColumns = isBasic && isAdminMode
-  const fetchPrivateData = isBasic && isAdminMode
+  const showExtraButtons = hasBasic
+  const showExtraColumns = hasBasic && isAdminMode
+  const fetchPrivateData = hasBasic && isAdminMode
 
   const url = fetchPrivateData ? '/api/discGroups?hasPrivate=true' : '/api/discGroups'
   const [{ error, data }, handler] = useData<IGroup[]>(url)
 
+  const navigate = useNavigate()
   const extraButtons = isAdminMode ? (
     <Button.Group>
       <Button onClick={() => setAdminMode(false)}>浏览模式</Button>
@@ -104,10 +100,10 @@ function getColumns(): MzColumn<IGroup>[] {
 function formatLinkedTitle(row: IGroup) {
   let color = isJustUpdated(row.modifyTime) ? 'red' : '#C67532'
   return (
-    <>
+    <span>
       <Link to={linkToGroupViewList(row.key)}>{row.title}</Link>
       <span style={{ color, marginLeft: 8 }}>({row.discCount})</span>
-    </>
+    </span>
   )
 }
 
@@ -126,7 +122,7 @@ function formatEdit(row: IGroup) {
 
 function formatItem(row: IGroup) {
   return (
-    <Link to={linkToGroupViewList(row.key)}>
+    <Link to={linkToGroupEditList(row.key)}>
       <UnorderedListOutlined />
     </Link>
   )

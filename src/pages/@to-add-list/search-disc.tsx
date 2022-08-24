@@ -8,7 +8,7 @@ import { useState } from 'react'
 interface Props {
   theDiscs: IDisc[]
   addDiscs: IDisc[]
-  pushToAdds: (disc: IDisc) => void
+  onPushAdds: (disc: IDisc) => void
 }
 
 interface FetchCount {
@@ -16,7 +16,7 @@ interface FetchCount {
   timestamp?: number
 }
 
-export default function SearchDisc(props: Props) {
+export function SearchDisc(props: Props) {
   const [asin, setAsin] = useState<string>()
   const [count, setCount] = useLocal<FetchCount>('local-fetchcount', {})
 
@@ -45,7 +45,7 @@ export default function SearchDisc(props: Props) {
     }
 
     fetchDisc(`/api/spider/searchDisc/${asin}`, '查询碟片', {
-      onSuccess: props.pushToAdds,
+      onSuccess: props.onPushAdds,
     })
   }
 
@@ -63,7 +63,7 @@ export default function SearchDisc(props: Props) {
   }
 
   return (
-    <div className="SearchDisc">
+    <div className="search-disc">
       <div className="input-wrapper">
         <Input
           addonBefore="ASIN"

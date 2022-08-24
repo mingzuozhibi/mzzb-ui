@@ -1,13 +1,12 @@
+import { MyColumn, MyTable } from '#C/table/MyTable'
+import { safeCompare } from '#U/compare'
+import { formatNumber } from '#U/format'
 import { Link } from 'react-router-dom'
 import './disc-list-table.scss'
 
-import { linkToDisc, linkToRecords } from '#A/routes'
-import { MyColumn, MyTable } from '#C/table/MyTable'
+import { linkToDisc, linkToRecords } from '#A/links'
 import { IDisc } from '#T/disc'
-import { safeCompare } from '#U/compare'
-import { formatNumber } from '#U/format'
-
-import { compareDisc, compareTitle, discTitle } from './disc-utils'
+import { compareRelease, compareTitle, discTitle } from '#T/disc-utils'
 
 interface Props {
   name: string
@@ -20,7 +19,7 @@ export function DiscListTable(props: Props) {
   const { name, rows } = props
   return (
     <div className="disc-list-table">
-      <MyTable name={name} rows={rows} cols={cols} defaultSort={compareRank()} />
+      <MyTable tag={name} rows={rows} cols={cols} defaultSort={compareRank()} />
     </div>
   )
 }
@@ -61,7 +60,7 @@ function buildColumns(): MyColumn<IDisc>[] {
       key: 'release',
       title: '发售',
       format: (row) => `${row.surplusDays}天`,
-      compare: compareDisc,
+      compare: compareRelease,
     },
     {
       key: 'title',

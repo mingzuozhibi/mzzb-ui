@@ -12,10 +12,10 @@ interface FormCreate {
 }
 
 interface Props {
-  pushToAdds: (disc: IDisc) => void
+  onPushAdds: (disc: IDisc) => void
 }
 
-export default function CreateDisc(Props: Props) {
+export function CreateDisc(Props: Props) {
   const [form, setForm] = useState<FormCreate>({})
   const [posting, createDisc] = useAjax<IDisc>('post')
 
@@ -57,12 +57,12 @@ export default function CreateDisc(Props: Props) {
 
     createDisc('/api/discs', '创建碟片', {
       body: form,
-      onSuccess: Props.pushToAdds,
+      onSuccess: Props.onPushAdds,
     })
   }
 
   return (
-    <div className="CreateDisc">
+    <div className="create-disc">
       <div className="input-wrapper">
         <div className="input-label">
           <span>日文标题</span>
