@@ -16,7 +16,7 @@ interface FetchCount {
   timestamp?: number
 }
 
-export default function SearchDisc(props: Props) {
+export function SearchDisc(props: Props) {
   const [asin, setAsin] = useState<string>()
   const [count, setCount] = useLocal<FetchCount>('local-fetchcount', {})
 
@@ -63,7 +63,7 @@ export default function SearchDisc(props: Props) {
   }
 
   return (
-    <div className="SearchDisc">
+    <div className="search-disc">
       <div className="input-wrapper">
         <Input
           addonBefore="ASIN"

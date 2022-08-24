@@ -8,13 +8,13 @@ import DiscDetailOfId from '#P/@disc/DiscDetail/DiscDetailOfId'
 import DiscComing from '#P/@discComing/DiscComing'
 import DiscGroupAdd from '#P/@discGroup/DiscGroupAdd/DiscGroupAdd'
 import DiscGroupDetail from '#P/@discGroup/DiscGroupDetail/DiscGroupDetail'
-import DiscGroupItems from '#P/@discGroup/DiscGroupItems/DiscGroupItems'
 import DiscGroups from '#P/@discGroup/DiscGroups/DiscGroups'
 import UserAdd from '#P/@user/UserAdd/UserAdd'
 import UserDetail from '#P/@user/UserDetail/UserDetail'
 import Users from '#P/@user/Users/Users'
 import NotFound from '#P/notfound/NotFound'
 
+import DiscGroupEditList from '#P/disc-group-edit-list/DiscGroupEditList'
 import DiscGroupViewList from '#P/disc-group-view-list/DiscGroupViewList'
 
 const LazyDiscRecords = lazy(
@@ -39,7 +39,7 @@ export const routes = (
 
       <Route path="/disc_groups/:key" element={<DiscGroupDetail />} />
       <Route path="/disc_groups/:key/discs" element={<DiscGroupViewList />} />
-      <Route path="/disc_groups/:key/discs/edit" element={<DiscGroupItems />} />
+      <Route path="/disc_groups/:key/discs/edit" element={<DiscGroupEditList />} />
 
       <Route path="*" element={<NotFound />} />
     </Routes>

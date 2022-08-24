@@ -1,23 +1,21 @@
-import { DeleteOutlined, FileAddOutlined } from '@ant-design/icons'
-import { Button, Space, Tabs } from 'antd'
-import { Link, useNavigate, useParams } from 'react-router-dom'
-import './DiscGroupItems.scss'
-
-import { linkToDisc, linkToGroup, linkToGroupViewList } from '#A/links'
 import { MzHeader } from '#C/header/MzHeader'
 import { MzColumn, MzTable } from '#C/table/MzTable'
 import { useAjax } from '#H/useAjax'
 import { useData } from '#H/useData'
 import { useLocal } from '#H/useLocal'
-import { compareSurp, compareTitle, discTitle } from '#P/@funcs'
-import { IDisc, IGroupItems } from '#T/disc'
-import { composeCompares } from '#U/compare'
-
 import { formatTimeout } from '#U/format'
-import CreateDisc from './CreateDisc'
-import SearchDisc from './SearchDisc'
+import { DeleteOutlined, FileAddOutlined } from '@ant-design/icons'
+import { Button, Space, Tabs } from 'antd'
+import { Link, useNavigate, useParams } from 'react-router-dom'
+import './DiscGroupEditList.scss'
 
-export default function DiscGroupItems() {
+import { linkToDisc, linkToGroup, linkToGroupViewList } from '#A/links'
+import { IDisc, IGroupItems } from '#T/disc'
+import { compareRelease, compareTitle, discTitle } from '#T/disc-utils'
+import { CreateDisc } from '../@to-add-list/create-disc'
+import { SearchDisc } from '../@to-add-list/search-disc'
+
+export default function DiscGroupEditList() {
   const navigate = useNavigate()
   const params = useParams<{ key: string }>()
 
@@ -87,7 +85,7 @@ export default function DiscGroupItems() {
   ) : null
 
   return (
-    <div className="DiscGroupItems">
+    <div className="DiscGroupEditList">
       <MzHeader header="管理碟片" title={title} error={error} handler={handler} />
       {group && (
         <>
@@ -105,7 +103,7 @@ export default function DiscGroupItems() {
             cols={getColumns(getDropCommand())}
             title={group.title}
             extraCaption={extraCaption}
-            defaultSort={composeCompares([compareSurp, compareTitle])}
+            defaultSort={compareRelease}
           />
         </>
       )}
@@ -125,7 +123,7 @@ function getColumns(extraColumn: MzColumn<IDisc>): MzColumn<IDisc>[] {
       key: 'surp',
       title: '天数',
       format: (row) => `${row.surplusDays}天`,
-      compare: composeCompares([compareSurp, compareTitle]),
+      compare: compareRelease,
     },
     {
       key: 'title',

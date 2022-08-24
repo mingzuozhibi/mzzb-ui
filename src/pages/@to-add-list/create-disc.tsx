@@ -15,7 +15,7 @@ interface Props {
   pushToAdds: (disc: IDisc) => void
 }
 
-export default function CreateDisc(Props: Props) {
+export function CreateDisc(Props: Props) {
   const [form, setForm] = useState<FormCreate>({})
   const [posting, createDisc] = useAjax<IDisc>('post')
 
@@ -62,7 +62,7 @@ export default function CreateDisc(Props: Props) {
   }
 
   return (
-    <div className="CreateDisc">
+    <div className="create-disc">
       <div className="input-wrapper">
         <div className="input-label">
           <span>日文标题</span>

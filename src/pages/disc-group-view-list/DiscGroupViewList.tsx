@@ -1,11 +1,12 @@
 import { useAppSelector } from '#A/hooks'
-import { linkToGroup, linkToGroupEditList } from '#A/links'
 import { useOnceRequest } from '#H/useOnce'
-import { IGroupItems } from '#T/disc'
 import { fetchResult } from '#U/fetchResult'
 import { Button, Space } from 'antd'
 import { useNavigate, useParams } from 'react-router-dom'
-import { DiscList } from '../disc-list/disc-list'
+
+import { linkToGroup, linkToGroupEditList } from '#A/links'
+import { IGroupItems } from '#T/disc'
+import { DiscList } from '../@disc-list/disc-list'
 
 export default function DiscGroupViewList() {
   const params = useParams<{ key: string }>()

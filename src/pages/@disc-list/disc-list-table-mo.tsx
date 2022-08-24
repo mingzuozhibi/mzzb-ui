@@ -1,14 +1,13 @@
+import { MyColumn, MyTable } from '#C/table/MyTable'
+import { safeCompare } from '#U/compare'
+import { formatNumber } from '#U/format'
 import { MinusOutlined, UpOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import './disc-list-table-mo.scss'
 
 import { linkToDisc, linkToRecords } from '#A/links'
-import { MyColumn, MyTable } from '#C/table/MyTable'
 import { IDisc } from '#T/disc'
-import { safeCompare } from '#U/compare'
-import { formatNumber } from '#U/format'
-
-import { compareDisc, compareTitle, discTitle } from './disc-utils'
+import { compareRelease, compareTitle, discTitle } from '#T/disc-utils'
 
 interface Props {
   name: string
@@ -92,7 +91,7 @@ function buildColumns(): MyColumn<IDisc>[] {
           <div>{row.discType}</div>
         </div>
       ),
-      compare: compareDisc,
+      compare: compareRelease,
     },
     {
       key: 'title',
