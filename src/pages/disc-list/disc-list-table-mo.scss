@@ -1,6 +1,6 @@
 @import '../_function.scss';
 
-.disc-list-table-mo table {
+#root .disc-list-table-mo table {
   table-layout: fixed;
 
   th:not(.title) > div {
@@ -12,20 +12,20 @@
   th {
     &.index {
       @include columnCenter();
-      @include columnWidth(40px, 35px);
+      @include columnPcMo(40px, 35px);
       @include columnHide(450px);
     }
 
     &.rank {
-      @include columnWidth(80px, 70px);
+      @include columnPcMo(80px, 70px);
     }
 
     &.point {
-      @include columnWidth(80px, 70px);
+      @include columnPcMo(80px, 70px);
     }
 
     &.release {
-      @include columnWidth(80px, 70px);
+      @include columnPcMo(80px, 70px);
     }
   }
 
@@ -40,7 +40,7 @@
       word-break: keep-all;
       white-space: nowrap;
       text-align: right;
-      padding-left: 0 !important;
+      padding-left: 0;
     }
 
     &.release {

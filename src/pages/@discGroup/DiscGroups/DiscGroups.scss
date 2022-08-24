@@ -8,21 +8,21 @@
     td {
       &.idx {
         @include columnCenter();
-        @include columnWidth(40px, 35px);
+        @include columnPcMo(40px, 35px);
       }
 
       &.update {
         @include columnCenter();
-        @include columnWidth(95px, 90px);
+        @include columnPcMo(95px, 90px);
       }
 
       &.edit {
-        @include columnWidth(70px, 65px);
+        @include columnPcMo(70px, 65px);
         @include columnCenter();
       }
 
       &.item {
-        @include columnWidth(70px, 65px);
+        @include columnPcMo(70px, 65px);
         @include columnCenter();
       }
     }

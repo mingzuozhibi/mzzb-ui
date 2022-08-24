@@ -1,6 +1,6 @@
 @import '../../_function.scss';
 
-.Users {
+#root .Users {
   max-width: 500px;
 
   .table {
@@ -9,11 +9,11 @@
       @include columnCenter();
 
       &.id {
-        @include columnWidth(40px, 35px);
+        @include columnPcMo(40px, 35px);
       }
 
       &.enabled {
-        @include columnWidth(45px, 40px);
+        @include columnPcMo(45px, 40px);
       }
     }
   }

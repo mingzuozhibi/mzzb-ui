@@ -16,7 +16,7 @@
     td {
       &.asin {
         @include columnCenter();
-        @include columnWidth(120px, 75px);
+        @include columnPcMo(120px, 75px);
         padding-left: 5px;
         padding-right: 5px;
         word-break: break-all;
@@ -24,17 +24,17 @@
 
       &.createOn {
         @include columnCenter();
-        @include columnHideWidth(600px, 75px);
+        @include columnPcHd(75px, 600px);
       }
 
       &.followed {
         @include columnCenter();
-        @include columnWidth(50px, 45px);
+        @include columnPcMo(50px, 45px);
       }
 
       &.type {
         @include columnCenter();
-        @include columnWidth(50px, 45px);
+        @include columnPcMo(50px, 45px);
       }
     }
   }

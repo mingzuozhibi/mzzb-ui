@@ -4,29 +4,22 @@
   padding-right: 0;
 }
 
-@mixin columnHide($switch) {
-  @media screen and (max-width: $switch) {
+@mixin columnHide($w_hd) {
+  @media screen and (max-width: $w_hd) {
     display: none;
   }
 }
 
-@mixin columnHideWidth($switch, $width_pc) {
-  width: $width_pc;
-  @media screen and (max-width: $switch) {
+@mixin columnPcHd($w_pc, $w_hd) {
+  width: $w_pc;
+  @media screen and (max-width: $w_hd) {
     display: none;
   }
 }
 
-@mixin columnWidth($width_pc, $width_mo) {
-  width: $width_pc;
+@mixin columnPcMo($w_pc, $w_mo) {
+  width: $w_pc;
   @media screen and (max-width: 600px) {
-    width: $width_mo;
-  }
-}
-
-@mixin columnWidthSwitch($width_pc, $width_mo, $switch) {
-  width: $width_pc;
-  @media screen and (max-width: $switch) {
-    width: $width_mo;
+    width: $w_mo;
   }
 }
