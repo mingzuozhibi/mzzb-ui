@@ -1,11 +1,12 @@
 import { MzHeader } from '#C/header/MzHeader'
 import { useAjax } from '#H/useAjax'
-import { viewTypes } from '#T/meta'
 import { isEmpty } from '#U/domain'
 import { KeyOutlined, TagOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Input, Modal, Radio } from 'antd'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+
+import { viewTypes } from '#A/metas'
 
 interface FormCreate {
   key?: string

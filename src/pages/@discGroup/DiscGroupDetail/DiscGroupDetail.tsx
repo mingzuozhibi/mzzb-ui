@@ -1,3 +1,4 @@
+import { useAppSelector } from '#A/hooks'
 import { MzHeader } from '#C/header/MzHeader'
 import { useAjax } from '#H/useAjax'
 import { useData } from '#H/useData'
@@ -6,9 +7,8 @@ import { Button, Checkbox, Input, Modal, Popconfirm, Radio } from 'antd'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 
+import { viewTypes } from '#A/metas'
 import { IGroup } from '#T/disc'
-import { viewTypes } from '#T/meta'
-import { useAppSelector } from '#A/hooks'
 
 interface Form {
   key?: string
