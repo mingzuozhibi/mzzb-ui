@@ -49,10 +49,11 @@
       word-break: keep-all;
       white-space: nowrap;
       text-align: right;
+      padding-left: 0;
     }
 
     &.release {
-      text-align: right;
+      text-align: center;
     }
   }
 }

@@ -80,7 +80,7 @@ export default function DiscGroupItems() {
 
   const extraCaption = group ? (
     <Space>
-      <span>更新于 {formatTimeout(group.modifyTime)}</span>
+      <span>更新于{formatTimeout(group.modifyTime)}</span>
       <Button onClick={() => navigate(linkToGroup(group.key))}>编辑列表</Button>
       <Button onClick={() => navigate(linkToGroupViewList(group.key))}>浏览碟片</Button>
     </Space>

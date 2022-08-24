@@ -63,7 +63,7 @@ export function DiscList(props: Props) {
       <MzTopbar
         title={title}
         error={state.error?.message}
-        subTitle={<span>更新于 {formatTimeout(updateOn)}</span>}
+        subTitle={<span>更新于{formatTimeout(updateOn)}</span>}
         extra={lastButtons}
       />
       {findMode && (

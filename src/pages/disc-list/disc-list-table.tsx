@@ -88,7 +88,7 @@ function compareRank() {
 }
 
 function formatPt(pt?: number) {
-  return pt === undefined ? '---' : `${pt} pt`
+  return pt === undefined ? '--- pt' : `${pt} pt`
 }
 
 function comparePt(apply: (disc: IDisc) => number | undefined) {

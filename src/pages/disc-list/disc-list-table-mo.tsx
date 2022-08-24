@@ -32,11 +32,9 @@ function buildColumns(): MyColumn<IDisc>[] {
       key: 'index',
       title: (
         <div>
-          &nbsp;
-          <br />
-          #
-          <br />
-          &nbsp;
+          <div>&nbsp;</div>
+          <div>#</div>
+          <div>&nbsp;</div>
         </div>
       ),
       format: (row, idx) => idx + 1,
@@ -45,11 +43,11 @@ function buildColumns(): MyColumn<IDisc>[] {
       key: 'rank',
       title: (
         <div>
-          当前
-          <br />
-          <UpOutlined />
-          <br />
-          前回
+          <div>当前</div>
+          <div>
+            <UpOutlined />
+          </div>
+          <div>前回</div>
         </div>
       ),
       format: (row) => <Link to={linkToRecords(row.id)}>{discRank(row)}</Link>,
@@ -60,20 +58,16 @@ function buildColumns(): MyColumn<IDisc>[] {
       key: 'point',
       title: (
         <div>
-          日增
-          <br />
-          累积
-          <br />
-          预测
+          <div>日增</div>
+          <div>累积</div>
+          <div>预测</div>
         </div>
       ),
       format: (row) => (
         <div>
-          +{formatPt(row.todayPt)}
-          <br />
-          {formatPt(row.totalPt)}
-          <br />
-          {formatPt(row.guessPt)}
+          <div>+{formatPt(row.todayPt)}</div>
+          <div>{formatPt(row.totalPt)}</div>
+          <div>{formatPt(row.guessPt)}</div>
         </div>
       ),
       compare: comparePt((disc) => disc.totalPt),
@@ -82,20 +76,20 @@ function buildColumns(): MyColumn<IDisc>[] {
       key: 'release',
       title: (
         <div>
-          发售
-          <br />
-          <MinusOutlined />
-          <br />
-          类型
+          <div>前回</div>
+          <div>
+            <MinusOutlined />
+          </div>
+          <div>类型</div>
         </div>
       ),
       format: (row) => (
         <div>
-          {row.surplusDays}天
-          <br />
-          <MinusOutlined />
-          <br />
-          {row.discType}
+          <div>{row.surplusDays}天</div>
+          <div>
+            <MinusOutlined />
+          </div>
+          <div>{row.discType}</div>
         </div>
       ),
       compare: compareDisc,
@@ -104,11 +98,9 @@ function buildColumns(): MyColumn<IDisc>[] {
       key: 'title',
       title: (
         <div>
-          &nbsp;
-          <br />
-          碟片标题
-          <br />
-          &nbsp;
+          <div>&nbsp;</div>
+          <div>碟片标题</div>
+          <div>&nbsp;</div>
         </div>
       ),
       format: (row) => <Link to={linkToDisc(row.id)}>{discTitle(row)}</Link>,
@@ -133,7 +125,7 @@ function compareRank() {
 }
 
 function formatPt(pt?: number) {
-  return pt === undefined ? '---' : `${pt} pt`
+  return pt === undefined ? '--- pt' : `${pt} pt`
 }
 
 function comparePt(apply: (disc: IDisc) => number | undefined) {
@@ -145,11 +137,11 @@ function discRank(disc: IDisc) {
   const prevRank = disc.prevRank ? formatNumber(disc.prevRank, '****') : '----'
   return (
     <div>
-      {thisRank}位
-      <br />
-      <UpOutlined />
-      <br />
-      {prevRank}位
+      <div>{thisRank}位</div>
+      <div>
+        <UpOutlined />
+      </div>
+      <div>{prevRank}位</div>
     </div>
   )
 }
