@@ -122,7 +122,7 @@ function formatEdit(row: IGroup) {
 
 function formatItem(row: IGroup) {
   return (
-    <Link to={linkToGroupViewList(row.key)}>
+    <Link to={linkToGroupEditList(row.key)}>
       <UnorderedListOutlined />
     </Link>
   )
