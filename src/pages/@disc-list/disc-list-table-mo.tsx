@@ -75,7 +75,7 @@ function buildColumns(): MyColumn<IDisc>[] {
       key: 'release',
       title: (
         <div>
-          <div>前回</div>
+          <div>发售</div>
           <div>
             <MinusOutlined />
           </div>
