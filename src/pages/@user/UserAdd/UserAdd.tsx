@@ -43,7 +43,7 @@ export default function UserAdd() {
   }
 
   return (
-    <div className="UserAdd">
+    <div className="UserAdd" style={{ maxWidth: 500 }}>
       <MzHeader header="添加用户" />
       <div className="input-wrapper">
         <Input

@@ -62,7 +62,7 @@ export default function DiscGroupDetail() {
   const hasAdmin = useAppSelector((state) => state.session.hasAdmin)
 
   return (
-    <div className="DiscGroupDtail">
+    <div className="DiscGroupDetail" style={{ maxWidth: 500 }}>
       <MzHeader header="列表信息" title={title} error={error} />
       {data && (
         <>
