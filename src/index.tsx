@@ -1,11 +1,12 @@
-import { setupDayjs, setupImmer } from '#A/setup'
-import { store } from '#A/store'
 import React from 'react'
 import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
-import App from './app/layout/App'
 import './index.scss'
+
+import App from '#A/layout/App'
+import { setupDayjs, setupImmer } from '#A/setup'
+import { store } from '#A/store'
 import reportWebVitals from './reportWebVitals'
 
 setupImmer()

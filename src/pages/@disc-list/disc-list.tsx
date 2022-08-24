@@ -16,7 +16,7 @@ interface Props {
   name: string
   rows?: IDisc[]
   state: IState
-  title: string
+  title?: string
   buttons?: JSX.Element[]
   updateOn?: number
 }

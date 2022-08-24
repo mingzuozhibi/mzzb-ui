@@ -5,8 +5,8 @@ import { Button, Space } from 'antd'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { linkToGroup, linkToGroupEditList } from '#A/links'
+import { DiscList } from '#P/@disc-list/disc-list'
 import { IGroupItems } from '#T/disc'
-import { DiscList } from '../@disc-list/disc-list'
 
 export default function DiscGroupViewList() {
   const params = useParams<{ key: string }>()
@@ -31,7 +31,7 @@ export default function DiscGroupViewList() {
     )
   }
 
-  const { discs, title = '载入中', modifyTime } = group ?? {}
+  const { discs, title, modifyTime } = group ?? {}
 
   return (
     <div className="DiscListOfGroup">

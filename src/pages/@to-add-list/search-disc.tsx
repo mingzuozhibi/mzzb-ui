@@ -8,7 +8,7 @@ import { useState } from 'react'
 interface Props {
   theDiscs: IDisc[]
   addDiscs: IDisc[]
-  pushToAdds: (disc: IDisc) => void
+  onPushAdds: (disc: IDisc) => void
 }
 
 interface FetchCount {
@@ -45,7 +45,7 @@ export function SearchDisc(props: Props) {
     }
 
     fetchDisc(`/api/spider/searchDisc/${asin}`, '查询碟片', {
-      onSuccess: props.pushToAdds,
+      onSuccess: props.onPushAdds,
     })
   }
 

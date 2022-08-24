@@ -12,7 +12,7 @@ interface FormCreate {
 }
 
 interface Props {
-  pushToAdds: (disc: IDisc) => void
+  onPushAdds: (disc: IDisc) => void
 }
 
 export function CreateDisc(Props: Props) {
@@ -57,7 +57,7 @@ export function CreateDisc(Props: Props) {
 
     createDisc('/api/discs', '创建碟片', {
       body: form,
-      onSuccess: Props.pushToAdds,
+      onSuccess: Props.onPushAdds,
     })
   }
 
