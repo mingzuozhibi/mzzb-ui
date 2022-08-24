@@ -5,7 +5,7 @@ interface Props {
   state: IState
 }
 
-export function Refresh(props: Props) {
+export function RefreshButton(props: Props) {
   const { state } = props
   return (
     <Button loading={state.loading} onClick={state.refresh}>

@@ -1,23 +1,21 @@
 import { useAppSelector } from '#A/hooks'
-import { MzColumn, MzTable } from '#C/table/MzTable'
-import { useData } from '#H/useData'
+import { RefreshButton } from '#C/button/Refresh'
+import { MyColumn, MyTable } from '#C/table/MyTable'
+import { MzTopbar } from '#C/topbar/MzTopbar'
 import { useLocal } from '#H/useLocal'
-import { useTitle } from '#H/useTitle'
 import { thenCompare } from '#U/compare'
 import { isJustUpdated } from '#U/domain'
+import { fetchResult } from '#U/fetchResult'
 import { formatTimeout } from '#U/format'
 import { EditOutlined, UnorderedListOutlined } from '@ant-design/icons'
-import { Alert, Button } from 'antd'
+import { Button } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import './DiscGroups.scss'
 
 import { linkToGroup, linkToGroupEditList, linkToGroupViewList } from '#A/links'
 import { viewTypes } from '#A/metas'
-import { IGroup } from '#T/disc'
 import { useOnceRequest } from '#H/useOnce'
-import { fetchResult } from '#U/fetchResult'
-import { MzTopbar } from '#C/topbar/MzTopbar'
-import { Refresh } from '#C/button/Refresh'
+import { IGroup } from '#T/disc'
 
 const adminCols = buildColumns()
 const guestCols = adminCols.filter((col) => !['edit', 'item'].includes(col.key))
@@ -39,7 +37,7 @@ export default function DiscGroups() {
   )
 
   const navigate = useNavigate()
-  const button = <Refresh key="1" state={state} />
+  const button = <RefreshButton key="1" state={state} />
   const button2 = isAdminMode ? (
     <Button.Group key="2">
       <Button onClick={() => setAdminMode(false)}>浏览模式</Button>
@@ -55,7 +53,8 @@ export default function DiscGroups() {
     <div className="DiscGroups">
       <MzTopbar title="推荐列表" error={state.error?.message} extra={[button, button2]} />
       {groups && (
-        <MzTable
+        <MyTable
+          tag="groups"
           rows={groups}
           cols={showExtraColumns ? adminCols : guestCols}
           trClass={trClass}
@@ -70,7 +69,7 @@ function trClass(t: IGroup) {
   return { warning: t.viewType === 'PrivateList' }
 }
 
-function buildColumns(): MzColumn<IGroup>[] {
+function buildColumns(): MyColumn<IGroup>[] {
   return [
     {
       key: 'idx',
