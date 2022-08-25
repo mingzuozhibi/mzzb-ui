@@ -37,7 +37,8 @@ export function compareTitle(a: IDisc, b: IDisc) {
 }
 
 export function discTitle(disc: IDisc) {
-  return mapTitle(disc.titlePc ?? disc.title)
+  // use || check null undefined and empty
+  return mapTitle(disc.titlePc || disc.title)
 }
 
 export function mapTitle(title: string) {
