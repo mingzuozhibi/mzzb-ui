@@ -18,6 +18,10 @@ export function comparePt(apply: (disc: IDisc) => number | undefined) {
   return safeCompare(apply, (a, b) => b - a)
 }
 
+export function formatAddPt(pt?: number) {
+  return pt === undefined ? '--- pt' : `+${pt} pt`
+}
+
 export function formatPt(pt?: number) {
   return pt === undefined ? '--- pt' : `${pt} pt`
 }

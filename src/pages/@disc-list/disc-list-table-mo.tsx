@@ -11,6 +11,7 @@ import {
   compareRelease,
   compareTitle,
   discTitle,
+  formatAddPt,
   formatPt,
   tdClassRank,
 } from '#T/disc-utils'
@@ -60,7 +61,7 @@ function buildColumns(): MyColumn<IDisc>[] {
       ),
       format: (row) => (
         <div>
-          <div>+{formatPt(row.todayPt)}</div>
+          <div>{formatAddPt(row.todayPt)}</div>
           <div>{formatPt(row.totalPt)}</div>
         </div>
       ),
