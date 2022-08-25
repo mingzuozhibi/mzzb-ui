@@ -2,8 +2,8 @@ import { RefreshButton } from '#C/button/Refresh'
 import { MzTopbar } from '#C/topbar/MzTopbar'
 import { useLocal } from '#H/useLocal'
 import { formatTimeout } from '#U/format'
-import { SearchOutlined } from '@ant-design/icons'
-import { Button, Empty, Input, Select } from 'antd'
+import { DownOutlined, SearchOutlined } from '@ant-design/icons'
+import { Button, Dropdown, Empty, Input, Menu, Select, Space } from 'antd'
 import classNames from 'classnames'
 import './disc-list.scss'
 
@@ -28,6 +28,7 @@ export function DiscList(props: Props) {
   const name = props.name.replaceAll('-', '').toLocaleLowerCase()
 
   const [viewMode, setViewMode] = useLocal<ViewMode>(`local-disclist-viewmode`, 'auto')
+  const [editMode, setEditMode] = useLocal<boolean>(`local-disclist-editmode`, false)
   const [findMode, setFindMode] = useLocal<boolean>(`local-disclist-findmode-${name}`, false)
   const [findText, setFindText] = useLocal<string>(`local-disclist-findtext-${name}`, '')
 
@@ -49,9 +50,32 @@ export function DiscList(props: Props) {
       <Select.Option value="auto">智能列</Select.Option>
       <Select.Option value="compact">紧凑型</Select.Option>
     </Select>,
-    <Button key="K3" onClick={() => setFindMode(!findMode)}>
-      {findMode ? '查询关' : '查询开'}
-    </Button>,
+    <Dropdown
+      key="K3"
+      overlay={
+        <Menu
+          items={[
+            {
+              key: 'M1',
+              label: findMode ? '查询关' : '查询开',
+              onClick: () => setFindMode(!findMode),
+            },
+            {
+              key: 'M2',
+              label: editMode ? '日语关' : '日语开',
+              onClick: () => setEditMode(!editMode),
+            },
+          ]}
+        />
+      }
+    >
+      <Button>
+        <Space>
+          功能
+          <DownOutlined />
+        </Space>
+      </Button>
+    </Dropdown>,
   ]
 
   buttons?.forEach((button) => lastButtons.push(button))
@@ -79,11 +103,11 @@ export function DiscList(props: Props) {
       {lastRows === undefined ? (
         <Empty />
       ) : viewMode === 'compact' ? (
-        <DiscListTableMo name={name} rows={lastRows!} />
+        <DiscListTableMo name={name} rows={lastRows!} showJapan={editMode} />
       ) : (
         <div className="pc-mode-warpper">
           <div className={classNames({ 'pc-mode': viewMode === 'all' })}>
-            <DiscListTable name={name} rows={lastRows!} />
+            <DiscListTable name={name} rows={lastRows!} showJapan={editMode} />
           </div>
         </div>
       )}

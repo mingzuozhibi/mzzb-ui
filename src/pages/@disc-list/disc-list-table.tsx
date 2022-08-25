@@ -6,27 +6,33 @@ import './disc-list-table.scss'
 import { linkToDisc, linkToRecords } from '#A/links'
 import { IDisc } from '#T/disc'
 import {
+  compareJapan,
   comparePt,
   compareRank,
   compareRelease,
   compareTitle,
   discTitle,
   formatPt,
+  mapTitle,
   tdClassRank,
 } from '#T/disc-utils'
 
 interface Props {
   name: string
   rows: IDisc[]
+  showJapan: boolean
 }
 
 const cols = buildColumns()
+const titleCols = cols.filter((c) => c.key !== 'japan')
+const japanCols = cols.filter((c) => c.key !== 'title')
 
 export function DiscListTable(props: Props) {
-  const { name, rows } = props
+  const { name, rows, showJapan } = props
+  const lastCols = showJapan ? japanCols : titleCols
   return (
     <div className="disc-list-table">
-      <MyTable tag={name} rows={rows} cols={cols} defaultSort={compareRank} />
+      <MyTable tag={name} rows={rows} cols={lastCols} defaultSort={compareRank} />
     </div>
   )
 }
@@ -74,6 +80,12 @@ function buildColumns(): MyColumn<IDisc>[] {
       title: '碟片标题',
       format: (row) => <Link to={linkToDisc(row.id)}>{discTitle(row)}</Link>,
       compare: compareTitle,
+    },
+    {
+      key: 'japan',
+      title: '日文标题',
+      format: (row) => <Link to={linkToDisc(row.id)}>{mapTitle(row.title)}</Link>,
+      compare: compareJapan,
     },
   ]
 }

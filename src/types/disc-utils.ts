@@ -37,5 +37,17 @@ export function compareTitle(a: IDisc, b: IDisc) {
 }
 
 export function discTitle(disc: IDisc) {
-  return disc.titlePc || disc.title
+  return mapTitle(disc.titlePc ?? disc.title)
 }
+
+export function mapTitle(title: string) {
+  const regex = /^(【[^】]+】)(.+)$/
+  const exec = regex.exec(title)
+  if (exec) return exec[2] + exec[1]
+  return title
+}
+
+export const compareJapan = safeCompare(
+  (row: IDisc) => mapTitle(row.title),
+  (a, b) => a.localeCompare(b)
+)
