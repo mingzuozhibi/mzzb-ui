@@ -80,8 +80,10 @@ export function DiscList(props: Props) {
 
   buttons?.forEach((button) => lastButtons.push(button))
 
+  const pcModeCls = { 'pc-mode': viewMode === 'all' }
+
   return (
-    <div className="disc-list">
+    <div className={classNames('disc-list', pcModeCls)}>
       <MzTopbar
         title={title}
         error={state.error?.message}
@@ -106,7 +108,7 @@ export function DiscList(props: Props) {
         <DiscListTableMo name={name} rows={lastRows!} showJapan={editMode} />
       ) : (
         <div className="pc-mode-warpper">
-          <div className={classNames({ 'pc-mode': viewMode === 'all' })}>
+          <div className={classNames(pcModeCls)}>
             <DiscListTable name={name} rows={lastRows!} showJapan={editMode} />
           </div>
         </div>
