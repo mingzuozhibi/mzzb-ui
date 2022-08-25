@@ -7,17 +7,27 @@
     vertical-align: middle;
   }
 
-  td {
+  td.idx {
     text-align: center;
+  }
 
-    &.point {
-      text-align: right;
-      padding-left: 0;
-    }
+  td.rank {
+    word-break: keep-all;
+    white-space: nowrap;
+    text-align: center;
+  }
 
-    &.title {
-      text-align: left;
-    }
+  td.point {
+    word-break: keep-all;
+    white-space: nowrap;
+    text-align: right;
+    padding-left: 0;
+  }
+
+  td.release {
+    word-break: keep-all;
+    white-space: nowrap;
+    text-align: center;
   }
 
   tr {
