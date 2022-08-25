@@ -49,9 +49,11 @@ export default function DiscGroups() {
     </Button.Group>
   )
 
+  const lastButtons = showExtraButtons ? [button, button2] : [button]
+
   return (
     <div className="DiscGroups">
-      <MzTopbar title="推荐列表" error={state.error?.message} extra={[button, button2]} />
+      <MzTopbar title="推荐列表" error={state.error?.message} extra={lastButtons} />
       {groups && (
         <MyTable
           tag="groups"
