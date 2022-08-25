@@ -44,7 +44,7 @@ export default function DiscGroupAdd() {
   }
 
   return (
-    <div className="admin-sakura-save-content">
+    <div className="DiscGroupAdd" style={{ maxWidth: 500 }}>
       <MzHeader header="添加列表" />
       <div className="input-wrapper">
         <Input

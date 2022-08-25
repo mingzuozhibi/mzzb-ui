@@ -32,8 +32,8 @@ export function MzTopbar(props: Props) {
 
   return (
     <div className="MzTopbar">
-      <SafeAlert type="error" message={error} />
       <PageHeader title={lastTitle} {...lastProps} />
+      <SafeAlert type="error" message={error} />
     </div>
   )
 }

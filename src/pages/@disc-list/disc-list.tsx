@@ -1,3 +1,4 @@
+import { RefreshButton } from '#C/button/Refresh'
 import { MzTopbar } from '#C/topbar/MzTopbar'
 import { useLocal } from '#H/useLocal'
 import { formatTimeout } from '#U/format'
@@ -42,9 +43,7 @@ export function DiscList(props: Props) {
   }
 
   const lastButtons = [
-    <Button key="K1" loading={state.loading} onClick={state.refresh}>
-      刷新
-    </Button>,
+    <RefreshButton key="K1" state={state} />,
     <Select key="K2" defaultValue={viewMode} style={{ width: 90 }} onChange={setViewMode}>
       <Select.Option value="all">所有列</Select.Option>
       <Select.Option value="auto">智能列</Select.Option>

@@ -40,7 +40,7 @@ export default function UserDetail() {
   const tilte = data ? `用户信息「${data.username}」` : '载入中'
 
   return (
-    <div className="UserDetail">
+    <div className="UserDetail" style={{ maxWidth: 500 }}>
       <MzHeader header="用户信息" title={tilte} error={error} />
       {data && (
         <>

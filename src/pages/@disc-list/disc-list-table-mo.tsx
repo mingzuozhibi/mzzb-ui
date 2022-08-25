@@ -1,12 +1,19 @@
 import { MyColumn, MyTable } from '#C/table/MyTable'
-import { safeCompare } from '#U/compare'
 import { formatNumber } from '#U/format'
 import { Link } from 'react-router-dom'
 import './disc-list-table-mo.scss'
 
 import { linkToDisc, linkToRecords } from '#A/links'
 import { IDisc } from '#T/disc'
-import { compareRelease, compareTitle, discTitle } from '#T/disc-utils'
+import {
+  comparePt,
+  compareRank,
+  compareRelease,
+  compareTitle,
+  discTitle,
+  formatPt,
+  tdClassRank,
+} from '#T/disc-utils'
 
 interface Props {
   name: string
@@ -19,7 +26,7 @@ export function DiscListTableMo(props: Props) {
   const { name, rows } = props
   return (
     <div className="disc-list-table-mo">
-      <MyTable tag={name} rows={rows} cols={cols} defaultSort={compareRank()} />
+      <MyTable tag={name} rows={rows} cols={cols} defaultSort={compareRank} />
     </div>
   )
 }
@@ -41,7 +48,7 @@ function buildColumns(): MyColumn<IDisc>[] {
       ),
       format: (row) => <Link to={linkToRecords(row.id)}>{discRank(row)}</Link>,
       tdClass: tdClassRank,
-      compare: compareRank(),
+      compare: compareRank,
     },
     {
       key: 'point',
@@ -82,29 +89,6 @@ function buildColumns(): MyColumn<IDisc>[] {
       compare: compareTitle,
     },
   ]
-}
-
-function tdClassRank(row: IDisc) {
-  if (row.updateTime === undefined) return null
-  const timeout = Date.now() - row.updateTime
-  if (timeout < 3600000) return 'success'
-  if (timeout > 21960000) return 'warning'
-  return null
-}
-
-function compareRank() {
-  return safeCompare<IDisc, number>({
-    apply: (row) => row.thisRank,
-    compare: (a, b) => a - b,
-  })
-}
-
-function formatPt(pt?: number) {
-  return pt === undefined ? '--- pt' : `${pt} pt`
-}
-
-function comparePt(apply: (disc: IDisc) => number | undefined) {
-  return safeCompare<IDisc, number>({ apply, compare: (a, b) => b - a })
 }
 
 function discRank(disc: IDisc) {
