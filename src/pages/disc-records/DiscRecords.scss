@@ -1,7 +1,9 @@
-@import '../../_function.scss';
+@import '../_function.scss';
 
 #root .DiscRecords {
   .table {
+    max-width: 650px;
+
     th,
     td {
       @include columnCenter();

@@ -1,3 +1,12 @@
+export interface IGroup {
+  id: number
+  key: string
+  title: string
+  enabled: boolean
+  viewType: string
+  modifyTime?: number
+}
+
 export interface IDisc {
   id: number
   asin: string
@@ -17,16 +26,23 @@ export interface IDisc {
   surplusDays: number
 }
 
-export interface IGroup {
+export interface IRecord {
   id: number
-  key: string
-  title: string
-  enabled: boolean
-  viewType: string
-  discCount: number
-  modifyTime?: number
+  date: string
+  todayPt?: number
+  totalPt?: number
+  guessPt?: number
+  averRank?: number
 }
 
-export interface IGroupItems extends Omit<IGroup, 'discCount'> {
+export interface IGroupCount extends IGroup {
+  discCount: number
+}
+
+export interface IGroupDiscs extends IGroup {
   discs: IDisc[]
+}
+
+export interface IDiscRecords extends IDisc {
+  records: IRecord[]
 }

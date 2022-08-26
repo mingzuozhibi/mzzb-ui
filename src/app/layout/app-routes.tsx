@@ -18,7 +18,7 @@ import DiscGroupEditList from '#P/disc-group-edit-list/DiscGroupEditList'
 import DiscGroupViewList from '#P/disc-group-view-list/DiscGroupViewList'
 
 const LazyDiscRecords = lazy(
-  () => import(/* webpackChunkName: "disc_records" */ '#P/@disc/DiscRecords/DiscRecords')
+  () => import(/* webpackChunkName: "disc_records" */ '#P/disc-records/DiscRecords')
 )
 
 export const routes = (

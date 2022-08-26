@@ -6,14 +6,14 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 import { linkToGroup, linkToGroupEditList } from '#A/links'
 import { DiscList } from '#P/@disc-list/disc-list'
-import { IGroupItems } from '#T/disc'
+import { IGroupDiscs } from '#T/disc'
 
 export default function DiscGroupViewList() {
   const params = useParams<{ key: string }>()
   const key = params.key as string
 
   const { data: group, ...state } = useOnceRequest(() =>
-    fetchResult<IGroupItems>(`/api/discGroups/key/${params.key!}/discs`).then(
+    fetchResult<IGroupDiscs>(`/api/discGroups/key/${params.key!}/discs`).then(
       (result) => result.data
     )
   )

@@ -13,7 +13,7 @@ import './DiscGroupEditList.scss'
 import { linkToDisc, linkToGroup, linkToGroupViewList } from '#A/links'
 import { CreateDisc } from '#P/@to-add-list/create-disc'
 import { SearchDisc } from '#P/@to-add-list/search-disc'
-import { IDisc, IGroupItems } from '#T/disc'
+import { IDisc, IGroupDiscs } from '#T/disc'
 import { compareRelease, compareTitle, discTitle } from '#T/disc-utils'
 
 export default function DiscGroupEditList() {
@@ -21,7 +21,7 @@ export default function DiscGroupEditList() {
   const groupKey = params.key as string
 
   const { data: group, ...state } = useOnceRequest(() =>
-    fetchResult<IGroupItems>(`/api/discGroups/key/${groupKey}/discs`).then((result) => result.data)
+    fetchResult<IGroupDiscs>(`/api/discGroups/key/${groupKey}/discs`).then((result) => result.data)
   )
 
   const [, pushDisc] = useAjax<IDisc>('post')

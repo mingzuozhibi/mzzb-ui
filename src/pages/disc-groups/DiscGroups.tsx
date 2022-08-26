@@ -3,6 +3,7 @@ import { RefreshButton } from '#C/button/Refresh'
 import { MyColumn, MyTable } from '#C/table/MyTable'
 import { MzTopbar } from '#C/topbar/MzTopbar'
 import { useLocal } from '#H/useLocal'
+import { useOnceRequest } from '#H/useOnce'
 import { thenCompare } from '#U/compare'
 import { isJustUpdated } from '#U/domain'
 import { fetchResult } from '#U/fetchResult'
@@ -14,8 +15,7 @@ import './DiscGroups.scss'
 
 import { linkToGroup, linkToGroupEditList, linkToGroupViewList } from '#A/links'
 import { viewTypes } from '#A/metas'
-import { useOnceRequest } from '#H/useOnce'
-import { IGroup } from '#T/disc'
+import { IGroupCount } from '#T/disc'
 
 const adminCols = buildColumns()
 const guestCols = adminCols.filter((col) => !['edit', 'item'].includes(col.key))
@@ -32,7 +32,7 @@ export default function DiscGroups() {
 
   const url = fetchPrivateData ? '/api/discGroups?hasPrivate=true' : '/api/discGroups'
   const { data: groups, ...state } = useOnceRequest(
-    () => fetchResult<IGroup[]>(url).then((result) => result.data),
+    () => fetchResult<IGroupCount[]>(url).then((result) => result.data),
     { refreshDeps: [url] }
   )
 
@@ -67,11 +67,11 @@ export default function DiscGroups() {
   )
 }
 
-function trClass(t: IGroup) {
+function trClass(t: IGroupCount) {
   return { warning: t.viewType === 'PrivateList' }
 }
 
-function buildColumns(): MyColumn<IGroup>[] {
+function buildColumns(): MyColumn<IGroupCount>[] {
   return [
     {
       key: 'idx',
@@ -126,7 +126,7 @@ function buildColumns(): MyColumn<IGroup>[] {
 
 function compareDiscGroups() {
   const sorts = viewTypes.map((e) => e.value)
-  return thenCompare<IGroup>(
+  return thenCompare<IGroupCount>(
     (a, b) => sorts.indexOf(a.viewType) - sorts.indexOf(b.viewType),
     (a, b) => b.key.localeCompare(a.key)
   )
