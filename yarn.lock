@@ -1832,13 +1832,6 @@
   dependencies:
     "@types/node" "*"
 
-"@types/echarts@^4.9.16":
-  version "4.9.16"
-  resolved "https://mirrors.tencent.com/npm/@types%2fecharts/-/echarts-4.9.16.tgz#7156aea4623f3543b083200f6c65e04d3693bcc8"
-  integrity sha512-bfiagfPw3dWauAIJ9fgoJQoL4hLWlGcltqwbE6LGye0NIY5xnbZau+mDmadCzGojic3MWuFDCUiO25kl4sRGeA==
-  dependencies:
-    "@types/zrender" "*"
-
 "@types/eslint-scope@^3.7.3":
   version "3.7.4"
   resolved "https://mirrors.tencent.com/npm/@types%2feslint-scope/-/eslint-scope-3.7.4.tgz#37fc1223f0786c39627068a12e94d6e6fc61de16"
@@ -2107,11 +2100,6 @@
   integrity sha512-aB4y9UDUXTSMxmM4MH+YnuR0g5Cph3FLQBoWoMB21DSvFVAxRVEHEMx3TLh+zUZYMCQtKiqazz0Q4Rre31f/OA==
   dependencies:
     "@types/yargs-parser" "*"
-
-"@types/zrender@*":
-  version "4.0.3"
-  resolved "https://mirrors.tencent.com/npm/@types%2fzrender/-/zrender-4.0.3.tgz#d18b31648b2f11b9ec672a560836e1887a965ec1"
-  integrity sha512-EPI269lkHNsObwILJ1k1z7znLjKyePuWRy/XKK0shSGpBb9cIX307arcwJV4+2NeZj5wEjN06r4D8yFv7sI06g==
 
 "@typescript-eslint/eslint-plugin@^5.5.0":
   version "5.33.1"

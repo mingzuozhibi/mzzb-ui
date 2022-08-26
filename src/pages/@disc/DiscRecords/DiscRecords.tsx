@@ -2,6 +2,7 @@ import { Button, Modal } from 'antd'
 import dayjs from 'dayjs'
 import * as echarts from 'echarts'
 import { useEffect } from 'react'
+import { renderToString } from 'react-dom/server'
 import { useParams } from 'react-router-dom'
 import './DiscRecords.scss'
 
@@ -11,8 +12,8 @@ import { useAjax } from '#H/useAjax'
 import { useData } from '#H/useData'
 import { formatNumber } from '#U/format'
 
-import { formatPt } from '#T/disc-utils'
 import { useAppSelector } from '#A/hooks'
+import { formatPt } from '#T/disc-utils'
 
 interface Data {
   title: string
@@ -90,7 +91,7 @@ function getColumns(): MzColumn<Record>[] {
     {
       key: 'idx',
       title: '#',
-      format: (row, i) => i + 1,
+      format: (row, idx) => idx + 1,
     },
     {
       key: 'date',
@@ -159,14 +160,21 @@ function initEchart(data?: Data) {
     },
     tooltip: {
       trigger: 'axis',
-      formatter: '排名：{c0}位<br>累积：{c1}pt<br>预测：{c2}pt<br>{b}',
-      position: function (point, params, dom, rect, size: any) {
-        const mouseX = point[0] as number
-        const mouseY = point[1] as number
-        const contentW = size.contentSize[0]
-        const contentH = size.contentSize[1]
-        const isLeft = mouseX < size.viewSize[0] / 2
-        return { top: mouseY - contentH - 50, left: isLeft ? mouseX + 30 : mouseX - contentW - 30 }
+      formatter: (params: any) => {
+        const b = params[0].name
+        const c0 = params[0].data
+        const c1 = params[1].data
+        const c2 = params[2].data
+        return renderTooltip(c0, c1, c2, b)
+      },
+      position: function (point: any, _params: any, _dom: any, _rect: any, size: any) {
+        const mouseX = point[0]
+        const mouseY = point[1]
+        const contW = size.contentSize[0]
+        const contH = size.contentSize[1]
+        const viewW = size.viewSize[0]
+        const isLeft = mouseX < viewW / 2
+        return { top: mouseY - contH - 50, left: isLeft ? mouseX + 30 : mouseX - contW - 30 }
       },
     },
     grid: {
@@ -221,4 +229,28 @@ function initEchart(data?: Data) {
       },
     ],
   })
+}
+
+function renderTooltip(c0: any, c1: any, c2: any, b: any) {
+  const table = (
+    <table className="tooltip-table">
+      <tr>
+        <td>排名</td>
+        <td>{c0 === undefined ? '---' : c0} 位</td>
+      </tr>
+      <tr>
+        <td>累积</td>
+        <td>{c1 === undefined ? '---' : c1} pt</td>
+      </tr>
+      <tr>
+        <td>预测</td>
+        <td>{c2 === undefined ? '---' : c2} pt</td>
+      </tr>
+      <tr>
+        <td>日期</td>
+        <td>{b}</td>
+      </tr>
+    </table>
+  )
+  return renderToString(table)
 }

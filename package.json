@@ -36,7 +36,6 @@
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
-    "@types/echarts": "^4.9.16",
     "@types/lodash.debounce": "^4.0.7",
     "@types/md5": "^2.3.2",
     "@types/node": "^16.11.49",

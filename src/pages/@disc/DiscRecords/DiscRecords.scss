@@ -10,4 +10,10 @@
       }
     }
   }
+  .tooltip-table {
+    tr td:nth-child(2) {
+      text-align: right;
+      padding-left: 8px;
+    }
+  }
 }
