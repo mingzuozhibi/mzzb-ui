@@ -1,6 +1,6 @@
 import { useAppSelector } from '#A/hooks'
 import { useOnceRequest } from '#H/useOnce'
-import { fetchResult } from '#U/fetchResult'
+import { fetchResult } from '#U/fetch/fetchResult'
 import { Button, Space } from 'antd'
 import { useNavigate, useParams } from 'react-router-dom'
 

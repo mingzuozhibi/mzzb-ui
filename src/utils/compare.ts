@@ -4,9 +4,10 @@ interface Compare<T> {
 
 export function safeCompare<T, E>(
   apply: (model: T) => E | undefined,
-  compare: Compare<E>
+  compare: Compare<E>,
+  nullFirst = false
 ): Compare<T> {
-  const fn = nullCompare(compare)
+  const fn = nullCompare(compare, nullFirst)
   return (a, b) => fn(apply(a), apply(b))
 }
 

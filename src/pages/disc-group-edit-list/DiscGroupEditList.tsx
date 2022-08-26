@@ -3,8 +3,9 @@ import { MzTopbar } from '#C/topbar/MzTopbar'
 import { useAjax } from '#H/useAjax'
 import { useLocal } from '#H/useLocal'
 import { useOnceRequest } from '#H/useOnce'
-import { fetchResult } from '#U/fetchResult'
-import { formatTimeout } from '#U/format'
+import { formatTimeout } from '#U/date/timeout'
+import { safeWarpper } from '#U/domain'
+import { fetchResult } from '#U/fetch/fetchResult'
 import { DeleteOutlined, FileAddOutlined } from '@ant-design/icons'
 import { Button, Space, Tabs } from 'antd'
 import { Link, useNavigate, useParams } from 'react-router-dom'
@@ -24,24 +25,24 @@ export default function DiscGroupEditList() {
     fetchResult<IGroupDiscs>(`/api/discGroups/key/${groupKey}/discs`).then((result) => result.data)
   )
 
-  const [, pushDisc] = useAjax<IDisc>('post')
-  const [, dropDisc] = useAjax<IDisc>('delete')
+  const [, doPush] = useAjax<IDisc>('post')
+  const [, doDrop] = useAjax<IDisc>('delete')
 
   const [toAdds, setToAdds] = useLocal<IDisc[]>('local-toadds', [])
 
-  function handlePushAdds(disc: IDisc) {
+  function pushToAdds(disc: IDisc) {
     setToAdds([disc, ...toAdds])
   }
 
-  function handleDropAdds(disc: IDisc) {
+  function dropToAdds(disc: IDisc) {
     setToAdds(toAdds.filter((e) => e.id !== disc.id))
   }
 
-  function handlePushDisc(discGroupId: number, discId: number) {
-    pushDisc(`/api/discGroups/${discGroupId}/discs/${discId}`, '添加碟片到列表', {
+  function doPushDiscs(groupId: number, discId: number) {
+    doPush(`/api/discGroups/${groupId}/discs/${discId}`, '添加碟片到列表', {
       onSuccess(disc: IDisc) {
         if (group !== undefined) {
-          handleDropAdds(disc)
+          dropToAdds(disc)
           state.mutate({
             ...group,
             discs: [disc, ...group.discs],
@@ -51,11 +52,11 @@ export default function DiscGroupEditList() {
     })
   }
 
-  function handleDropDisc(discGroupId: number, discId: number) {
-    dropDisc(`/api/discGroups/${discGroupId}/discs/${discId}`, '从列表移除碟片', {
+  function doDropDiscs(groupId: number, discId: number) {
+    doDrop(`/api/discGroups/${groupId}/discs/${discId}`, '从列表移除碟片', {
       onSuccess(disc: IDisc) {
         if (group !== undefined) {
-          handlePushAdds(disc)
+          pushToAdds(disc)
           state.mutate({
             ...group,
             discs: group.discs.filter((e) => e.id !== disc.id),
@@ -69,7 +70,7 @@ export default function DiscGroupEditList() {
     return {
       key: 'command',
       title: '添加',
-      format: (row: IDisc) => <FileAddOutlined onClick={() => handlePushDisc(group!.id, row.id)} />,
+      format: (row: IDisc) => <FileAddOutlined onClick={() => doPushDiscs(group!.id, row.id)} />,
     }
   }
 
@@ -77,18 +78,20 @@ export default function DiscGroupEditList() {
     return {
       key: 'command',
       title: '移除',
-      format: (row: IDisc) => <DeleteOutlined onClick={() => handleDropDisc(group!.id, row.id)} />,
+      format: (row: IDisc) => <DeleteOutlined onClick={() => doDropDiscs(group!.id, row.id)} />,
     }
   }
 
   const navigate = useNavigate()
-  const extraCaption = group ? (
+  const extraCaption = safeWarpper(group, (group) => (
     <Space>
-      <span>更新于{formatTimeout(group.modifyTime)}</span>
+      {safeWarpper(group.modifyTime, (updateOn) => (
+        <span>更新于{formatTimeout(updateOn)}</span>
+      ))}
       <Button onClick={() => navigate(linkToGroup(group.key))}>编辑列表</Button>
       <Button onClick={() => navigate(linkToGroupViewList(group.key))}>浏览碟片</Button>
     </Space>
-  ) : null
+  ))
 
   return (
     <div className="DiscGroupEditList">
@@ -97,10 +100,10 @@ export default function DiscGroupEditList() {
         <>
           <Tabs type="card">
             <Tabs.TabPane tab="查询碟片" key="1">
-              <SearchDisc theDiscs={group.discs} addDiscs={toAdds} onPushAdds={handlePushAdds} />
+              <SearchDisc theDiscs={group.discs} addDiscs={toAdds} onPushAdds={pushToAdds} />
             </Tabs.TabPane>
             <Tabs.TabPane tab="手动创建" key="2">
-              <CreateDisc onPushAdds={handlePushAdds} />
+              <CreateDisc onPushAdds={pushToAdds} />
             </Tabs.TabPane>
           </Tabs>
           <MyTable

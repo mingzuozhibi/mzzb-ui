@@ -4,7 +4,7 @@ import { MyColumn, MyTable } from '#C/table/MyTable'
 import { MzTopbar } from '#C/topbar/MzTopbar'
 import { useAjax } from '#H/useAjax'
 import { useOnceRequest } from '#H/useOnce'
-import { fetchResult } from '#U/fetchResult'
+import { fetchResult } from '#U/fetch/fetchResult'
 import { formatNumber } from '#U/format'
 import { Button, Modal, Space } from 'antd'
 import dayjs from 'dayjs'
@@ -30,7 +30,7 @@ export default function DiscRecords() {
     data && initEcharts(data)
   }, [data])
 
-  const [_, doPost] = useAjax<string>('post')
+  const [isPost, doPost] = useAjax<string>('post')
 
   function reCompute() {
     doPost(`/api/admin/reComputeDisc2/${discId}`, '重新计算PT', {
@@ -46,7 +46,11 @@ export default function DiscRecords() {
     <Space>
       <span>如果图表显示错误，请尝试刷新</span>
       <RefreshButton state={state} />
-      {hasBasic && <Button onClick={reCompute}>重新计算PT</Button>}
+      {hasBasic && (
+        <Button loading={isPost} onClick={reCompute}>
+          重新计算PT
+        </Button>
+      )}
     </Space>
   )
 

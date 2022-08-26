@@ -20,8 +20,8 @@ export function SearchDisc(props: Props) {
   const [asin, setAsin] = useState<string>()
   const [count, setCount] = useLocal<FetchCount>('local-fetchcount', {})
 
-  const [loadingDisc, fetchDisc] = useAjax<IDisc>('get')
-  const [loadingCount, fetchCount] = useAjax<number>('get')
+  const [isGetDisc, doGetDisc] = useAjax<IDisc>('get')
+  const [isGetCount, doGetCount] = useAjax<number>('get')
 
   function doFetchDisc() {
     if (isEmpty(asin)) {
@@ -44,13 +44,13 @@ export function SearchDisc(props: Props) {
       return
     }
 
-    fetchDisc(`/api/spider/searchDisc/${asin}`, '查询碟片', {
+    doGetDisc(`/api/spider/searchDisc/${asin}`, '查询碟片', {
       onSuccess: props.onPushAdds,
     })
   }
 
   function doFetchCount() {
-    fetchCount('/api/spider/fetchCount', '查询抓取中的碟片数量', {
+    doGetCount('/api/spider/fetchCount', '查询抓取中的碟片数量', {
       onSuccess: (count) => {
         setCount({ value: count, timestamp: Date.now() })
       },
@@ -72,10 +72,10 @@ export function SearchDisc(props: Props) {
         />
       </div>
       <div className="input-wrapper button-group">
-        <Button loading={loadingDisc} onClick={doFetchDisc}>
+        <Button loading={isGetDisc} onClick={doFetchDisc}>
           查找碟片
         </Button>
-        <Button loading={loadingCount} onClick={doFetchCount}>
+        <Button loading={isGetCount} onClick={doFetchCount}>
           {buttonName}
         </Button>
       </div>
