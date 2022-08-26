@@ -1,11 +1,13 @@
 #root .disc-list {
-  max-width: 800px;
+  &:not(.pc-mode) {
+    max-width: 800px;
+  }
 
   .pc-mode-warpper {
     overflow-x: auto;
 
     .pc-mode {
-      min-width: 750px;
+      min-width: 200%;
 
       table {
         th,

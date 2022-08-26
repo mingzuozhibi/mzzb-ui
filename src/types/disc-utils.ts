@@ -18,6 +18,10 @@ export function comparePt(apply: (disc: IDisc) => number | undefined) {
   return safeCompare(apply, (a, b) => b - a)
 }
 
+export function formatAddPt(pt?: number) {
+  return pt === undefined ? '--- pt' : `+${pt} pt`
+}
+
 export function formatPt(pt?: number) {
   return pt === undefined ? '--- pt' : `${pt} pt`
 }
@@ -33,5 +37,18 @@ export function compareTitle(a: IDisc, b: IDisc) {
 }
 
 export function discTitle(disc: IDisc) {
-  return disc.titlePc || disc.title
+  // use || check null undefined and empty
+  return mapTitle(disc.titlePc || disc.title)
 }
+
+export function mapTitle(title: string) {
+  const regex = /^(【[^】]+】)(.+)$/
+  const exec = regex.exec(title)
+  if (exec) return exec[2] + exec[1]
+  return title
+}
+
+export const compareJapan = safeCompare(
+  (row: IDisc) => mapTitle(row.title),
+  (a, b) => a.localeCompare(b)
+)

@@ -10,6 +10,7 @@ cd "$HomeDir" || exit
 # 构建部署
 if [[ $1 != '-q' ]]; then
     yarn build
+    git log --pretty=format:'%h %ad | %s [%an]' --date=short -7 >build/git_logs.txt
 fi
 
 target=mzzb-admin/nginx/www/dev
