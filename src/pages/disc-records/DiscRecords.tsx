@@ -16,7 +16,7 @@ import { IDiscRecords, IRecord } from '#T/disc'
 import { discTitle, formatPt } from '#T/disc-utils'
 import { initEcharts } from './echarts'
 
-const cols = getColumns()
+const cols = buildColumns()
 
 export default function DiscRecords() {
   const params = useParams<{ id: string }>()
@@ -74,7 +74,7 @@ function trClass(data: IDiscRecords) {
   return (t: IRecord) => ({ warning: !dayjs(t.date).isBefore(dayjs(data.releaseDate)) })
 }
 
-function getColumns(): MyColumn<IRecord>[] {
+function buildColumns(): MyColumn<IRecord>[] {
   return [
     {
       key: 'idx',

@@ -106,13 +106,13 @@ export default function DiscGroupEditList() {
           <MyTable
             tag="toadds"
             rows={toAdds}
-            cols={getColumns(getPushCommand())}
+            cols={buildColumns(getPushCommand())}
             title="待选列表"
           />
           <MyTable
             tag="editlist"
             rows={group.discs}
-            cols={getColumns(getDropCommand())}
+            cols={buildColumns(getDropCommand())}
             title={group.title}
             defaultSort={compareRelease}
             extraCaption={extraCaption}
@@ -123,7 +123,7 @@ export default function DiscGroupEditList() {
   )
 }
 
-function getColumns(extraColumn: MyColumn<IDisc>): MyColumn<IDisc>[] {
+function buildColumns(extraColumn: MyColumn<IDisc>): MyColumn<IDisc>[] {
   return [
     {
       key: 'asin',
