@@ -19,7 +19,10 @@ export function AppHeader() {
   const showSider = useCallback(() => dispatch(setViewSider(true)), [dispatch])
   const hideSider = useCallback(() => dispatch(setViewSider(false)), [dispatch])
 
-  useOnceService(doQuery)
+  useOnceService(() => {
+    setTimeout(doQuery, 500)
+    setInterval(doQuery, 600_000)
+  })
 
   return (
     <Layout.Header className="app-header">

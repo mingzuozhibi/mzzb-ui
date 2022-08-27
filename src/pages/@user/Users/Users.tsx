@@ -16,7 +16,7 @@ export default function Users() {
   const [{ error, data }, handler] = useData<IUser[]>(`/api/users`)
 
   const width = useWidth('.Users')
-  const cols = useMemo(() => getColumns(width), [width])
+  const cols = useMemo(() => buildColumns(width), [width])
   const addUserButton = (
     <Button.Group>
       <Button onClick={() => navigate(`/users/add`)}>添加用户</Button>
@@ -41,7 +41,7 @@ export default function Users() {
   )
 }
 
-function getColumns(width: number): MzColumn<IUser>[] {
+function buildColumns(width: number): MzColumn<IUser>[] {
   return [
     {
       key: 'id',

@@ -1,5 +1,5 @@
 import { ISession } from '#T/user'
-import { fetchResult } from '#U/fetchResult'
+import { fetchResult } from '#U/fetch/fetchResult'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 interface SessionState extends ISession {}

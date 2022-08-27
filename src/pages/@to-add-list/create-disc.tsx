@@ -17,7 +17,7 @@ interface Props {
 
 export function CreateDisc(Props: Props) {
   const [form, setForm] = useState<FormCreate>({})
-  const [posting, createDisc] = useAjax<IDisc>('post')
+  const [isPost, doPost] = useAjax<IDisc>('post')
 
   function doCreateDisc() {
     const { asin, title, releaseDate, discType } = form
@@ -55,7 +55,7 @@ export function CreateDisc(Props: Props) {
       return
     }
 
-    createDisc('/api/discs', '创建碟片', {
+    doPost('/api/discs', '创建碟片', {
       body: form,
       onSuccess: Props.onPushAdds,
     })
@@ -102,7 +102,7 @@ export function CreateDisc(Props: Props) {
           <Radio.Button value="Other">未知</Radio.Button>
         </Radio.Group>
         <div style={{ marginTop: 20 }}>
-          <Button type="primary" loading={posting} onClick={() => doCreateDisc()}>
+          <Button type="primary" loading={isPost} onClick={() => doCreateDisc()}>
             创建碟片
           </Button>
         </div>

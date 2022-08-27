@@ -20,7 +20,7 @@ interface DiscComing {
   createOn: number
 }
 
-const cols = getColumns()
+const cols = buildColumns()
 
 export default function DiscComing() {
   const location = useLocation()
@@ -49,7 +49,7 @@ export default function DiscComing() {
   )
 }
 
-function getColumns(): MzColumn<DiscComing>[] {
+function buildColumns(): MzColumn<DiscComing>[] {
   return [
     {
       key: 'asin',

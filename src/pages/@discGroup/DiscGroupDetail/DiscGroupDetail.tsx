@@ -47,11 +47,11 @@ export default function DiscGroupDetail() {
     doEdit(`/api/discGroups/${data!.id}`, form)
   }
 
-  const [deleting, doDelete] = useAjax('delete')
+  const [isDrop, doDrop] = useAjax('delete')
   const [deleted, setDeleted] = useState(false)
 
-  function deleteThis() {
-    doDelete(`/api/discGroups/${data!.id}`, '删除列表', {
+  function doDeleteGroup() {
+    doDrop(`/api/discGroups/${data!.id}`, '删除列表', {
       onSuccess() {
         setDeleted(true)
       },
@@ -114,9 +114,9 @@ export default function DiscGroupDetail() {
                   placement="bottomRight"
                   okText="Yes"
                   cancelText="No"
-                  onConfirm={deleteThis}
+                  onConfirm={doDeleteGroup}
                 >
-                  <Button danger={true} loading={deleting} style={{ marginLeft: 20 }}>
+                  <Button danger={true} loading={isDrop} style={{ marginLeft: 20 }}>
                     删除列表
                   </Button>
                 </Popconfirm>

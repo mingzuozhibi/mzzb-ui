@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "mzzb-ui",
-  "version": "2.9.0",
+  "version": "3.0.0",
   "license": "Apache-2.0",
   "description": "ui for mingzuozhibi",
   "proxy": "https://mingzuozhibi.com",
@@ -10,6 +10,7 @@
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "eject": "react-scripts eject",
+    "size": "source-map-explorer 'build/static/js/*.js' --html >~/downs/size.html",
     "c1": "sed -i 's/http:/https:/g' yarn.lock",
     "c2": "sed -i 's/mirrors.cloud.tencent.com/mirrors.tencent.com/g' yarn.lock",
     "ca": "yarn c1 && yarn c2"
@@ -18,7 +19,7 @@
     "@ant-design/icons": "^4.7.0",
     "@reduxjs/toolkit": "^1.8.5",
     "ahooks": "^3.7.0",
-    "antd": "^4.22.6",
+    "antd": "^4.22.8",
     "classnames": "^2.3.1",
     "dayjs": "^1.11.5",
     "echarts": "^5.3.3",
@@ -31,20 +32,20 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "redux": "^4.2.0",
-    "typescript": "^4.7.4",
+    "typescript": "^4.8.2",
     "use-immer": "^0.7.0",
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
-    "@types/echarts": "^4.9.16",
     "@types/lodash.debounce": "^4.0.7",
     "@types/md5": "^2.3.2",
-    "@types/node": "^16.11.49",
+    "@types/node": "^16.11.56",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
     "customize-cra": "^1.0.0",
     "react-app-rewired": "^2.2.1",
-    "sass": "^1.54.4"
+    "sass": "^1.54.4",
+    "source-map-explorer": "^2.5.2"
   },
   "repository": {
     "type": "git",

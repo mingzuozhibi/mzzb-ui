@@ -1,4 +1,4 @@
-import { request } from '#U/request'
+import { request } from '#U/fetch/request'
 import { message, Modal } from 'antd'
 import { useState } from 'react'
 

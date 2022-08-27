@@ -1,9 +1,10 @@
 import { RefreshButton } from '#C/button/Refresh'
 import { MzTopbar } from '#C/topbar/MzTopbar'
 import { useLocal } from '#H/useLocal'
-import { formatTimeout } from '#U/format'
+import { formatTimeout } from '#U/date/timeout'
+import { safeWarpper } from '#U/domain'
 import { DownOutlined, SearchOutlined } from '@ant-design/icons'
-import { Button, Dropdown, Empty, Input, Menu, Select, Space } from 'antd'
+import { Button, Dropdown, Input, Menu, Select, Space } from 'antd'
 import classNames from 'classnames'
 import './disc-list.scss'
 
@@ -87,7 +88,9 @@ export function DiscList(props: Props) {
       <MzTopbar
         title={title}
         error={state.error?.message}
-        subTitle={<span>更新于{formatTimeout(updateOn)}</span>}
+        subTitle={safeWarpper(updateOn, (updateOn) => (
+          <span>更新于{formatTimeout(updateOn)}</span>
+        ))}
         extra={lastButtons}
       />
       {findMode && (
@@ -102,16 +105,16 @@ export function DiscList(props: Props) {
           style={{ marginBottom: 8 }}
         />
       )}
-      {lastRows === undefined ? (
-        <Empty />
-      ) : viewMode === 'compact' ? (
-        <DiscListTableMo name={name} rows={lastRows!} showJapan={editMode} />
-      ) : (
-        <div className="pc-mode-warpper">
-          <div className={classNames(pcModeCls)}>
-            <DiscListTable name={name} rows={lastRows!} showJapan={editMode} />
+      {safeWarpper(lastRows, (lastRows) =>
+        viewMode === 'compact' ? (
+          <DiscListTableMo name={name} rows={lastRows!} showJapan={editMode} />
+        ) : (
+          <div className="pc-mode-warpper">
+            <div className={classNames(pcModeCls)}>
+              <DiscListTable name={name} rows={lastRows!} showJapan={editMode} />
+            </div>
           </div>
-        </div>
+        )
       )}
     </div>
   )

@@ -19,9 +19,9 @@ export default function UserAdd() {
   const { form, onChange, onSelect } = useForm<FormCreate>({
     enabled: true,
   })
-  const [inPost, doPost] = useAjax<IUser>('post')
+  const [isPost, doPost] = useAjax<IUser>('post')
 
-  function submitCreate() {
+  function doCreateUser() {
     if (!form.username) {
       Modal.warning({ title: '请检查输入项', content: `你必须输入用户名称` })
       return
@@ -76,7 +76,7 @@ export default function UserAdd() {
         />
       </div>
       <div className="input-wrapper">
-        <Button type="primary" loading={inPost} onClick={submitCreate}>
+        <Button type="primary" loading={isPost} onClick={doCreateUser}>
           提交保存
         </Button>
       </div>

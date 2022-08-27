@@ -1,5 +1,5 @@
 import { ILoad, IPage } from '#T/result'
-import { request } from '#U/request'
+import { request } from '#U/fetch/request'
 import { message, Modal } from 'antd'
 import produce from 'immer'
 import { useEffect, useReducer, useState } from 'react'

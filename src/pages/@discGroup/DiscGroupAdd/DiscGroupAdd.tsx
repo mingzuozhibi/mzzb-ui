@@ -22,7 +22,7 @@ export default function DiscGroupAdd() {
     enabled: true,
     viewType: 'PublicList',
   })
-  const [posting, createGroup] = useAjax('post')
+  const [isPost, doPost] = useAjax('post')
 
   function doCreateGroup() {
     if (isEmpty(form.key)) {
@@ -35,7 +35,7 @@ export default function DiscGroupAdd() {
       return
     }
 
-    createGroup('/api/discGroups', '添加列表', {
+    doPost('/api/discGroups', '添加列表', {
       body: form,
       onSuccess() {
         setTimeout(() => navigate(-1), 500)
@@ -78,7 +78,7 @@ export default function DiscGroupAdd() {
         />
       </div>
       <div className="input-wrapper">
-        <Button type="primary" loading={posting} onClick={doCreateGroup}>
+        <Button type="primary" loading={isPost} onClick={doCreateGroup}>
           提交保存
         </Button>
       </div>
