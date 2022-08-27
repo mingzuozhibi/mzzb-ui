@@ -3,11 +3,9 @@ import { MzTopbar } from '#C/topbar/MzTopbar'
 import { useAjax } from '#H/useAjax'
 import { useLocal } from '#H/useLocal'
 import { useOnceRequest } from '#H/useOnce'
-import { formatTimeout } from '#U/date/timeout'
-import { safeWarpper } from '#U/domain'
 import { fetchResult } from '#U/fetch/fetchResult'
 import { DeleteOutlined, FileAddOutlined } from '@ant-design/icons'
-import { Button, Space, Tabs } from 'antd'
+import { Button, Popconfirm, Space, Tabs } from 'antd'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import './DiscGroupEditList.scss'
 
@@ -36,6 +34,10 @@ export default function DiscGroupEditList() {
 
   function dropToAdds(disc: IDisc) {
     setToAdds(toAdds.filter((e) => e.id !== disc.id))
+  }
+
+  function cleanToAdds() {
+    setToAdds([])
   }
 
   function doPushDiscs(groupId: number, discId: number) {
@@ -83,15 +85,6 @@ export default function DiscGroupEditList() {
   }
 
   const navigate = useNavigate()
-  const extraCaption = safeWarpper(group, (group) => (
-    <Space>
-      {safeWarpper(group.modifyTime, (updateOn) => (
-        <span>更新于{formatTimeout(updateOn)}</span>
-      ))}
-      <Button onClick={() => navigate(linkToGroup(group.key))}>编辑列表</Button>
-      <Button onClick={() => navigate(linkToGroupViewList(group.key))}>浏览碟片</Button>
-    </Space>
-  ))
 
   return (
     <div className="DiscGroupEditList">
@@ -111,6 +104,16 @@ export default function DiscGroupEditList() {
             rows={toAdds}
             cols={buildColumns(getPushCommand())}
             title="待选列表"
+            extraCaption={
+              <Popconfirm
+                title="确定要清空待选列表吗？"
+                okText="Yes"
+                cancelText="No"
+                onConfirm={cleanToAdds}
+              >
+                <Button>清空</Button>
+              </Popconfirm>
+            }
           />
           <MyTable
             tag="editlist"
@@ -118,7 +121,12 @@ export default function DiscGroupEditList() {
             cols={buildColumns(getDropCommand())}
             title={group.title}
             defaultSort={compareRelease}
-            extraCaption={extraCaption}
+            extraCaption={
+              <Space>
+                <Button onClick={() => navigate(linkToGroup(group.key))}>编辑列表</Button>
+                <Button onClick={() => navigate(linkToGroupViewList(group.key))}>浏览碟片</Button>
+              </Space>
+            }
           />
         </>
       )}
@@ -135,7 +143,7 @@ function buildColumns(extraColumn: MyColumn<IDisc>): MyColumn<IDisc>[] {
       compare: (a, b) => a.asin.localeCompare(b.asin),
     },
     {
-      key: 'surp',
+      key: 'release',
       title: '天数',
       format: (row) => `${row.surplusDays}天`,
       compare: compareRelease,
