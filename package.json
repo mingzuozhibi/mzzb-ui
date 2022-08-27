@@ -10,6 +10,7 @@
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "eject": "react-scripts eject",
+    "size": "source-map-explorer 'build/static/js/*.js' --html >~/downs/size.html",
     "c1": "sed -i 's/http:/https:/g' yarn.lock",
     "c2": "sed -i 's/mirrors.cloud.tencent.com/mirrors.tencent.com/g' yarn.lock",
     "ca": "yarn c1 && yarn c2"
@@ -43,7 +44,8 @@
     "@types/react-dom": "^18.0.6",
     "customize-cra": "^1.0.0",
     "react-app-rewired": "^2.2.1",
-    "sass": "^1.54.4"
+    "sass": "^1.54.4",
+    "source-map-explorer": "^2.5.2"
   },
   "repository": {
     "type": "git",
