@@ -5,7 +5,7 @@ import { MzTopbar } from '#C/topbar/MzTopbar'
 import { useLocal } from '#H/useLocal'
 import { useOnceRequest } from '#H/useOnce'
 import { thenCompare } from '#U/compare'
-import { isJustUpdated } from '#U/date/check'
+import { isJustUpdate } from '#U/date/check'
 import { formatTimeout } from '#U/date/timeout'
 import { fetchResult } from '#U/fetch/fetchResult'
 import { EditOutlined, UnorderedListOutlined } from '@ant-design/icons'
@@ -82,7 +82,7 @@ function buildColumns(): MyColumn<IGroupCount>[] {
       key: 'title',
       title: '列表标题',
       format: (row) => {
-        let color = isJustUpdated(row.modifyTime) ? 'red' : '#C67532'
+        let color = isJustUpdate(row.modifyTime, 1) ? 'red' : '#C67532'
         return (
           <span>
             <Link to={linkToGroupViewList(row.key)}>{row.title}</Link>

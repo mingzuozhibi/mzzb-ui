@@ -44,6 +44,23 @@ export function DiscList(props: Props) {
     }
   }
 
+  const menu = (
+    <Menu
+      items={[
+        {
+          key: 'M1',
+          label: findMode ? '查询关' : '查询开',
+          onClick: () => setFindMode(!findMode),
+        },
+        {
+          key: 'M2',
+          label: editMode ? '日语关' : '日语开',
+          onClick: () => setEditMode(!editMode),
+        },
+      ]}
+    />
+  )
+
   const lastButtons = [
     <RefreshButton key="K1" state={state} />,
     <Select key="K2" defaultValue={viewMode} style={{ width: 90 }} onChange={setViewMode}>
@@ -51,25 +68,7 @@ export function DiscList(props: Props) {
       <Select.Option value="auto">智能列</Select.Option>
       <Select.Option value="compact">紧凑型</Select.Option>
     </Select>,
-    <Dropdown
-      key="K3"
-      overlay={
-        <Menu
-          items={[
-            {
-              key: 'M1',
-              label: findMode ? '查询关' : '查询开',
-              onClick: () => setFindMode(!findMode),
-            },
-            {
-              key: 'M2',
-              label: editMode ? '日语关' : '日语开',
-              onClick: () => setEditMode(!editMode),
-            },
-          ]}
-        />
-      }
-    >
+    <Dropdown key="K3" overlay={menu}>
       <Button>
         <Space>
           功能

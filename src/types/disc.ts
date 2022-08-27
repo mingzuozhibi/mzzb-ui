@@ -26,6 +26,15 @@ export interface IDisc {
   surplusDays: number
 }
 
+export interface IComing {
+  id: number
+  asin: string
+  type?: string
+  title: string
+  tracked: boolean
+  createOn: number
+}
+
 export interface IRecord {
   id: number
   date: string
