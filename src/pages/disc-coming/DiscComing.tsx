@@ -1,4 +1,3 @@
-import { RefreshButton } from '#C/button/Refresh'
 import { MzLink } from '#C/link/MzLink'
 import { MzPagination } from '#C/pagination/MzPagination'
 import { MyColumn, MyTable } from '#C/table/MyTable'
@@ -35,11 +34,7 @@ export default function DiscComing() {
 
   return (
     <div className="IComing">
-      <MzTopbar
-        title="上架追踪"
-        error={state.error?.message}
-        extra={<RefreshButton state={state} />}
-      />
+      <MzTopbar title="上架追踪" state={state} />
       {data && <MyTable tag="coming" rows={data} cols={cols} />}
       {page && <MzPagination page={page} onChange={onPaginationChange} />}
     </div>

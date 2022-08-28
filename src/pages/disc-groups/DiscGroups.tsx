@@ -1,5 +1,4 @@
 import { useAppSelector } from '#A/hooks'
-import { RefreshButton } from '#C/button/Refresh'
 import { MyColumn, MyTable } from '#C/table/MyTable'
 import { MzTopbar } from '#C/topbar/MzTopbar'
 import { useLocal } from '#H/useLocal'
@@ -7,6 +6,7 @@ import { useOnceRequest } from '#H/useOnce'
 import { thenCompare } from '#U/compare'
 import { isJustUpdate } from '#U/date/check'
 import { formatTimeout } from '#U/date/timeout'
+import { testWarpper } from '#U/domain'
 import { fetchResult } from '#U/fetch/fetchResult'
 import { EditOutlined, UnorderedListOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
@@ -24,11 +24,11 @@ const defaultSort = compareDiscGroups()
 
 export default function DiscGroups() {
   const hasBasic = useAppSelector((state) => state.session.hasBasic)
-  const [isAdminMode, setAdminMode] = useLocal('local-isadmin', false)
+  const [isEditMode, setEditMode] = useLocal('local-editmode', false)
 
   const showExtraButtons = hasBasic
-  const showExtraColumns = hasBasic && isAdminMode
-  const fetchPrivateData = hasBasic && isAdminMode
+  const showExtraColumns = hasBasic && isEditMode
+  const fetchPrivateData = hasBasic && isEditMode
 
   const url = fetchPrivateData ? '/api/discGroups?hasPrivate=true' : '/api/discGroups'
   const { data: groups, ...state } = useOnceRequest(
@@ -37,23 +37,22 @@ export default function DiscGroups() {
   )
 
   const navigate = useNavigate()
-  const button = <RefreshButton key="1" state={state} />
-  const button2 = isAdminMode ? (
-    <Button.Group key="2">
-      <Button onClick={() => setAdminMode(false)}>浏览模式</Button>
-      <Button onClick={() => navigate('/disc_groups/add')}>添加列表</Button>
-    </Button.Group>
-  ) : (
-    <Button.Group key="3">
-      <Button onClick={() => setAdminMode(true)}>管理模式</Button>
-    </Button.Group>
+  const lastButtons = testWarpper(showExtraButtons, () =>
+    isEditMode ? (
+      <Button.Group key="1">
+        <Button onClick={() => setEditMode(false)}>浏览模式</Button>
+        <Button onClick={() => navigate('/disc_groups/add')}>添加列表</Button>
+      </Button.Group>
+    ) : (
+      <Button.Group key="2">
+        <Button onClick={() => setEditMode(true)}>管理模式</Button>
+      </Button.Group>
+    )
   )
-
-  const lastButtons = showExtraButtons ? [button, button2] : [button]
 
   return (
     <div className="DiscGroups">
-      <MzTopbar title="推荐列表" error={state.error?.message} extra={lastButtons} />
+      <MzTopbar title="推荐列表" state={state} extra={[lastButtons]} />
       {groups && (
         <MyTable
           tag="groups"
