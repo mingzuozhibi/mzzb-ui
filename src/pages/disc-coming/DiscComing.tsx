@@ -3,15 +3,15 @@ import { MzPagination } from '#C/pagination/MzPagination'
 import { MyColumn, MyTable } from '#C/table/MyTable'
 import { MzTopbar } from '#C/topbar/MzTopbar'
 import { useOnceRequest } from '#H/useOnce'
-import { isJustUpdate } from '#U/date/check'
 import { fetchResult } from '#U/fetch/fetchResult'
 import { QuestionOutlined } from '@ant-design/icons'
-import dayjs from 'dayjs'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import './DiscComing.scss'
 
 import { linkToAsin } from '#A/links'
 import { IComing } from '#T/disc'
+import { isJustUpdate } from '#U/date/check'
+import { formatDDMM, formatTime } from '#U/date/format'
 
 const cols = buildColumns()
 
@@ -76,9 +76,9 @@ function buildColumns(): MyColumn<IComing>[] {
 function formatCreateOn(row: IComing) {
   return (
     <span>
-      {dayjs(row.createOn).format('MM/DD')}
+      {formatDDMM(row.createOn)}
       <br />
-      {dayjs(row.createOn).format('HH:mm:ss')}
+      {formatTime(row.createOn)}
     </span>
   )
 }

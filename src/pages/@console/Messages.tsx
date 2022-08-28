@@ -5,12 +5,12 @@ import { MzColumn, MzTable } from '#C/table/MzTable'
 import { useData } from '#H/useData'
 import { UrlBuilder } from '#U/fetch/urlBuilder'
 import { Alert, Button, Input } from 'antd'
-import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
 import './Messages.scss'
 
 import { linkToAsin } from '#A/links'
 import { msgLevels } from '#A/metas'
+import { formatDDMM, formatTime } from '#U/date/format'
 
 interface IMsg {
   id: number
@@ -108,9 +108,9 @@ function buildColumns(): MzColumn<IMsg>[] {
       title: '时间',
       format: (row) => (
         <span>
-          {dayjs(row.createOn).format('MM/DD')}
+          {formatDDMM(row.createOn)}
           <br />
-          {dayjs(row.createOn).format('HH:mm:ss')}
+          {formatTime(row.createOn)}
         </span>
       ),
     },

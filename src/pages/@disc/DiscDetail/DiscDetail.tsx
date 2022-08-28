@@ -1,16 +1,16 @@
 import { MzHeader } from '#C/header/MzHeader'
 import { MzLink } from '#C/link/MzLink'
 import { UseData } from '#H/useData'
-import { formatNumber } from '#U/format'
 import { request } from '#U/fetch/request'
 import { Button, Input, message, Modal, Radio } from 'antd'
-import dayjs from 'dayjs'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { linkToAmazon, linkToRecords } from '#A/links'
 import { IDisc } from '#T/disc'
 import { discTitle } from '#T/disc-utils'
+import { formatDateTime } from '#U/date/format'
+import { formatNumber } from '#U/format'
 
 interface Form {
   titlePc?: string
@@ -227,7 +227,7 @@ export function DiscDetail({ useDate, isBasic }: Props) {
 }
 
 function formatDate(time?: number) {
-  return time == null ? '无' : dayjs(time).format('YYYY-MM-DD HH:mm:ss')
+  return time == null ? '无' : formatDateTime(time)
 }
 
 function formatRank(rank?: number) {
