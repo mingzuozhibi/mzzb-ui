@@ -10,12 +10,10 @@ import { IGroupDiscs } from '#T/disc'
 
 export default function DiscGroupViewList() {
   const params = useParams<{ key: string }>()
-  const key = params.key as string
+  const groupKey = params.key as string
 
   const { data: group, ...state } = useOnceRequest(() =>
-    fetchResult<IGroupDiscs>(`/api/discGroups/key/${params.key!}/discs`).then(
-      (result) => result.data
-    )
+    fetchResult<IGroupDiscs>(`/api/discGroups/key/${groupKey}/discs`).then((result) => result.data)
   )
 
   const buttons = []
@@ -25,23 +23,23 @@ export default function DiscGroupViewList() {
   if (hasBasic) {
     buttons.push(
       <Space key="S1">
-        <Button onClick={() => navigate(linkToGroup(key))}>编辑列表</Button>
-        <Button onClick={() => navigate(linkToGroupEditList(key))}>管理碟片</Button>
+        <Button onClick={() => navigate(linkToGroup(groupKey))}>编辑列表</Button>
+        <Button onClick={() => navigate(linkToGroupEditList(groupKey))}>管理碟片</Button>
       </Space>
     )
   }
 
-  const { discs, title, modifyTime } = group ?? {}
+  const { discs, title, modifyTime: updateOn } = group ?? {}
 
   return (
     <div className="DiscListOfGroup">
       <DiscList
-        name={key}
+        name={groupKey}
         rows={discs}
         state={state}
         title={title}
         buttons={buttons}
-        updateOn={modifyTime}
+        updateOn={updateOn}
       />
     </div>
   )
