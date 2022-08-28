@@ -2,8 +2,8 @@ export interface IUser {
   id: number
   enabled: boolean
   username: string
-  registerDate: string
-  lastLoggedIn: string | undefined
+  registerDate: number
+  lastLoggedIn: number | undefined
 }
 
 export interface ISession {

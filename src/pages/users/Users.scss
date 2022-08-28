@@ -1,18 +1,20 @@
-@import '../../_function.scss';
+@import '../_function.scss';
 
 #root .Users {
   max-width: 500px;
 
   .table {
-    th,
-    td {
-      @include columnCenter();
+    tr {
+      td,
+      th {
+        text-align: center;
+      }
 
-      &.id {
+      .id {
         @include columnPcMo(40px, 35px);
       }
 
-      &.enabled {
+      .enabled {
         @include columnPcMo(45px, 40px);
       }
     }
