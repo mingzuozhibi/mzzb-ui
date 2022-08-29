@@ -13,7 +13,7 @@
         @include columnPcMo(100px, 95px);
       }
 
-      &.surp {
+      &.release {
         @include columnCenter();
         @include columnPcMo(65px, 60px);
       }

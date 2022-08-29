@@ -13,7 +13,7 @@ import {
   compareTitle,
   discTitle,
   formatPt,
-  mapTitle,
+  fmtJapan,
   tdClassRank,
 } from '#T/disc-utils'
 
@@ -84,7 +84,7 @@ function buildColumns(): MyColumn<IDisc>[] {
     {
       key: 'japan',
       title: '日文标题',
-      format: (row) => <Link to={linkToDisc(row.id)}>{mapTitle(row.title)}</Link>,
+      format: (row) => <Link to={linkToDisc(row.id)}>{fmtJapan(row.title)}</Link>,
       compare: compareJapan,
     },
   ]

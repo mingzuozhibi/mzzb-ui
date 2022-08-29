@@ -1,5 +1,6 @@
 import { IDisc } from '#T/disc'
 import { safeCompare, thenCompare } from '#U/compare'
+import { isJustUpdate, isLazyUpdate } from '#U/date/check'
 
 export const compareRank = safeCompare<IDisc, number>(
   (row) => row.thisRank,
@@ -7,11 +8,10 @@ export const compareRank = safeCompare<IDisc, number>(
 )
 
 export function tdClassRank(row: IDisc) {
-  if (row.updateTime === undefined) return null
-  const timeout = Date.now() - row.updateTime
-  if (timeout < 3600000) return 'success'
-  if (timeout > 21960000) return 'warning'
-  return null
+  return {
+    success: isJustUpdate(row.updateTime, 1),
+    warning: isLazyUpdate(row.updateTime, 6),
+  }
 }
 
 export function comparePt(apply: (disc: IDisc) => number | undefined) {
@@ -38,10 +38,10 @@ export function compareTitle(a: IDisc, b: IDisc) {
 
 export function discTitle(disc: IDisc) {
   // use || check null undefined and empty
-  return mapTitle(disc.titlePc || disc.title)
+  return disc.titlePc?.trim() || fmtJapan(disc.title)
 }
 
-export function mapTitle(title: string) {
+export function fmtJapan(title: string) {
   const regex = /^(【[^】]+】)(.+)$/
   const exec = regex.exec(title)
   if (exec) return exec[2] + exec[1]
@@ -49,6 +49,6 @@ export function mapTitle(title: string) {
 }
 
 export const compareJapan = safeCompare(
-  (row: IDisc) => mapTitle(row.title),
+  (row: IDisc) => fmtJapan(row.title),
   (a, b) => a.localeCompare(b)
 )

@@ -65,7 +65,6 @@ export default function DiscRecords() {
           tag="records"
           rows={data.records}
           cols={cols}
-          title="碟片历史数据"
           trClass={trClass(data)}
           extraCaption={extraCaption}
         />

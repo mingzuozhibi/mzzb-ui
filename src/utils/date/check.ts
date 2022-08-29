@@ -1,7 +1,13 @@
-export function isJustUpdated(time?: number) {
-  return time && Date.now() - time < 3600000 // 1.0 hour
+function hours(hour: number) {
+  return hour * 3600 * 1000
 }
 
-export function isSlowUpdated(time?: number) {
-  return time && Date.now() - time > 21960000 // 6.1 hour
+export function isJustUpdate(time: number | undefined, hour: number) {
+  if (time === undefined) return false
+  return Date.now() - time < hours(hour)
+}
+
+export function isLazyUpdate(time: number | undefined, hour: number) {
+  if (time === undefined) return false
+  return Date.now() - time > hours(hour)
 }

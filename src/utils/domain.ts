@@ -9,8 +9,16 @@ export function encodePassword(username: string, password: string) {
 }
 
 export function safeWarpper<T, R>(t: T | undefined, callback: (t: T) => R) {
-  if (t !== undefined) {
+  if (t != undefined) {
     return callback(t)
+  } else {
+    return undefined
+  }
+}
+
+export function testWarpper<R>(test: boolean, callback: () => R) {
+  if (test) {
+    return callback()
   } else {
     return undefined
   }
