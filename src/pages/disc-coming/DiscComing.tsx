@@ -33,7 +33,7 @@ export default function DiscComing() {
   }
 
   return (
-    <div className="IComing">
+    <div className="DiscComing">
       <MzTopbar title="上架追踪" state={state} />
       {data && <MyTable tag="coming" rows={data} cols={cols} />}
       {page && <MzPagination page={page} onChange={onPaginationChange} />}
