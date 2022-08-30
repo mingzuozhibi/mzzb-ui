@@ -1,11 +1,12 @@
 import { MzHeader } from '#C/header/MzHeader'
 import { useAjax } from '#H/useAjax'
 import { useForm } from '#H/useFrom'
-import { IUser } from '#T/user'
-import { encodePassword } from '#U/domain'
 import { KeyOutlined, UserOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Input, Modal } from 'antd'
 import { useNavigate } from 'react-router-dom'
+
+import { IUser } from '#T/user'
+import { encodePassword } from '#U/domain'
 
 interface FormCreate {
   username?: string
@@ -16,7 +17,7 @@ interface FormCreate {
 export default function UserAdd() {
   const navigate = useNavigate()
 
-  const { form, onChange, onSelect } = useForm<FormCreate>({
+  const { form, onValueChange, onCheckChange } = useForm<FormCreate>({
     enabled: true,
   })
   const [isPost, doPost] = useAjax<IUser>('post')
@@ -49,9 +50,7 @@ export default function UserAdd() {
         <Input
           prefix={<UserOutlined />}
           defaultValue={form.username}
-          onChange={onChange((drfat, value) => {
-            drfat.username = value
-          })}
+          onChange={onValueChange('username')}
           placeholder="请输入用户名称"
         />
       </div>
@@ -60,18 +59,14 @@ export default function UserAdd() {
           type="password"
           prefix={<KeyOutlined />}
           defaultValue={form.password}
-          onChange={onChange((drfat, value) => {
-            drfat.password = value
-          })}
+          onChange={onValueChange('password')}
           placeholder="请输入用户密码"
         />
       </div>
       <div className="input-wrapper">
         <Checkbox
           defaultChecked={form.enabled}
-          onChange={onSelect((drfat, checked) => {
-            drfat.enabled = checked
-          })}
+          onChange={onCheckChange('enabled')}
           children="启用"
         />
       </div>
