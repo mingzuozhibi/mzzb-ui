@@ -1,14 +1,19 @@
-import md5 from 'md5'
+type HasLength = { length: number }
+type TCallback<T, R> = (t: T) => R
 
-export function isEmpty(text?: string): text is undefined {
+export function isEmpty(text?: HasLength): text is undefined {
   return text === undefined || text.length === 0
 }
 
-export function encodePassword(username: string, password: string) {
-  return md5(username + md5(password))
+export function emptyWarpper<T extends HasLength, R>(t: T | undefined, callback: TCallback<T, R>) {
+  if (t != undefined && t.length > 0) {
+    return callback(t)
+  } else {
+    return undefined
+  }
 }
 
-export function safeWarpper<T, R>(t: T | undefined, callback: (t: T) => R) {
+export function safeWarpper<T, R>(t: T | undefined, callback: TCallback<T, R>) {
   if (t != undefined) {
     return callback(t)
   } else {

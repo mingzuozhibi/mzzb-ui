@@ -6,7 +6,7 @@ import { Button, Checkbox, Input, Modal } from 'antd'
 import { useNavigate } from 'react-router-dom'
 
 import { IUser } from '#T/user'
-import { encodePassword } from '#U/domain'
+import { encodePassword } from '#U/format'
 
 interface FormCreate {
   username?: string

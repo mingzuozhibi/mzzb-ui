@@ -7,7 +7,7 @@ import { useCallback } from 'react'
 
 import { setViewLogin } from '#F/layout'
 import { sessionLogin } from '#F/session'
-import { encodePassword } from '#U/domain'
+import { encodePassword } from '#U/format'
 
 interface FormLogin {
   username?: string
