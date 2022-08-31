@@ -1,7 +1,7 @@
 import { MyColumn, MyTable } from '#C/table/MyTable'
 import { formatNumber } from '#U/format'
 import { Link } from 'react-router-dom'
-import './disc-list-table-mo.scss'
+import './disc-table.scss'
 
 import { linkToDisc, linkToRecords } from '#A/links'
 import { IDisc } from '#T/disc'
@@ -12,7 +12,6 @@ import {
   compareRelease,
   compareTitle,
   discTitle,
-  formatAddPt,
   formatPt,
   fmtJapan,
   tdClassRank,
@@ -28,11 +27,11 @@ const cols = buildColumns()
 const titleCols = cols.filter((c) => c.key !== 'japan')
 const japanCols = cols.filter((c) => c.key !== 'title')
 
-export function DiscListTableMo(props: Props) {
+export function DiscTable(props: Props) {
   const { name, rows, showJapan } = props
   const lastCols = showJapan ? japanCols : titleCols
   return (
-    <div className="disc-list-table-mo">
+    <div className="disc-table">
       <MyTable tag={name} rows={rows} cols={lastCols} defaultSort={compareRank} />
     </div>
   )
@@ -41,52 +40,39 @@ export function DiscListTableMo(props: Props) {
 function buildColumns(): MyColumn<IDisc>[] {
   return [
     {
-      key: 'idx',
+      key: 'index',
       title: '#',
       format: (row, idx) => idx + 1,
     },
     {
       key: 'rank',
-      title: (
-        <div>
-          <div>当前</div>
-          <div>前回</div>
-        </div>
-      ),
+      title: '日亚排名',
       format: (row) => <Link to={linkToRecords(row.id)}>{discRank(row)}</Link>,
-      tdClass: tdClassRank,
       compare: compareRank,
+      tdClass: tdClassRank,
     },
     {
-      key: 'point',
-      title: (
-        <div>
-          <div>日增</div>
-          <div>累积</div>
-        </div>
-      ),
-      format: (row) => (
-        <div>
-          <div>{formatAddPt(row.todayPt)}</div>
-          <div>{formatPt(row.totalPt)}</div>
-        </div>
-      ),
+      key: 'today-pt',
+      title: '日增',
+      format: (row) => formatPt(row.todayPt),
+      compare: comparePt((disc) => disc.todayPt),
+    },
+    {
+      key: 'total-pt',
+      title: '累积',
+      format: (row) => formatPt(row.totalPt),
       compare: comparePt((disc) => disc.totalPt),
     },
     {
+      key: 'guess-pt',
+      title: '预测',
+      format: (row) => formatPt(row.guessPt),
+      compare: comparePt((disc) => disc.guessPt),
+    },
+    {
       key: 'release',
-      title: (
-        <div>
-          <div>发售</div>
-          <div>预测</div>
-        </div>
-      ),
-      format: (row) => (
-        <div>
-          <div>{row.surplusDays}天</div>
-          <div>{formatPt(row.guessPt)}</div>
-        </div>
-      ),
+      title: '发售',
+      format: (row) => `${row.surplusDays}天`,
       compare: compareRelease,
     },
     {
@@ -107,10 +93,5 @@ function buildColumns(): MyColumn<IDisc>[] {
 function discRank(disc: IDisc) {
   const thisRank = disc.thisRank ? formatNumber(disc.thisRank, '****') : '----'
   const prevRank = disc.prevRank ? formatNumber(disc.prevRank, '****') : '----'
-  return (
-    <div>
-      <div>{thisRank}位</div>
-      <div>{prevRank}位</div>
-    </div>
-  )
+  return `${thisRank}位/${prevRank}位`
 }

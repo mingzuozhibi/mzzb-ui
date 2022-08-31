@@ -1,7 +1,7 @@
 import { MzHeader } from '#C/header/MzHeader'
 import { useData } from '#H/useData'
 import { IUser } from '#T/user'
-import { encodePassword } from '#U/domain'
+import { encodePassword } from '#U/format'
 import { KeyOutlined, UserOutlined } from '@ant-design/icons'
 import { Button, Checkbox, Input, Modal } from 'antd'
 import { useParams } from 'react-router-dom'

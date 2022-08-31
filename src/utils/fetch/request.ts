@@ -2,14 +2,14 @@ import { IResult } from '#T/result'
 
 function prepareCookies({ credentials, ...props }: RequestInit) {
   if (!credentials) {
-    credentials = 'include'
+    credentials = 'same-origin'
   }
   return { credentials, ...props }
 }
 
 function prepareHeaders({ headers = {}, ...prors }: RequestInit) {
-  const name = sessionStorage['X-CSRF-HEADER']
-  const value = sessionStorage['X-CSRF-TOKEN']
+  const name = sessionStorage['csrf_header_name']
+  const value = sessionStorage['csrf_token_value']
   if (name && value) {
     // @ts-ignore
     headers[name] = value
@@ -34,8 +34,8 @@ function checkStatus(response: Response) {
 
 function saveOfToken(response: Response) {
   const headers = response.headers
-  sessionStorage['X-CSRF-HEADER'] = headers.get('X-CSRF-HEADER')
-  sessionStorage['X-CSRF-TOKEN'] = headers.get('X-CSRF-TOKEN')
+  sessionStorage['csrf_header_name'] = headers.get('X-CSRF-HEADER')
+  sessionStorage['csrf_token_value'] = headers.get('X-CSRF-TOKEN')
   if (headers.has('session-token')) {
     localStorage['session-token'] = headers.get('session-token')
   }
