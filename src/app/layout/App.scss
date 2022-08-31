@@ -55,3 +55,15 @@ $style-background-color: #fff;
     padding: 0;
   }
 }
+
+.app-login {
+  .ant-drawer-title {
+    text-align: center;
+  }
+
+  .ant-drawer-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}

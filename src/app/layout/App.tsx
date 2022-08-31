@@ -4,6 +4,7 @@ import './App.scss'
 import { AppContent } from './app-content'
 import { AppFooter } from './app-footer'
 import { AppHeader } from './app-header'
+import { AppLogin } from './app-login'
 import { AppSider } from './app-sider'
 
 export default function App() {
@@ -13,6 +14,7 @@ export default function App() {
         <AppSider />
         <Layout>
           <AppHeader />
+          <AppLogin />
           <AppContent />
           <AppFooter />
         </Layout>
