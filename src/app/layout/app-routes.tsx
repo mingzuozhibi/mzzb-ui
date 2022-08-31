@@ -6,7 +6,6 @@ import Console from '#P/@console/Console'
 import DiscDetailOfAsin from '#P/@disc/DiscDetail/DiscDetailOfAsin'
 import DiscDetailOfId from '#P/@disc/DiscDetail/DiscDetailOfId'
 import DiscGroupDetail from '#P/@discGroup/DiscGroupDetail/DiscGroupDetail'
-import UserDetail from '#P/@user/UserDetail/UserDetail'
 import NotFound from '#P/notfound/NotFound'
 
 import DiscComing from '#P/disc-coming/DiscComing'
@@ -16,6 +15,7 @@ import DiscGroupEditList from '#P/disc-group-edit-list/DiscGroupEditList'
 import DiscGroupViewList from '#P/disc-group-view-list/DiscGroupViewList'
 import Users from '#P/users/Users'
 import UserAdd from '#P/user-add/UserAdd'
+import UserDetail from '#P/user-detail/UserDetail'
 
 const LazyDiscRecords = lazy(
   () => import(/* webpackChunkName: "disc_records" */ '#P/disc-records/DiscRecords')
