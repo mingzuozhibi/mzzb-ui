@@ -5,14 +5,14 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import Console from '#P/@console/Console'
 import DiscDetailOfAsin from '#P/@disc/DiscDetail/DiscDetailOfAsin'
 import DiscDetailOfId from '#P/@disc/DiscDetail/DiscDetailOfId'
-import DiscGroupDetail from '#P/@discGroup/DiscGroupDetail/DiscGroupDetail'
 import NotFound from '#P/notfound/NotFound'
 
 import DiscComing from '#P/disc-coming/DiscComing'
 import DiscGroups from '#P/disc-groups/DiscGroups'
 import DiscGroupAdd from '#P/disc-group-add/DiscGroupAdd'
-import DiscGroupEditList from '#P/disc-group-edit-list/DiscGroupEditList'
+import DiscGroupDetail from '#P/disc-group-detail/DiscGroupDetail'
 import DiscGroupViewList from '#P/disc-group-view-list/DiscGroupViewList'
+import DiscGroupEditList from '#P/disc-group-edit-list/DiscGroupEditList'
 import Users from '#P/users/Users'
 import UserAdd from '#P/user-add/UserAdd'
 import UserDetail from '#P/user-detail/UserDetail'
@@ -26,20 +26,20 @@ export const routes = (
     <Routes>
       <Route path="/" element={<Navigate to="/disc_groups" />} />
 
-      <Route path="/disc_groups" element={<DiscGroups />} />
-      <Route path="/disc_groups/add" element={<DiscGroupAdd />} />
       <Route path="/discs/asin/:asin" element={<DiscDetailOfAsin />} />
       <Route path="/discs/:id" element={<DiscDetailOfId />} />
       <Route path="/discs/:id/records" element={<LazyDiscRecords />} />
-      <Route path="/users" element={<Users />} />
-      <Route path="/users/add" element={<UserAdd />} />
-      <Route path="/users/:id" element={<UserDetail />} />
       <Route path="/console" element={<Console />} />
 
       <Route path="/disc_coming" element={<DiscComing />} />
+      <Route path="/disc_groups" element={<DiscGroups />} />
+      <Route path="/disc_groups/add" element={<DiscGroupAdd />} />
       <Route path="/disc_groups/:key" element={<DiscGroupDetail />} />
       <Route path="/disc_groups/:key/discs" element={<DiscGroupViewList />} />
       <Route path="/disc_groups/:key/discs/edit" element={<DiscGroupEditList />} />
+      <Route path="/users" element={<Users />} />
+      <Route path="/users/add" element={<UserAdd />} />
+      <Route path="/users/:id" element={<UserDetail />} />
 
       <Route path="*" element={<NotFound />} />
     </Routes>

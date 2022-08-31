@@ -37,7 +37,7 @@ const rules: Rules = {
 
 export default function UserDetail() {
   const params = useParams<{ id: string }>()
-  const userId = params.id
+  const userId = params.id as string
 
   const { data: user, ...state } = useOnceRequest(() =>
     fetchResult<IUser>(`/api/users/${userId}`).then((result) => result.data)
@@ -80,7 +80,7 @@ export default function UserDetail() {
             </Form.Item>
             <Form.Item wrapperCol={{ offset: 6 }}>
               <Button type="primary" htmlType="submit" loading={isEdit}>
-                添加用户
+                提交更新
               </Button>
             </Form.Item>
           </Form>

@@ -1,7 +1,7 @@
 import { MzTopbar } from '#C/topbar/MzTopbar'
 import { useAjax } from '#H/useAjax'
 import { Button, Card, Form, Input, Radio, Switch } from 'antd'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import { viewTypes } from '#A/metas'
 import { Rules } from '#T/antd'
@@ -30,14 +30,16 @@ const rules: Rules = {
       message: '请输入列表标题',
     },
     {
-      pattern: /^[A-Za-z0-9\-]{4,50}$/g,
-      message: '只能输入英文数字减号，且长度为4-50',
+      min: 4,
+      max: 50,
+      message: '长度限制为4-50',
     },
   ],
 }
 
 export default function DiscGroupAdd() {
   const navigate = useNavigate()
+  const location = useLocation()
 
   const [isPost, doPost] = useAjax('post')
 
@@ -50,6 +52,8 @@ export default function DiscGroupAdd() {
     })
   }
 
+  const initialValues = location.state ?? { enabled: true, viewType: 'PublicList' }
+
   return (
     <div className="DiscGroupAdd" style={{ maxWidth: 650 }}>
       <MzTopbar title="添加列表" />
@@ -58,7 +62,7 @@ export default function DiscGroupAdd() {
           style={{ marginTop: 24 }}
           labelCol={{ span: 6 }}
           wrapperCol={{ span: 12 }}
-          initialValues={{ enabled: true, viewType: 'PublicList' }}
+          initialValues={initialValues}
           onFinish={onFinish}
         >
           <Form.Item label="列表索引" name="key" rules={rules.key}>
