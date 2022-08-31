@@ -1,9 +1,11 @@
-import { MzHeader } from '#C/header/MzHeader'
+import { useAppSelector } from '#A/hooks'
 import { MzLink } from '#C/link/MzLink'
-import { UseData } from '#H/useData'
-import { request } from '#U/fetch/request'
-import { Button, Input, message, Modal, Radio } from 'antd'
-import { useState } from 'react'
+import { MzTopbar } from '#C/topbar/MzTopbar'
+import { useAjax } from '#H/useAjax'
+import { useForm } from '#H/useFrom'
+import { useOnceRequest } from '#H/useOnce'
+import { fetchResult } from '#U/fetch/fetchResult'
+import { Button, Input, Modal, Radio } from 'antd'
 import { Link } from 'react-router-dom'
 
 import { linkToAmazon, linkToRecords } from '#A/links'
@@ -12,104 +14,104 @@ import { discTitle } from '#T/disc-utils'
 import { formatDateTime } from '#U/date/format'
 import { formatNumber } from '#U/format'
 
-interface Form {
+interface FormEdit {
+  rank?: string
   titlePc?: string
   discType?: string
   releaseDate?: string
 }
 
 interface Props {
-  useDate: UseData<IDisc>
-  isBasic: boolean
+  url: string
 }
 
-export function DiscDetail({ useDate, isBasic }: Props) {
-  const [{ data, error }, { loading, refresh }, { doEdit }] = useDate
-  const form: Form = {}
-  const [rank, setRank] = useState<number>()
+export function DiscDetail({ url }: Props) {
+  const { form, onValueChange } = useForm<FormEdit>({})
+  const [isPost, doPost] = useAjax<IDisc>('post')
+  const [isEdit, doEdit] = useAjax<IDisc>('put')
 
-  if (data) {
-    form.titlePc = data.titlePc
-    form.discType = data.discType
-    form.releaseDate = data.releaseDate
-  }
+  const hasBasic = useAppSelector((state) => state.session.hasBasic)
+  const { data: disc, ...state } = useOnceRequest(() =>
+    fetchResult<IDisc>(url).then((result) => result.data)
+  )
 
-  function submitForm() {
+  function doEditDisc() {
     if (!form.releaseDate) {
-      Modal.warning({ title: '请检查输入项', content: `你必须输入发售日期` })
+      Modal.warning({ title: '请检查输入项', content: '请输入发售日期' })
       return
     }
-    if (!form.releaseDate.match(/^\d{4}\/\d{1,2}\/\d{1,2}$/)) {
-      Modal.warning({
-        title: '请检查输入项',
-        content: `你输入的发售日期格式不正确，应该为：YYYY/M/D`,
-      })
+    if (!form.releaseDate.match(/^\d{4}\/\d{1,2}\/\d{1,2}$/g)) {
+      Modal.warning({ title: '请检查输入项', content: '格式应该为: YYYY/M/D' })
       return
     }
-    doEdit(`/api/discs/${data!.id}`, form)
+    doEdit(`/api/discs/${disc?.id}`, '编辑碟片', {
+      body: form,
+      onSuccess: state.mutate,
+    })
   }
 
-  function updateRank() {
-    if (data?.asin && rank) {
-      request(`/api/updateRank/${data?.asin}/${rank}`, {
-        method: 'post',
+  function doEditRank() {
+    if (!form.rank) {
+      Modal.warning({ title: '请检查输入项', content: '请输入碟片排名' })
+      return
+    }
+    if (parseInt(form.rank) <= 0) {
+      Modal.warning({ title: '请检查输入项', content: '碟片排名必须是正整数' })
+      return
+    }
+    if (disc?.asin && form.rank) {
+      doPost(`/api/updateRank/${disc?.asin}/${form.rank}`, '更新排名', {
+        onSuccess: state.mutate,
       })
-        .then(() => {
-          message.success('提交排名成功')
-          refresh()
-        })
-        .catch((e) => {
-          Modal.warning({ title: '操作失败', content: e.message })
-        })
     }
   }
 
-  const title = data ? `碟片信息：${discTitle(data)}` : '载入中'
+  const title = disc ? discTitle(disc) : undefined
 
   return (
-    <div className="DiscDetail">
-      <MzHeader header="碟片信息" title={title} error={error} />
-      {data && (
+    <div className="disc-detail">
+      <MzTopbar title={{ prefix: '碟片信息', suffix: title }} state={state} />
+      {disc && (
         <>
           <div className="input-wrapper">
             <div className="input-label">
               <span>日文标题</span>
-              <span style={{ marginLeft: 20 }}>{toAmazon(data.asin)}</span>
+              <span style={{ marginLeft: 20 }}>{toAmazon(disc.asin)}</span>
             </div>
-            <Input.TextArea readOnly={true} autoSize={true} value={data.title} />
+            <Input.TextArea readOnly={true} autoSize={true} value={disc.title} />
           </div>
-          {isBasic && (
+          {hasBasic && (
             <div className="input-wrapper">
               <div className="input-label">
                 <span>手动更新</span>
                 <span style={{ marginLeft: 20 }}>
-                  <Button type="primary" onClick={() => updateRank()}>
+                  <Button type="primary" loading={isPost} onClick={() => doEditRank()}>
                     提交排名
                   </Button>
                 </span>
               </div>
-              <Input type="number" onChange={(e) => setRank(parseInt(e.target.value))} />
+              <Input type="number" onChange={onValueChange('rank')} />
             </div>
           )}
           <div className="input-wrapper">
             <div className="input-label">
               <span>中文标题</span>
-              <span style={{ marginLeft: 20 }}>{toRecords(data.id)}</span>
+              <span style={{ marginLeft: 20 }}>{toRecords(disc.id)}</span>
             </div>
             <Input.TextArea
               autoSize={true}
-              onChange={(e) => (form.titlePc = e.target.value.trim())}
-              defaultValue={form.titlePc}
+              onChange={onValueChange('titlePc')}
+              defaultValue={disc.titlePc}
             />
           </div>
           <Input.Group compact={true}>
             <div className="input-wrapper">
-              <Input readOnly={true} addonBefore="Id" style={{ width: 100 }} value={data.id} />
+              <Input readOnly={true} addonBefore="Id" style={{ width: 100 }} value={disc.id} />
               <Input
                 readOnly={true}
                 addonBefore="Asin"
                 style={{ width: 180, marginLeft: 12 }}
-                value={data.asin}
+                value={disc.asin}
               />
             </div>
           </Input.Group>
@@ -119,13 +121,13 @@ export function DiscDetail({ useDate, isBasic }: Props) {
                 readOnly={true}
                 addonBefore="当前"
                 style={{ width: 140 }}
-                value={formatRank(data.thisRank)}
+                value={formatRank(disc.thisRank)}
               />
               <Input
                 readOnly={true}
                 addonBefore="前回"
                 style={{ width: 140, marginLeft: 12 }}
-                value={formatRank(data.prevRank)}
+                value={formatRank(disc.prevRank)}
               />
             </div>
           </Input.Group>
@@ -135,13 +137,13 @@ export function DiscDetail({ useDate, isBasic }: Props) {
                 readOnly={true}
                 addonBefore="累积PT"
                 style={{ width: 140 }}
-                value={data.totalPt}
+                value={disc.totalPt}
               />
               <Input
                 readOnly={true}
                 addonBefore="预测PT"
                 style={{ width: 140, marginLeft: 12 }}
-                value={data.guessPt}
+                value={disc.guessPt}
               />
             </div>
           </Input.Group>
@@ -151,13 +153,13 @@ export function DiscDetail({ useDate, isBasic }: Props) {
                 readOnly={true}
                 addonBefore="日增PT"
                 style={{ width: 140 }}
-                value={data.todayPt}
+                value={disc.todayPt}
               />
               <Input
                 readOnly={true}
                 addonBefore="Nico预约"
                 style={{ width: 140, marginLeft: 12 }}
-                value={data.nicoBook}
+                value={disc.nicoBook}
               />
             </div>
           </Input.Group>
@@ -166,14 +168,14 @@ export function DiscDetail({ useDate, isBasic }: Props) {
               <Input
                 addonBefore="发售"
                 style={{ width: 160 }}
-                defaultValue={form.releaseDate}
-                onChange={(e) => (form.releaseDate = e.target.value.trim())}
+                defaultValue={disc.releaseDate}
+                onChange={onValueChange('releaseDate')}
               />
               <Input
                 readOnly={true}
                 addonBefore="天数"
                 style={{ width: 120, marginLeft: 12 }}
-                value={data.surplusDays}
+                value={disc.surplusDays}
               />
             </div>
           </Input.Group>
@@ -182,7 +184,7 @@ export function DiscDetail({ useDate, isBasic }: Props) {
               readOnly={true}
               addonBefore="创建时间"
               style={{ width: 270 }}
-              value={formatDate(data.createTime)}
+              value={formatDate(disc.createTime)}
             />
           </div>
           <div className="input-wrapper">
@@ -190,7 +192,7 @@ export function DiscDetail({ useDate, isBasic }: Props) {
               readOnly={true}
               addonBefore="刷新时间"
               style={{ width: 270 }}
-              value={formatDate(data.updateTime)}
+              value={formatDate(disc.updateTime)}
             />
           </div>
           <div className="input-wrapper">
@@ -198,23 +200,20 @@ export function DiscDetail({ useDate, isBasic }: Props) {
               readOnly={true}
               addonBefore="修改时间"
               style={{ width: 270 }}
-              value={formatDate(data.modifyTime)}
+              value={formatDate(disc.modifyTime)}
             />
           </div>
           <div className="input-wrapper">
-            <Radio.Group
-              defaultValue={form.discType}
-              onChange={(e) => (form.discType = e.target.value)}
-            >
+            <Radio.Group defaultValue={disc.discType} onChange={onValueChange('discType')}>
               <Radio.Button value="Cd">CD</Radio.Button>
               <Radio.Button value="Bluray">BD</Radio.Button>
               <Radio.Button value="Dvd">DVD</Radio.Button>
               <Radio.Button value="Auto">自动</Radio.Button>
               <Radio.Button value="Other">未知</Radio.Button>
             </Radio.Group>
-            {isBasic && (
+            {hasBasic && (
               <div style={{ marginTop: 20 }}>
-                <Button loading={loading} type="primary" onClick={submitForm}>
+                <Button loading={isEdit} type="primary" onClick={doEditDisc}>
                   提交修改
                 </Button>
               </div>
