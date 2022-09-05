@@ -1,14 +1,15 @@
-import { Checkbox } from 'antd'
+import { Checkbox, Space } from 'antd'
 import { CheckboxOptionType, CheckboxValueType } from 'antd/lib/checkbox/Group'
 
 interface Props {
   value: CheckboxValueType[]
+  prefix?: React.ReactNode
   options: Array<CheckboxOptionType>
   onChange: (value: CheckboxValueType[]) => void
 }
 
 export function MzCheckbox(props: Props) {
-  const { value, options, onChange } = props
+  const { value, prefix, options, onChange } = props
   const defaultValue = options.map((e) => e.value)
 
   function onAllChecked(checked: boolean) {
@@ -24,22 +25,27 @@ export function MzCheckbox(props: Props) {
   }
 
   return (
-    <>
+    <Space wrap={true}>
+      {prefix}
       <Checkbox
-        onChange={(e) => onAllChecked(e.target.checked)}
+        style={{ padding: '5px 0' }}
         checked={value.length === options.length}
-        children="全选"
-      />
+        onChange={(e) => onAllChecked(e.target.checked)}
+      >
+        全选
+      </Checkbox>
       {options.map((option) => (
         <Checkbox
           key={option.value as string}
+          style={{ padding: '5px 0' }}
           checked={value.includes(option.value)}
-          children={option.label}
           onChange={(e) => {
             onOneChecked(e.target.checked, option)
           }}
-        />
+        >
+          {option.label}
+        </Checkbox>
       ))}
-    </>
+    </Space>
   )
 }

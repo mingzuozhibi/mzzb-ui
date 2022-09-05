@@ -45,14 +45,16 @@ const rules: Rules = {
 
 export default function DiscGroupDetail() {
   const params = useParams<{ key: string }>()
+  const groupKey = params.key as string
 
   const [isEdit, doEdit] = useAjax<IGroup>('put')
   const [isDrop, doDrop] = useAjax<IGroup>('delete')
   const [deleted, setDeleted] = useState<IGroup>()
 
   const navigate = useNavigate()
+  const url = `/api/discGroups/key/${groupKey}`
   const { data: group, ...state } = useOnceRequest(() =>
-    fetchResult<IGroup>(`/api/discGroups/key/${params.key}`).then((result) => result.data)
+    fetchResult<IGroup>(url).then((result) => result.data)
   )
 
   function onFinish(form: FormEdit) {

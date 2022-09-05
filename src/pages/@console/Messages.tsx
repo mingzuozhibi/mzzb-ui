@@ -1,16 +1,18 @@
+import { RefreshButton } from '#C/button/Refresh'
 import { MzCheckbox } from '#C/checkbox/MzCheckbox'
 import { MzLink } from '#C/link/MzLink'
 import { MzPagination } from '#C/pagination/MzPagination'
 import { MzColumn, MzTable } from '#C/table/MzTable'
-import { useData } from '#H/useData'
+import { useOnceRequest } from '#H/useOnce'
+import { fetchResult } from '#U/fetch/fetchResult'
 import { UrlBuilder } from '#U/fetch/urlBuilder'
-import { Alert, Button, Input } from 'antd'
+import { Alert, Input, Space } from 'antd'
 import { useEffect, useState } from 'react'
 import './Messages.scss'
 
 import { linkToAsin } from '#A/links'
 import { msgLevels } from '#A/metas'
-import { formatDDMM, formatTime } from '#U/date/format'
+import { formatMMDD, formatTime } from '#U/date/format'
 
 interface IMsg {
   id: number
@@ -41,11 +43,14 @@ export default function Messages({ name, activeKey }: Props) {
     .append('search', query)
     .toString()
 
-  const [{ error, data: msgs, page }, handler] = useData<IMsg[]>(url)
+  const { data: result, ...state } = useOnceRequest(() => fetchResult<IMsg[]>(url), {
+    refreshDeps: [url],
+  })
+  const { data: msgs, page } = result ?? {}
 
   useEffect(() => {
-    if (activeKey === name && !handler.loading) {
-      handler.refresh()
+    if (activeKey === name && !state.loading) {
+      state.refresh()
     }
   }, [activeKey])
 
@@ -66,16 +71,16 @@ export default function Messages({ name, activeKey }: Props) {
 
   return (
     <div className="Messages">
-      {error && <Alert message={error} type="error" />}
-      {msgs && (
-        <>
-          <div className="format">
-            <span className="more">
-              <Button children={'刷新'} onClick={handler.refresh} loading={handler.loading} />
-            </span>
-            <MzCheckbox options={msgLevels} value={types} onChange={onChangeTypes} />
-          </div>
-          <div className="format">
+      <Space direction="vertical">
+        {state.error && <Alert message={state.error.message} type="error" />}
+        {msgs && (
+          <>
+            <MzCheckbox
+              prefix={<RefreshButton state={state} />}
+              options={msgLevels}
+              value={types}
+              onChange={onChangeTypes}
+            />
             <Input.Search
               placeholder="input search text"
               allowClear
@@ -83,20 +88,12 @@ export default function Messages({ name, activeKey }: Props) {
               size="large"
               onSearch={onSearch}
             />
-          </div>
-        </>
-      )}
-      {page && (
-        <div className="format">
-          <MzPagination page={page} onChange={onChangePage} />
-        </div>
-      )}
-      {msgs && <MzTable cols={cols} rows={msgs} trClass={trClass} />}
-      {page && (
-        <div className="format">
-          <MzPagination page={page} onChange={onChangePage} />
-        </div>
-      )}
+          </>
+        )}
+        {page && <MzPagination page={page} onChange={onChangePage} />}
+        {msgs && <MzTable tag="messages" cols={cols} rows={msgs} trClass={trClass} />}
+        {page && <MzPagination page={page} onChange={onChangePage} />}
+      </Space>
     </div>
   )
 }
@@ -108,7 +105,7 @@ function buildColumns(): MzColumn<IMsg>[] {
       title: '时间',
       format: (row) => (
         <span>
-          {formatDDMM(row.createOn)}
+          {formatMMDD(row.createOn)}
           <br />
           {formatTime(row.createOn)}
         </span>

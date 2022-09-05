@@ -1,9 +1,6 @@
-import { ILoad } from '#T/result'
-import { Button, Checkbox, Input, message, Modal } from 'antd'
+import { useLocal } from '#H/useLocal'
 import classNames from 'classnames'
-import copy from 'copy-to-clipboard'
-import produce from 'immer'
-import React, { useState } from 'react'
+import React from 'react'
 import './MzTable.scss'
 
 interface BaseRow {
@@ -14,17 +11,16 @@ export interface MzColumn<T> {
   key: string
   title: React.ReactNode
   format: (row: T, idx: number) => React.ReactNode
-  tdClass?: (row: T) => string | object
+  tdClass?: (row: T) => string | object | null
   compare?: (a: T, b: T) => number
 }
 
 interface Props<T> {
+  tag: string
   rows: T[]
   cols: MzColumn<T>[]
   title?: React.ReactNode
   trClass?: (row: T) => string | object
-  copyFmt?: (row: T, idx: number) => string
-  handler?: ILoad
   defaultSort?: (a: T, b: T) => number
   extraCaption?: React.ReactNode
 }
@@ -32,27 +28,21 @@ interface Props<T> {
 interface State {
   sortKey?: string
   sortAsc?: boolean
-  copyMode: boolean
-  selected: Set<number>
 }
 
 export function MzTable<T extends BaseRow>(props: Props<T>) {
-  const { cols, title, handler, trClass, copyFmt, defaultSort, extraCaption } = props
-  const mark = `talbe-state/${window.location.pathname}`
-  const [state, setState] = useState<State>(() => {
-    return loadState(mark, { copyMode: false, selected: new Set() })
-  })
-  const { sortKey, sortAsc, copyMode, selected } = state
+  const { tag, cols, title, trClass, defaultSort, extraCaption } = props
+
+  const [{ sortKey, sortAsc }, setState] = useLocal<State>(`local-table-state-${tag}`, {})
 
   const rows = sortRows()
 
   return (
     <div className="MzTable">
-      {(title || copyFmt || handler || extraCaption) && renderCaption()}
+      {(title || extraCaption) && renderCaption()}
       <table className="table table-bordered table-hover">
         <thead>
           <tr>
-            {copyMode && renderSelectTh()}
             {cols.map((col) => (
               <th
                 key={col.key}
@@ -65,13 +55,7 @@ export function MzTable<T extends BaseRow>(props: Props<T>) {
         </thead>
         <tbody>
           {rows.map((row, idx) => (
-            <tr
-              key={row.id}
-              id={`row-${row.id}`}
-              className={trClass && classNames(trClass(row))}
-              onClick={() => copyMode && doToggleRow(row.id)}
-            >
-              {copyMode && renderSelectTd(row.id)}
+            <tr key={row.id} id={`row-${row.id}`} className={trClass && classNames(trClass(row))}>
               {cols.map((col) => (
                 <td key={col.key} className={tdClass(col, row)}>
                   {col.format(row, idx)}
@@ -84,62 +68,12 @@ export function MzTable<T extends BaseRow>(props: Props<T>) {
     </div>
   )
 
-  function renderSelectTh() {
-    return (
-      <th className="select">
-        <Checkbox
-          checked={selected.size === rows.length}
-          onChange={(e) => doSelectAll(e.target.checked)}
-        />
-      </th>
-    )
-  }
-
-  function renderSelectTd(rowId: number) {
-    return (
-      <td className="select">
-        <Checkbox checked={selected.has(rowId)} />
-      </td>
-    )
-  }
-
   function renderCaption() {
     return (
       <div className="table-caption">
         {title && <span className="caption-title">{title}</span>}
-        {copyFmt && (
-          <span className="caption-copybtn">
-            {!copyMode ? renderViewButtons() : renderCopyButtons()}
-          </span>
-        )}
-        {handler && (
-          <span className="caption-refresh">
-            <Button.Group>
-              <Button onClick={handler.refresh} loading={handler.loading}>
-                刷新
-              </Button>
-            </Button.Group>
-          </span>
-        )}
         {extraCaption && <span className="caption-extra">{extraCaption}</span>}
       </div>
-    )
-  }
-
-  function renderViewButtons() {
-    return (
-      <Button.Group>
-        <Button onClick={() => setCopyMode(true)}>复制</Button>
-      </Button.Group>
-    )
-  }
-
-  function renderCopyButtons() {
-    return (
-      <Button.Group>
-        <Button onClick={doCopy}>复制</Button>
-        <Button onClick={() => setCopyMode(false)}>取消</Button>
-      </Button.Group>
     )
   }
 
@@ -159,69 +93,12 @@ export function MzTable<T extends BaseRow>(props: Props<T>) {
     return array
   }
 
-  function setCopyMode(copyMode: boolean) {
-    update((draft) => {
-      draft.copyMode = copyMode
-    })
-  }
-
-  function doCopy() {
-    if (!copyFmt) {
-      console.warn('call doCopy() but copyFmt is empty')
-      return
-    }
-    let idx = 0,
-      result: Array<String> = []
-    selected.forEach((id) => {
-      const row = rows.find((t) => t.id === id)
-      row && result.push(copyFmt(row, idx++))
-    })
-    const resultText = result.join('\n')
-    if (copy(resultText)) {
-      message.success(`已复制到剪贴板，共${result.length}条数据`)
-    } else {
-      Modal.info({
-        title: '请手动复制数据',
-        content: <Input.TextArea value={resultText} autoSize={{ minRows: 2, maxRows: 6 }} />,
-      })
-    }
-  }
-
-  function doToggleRow(id: number) {
-    doSelectRow(id, !selected.has(id))
-  }
-
-  function doSelectRow(id: number, checked: boolean) {
-    update((draft) => {
-      if (checked) {
-        draft.selected.add(id)
-        draft.selected = new Set(draft.selected)
-      } else {
-        draft.selected.delete(id)
-        draft.selected = new Set(draft.selected)
-      }
-    })
-  }
-
-  function doSelectAll(checked: boolean) {
-    update((draft) => {
-      if (checked) {
-        draft.selected = new Set(rows.map((row) => row.id))
-      } else {
-        draft.selected = new Set()
-      }
-    })
-  }
-
   function thClick(col: MzColumn<T>) {
-    update((draft) => {
-      if (sortKey === col.key) {
-        draft.sortAsc = draft.sortAsc !== true
-      } else {
-        draft.sortAsc = true
-        draft.sortKey = col.key
-      }
-    })
+    if (sortKey === col.key) {
+      setState({ sortKey, sortAsc: sortAsc !== true })
+    } else {
+      setState({ sortKey: col.key, sortAsc: true })
+    }
   }
 
   function thClass(col: MzColumn<T>) {
@@ -235,25 +112,4 @@ export function MzTable<T extends BaseRow>(props: Props<T>) {
   function tdClass(col: MzColumn<T>, row: T) {
     return classNames(col.key, col.tdClass && col.tdClass(row))
   }
-
-  function update(updater: (draft: State) => void) {
-    const nextState = produce(state, updater)
-    setState(nextState)
-    saveState(mark, nextState)
-  }
-}
-
-function saveState(key: string, state: State) {
-  const saveState = { ...state, selected: [...state.selected] }
-  sessionStorage[key] = JSON.stringify(saveState)
-}
-
-function loadState(key: string, initState: State): State {
-  const stateText = sessionStorage[key]
-  const loadState = JSON.parse(stateText || '{}')
-  const nextState = { ...initState, ...loadState }
-  if (Array.isArray(loadState.selected)) {
-    nextState.selected = new Set(loadState.selected)
-  }
-  return nextState
 }

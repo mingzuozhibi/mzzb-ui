@@ -19,6 +19,8 @@
   }
 
   .table {
+    margin-bottom: 0;
+
     th.sortable {
       cursor: pointer;
       text-align: left;
@@ -33,13 +35,9 @@
         background-image: url('./images/table-desc.gif');
       }
     }
+
     tr.debug {
       font-style: italic;
-    }
-
-    .select {
-      width: 40px;
-      text-align: center;
     }
   }
 

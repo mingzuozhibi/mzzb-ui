@@ -1,22 +1,22 @@
-import { CheckboxChangeEvent } from 'antd/lib/checkbox'
-import { ChangeEvent } from 'react'
 import { useImmer } from 'use-immer'
 
-type ValueElement = HTMLInputElement
+type Target<T> = { target: T }
+type ValueElement = { value?: string }
+type CheckElement = { checked: boolean }
 
 export function useForm<T>(initialValue: T) {
   const [form, setForm] = useImmer(initialValue)
 
   function onValueChange<K extends keyof T>(name: K) {
-    return (e: ChangeEvent<ValueElement>) => {
+    return (e: Target<ValueElement>) => {
       setForm((draft: any) => {
-        draft[name] = e.target.value.trim()
+        draft[name] = e.target.value!.trim()
       })
     }
   }
 
   function onCheckChange<K extends keyof T>(name: K) {
-    return (e: CheckboxChangeEvent) => {
+    return (e: Target<CheckElement>) => {
       setForm((draft: any) => {
         draft[name] = e.target.checked
       })
