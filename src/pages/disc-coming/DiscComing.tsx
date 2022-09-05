@@ -1,6 +1,6 @@
 import { MzLink } from '#C/link/MzLink'
 import { MzPagination } from '#C/pagination/MzPagination'
-import { MyColumn, MzTable } from '#C/table/MzTable'
+import { MzColumn, MzTable } from '#C/table/MzTable'
 import { MzTopbar } from '#C/topbar/MzTopbar'
 import { useOnceRequest } from '#H/useOnce'
 import { fetchResult } from '#U/fetch/fetchResult'
@@ -13,6 +13,7 @@ import { IComing } from '#T/disc'
 import { isJustUpdate } from '#U/date/check'
 import { formatDDMM, formatTime } from '#U/date/format'
 import { Space } from 'antd'
+import dayjs from 'dayjs'
 
 const cols = buildColumns()
 
@@ -20,9 +21,10 @@ export default function DiscComing() {
   const location = useLocation()
   const navigate = useNavigate()
 
-  const { ...state } = useOnceRequest(() =>
-    fetchResult<IComing[]>(`/api/spider/discShelfs${location.search}`)
-  )
+  const url = `/api/spider/discShelfs${location.search}`
+  const { ...state } = useOnceRequest(() => fetchResult<IComing[]>(url), {
+    refreshDeps: [location.search],
+  })
   const { data, page } = state.data ?? {}
 
   function onPaginationChange(page: number, size: number = 20) {
@@ -37,6 +39,7 @@ export default function DiscComing() {
     <div className="DiscComing">
       <MzTopbar title="上架追踪" state={state} />
       <Space direction="vertical">
+        {page && <MzPagination page={page} onChange={onPaginationChange} />}
         {data && <MzTable tag="coming" rows={data} cols={cols} />}
         {page && <MzPagination page={page} onChange={onPaginationChange} />}
       </Space>
@@ -44,7 +47,7 @@ export default function DiscComing() {
   )
 }
 
-function buildColumns(): MyColumn<IComing>[] {
+function buildColumns(): MzColumn<IComing>[] {
   return [
     {
       key: 'asin',
@@ -77,13 +80,13 @@ function buildColumns(): MyColumn<IComing>[] {
 }
 
 function formatCreateOn(row: IComing) {
-  return (
-    <span>
+    return (
+      <span>
       {formatDDMM(row.createOn)}
-      <br />
-      {formatTime(row.createOn)}
-    </span>
-  )
+        <br />
+        {formatTime(row.createOn)}
+      </span>
+    )
 }
 
 function tdClassCreateOn(row: IComing) {

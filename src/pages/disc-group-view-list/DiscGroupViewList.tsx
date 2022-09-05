@@ -28,8 +28,9 @@ export default function DiscGroupViewList() {
   const [findMode, setFindMode] = useLocal<boolean>(`local-disclist-findmode-${localKey}`, false)
   const [findText, setFindText] = useLocal<string>(`local-disclist-findtext-${localKey}`, '')
 
+  const url = `/api/discGroups/key/${groupKey}/discs`
   const { data: group, ...state } = useOnceRequest(() =>
-    fetchResult<IGroupDiscs>(`/api/discGroups/key/${groupKey}/discs`).then((result) => result.data)
+    fetchResult<IGroupDiscs>(url).then((result) => result.data)
   )
 
   let lastRows = sortRows(group?.discs, findText, findMode)

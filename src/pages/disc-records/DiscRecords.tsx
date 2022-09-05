@@ -22,8 +22,9 @@ export default function DiscRecords() {
   const params = useParams<{ id: string }>()
   const discId = params.id as string
 
+  const url = `/api/discs/${discId}/records`
   const { data, ...state } = useOnceRequest(() =>
-    fetchResult<IDiscRecords>(`/api/discs/${discId}/records`).then((result) => result.data)
+    fetchResult<IDiscRecords>(url).then((result) => result.data)
   )
 
   useEffect(() => {

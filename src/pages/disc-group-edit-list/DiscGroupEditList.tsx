@@ -19,8 +19,9 @@ export default function DiscGroupEditList() {
   const params = useParams<{ key: string }>()
   const groupKey = params.key as string
 
+  const url = `/api/discGroups/key/${groupKey}/discs`
   const { data: group, ...state } = useOnceRequest(() =>
-    fetchResult<IGroupDiscs>(`/api/discGroups/key/${groupKey}/discs`).then((result) => result.data)
+    fetchResult<IGroupDiscs>(url).then((result) => result.data)
   )
 
   const [, doPush] = useAjax<IDisc>('post')

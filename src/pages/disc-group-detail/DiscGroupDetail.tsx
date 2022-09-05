@@ -52,8 +52,9 @@ export default function DiscGroupDetail() {
   const [deleted, setDeleted] = useState<IGroup>()
 
   const navigate = useNavigate()
+  const url = `/api/discGroups/key/${groupKey}`
   const { data: group, ...state } = useOnceRequest(() =>
-    fetchResult<IGroup>(`/api/discGroups/key/${groupKey}`).then((result) => result.data)
+    fetchResult<IGroup>(url).then((result) => result.data)
   )
 
   function onFinish(form: FormEdit) {

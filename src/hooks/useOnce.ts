@@ -16,7 +16,9 @@ type UseRequest = typeof useRequest
 export const useOnceRequest: UseRequest = (service, options, plugins) => {
   const myOptions: typeof options = {
     debounceWait: 50,
-    ...options,
   }
-  return useRequest(service, myOptions, plugins)
+  if (options?.refreshDeps) {
+    myOptions.onSuccess = () => window.scroll(0, 0)
+  }
+  return useRequest(service, { ...myOptions, ...options }, plugins)
 }
