@@ -12,9 +12,7 @@ import './Messages.scss'
 
 import { linkToAsin } from '#A/links'
 import { msgLevels } from '#A/metas'
-import { useOnceRequest } from '#H/useOnce'
-import { formatDDMM, formatTime } from '#U/date/format'
-import { fetchResult } from '#U/fetch/fetchResult'
+import { formatMMDD, formatTime } from '#U/date/format'
 
 interface IMsg {
   id: number
@@ -107,7 +105,7 @@ function buildColumns(): MzColumn<IMsg>[] {
       title: '时间',
       format: (row) => (
         <span>
-          {formatDDMM(row.createOn)}
+          {formatMMDD(row.createOn)}
           <br />
           {formatTime(row.createOn)}
         </span>

@@ -11,7 +11,7 @@ import './DiscComing.scss'
 import { linkToAsin } from '#A/links'
 import { IComing } from '#T/disc'
 import { isJustUpdate } from '#U/date/check'
-import { formatDDMM, formatTime } from '#U/date/format'
+import { formatMMDD, formatTime, formatYYMM } from '#U/date/format'
 import { Space } from 'antd'
 import dayjs from 'dayjs'
 
@@ -80,9 +80,18 @@ function buildColumns(): MzColumn<IComing>[] {
 }
 
 function formatCreateOn(row: IComing) {
+  if (dayjs(row.createOn).get('year') !== dayjs().get('year')) {
     return (
       <span>
-      {formatDDMM(row.createOn)}
+        {formatYYMM(row.createOn)}
+        <br />
+        {formatTime(row.createOn)}
+      </span>
+    )
+  } else
+    return (
+      <span>
+        {formatMMDD(row.createOn)}
         <br />
         {formatTime(row.createOn)}
       </span>
