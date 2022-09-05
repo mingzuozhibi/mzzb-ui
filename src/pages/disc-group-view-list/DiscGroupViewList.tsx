@@ -84,29 +84,30 @@ export default function DiscGroupViewList() {
           ))}
           extra={buttons}
         />
-        {findMode && (
-          <Input.Search
-            placeholder="查询日文或中文标题"
-            allowClear
-            enterButton="Search"
-            prefix={<SearchOutlined />}
-            size="large"
-            onSearch={setFindText}
-            defaultValue={findText}
-            style={{ marginBottom: 8 }}
-          />
-        )}
-        {safeWarpper(lastRows, (lastRows) =>
-          viewMode === 'compact' ? (
-            <DiscTableCompact name={localKey} rows={lastRows!} showJapan={editMode} />
-          ) : (
-            <div className="pc-mode-warpper">
-              <div className={classNames(pcModeCls)}>
-                <DiscTable name={localKey} rows={lastRows!} showJapan={editMode} />
+        <Space direction="vertical">
+          {findMode && (
+            <Input.Search
+              placeholder="查询日文或中文标题"
+              allowClear
+              enterButton="Search"
+              prefix={<SearchOutlined />}
+              size="large"
+              onSearch={setFindText}
+              defaultValue={findText}
+            />
+          )}
+          {safeWarpper(lastRows, (lastRows) =>
+            viewMode === 'compact' ? (
+              <DiscTableCompact name={localKey} rows={lastRows!} showJapan={editMode} />
+            ) : (
+              <div className="pc-mode-warpper">
+                <div className={classNames(pcModeCls)}>
+                  <DiscTable name={localKey} rows={lastRows!} showJapan={editMode} />
+                </div>
               </div>
-            </div>
-          )
-        )}
+            )
+          )}
+        </Space>
       </div>
     </div>
   )

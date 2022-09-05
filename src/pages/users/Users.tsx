@@ -1,18 +1,16 @@
 import { MyColumn, MyTable } from '#C/table/MyTable'
 import { MzTopbar } from '#C/topbar/MzTopbar'
 import { useOnceRequest } from '#H/useOnce'
-import { useWidth } from '#H/useWidth'
 import { safeWarpper } from '#U/domain'
 import { fetchResult } from '#U/fetch/fetchResult'
 import { Button } from 'antd'
 import dayjs from 'dayjs'
-import { useMemo } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import './Users.scss'
 
 import { IUser } from '#T/user'
 import { isJustUpdate } from '#U/date/check'
-import { formatDate, formatDateTime } from '#U/date/format'
+import { formatDate } from '#U/date/format'
 
 const cols = buildColumns()
 
@@ -35,7 +33,7 @@ export default function Users() {
         ]}
       />
       {safeWarpper(users, (users) => (
-        <MyTable tag="users" rows={users} cols={cols} title="用户管理" />
+        <MyTable tag="users" rows={users} cols={cols} />
       ))}
     </div>
   )

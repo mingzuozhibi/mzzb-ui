@@ -12,6 +12,7 @@ import { linkToAsin } from '#A/links'
 import { IComing } from '#T/disc'
 import { isJustUpdate } from '#U/date/check'
 import { formatDDMM, formatTime } from '#U/date/format'
+import { Space } from 'antd'
 
 const cols = buildColumns()
 
@@ -35,8 +36,10 @@ export default function DiscComing() {
   return (
     <div className="DiscComing">
       <MzTopbar title="上架追踪" state={state} />
-      {data && <MyTable tag="coming" rows={data} cols={cols} />}
-      {page && <MzPagination page={page} onChange={onPaginationChange} />}
+      <Space direction="vertical">
+        {data && <MyTable tag="coming" rows={data} cols={cols} />}
+        {page && <MzPagination page={page} onChange={onPaginationChange} />}
+      </Space>
     </div>
   )
 }
