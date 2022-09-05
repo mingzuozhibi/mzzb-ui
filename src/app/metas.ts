@@ -28,16 +28,16 @@ export const msgModules: IOption[] = [
     value: 'SPIDER_HISTORY',
   },
   {
-    label: '碟片日志',
-    value: 'SERVER_DISC',
+    label: '核心日志',
+    value: 'SERVER_CORE',
   },
   {
     label: '用户日志',
     value: 'SERVER_USER',
   },
   {
-    label: '核心日志',
-    value: 'SERVER_CORE',
+    label: '碟片日志',
+    value: 'SERVER_DISC',
   },
   {
     label: '其他日志',
