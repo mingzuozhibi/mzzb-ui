@@ -1,4 +1,4 @@
-import { MyColumn, MyTable } from '#C/table/MyTable'
+import { MzColumn, MzTable } from '#C/table/MzTable'
 import { MzTopbar } from '#C/topbar/MzTopbar'
 import { useAjax } from '#H/useAjax'
 import { useLocal } from '#H/useLocal'
@@ -99,7 +99,7 @@ export default function DiscGroupEditList() {
               <CreateDisc onPushAdds={pushToAdds} />
             </Tabs.TabPane>
           </Tabs>
-          <MyTable
+          <MzTable
             tag="toadds"
             rows={toAdds}
             cols={buildColumns(getPushCommand())}
@@ -115,7 +115,7 @@ export default function DiscGroupEditList() {
               </Popconfirm>
             }
           />
-          <MyTable
+          <MzTable
             tag="editlist"
             rows={group.discs}
             cols={buildColumns(getDropCommand())}
@@ -134,7 +134,7 @@ export default function DiscGroupEditList() {
   )
 }
 
-function buildColumns(extraColumn: MyColumn<IDisc>): MyColumn<IDisc>[] {
+function buildColumns(extraColumn: MzColumn<IDisc>): MzColumn<IDisc>[] {
   return [
     {
       key: 'asin',

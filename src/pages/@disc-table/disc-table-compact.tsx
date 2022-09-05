@@ -1,4 +1,4 @@
-import { MyColumn, MyTable } from '#C/table/MyTable'
+import { MzColumn, MzTable } from '#C/table/MzTable'
 import { formatNumber } from '#U/format'
 import { Link } from 'react-router-dom'
 import './disc-table-compact.scss'
@@ -33,12 +33,12 @@ export function DiscTableCompact(props: Props) {
   const lastCols = showJapan ? japanCols : titleCols
   return (
     <div className="disc-table-compact">
-      <MyTable tag={name} rows={rows} cols={lastCols} defaultSort={compareRank} />
+      <MzTable tag={name} rows={rows} cols={lastCols} defaultSort={compareRank} />
     </div>
   )
 }
 
-function buildColumns(): MyColumn<IDisc>[] {
+function buildColumns(): MzColumn<IDisc>[] {
   return [
     {
       key: 'idx',

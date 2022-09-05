@@ -1,6 +1,6 @@
 import { useAppSelector } from '#A/hooks'
 import { RefreshButton } from '#C/button/Refresh'
-import { MyColumn, MyTable } from '#C/table/MyTable'
+import { MzColumn, MzTable } from '#C/table/MzTable'
 import { MzTopbar } from '#C/topbar/MzTopbar'
 import { useAjax } from '#H/useAjax'
 import { useOnceRequest } from '#H/useOnce'
@@ -61,7 +61,7 @@ export default function DiscRecords() {
       <MzTopbar title={{ prefix: '碟片历史数据', suffix: title }} />
       <div id="echart_warp" />
       {data && (
-        <MyTable
+        <MzTable
           tag="records"
           rows={data.records}
           cols={cols}
@@ -77,7 +77,7 @@ function trClass(data: IDiscRecords) {
   return (t: IRecord) => ({ warning: !dayjs(t.date).isBefore(dayjs(data.releaseDate)) })
 }
 
-function buildColumns(): MyColumn<IRecord>[] {
+function buildColumns(): MzColumn<IRecord>[] {
   return [
     {
       key: 'idx',

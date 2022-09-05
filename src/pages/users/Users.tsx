@@ -1,4 +1,4 @@
-import { MyColumn, MyTable } from '#C/table/MyTable'
+import { MzColumn, MzTable } from '#C/table/MzTable'
 import { MzTopbar } from '#C/topbar/MzTopbar'
 import { useOnceRequest } from '#H/useOnce'
 import { safeWarpper } from '#U/domain'
@@ -33,13 +33,13 @@ export default function Users() {
         ]}
       />
       {safeWarpper(users, (users) => (
-        <MyTable tag="users" rows={users} cols={cols} />
+        <MzTable tag="users" rows={users} cols={cols} />
       ))}
     </div>
   )
 }
 
-function buildColumns(): MyColumn<IUser>[] {
+function buildColumns(): MzColumn<IUser>[] {
   return [
     {
       key: 'id',

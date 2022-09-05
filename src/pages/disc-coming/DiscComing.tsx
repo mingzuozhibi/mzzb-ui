@@ -1,6 +1,6 @@
 import { MzLink } from '#C/link/MzLink'
 import { MzPagination } from '#C/pagination/MzPagination'
-import { MyColumn, MyTable } from '#C/table/MyTable'
+import { MyColumn, MzTable } from '#C/table/MzTable'
 import { MzTopbar } from '#C/topbar/MzTopbar'
 import { useOnceRequest } from '#H/useOnce'
 import { fetchResult } from '#U/fetch/fetchResult'
@@ -37,7 +37,7 @@ export default function DiscComing() {
     <div className="DiscComing">
       <MzTopbar title="上架追踪" state={state} />
       <Space direction="vertical">
-        {data && <MyTable tag="coming" rows={data} cols={cols} />}
+        {data && <MzTable tag="coming" rows={data} cols={cols} />}
         {page && <MzPagination page={page} onChange={onPaginationChange} />}
       </Space>
     </div>

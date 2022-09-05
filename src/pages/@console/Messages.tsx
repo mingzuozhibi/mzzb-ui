@@ -2,7 +2,7 @@ import { RefreshButton } from '#C/button/Refresh'
 import { MzCheckbox } from '#C/checkbox/MzCheckbox'
 import { MzLink } from '#C/link/MzLink'
 import { MzPagination } from '#C/pagination/MzPagination'
-import { MyColumn, MyTable } from '#C/table/MyTable'
+import { MzColumn, MzTable } from '#C/table/MzTable'
 import { UrlBuilder } from '#U/fetch/urlBuilder'
 import { Alert, Input, Space } from 'antd'
 import { useEffect, useState } from 'react'
@@ -89,14 +89,14 @@ export default function Messages({ name, activeKey }: Props) {
           </>
         )}
         {page && <MzPagination page={page} onChange={onChangePage} />}
-        {msgs && <MyTable tag="messages" cols={cols} rows={msgs} trClass={trClass} />}
+        {msgs && <MzTable tag="messages" cols={cols} rows={msgs} trClass={trClass} />}
         {page && <MzPagination page={page} onChange={onChangePage} />}
       </Space>
     </div>
   )
 }
 
-function buildColumns(): MyColumn<IMsg>[] {
+function buildColumns(): MzColumn<IMsg>[] {
   return [
     {
       key: 'time',

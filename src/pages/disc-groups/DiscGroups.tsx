@@ -1,5 +1,5 @@
 import { useAppSelector } from '#A/hooks'
-import { MyColumn, MyTable } from '#C/table/MyTable'
+import { MzColumn, MzTable } from '#C/table/MzTable'
 import { MzTopbar } from '#C/topbar/MzTopbar'
 import { useLocal } from '#H/useLocal'
 import { useOnceRequest } from '#H/useOnce'
@@ -54,7 +54,7 @@ export default function DiscGroups() {
     <div className="DiscGroups">
       <MzTopbar title="推荐列表" state={state} extra={[lastButtons]} />
       {groups && (
-        <MyTable
+        <MzTable
           tag="groups"
           rows={groups}
           cols={showExtraColumns ? adminCols : guestCols}
@@ -70,7 +70,7 @@ function trClass(t: IGroupCount) {
   return { warning: t.viewType === 'PrivateList' }
 }
 
-function buildColumns(): MyColumn<IGroupCount>[] {
+function buildColumns(): MzColumn<IGroupCount>[] {
   return [
     {
       key: 'idx',

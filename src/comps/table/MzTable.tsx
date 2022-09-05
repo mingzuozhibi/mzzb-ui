@@ -1,13 +1,13 @@
 import { useLocal } from '#H/useLocal'
 import classNames from 'classnames'
 import React from 'react'
-import './MyTable.scss'
+import './MzTable.scss'
 
 interface BaseRow {
   id: number
 }
 
-export interface MyColumn<T> {
+export interface MzColumn<T> {
   key: string
   title: React.ReactNode
   format: (row: T, idx: number) => React.ReactNode
@@ -18,7 +18,7 @@ export interface MyColumn<T> {
 interface Props<T> {
   tag: string
   rows: T[]
-  cols: MyColumn<T>[]
+  cols: MzColumn<T>[]
   title?: React.ReactNode
   trClass?: (row: T) => string | object
   defaultSort?: (a: T, b: T) => number
@@ -30,7 +30,7 @@ interface State {
   sortAsc?: boolean
 }
 
-export function MyTable<T extends BaseRow>(props: Props<T>) {
+export function MzTable<T extends BaseRow>(props: Props<T>) {
   const { tag, cols, title, trClass, defaultSort, extraCaption } = props
 
   const [{ sortKey, sortAsc }, setState] = useLocal<State>(`local-table-state-${tag}`, {})
@@ -38,7 +38,7 @@ export function MyTable<T extends BaseRow>(props: Props<T>) {
   const rows = sortRows()
 
   return (
-    <div className="MyTable">
+    <div className="MzTable">
       {(title || extraCaption) && renderCaption()}
       <table className="table table-bordered table-hover">
         <thead>
@@ -93,7 +93,7 @@ export function MyTable<T extends BaseRow>(props: Props<T>) {
     return array
   }
 
-  function thClick(col: MyColumn<T>) {
+  function thClick(col: MzColumn<T>) {
     if (sortKey === col.key) {
       setState({ sortKey, sortAsc: sortAsc !== true })
     } else {
@@ -101,7 +101,7 @@ export function MyTable<T extends BaseRow>(props: Props<T>) {
     }
   }
 
-  function thClass(col: MyColumn<T>) {
+  function thClass(col: MzColumn<T>) {
     return classNames(col.key, {
       sortable: col.compare !== undefined,
       asc: sortKey === col.key && sortAsc === true,
@@ -109,7 +109,7 @@ export function MyTable<T extends BaseRow>(props: Props<T>) {
     })
   }
 
-  function tdClass(col: MyColumn<T>, row: T) {
+  function tdClass(col: MzColumn<T>, row: T) {
     return classNames(col.key, col.tdClass && col.tdClass(row))
   }
 }
