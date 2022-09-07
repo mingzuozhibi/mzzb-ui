@@ -1,6 +1,6 @@
 import { MzTopbar } from '#C/topbar/MzTopbar'
 import { useAjax } from '#H/useAjax'
-import { Button, Card, Form, Input, Radio, Switch } from 'antd'
+import { Button, Card, Form, Input, Radio, Space, Switch } from 'antd'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 import { viewTypes } from '#A/metas'
@@ -78,9 +78,18 @@ export default function DiscGroupAdd() {
             <Switch />
           </Form.Item>
           <Form.Item wrapperCol={{ offset: 6 }}>
-            <Button type="primary" htmlType="submit" loading={isPost}>
-              添加列表
-            </Button>
+            {location.state ? (
+              <Space size="large">
+                <Button type="primary" htmlType="submit" loading={isPost}>
+                  重新添加
+                </Button>
+                <Button onClick={() => navigate(`/disc_groups`)}>点击返回</Button>
+              </Space>
+            ) : (
+              <Button type="primary" htmlType="submit" loading={isPost}>
+                添加列表
+              </Button>
+            )}
           </Form.Item>
         </Form>
       </Card>
