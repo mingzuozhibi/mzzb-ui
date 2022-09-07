@@ -88,7 +88,7 @@ export default function DiscGroupEditList() {
   const navigate = useNavigate()
 
   return (
-    <div className="DiscGroupEditList">
+    <div className="DiscGroupEditList" style={{ maxWidth: 650 }}>
       <MzTopbar title={{ prefix: '管理碟片', suffix: group?.title }} error={state.error?.message} />
       {group && (
         <>

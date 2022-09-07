@@ -36,7 +36,7 @@ export default function DiscComing() {
   }
 
   return (
-    <div className="DiscComing">
+    <div className="DiscComing" style={{ maxWidth: 800 }}>
       <MzTopbar title="上架追踪" state={state} />
       <Space direction="vertical">
         {page && <MzPagination page={page} onChange={onPaginationChange} />}

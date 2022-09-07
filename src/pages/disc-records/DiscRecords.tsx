@@ -58,7 +58,7 @@ export default function DiscRecords() {
   const title = data ? discTitle(data) : `载入中`
 
   return (
-    <div className="DiscRecords">
+    <div className="DiscRecords" style={{ maxWidth: 650 }}>
       <MzTopbar title={{ prefix: '碟片历史数据', suffix: title }} />
       <div id="echart_warp" />
       {data && (
@@ -75,7 +75,9 @@ export default function DiscRecords() {
 }
 
 function trClass(data: IDiscRecords) {
-  return (t: IRecord) => ({ warning: !dayjs(t.date).isBefore(dayjs(data.releaseDate)) })
+  return (t: IRecord) => ({
+    warning: !dayjs(t.date).isBefore(dayjs(data.releaseDate)),
+  })
 }
 
 function buildColumns(): MzColumn<IRecord>[] {

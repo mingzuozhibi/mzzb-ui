@@ -72,44 +72,42 @@ export default function DiscGroupViewList() {
     )),
   ]
 
-  const pcModeCls = { 'pc-mode': viewMode === 'all' }
+  const maxWidth = viewMode === 'all' ? '100%' : '800px'
 
   return (
-    <div className="DiscGroupViewList">
-      <div className={classNames(pcModeCls)}>
-        <MzTopbar
-          title={group?.title}
-          state={state}
-          subTitle={safeWarpper(group?.modifyTime, (updateOn) => (
-            <span>更新于{formatTimeout(updateOn)}</span>
-          ))}
-          extra={buttons}
-        />
-        <Space direction="vertical">
-          {findMode && (
-            <Input.Search
-              placeholder="查询日文或中文标题"
-              allowClear
-              enterButton="Search"
-              prefix={<SearchOutlined />}
-              size="large"
-              onSearch={setFindText}
-              defaultValue={findText}
-            />
-          )}
-          {safeWarpper(lastRows, (lastRows) =>
-            viewMode === 'compact' ? (
-              <DiscTableCompact name={localKey} rows={lastRows!} showJapan={editMode} />
-            ) : (
-              <div className="pc-mode-warpper">
-                <div className={classNames(pcModeCls)}>
-                  <DiscTable name={localKey} rows={lastRows!} showJapan={editMode} />
-                </div>
+    <div className="DiscGroupViewList" style={{ maxWidth }}>
+      <MzTopbar
+        title={group?.title}
+        state={state}
+        subTitle={safeWarpper(group?.modifyTime, (updateOn) => (
+          <span>更新于{formatTimeout(updateOn)}</span>
+        ))}
+        extra={buttons}
+      />
+      <Space direction="vertical">
+        {findMode && (
+          <Input.Search
+            placeholder="查询日文或中文标题"
+            allowClear
+            enterButton="Search"
+            prefix={<SearchOutlined />}
+            size="large"
+            onSearch={setFindText}
+            defaultValue={findText}
+          />
+        )}
+        {safeWarpper(lastRows, (lastRows) =>
+          viewMode === 'compact' ? (
+            <DiscTableCompact name={localKey} rows={lastRows!} showJapan={editMode} />
+          ) : (
+            <div className="pc-mode-warpper">
+              <div className={classNames({ 'pc-mode': viewMode === 'all' })}>
+                <DiscTable name={localKey} rows={lastRows!} showJapan={editMode} />
               </div>
-            )
-          )}
-        </Space>
-      </div>
+            </div>
+          )
+        )}
+      </Space>
     </div>
   )
 }
