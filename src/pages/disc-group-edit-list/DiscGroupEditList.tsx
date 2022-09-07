@@ -1,7 +1,6 @@
 import { MzColumn, MzTable } from '#C/table/MzTable'
 import { MzTopbar } from '#C/topbar/MzTopbar'
 import { useAjax } from '#H/useAjax'
-import { useLocal } from '#H/useLocal'
 import { useOnceRequest } from '#H/useOnce'
 import { fetchResult } from '#U/fetch/fetchResult'
 import { DeleteOutlined, FileAddOutlined } from '@ant-design/icons'

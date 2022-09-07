@@ -14,6 +14,10 @@ export function linkToAmazon(asin: string) {
   return `https://www.amazon.co.jp/dp/${asin}`
 }
 
+export function linkToAmazonDeatil(asin: string) {
+  return `https://www.amazon.co.jp/dp/${asin}#detailBullets_feature_div`
+}
+
 export function linkToGroup(key: string) {
   return `/disc_groups/${key}`
 }
