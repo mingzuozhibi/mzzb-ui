@@ -1,5 +1,5 @@
-import { request } from '#U/fetch/request'
-import { message, Modal } from 'antd'
+import { safeWarpper } from '#U/domain'
+import { fetchResult } from '#U/fetch/fetchResult'
 import { useState } from 'react'
 
 interface Options<T> {
@@ -12,15 +12,14 @@ export function useAjax<T>(method: 'get' | 'put' | 'post' | 'delete') {
 
   function doAjax(url: string, title: string, { body, onSuccess }: Options<T>) {
     setLoading(true)
-    request<T>(url, { method, body: body && JSON.stringify(body) }).then((result) => {
-      setLoading(false)
-      if (result.success) {
-        message.success(`${title}成功`)
-        onSuccess(result.data!)
-      } else {
-        Modal.error({ title: `${title}失败`, content: result.message })
-      }
+    fetchResult<T>(url, {
+      method,
+      body: safeWarpper(body, JSON.stringify),
+      successText: `${title}成功`,
+      failureName: `${title}失败`,
     })
+      .then((result) => onSuccess(result.data!))
+      .finally(() => setLoading(false))
   }
 
   return [loading, doAjax] as [boolean, (url: string, title: string, options: Options<T>) => void]

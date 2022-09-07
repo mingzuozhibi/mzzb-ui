@@ -6,7 +6,7 @@ import { safeWarpper } from '#U/domain'
 import { fetchResult } from '#U/fetch/fetchResult'
 import { Button, Card, Form, Input, Popconfirm, Radio, Space, Switch } from 'antd'
 import { useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 
 import { viewTypes } from '#A/metas'
 import { Rules } from '#T/antd'
@@ -51,7 +51,6 @@ export default function DiscGroupDetail() {
   const [isDrop, doDrop] = useAjax<IGroup>('delete')
   const [deleted, setDeleted] = useState<IGroup>()
 
-  const navigate = useNavigate()
   const url = `/api/discGroups/key/${groupKey}`
   const { data: group, ...state } = useOnceRequest(() =>
     fetchResult<IGroup>(url).then((result) => result.data)
@@ -98,9 +97,7 @@ export default function DiscGroupDetail() {
             </Form.Item>
             <Form.Item wrapperCol={{ offset: 6 }}>
               {deleted ? (
-                <Button onClick={() => navigate(`/disc_groups/add`, { state: deleted })}>
-                  重新添加
-                </Button>
+                <Navigate to="/disc_groups/add" state={deleted} />
               ) : (
                 <Space size="large">
                   <Button type="primary" htmlType="submit" loading={isEdit}>
