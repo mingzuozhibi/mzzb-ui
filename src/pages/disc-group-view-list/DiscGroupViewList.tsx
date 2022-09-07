@@ -2,7 +2,7 @@ import { useAppSelector } from '#A/hooks'
 import { MzTopbar } from '#C/topbar/MzTopbar'
 import { useLocal } from '#H/useLocal'
 import { useOnceRequest } from '#H/useOnce'
-import { safeWarpper, testWarpper } from '#U/domain'
+import { safeWarpper } from '#U/domain'
 import { fetchResult } from '#U/fetch/fetchResult'
 import { DownOutlined, SearchOutlined } from '@ant-design/icons'
 import { Button, Dropdown, Input, Menu, Select, Space } from 'antd'
@@ -35,26 +35,38 @@ export default function DiscGroupViewList() {
 
   let lastRows = sortRows(group?.discs, findText, findMode)
 
+  const hasBasic = useAppSelector((state) => state.session.hasBasic)
   const items = [
     {
       key: 'M1',
-      label: findMode ? '查询关' : '查询开',
+      label: findMode ? '关闭过滤' : '开启过滤',
       onClick: () => setFindMode(!findMode),
     },
     {
       key: 'M2',
-      label: editMode ? '日语关' : '日语开',
+      label: editMode ? '中文标题' : '日文标题',
       onClick: () => setEditMode(!editMode),
     },
-  ]
+    {
+      key: 'M3',
+      label: '编辑列表',
+      onClick: () => navigate(linkToGroup(groupKey)),
+      disabled: !hasBasic,
+    },
+    {
+      key: 'M4',
+      label: '管理碟片',
+      onClick: () => navigate(linkToGroupEditList(groupKey)),
+      disabled: !hasBasic,
+    },
+  ].filter((e) => e.disabled !== true)
 
   const navigate = useNavigate()
-  const hasBasic = useAppSelector((state) => state.session.hasBasic)
   const buttons = [
     <Select key="K1" value={viewMode} onChange={setViewMode}>
       <Select.Option value="all">所有列</Select.Option>
       <Select.Option value="auto">智能列</Select.Option>
-      <Select.Option value="compact">紧凑型</Select.Option>
+      <Select.Option value="compact">紧凑列</Select.Option>
     </Select>,
     <Dropdown key="K2" overlay={<Menu items={items} />}>
       <Button>
@@ -64,12 +76,6 @@ export default function DiscGroupViewList() {
         </Space>
       </Button>
     </Dropdown>,
-    testWarpper(hasBasic, () => (
-      <Button.Group key="K3">
-        <Button onClick={() => navigate(linkToGroup(groupKey))}>编辑</Button>
-        <Button onClick={() => navigate(linkToGroupEditList(groupKey))}>管理</Button>
-      </Button.Group>
-    )),
   ]
 
   const maxWidth = viewMode === 'all' ? '100%' : '800px'
