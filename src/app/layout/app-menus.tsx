@@ -4,6 +4,7 @@ import { ItemType } from 'antd/lib/menu/hooks/useItems'
 import { NavLink } from 'react-router-dom'
 
 export function buildItems(userRoles: string[]): ItemType[] {
+  const hasAdmin = userRoles.includes('ROLE_ADMIN')
   return [
     { label: '推荐列表', icon: <MzIcon type="icon-yinghua" />, key: '/disc_groups' },
     { label: '上架追踪', icon: <MzIcon type="icon-yinghua" />, key: '/disc_coming' },
@@ -11,7 +12,7 @@ export function buildItems(userRoles: string[]): ItemType[] {
       label: '用户管理',
       icon: <MzIcon type="icon-user" />,
       key: '/users',
-      disabled: !userRoles.includes('ROLE_ADMIN'),
+      disabled: !hasAdmin,
     },
     { label: '系统日志', icon: <BarChartOutlined />, key: '/console' },
     {
