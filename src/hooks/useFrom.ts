@@ -23,5 +23,5 @@ export function useForm<T>(initialValue: T) {
     }
   }
 
-  return { form, onValueChange, onCheckChange }
+  return { form, setForm, onValueChange, onCheckChange }
 }

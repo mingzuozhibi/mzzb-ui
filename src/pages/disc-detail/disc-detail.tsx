@@ -26,13 +26,19 @@ interface Props {
 }
 
 export function DiscDetail({ url }: Props) {
-  const { form, onValueChange } = useForm<FormEdit>({})
+  const { form, setForm, onValueChange } = useForm<FormEdit>({})
   const [isPost, doPost] = useAjax<IDisc>('post')
   const [isEdit, doEdit] = useAjax<IDisc>('put')
 
   const hasBasic = useAppSelector((state) => state.session.hasBasic)
-  const { data: disc, ...state } = useOnceRequest(() =>
-    fetchResult<IDisc>(url).then((result) => result.data)
+  const { data: disc, ...state } = useOnceRequest(
+    () => fetchResult<IDisc>(url).then((result) => result.data),
+    {
+      onSuccess: (disc) => {
+        const { titlePc, discType, releaseDate } = disc!
+        setForm({ titlePc, discType, releaseDate })
+      },
+    }
   )
 
   function doEditDisc() {
@@ -100,8 +106,8 @@ export function DiscDetail({ url }: Props) {
             </div>
             <Input.TextArea
               autoSize={true}
+              value={form.titlePc}
               onChange={onValueChange('titlePc')}
-              defaultValue={disc.titlePc}
             />
           </div>
           <Input.Group compact={true}>
@@ -168,7 +174,7 @@ export function DiscDetail({ url }: Props) {
               <Input
                 addonBefore="发售"
                 style={{ width: 160 }}
-                defaultValue={disc.releaseDate}
+                value={form.releaseDate}
                 onChange={onValueChange('releaseDate')}
               />
               <Input
@@ -204,7 +210,7 @@ export function DiscDetail({ url }: Props) {
             />
           </div>
           <div className="input-wrapper">
-            <Radio.Group defaultValue={disc.discType} onChange={onValueChange('discType')}>
+            <Radio.Group value={form.discType} onChange={onValueChange('discType')}>
               <Radio.Button value="Cd">CD</Radio.Button>
               <Radio.Button value="Bluray">BD</Radio.Button>
               <Radio.Button value="Dvd">DVD</Radio.Button>
