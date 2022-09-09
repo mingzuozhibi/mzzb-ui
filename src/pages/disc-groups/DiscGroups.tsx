@@ -51,7 +51,7 @@ export default function DiscGroups() {
   )
 
   return (
-    <div className="DiscGroups">
+    <div className="DiscGroups" style={{ maxWidth: 650 }}>
       <MzTopbar title="推荐列表" state={state} extra={[lastButtons]} />
       {groups && (
         <MzTable

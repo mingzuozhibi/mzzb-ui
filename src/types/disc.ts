@@ -29,7 +29,7 @@ export interface IDisc {
 export interface IComing {
   id: number
   asin: string
-  type?: string
+  type: string
   title: string
   tracked: boolean
   createOn: number

@@ -75,7 +75,7 @@ export function DiscDetail({ url }: Props) {
   const title = disc ? discTitle(disc) : undefined
 
   return (
-    <div className="disc-detail">
+    <div className="disc-detail" style={{ maxWidth: 650 }}>
       <MzTopbar title={{ prefix: '碟片信息', suffix: title }} state={state} />
       {disc && (
         <>

@@ -15,6 +15,7 @@ import UserAdd from '#P/user-add/UserAdd'
 import UserDetail from '#P/user-detail/UserDetail'
 import Console from '#P/console/Console'
 import NotFound from '#P/notfound/NotFound'
+import { DiscAdd } from '#P/disc-add/DiscAdd'
 
 const LazyDiscRecords = lazy(
   () => import(/* webpackChunkName: "disc_records" */ '#P/disc-records/DiscRecords')
@@ -33,6 +34,7 @@ export const routes = (
       <Route path="/disc_groups/:key/discs/edit" element={<DiscGroupEditList />} />
       <Route path="/discs/:id" element={<DiscDetailOfId />} />
       <Route path="/discs/asin/:asin" element={<DiscDetailOfAsin />} />
+      <Route path="/discs/add" element={<DiscAdd />} />
       <Route path="/discs/:id/records" element={<LazyDiscRecords />} />
       <Route path="/users" element={<Users />} />
       <Route path="/users/add" element={<UserAdd />} />

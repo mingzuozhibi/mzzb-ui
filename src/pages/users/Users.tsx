@@ -22,7 +22,7 @@ export default function Users() {
   const navigate = useNavigate()
 
   return (
-    <div className="Users">
+    <div className="Users" style={{ maxWidth: 650 }}>
       <MzTopbar
         title="用户管理"
         state={state}

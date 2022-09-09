@@ -1,19 +1,44 @@
 import { MzIcon } from '#C/icon/MzIcon'
-import { BarChartOutlined, GithubOutlined } from '@ant-design/icons'
+import {
+  AmazonOutlined,
+  BarChartOutlined,
+  GithubOutlined,
+  PlusCircleOutlined,
+} from '@ant-design/icons'
 import { ItemType } from 'antd/lib/menu/hooks/useItems'
 import { NavLink } from 'react-router-dom'
 
 export function buildItems(userRoles: string[]): ItemType[] {
+  const hasBasic = userRoles.includes('ROLE_BASIC')
+  const hasAdmin = userRoles.includes('ROLE_ADMIN')
   return [
-    { label: '推荐列表', icon: <MzIcon type="icon-yinghua" />, key: '/disc_groups' },
-    { label: '上架追踪', icon: <MzIcon type="icon-yinghua" />, key: '/disc_coming' },
+    {
+      label: '推荐列表',
+      icon: <MzIcon type="icon-yinghua" />,
+      key: '/disc_groups',
+    },
+    {
+      label: '上架追踪',
+      icon: <AmazonOutlined />,
+      key: '/disc_coming',
+    },
+    {
+      label: '碟片管理',
+      icon: <PlusCircleOutlined />,
+      key: '/discs/add',
+      disabled: !hasBasic,
+    },
     {
       label: '用户管理',
       icon: <MzIcon type="icon-user" />,
       key: '/users',
-      disabled: !userRoles.includes('ROLE_ADMIN'),
+      disabled: !hasAdmin,
     },
-    { label: '系统日志', icon: <BarChartOutlined />, key: '/console' },
+    {
+      label: '系统日志',
+      icon: <BarChartOutlined />,
+      key: '/console',
+    },
     {
       label: '名作之壁吧',
       icon: <MzIcon type="icon-social-tieba" />,

@@ -1,8 +1,4 @@
 #root .DiscGroupViewList {
-  & > :not(.pc-mode) {
-    max-width: 800px;
-  }
-
   .pc-mode-warpper {
     overflow-x: auto;
 

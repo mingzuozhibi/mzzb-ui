@@ -2,8 +2,6 @@
 
 #root .DiscRecords {
   .table {
-    max-width: 650px;
-
     th,
     td {
       @include columnCenter();

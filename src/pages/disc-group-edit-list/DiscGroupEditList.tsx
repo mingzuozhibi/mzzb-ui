@@ -1,7 +1,6 @@
 import { MzColumn, MzTable } from '#C/table/MzTable'
 import { MzTopbar } from '#C/topbar/MzTopbar'
 import { useAjax } from '#H/useAjax'
-import { useLocal } from '#H/useLocal'
 import { useOnceRequest } from '#H/useOnce'
 import { fetchResult } from '#U/fetch/fetchResult'
 import { DeleteOutlined, FileAddOutlined } from '@ant-design/icons'
@@ -14,6 +13,8 @@ import { CreateDisc } from '#P/@to-add-list/create-disc'
 import { SearchDisc } from '#P/@to-add-list/search-disc'
 import { IDisc, IGroupDiscs } from '#T/disc'
 import { compareRelease, compareTitle, discTitle } from '#T/disc-utils'
+import { useAppDispatch, useAppSelector } from '#A/hooks'
+import { cleanToAdds, dropToAdds, pushToAdds } from '#F/local'
 
 export default function DiscGroupEditList() {
   const params = useParams<{ key: string }>()
@@ -27,25 +28,14 @@ export default function DiscGroupEditList() {
   const [, doPush] = useAjax<IDisc>('post')
   const [, doDrop] = useAjax<IDisc>('delete')
 
-  const [toAdds, setToAdds] = useLocal<IDisc[]>('local-toadds', [])
-
-  function pushToAdds(disc: IDisc) {
-    setToAdds([disc, ...toAdds])
-  }
-
-  function dropToAdds(disc: IDisc) {
-    setToAdds(toAdds.filter((e) => e.id !== disc.id))
-  }
-
-  function cleanToAdds() {
-    setToAdds([])
-  }
+  const toAdds = useAppSelector((state) => state.local.toAdds)
+  const dispatch = useAppDispatch()
 
   function doPushDiscs(groupId: number, discId: number) {
     doPush(`/api/discGroups/${groupId}/discs/${discId}`, '添加碟片到列表', {
       onSuccess(disc: IDisc) {
         if (group !== undefined) {
-          dropToAdds(disc)
+          dispatch(dropToAdds(disc))
           state.mutate({
             ...group,
             discs: [disc, ...group.discs],
@@ -59,7 +49,7 @@ export default function DiscGroupEditList() {
     doDrop(`/api/discGroups/${groupId}/discs/${discId}`, '从列表移除碟片', {
       onSuccess(disc: IDisc) {
         if (group !== undefined) {
-          pushToAdds(disc)
+          dispatch(pushToAdds(disc))
           state.mutate({
             ...group,
             discs: group.discs.filter((e) => e.id !== disc.id),
@@ -88,7 +78,7 @@ export default function DiscGroupEditList() {
   const navigate = useNavigate()
 
   return (
-    <div className="DiscGroupEditList">
+    <div className="DiscGroupEditList" style={{ maxWidth: 650 }}>
       <MzTopbar title={{ prefix: '管理碟片', suffix: group?.title }} error={state.error?.message} />
       {group && (
         <>
@@ -110,7 +100,7 @@ export default function DiscGroupEditList() {
                 title="确定要清空待选列表吗？"
                 okText="Yes"
                 cancelText="No"
-                onConfirm={cleanToAdds}
+                onConfirm={() => dispatch(cleanToAdds())}
               >
                 <Button>清空</Button>
               </Popconfirm>

@@ -4,11 +4,17 @@ import { MzColumn, MzTable } from '#C/table/MzTable'
 import { MzTopbar } from '#C/topbar/MzTopbar'
 import { useOnceRequest } from '#H/useOnce'
 import { fetchResult } from '#U/fetch/fetchResult'
-import { QuestionOutlined } from '@ant-design/icons'
+import {
+  CheckCircleTwoTone,
+  CheckOutlined,
+  PlusOutlined,
+  PlusSquareTwoTone,
+  QuestionOutlined,
+} from '@ant-design/icons'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import './DiscComing.scss'
 
-import { linkToAsin } from '#A/links'
+import { linkToAmazon, linkToAsin } from '#A/links'
 import { IComing } from '#T/disc'
 import { isJustUpdate } from '#U/date/check'
 import { formatMMDD, formatTime, formatYYMM } from '#U/date/format'
@@ -36,7 +42,7 @@ export default function DiscComing() {
   }
 
   return (
-    <div className="DiscComing">
+    <div className="DiscComing" style={{ maxWidth: 800 }}>
       <MzTopbar title="上架追踪" state={state} />
       <Space direction="vertical">
         {page && <MzPagination page={page} onChange={onPaginationChange} />}
@@ -106,14 +112,25 @@ function tdClassCreateOn(row: IComing) {
 }
 
 function formatFollowed(row: IComing) {
-  return row.tracked ? <Link to={linkToAsin(row.asin)}>已有</Link> : '暂无'
+  if (row.tracked) {
+    return (
+      <Link to={linkToAsin(row.asin)}>
+        <CheckCircleTwoTone twoToneColor="#52c41a" />
+      </Link>
+    )
+  } else {
+    return (
+      <Link to={`/discs/add`} state={row}>
+        <PlusSquareTwoTone twoToneColor="#eb2f96" />
+      </Link>
+    )
+  }
 }
 
 function formatType(row: IComing) {
-  if (row.type === undefined) return '---'
   return row.type === 'Blu-ray' ? 'BD' : row.type
 }
 
 function formatTitle(row: IComing) {
-  return <MzLink href={`http://www.amazon.co.jp/dp/${row.asin}`} title={row.title} />
+  return <MzLink href={linkToAmazon(row.asin)} title={row.title} />
 }
