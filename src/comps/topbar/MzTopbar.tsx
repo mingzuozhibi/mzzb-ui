@@ -49,7 +49,7 @@ export function MzTopbar(props: Props) {
     <div className="MzTopbar">
       <PageHeader title={lastTitle} extra={lastExtra} {...lastProps} />
       {safeWarpper(message, (message) => {
-        return <Alert type="error" message={message} />
+        return <Alert type="error" message={message} style={{ marginBottom: 8 }} />
       })}
     </div>
   )
