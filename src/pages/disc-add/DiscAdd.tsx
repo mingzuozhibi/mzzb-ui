@@ -98,7 +98,7 @@ export function DiscAdd() {
           <Form.Item label="发售日期" name="releaseDate" rules={rules.releaseDate}>
             <Input />
           </Form.Item>
-          <Form.Item label="发售日期" name="discType" rules={rules.discType}>
+          <Form.Item label="碟片类型" name="discType" rules={rules.discType}>
             <Radio.Group>
               <Radio.Button value="Cd">CD</Radio.Button>
               <Radio.Button value="Bluray">BD</Radio.Button>
