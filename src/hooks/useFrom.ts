@@ -10,7 +10,7 @@ export function useForm<T>(initialValue: T) {
   function onValueChange<K extends keyof T>(name: K) {
     return (e: Target<ValueElement>) => {
       setForm((draft: any) => {
-        draft[name] = e.target.value!.trim()
+        draft[name] = e.target.value?.trim()
       })
     }
   }

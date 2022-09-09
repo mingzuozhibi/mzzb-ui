@@ -2,7 +2,7 @@ type HasLength = { length: number }
 type TCallback<T, R> = (t: T) => R
 
 export function isEmpty(text?: HasLength): text is undefined {
-  return text === undefined || text.length === 0
+  return text == null || text.length === 0
 }
 
 export function emptyWarpper<T extends HasLength, R>(t: T | undefined, callback: TCallback<T, R>) {
