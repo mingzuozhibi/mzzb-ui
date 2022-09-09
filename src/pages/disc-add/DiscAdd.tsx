@@ -3,16 +3,15 @@ import { MzLink } from '#C/link/MzLink'
 import { MzTopbar } from '#C/topbar/MzTopbar'
 import { useAjax } from '#H/useAjax'
 import { safeWarpper } from '#U/domain'
-import { Button, Card, Form, Input, InputRef, Radio, Space } from 'antd'
+import { Button, Card, Form, Input, Radio, Space } from 'antd'
+import dayjs from 'dayjs'
 import { useLocation } from 'react-router-dom'
 
 import { linkToAmazonDeatil } from '#A/links'
 import { pushToAdds } from '#F/local'
 import { Rules } from '#T/antd'
 import { IComing, IDisc } from '#T/disc'
-import { ToAddsTable } from '#P/@to-add-list/to-adds-table'
-import { useRef } from 'react'
-import dayjs from 'dayjs'
+import { ToAddsTable } from '../@to-add-list/to-adds-table'
 
 interface FormCreate {
   asin?: string
