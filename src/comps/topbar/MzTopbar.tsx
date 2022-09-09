@@ -19,15 +19,7 @@ interface Props extends Omit<PageHeaderProps, ExcludedUnion> {
 export function MzTopbar(props: Props) {
   const { title, state, error, extra, ...otherProps } = props
 
-  let lastTitle: string
-  if (title === undefined) {
-    lastTitle = '载入中'
-  } else if (typeof title === 'string') {
-    lastTitle = title
-  } else {
-    const titleSuffix = title.suffix === undefined ? '载入中' : title.suffix
-    lastTitle = `${title.prefix}：${titleSuffix}`
-  }
+  let lastTitle = findTitle(title)
 
   useTitle(lastTitle)
 
@@ -53,4 +45,14 @@ export function MzTopbar(props: Props) {
       })}
     </div>
   )
+}
+
+function findTitle(title: Props['title']) {
+  if (title == null) {
+    return '载入中'
+  } else if (typeof title === 'string') {
+    return title
+  } else {
+    return `${title.prefix}：${title.suffix || '载入中'}`
+  }
 }
