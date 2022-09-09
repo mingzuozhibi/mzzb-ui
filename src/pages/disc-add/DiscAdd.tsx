@@ -132,6 +132,7 @@ function toDisc(coming?: IComing) {
 
 function toDiscType(type: string) {
   switch (type) {
+    case '4K':
     case 'Blu-ray':
       return 'Bluray'
     case 'DVD':
