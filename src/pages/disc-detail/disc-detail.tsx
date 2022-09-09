@@ -61,7 +61,7 @@ export function DiscDetail({ url }: Props) {
       Modal.warning({ title: '请检查输入项', content: '请输入碟片排名' })
       return
     }
-    if (parseInt(form.rank) <= 0) {
+    if (!form.rank.match(/^[0-9]+$/) || parseInt(form.rank) <= 0) {
       Modal.warning({ title: '请检查输入项', content: '碟片排名必须是正整数' })
       return
     }

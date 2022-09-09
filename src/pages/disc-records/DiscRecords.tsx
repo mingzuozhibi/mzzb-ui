@@ -5,7 +5,6 @@ import { MzTopbar } from '#C/topbar/MzTopbar'
 import { useAjax } from '#H/useAjax'
 import { useOnceRequest } from '#H/useOnce'
 import { fetchResult } from '#U/fetch/fetchResult'
-import { formatNumber } from '#U/format'
 import { Button, Modal, Space } from 'antd'
 import dayjs from 'dayjs'
 import { useEffect } from 'react'
@@ -14,6 +13,7 @@ import './DiscRecords.scss'
 
 import { IDiscRecords, IRecord } from '#T/disc'
 import { discTitle, formatPt } from '#T/disc-utils'
+import { formatNumber } from '#U/format'
 import { initEcharts } from './echarts'
 
 const cols = buildColumns()
@@ -44,14 +44,14 @@ export default function DiscRecords() {
 
   const hasBasic = useAppSelector((state) => state.session.hasBasic)
   const extraCaption = (
-    <Space>
-      <span>如果图表显示错误，请尝试刷新</span>
+    <Space wrap={true}>
       <RefreshButton state={state} />
       {hasBasic && (
         <Button loading={isPost} onClick={reCompute}>
           重新计算PT
         </Button>
       )}
+      <span>如果图表显示错误，请尝试刷新</span>
     </Space>
   )
 

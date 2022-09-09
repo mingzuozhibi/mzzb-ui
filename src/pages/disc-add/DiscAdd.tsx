@@ -2,17 +2,17 @@ import { useAppDispatch } from '#A/hooks'
 import { MzLink } from '#C/link/MzLink'
 import { MzTopbar } from '#C/topbar/MzTopbar'
 import { useAjax } from '#H/useAjax'
+import { useOnceService } from '#H/useOnce'
 import { safeWarpper } from '#U/domain'
-import { Button, Card, Form, Input, InputRef, Radio, Space } from 'antd'
+import { Button, Card, Form, Input, Radio, Space } from 'antd'
+import dayjs from 'dayjs'
 import { useLocation } from 'react-router-dom'
 
 import { linkToAmazonDeatil } from '#A/links'
 import { pushToAdds } from '#F/local'
 import { Rules } from '#T/antd'
 import { IComing, IDisc } from '#T/disc'
-import { ToAddsTable } from '#P/@to-add-list/to-adds-table'
-import { useRef } from 'react'
-import dayjs from 'dayjs'
+import { ToAddsTable } from '../@to-add-list/to-adds-table'
 
 interface FormCreate {
   asin?: string
@@ -57,6 +57,10 @@ const rules: Rules = {
 }
 
 export function DiscAdd() {
+  useOnceService(() => {
+    window.scroll(0, 0)
+  })
+
   const dispatch = useAppDispatch()
   const [isPost, doPost] = useAjax<IDisc>('post')
   const onFinish = (form: FormCreate) => {
@@ -98,7 +102,7 @@ export function DiscAdd() {
           <Form.Item label="发售日期" name="releaseDate" rules={rules.releaseDate}>
             <Input />
           </Form.Item>
-          <Form.Item label="发售日期" name="discType" rules={rules.discType}>
+          <Form.Item label="碟片类型" name="discType" rules={rules.discType}>
             <Radio.Group>
               <Radio.Button value="Cd">CD</Radio.Button>
               <Radio.Button value="Bluray">BD</Radio.Button>
@@ -132,6 +136,7 @@ function toDisc(coming?: IComing) {
 
 function toDiscType(type: string) {
   switch (type) {
+    case '4K':
     case 'Blu-ray':
       return 'Bluray'
     case 'DVD':
