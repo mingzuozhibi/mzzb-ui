@@ -2,6 +2,7 @@ import { useAppDispatch } from '#A/hooks'
 import { MzLink } from '#C/link/MzLink'
 import { MzTopbar } from '#C/topbar/MzTopbar'
 import { useAjax } from '#H/useAjax'
+import { useOnceService } from '#H/useOnce'
 import { safeWarpper } from '#U/domain'
 import { Button, Card, Form, Input, Radio, Space } from 'antd'
 import dayjs from 'dayjs'
@@ -56,6 +57,10 @@ const rules: Rules = {
 }
 
 export function DiscAdd() {
+  useOnceService(() => {
+    window.scroll(0, 0)
+  })
+
   const dispatch = useAppDispatch()
   const [isPost, doPost] = useAjax<IDisc>('post')
   const onFinish = (form: FormCreate) => {
