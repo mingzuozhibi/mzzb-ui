@@ -31,6 +31,10 @@ export default function DiscGroupEditList() {
   const toAdds = useAppSelector((state) => state.local.toAdds)
   const dispatch = useAppDispatch()
 
+  function doPushAdds(disc: IDisc) {
+    dispatch(pushToAdds(disc))
+  }
+
   function doPushDiscs(groupId: number, discId: number) {
     doPush(`/api/discGroups/${groupId}/discs/${discId}`, '添加碟片到列表', {
       onSuccess(disc: IDisc) {
@@ -84,10 +88,10 @@ export default function DiscGroupEditList() {
         <>
           <Tabs type="card">
             <Tabs.TabPane tab="查询碟片" key="1">
-              <SearchDisc theDiscs={group.discs} addDiscs={toAdds} onPushAdds={pushToAdds} />
+              <SearchDisc theDiscs={group.discs} addDiscs={toAdds} onPushAdds={doPushAdds} />
             </Tabs.TabPane>
             <Tabs.TabPane tab="手动创建" key="2">
-              <CreateDisc onPushAdds={pushToAdds} />
+              <CreateDisc onPushAdds={doPushAdds} />
             </Tabs.TabPane>
           </Tabs>
           <MzTable
