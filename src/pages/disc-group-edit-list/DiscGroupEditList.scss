@@ -2,30 +2,21 @@
 
 #root .DiscGroupEditList {
   .table {
-    table-layout: fixed;
-
-    td,
-    th {
-      &.asin {
+    tr {
+      .asin {
         @include columnCenter();
         @include columnPcMo(100px, 95px);
       }
 
-      &.release {
+      .release {
         @include columnCenter();
         @include columnPcMo(65px, 60px);
       }
 
-      &.command {
+      .command {
         @include columnCenter();
         @include columnPcMo(45px, 40px);
       }
-    }
-  }
-
-  .input-wrapper.button-group {
-    button:not(:first-child) {
-      margin-left: 10px;
     }
   }
 }

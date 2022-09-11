@@ -1,12 +1,14 @@
 import { MzIcon } from '#C/icon/MzIcon'
+import { ItemType } from 'antd/lib/menu/hooks/useItems'
+import { NavLink } from 'react-router-dom'
+
 import {
   AmazonOutlined,
   BarChartOutlined,
+  CloudOutlined,
   GithubOutlined,
-  PlusCircleOutlined,
+  UserOutlined,
 } from '@ant-design/icons'
-import { ItemType } from 'antd/lib/menu/hooks/useItems'
-import { NavLink } from 'react-router-dom'
 
 export function buildItems(userRoles: string[]): ItemType[] {
   const hasBasic = userRoles.includes('ROLE_BASIC')
@@ -23,14 +25,14 @@ export function buildItems(userRoles: string[]): ItemType[] {
       key: '/disc_coming',
     },
     {
-      label: '碟片管理',
-      icon: <PlusCircleOutlined />,
+      label: '待选列表',
+      icon: <CloudOutlined />,
       key: '/discs/add',
       disabled: !hasBasic,
     },
     {
       label: '用户管理',
-      icon: <MzIcon type="icon-user" />,
+      icon: <UserOutlined />,
       key: '/users',
       disabled: !hasAdmin,
     },
