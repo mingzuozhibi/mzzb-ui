@@ -1,12 +1,12 @@
-import { IDiscRecords } from '#T/disc'
+import { IRecord } from '#T/disc'
 import * as echarts from 'echarts'
 import { renderToString } from 'react-dom/server'
 
-export function initEcharts(data: IDiscRecords) {
-  const dates = data.records.map((record) => record.date)
-  const sumPts = data.records.map((record) => record.totalPt)
-  const gesPts = data.records.map((record) => record.guessPt)
-  const ranks = data.records.map((record) => {
+export function initEcharts(records: IRecord[]) {
+  const dates = records.map((record) => record.date)
+  const totalPts = records.map((record) => record.totalPt)
+  const guessPts = records.map((record) => record.guessPt)
+  const ranks = records.map((record) => {
     if (record.averRank !== undefined && record.averRank < 10) {
       record.averRank = Math.floor(record.averRank * 10) / 10
     }
@@ -86,13 +86,13 @@ export function initEcharts(data: IDiscRecords) {
         type: 'line',
         name: '累积',
         yAxisIndex: 1,
-        data: sumPts,
+        data: totalPts,
       },
       {
         type: 'line',
         name: '预测',
         yAxisIndex: 1,
-        data: gesPts,
+        data: guessPts,
       },
     ],
   })
