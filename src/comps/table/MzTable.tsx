@@ -48,7 +48,7 @@ export function MzTable<T extends BaseRow>(props: Props<T>) {
                 key={col.key}
                 children={col.title}
                 className={thClass(col)}
-                onClick={col.compare && (() => thClick(col))}
+                onClick={col.compare ? () => thClick(col) : () => setState({})}
               />
             ))}
           </tr>

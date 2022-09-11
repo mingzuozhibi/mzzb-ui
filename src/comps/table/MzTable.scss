@@ -1,19 +1,16 @@
 .MzTable {
   .table-caption {
+    display: flex;
+    align-items: center;
     padding: 4px;
-    margin-bottom: 4px;
-
-    & > span {
-      line-height: 44px;
-      margin: 4px;
-    }
+    line-height: 44px;
 
     .caption-title {
       font-size: 24px;
-      padding-right: 4px;
     }
 
     .caption-extra {
+      margin-left: 8px;
       font-size: 16px;
     }
   }
