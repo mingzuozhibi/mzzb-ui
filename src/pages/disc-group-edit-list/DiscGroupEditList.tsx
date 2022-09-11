@@ -1,4 +1,5 @@
 import { useAppDispatch, useAppSelector } from '#A/hooks'
+import { RefreshButton } from '#C/button/Refresh'
 import { MzTable } from '#C/table/MzTable'
 import { MzTopbar } from '#C/topbar/MzTopbar'
 import { useAjax } from '#H/useAjax'
@@ -13,7 +14,6 @@ import { linkToGroup, linkToGroupViewList } from '#A/links'
 import { dropToAdds, pushToAdds } from '#F/local'
 import { IDisc, IGroupDiscs } from '#T/disc'
 import { compareRelease } from '#T/disc-utils'
-
 import { buildColumns } from '../@to-add-list/columns'
 import { ToAddsList } from '../@to-add-list/to-adds-list'
 import { ToAddsTabs } from '../@to-add-list/to-adds-tabs'
@@ -88,6 +88,7 @@ export default function DiscGroupEditList() {
           defaultSort={compareRelease}
           extraCaption={
             <Space>
+              <RefreshButton state={state} />
               <Button onClick={() => navigate(linkToGroup(group.key))}>编辑列表</Button>
               <Button onClick={() => navigate(linkToGroupViewList(group.key))}>浏览碟片</Button>
             </Space>
