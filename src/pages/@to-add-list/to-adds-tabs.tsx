@@ -1,12 +1,14 @@
 import { useAppDispatch } from '#A/hooks'
 import { useAjax } from '#H/useAjax'
 import { safeWarpper } from '#U/domain'
-import { Button, Form, Input, Modal, Radio, Space, Tabs } from 'antd'
+import { Button, Col, Form, Input, Modal, Radio, Space, Tabs } from 'antd'
 import dayjs from 'dayjs'
 
 import { pushToAdds } from '#F/local'
 import { Rules } from '#T/antd'
 import { IComing, IDisc } from '#T/disc'
+import { MzLink } from '#C/link/MzLink'
+import { linkToAmazonDeatil } from '#A/links'
 
 interface FormCreate {
   asin: string
@@ -82,20 +84,30 @@ export function ToAddsTabs(props: Props) {
     })
   }
 
-  const [form] = Form.useForm<FormCreate>()
-  const setDateNow = () => form.setFieldValue('releaseDate', dayjs().format('YYYY/M/D'))
+  const [formSearch] = Form.useForm<FormCreate>()
+  const [formCreate] = Form.useForm<FormCreate>()
+  const setDateNow = () => formCreate.setFieldValue('releaseDate', dayjs().format('YYYY/M/D'))
+
+  const asinSearch = Form.useWatch('asin', formSearch)
+  const asinCreate = Form.useWatch('asin', formCreate)
 
   return (
     <div className="to-adds-tabs">
       <Tabs type="card" defaultActiveKey={coming ? 'create' : 'search'}>
         <Tabs.TabPane key="search" tab="查询碟片">
           <Form
+            form={formSearch}
             style={{ marginTop: 24 }}
             labelCol={{ span: 6 }}
             wrapperCol={{ span: 12 }}
             initialValues={toDisc(coming) ?? {}}
             onFinish={onSearch}
           >
+            {safeWarpper(asinSearch, (asin) => (
+              <Col offset={6} span={12}>
+                <MzLink href={linkToAmazonDeatil(asin)} title="点击打开日亚页面" />
+              </Col>
+            ))}
             <Form.Item label="碟片ASIN" name="asin" rules={rules.asin}>
               <Input />
             </Form.Item>
@@ -108,7 +120,7 @@ export function ToAddsTabs(props: Props) {
         </Tabs.TabPane>
         <Tabs.TabPane key="create" tab="创建碟片">
           <Form
-            form={form}
+            form={formCreate}
             style={{ marginTop: 24 }}
             labelCol={{ span: 6 }}
             wrapperCol={{ span: 12 }}
@@ -118,6 +130,11 @@ export function ToAddsTabs(props: Props) {
             <Form.Item label="碟片标题" name="title" rules={rules.title}>
               <Input.TextArea autoSize={true} />
             </Form.Item>
+            {safeWarpper(asinCreate, (asin) => (
+              <Col offset={6} span={12}>
+                <MzLink href={linkToAmazonDeatil(asin)} title="点击打开日亚页面" />
+              </Col>
+            ))}
             <Form.Item label="碟片ASIN" name="asin" rules={rules.asin}>
               <Input />
             </Form.Item>

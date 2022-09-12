@@ -19,9 +19,6 @@ export default function DiscAdd() {
 
   const location = useLocation()
   const coming = location.state as IComing | undefined
-  const amazonUrl = safeWarpper(coming?.asin, (asin) => (
-    <MzLink href={linkToAmazonDeatil(asin)} title="点击打开日亚页面" />
-  ))
 
   const dispatch = useAppDispatch()
   const toAdds = useAppSelector((state) => state.local.toAdds)
@@ -33,7 +30,7 @@ export default function DiscAdd() {
 
   return (
     <div className="DiscAdd" style={{ maxWidth: 650 }}>
-      <MzTopbar title="待选列表" subTitle={amazonUrl} />
+      <MzTopbar title="待选列表" />
       <ToAddsTabs toAdds={toAdds} coming={coming} />
       <ToAddsList toAdds={toAdds} column={column} />
     </div>
