@@ -14,8 +14,7 @@ import { linkToGroup, linkToGroupViewList } from '#A/links'
 import { dropToAdds, pushToAdds } from '#F/local'
 import { IDisc, IGroupDiscs } from '#T/disc'
 import { compareRelease } from '#T/disc-utils'
-import { buildColumns } from '../@to-add-list/columns'
-import { ToAddsList } from '../@to-add-list/to-adds-list'
+import { buildColumns, ToAddsList } from '../@to-add-list/to-adds-list'
 import { ToAddsTabs } from '../@to-add-list/to-adds-tabs'
 
 export default function DiscGroupEditList() {
