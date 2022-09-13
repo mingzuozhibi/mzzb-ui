@@ -4,6 +4,7 @@ import { MzColumn, MzTable } from '#C/table/MzTable'
 import { MzTopbar } from '#C/topbar/MzTopbar'
 import { useAjax } from '#H/useAjax'
 import { useOnceRequest } from '#H/useOnce'
+import { safeWarpper } from '#U/domain'
 import { fetchResult } from '#U/fetch/fetchResult'
 import { Button, Modal, Space } from 'antd'
 import dayjs from 'dayjs'
@@ -15,7 +16,6 @@ import { IDiscRecords, IRecord } from '#T/disc'
 import { discTitle, formatPt } from '#T/disc-utils'
 import { formatNumber } from '#U/format'
 import { initEcharts } from './echarts'
-import { safeWarpper } from '#U/domain'
 
 const cols = buildColumns()
 
@@ -35,7 +35,7 @@ export default function DiscRecords() {
   const [isPost, doPost] = useAjax<string>('post')
 
   function reCompute() {
-    doPost(`/api/admin/reComputeDisc2/${discId}`, '重新计算PT', {
+    doPost(`/api/spider/computePt/${discId}`, '重新计算PT', {
       onSuccess(text) {
         Modal.success({ title: '重新计算PT成功', content: text })
         state.refresh()
