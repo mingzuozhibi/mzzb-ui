@@ -3,6 +3,7 @@ import { useTitle } from '#H/useTitle'
 import { IState } from '#T/result'
 import { safeWarpper } from '#U/domain'
 import { Alert, PageHeader, PageHeaderProps } from 'antd'
+import classNames from 'classnames'
 import { ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './MzTopbar.scss'
@@ -36,10 +37,13 @@ export function MzTopbar(props: Props) {
   }
 
   const message = error ?? state?.error?.message
+  const extraCls = classNames({ 'refresh-only': extra == null && state != null })
 
   return (
     <div className="MzTopbar">
-      <PageHeader title={lastTitle} extra={lastExtra} {...lastProps} />
+      <div className={extraCls}>
+        <PageHeader title={lastTitle} extra={lastExtra} {...lastProps} />
+      </div>
       {safeWarpper(message, (message) => {
         return <Alert type="error" message={message} style={{ marginBottom: 8 }} />
       })}
