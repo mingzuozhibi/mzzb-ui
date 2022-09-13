@@ -27,8 +27,8 @@ interface Props {
 
 export function DiscDetail({ url }: Props) {
   const { form, setForm, onValueChange } = useForm<FormEdit>({})
-  const [isPost, doPost] = useAjax<IDisc>('post')
-  const [isEdit, doEdit] = useAjax<IDisc>('put')
+  const [isPut, doPut] = useAjax<IDisc>('put')
+  const [isPatch, doPatch] = useAjax<IDisc>('patch')
 
   const hasBasic = useAppSelector((state) => state.session.hasBasic)
   const { data: disc, ...state } = useOnceRequest(
@@ -50,10 +50,12 @@ export function DiscDetail({ url }: Props) {
       Modal.warning({ title: '请检查输入项', content: '格式应该为: YYYY/M/D' })
       return
     }
-    doEdit(`/api/discs/${disc?.id}`, '编辑碟片', {
-      body: form,
-      onSuccess: state.mutate,
-    })
+    if (disc != null) {
+      doPut(`/api/discs/${disc.id}`, '编辑碟片', {
+        body: form,
+        onSuccess: state.mutate,
+      })
+    }
   }
 
   function doEditRank() {
@@ -65,8 +67,9 @@ export function DiscDetail({ url }: Props) {
       Modal.warning({ title: '请检查输入项', content: '碟片排名必须是正整数' })
       return
     }
-    if (disc?.asin && form.rank) {
-      doPost(`/api/updateRank/${disc?.asin}/${form.rank}`, '更新排名', {
+    if (disc != null) {
+      doPatch(`/api/discs/${disc.id}`, '更新排名', {
+        body: { rank: form.rank },
         onSuccess: state.mutate,
       })
     }
@@ -91,7 +94,7 @@ export function DiscDetail({ url }: Props) {
               <div className="input-label">
                 <span>手动更新</span>
                 <span style={{ marginLeft: 20 }}>
-                  <Button type="primary" loading={isPost} onClick={() => doEditRank()}>
+                  <Button type="primary" loading={isPatch} onClick={() => doEditRank()}>
                     提交排名
                   </Button>
                 </span>
@@ -219,7 +222,7 @@ export function DiscDetail({ url }: Props) {
             </Radio.Group>
             {hasBasic && (
               <div style={{ marginTop: 20 }}>
-                <Button loading={isEdit} type="primary" onClick={doEditDisc}>
+                <Button loading={isPut} type="primary" onClick={doEditDisc}>
                   提交修改
                 </Button>
               </div>

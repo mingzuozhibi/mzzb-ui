@@ -7,13 +7,13 @@ interface Options<T> {
   onSuccess: (data: T) => void
 }
 
-export function useAjax<T>(method: 'get' | 'put' | 'post' | 'delete') {
+export function useAjax<T>(method: 'get' | 'put' | 'post' | 'patch' | 'delete') {
   const [loading, setLoading] = useState(false)
 
   function doAjax(url: string, title: string, { body, onSuccess }: Options<T>) {
     setLoading(true)
     fetchResult<T>(url, {
-      method,
+      method: method.toLocaleUpperCase(),
       body: safeWarpper(body, JSON.stringify),
       successText: `${title}成功`,
       failureName: `${title}失败`,

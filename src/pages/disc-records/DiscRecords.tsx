@@ -15,6 +15,7 @@ import { IDiscRecords, IRecord } from '#T/disc'
 import { discTitle, formatPt } from '#T/disc-utils'
 import { formatNumber } from '#U/format'
 import { initEcharts } from './echarts'
+import { safeWarpper } from '#U/domain'
 
 const cols = buildColumns()
 
@@ -23,13 +24,13 @@ export default function DiscRecords() {
   const discId = params.id as string
 
   const url = `/api/discs/${discId}/records`
-  const { data, ...state } = useOnceRequest(() =>
+  const { data: disc, ...state } = useOnceRequest(() =>
     fetchResult<IDiscRecords>(url).then((result) => result.data)
   )
 
   useEffect(() => {
-    data && initEcharts(data)
-  }, [data])
+    disc && initEcharts(disc.records)
+  }, [disc])
 
   const [isPost, doPost] = useAjax<string>('post')
 
@@ -55,18 +56,18 @@ export default function DiscRecords() {
     </Space>
   )
 
-  const title = data ? discTitle(data) : `载入中`
+  const title = safeWarpper(disc, discTitle)
 
   return (
     <div className="DiscRecords" style={{ maxWidth: 650 }}>
       <MzTopbar title={{ prefix: '碟片历史数据', suffix: title }} />
       <div id="echart_warp" />
-      {data && (
+      {disc && (
         <MzTable
           tag="records"
-          rows={data.records}
+          rows={disc.records}
           cols={cols}
-          trClass={trClass(data)}
+          trClass={trClass(disc)}
           extraCaption={extraCaption}
         />
       )}
@@ -74,9 +75,9 @@ export default function DiscRecords() {
   )
 }
 
-function trClass(data: IDiscRecords) {
-  return (t: IRecord) => ({
-    warning: !dayjs(t.date).isBefore(dayjs(data.releaseDate)),
+function trClass(disc: IDiscRecords) {
+  return (row: IRecord) => ({
+    warning: !dayjs(row.date).isBefore(dayjs(disc.releaseDate)),
   })
 }
 
