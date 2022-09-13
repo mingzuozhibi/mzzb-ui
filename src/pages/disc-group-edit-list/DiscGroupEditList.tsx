@@ -1,12 +1,11 @@
 import { useAppDispatch, useAppSelector } from '#A/hooks'
-import { RefreshButton } from '#C/button/Refresh'
 import { MzTable } from '#C/table/MzTable'
 import { MzTopbar } from '#C/topbar/MzTopbar'
 import { useAjax } from '#H/useAjax'
 import { useOnceRequest } from '#H/useOnce'
 import { fetchResult } from '#U/fetch/fetchResult'
 import { DownCircleOutlined, UpCircleOutlined } from '@ant-design/icons'
-import { Button, Space } from 'antd'
+import { Button } from 'antd'
 import { useNavigate, useParams } from 'react-router-dom'
 import './DiscGroupEditList.scss'
 
@@ -75,7 +74,7 @@ export default function DiscGroupEditList() {
 
   return (
     <div className="DiscGroupEditList" style={{ maxWidth: 650 }}>
-      <MzTopbar title={{ prefix: '管理碟片', suffix: group?.title }} error={state.error?.message} />
+      <MzTopbar title={{ prefix: '管理碟片', suffix: group?.title }} state={state} />
       <ToAddsTabs toAdds={toAdds} />
       <ToAddsList toAdds={toAdds} column={pushColumn} />
       {group && (
@@ -86,11 +85,10 @@ export default function DiscGroupEditList() {
           title={group.title}
           defaultSort={compareRelease}
           extraCaption={
-            <Space>
-              <RefreshButton state={state} />
-              <Button onClick={() => navigate(linkToGroup(group.key))}>编辑列表</Button>
-              <Button onClick={() => navigate(linkToGroupViewList(group.key))}>浏览碟片</Button>
-            </Space>
+            <Button.Group>
+              <Button onClick={() => navigate(linkToGroup(group.key))}>编辑</Button>
+              <Button onClick={() => navigate(linkToGroupViewList(group.key))}>浏览</Button>
+            </Button.Group>
           }
         />
       )}
