@@ -12,7 +12,7 @@ import './Messages.scss'
 
 import { linkToAsin } from '#A/links'
 import { msgLevels } from '#A/metas'
-import { formatMMDD, formatTime } from '#U/date/format'
+import dayjs from 'dayjs'
 
 interface IMsg {
   id: number
@@ -105,9 +105,9 @@ function buildColumns(): MzColumn<IMsg>[] {
       title: '时间',
       format: (row) => (
         <span>
-          {formatMMDD(row.createOn)}
+          {dayjs(row.createOn).format('MM/DD')}
           <br />
-          {formatTime(row.createOn)}
+          {dayjs(row.createOn).format('HH:mm:ss')}
         </span>
       ),
     },
