@@ -1,7 +1,13 @@
 import { MzLink } from '#C/link/MzLink'
 import { Layout } from 'antd'
+import { useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 
 export function AppFooter() {
+  const { pathname } = useLocation()
+  useEffect(() => {
+    window.scroll(0, 0)
+  }, [pathname])
   return (
     <Layout.Footer className="app-footer">
       <div id="beian" style={{ textAlign: 'center' }}>
