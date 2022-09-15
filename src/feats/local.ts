@@ -33,9 +33,13 @@ export const localSlice = createSlice({
       state.toAdds = []
       saveToAdds(state.toAdds)
     },
+    reoladToAdds(state) {
+      state.toAdds = loadToAdds()
+      saveToAdds(state.toAdds)
+    },
   },
 })
 
-export const { pushToAdds, dropToAdds, cleanToAdds } = localSlice.actions
+export const { pushToAdds, dropToAdds, cleanToAdds, reoladToAdds } = localSlice.actions
 
 export const localReducer = localSlice.reducer
