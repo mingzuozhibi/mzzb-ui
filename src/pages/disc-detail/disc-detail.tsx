@@ -11,8 +11,8 @@ import { Link } from 'react-router-dom'
 import { linkToAmazon, linkToRecords } from '#A/links'
 import { IDisc } from '#T/disc'
 import { discTitle } from '#T/disc-utils'
-import { formatDateTime } from '#U/date/format'
 import { formatNumber } from '#U/format'
+import dayjs from 'dayjs'
 
 interface FormEdit {
   rank?: string
@@ -235,7 +235,7 @@ export function DiscDetail({ url }: Props) {
 }
 
 function formatDate(time?: number) {
-  return time == null ? '无' : formatDateTime(time)
+  return time == null ? '无' : dayjs(time).format('YYYY-MM-DD HH:mm:ss')
 }
 
 function formatRank(rank?: number) {

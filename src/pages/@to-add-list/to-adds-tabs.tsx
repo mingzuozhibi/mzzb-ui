@@ -1,14 +1,14 @@
 import { useAppDispatch } from '#A/hooks'
+import { MzLink } from '#C/link/MzLink'
 import { useAjax } from '#H/useAjax'
 import { safeWarpper } from '#U/domain'
-import { Button, Col, Form, Input, Modal, Radio, Space, Tabs } from 'antd'
+import { Button, Form, Input, Modal, Radio, Space, Tabs } from 'antd'
 import dayjs from 'dayjs'
 
+import { linkToAmazonDeatil } from '#A/links'
 import { pushToAdds } from '#F/local'
 import { Rules } from '#T/antd'
 import { IComing, IDisc } from '#T/disc'
-import { MzLink } from '#C/link/MzLink'
-import { linkToAmazonDeatil } from '#A/links'
 
 interface FormCreate {
   asin: string
@@ -103,13 +103,8 @@ export function ToAddsTabs(props: Props) {
             initialValues={toDisc(coming) ?? {}}
             onFinish={onSearch}
           >
-            {safeWarpper(asinSearch, (asin) => (
-              <Col offset={6} span={12}>
-                <MzLink href={linkToAmazonDeatil(asin)} title="点击打开日亚页面" />
-              </Col>
-            ))}
             <Form.Item label="碟片ASIN" name="asin" rules={rules.asin}>
-              <Input />
+              <Input addonAfter={amazonUrl(asinSearch)} />
             </Form.Item>
             <Form.Item wrapperCol={{ offset: 6 }}>
               <Button type="primary" htmlType="submit" loading={isGet}>
@@ -130,13 +125,8 @@ export function ToAddsTabs(props: Props) {
             <Form.Item label="碟片标题" name="title" rules={rules.title}>
               <Input.TextArea autoSize={true} />
             </Form.Item>
-            {safeWarpper(asinCreate, (asin) => (
-              <Col offset={6} span={12}>
-                <MzLink href={linkToAmazonDeatil(asin)} title="点击打开日亚页面" />
-              </Col>
-            ))}
             <Form.Item label="碟片ASIN" name="asin" rules={rules.asin}>
-              <Input />
+              <Input addonAfter={amazonUrl(asinCreate)} />
             </Form.Item>
             <Form.Item label="发售日期" name="releaseDate" rules={rules.releaseDate}>
               <Input />
@@ -163,6 +153,10 @@ export function ToAddsTabs(props: Props) {
       </Tabs>
     </div>
   )
+}
+
+function amazonUrl(asin?: string) {
+  return safeWarpper(asin, (asin) => <MzLink href={linkToAmazonDeatil(asin)} title="日亚链接" />)
 }
 
 function toDisc(coming?: IComing) {

@@ -4,21 +4,14 @@ import { MzColumn, MzTable } from '#C/table/MzTable'
 import { MzTopbar } from '#C/topbar/MzTopbar'
 import { useOnceRequest } from '#H/useOnce'
 import { fetchResult } from '#U/fetch/fetchResult'
-import {
-  CheckCircleTwoTone,
-  CheckOutlined,
-  PlusOutlined,
-  PlusSquareTwoTone,
-  QuestionOutlined,
-} from '@ant-design/icons'
+import { CheckCircleTwoTone, PlusSquareTwoTone, QuestionOutlined } from '@ant-design/icons'
+import { Space } from 'antd'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import './DiscComing.scss'
 
 import { linkToAmazon, linkToAsin } from '#A/links'
 import { IComing } from '#T/disc'
 import { isJustUpdate } from '#U/date/check'
-import { formatMMDD, formatTime, formatYYMM } from '#U/date/format'
-import { Space } from 'antd'
 import dayjs from 'dayjs'
 
 const cols = buildColumns()
@@ -86,22 +79,19 @@ function buildColumns(): MzColumn<IComing>[] {
 }
 
 function formatCreateOn(row: IComing) {
-  if (dayjs(row.createOn).get('year') !== dayjs().get('year')) {
-    return (
-      <span>
-        {formatYYMM(row.createOn)}
-        <br />
-        {formatTime(row.createOn)}
-      </span>
-    )
-  } else
-    return (
-      <span>
-        {formatMMDD(row.createOn)}
-        <br />
-        {formatTime(row.createOn)}
-      </span>
-    )
+  const _3months = dayjs().subtract(3, 'months')
+  const recently = dayjs(row.createOn).isAfter(_3months)
+  return recently ? (
+    <div>
+      <div>{dayjs(row.createOn).format('MM/DD')}</div>
+      <div>{dayjs(row.createOn).format('HH:mm:ss')}</div>
+    </div>
+  ) : (
+    <div>
+      <div>{dayjs(row.createOn).format('YYYY')}</div>
+      <div>{dayjs(row.createOn).format('MM/DD')}</div>
+    </div>
+  )
 }
 
 function tdClassCreateOn(row: IComing) {

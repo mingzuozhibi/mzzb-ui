@@ -4,13 +4,12 @@ import { useOnceRequest } from '#H/useOnce'
 import { safeWarpper } from '#U/domain'
 import { fetchResult } from '#U/fetch/fetchResult'
 import { Button } from 'antd'
-import dayjs from 'dayjs'
 import { Link, useNavigate } from 'react-router-dom'
 import './Users.scss'
 
 import { IUser } from '#T/user'
 import { isJustUpdate } from '#U/date/check'
-import { formatDate } from '#U/date/format'
+import dayjs from 'dayjs'
 
 const cols = buildColumns()
 
@@ -79,7 +78,7 @@ function formatEnabled(row: IUser) {
 }
 
 function formatRegisterDate(row: IUser) {
-  return formatDate(row.registerDate)
+  return dayjs(row.registerDate).format('YYYY-MM-DD')
 }
 
 function formatLastLoggedIn(row: IUser) {

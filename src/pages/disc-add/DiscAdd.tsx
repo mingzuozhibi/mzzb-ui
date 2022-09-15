@@ -1,22 +1,14 @@
 import { useAppDispatch, useAppSelector } from '#A/hooks'
-import { MzLink } from '#C/link/MzLink'
 import { MzTopbar } from '#C/topbar/MzTopbar'
-import { useOnceService } from '#H/useOnce'
-import { safeWarpper } from '#U/domain'
 import { DeleteOutlined } from '@ant-design/icons'
 import { useLocation } from 'react-router-dom'
 
-import { linkToAmazonDeatil } from '#A/links'
 import { dropToAdds } from '#F/local'
 import { IComing, IDisc } from '#T/disc'
 import { ToAddsList } from '../@to-add-list/to-adds-list'
 import { ToAddsTabs } from '../@to-add-list/to-adds-tabs'
 
 export default function DiscAdd() {
-  useOnceService(() => {
-    window.scroll(0, 0)
-  })
-
   const location = useLocation()
   const coming = location.state as IComing | undefined
 
