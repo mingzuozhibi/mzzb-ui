@@ -6,7 +6,7 @@ import { Alert, PageHeader, PageHeaderProps } from 'antd'
 import classNames from 'classnames'
 import { ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
-import './MzTopbar.scss'
+import './MzHeader.scss'
 
 type ExcludedUnion = 'title' | 'extra'
 
@@ -17,7 +17,7 @@ interface Props extends Omit<PageHeaderProps, ExcludedUnion> {
   extra?: ReactNode[]
 }
 
-export function MzTopbar(props: Props) {
+export function MzHeader(props: Props) {
   const { title, state, error, extra, ...otherProps } = props
 
   let lastTitle = findTitle(title)
@@ -40,7 +40,7 @@ export function MzTopbar(props: Props) {
   const extraCls = classNames({ 'refresh-only': extra == null && state != null })
 
   return (
-    <div className="MzTopbar">
+    <div className="MzHeader">
       <div className={extraCls}>
         <PageHeader title={lastTitle} extra={lastExtra} {...lastProps} />
       </div>

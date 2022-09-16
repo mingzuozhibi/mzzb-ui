@@ -1,5 +1,5 @@
 import { useAppSelector } from '#A/hooks'
-import { MzTopbar } from '#C/topbar/MzTopbar'
+import { MzHeader } from '#C/header/MzHeader'
 import { useLocal } from '#H/useLocal'
 import { useOnceRequest } from '#H/useOnce'
 import { safeWarpper } from '#U/domain'
@@ -82,7 +82,7 @@ export default function DiscGroupViewList() {
 
   return (
     <div className="DiscGroupViewList" style={{ maxWidth }}>
-      <MzTopbar
+      <MzHeader
         title={group?.title}
         state={state}
         subTitle={safeWarpper(group?.modifyTime, (updateOn) => (

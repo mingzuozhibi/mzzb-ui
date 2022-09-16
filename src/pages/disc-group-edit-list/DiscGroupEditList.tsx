@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '#A/hooks'
 import { MzTable } from '#C/table/MzTable'
-import { MzTopbar } from '#C/topbar/MzTopbar'
+import { MzHeader } from '#C/header/MzHeader'
 import { useAjax } from '#H/useAjax'
 import { useOnceRequest } from '#H/useOnce'
 import { fetchResult } from '#U/fetch/fetchResult'
@@ -74,7 +74,7 @@ export default function DiscGroupEditList() {
 
   return (
     <div className="DiscGroupEditList" style={{ maxWidth: 650 }}>
-      <MzTopbar title={{ prefix: '管理碟片', suffix: group?.title }} state={state} />
+      <MzHeader title={{ prefix: '管理碟片', suffix: group?.title }} state={state} />
       <ToAddsTabs toAdds={toAdds} />
       <ToAddsList toAdds={toAdds} column={pushColumn} />
       {group && (

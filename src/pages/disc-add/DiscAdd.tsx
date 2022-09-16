@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '#A/hooks'
-import { MzTopbar } from '#C/topbar/MzTopbar'
+import { MzHeader } from '#C/header/MzHeader'
 import { DeleteOutlined } from '@ant-design/icons'
 import { useLocation } from 'react-router-dom'
 
@@ -22,7 +22,7 @@ export default function DiscAdd() {
 
   return (
     <div className="DiscAdd" style={{ maxWidth: 650 }}>
-      <MzTopbar title="待选列表" />
+      <MzHeader title="待选列表" />
       <ToAddsTabs toAdds={toAdds} coming={coming} />
       <ToAddsList toAdds={toAdds} column={column} />
     </div>

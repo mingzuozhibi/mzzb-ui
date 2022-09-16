@@ -1,4 +1,4 @@
-import { MzTopbar } from '#C/topbar/MzTopbar'
+import { MzHeader } from '#C/header/MzHeader'
 import { useAjax } from '#H/useAjax'
 import { useOnceRequest } from '#H/useOnce'
 import { emptyWarpper, safeWarpper } from '#U/domain'
@@ -58,7 +58,7 @@ export default function UserDetail() {
 
   return (
     <div className="UserDetail" style={{ maxWidth: 650 }}>
-      <MzTopbar title={{ prefix: '用户信息', suffix: user?.username }} state={state} />
+      <MzHeader title={{ prefix: '用户信息', suffix: user?.username }} state={state} />
       {safeWarpper(user, (user) => (
         <Card>
           <Form

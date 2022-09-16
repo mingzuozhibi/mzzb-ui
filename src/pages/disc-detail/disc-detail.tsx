@@ -1,6 +1,6 @@
 import { useAppSelector } from '#A/hooks'
 import { MzLink } from '#C/link/MzLink'
-import { MzTopbar } from '#C/topbar/MzTopbar'
+import { MzHeader } from '#C/header/MzHeader'
 import { useAjax } from '#H/useAjax'
 import { useForm } from '#H/useFrom'
 import { useOnceRequest } from '#H/useOnce'
@@ -79,7 +79,7 @@ export function DiscDetail({ url }: Props) {
 
   return (
     <div className="disc-detail" style={{ maxWidth: 650 }}>
-      <MzTopbar title={{ prefix: '碟片信息', suffix: title }} state={state} />
+      <MzHeader title={{ prefix: '碟片信息', suffix: title }} state={state} />
       {disc && (
         <>
           <div className="input-wrapper">

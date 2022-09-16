@@ -1,7 +1,7 @@
 import { MzLink } from '#C/link/MzLink'
 import { MzPagination } from '#C/pagination/MzPagination'
 import { MzColumn, MzTable } from '#C/table/MzTable'
-import { MzTopbar } from '#C/topbar/MzTopbar'
+import { MzHeader } from '#C/header/MzHeader'
 import { useOnceRequest } from '#H/useOnce'
 import { fetchResult } from '#U/fetch/fetchResult'
 import { CheckCircleTwoTone, PlusSquareTwoTone, QuestionOutlined } from '@ant-design/icons'
@@ -36,7 +36,7 @@ export default function DiscComing() {
 
   return (
     <div className="DiscComing" style={{ maxWidth: 800 }}>
-      <MzTopbar title="上架追踪" state={state} />
+      <MzHeader title="上架追踪" state={state} />
       <Space direction="vertical">
         {page && <MzPagination page={page} onChange={onPaginationChange} />}
         {data && <MzTable tag="coming" rows={data} cols={cols} />}

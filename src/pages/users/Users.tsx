@@ -1,5 +1,5 @@
 import { MzColumn, MzTable } from '#C/table/MzTable'
-import { MzTopbar } from '#C/topbar/MzTopbar'
+import { MzHeader } from '#C/header/MzHeader'
 import { useOnceRequest } from '#H/useOnce'
 import { safeWarpper } from '#U/domain'
 import { fetchResult } from '#U/fetch/fetchResult'
@@ -22,7 +22,7 @@ export default function Users() {
 
   return (
     <div className="Users" style={{ maxWidth: 650 }}>
-      <MzTopbar
+      <MzHeader
         title="用户管理"
         state={state}
         extra={[

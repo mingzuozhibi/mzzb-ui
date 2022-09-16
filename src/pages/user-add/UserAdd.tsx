@@ -1,4 +1,4 @@
-import { MzTopbar } from '#C/topbar/MzTopbar'
+import { MzHeader } from '#C/header/MzHeader'
 import { useAjax } from '#H/useAjax'
 import { Button, Card, Form, Input, Switch } from 'antd'
 import { useNavigate } from 'react-router-dom'
@@ -54,7 +54,7 @@ export default function UserAdd() {
 
   return (
     <div className="UserAdd" style={{ maxWidth: 650 }}>
-      <MzTopbar title="添加用户" />
+      <MzHeader title="添加用户" />
       <Card>
         <Form
           style={{ marginTop: 24 }}

@@ -1,7 +1,7 @@
 import { useAppSelector } from '#A/hooks'
 import { RefreshButton } from '#C/button/Refresh'
 import { MzColumn, MzTable } from '#C/table/MzTable'
-import { MzTopbar } from '#C/topbar/MzTopbar'
+import { MzHeader } from '#C/header/MzHeader'
 import { useAjax } from '#H/useAjax'
 import { useOnceRequest } from '#H/useOnce'
 import { safeWarpper } from '#U/domain'
@@ -60,7 +60,7 @@ export default function DiscRecords() {
 
   return (
     <div className="DiscRecords" style={{ maxWidth: 650 }}>
-      <MzTopbar title={{ prefix: '碟片历史数据', suffix: title }} />
+      <MzHeader title={{ prefix: '碟片历史数据', suffix: title }} />
       <div id="echart_warp" />
       {disc && (
         <MzTable
