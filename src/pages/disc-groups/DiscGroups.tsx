@@ -1,6 +1,6 @@
 import { useAppSelector } from '#A/hooks'
 import { MzColumn, MzTable } from '#C/table/MzTable'
-import { MzTopbar } from '#C/topbar/MzTopbar'
+import { MzHeader } from '#C/header/MzHeader'
 import { useLocal } from '#H/useLocal'
 import { useOnceRequest } from '#H/useOnce'
 import { thenCompare } from '#U/compare'
@@ -24,7 +24,7 @@ const defaultSort = compareDiscGroups()
 
 export default function DiscGroups() {
   const hasBasic = useAppSelector((state) => state.session.hasBasic)
-  const [isEditMode, setEditMode] = useLocal('local-editmode', false)
+  const [isEditMode, setEditMode] = useLocal('groups-editmode', false)
 
   const showExtraButtons = hasBasic
   const showExtraColumns = hasBasic && isEditMode
@@ -52,7 +52,7 @@ export default function DiscGroups() {
 
   return (
     <div className="DiscGroups" style={{ maxWidth: 650 }}>
-      <MzTopbar title="推荐列表" state={state} extra={[lastButtons]} />
+      <MzHeader title="推荐列表" state={state} extra={[lastButtons]} />
       {groups && (
         <MzTable
           tag="groups"

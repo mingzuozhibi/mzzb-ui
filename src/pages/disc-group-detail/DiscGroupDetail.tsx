@@ -1,5 +1,5 @@
 import { useAppSelector } from '#A/hooks'
-import { MzTopbar } from '#C/topbar/MzTopbar'
+import { MzHeader } from '#C/header/MzHeader'
 import { useAjax } from '#H/useAjax'
 import { useOnceRequest } from '#H/useOnce'
 import { safeWarpper } from '#U/domain'
@@ -73,7 +73,7 @@ export default function DiscGroupDetail() {
 
   return (
     <div className="DiscGroupDetail" style={{ maxWidth: 650 }}>
-      <MzTopbar title={{ prefix: '列表信息', suffix: group?.title }} state={state} />
+      <MzHeader title={{ prefix: '列表信息', suffix: group?.title }} state={state} />
       {safeWarpper(group, (group) => (
         <Card>
           <Form

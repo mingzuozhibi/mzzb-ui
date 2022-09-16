@@ -22,12 +22,15 @@ export default function Console() {
   }
 
   return (
-    <Tabs type="card" activeKey={activeKey} onChange={onChange}>
-      {msgModules.map(({ value, label }) => (
-        <Tabs.TabPane key={value} tab={label}>
-          <Messages name={value} activeKey={activeKey} />
-        </Tabs.TabPane>
-      ))}
-    </Tabs>
+    <Tabs
+      type="card"
+      activeKey={activeKey}
+      onChange={onChange}
+      items={msgModules.map(({ value, label }) => ({
+        key: value,
+        label: label,
+        children: <Messages name={value} activeKey={activeKey} />,
+      }))}
+    />
   )
 }

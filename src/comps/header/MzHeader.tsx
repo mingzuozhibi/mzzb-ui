@@ -1,51 +1,62 @@
-import { ILoad } from '#T/result'
-import { ArrowLeftOutlined } from '@ant-design/icons'
-import { Alert, Button, Divider, PageHeader } from 'antd'
-import React, { useEffect } from 'react'
+import { RefreshButton } from '#C/button/Refresh'
+import { useTitle } from '#H/useTitle'
+import { IState } from '#T/result'
+import { safeWarpper } from '#U/domain'
+import { Alert, PageHeader, PageHeaderProps } from 'antd'
+import classNames from 'classnames'
+import { ReactNode } from 'react'
+import { useNavigate } from 'react-router-dom'
 import './MzHeader.scss'
 
-interface Props {
-  header: string
-  title?: string
+type ExcludedUnion = 'title' | 'extra'
+
+interface Props extends Omit<PageHeaderProps, ExcludedUnion> {
+  title?: string | { prefix: string; suffix?: string }
+  state?: IState
   error?: string
-  handler?: ILoad
-  replace?: React.ReactNode
+  extra?: ReactNode[]
 }
 
-export function MzHeader({ header, title, error, handler, replace }: Props) {
-  useEffect(() => {
-    document.title = `${title || header} - mingzuozhibi.com`
-  }, [header, title])
+export function MzHeader(props: Props) {
+  const { title, state, error, extra, ...otherProps } = props
+
+  let lastTitle = findTitle(title)
+
+  useTitle(lastTitle)
+
+  const button = safeWarpper(state, (state) => {
+    return <RefreshButton key="R1" state={state} />
+  })
+  const lastExtra = extra ? [button, ...extra] : [button]
+
+  const navigate = useNavigate()
+  const lastProps: PageHeaderProps = {
+    onBack: () => navigate(-1),
+    style: { padding: 8 },
+    ...otherProps,
+  }
+
+  const message = error ?? state?.error?.message
+  const extraCls = classNames({ 'refresh-only': extra == null && state != null })
+
   return (
     <div className="MzHeader">
-      {replace ? renderCustomHeader(replace) : renderPageHeader(header, handler)}
-      {error && <Alert message={error} type="error" />}
+      <div className={extraCls}>
+        <PageHeader title={lastTitle} extra={lastExtra} {...lastProps} />
+      </div>
+      {safeWarpper(message, (message) => {
+        return <Alert type="error" message={message} style={{ marginBottom: 8 }} />
+      })}
     </div>
   )
 }
 
-function renderPageHeader(header: string, handler?: ILoad) {
-  return (
-    <PageHeader
-      title={header}
-      onBack={() => window.history.back()}
-      extra={
-        handler && (
-          <Button loading={handler.loading} onClick={handler.refresh}>
-            刷新
-          </Button>
-        )
-      }
-    />
-  )
-}
-
-function renderCustomHeader(replace: React.ReactNode) {
-  return (
-    <div className="custom-header">
-      <ArrowLeftOutlined onClick={() => window.history.back()} />
-      <Divider type="vertical" />
-      {replace}
-    </div>
-  )
+function findTitle(title: Props['title']) {
+  if (title == null) {
+    return '载入中'
+  } else if (typeof title === 'string') {
+    return title
+  } else {
+    return `${title.prefix}：${title.suffix || '载入中'}`
+  }
 }

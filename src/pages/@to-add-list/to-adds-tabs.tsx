@@ -93,66 +93,86 @@ export function ToAddsTabs(props: Props) {
 
   return (
     <div className="to-adds-tabs">
-      <Tabs type="card" defaultActiveKey={coming ? 'create' : 'search'}>
-        <Tabs.TabPane key="search" tab="查询碟片">
-          <Form
-            form={formSearch}
-            style={{ marginTop: 24 }}
-            labelCol={{ span: 6 }}
-            wrapperCol={{ span: 12 }}
-            initialValues={toDisc(coming) ?? {}}
-            onFinish={onSearch}
-          >
-            <Form.Item label="碟片ASIN" name="asin" rules={rules.asin}>
-              <Input addonAfter={amazonUrl(asinSearch)} />
-            </Form.Item>
-            <Form.Item wrapperCol={{ offset: 6 }}>
-              <Button type="primary" htmlType="submit" loading={isGet}>
-                查询碟片
-              </Button>
-            </Form.Item>
-          </Form>
-        </Tabs.TabPane>
-        <Tabs.TabPane key="create" tab="创建碟片">
-          <Form
-            form={formCreate}
-            style={{ marginTop: 24 }}
-            labelCol={{ span: 6 }}
-            wrapperCol={{ span: 12 }}
-            initialValues={toDisc(coming) ?? {}}
-            onFinish={onCreate}
-          >
-            <Form.Item label="碟片标题" name="title" rules={rules.title}>
-              <Input.TextArea autoSize={true} />
-            </Form.Item>
-            <Form.Item label="碟片ASIN" name="asin" rules={rules.asin}>
-              <Input addonAfter={amazonUrl(asinCreate)} />
-            </Form.Item>
-            <Form.Item label="发售日期" name="releaseDate" rules={rules.releaseDate}>
-              <Input />
-            </Form.Item>
-            <Form.Item label="碟片类型" name="discType" rules={rules.discType}>
-              <Radio.Group>
-                <Radio.Button value="Cd">CD</Radio.Button>
-                <Radio.Button value="Bluray">BD</Radio.Button>
-                <Radio.Button value="Dvd">DVD</Radio.Button>
-                <Radio.Button value="Auto">自动</Radio.Button>
-                <Radio.Button value="Other">未知</Radio.Button>
-              </Radio.Group>
-            </Form.Item>
-            <Form.Item wrapperCol={{ offset: 6 }}>
-              <Space size="large">
-                <Button type="primary" htmlType="submit" loading={isPost}>
-                  创建碟片
-                </Button>
-                <Button onClick={setDateNow}>填充日期</Button>
-              </Space>
-            </Form.Item>
-          </Form>
-        </Tabs.TabPane>
-      </Tabs>
+      <Tabs
+        type="card"
+        defaultActiveKey={coming ? 'create' : 'search'}
+        items={[
+          {
+            key: 'search',
+            label: '查询碟片',
+            children: searchTab(),
+          },
+          {
+            key: 'create',
+            label: '创建碟片',
+            children: createTab(),
+          },
+        ]}
+      />
     </div>
   )
+
+  function searchTab() {
+    return (
+      <Form
+        form={formSearch}
+        style={{ marginTop: 24 }}
+        labelCol={{ span: 6 }}
+        wrapperCol={{ span: 12 }}
+        initialValues={toDisc(coming) ?? {}}
+        onFinish={onSearch}
+      >
+        <Form.Item label="碟片ASIN" name="asin" rules={rules.asin}>
+          <Input addonAfter={amazonUrl(asinSearch)} />
+        </Form.Item>
+        <Form.Item wrapperCol={{ offset: 6 }}>
+          <Button type="primary" htmlType="submit" loading={isGet}>
+            查询碟片
+          </Button>
+        </Form.Item>
+      </Form>
+    )
+  }
+
+  function createTab() {
+    return (
+      <Form
+        form={formCreate}
+        style={{ marginTop: 24 }}
+        labelCol={{ span: 6 }}
+        wrapperCol={{ span: 12 }}
+        initialValues={toDisc(coming) ?? {}}
+        onFinish={onCreate}
+      >
+        <Form.Item label="碟片标题" name="title" rules={rules.title}>
+          <Input.TextArea autoSize={true} />
+        </Form.Item>
+        <Form.Item label="碟片ASIN" name="asin" rules={rules.asin}>
+          <Input addonAfter={amazonUrl(asinCreate)} />
+        </Form.Item>
+        <Form.Item label="发售日期" name="releaseDate" rules={rules.releaseDate}>
+          <Input />
+        </Form.Item>
+        <Form.Item label="碟片类型" name="discType" rules={rules.discType}>
+          <Radio.Group>
+            <Radio.Button value="Cd">CD</Radio.Button>
+            <Radio.Button value="Bluray">BD</Radio.Button>
+            <Radio.Button value="Dvd">DVD</Radio.Button>
+            <Radio.Button value="Auto">自动</Radio.Button>
+            <Radio.Button value="Other">未知</Radio.Button>
+          </Radio.Group>
+        </Form.Item>
+        <Form.Item wrapperCol={{ offset: 6 }}>
+          <Space size="large">
+            <Button type="primary" htmlType="submit" loading={isPost}>
+              创建碟片
+            </Button>
+            <Button onClick={setDateNow}>填充日期</Button>
+          </Space>
+        </Form.Item>
+      </Form>
+    )
+  }
 }
 
 function amazonUrl(asin?: string) {

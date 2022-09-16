@@ -47,7 +47,7 @@ export function AppLogin() {
       title="用户登入"
       placement="top"
       onClose={onCancel}
-      visible={viewLogin}
+      open={viewLogin}
       closable={false}
       extra={<CloseOutlined onClick={onCancel} />}
     >

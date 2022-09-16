@@ -1,5 +1,5 @@
 import { useLocal } from '#H/useLocal'
-import classNames from 'classnames'
+import classNames, { Argument } from 'classnames'
 import React from 'react'
 import './MzTable.scss'
 
@@ -11,7 +11,7 @@ export interface MzColumn<T> {
   key: string
   title: React.ReactNode
   format: (row: T, idx: number) => React.ReactNode
-  tdClass?: (row: T) => string | object | null
+  tdClass?: (row: T) => Argument
   compare?: (a: T, b: T) => number
 }
 
@@ -20,7 +20,7 @@ interface Props<T> {
   rows: T[]
   cols: MzColumn<T>[]
   title?: React.ReactNode
-  trClass?: (row: T) => string | object
+  trClass?: (row: T) => Argument
   defaultSort?: (a: T, b: T) => number
   extraCaption?: React.ReactNode
 }
@@ -31,9 +31,9 @@ interface State {
 }
 
 export function MzTable<T extends BaseRow>(props: Props<T>) {
-  const { tag, cols, title, trClass, defaultSort, extraCaption } = props
+  const { tag, cols, title, defaultSort, extraCaption } = props
 
-  const [{ sortKey, sortAsc }, setState] = useLocal<State>(`local-table-state-${tag}`, {})
+  const [{ sortKey, sortAsc }, setState] = useLocal<State>(`table-state-${tag}`, {})
 
   const rows = sortRows()
 
@@ -55,7 +55,7 @@ export function MzTable<T extends BaseRow>(props: Props<T>) {
         </thead>
         <tbody>
           {rows.map((row, idx) => (
-            <tr key={row.id} id={`row-${row.id}`} className={trClass && classNames(trClass(row))}>
+            <tr key={row.id} id={`row-${row.id}`} className={trClass(row)}>
               {cols.map((col) => (
                 <td key={col.key} className={tdClass(col, row)}>
                   {col.format(row, idx)}
@@ -111,5 +111,9 @@ export function MzTable<T extends BaseRow>(props: Props<T>) {
 
   function tdClass(col: MzColumn<T>, row: T) {
     return classNames(col.key, col.tdClass && col.tdClass(row))
+  }
+
+  function trClass(row: T) {
+    if (props.trClass) return classNames(props.trClass(row))
   }
 }

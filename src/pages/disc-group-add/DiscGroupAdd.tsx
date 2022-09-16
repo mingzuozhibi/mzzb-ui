@@ -1,4 +1,4 @@
-import { MzTopbar } from '#C/topbar/MzTopbar'
+import { MzHeader } from '#C/header/MzHeader'
 import { useAjax } from '#H/useAjax'
 import { Button, Card, Form, Input, Radio, Space, Switch } from 'antd'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -56,7 +56,7 @@ export default function DiscGroupAdd() {
 
   return (
     <div className="DiscGroupAdd" style={{ maxWidth: 650 }}>
-      <MzTopbar title="添加列表" />
+      <MzHeader title="添加列表" />
       <Card>
         <Form
           style={{ marginTop: 24 }}
