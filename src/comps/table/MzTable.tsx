@@ -33,7 +33,7 @@ interface State {
 export function MzTable<T extends BaseRow>(props: Props<T>) {
   const { tag, cols, title, defaultSort, extraCaption } = props
 
-  const [{ sortKey, sortAsc }, setState] = useLocal<State>(`local-table-state-${tag}`, {})
+  const [{ sortKey, sortAsc }, setState] = useLocal<State>(`table-state-${tag}`, {})
 
   const rows = sortRows()
 

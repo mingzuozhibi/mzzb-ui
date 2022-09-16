@@ -24,7 +24,7 @@ const defaultSort = compareDiscGroups()
 
 export default function DiscGroups() {
   const hasBasic = useAppSelector((state) => state.session.hasBasic)
-  const [isEditMode, setEditMode] = useLocal('local-editmode', false)
+  const [isEditMode, setEditMode] = useLocal('groups-editmode', false)
 
   const showExtraButtons = hasBasic
   const showExtraColumns = hasBasic && isEditMode

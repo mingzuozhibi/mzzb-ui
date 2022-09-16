@@ -23,10 +23,10 @@ export default function DiscGroupViewList() {
   const groupKey = params.key as string
   const localKey = groupKey.replaceAll('-', '').toLocaleLowerCase()
 
-  const [viewMode, setViewMode] = useLocal<ViewMode>(`local-disclist-viewmode`, 'auto')
-  const [editMode, setEditMode] = useLocal<boolean>(`local-disclist-editmode`, false)
-  const [findMode, setFindMode] = useLocal<boolean>(`local-disclist-findmode-${localKey}`, false)
-  const [findText, setFindText] = useLocal<string>(`local-disclist-findtext-${localKey}`, '')
+  const [viewMode, setViewMode] = useLocal<ViewMode>(`viewlist-viewmode`, 'auto')
+  const [editMode, setEditMode] = useLocal<boolean>(`viewlist-editmode`, false)
+  const [findMode, setFindMode] = useLocal<boolean>(`viewlist-findmode-${localKey}`, false)
+  const [findText, setFindText] = useLocal<string>(`viewlist-findtext-${localKey}`, '')
 
   const url = `/api/discGroups/key/${groupKey}/discs`
   const { data: group, ...state } = useOnceRequest(() =>
