@@ -1,5 +1,5 @@
 import { useLocal } from '#H/useLocal'
-import classNames from 'classnames'
+import classNames, { Argument } from 'classnames'
 import React from 'react'
 import './MzTable.scss'
 
@@ -11,7 +11,7 @@ export interface MzColumn<T> {
   key: string
   title: React.ReactNode
   format: (row: T, idx: number) => React.ReactNode
-  tdClass?: (row: T) => string | object | null
+  tdClass?: (row: T) => Argument
   compare?: (a: T, b: T) => number
 }
 
@@ -20,7 +20,7 @@ interface Props<T> {
   rows: T[]
   cols: MzColumn<T>[]
   title?: React.ReactNode
-  trClass?: (row: T) => string | object
+  trClass?: (row: T) => Argument
   defaultSort?: (a: T, b: T) => number
   extraCaption?: React.ReactNode
 }
