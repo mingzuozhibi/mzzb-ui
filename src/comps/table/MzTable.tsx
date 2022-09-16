@@ -31,7 +31,7 @@ interface State {
 }
 
 export function MzTable<T extends BaseRow>(props: Props<T>) {
-  const { tag, cols, title, trClass, defaultSort, extraCaption } = props
+  const { tag, cols, title, defaultSort, extraCaption } = props
 
   const [{ sortKey, sortAsc }, setState] = useLocal<State>(`local-table-state-${tag}`, {})
 
@@ -55,7 +55,7 @@ export function MzTable<T extends BaseRow>(props: Props<T>) {
         </thead>
         <tbody>
           {rows.map((row, idx) => (
-            <tr key={row.id} id={`row-${row.id}`} className={trClass && classNames(trClass(row))}>
+            <tr key={row.id} id={`row-${row.id}`} className={trClass(row)}>
               {cols.map((col) => (
                 <td key={col.key} className={tdClass(col, row)}>
                   {col.format(row, idx)}
@@ -111,5 +111,9 @@ export function MzTable<T extends BaseRow>(props: Props<T>) {
 
   function tdClass(col: MzColumn<T>, row: T) {
     return classNames(col.key, col.tdClass && col.tdClass(row))
+  }
+
+  function trClass(row: T) {
+    if (props.trClass) return classNames(props.trClass(row))
   }
 }
