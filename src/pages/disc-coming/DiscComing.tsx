@@ -1,10 +1,10 @@
+import { MzHeader } from '#C/header/MzHeader'
 import { MzLink } from '#C/link/MzLink'
 import { MzPagination } from '#C/pagination/MzPagination'
 import { MzColumn, MzTable } from '#C/table/MzTable'
-import { MzHeader } from '#C/header/MzHeader'
 import { useOnceRequest } from '#H/useOnce'
 import { fetchResult } from '#U/fetch/fetchResult'
-import { CheckCircleTwoTone, PlusSquareTwoTone, QuestionOutlined } from '@ant-design/icons'
+import { CheckCircleTwoTone, PlusSquareTwoTone } from '@ant-design/icons'
 import { Space } from 'antd'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import './DiscComing.scss'
@@ -51,7 +51,7 @@ function buildColumns(): MzColumn<IComing>[] {
     {
       key: 'asin',
       title: 'ASIN',
-      format: (row) => row.asin,
+      format: formatAsin,
       tdClass: tdClassCreateOn,
     },
     {
@@ -61,14 +61,14 @@ function buildColumns(): MzColumn<IComing>[] {
       tdClass: tdClassCreateOn,
     },
     {
-      key: 'followed',
-      title: <QuestionOutlined />,
-      format: formatFollowed,
-    },
-    {
       key: 'type',
       title: '类型',
       format: formatType,
+    },
+    {
+      key: 'date',
+      title: '发售',
+      format: formatDate,
     },
     {
       key: 'title',
@@ -78,18 +78,23 @@ function buildColumns(): MzColumn<IComing>[] {
   ]
 }
 
+function formatAsin(row: IComing) {
+  return row.asin
+}
+
 function formatCreateOn(row: IComing) {
   const _3months = dayjs().subtract(3, 'months')
-  const recently = dayjs(row.createOn).isAfter(_3months)
+  const datetime = dayjs(row.createOn)
+  const recently = datetime.isAfter(_3months)
   return recently ? (
     <div>
-      <div>{dayjs(row.createOn).format('MM/DD')}</div>
-      <div>{dayjs(row.createOn).format('HH:mm:ss')}</div>
+      <div>{datetime.format('MM/DD')}</div>
+      <div>{datetime.format('HH:mm:ss')}</div>
     </div>
   ) : (
     <div>
-      <div>{dayjs(row.createOn).format('YYYY')}</div>
-      <div>{dayjs(row.createOn).format('MM/DD')}</div>
+      <div>{datetime.format('YYYY')}</div>
+      <div>{datetime.format('MM/DD')}</div>
     </div>
   )
 }
@@ -99,6 +104,15 @@ function tdClassCreateOn(row: IComing) {
     'just-update-in-1': isJustUpdate(row.createOn, 12),
     'just-update-in-2': isJustUpdate(row.createOn, 24),
   }
+}
+
+function formatType(row: IComing) {
+  return (
+    <div>
+      <div>{row.type === 'Blu-ray' ? 'BD' : row.type}</div>
+      <div>{formatFollowed(row)}</div>
+    </div>
+  )
 }
 
 function formatFollowed(row: IComing) {
@@ -117,8 +131,17 @@ function formatFollowed(row: IComing) {
   }
 }
 
-function formatType(row: IComing) {
-  return row.type === 'Blu-ray' ? 'BD' : row.type
+function formatDate(row: IComing) {
+  if (row.date === undefined) {
+    return '-'
+  }
+  const date = dayjs(row.date)
+  return (
+    <div>
+      <div>{date.format('YYYY')}</div>
+      <div>{date.format('MM/DD')}</div>
+    </div>
+  )
 }
 
 function formatTitle(row: IComing) {

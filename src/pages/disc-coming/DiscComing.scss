@@ -12,9 +12,8 @@
   .table {
     table-layout: fixed;
 
-    th,
-    td {
-      &.asin {
+    tr {
+      .asin {
         @include columnCenter();
         @include columnPcMo(120px, 75px);
         padding-left: 5px;
@@ -22,19 +21,19 @@
         word-break: break-all;
       }
 
-      &.createOn {
+      .createOn {
         @include columnCenter();
         @include columnPcHd(75px, 600px);
       }
 
-      &.followed {
+      .type {
         @include columnCenter();
-        @include columnPcMo(50px, 45px);
+        @include columnPcMo(50px, 40px);
       }
 
-      &.type {
+      .date {
         @include columnCenter();
-        @include columnPcMo(50px, 45px);
+        @include columnPcHd(55px, 600px);
       }
     }
   }
