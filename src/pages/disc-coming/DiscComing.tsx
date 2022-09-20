@@ -2,10 +2,12 @@ import { MzHeader } from '#C/header/MzHeader'
 import { MzLink } from '#C/link/MzLink'
 import { MzPagination } from '#C/pagination/MzPagination'
 import { MzColumn, MzTable } from '#C/table/MzTable'
+import { AllColumns } from '#C/warpper/AllColumns'
+import { useLocal } from '#H/useLocal'
 import { useOnceRequest } from '#H/useOnce'
 import { fetchResult } from '#U/fetch/fetchResult'
 import { CheckCircleTwoTone, PlusSquareTwoTone } from '@ant-design/icons'
-import { Space } from 'antd'
+import { Select, Space } from 'antd'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import './DiscComing.scss'
 
@@ -21,10 +23,10 @@ export default function DiscComing() {
   const navigate = useNavigate()
 
   const url = `/api/spider/discShelfs${location.search}`
-  const { ...state } = useOnceRequest(() => fetchResult<IComing[]>(url), {
+  const { data: result, ...state } = useOnceRequest(() => fetchResult<IComing[]>(url), {
     refreshDeps: [location.search],
   })
-  const { data, page } = state.data ?? {}
+  const { data: rows, page } = result ?? {}
 
   function onPaginationChange(page: number, size: number = 20) {
     if (size === 20) {
@@ -34,12 +36,26 @@ export default function DiscComing() {
     }
   }
 
+  const [viewMode, setViewMode] = useLocal<'all' | 'auto'>('coming-viewmode', 'auto')
+  const viewSelect = (
+    <Select key="K1" value={viewMode} onChange={setViewMode}>
+      <Select.Option value="all">所有列</Select.Option>
+      <Select.Option value="auto">智能列</Select.Option>
+    </Select>
+  )
+
+  const maxWidth = viewMode === 'all' ? '100%' : '800px'
+
   return (
-    <div className="DiscComing" style={{ maxWidth: 800 }}>
-      <MzHeader title="上架追踪" state={state} />
+    <div className="DiscComing" style={{ maxWidth }}>
+      <MzHeader title="上架追踪" state={state} extra={[viewSelect]} />
       <Space direction="vertical">
         {page && <MzPagination page={page} onChange={onPaginationChange} />}
-        {data && <MzTable tag="coming" rows={data} cols={cols} />}
+        {rows && (
+          <AllColumns viewMode={viewMode}>
+            <MzTable tag="coming" rows={rows} cols={cols} />
+          </AllColumns>
+        )}
         {page && <MzPagination page={page} onChange={onPaginationChange} />}
       </Space>
     </div>

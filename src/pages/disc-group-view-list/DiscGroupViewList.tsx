@@ -1,14 +1,13 @@
 import { useAppSelector } from '#A/hooks'
 import { MzHeader } from '#C/header/MzHeader'
+import { AllColumns } from '#C/warpper/AllColumns'
 import { useLocal } from '#H/useLocal'
 import { useOnceRequest } from '#H/useOnce'
 import { safeWarpper } from '#U/domain'
 import { fetchResult } from '#U/fetch/fetchResult'
 import { DownOutlined, SearchOutlined } from '@ant-design/icons'
 import { Button, Dropdown, Input, Menu, Select, Space } from 'antd'
-import classNames from 'classnames'
 import { useNavigate, useParams } from 'react-router-dom'
-import './DiscGroupViewList.scss'
 
 import { linkToGroup, linkToGroupEditList } from '#A/links'
 import { IDisc, IGroupDiscs } from '#T/disc'
@@ -106,11 +105,9 @@ export default function DiscGroupViewList() {
           viewMode === 'compact' ? (
             <DiscTableCompact name={localKey} rows={lastRows!} showJapan={editMode} />
           ) : (
-            <div className="pc-mode-warpper">
-              <div className={classNames({ 'pc-mode': viewMode === 'all' })}>
-                <DiscTable name={localKey} rows={lastRows!} showJapan={editMode} />
-              </div>
-            </div>
+            <AllColumns viewMode={viewMode}>
+              <DiscTable name={localKey} rows={lastRows!} showJapan={editMode} />
+            </AllColumns>
           )
         )}
       </Space>
