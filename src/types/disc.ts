@@ -30,6 +30,7 @@ export interface IComing {
   id: number
   asin: string
   type: string
+  date?: string
   title: string
   tracked: boolean
   createOn: number

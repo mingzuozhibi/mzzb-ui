@@ -183,6 +183,7 @@ function toDisc(coming?: IComing) {
   return safeWarpper(coming, (coming) => ({
     title: coming.title,
     asin: coming.asin,
+    releaseDate: coming.date,
     discType: toDiscType(coming.type),
   }))
 }
