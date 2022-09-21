@@ -75,6 +75,12 @@ export function DiscDetail({ url }: Props) {
     }
   }
 
+  function addAmazonLimit() {
+    setForm((draft) => {
+      draft.titlePc = draft.titlePc + '【尼限】'
+    })
+  }
+
   const title = disc ? discTitle(disc) : undefined
 
   return (
@@ -106,6 +112,9 @@ export function DiscDetail({ url }: Props) {
             <div className="input-label">
               <span>中文标题</span>
               <span style={{ marginLeft: 20 }}>{toRecords(disc.id)}</span>
+              <Button type="link" onClick={addAmazonLimit}>
+                +尼限
+              </Button>
             </div>
             <Input.TextArea
               autoSize={true}
