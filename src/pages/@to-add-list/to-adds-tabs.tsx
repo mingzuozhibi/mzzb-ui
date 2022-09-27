@@ -4,6 +4,7 @@ import { useAjax } from '#H/useAjax'
 import { safeWarpper } from '#U/domain'
 import { Button, Form, Input, Modal, Radio, Space, Tabs } from 'antd'
 import dayjs from 'dayjs'
+import { useState } from 'react'
 
 import { linkToAmazonDeatil } from '#A/links'
 import { pushToAdds } from '#F/local'
@@ -60,6 +61,14 @@ interface Props {
 export function ToAddsTabs(props: Props) {
   const { toAdds, coming } = props
   const dispatch = useAppDispatch()
+
+  const [fetchCount, setFetchCount] = useState<number>()
+  const [loadingFetchCount, loadFetchCount] = useAjax<number>('get')
+  const onLoadFetchCount = () => {
+    loadFetchCount(`/api/spider/fetchCount`, '查询抓取总数', {
+      onSuccess: setFetchCount
+    })
+  }
 
   const [isGet, doGet] = useAjax<IDisc>('get')
   const onSearch = (form: FormCreate) => {
@@ -125,10 +134,18 @@ export function ToAddsTabs(props: Props) {
         <Form.Item label="碟片ASIN" name="asin" rules={rules.asin}>
           <Input addonAfter={amazonUrl(asinSearch)} />
         </Form.Item>
+        {fetchCount && (
+          <Form.Item label="抓取总数">
+            <Input value={fetchCount} readOnly />
+          </Form.Item>
+        )}
         <Form.Item wrapperCol={{ offset: 6 }}>
-          <Button type="primary" htmlType="submit" loading={isGet}>
-            查询碟片
-          </Button>
+          <Space size="large">
+            <Button type="primary" htmlType="submit" loading={isGet}>
+              查询碟片
+            </Button>
+            <Button loading={loadingFetchCount} onClick={onLoadFetchCount}>查询抓取总数</Button>
+          </Space>
         </Form.Item>
       </Form>
     )
