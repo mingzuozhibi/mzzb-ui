@@ -6,8 +6,9 @@ import { MzColumn, MzTable } from '#C/table/MzTable'
 import { useOnceRequest } from '#H/useOnce'
 import { fetchResult } from '#U/fetch/fetchResult'
 import { UrlBuilder } from '#U/fetch/urlBuilder'
-import { Alert, Input, Space } from 'antd'
-import { useEffect, useState } from 'react'
+import { Alert, Card, DatePicker, Input, Space } from 'antd'
+import { useEffect } from 'react'
+import { useImmer } from 'use-immer'
 import './Messages.scss'
 
 import { linkToAsin } from '#A/links'
@@ -28,19 +29,32 @@ interface Props {
   activeKey: string
 }
 
+interface Params {
+  types: string[]
+  query?: string
+  start?: string
+  end?: string
+  page: number
+  size: number
+}
+
 const initTypes = msgLevels.map((e) => e.value)
 const cols = buildColumns()
 
 export default function Messages({ name, activeKey }: Props) {
-  const [types, setTypes] = useState(initTypes)
-  const [param, setParam] = useState({ page: 1, size: 20 })
-  const [query, setQuery] = useState('')
+  const [params, setParams] = useImmer<Params>({
+    types: initTypes,
+    page: 1,
+    size: 20,
+  })
 
   const url = new UrlBuilder(`/api/messages/${name}`)
-    .append('types', types.join(','))
-    .append('page', `${param.page}`)
-    .append('size', `${param.size}`)
-    .append('search', query)
+    .append('types', params.types.join(','))
+    .append('search', params.query)
+    .append('start', params.start)
+    .append('end', params.end)
+    .append('page', params.page)
+    .append('size', params.size)
     .toString()
 
   const { data: result, ...state } = useOnceRequest(() => fetchResult<IMsg[]>(url), {
@@ -55,18 +69,36 @@ export default function Messages({ name, activeKey }: Props) {
   }, [activeKey])
 
   function onChangePage(page: number, size: number = 20) {
-    setParam({ page, size })
+    setParams((draft) => {
+      draft.page = page
+      draft.size = size
+    })
     window.scroll(0, 0)
   }
 
   function onChangeTypes(checked: any[]) {
-    setTypes(checked)
-    setParam({ page: 1, size: param.size })
+    setParams((draft) => {
+      draft.page = 1
+      draft.types = checked
+    })
+    window.scroll(0, 0)
+  }
+
+  function onChangeRange(_moments: any, formats: [string, string]) {
+    setParams((draft) => {
+      draft.page = 1
+      draft.start = formats[0]
+      draft.end = formats[1]
+    })
+    window.scroll(0, 0)
   }
 
   function onSearch(value: string) {
-    setQuery(value)
-    setParam({ page: 1, size: param.size })
+    setParams((draft) => {
+      draft.page = 1
+      draft.query = value
+    })
+    window.scroll(0, 0)
   }
 
   return (
@@ -74,21 +106,22 @@ export default function Messages({ name, activeKey }: Props) {
       <Space direction="vertical">
         {state.error && <Alert message={state.error.message} type="error" />}
         {msgs && (
-          <>
+          <Space wrap={true} style={{ maxWidth: 650 }}>
             <MzCheckbox
               prefix={<RefreshButton state={state} />}
               options={msgLevels}
-              value={types}
+              value={params.types}
               onChange={onChangeTypes}
             />
+            <DatePicker.RangePicker format="YYYY/M/D" onChange={onChangeRange} />
             <Input.Search
               placeholder="input search text"
               allowClear
               enterButton="Search"
-              size="large"
+              size="middle"
               onSearch={onSearch}
             />
-          </>
+          </Space>
         )}
         {page && <MzPagination page={page} onChange={onChangePage} />}
         {msgs && <MzTable tag="messages" cols={cols} rows={msgs} trClass={trClass} />}
