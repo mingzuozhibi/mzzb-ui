@@ -9,10 +9,15 @@ export class UrlBuilder {
     this.searchParams = new URLSearchParams()
   }
 
-  append(name: string, value: string) {
-    if (value.length > 0) {
+  append(name: string, value?: string | number) {
+    if (value == null) return this
+    if (typeof value === 'string' && value.length > 0) {
       this.hasParam = true
       this.searchParams.append(name, value)
+    }
+    if (typeof value === 'number') {
+      this.hasParam = true
+      this.searchParams.append(name, value.toString())
     }
     return this
   }
