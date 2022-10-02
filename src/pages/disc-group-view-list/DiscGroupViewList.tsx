@@ -1,12 +1,13 @@
 import { useAppSelector } from '#A/hooks'
+import { MzDropdown } from '#C/dropdown/MzDropdown'
 import { MzHeader } from '#C/header/MzHeader'
 import { AllColumns } from '#C/warpper/AllColumns'
 import { useLocal } from '#H/useLocal'
 import { useOnceRequest } from '#H/useOnce'
 import { safeWarpper } from '#U/domain'
 import { fetchResult } from '#U/fetch/fetchResult'
-import { DownOutlined, SearchOutlined } from '@ant-design/icons'
-import { Button, Dropdown, Input, Menu, Select, Space } from 'antd'
+import { SearchOutlined } from '@ant-design/icons'
+import { Input, Select, Space } from 'antd'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { linkToGroup, linkToGroupEditList } from '#A/links'
@@ -31,35 +32,9 @@ export default function DiscGroupViewList() {
   const { data: group, ...state } = useOnceRequest(() =>
     fetchResult<IGroupDiscs>(url).then((result) => result.data)
   )
-
-  let lastRows = sortRows(group?.discs, findText, findMode)
+  const lastRows = sortRows(group?.discs, findText.trim(), findMode)
 
   const hasBasic = useAppSelector((state) => state.session.hasBasic)
-  const items = [
-    {
-      key: 'M1',
-      label: findMode ? '关闭过滤' : '开启过滤',
-      onClick: () => setFindMode(!findMode),
-    },
-    {
-      key: 'M2',
-      label: editMode ? '中文标题' : '日文标题',
-      onClick: () => setEditMode(!editMode),
-    },
-    {
-      key: 'M3',
-      label: '编辑列表',
-      onClick: () => navigate(linkToGroup(groupKey)),
-      disabled: !hasBasic,
-    },
-    {
-      key: 'M4',
-      label: '管理碟片',
-      onClick: () => navigate(linkToGroupEditList(groupKey)),
-      disabled: !hasBasic,
-    },
-  ].filter((e) => e.disabled !== true)
-
   const navigate = useNavigate()
   const buttons = [
     <Select key="K1" value={viewMode} onChange={setViewMode}>
@@ -67,14 +42,32 @@ export default function DiscGroupViewList() {
       <Select.Option value="auto">智能列</Select.Option>
       <Select.Option value="compact">紧凑列</Select.Option>
     </Select>,
-    <Dropdown key="K2" overlay={<Menu items={items} />}>
-      <Button>
-        <Space>
-          功能
-          <DownOutlined />
-        </Space>
-      </Button>
-    </Dropdown>,
+    <MzDropdown key="K2" label="功能">
+      {[
+        {
+          key: 'C1',
+          label: findMode ? '关闭过滤' : '开启过滤',
+          onClick: () => setFindMode(!findMode),
+        },
+        {
+          key: 'C2',
+          label: editMode ? '中文标题' : '日文标题',
+          onClick: () => setEditMode(!editMode),
+        },
+        {
+          key: 'C3',
+          label: '编辑列表',
+          onClick: () => navigate(linkToGroup(groupKey)),
+          disabled: !hasBasic,
+        },
+        {
+          key: 'C4',
+          label: '管理碟片',
+          onClick: () => navigate(linkToGroupEditList(groupKey)),
+          disabled: !hasBasic,
+        },
+      ]}
+    </MzDropdown>,
   ]
 
   const maxWidth = viewMode === 'all' ? '100%' : '800px'
@@ -114,6 +107,7 @@ export default function DiscGroupViewList() {
     </div>
   )
 }
+
 function sortRows(rows: IDisc[] | undefined, findText: string, findMode: boolean) {
   let lastRows = rows
   if (findText.length > 0 && findMode === true && lastRows !== undefined) {
