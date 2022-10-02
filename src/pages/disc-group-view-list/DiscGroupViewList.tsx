@@ -32,8 +32,7 @@ export default function DiscGroupViewList() {
   const { data: group, ...state } = useOnceRequest(() =>
     fetchResult<IGroupDiscs>(url).then((result) => result.data)
   )
-
-  let lastRows = sortRows(group?.discs, findText, findMode)
+  const lastRows = sortRows(group?.discs, findText.trim(), findMode)
 
   const hasBasic = useAppSelector((state) => state.session.hasBasic)
   const navigate = useNavigate()
@@ -108,6 +107,7 @@ export default function DiscGroupViewList() {
     </div>
   )
 }
+
 function sortRows(rows: IDisc[] | undefined, findText: string, findMode: boolean) {
   let lastRows = rows
   if (findText.length > 0 && findMode === true && lastRows !== undefined) {
