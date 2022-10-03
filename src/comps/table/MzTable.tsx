@@ -100,10 +100,12 @@ export function MzTable<T extends BaseRow>(props: Props<T>) {
   }
 
   function thClick(col: MzColumn<T>) {
-    if (sortKey === col.key) {
-      setState({ sortKey, sortAsc: sortAsc !== true })
-    } else {
+    if (sortKey !== col.key) {
       setState({ sortKey: col.key, sortAsc: true })
+    } else if (sortAsc === true) {
+      setState({ sortKey, sortAsc: false })
+    } else {
+      setState({})
     }
   }
 
