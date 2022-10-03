@@ -13,7 +13,7 @@ import { Button } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import './DiscGroups.scss'
 
-import { linkToGroups } from '#A/links'
+import { apiToGroups, linkToGroups } from '#A/links'
 import { viewTypes } from '#A/metas'
 import { IGroupCount } from '#T/disc'
 
@@ -30,10 +30,10 @@ export default function DiscGroups() {
   const showExtraColumns = hasBasic && isEditMode
   const fetchPrivateData = hasBasic && isEditMode
 
-  const url = fetchPrivateData ? `/api/discGroups?hasPrivate=true` : `/api/discGroups`
+  const apiUrl = apiToGroups(fetchPrivateData ? `?hasPrivate=true` : undefined)
   const { data: groups, ...state } = useOnceRequest(
-    () => fetchResult<IGroupCount[]>(url).then((result) => result.data),
-    { refreshDeps: [url] }
+    () => fetchResult<IGroupCount[]>(apiUrl).then((result) => result.data),
+    { refreshDeps: [apiUrl] }
   )
 
   const navigate = useNavigate()

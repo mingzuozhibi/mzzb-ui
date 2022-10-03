@@ -8,6 +8,7 @@ import { Button, Card, Form, Input, Popconfirm, Radio, Space, Switch } from 'ant
 import { useState } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
 
+import { apiToGroups } from '#A/links'
 import { viewTypes } from '#A/metas'
 import { Rules } from '#T/antd'
 import { IGroup } from '#T/disc'
@@ -51,20 +52,20 @@ export default function DiscGroupDetail() {
   const [isDrop, doDrop] = useAjax<IGroup>('delete')
   const [deleted, setDeleted] = useState<IGroup>()
 
-  const url = `/api/discGroups/key/${groupKey}`
+  const apiUrl = apiToGroups(`/key/${groupKey}`)
   const { data: group, ...state } = useOnceRequest(() =>
-    fetchResult<IGroup>(url).then((result) => result.data)
+    fetchResult<IGroup>(apiUrl).then((result) => result.data)
   )
 
   function onFinish(form: FormEdit) {
-    doEdit(`/api/discGroups/${group?.id}`, '编辑列表', {
+    doEdit(apiToGroups(`/${group?.id}`), '编辑列表', {
       body: form,
       onSuccess: state.mutate,
     })
   }
 
   function doDeleteGroup() {
-    doDrop(`/api/discGroups/${group?.id}`, '删除列表', {
+    doDrop(apiToGroups(`/${group?.id}`), '删除列表', {
       onSuccess: setDeleted,
     })
   }

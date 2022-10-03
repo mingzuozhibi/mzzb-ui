@@ -7,7 +7,7 @@ import { Button } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import './Users.scss'
 
-import { linkToUsers } from '#A/links'
+import { apiToUsers, linkToUsers } from '#A/links'
 import { IUser } from '#T/user'
 import { isJustUpdate } from '#U/date/check'
 import dayjs from 'dayjs'
@@ -15,8 +15,9 @@ import dayjs from 'dayjs'
 const cols = buildColumns()
 
 export default function Users() {
+  const apiUrl = apiToUsers()
   const { data: users, ...state } = useOnceRequest(() =>
-    fetchResult<IUser[]>(`/api/users`).then((result) => result.data)
+    fetchResult<IUser[]>(apiUrl).then((result) => result.data)
   )
 
   const navigate = useNavigate()

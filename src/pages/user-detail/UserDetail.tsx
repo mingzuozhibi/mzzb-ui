@@ -6,6 +6,7 @@ import { fetchResult } from '#U/fetch/fetchResult'
 import { Button, Card, Form, Input, Switch } from 'antd'
 import { useParams } from 'react-router-dom'
 
+import { apiToUsers } from '#A/links'
 import { Rules } from '#T/antd'
 import { IUser } from '#T/user'
 import { encodePassword } from '#U/format'
@@ -39,18 +40,18 @@ export default function UserDetail() {
   const params = useParams<{ id: string }>()
   const userId = params.id as string
 
+  const apiUrl = apiToUsers(`/${userId}`)
   const { data: user, ...state } = useOnceRequest(() =>
-    fetchResult<IUser>(`/api/users/${userId}`).then((result) => result.data)
+    fetchResult<IUser>(apiUrl).then((result) => result.data)
   )
 
   const [isEdit, doEdit] = useAjax<IUser>('put')
-
   function onFinish(form: FormEdit) {
     const { username, password, enabled } = form
     const encode = emptyWarpper(password, (password) => {
       return encodePassword(username, password)
     })
-    doEdit(`/api/users/${userId}`, '编辑用户', {
+    doEdit(apiToUsers(`/${userId}`), '编辑用户', {
       body: { username, password: encode, enabled },
       onSuccess: state.mutate,
     })

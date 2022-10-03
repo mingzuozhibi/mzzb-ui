@@ -11,7 +11,7 @@ import { Select, Space } from 'antd'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import './DiscComing.scss'
 
-import { linkToComing, linkToDiscs, linkToAmazon } from '#A/links'
+import { apiToSpider, linkToAmazon, linkToComing, linkToDiscs } from '#A/links'
 import { IComing } from '#T/disc'
 import { isJustUpdate } from '#U/date/check'
 import dayjs from 'dayjs'
@@ -22,9 +22,10 @@ export default function DiscComing() {
   const location = useLocation()
   const navigate = useNavigate()
 
-  const url = `/api/spider/discShelfs${location.search}`
-  const { data: result, ...state } = useOnceRequest(() => fetchResult<IComing[]>(url), {
-    refreshDeps: [location.search],
+  const apiUrl = apiToSpider(`/discShelfs${location.search}`)
+  const { data: result, ...state } = useOnceRequest(
+    () => fetchResult<IComing[]>(apiUrl), {
+    refreshDeps: [apiUrl],
   })
   const { data: rows, page } = result ?? {}
 

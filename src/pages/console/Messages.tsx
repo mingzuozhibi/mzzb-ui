@@ -11,7 +11,7 @@ import { useEffect } from 'react'
 import { useImmer } from 'use-immer'
 import './Messages.scss'
 
-import { linkToDiscs } from '#A/links'
+import { apiToMsgs, linkToDiscs } from '#A/links'
 import { msgLevels } from '#A/metas'
 import dayjs from 'dayjs'
 
@@ -48,7 +48,7 @@ export default function Messages({ name, activeKey }: Props) {
     size: 20,
   })
 
-  const url = new UrlBuilder(`/api/messages/${name}`)
+  const apiUrl = new UrlBuilder(apiToMsgs(`/${name}`))
     .append('types', params.types.join(','))
     .append('search', params.query)
     .append('start', params.start)
@@ -57,8 +57,9 @@ export default function Messages({ name, activeKey }: Props) {
     .append('size', params.size)
     .toString()
 
-  const { data: result, ...state } = useOnceRequest(() => fetchResult<IMsg[]>(url), {
-    refreshDeps: [url],
+  const { data: result, ...state } = useOnceRequest(
+    () => fetchResult<IMsg[]>(apiUrl), {
+    refreshDeps: [apiUrl],
   })
   const { data: msgs, page } = result ?? {}
 
