@@ -10,7 +10,7 @@ import { SearchOutlined } from '@ant-design/icons'
 import { Input, Select, Space } from 'antd'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import { linkToGroup, linkToGroupEditList } from '#A/links'
+import { linkToGroups } from '#A/links'
 import { IDisc, IGroupDiscs } from '#T/disc'
 import { formatTimeout } from '#U/date/timeout'
 import { DiscTable } from '../@disc-table/disc-table'
@@ -20,15 +20,15 @@ type ViewMode = 'all' | 'auto' | 'compact'
 
 export default function DiscGroupViewList() {
   const params = useParams<{ key: string }>()
-  const groupKey = params.key as string
-  const localKey = groupKey.replaceAll('-', '').toLocaleLowerCase()
+  const gkey = params.key as string
+  const gtag = gkey.replaceAll('-', '').toLocaleLowerCase()
 
   const [viewMode, setViewMode] = useLocal<ViewMode>(`viewlist-viewmode`, 'auto')
   const [editMode, setEditMode] = useLocal<boolean>(`viewlist-editmode`, false)
-  const [findMode, setFindMode] = useLocal<boolean>(`viewlist-findmode-${localKey}`, false)
-  const [findText, setFindText] = useLocal<string>(`viewlist-findtext-${localKey}`, '')
+  const [findMode, setFindMode] = useLocal<boolean>(`viewlist-findmode-${gtag}`, false)
+  const [findText, setFindText] = useLocal<string>(`viewlist-findtext-${gtag}`, '')
 
-  const url = `/api/discGroups/key/${groupKey}/discs`
+  const url = `/api/discGroups/key/${gkey}/discs`
   const { data: group, ...state } = useOnceRequest(() =>
     fetchResult<IGroupDiscs>(url).then((result) => result.data)
   )
@@ -57,13 +57,13 @@ export default function DiscGroupViewList() {
         {
           key: 'C3',
           label: '编辑列表',
-          onClick: () => navigate(linkToGroup(groupKey)),
+          onClick: () => navigate(linkToGroups(`/${gkey}`)),
           disabled: !hasBasic,
         },
         {
           key: 'C4',
           label: '管理碟片',
-          onClick: () => navigate(linkToGroupEditList(groupKey)),
+          onClick: () => navigate(linkToGroups(`/${gkey}/discs/edit`)),
           disabled: !hasBasic,
         },
       ]}
@@ -96,10 +96,10 @@ export default function DiscGroupViewList() {
         )}
         {safeWarpper(lastRows, (lastRows) =>
           viewMode === 'compact' ? (
-            <DiscTableCompact name={localKey} rows={lastRows!} showJapan={editMode} />
+            <DiscTableCompact name={gtag} rows={lastRows!} showJapan={editMode} />
           ) : (
             <AllColumns viewMode={viewMode}>
-              <DiscTable name={localKey} rows={lastRows!} showJapan={editMode} />
+              <DiscTable name={gtag} rows={lastRows!} showJapan={editMode} />
             </AllColumns>
           )
         )}

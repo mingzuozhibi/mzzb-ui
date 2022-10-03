@@ -11,7 +11,7 @@ import { Select, Space } from 'antd'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import './DiscComing.scss'
 
-import { linkToAmazon, linkToAsin } from '#A/links'
+import { linkToComing, linkToDiscs, linkToAmazon } from '#A/links'
 import { IComing } from '#T/disc'
 import { isJustUpdate } from '#U/date/check'
 import dayjs from 'dayjs'
@@ -30,9 +30,9 @@ export default function DiscComing() {
 
   function onPaginationChange(page: number, size: number = 20) {
     if (size === 20) {
-      navigate(`/disc_coming?page=${page}`)
+      navigate(linkToComing(`?page=${page}`))
     } else {
-      navigate(`/disc_coming?page=${page}&size=${size}`)
+      navigate(linkToComing(`?page=${page}&size=${size}`))
     }
   }
 
@@ -134,13 +134,13 @@ function formatType(row: IComing) {
 function formatFollowed(row: IComing) {
   if (row.tracked) {
     return (
-      <Link to={linkToAsin(row.asin)}>
+      <Link to={linkToDiscs(`/asin/${row.asin}`)}>
         <CheckCircleTwoTone twoToneColor="#52c41a" />
       </Link>
     )
   } else {
     return (
-      <Link to={`/discs/add`} state={row}>
+      <Link to={linkToDiscs(`/add`)} state={row}>
         <PlusSquareTwoTone twoToneColor="#eb2f96" />
       </Link>
     )

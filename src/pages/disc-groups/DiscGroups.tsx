@@ -1,6 +1,6 @@
 import { useAppSelector } from '#A/hooks'
-import { MzColumn, MzTable } from '#C/table/MzTable'
 import { MzHeader } from '#C/header/MzHeader'
+import { MzColumn, MzTable } from '#C/table/MzTable'
 import { useLocal } from '#H/useLocal'
 import { useOnceRequest } from '#H/useOnce'
 import { thenCompare } from '#U/compare'
@@ -13,7 +13,7 @@ import { Button } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import './DiscGroups.scss'
 
-import { linkToGroup, linkToGroupEditList, linkToGroupViewList } from '#A/links'
+import { linkToGroups } from '#A/links'
 import { viewTypes } from '#A/metas'
 import { IGroupCount } from '#T/disc'
 
@@ -30,7 +30,7 @@ export default function DiscGroups() {
   const showExtraColumns = hasBasic && isEditMode
   const fetchPrivateData = hasBasic && isEditMode
 
-  const url = fetchPrivateData ? '/api/discGroups?hasPrivate=true' : '/api/discGroups'
+  const url = fetchPrivateData ? `/api/discGroups?hasPrivate=true` : `/api/discGroups`
   const { data: groups, ...state } = useOnceRequest(
     () => fetchResult<IGroupCount[]>(url).then((result) => result.data),
     { refreshDeps: [url] }
@@ -41,7 +41,7 @@ export default function DiscGroups() {
     isEditMode ? (
       <Button.Group key="1">
         <Button onClick={() => setEditMode(false)}>浏览模式</Button>
-        <Button onClick={() => navigate('/disc_groups/add')}>添加列表</Button>
+        <Button onClick={() => navigate(linkToGroups(`/add`))}>添加列表</Button>
       </Button.Group>
     ) : (
       <Button.Group key="2">
@@ -84,7 +84,7 @@ function buildColumns(): MzColumn<IGroupCount>[] {
         let color = isJustUpdate(row.modifyTime, 1) ? 'red' : '#C67532'
         return (
           <span>
-            <Link to={linkToGroupViewList(row.key)}>{row.title}</Link>
+            <Link to={linkToGroups(`/${row.key}/discs`)}>{row.title}</Link>
             <span style={{ color, marginLeft: 8 }}>({row.discCount})</span>
           </span>
         )
@@ -103,7 +103,7 @@ function buildColumns(): MzColumn<IGroupCount>[] {
       title: '编辑列表',
       format: (row) => {
         return (
-          <Link to={linkToGroup(row.key)}>
+          <Link to={linkToGroups(`/${row.key}`)}>
             <EditOutlined />
           </Link>
         )
@@ -114,7 +114,7 @@ function buildColumns(): MzColumn<IGroupCount>[] {
       title: '增减碟片',
       format: (row) => {
         return (
-          <Link to={linkToGroupEditList(row.key)}>
+          <Link to={linkToGroups(`/${row.key}/discs/edit`)}>
             <UnorderedListOutlined />
           </Link>
         )

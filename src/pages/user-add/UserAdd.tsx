@@ -44,7 +44,7 @@ export default function UserAdd() {
   function onFinish(form: FormCreate) {
     const { username, password, enabled } = form
     const encode = encodePassword(username, password)
-    doPost('/api/users', '添加用户', {
+    doPost(`/api/users`, '添加用户', {
       body: { username, password: encode, enabled },
       onSuccess() {
         setTimeout(() => navigate(-1), 500)

@@ -6,12 +6,12 @@ import { MzColumn, MzTable } from '#C/table/MzTable'
 import { useOnceRequest } from '#H/useOnce'
 import { fetchResult } from '#U/fetch/fetchResult'
 import { UrlBuilder } from '#U/fetch/urlBuilder'
-import { Alert, Card, DatePicker, Input, Space } from 'antd'
+import { Alert, DatePicker, Input, Space } from 'antd'
 import { useEffect } from 'react'
 import { useImmer } from 'use-immer'
 import './Messages.scss'
 
-import { linkToAsin } from '#A/links'
+import { linkToDiscs } from '#A/links'
 import { msgLevels } from '#A/metas'
 import dayjs from 'dayjs'
 
@@ -175,7 +175,7 @@ function formatText(row: IMsg) {
     return (
       <>
         {row.text.slice(0, result.index + 1)}
-        <MzLink href={linkToAsin(asin)} title={asin} />
+        <MzLink href={linkToDiscs(`/asin/${asin}`)} title={asin} />
         {row.text.slice(result.index + 11)}
       </>
     )

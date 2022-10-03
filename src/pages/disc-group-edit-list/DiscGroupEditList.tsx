@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '#A/hooks'
-import { MzTable } from '#C/table/MzTable'
 import { MzHeader } from '#C/header/MzHeader'
+import { MzTable } from '#C/table/MzTable'
 import { useAjax } from '#H/useAjax'
 import { useOnceRequest } from '#H/useOnce'
 import { fetchResult } from '#U/fetch/fetchResult'
@@ -9,7 +9,7 @@ import { Button } from 'antd'
 import { useNavigate, useParams } from 'react-router-dom'
 import './DiscGroupEditList.scss'
 
-import { linkToGroup, linkToGroupViewList } from '#A/links'
+import { linkToGroups } from '#A/links'
 import { dropToAdds, pushToAdds } from '#F/local'
 import { IDisc, IGroupDiscs } from '#T/disc'
 import { compareRelease } from '#T/disc-utils'
@@ -86,8 +86,8 @@ export default function DiscGroupEditList() {
           defaultSort={compareRelease}
           extraCaption={
             <Button.Group>
-              <Button onClick={() => navigate(linkToGroup(group.key))}>编辑</Button>
-              <Button onClick={() => navigate(linkToGroupViewList(group.key))}>浏览</Button>
+              <Button onClick={() => navigate(linkToGroups(`/${group.key}`))}>编辑</Button>
+              <Button onClick={() => navigate(linkToGroups(`/${group.key}/discs`))}>浏览</Button>
             </Button.Group>
           }
         />

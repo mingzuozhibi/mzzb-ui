@@ -1,6 +1,6 @@
 import { useAppSelector } from '#A/hooks'
-import { MzLink } from '#C/link/MzLink'
 import { MzHeader } from '#C/header/MzHeader'
+import { MzLink } from '#C/link/MzLink'
 import { useAjax } from '#H/useAjax'
 import { useForm } from '#H/useFrom'
 import { useOnceRequest } from '#H/useOnce'
@@ -8,7 +8,7 @@ import { fetchResult } from '#U/fetch/fetchResult'
 import { Button, Input, Modal, Radio } from 'antd'
 import { Link } from 'react-router-dom'
 
-import { linkToAmazon, linkToRecords } from '#A/links'
+import { linkToDiscs, linkToAmazon } from '#A/links'
 import { IDisc } from '#T/disc'
 import { discTitle } from '#T/disc-utils'
 import { formatNumber } from '#U/format'
@@ -256,5 +256,5 @@ function toAmazon(asin: string) {
 }
 
 function toRecords(id: number) {
-  return <Link to={linkToRecords(id)}>点击查看所有排名</Link>
+  return <Link to={linkToDiscs(`/${id}/records`)}>点击查看所有排名</Link>
 }

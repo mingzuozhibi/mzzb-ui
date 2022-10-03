@@ -1,5 +1,5 @@
-import { MzColumn, MzTable } from '#C/table/MzTable'
 import { MzHeader } from '#C/header/MzHeader'
+import { MzColumn, MzTable } from '#C/table/MzTable'
 import { useOnceRequest } from '#H/useOnce'
 import { safeWarpper } from '#U/domain'
 import { fetchResult } from '#U/fetch/fetchResult'
@@ -7,6 +7,7 @@ import { Button } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import './Users.scss'
 
+import { linkToUsers } from '#A/links'
 import { IUser } from '#T/user'
 import { isJustUpdate } from '#U/date/check'
 import dayjs from 'dayjs'
@@ -26,7 +27,7 @@ export default function Users() {
         title="用户管理"
         state={state}
         extra={[
-          <Button key="1" onClick={() => navigate(`/users/add`)}>
+          <Button key="1" onClick={() => navigate(linkToUsers(`/add`))}>
             添加用户
           </Button>,
         ]}
@@ -70,7 +71,7 @@ function buildColumns(): MzColumn<IUser>[] {
 }
 
 function formatUsername(row: IUser) {
-  return <Link to={`/users/${row.id}`}>{row.username}</Link>
+  return <Link to={linkToUsers(`/${row.id}`)}>{row.username}</Link>
 }
 
 function formatEnabled(row: IUser) {

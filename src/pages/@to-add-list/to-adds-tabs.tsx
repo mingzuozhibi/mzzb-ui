@@ -3,13 +3,13 @@ import { MzLink } from '#C/link/MzLink'
 import { useAjax } from '#H/useAjax'
 import { safeWarpper } from '#U/domain'
 import { Button, Form, Input, Modal, Radio, Space, Tabs } from 'antd'
-import dayjs from 'dayjs'
 import { useState } from 'react'
 
-import { linkToAmazonDeatil } from '#A/links'
+import { linkToBullet } from '#A/links'
 import { pushToAdds } from '#F/local'
 import { Rules } from '#T/antd'
 import { IComing, IDisc } from '#T/disc'
+import dayjs from 'dayjs'
 
 interface FormCreate {
   asin: string
@@ -66,7 +66,7 @@ export function ToAddsTabs(props: Props) {
   const [loadingFetchCount, loadFetchCount] = useAjax<number>('get')
   const onLoadFetchCount = () => {
     loadFetchCount(`/api/spider/fetchCount`, '查询抓取总数', {
-      onSuccess: setFetchCount
+      onSuccess: setFetchCount,
     })
   }
 
@@ -144,7 +144,9 @@ export function ToAddsTabs(props: Props) {
             <Button type="primary" htmlType="submit" loading={isGet}>
               查询碟片
             </Button>
-            <Button loading={loadingFetchCount} onClick={onLoadFetchCount}>查询抓取总数</Button>
+            <Button loading={loadingFetchCount} onClick={onLoadFetchCount}>
+              查询抓取总数
+            </Button>
           </Space>
         </Form.Item>
       </Form>
@@ -193,7 +195,7 @@ export function ToAddsTabs(props: Props) {
 }
 
 function amazonUrl(asin?: string) {
-  return safeWarpper(asin, (asin) => <MzLink href={linkToAmazonDeatil(asin)} title="日亚链接" />)
+  return safeWarpper(asin, (asin) => <MzLink href={linkToBullet(asin)} title="日亚链接" />)
 }
 
 function toDisc(coming?: IComing) {

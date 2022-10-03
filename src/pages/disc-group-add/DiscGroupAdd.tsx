@@ -3,6 +3,7 @@ import { useAjax } from '#H/useAjax'
 import { Button, Card, Form, Input, Radio, Space, Switch } from 'antd'
 import { useLocation, useNavigate } from 'react-router-dom'
 
+import { linkToGroups } from '#A/links'
 import { viewTypes } from '#A/metas'
 import { Rules } from '#T/antd'
 
@@ -44,7 +45,7 @@ export default function DiscGroupAdd() {
   const [isPost, doPost] = useAjax('post')
 
   const onFinish = (form: FormCreate) => {
-    doPost('/api/discGroups', '添加列表', {
+    doPost(`/api/discGroups`, '添加列表', {
       body: form,
       onSuccess() {
         setTimeout(() => navigate(-1), 500)
@@ -83,7 +84,7 @@ export default function DiscGroupAdd() {
                 <Button type="primary" htmlType="submit" loading={isPost}>
                   重新添加
                 </Button>
-                <Button onClick={() => navigate(`/disc_groups`)}>点击返回</Button>
+                <Button onClick={() => navigate(linkToGroups())}>点击返回</Button>
               </Space>
             ) : (
               <Button type="primary" htmlType="submit" loading={isPost}>

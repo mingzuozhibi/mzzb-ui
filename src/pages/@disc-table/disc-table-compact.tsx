@@ -3,7 +3,7 @@ import { formatNumber } from '#U/format'
 import { Link } from 'react-router-dom'
 import './disc-table-compact.scss'
 
-import { linkToDisc, linkToRecords } from '#A/links'
+import { linkToDiscs } from '#A/links'
 import { IDisc } from '#T/disc'
 import {
   compareJapan,
@@ -12,9 +12,9 @@ import {
   compareRelease,
   compareTitle,
   discTitle,
+  fmtJapan,
   formatAddPt,
   formatPt,
-  fmtJapan,
   tdClassRank,
 } from '#T/disc-utils'
 
@@ -53,7 +53,7 @@ function buildColumns(): MzColumn<IDisc>[] {
           <div>前回</div>
         </div>
       ),
-      format: (row) => <Link to={linkToRecords(row.id)}>{discRank(row)}</Link>,
+      format: (row) => <Link to={linkToDiscs(`/${row.id}/records`)}>{discRank(row)}</Link>,
       tdClass: tdClassRank,
       compare: compareRank,
     },
@@ -92,13 +92,13 @@ function buildColumns(): MzColumn<IDisc>[] {
     {
       key: 'title',
       title: '碟片标题',
-      format: (row) => <Link to={linkToDisc(row.id)}>{discTitle(row)}</Link>,
+      format: (row) => <Link to={linkToDiscs(`/${row.id}`)}>{discTitle(row)}</Link>,
       compare: compareTitle,
     },
     {
       key: 'japan',
       title: '日文标题',
-      format: (row) => <Link to={linkToDisc(row.id)}>{fmtJapan(row.title)}</Link>,
+      format: (row) => <Link to={linkToDiscs(`/${row.id}`)}>{fmtJapan(row.title)}</Link>,
       compare: compareJapan,
     },
   ]
