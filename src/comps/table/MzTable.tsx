@@ -1,4 +1,5 @@
 import { useLocal } from '#H/useLocal'
+import { Empty } from 'antd'
 import classNames, { Argument } from 'classnames'
 import React from 'react'
 import './MzTable.scss'
@@ -65,6 +66,11 @@ export function MzTable<T extends BaseRow>(props: Props<T>) {
           ))}
         </tbody>
       </table>
+      {rows.length === 0 && (
+        <div className="empty-warpper">
+          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+        </div>
+      )}
     </div>
   )
 
