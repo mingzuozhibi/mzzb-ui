@@ -113,7 +113,11 @@ export default function Messages({ name, activeKey }: Props) {
               value={params.types}
               onChange={onChangeTypes}
             />
-            <DatePicker.RangePicker format="YYYY/M/D" onChange={onChangeRange} />
+            <DatePicker.RangePicker
+              format="YYYY/M/D"
+              onChange={onChangeRange}
+              allowEmpty={[true, true]}
+            />
             <Input.Search
               placeholder="input search text"
               allowClear
