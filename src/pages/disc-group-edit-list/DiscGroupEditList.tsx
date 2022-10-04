@@ -15,6 +15,7 @@ import { IDisc, IGroupDiscs } from '#T/disc'
 import { compareRelease } from '#T/disc-utils'
 import { buildColumns, ToAddsList } from '../@to-add-list/to-adds-list'
 import { ToAddsTabs } from '../@to-add-list/to-adds-tabs'
+import { useCallback, useMemo } from 'react'
 
 export default function DiscGroupEditList() {
   const params = useParams<{ key: string }>()
@@ -26,9 +27,9 @@ export default function DiscGroupEditList() {
   )
 
   const dispatch = useAppDispatch()
-  const [, doPush] = useAjax<IDisc>('post')
-  const [, doDrop] = useAjax<IDisc>('delete')
+  const toAdds = useAppSelector((state) => state.local.toAdds)
 
+  const [, doPush] = useAjax<IDisc>('post')
   function doPushDiscs(groupId: number, discId: number) {
     doPush(apiToGroups(`/${groupId}/discs/${discId}`), '添加碟片到列表', {
       onSuccess(disc: IDisc) {
@@ -43,34 +44,50 @@ export default function DiscGroupEditList() {
     })
   }
 
-  function doDropDiscs(groupId: number, discId: number) {
-    doDrop(apiToGroups(`/${groupId}/discs/${discId}`), '从列表移除碟片', {
-      onSuccess(disc: IDisc) {
-        if (group !== undefined) {
-          dispatch(pushToAdds(disc))
-          state.mutate({
-            ...group,
-            discs: group.discs.filter((e) => e.id !== disc.id),
-          })
-        }
-      },
-    })
-  }
-
   const pushColumn = {
     key: 'command',
     title: '添加',
     format: (row: IDisc) => <DownCircleOutlined onClick={() => doPushDiscs(group!.id, row.id)} />,
   }
 
-  const dropColumn = {
-    key: 'command',
-    title: '移除',
-    format: (row: IDisc) => <UpCircleOutlined onClick={() => doDropDiscs(group!.id, row.id)} />,
-  }
+  const [, doDrop] = useAjax<IDisc>('delete')
+  const doDropDiscs = useCallback(
+    (groupId: number, discId: number) => {
+      doDrop(apiToGroups(`/${groupId}/discs/${discId}`), '从列表移除碟片', {
+        onSuccess(disc: IDisc) {
+          if (group !== undefined) {
+            dispatch(pushToAdds(disc))
+            state.mutate({
+              ...group,
+              discs: group.discs.filter((e) => e.id !== disc.id),
+            })
+          }
+        },
+      })
+    },
+    [doDrop, dispatch, state.mutate, group]
+  )
 
-  const toAdds = useAppSelector((state) => state.local.toAdds)
+  const editCols = useMemo(
+    () =>
+      buildColumns({
+        key: 'command',
+        title: '移除',
+        format: (row: IDisc) => <UpCircleOutlined onClick={() => doDropDiscs(group!.id, row.id)} />,
+      }),
+    [doDropDiscs, group]
+  )
+
   const navigate = useNavigate()
+  const editExtra = useMemo(
+    () => (
+      <Button.Group>
+        <Button onClick={() => navigate(linkToGroups(`/${group?.key}`))}>编辑</Button>
+        <Button onClick={() => navigate(linkToGroups(`/${group?.key}/discs`))}>浏览</Button>
+      </Button.Group>
+    ),
+    [navigate, group]
+  )
 
   return (
     <div className="DiscGroupEditList" style={{ maxWidth: 650 }}>
@@ -81,15 +98,10 @@ export default function DiscGroupEditList() {
         <MzTable
           tag="editlist"
           rows={group.discs}
-          cols={buildColumns(dropColumn)}
+          cols={editCols}
           title={group.title}
           defaultSort={compareRelease}
-          extraCaption={
-            <Button.Group>
-              <Button onClick={() => navigate(linkToGroups(`/${group.key}`))}>编辑</Button>
-              <Button onClick={() => navigate(linkToGroups(`/${group.key}/discs`))}>浏览</Button>
-            </Button.Group>
-          }
+          extraCaption={editExtra}
         />
       )}
     </div>

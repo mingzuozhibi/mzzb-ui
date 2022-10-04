@@ -1,14 +1,14 @@
 import { useAppDispatch } from '#A/hooks'
-import { MzLink } from '#C/link/MzLink'
 import { useAjax } from '#H/useAjax'
 import { safeWarpper } from '#U/domain'
 import { Button, Form, Input, Modal, Radio, Space, Tabs } from 'antd'
 import { useState } from 'react'
 
-import { apiToDiscs, apiToSpider, linkToBullet } from '#A/links'
+import { apiToDiscs, apiToSpider } from '#A/links'
 import { pushToAdds } from '#F/local'
 import { Rules } from '#T/antd'
 import { IComing, IDisc } from '#T/disc'
+import { amazonLink } from '#T/disc-comps'
 import dayjs from 'dayjs'
 
 interface FormCreate {
@@ -132,7 +132,7 @@ export function ToAddsTabs(props: Props) {
         onFinish={onSearch}
       >
         <Form.Item label="碟片ASIN" name="asin" rules={rules.asin}>
-          <Input addonAfter={amazonUrl(asinSearch)} />
+          <Input addonAfter={amazonLink(asinSearch)} />
         </Form.Item>
         {fetchCount && (
           <Form.Item label="抓取总数">
@@ -167,7 +167,7 @@ export function ToAddsTabs(props: Props) {
           <Input.TextArea autoSize={true} />
         </Form.Item>
         <Form.Item label="碟片ASIN" name="asin" rules={rules.asin}>
-          <Input addonAfter={amazonUrl(asinCreate)} />
+          <Input addonAfter={amazonLink(asinCreate)} />
         </Form.Item>
         <Form.Item label="发售日期" name="releaseDate" rules={rules.releaseDate}>
           <Input />
@@ -192,10 +192,6 @@ export function ToAddsTabs(props: Props) {
       </Form>
     )
   }
-}
-
-function amazonUrl(asin?: string) {
-  return safeWarpper(asin, (asin) => <MzLink href={linkToBullet(asin)} title="日亚链接" />)
 }
 
 function toDisc(coming?: IComing) {

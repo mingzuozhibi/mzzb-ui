@@ -7,15 +7,17 @@ import { useOnceRequest } from '#H/useOnce'
 import { safeWarpper } from '#U/domain'
 import { fetchResult } from '#U/fetch/fetchResult'
 import { Button, Modal, Space } from 'antd'
-import dayjs from 'dayjs'
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import './DiscRecords.scss'
 
 import { apiToDiscs, apiToSpider } from '#A/links'
 import { IDiscRecords, IRecord } from '#T/disc'
-import { discTitle, formatPt } from '#T/disc-utils'
+import { discTitle } from '#T/disc-comps'
+import { formatPt } from '#T/disc-utils'
 import { formatNumber } from '#U/format'
+import dayjs from 'dayjs'
+
 import { initEcharts } from './echarts'
 
 const cols = buildColumns()

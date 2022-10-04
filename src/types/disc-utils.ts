@@ -1,6 +1,7 @@
 import { IDisc } from '#T/disc'
 import { safeCompare, thenCompare } from '#U/compare'
 import { isJustUpdate, isLazyUpdate } from '#U/date/check'
+import { discJapan, discTitle } from './disc-comps'
 
 export const compareRank = safeCompare<IDisc, number>(
   (row) => row.thisRank,
@@ -36,19 +37,7 @@ export function compareTitle(a: IDisc, b: IDisc) {
   return discTitle(a).localeCompare(discTitle(b))
 }
 
-export function discTitle(disc: IDisc) {
-  // use || check null undefined and empty
-  return disc.titlePc?.trim() || fmtJapan(disc.title)
-}
-
-export function fmtJapan(title: string) {
-  const regex = /^(【[^】]+】)(.+)$/
-  const exec = regex.exec(title)
-  if (exec) return exec[2] + exec[1]
-  return title
-}
-
 export const compareJapan = safeCompare(
-  (row: IDisc) => fmtJapan(row.title),
+  (row: IDisc) => discJapan(row),
   (a, b) => a.localeCompare(b)
 )

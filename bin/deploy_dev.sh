@@ -13,6 +13,7 @@ if [[ $1 != '-q' ]]; then
     git log --pretty=format:'%h %ad | %s [%an]' --date=short -7 >build/git_logs.txt
 fi
 
+echo "Copying files to remote directory www/dev"
 target=mzzb-admin/nginx/www/dev
 ssh q "rm -rf $target; mkdir -p $target;"
 tar -czf - -C build . | ssh q "tar -xzpvf - -C $target"

@@ -1,22 +1,21 @@
 import { MzColumn, MzTable } from '#C/table/MzTable'
-import { formatNumber } from '#U/format'
 import { Link } from 'react-router-dom'
 import './disc-table-compact.scss'
 
 import { linkToDiscs } from '#A/links'
 import { IDisc } from '#T/disc'
+import { discJapan, discTitle } from '#T/disc-comps'
 import {
   compareJapan,
   comparePt,
   compareRank,
   compareRelease,
   compareTitle,
-  discTitle,
-  fmtJapan,
   formatAddPt,
   formatPt,
   tdClassRank,
 } from '#T/disc-utils'
+import { formatNumber } from '#U/format'
 
 interface Props {
   name: string
@@ -98,7 +97,7 @@ function buildColumns(): MzColumn<IDisc>[] {
     {
       key: 'japan',
       title: '日文标题',
-      format: (row) => <Link to={linkToDiscs(`/${row.id}`)}>{fmtJapan(row.title)}</Link>,
+      format: (row) => <Link to={linkToDiscs(`/${row.id}`)}>{discJapan(row)}</Link>,
       compare: compareJapan,
     },
   ]

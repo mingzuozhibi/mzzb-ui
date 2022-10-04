@@ -5,16 +5,15 @@ import './disc-table.scss'
 
 import { linkToDiscs } from '#A/links'
 import { IDisc } from '#T/disc'
+import { discJapan, discTitle } from '#T/disc-comps'
 import {
   compareJapan,
   comparePt,
   compareRank,
   compareRelease,
   compareTitle,
-  discTitle,
-  fmtJapan,
   formatPt,
-  tdClassRank
+  tdClassRank,
 } from '#T/disc-utils'
 
 interface Props {
@@ -84,7 +83,7 @@ function buildColumns(): MzColumn<IDisc>[] {
     {
       key: 'japan',
       title: '日文标题',
-      format: (row) => <Link to={linkToDiscs(`/${row.id}`)}>{fmtJapan(row.title)}</Link>,
+      format: (row) => <Link to={linkToDiscs(`/${row.id}`)}>{discJapan(row)}</Link>,
       compare: compareJapan,
     },
   ]
