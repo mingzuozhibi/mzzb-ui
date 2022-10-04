@@ -1,4 +1,5 @@
 import { RefreshButton } from '#C/button/Refresh'
+import { MzDropdown, MzItem } from '#C/dropdown/MzDropdown'
 import { useTitle } from '#H/useTitle'
 import { IState } from '#T/result'
 import { safeWarpper } from '#U/domain'
@@ -14,20 +15,26 @@ interface Props extends Omit<PageHeaderProps, ExcludedUnion> {
   title?: string | { prefix: string; suffix?: string }
   state?: IState
   error?: string
+  items?: MzItem[]
   extra?: ReactNode[]
 }
 
 export function MzHeader(props: Props) {
-  const { title, state, error, extra, ...otherProps } = props
+  const { title, state, error, items, extra, ...otherProps } = props
 
   let lastTitle = findTitle(title)
 
   useTitle(lastTitle)
 
-  const button = safeWarpper(state, (state) => {
-    return <RefreshButton key="R1" state={state} />
-  })
-  const lastExtra = extra ? [button, ...extra] : [button]
+  const lastExtra = extra ? [...extra] : []
+
+  if (state) {
+    lastExtra.unshift(<RefreshButton key="H1" state={state} />)
+  }
+
+  if (items) {
+    lastExtra.push(<MzDropdown key="H2" label="功能" children={items} />)
+  }
 
   const navigate = useNavigate()
   const lastProps: PageHeaderProps = {
@@ -37,7 +44,7 @@ export function MzHeader(props: Props) {
   }
 
   const message = error ?? state?.error?.message
-  const extraCls = classNames({ 'refresh-only': extra == null && state != null })
+  const extraCls = classNames({ 'refresh-only': lastExtra.length === 1 && state != null })
 
   return (
     <div className="MzHeader">

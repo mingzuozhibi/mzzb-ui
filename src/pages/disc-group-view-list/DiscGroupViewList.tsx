@@ -1,5 +1,4 @@
 import { useAppSelector } from '#A/hooks'
-import { MzDropdown } from '#C/dropdown/MzDropdown'
 import { MzHeader } from '#C/header/MzHeader'
 import { AllColumns } from '#C/warpper/AllColumns'
 import { useLocal } from '#H/useLocal'
@@ -13,6 +12,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { apiToGroups, linkToGroups } from '#A/links'
 import { IDisc, IGroupDiscs } from '#T/disc'
 import { formatTimeout } from '#U/date/timeout'
+
 import { DiscTable } from '../@disc-table/disc-table'
 import { DiscTableCompact } from '../@disc-table/disc-table-compact'
 
@@ -36,40 +36,6 @@ export default function DiscGroupViewList() {
 
   const hasBasic = useAppSelector((state) => state.session.hasBasic)
   const navigate = useNavigate()
-  const buttons = [
-    <Select key="K1" value={viewMode} onChange={setViewMode}>
-      <Select.Option value="all">所有列</Select.Option>
-      <Select.Option value="auto">智能列</Select.Option>
-      <Select.Option value="compact">紧凑列</Select.Option>
-    </Select>,
-    <MzDropdown key="K2" label="功能">
-      {[
-        {
-          key: 'C1',
-          label: findMode ? '关闭过滤' : '开启过滤',
-          onClick: () => setFindMode(!findMode),
-        },
-        {
-          key: 'C2',
-          label: editMode ? '中文标题' : '日文标题',
-          onClick: () => setEditMode(!editMode),
-        },
-        {
-          key: 'C3',
-          label: '编辑列表',
-          onClick: () => navigate(linkToGroups(`/${groupKey}`)),
-          disabled: !hasBasic,
-        },
-        {
-          key: 'C4',
-          label: '管理碟片',
-          onClick: () => navigate(linkToGroups(`/${groupKey}/discs/edit`)),
-          disabled: !hasBasic,
-        },
-      ]}
-    </MzDropdown>,
-  ]
-
   const maxWidth = viewMode === 'all' ? '100%' : '800px'
 
   return (
@@ -80,7 +46,37 @@ export default function DiscGroupViewList() {
         subTitle={safeWarpper(group?.modifyTime, (updateOn) => (
           <span>更新于{formatTimeout(updateOn)}</span>
         ))}
-        extra={buttons}
+        items={[
+          {
+            key: 'K1',
+            label: findMode ? '关闭过滤' : '开启过滤',
+            onClick: () => setFindMode(!findMode),
+          },
+          {
+            key: 'K2',
+            label: editMode ? '中文标题' : '日文标题',
+            onClick: () => setEditMode(!editMode),
+          },
+          {
+            key: 'K3',
+            label: '编辑列表',
+            onClick: () => navigate(linkToGroups(`/${groupKey}`)),
+            disabled: !hasBasic,
+          },
+          {
+            key: 'K4',
+            label: '管理碟片',
+            onClick: () => navigate(linkToGroups(`/${groupKey}/discs/edit`)),
+            disabled: !hasBasic,
+          },
+        ]}
+        extra={[
+          <Select key="K1" value={viewMode} onChange={setViewMode}>
+            <Select.Option value="all">所有列</Select.Option>
+            <Select.Option value="auto">智能列</Select.Option>
+            <Select.Option value="compact">紧凑列</Select.Option>
+          </Select>,
+        ]}
       />
       <Space direction="vertical">
         {findMode && (
