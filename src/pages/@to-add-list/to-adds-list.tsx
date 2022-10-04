@@ -7,7 +7,8 @@ import './to-adds-list.scss'
 import { linkToDiscs } from '#A/links'
 import { cleanToAdds, reoladToAdds } from '#F/local'
 import { IDisc } from '#T/disc'
-import { compareRelease, compareTitle, discTitle } from '#T/disc-utils'
+import { discTitle } from '#T/disc-comps'
+import { compareRelease, compareTitle } from '#T/disc-utils'
 
 interface Props {
   toAdds: IDisc[]
