@@ -15,6 +15,8 @@ import './DiscGroups.scss'
 import { apiToGroups, linkToGroups } from '#A/links'
 import { viewTypes } from '#A/metas'
 import { IGroupCount } from '#T/disc'
+import { Button } from 'antd'
+import { useState } from 'react'
 
 const adminCols = buildColumns()
 const guestCols = adminCols.filter((col) => !['edit', 'item'].includes(col.key))
@@ -27,10 +29,11 @@ export default function DiscGroups() {
 
   const [isAdmin, setIsAdmin] = useLocal('groups-isadmin', false)
   const [hasSave, setHasSave] = useLocal('groups-hassave', false)
+  const [hasMore, setHasMore] = useState(false)
 
   const apiUrl = new UrlBuilder(apiToGroups())
     .append('hasPrivate', hasBasic && isAdmin)
-    .append('hasDisable', hasSave)
+    .append('hasDisable', hasSave || hasMore)
     .toString()
 
   const { data: groups, ...state } = useOnceRequest(
@@ -73,6 +76,11 @@ export default function DiscGroups() {
           trClass={trClass}
           defaultSort={defaultSort}
         />
+      )}
+      {!hasMore && (
+        <Button type="link" onClick={() => setHasMore(true)} style={{ marginTop: 8 }}>
+          显示停止更新的列表
+        </Button>
       )}
     </div>
   )
