@@ -9,13 +9,12 @@ export class UrlBuilder {
     this.searchParams = new URLSearchParams()
   }
 
-  append(name: string, value?: string | number) {
+  append(name: string, value?: string | number | boolean) {
     if (value == null) return this
     if (typeof value === 'string' && value.length > 0) {
       this.hasParam = true
       this.searchParams.append(name, value)
-    }
-    if (typeof value === 'number') {
+    } else {
       this.hasParam = true
       this.searchParams.append(name, value.toString())
     }
