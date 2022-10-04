@@ -1,7 +1,7 @@
 import { useAppSelector } from '#A/hooks'
 import { RefreshButton } from '#C/button/Refresh'
-import { MzColumn, MzTable } from '#C/table/MzTable'
 import { MzHeader } from '#C/header/MzHeader'
+import { MzColumn, MzTable } from '#C/table/MzTable'
 import { useAjax } from '#H/useAjax'
 import { useOnceRequest } from '#H/useOnce'
 import { safeWarpper } from '#U/domain'
@@ -12,6 +12,7 @@ import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import './DiscRecords.scss'
 
+import { apiToDiscs, apiToSpider } from '#A/links'
 import { IDiscRecords, IRecord } from '#T/disc'
 import { discTitle, formatPt } from '#T/disc-utils'
 import { formatNumber } from '#U/format'
@@ -23,9 +24,9 @@ export default function DiscRecords() {
   const params = useParams<{ id: string }>()
   const discId = params.id as string
 
-  const url = `/api/discs/${discId}/records`
+  const apiUrl = apiToDiscs(`/${discId}/records`)
   const { data: disc, ...state } = useOnceRequest(() =>
-    fetchResult<IDiscRecords>(url).then((result) => result.data)
+    fetchResult<IDiscRecords>(apiUrl).then((result) => result.data)
   )
 
   useEffect(() => {
@@ -35,7 +36,7 @@ export default function DiscRecords() {
   const [isPost, doPost] = useAjax<string>('post')
 
   function reCompute() {
-    doPost(`/api/spider/computePt/${discId}`, '重新计算PT', {
+    doPost(apiToSpider(`computePt/${discId}`), '重新计算PT', {
       onSuccess(text) {
         Modal.success({ title: '重新计算PT成功', content: text })
         state.refresh()

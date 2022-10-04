@@ -10,6 +10,8 @@ import {
   UserOutlined,
 } from '@ant-design/icons'
 
+import { linkToComing, linkToDiscs, linkToGroups, linkToMsgs, linkToUsers } from '#A/links'
+
 export function buildItems(userRoles: string[]): ItemType[] {
   const hasBasic = userRoles.includes('ROLE_BASIC')
   const hasAdmin = userRoles.includes('ROLE_ADMIN')
@@ -17,29 +19,29 @@ export function buildItems(userRoles: string[]): ItemType[] {
     {
       label: '推荐列表',
       icon: <MzIcon type="icon-yinghua" />,
-      key: '/disc_groups',
+      key: linkToGroups(),
     },
     {
       label: '上架追踪',
       icon: <AmazonOutlined />,
-      key: '/disc_coming',
+      key: linkToComing(),
     },
     {
       label: '待选列表',
       icon: <CloudOutlined />,
-      key: '/discs/add',
+      key: linkToDiscs(`/add`),
       disabled: !hasBasic,
     },
     {
       label: '用户管理',
       icon: <UserOutlined />,
-      key: '/users',
+      key: linkToUsers(),
       disabled: !hasAdmin,
     },
     {
       label: '系统日志',
       icon: <BarChartOutlined />,
-      key: '/console',
+      key: linkToMsgs(),
     },
     {
       label: '名作之壁吧',

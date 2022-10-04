@@ -11,7 +11,7 @@ import { Select, Space } from 'antd'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import './DiscComing.scss'
 
-import { linkToAmazon, linkToAsin } from '#A/links'
+import { apiToSpider, linkToAmazon, linkToComing, linkToDiscs } from '#A/links'
 import { IComing } from '#T/disc'
 import { isJustUpdate } from '#U/date/check'
 import dayjs from 'dayjs'
@@ -22,17 +22,18 @@ export default function DiscComing() {
   const location = useLocation()
   const navigate = useNavigate()
 
-  const url = `/api/spider/discShelfs${location.search}`
-  const { data: result, ...state } = useOnceRequest(() => fetchResult<IComing[]>(url), {
-    refreshDeps: [location.search],
+  const apiUrl = apiToSpider(`/discShelfs${location.search}`)
+  const { data: result, ...state } = useOnceRequest(
+    () => fetchResult<IComing[]>(apiUrl), {
+    refreshDeps: [apiUrl],
   })
   const { data: rows, page } = result ?? {}
 
   function onPaginationChange(page: number, size: number = 20) {
     if (size === 20) {
-      navigate(`/disc_coming?page=${page}`)
+      navigate(linkToComing(`?page=${page}`))
     } else {
-      navigate(`/disc_coming?page=${page}&size=${size}`)
+      navigate(linkToComing(`?page=${page}&size=${size}`))
     }
   }
 
@@ -134,13 +135,13 @@ function formatType(row: IComing) {
 function formatFollowed(row: IComing) {
   if (row.tracked) {
     return (
-      <Link to={linkToAsin(row.asin)}>
+      <Link to={linkToDiscs(`/asin/${row.asin}`)}>
         <CheckCircleTwoTone twoToneColor="#52c41a" />
       </Link>
     )
   } else {
     return (
-      <Link to={`/discs/add`} state={row}>
+      <Link to={linkToDiscs(`/add`)} state={row}>
         <PlusSquareTwoTone twoToneColor="#eb2f96" />
       </Link>
     )

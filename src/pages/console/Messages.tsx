@@ -6,12 +6,12 @@ import { MzColumn, MzTable } from '#C/table/MzTable'
 import { useOnceRequest } from '#H/useOnce'
 import { fetchResult } from '#U/fetch/fetchResult'
 import { UrlBuilder } from '#U/fetch/urlBuilder'
-import { Alert, Card, DatePicker, Input, Space } from 'antd'
+import { Alert, DatePicker, Input, Space } from 'antd'
 import { useEffect } from 'react'
 import { useImmer } from 'use-immer'
 import './Messages.scss'
 
-import { linkToAsin } from '#A/links'
+import { apiToMsgs, linkToDiscs } from '#A/links'
 import { msgLevels } from '#A/metas'
 import dayjs from 'dayjs'
 
@@ -48,7 +48,7 @@ export default function Messages({ name, activeKey }: Props) {
     size: 20,
   })
 
-  const url = new UrlBuilder(`/api/messages/${name}`)
+  const apiUrl = new UrlBuilder(apiToMsgs(`/${name}`))
     .append('types', params.types.join(','))
     .append('search', params.query)
     .append('start', params.start)
@@ -57,8 +57,9 @@ export default function Messages({ name, activeKey }: Props) {
     .append('size', params.size)
     .toString()
 
-  const { data: result, ...state } = useOnceRequest(() => fetchResult<IMsg[]>(url), {
-    refreshDeps: [url],
+  const { data: result, ...state } = useOnceRequest(
+    () => fetchResult<IMsg[]>(apiUrl), {
+    refreshDeps: [apiUrl],
   })
   const { data: msgs, page } = result ?? {}
 
@@ -113,7 +114,11 @@ export default function Messages({ name, activeKey }: Props) {
               value={params.types}
               onChange={onChangeTypes}
             />
-            <DatePicker.RangePicker format="YYYY/M/D" onChange={onChangeRange} />
+            <DatePicker.RangePicker
+              format="YYYY/M/D"
+              onChange={onChangeRange}
+              allowEmpty={[true, true]}
+            />
             <Input.Search
               placeholder="input search text"
               allowClear
@@ -171,7 +176,7 @@ function formatText(row: IMsg) {
     return (
       <>
         {row.text.slice(0, result.index + 1)}
-        <MzLink href={linkToAsin(asin)} title={asin} />
+        <MzLink href={linkToDiscs(`/asin/${asin}`)} title={asin} />
         {row.text.slice(result.index + 11)}
       </>
     )

@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { Rules } from '#T/antd'
 import { IUser } from '#T/user'
 import { encodePassword } from '#U/format'
+import { apiToUsers } from '#A/links'
 
 interface FormCreate {
   username: string
@@ -44,7 +45,7 @@ export default function UserAdd() {
   function onFinish(form: FormCreate) {
     const { username, password, enabled } = form
     const encode = encodePassword(username, password)
-    doPost('/api/users', '添加用户', {
+    doPost(apiToUsers(), '添加用户', {
       body: { username, password: encode, enabled },
       onSuccess() {
         setTimeout(() => navigate(-1), 500)

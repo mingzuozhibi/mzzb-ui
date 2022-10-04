@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '#A/hooks'
-import { MzTable } from '#C/table/MzTable'
 import { MzHeader } from '#C/header/MzHeader'
+import { MzTable } from '#C/table/MzTable'
 import { useAjax } from '#H/useAjax'
 import { useOnceRequest } from '#H/useOnce'
 import { fetchResult } from '#U/fetch/fetchResult'
@@ -9,7 +9,7 @@ import { Button } from 'antd'
 import { useNavigate, useParams } from 'react-router-dom'
 import './DiscGroupEditList.scss'
 
-import { linkToGroup, linkToGroupViewList } from '#A/links'
+import { apiToGroups, linkToGroups } from '#A/links'
 import { dropToAdds, pushToAdds } from '#F/local'
 import { IDisc, IGroupDiscs } from '#T/disc'
 import { compareRelease } from '#T/disc-utils'
@@ -20,9 +20,9 @@ export default function DiscGroupEditList() {
   const params = useParams<{ key: string }>()
   const groupKey = params.key as string
 
-  const url = `/api/discGroups/key/${groupKey}/discs`
+  const apiUrl = apiToGroups(`/key/${groupKey}/discs`)
   const { data: group, ...state } = useOnceRequest(() =>
-    fetchResult<IGroupDiscs>(url).then((result) => result.data)
+    fetchResult<IGroupDiscs>(apiUrl).then((result) => result.data)
   )
 
   const dispatch = useAppDispatch()
@@ -30,7 +30,7 @@ export default function DiscGroupEditList() {
   const [, doDrop] = useAjax<IDisc>('delete')
 
   function doPushDiscs(groupId: number, discId: number) {
-    doPush(`/api/discGroups/${groupId}/discs/${discId}`, '添加碟片到列表', {
+    doPush(apiToGroups(`/${groupId}/discs/${discId}`), '添加碟片到列表', {
       onSuccess(disc: IDisc) {
         if (group !== undefined) {
           dispatch(dropToAdds(disc))
@@ -44,7 +44,7 @@ export default function DiscGroupEditList() {
   }
 
   function doDropDiscs(groupId: number, discId: number) {
-    doDrop(`/api/discGroups/${groupId}/discs/${discId}`, '从列表移除碟片', {
+    doDrop(apiToGroups(`/${groupId}/discs/${discId}`), '从列表移除碟片', {
       onSuccess(disc: IDisc) {
         if (group !== undefined) {
           dispatch(pushToAdds(disc))
@@ -86,8 +86,8 @@ export default function DiscGroupEditList() {
           defaultSort={compareRelease}
           extraCaption={
             <Button.Group>
-              <Button onClick={() => navigate(linkToGroup(group.key))}>编辑</Button>
-              <Button onClick={() => navigate(linkToGroupViewList(group.key))}>浏览</Button>
+              <Button onClick={() => navigate(linkToGroups(`/${group.key}`))}>编辑</Button>
+              <Button onClick={() => navigate(linkToGroups(`/${group.key}/discs`))}>浏览</Button>
             </Button.Group>
           }
         />

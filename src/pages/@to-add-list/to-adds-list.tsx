@@ -4,7 +4,7 @@ import { Button, Popconfirm, Space } from 'antd'
 import { Link } from 'react-router-dom'
 import './to-adds-list.scss'
 
-import { linkToDisc } from '#A/links'
+import { linkToDiscs } from '#A/links'
 import { cleanToAdds, reoladToAdds } from '#F/local'
 import { IDisc } from '#T/disc'
 import { compareRelease, compareTitle, discTitle } from '#T/disc-utils'
@@ -63,7 +63,7 @@ export function buildColumns(extraColumn: MzColumn<IDisc>): MzColumn<IDisc>[] {
     {
       key: 'title',
       title: '碟片标题',
-      format: (row) => <Link to={linkToDisc(row.id)}>{discTitle(row)}</Link>,
+      format: (row) => <Link to={linkToDiscs(`/${row.id}`)}>{discTitle(row)}</Link>,
       compare: compareTitle,
     },
     extraColumn,

@@ -10,7 +10,7 @@ import { SearchOutlined } from '@ant-design/icons'
 import { Input, Select, Space } from 'antd'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import { linkToGroup, linkToGroupEditList } from '#A/links'
+import { apiToGroups, linkToGroups } from '#A/links'
 import { IDisc, IGroupDiscs } from '#T/disc'
 import { formatTimeout } from '#U/date/timeout'
 import { DiscTable } from '../@disc-table/disc-table'
@@ -28,9 +28,9 @@ export default function DiscGroupViewList() {
   const [findMode, setFindMode] = useLocal<boolean>(`viewlist-findmode-${localKey}`, false)
   const [findText, setFindText] = useLocal<string>(`viewlist-findtext-${localKey}`, '')
 
-  const url = `/api/discGroups/key/${groupKey}/discs`
+  const apiUrl = apiToGroups(`/key/${groupKey}/discs`)
   const { data: group, ...state } = useOnceRequest(() =>
-    fetchResult<IGroupDiscs>(url).then((result) => result.data)
+    fetchResult<IGroupDiscs>(apiUrl).then((result) => result.data)
   )
   const lastRows = sortRows(group?.discs, findText.trim(), findMode)
 
@@ -57,13 +57,13 @@ export default function DiscGroupViewList() {
         {
           key: 'C3',
           label: '编辑列表',
-          onClick: () => navigate(linkToGroup(groupKey)),
+          onClick: () => navigate(linkToGroups(`/${groupKey}`)),
           disabled: !hasBasic,
         },
         {
           key: 'C4',
           label: '管理碟片',
-          onClick: () => navigate(linkToGroupEditList(groupKey)),
+          onClick: () => navigate(linkToGroups(`/${groupKey}/discs/edit`)),
           disabled: !hasBasic,
         },
       ]}

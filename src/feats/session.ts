@@ -1,3 +1,4 @@
+import { apiToSession } from '#A/links'
 import { ISession } from '#T/user'
 import { fetchResult } from '#U/fetch/fetchResult'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
@@ -14,7 +15,7 @@ const initialState: SessionState = {
 
 export const sessionQuery = createAsyncThunk('session/query', async () => {
   const token = localStorage['session-token']
-  const result = await fetchResult<SessionState>('/api/session', {
+  const result = await fetchResult<SessionState>(apiToSession(), {
     headers: { 'session-token': token },
   })
   return result.data!
@@ -26,7 +27,7 @@ interface LoginParams {
 }
 
 export const sessionLogin = createAsyncThunk('session/login', async (params: LoginParams) => {
-  const result = await fetchResult<SessionState>('/api/session', {
+  const result = await fetchResult<SessionState>(apiToSession(), {
     method: 'POST',
     body: JSON.stringify(params),
     failureName: '登入失败',
@@ -36,7 +37,7 @@ export const sessionLogin = createAsyncThunk('session/login', async (params: Log
 })
 
 export const sessionLogout = createAsyncThunk('session/logout', async () => {
-  const result = await fetchResult<SessionState>('/api/session', {
+  const result = await fetchResult<SessionState>(apiToSession(), {
     method: 'DELETE',
   })
   return result.data!
