@@ -28,31 +28,16 @@ body {
   }
 }
 
+textarea:read-only,
+input:read-only {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
 .input-wrapper {
   padding: 10px;
-
-  span.input-label {
-    padding-right: 10px;
-  }
 
   div.input-label {
     padding-left: 10px;
     padding-bottom: 5px;
-  }
-}
-
-div.format {
-  margin-bottom: 10px;
-  & > span {
-    margin-right: 8px;
-  }
-  & > span.more {
-    margin-right: 16px;
-  }
-}
-
-span.format {
-  & > * {
-    margin-right: 8px;
   }
 }
