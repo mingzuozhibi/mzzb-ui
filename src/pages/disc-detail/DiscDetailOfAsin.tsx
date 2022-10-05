@@ -5,5 +5,5 @@ import { DiscDetail } from './disc-detail'
 export default function DiscDetailOfAsin() {
   const params = useParams<{ asin: string }>()
   const discAsin = params.asin as string
-  return <DiscDetail url={apiToDiscs(`/asin/${discAsin}`)} />
+  return <DiscDetail apiUrl={apiToDiscs(`/asin/${discAsin}`)} />
 }

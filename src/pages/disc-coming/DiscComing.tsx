@@ -26,6 +26,7 @@ export default function DiscComing() {
   const { data: result, ...state } = useOnceRequest(() => fetchResult<IComing[]>(apiUrl), {
     refreshDeps: [apiUrl],
     autoScroll: true,
+    cacheKey: apiUrl,
   })
   const { data: rows, page } = result ?? {}
 

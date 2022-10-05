@@ -4,7 +4,7 @@ import { MzColumn, MzTable } from '#C/table/MzTable'
 import { useLocal } from '#H/useLocal'
 import { useOnceRequest } from '#H/useOnce'
 import { thenCompare } from '#U/compare'
-import { fetchResult } from '#U/fetch/fetchResult'
+import { fetchData, fetchResult } from '#U/fetch/fetchResult'
 import { EditOutlined, UnorderedListOutlined } from '@ant-design/icons'
 import { Button, Radio, Space } from 'antd'
 import { useState } from 'react'
@@ -32,10 +32,10 @@ export default function DiscGroups() {
   const getPub = filter === 'top' && isMore === true
   const apiUrl = apiToGroups(`?filter=${getPub ? 'pub' : filter}`)
 
-  const { data: groups, ...state } = useOnceRequest(
-    () => fetchResult<IGroupCount[]>(apiUrl).then((result) => result.data),
-    { refreshDeps: [apiUrl] }
-  )
+  const { data: groups, ...state } = useOnceRequest(() => fetchData<IGroupCount[]>(apiUrl), {
+    refreshDeps: [apiUrl],
+    cacheKey: apiUrl,
+  })
 
   const lastCols = hasBasic && filter === 'all' ? adminCols : guestCols
 

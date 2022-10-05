@@ -2,7 +2,7 @@ import { MzHeader } from '#C/header/MzHeader'
 import { MzColumn, MzTable } from '#C/table/MzTable'
 import { useOnceRequest } from '#H/useOnce'
 import { safeWarpper } from '#U/domain'
-import { fetchResult } from '#U/fetch/fetchResult'
+import { fetchData, fetchResult } from '#U/fetch/fetchResult'
 import { Button } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import './Users.scss'
@@ -16,9 +16,9 @@ const cols = buildColumns()
 
 export default function Users() {
   const apiUrl = apiToUsers()
-  const { data: users, ...state } = useOnceRequest(() =>
-    fetchResult<IUser[]>(apiUrl).then((result) => result.data)
-  )
+  const { data: users, ...state } = useOnceRequest(() => fetchData<IUser[]>(apiUrl), {
+    cacheKey: apiUrl,
+  })
 
   const navigate = useNavigate()
 

@@ -3,7 +3,7 @@ import { MzHeader } from '#C/header/MzHeader'
 import { MzTable } from '#C/table/MzTable'
 import { useAjax } from '#H/useAjax'
 import { useOnceRequest } from '#H/useOnce'
-import { fetchResult } from '#U/fetch/fetchResult'
+import { fetchData, fetchResult } from '#U/fetch/fetchResult'
 import { DownCircleOutlined, UpCircleOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -22,9 +22,9 @@ export default function DiscGroupEditList() {
   const groupKey = params.key as string
 
   const apiUrl = apiToGroups(`/key/${groupKey}/discs`)
-  const { data: group, ...state } = useOnceRequest(() =>
-    fetchResult<IGroupDiscs>(apiUrl).then((result) => result.data)
-  )
+  const { data: group, ...state } = useOnceRequest(() => fetchData<IGroupDiscs>(apiUrl), {
+    cacheKey: apiUrl,
+  })
 
   const dispatch = useAppDispatch()
   const toAdds = useAppSelector((state) => state.local.toAdds)

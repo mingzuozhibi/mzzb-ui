@@ -2,7 +2,7 @@ import { MzHeader } from '#C/header/MzHeader'
 import { useAjax } from '#H/useAjax'
 import { useOnceRequest } from '#H/useOnce'
 import { emptyWarpper, safeWarpper } from '#U/domain'
-import { fetchResult } from '#U/fetch/fetchResult'
+import { fetchData, fetchResult } from '#U/fetch/fetchResult'
 import { Button, Card, Form, Input, Switch } from 'antd'
 import { useParams } from 'react-router-dom'
 
@@ -41,9 +41,9 @@ export default function UserDetail() {
   const userId = params.id as string
 
   const apiUrl = apiToUsers(`/${userId}`)
-  const { data: user, ...state } = useOnceRequest(() =>
-    fetchResult<IUser>(apiUrl).then((result) => result.data)
-  )
+  const { data: user, ...state } = useOnceRequest(() => fetchData<IUser>(apiUrl), {
+    cacheKey: apiUrl,
+  })
 
   const [isEdit, doEdit] = useAjax<IUser>('put')
   function onFinish(form: FormEdit) {
