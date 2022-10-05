@@ -6,7 +6,7 @@ import { useOnceRequest } from '#H/useOnce'
 import { thenCompare } from '#U/compare'
 import { fetchResult } from '#U/fetch/fetchResult'
 import { EditOutlined, UnorderedListOutlined } from '@ant-design/icons'
-import { Button, Radio } from 'antd'
+import { Button, Radio, Space } from 'antd'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import './DiscGroups.scss'
@@ -76,18 +76,20 @@ export default function DiscGroups() {
         ]}
       />
       {groups && (
-        <MzTable
-          tag="groups"
-          rows={groups}
-          cols={lastCols}
-          trClass={trClass}
-          defaultSort={defaultSort}
-        />
-      )}
-      {filter === 'top' && isMore === false && (
-        <Button type="link" onClick={() => setIsMore(true)} style={{ marginTop: 8 }}>
-          点击加载更多列表
-        </Button>
+        <Space direction="vertical" style={{ width: '100%' }}>
+          <MzTable
+            tag="groups"
+            rows={groups}
+            cols={lastCols}
+            trClass={trClass}
+            defaultSort={defaultSort}
+          />
+          {filter === 'top' && isMore === false && (
+            <Button type="link" onClick={() => setIsMore(true)}>
+              点击加载更多列表
+            </Button>
+          )}
+        </Space>
       )}
     </div>
   )
