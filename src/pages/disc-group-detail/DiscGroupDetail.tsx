@@ -1,9 +1,8 @@
 import { useAppSelector } from '#A/hooks'
 import { MzHeader } from '#C/header/MzHeader'
 import { useAjax } from '#H/useAjax'
-import { useOnceRequest } from '#H/useOnce'
+import { useData } from '#H/useOnce'
 import { safeWarpper } from '#U/domain'
-import { fetchData, fetchResult } from '#U/fetch/fetchResult'
 import { Button, Card, Form, Input, Popconfirm, Radio, Space, Switch } from 'antd'
 import { useState } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
@@ -53,9 +52,7 @@ export default function DiscGroupDetail() {
   const [deleted, setDeleted] = useState<IGroup>()
 
   const apiUrl = apiToGroups(`/key/${groupKey}`)
-  const { data: group, ...state } = useOnceRequest(() => fetchData<IGroup>(apiUrl), {
-    cacheKey: apiUrl,
-  })
+  const { data: group, ...state } = useData<IGroup>(apiUrl)
 
   function onFinish(form: FormEdit) {
     doEdit(apiToGroups(`/${group?.id}`), '编辑列表', {

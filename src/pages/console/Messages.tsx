@@ -3,8 +3,7 @@ import { MzCheckbox } from '#C/checkbox/MzCheckbox'
 import { MzLink } from '#C/link/MzLink'
 import { MzPagination } from '#C/pagination/MzPagination'
 import { MzColumn, MzTable } from '#C/table/MzTable'
-import { useOnceRequest } from '#H/useOnce'
-import { fetchResult } from '#U/fetch/fetchResult'
+import { useResult } from '#H/useOnce'
 import { UrlBuilder } from '#U/fetch/urlBuilder'
 import { Alert, DatePicker, Input, Space } from 'antd'
 import { useEffect } from 'react'
@@ -57,10 +56,9 @@ export default function Messages({ name, activeKey }: Props) {
     .append('size', params.size)
     .toString()
 
-  const { data: result, ...state } = useOnceRequest(() => fetchResult<IMsg[]>(apiUrl), {
+  const { data: result, ...state } = useResult<IMsg[]>(apiUrl, {
     refreshDeps: [apiUrl],
     autoScroll: true,
-    cacheKey: apiUrl,
   })
   const { data: msgs, page } = result ?? {}
 

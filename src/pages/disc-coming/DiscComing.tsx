@@ -4,8 +4,7 @@ import { MzPagination } from '#C/pagination/MzPagination'
 import { MzColumn, MzTable } from '#C/table/MzTable'
 import { AllColumns } from '#C/warpper/AllColumns'
 import { useLocal } from '#H/useLocal'
-import { useOnceRequest } from '#H/useOnce'
-import { fetchResult } from '#U/fetch/fetchResult'
+import { useResult } from '#H/useOnce'
 import { CheckCircleTwoTone, PlusSquareTwoTone } from '@ant-design/icons'
 import { Select, Space } from 'antd'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
@@ -23,10 +22,9 @@ export default function DiscComing() {
   const navigate = useNavigate()
 
   const apiUrl = apiToSpider(`/discShelfs${location.search}`)
-  const { data: result, ...state } = useOnceRequest(() => fetchResult<IComing[]>(apiUrl), {
+  const { data: result, ...state } = useResult<IComing[]>(apiUrl, {
     refreshDeps: [apiUrl],
     autoScroll: true,
-    cacheKey: apiUrl,
   })
   const { data: rows, page } = result ?? {}
 

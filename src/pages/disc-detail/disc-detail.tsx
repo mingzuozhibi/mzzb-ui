@@ -1,8 +1,7 @@
 import { useAppSelector } from '#A/hooks'
 import { MzHeader } from '#C/header/MzHeader'
 import { useLocal } from '#H/useLocal'
-import { useOnceRequest } from '#H/useOnce'
-import { fetchData, fetchResult } from '#U/fetch/fetchResult'
+import { useData } from '#H/useOnce'
 import { Tabs } from 'antd'
 
 import { IDisc } from '#T/disc'
@@ -17,9 +16,7 @@ interface Props {
 }
 
 export function DiscDetail({ apiUrl }: Props) {
-  const { data: disc, ...state } = useOnceRequest(() => fetchData<IDisc>(apiUrl), {
-    cacheKey: apiUrl,
-  })
+  const { data: disc, ...state } = useData<IDisc>(apiUrl)
 
   const hasBasic = useAppSelector((state) => state.session.hasBasic)
   const [tabKey, setTabKey] = useLocal<string>('discdetail-tabkey', 'view-disc')

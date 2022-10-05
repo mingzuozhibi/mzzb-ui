@@ -1,8 +1,7 @@
 import { MzHeader } from '#C/header/MzHeader'
 import { MzColumn, MzTable } from '#C/table/MzTable'
-import { useOnceRequest } from '#H/useOnce'
+import { useData } from '#H/useOnce'
 import { safeWarpper } from '#U/domain'
-import { fetchData, fetchResult } from '#U/fetch/fetchResult'
 import { Button } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import './Users.scss'
@@ -15,12 +14,9 @@ import dayjs from 'dayjs'
 const cols = buildColumns()
 
 export default function Users() {
-  const apiUrl = apiToUsers()
-  const { data: users, ...state } = useOnceRequest(() => fetchData<IUser[]>(apiUrl), {
-    cacheKey: apiUrl,
-  })
-
   const navigate = useNavigate()
+  const apiUrl = apiToUsers()
+  const { data: users, ...state } = useData<IUser[]>(apiUrl)
 
   return (
     <div className="Users" style={{ maxWidth: 650 }}>

@@ -2,10 +2,10 @@ import { useAppDispatch, useAppSelector } from '#A/hooks'
 import { MzHeader } from '#C/header/MzHeader'
 import { MzTable } from '#C/table/MzTable'
 import { useAjax } from '#H/useAjax'
-import { useOnceRequest } from '#H/useOnce'
-import { fetchData, fetchResult } from '#U/fetch/fetchResult'
+import { useData } from '#H/useOnce'
 import { DownCircleOutlined, UpCircleOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
+import { useCallback, useMemo } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import './DiscGroupEditList.scss'
 
@@ -13,18 +13,16 @@ import { apiToGroups, linkToGroups } from '#A/links'
 import { dropToAdds, pushToAdds } from '#F/local'
 import { IDisc, IGroupDiscs } from '#T/disc'
 import { compareRelease } from '#T/disc-utils'
+
 import { buildColumns, ToAddsList } from '../@to-add-list/to-adds-list'
 import { ToAddsTabs } from '../@to-add-list/to-adds-tabs'
-import { useCallback, useMemo } from 'react'
 
 export default function DiscGroupEditList() {
   const params = useParams<{ key: string }>()
   const groupKey = params.key as string
 
   const apiUrl = apiToGroups(`/key/${groupKey}/discs`)
-  const { data: group, ...state } = useOnceRequest(() => fetchData<IGroupDiscs>(apiUrl), {
-    cacheKey: apiUrl,
-  })
+  const { data: group, ...state } = useData<IGroupDiscs>(apiUrl)
 
   const dispatch = useAppDispatch()
   const toAdds = useAppSelector((state) => state.local.toAdds)
