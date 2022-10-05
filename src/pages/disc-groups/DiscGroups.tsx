@@ -4,18 +4,18 @@ import { MzColumn, MzTable } from '#C/table/MzTable'
 import { useLocal } from '#H/useLocal'
 import { useOnceRequest } from '#H/useOnce'
 import { thenCompare } from '#U/compare'
-import { isJustUpdate } from '#U/date/check'
-import { formatTimeout } from '#U/date/timeout'
-import { testWarpper } from '#U/domain'
 import { fetchResult } from '#U/fetch/fetchResult'
 import { EditOutlined, UnorderedListOutlined } from '@ant-design/icons'
-import { Button } from 'antd'
+import { Button, Radio } from 'antd'
+import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import './DiscGroups.scss'
 
 import { apiToGroups, linkToGroups } from '#A/links'
 import { viewTypes } from '#A/metas'
 import { IGroupCount } from '#T/disc'
+import { isJustUpdate } from '#U/date/check'
+import { formatTimeout } from '#U/date/timeout'
 
 const adminCols = buildColumns()
 const guestCols = adminCols.filter((col) => !['edit', 'item'].includes(col.key))
@@ -23,44 +23,71 @@ const guestCols = adminCols.filter((col) => !['edit', 'item'].includes(col.key))
 const defaultSort = compareDiscGroups()
 
 export default function DiscGroups() {
+  const navigate = useNavigate()
   const hasBasic = useAppSelector((state) => state.session.hasBasic)
-  const [isEditMode, setEditMode] = useLocal('groups-editmode', false)
 
-  const showExtraButtons = hasBasic
-  const showExtraColumns = hasBasic && isEditMode
-  const fetchPrivateData = hasBasic && isEditMode
+  const [filter, setFilter] = useLocal('groups-filter', 'top')
+  const [isMore, setIsMore] = useState(false)
 
-  const apiUrl = apiToGroups(fetchPrivateData ? `?hasPrivate=true` : undefined)
+  const getPub = filter === 'top' && isMore === true
+  const apiUrl = apiToGroups(`?filter=${getPub ? 'pub' : filter}`)
+
   const { data: groups, ...state } = useOnceRequest(
     () => fetchResult<IGroupCount[]>(apiUrl).then((result) => result.data),
     { refreshDeps: [apiUrl] }
   )
 
-  const navigate = useNavigate()
-  const lastButtons = testWarpper(showExtraButtons, () =>
-    isEditMode ? (
-      <Button.Group key="1">
-        <Button onClick={() => setEditMode(false)}>浏览模式</Button>
-        <Button onClick={() => navigate(linkToGroups(`/add`))}>添加列表</Button>
-      </Button.Group>
-    ) : (
-      <Button.Group key="2">
-        <Button onClick={() => setEditMode(true)}>管理模式</Button>
-      </Button.Group>
-    )
-  )
+  const lastCols = hasBasic && filter === 'all' ? adminCols : guestCols
 
   return (
     <div className="DiscGroups" style={{ maxWidth: 650 }}>
-      <MzHeader title="推荐列表" state={state} extra={[lastButtons]} />
+      <MzHeader
+        title="推荐列表"
+        state={state}
+        items={[
+          {
+            key: 'K1',
+            label: '添加列表',
+            onClick: () => navigate(linkToGroups(`/add`)),
+            disabled: !hasBasic,
+          },
+          {
+            key: 'K2',
+            label: '设置过滤',
+            children: [
+              {
+                key: 'S1',
+                label: <Radio checked={filter === 'top'}>显示推荐列表</Radio>,
+                onClick: () => setFilter('top'),
+              },
+              {
+                key: 'S2',
+                label: <Radio checked={filter === 'pub'}>显示公开列表</Radio>,
+                onClick: () => setFilter('pub'),
+              },
+              {
+                key: 'S3',
+                label: <Radio checked={filter === 'all'}>管理所有列表</Radio>,
+                onClick: () => setFilter('all'),
+                disabled: !hasBasic,
+              },
+            ],
+          },
+        ]}
+      />
       {groups && (
         <MzTable
           tag="groups"
           rows={groups}
-          cols={showExtraColumns ? adminCols : guestCols}
+          cols={lastCols}
           trClass={trClass}
           defaultSort={defaultSort}
         />
+      )}
+      {filter === 'top' && isMore === false && (
+        <Button type="link" onClick={() => setIsMore(true)} style={{ marginTop: 8 }}>
+          点击加载更多列表
+        </Button>
       )}
     </div>
   )
