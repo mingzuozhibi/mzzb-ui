@@ -4,19 +4,18 @@ import { MzColumn, MzTable } from '#C/table/MzTable'
 import { useLocal } from '#H/useLocal'
 import { useOnceRequest } from '#H/useOnce'
 import { thenCompare } from '#U/compare'
-import { isJustUpdate } from '#U/date/check'
-import { formatTimeout } from '#U/date/timeout'
 import { fetchResult } from '#U/fetch/fetchResult'
-import { UrlBuilder } from '#U/fetch/urlBuilder'
 import { EditOutlined, UnorderedListOutlined } from '@ant-design/icons'
+import { Button, Radio } from 'antd'
+import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import './DiscGroups.scss'
 
 import { apiToGroups, linkToGroups } from '#A/links'
 import { viewTypes } from '#A/metas'
 import { IGroupCount } from '#T/disc'
-import { Button } from 'antd'
-import { useState } from 'react'
+import { isJustUpdate } from '#U/date/check'
+import { formatTimeout } from '#U/date/timeout'
 
 const adminCols = buildColumns()
 const guestCols = adminCols.filter((col) => !['edit', 'item'].includes(col.key))
@@ -27,21 +26,18 @@ export default function DiscGroups() {
   const navigate = useNavigate()
   const hasBasic = useAppSelector((state) => state.session.hasBasic)
 
-  const [isAdmin, setIsAdmin] = useLocal('groups-isadmin', false)
-  const [hasSave, setHasSave] = useLocal('groups-hassave', false)
-  const [hasMore, setHasMore] = useState(false)
+  const [filter, setFilter] = useLocal('groups-filter', 'top')
+  const [isMore, setIsMore] = useState(false)
 
-  const apiUrl = new UrlBuilder(apiToGroups())
-    .append('hasPrivate', hasBasic && isAdmin)
-    .append('hasDisable', hasSave || hasMore)
-    .toString()
+  const getPub = filter === 'top' && isMore === true
+  const apiUrl = apiToGroups(`?filter=${getPub ? 'pub' : filter}`)
 
   const { data: groups, ...state } = useOnceRequest(
     () => fetchResult<IGroupCount[]>(apiUrl).then((result) => result.data),
     { refreshDeps: [apiUrl] }
   )
 
-  const lastCols = hasBasic && isAdmin ? adminCols : guestCols
+  const lastCols = hasBasic && filter === 'all' ? adminCols : guestCols
 
   return (
     <div className="DiscGroups" style={{ maxWidth: 650 }}>
@@ -57,14 +53,25 @@ export default function DiscGroups() {
           },
           {
             key: 'K2',
-            label: isAdmin ? '浏览模式' : '管理模式',
-            onClick: () => setIsAdmin(!isAdmin),
-            disabled: !hasBasic,
-          },
-          {
-            key: 'K3',
-            label: hasSave ? '隐藏存档' : '显示存档',
-            onClick: () => setHasSave(!hasSave),
+            label: '设置过滤',
+            children: [
+              {
+                key: 'S1',
+                label: <Radio checked={filter === 'top'}>显示推荐列表</Radio>,
+                onClick: () => setFilter('top'),
+              },
+              {
+                key: 'S2',
+                label: <Radio checked={filter === 'pub'}>显示公开列表</Radio>,
+                onClick: () => setFilter('pub'),
+              },
+              {
+                key: 'S3',
+                label: <Radio checked={filter === 'all'}>管理所有列表</Radio>,
+                onClick: () => setFilter('all'),
+                disabled: !hasBasic,
+              },
+            ],
           },
         ]}
       />
@@ -77,9 +84,9 @@ export default function DiscGroups() {
           defaultSort={defaultSort}
         />
       )}
-      {!hasMore && (
-        <Button type="link" onClick={() => setHasMore(true)} style={{ marginTop: 8 }}>
-          显示停止更新的列表
+      {filter === 'top' && isMore === false && (
+        <Button type="link" onClick={() => setIsMore(true)} style={{ marginTop: 8 }}>
+          点击加载更多列表
         </Button>
       )}
     </div>
