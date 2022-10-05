@@ -11,9 +11,8 @@ interface Props {
 
 export function MzDropdown(props: Props) {
   const { label, children } = props
-  const items = children.filter((item) => item.disabled !== true)
   return (
-    <Dropdown trigger={['click']} overlay={<Menu items={items} />}>
+    <Dropdown trigger={['click']} overlay={<Menu items={removeDisabled(children)} />}>
       <Button>
         <Space size={0}>
           {label}
@@ -22,4 +21,15 @@ export function MzDropdown(props: Props) {
       </Button>
     </Dropdown>
   )
+}
+
+function removeDisabled(items: MzItem[]) {
+  return items
+    .filter((item) => item.disabled !== true)
+    .map((item) => {
+      if ('children' in item && item.children != null) {
+        item.children = removeDisabled(item.children as MzItem[])
+      }
+      return item
+    })
 }
