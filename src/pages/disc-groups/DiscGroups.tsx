@@ -1,7 +1,7 @@
 import { useAppSelector } from '#A/hooks'
 import { MzHeader } from '#C/header/MzHeader'
 import { MzColumn, MzTable } from '#C/table/MzTable'
-import { useLocal } from '#H/useLocal'
+import { useLocal, useSession } from '#H/useLocal'
 import { useData } from '#H/useOnce'
 import { thenCompare } from '#U/compare'
 import { EditOutlined, UnorderedListOutlined } from '@ant-design/icons'
@@ -26,7 +26,7 @@ export default function DiscGroups() {
   const hasBasic = useAppSelector((state) => state.session.hasBasic)
 
   const [filter, setFilter] = useLocal('groups-filter', 'top')
-  const [isMore, setIsMore] = useState(false)
+  const [isMore, setIsMore] = useSession('groups-ismore', false)
 
   const getPub = filter === 'top' && isMore === true
   const apiUrl = apiToGroups(`?filter=${getPub ? 'pub' : filter}`)
@@ -55,18 +55,24 @@ export default function DiscGroups() {
             children: [
               {
                 key: 'S1',
-                label: <Radio checked={filter === 'top'}>显示推荐列表</Radio>,
-                onClick: () => setFilter('top'),
+                label: <Radio checked={filter === 'top' && isMore !== true}>显示推荐列表</Radio>,
+                onClick: () => {
+                  setFilter('top')
+                  setIsMore(false)
+                },
               },
               {
                 key: 'S2',
-                label: <Radio checked={filter === 'pub'}>显示公开列表</Radio>,
+                label: <Radio checked={filter === 'pub' || isMore === true}>显示公开列表</Radio>,
                 onClick: () => setFilter('pub'),
               },
               {
                 key: 'S3',
                 label: <Radio checked={filter === 'all'}>管理所有列表</Radio>,
-                onClick: () => setFilter('all'),
+                onClick: () => {
+                  setFilter('all')
+                  setIsMore(false)
+                },
                 disabled: !hasBasic,
               },
             ],
