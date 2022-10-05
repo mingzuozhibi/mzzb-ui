@@ -57,9 +57,9 @@ export default function Messages({ name, activeKey }: Props) {
     .append('size', params.size)
     .toString()
 
-  const { data: result, ...state } = useOnceRequest(
-    () => fetchResult<IMsg[]>(apiUrl), {
+  const { data: result, ...state } = useOnceRequest(() => fetchResult<IMsg[]>(apiUrl), {
     refreshDeps: [apiUrl],
+    autoScroll: true,
   })
   const { data: msgs, page } = result ?? {}
 

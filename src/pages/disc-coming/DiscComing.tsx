@@ -23,9 +23,9 @@ export default function DiscComing() {
   const navigate = useNavigate()
 
   const apiUrl = apiToSpider(`/discShelfs${location.search}`)
-  const { data: result, ...state } = useOnceRequest(
-    () => fetchResult<IComing[]>(apiUrl), {
+  const { data: result, ...state } = useOnceRequest(() => fetchResult<IComing[]>(apiUrl), {
     refreshDeps: [apiUrl],
+    autoScroll: true,
   })
   const { data: rows, page } = result ?? {}
 
