@@ -7,6 +7,10 @@ interface Props {
   failureName?: string
 }
 
+export function fetchData<T>(input: RequestInfo, init: RequestInit & Props = {}) {
+  return fetchResult<T>(input, init).then((result) => result.data)
+}
+
 export function fetchResult<T>(input: RequestInfo, init: RequestInit & Props = {}) {
   const headers = new Headers(init.headers)
   loadCsrfToken(headers)

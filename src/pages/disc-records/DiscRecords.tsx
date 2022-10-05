@@ -3,9 +3,8 @@ import { RefreshButton } from '#C/button/Refresh'
 import { MzHeader } from '#C/header/MzHeader'
 import { MzColumn, MzTable } from '#C/table/MzTable'
 import { useAjax } from '#H/useAjax'
-import { useOnceRequest } from '#H/useOnce'
+import { useData } from '#H/useOnce'
 import { safeWarpper } from '#U/domain'
-import { fetchResult } from '#U/fetch/fetchResult'
 import { Button, Modal, Space } from 'antd'
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
@@ -27,9 +26,7 @@ export default function DiscRecords() {
   const discId = params.id as string
 
   const apiUrl = apiToDiscs(`/${discId}/records`)
-  const { data: disc, ...state } = useOnceRequest(() =>
-    fetchResult<IDiscRecords>(apiUrl).then((result) => result.data)
-  )
+  const { data: disc, ...state } = useData<IDiscRecords>(apiUrl)
 
   useEffect(() => {
     disc && initEcharts(disc.records)

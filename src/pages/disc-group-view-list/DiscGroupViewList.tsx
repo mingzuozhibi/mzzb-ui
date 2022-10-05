@@ -2,9 +2,8 @@ import { useAppSelector } from '#A/hooks'
 import { MzHeader } from '#C/header/MzHeader'
 import { AllColumns } from '#C/warpper/AllColumns'
 import { useLocal } from '#H/useLocal'
-import { useOnceRequest } from '#H/useOnce'
+import { useData } from '#H/useOnce'
 import { safeWarpper } from '#U/domain'
-import { fetchResult } from '#U/fetch/fetchResult'
 import { SearchOutlined } from '@ant-design/icons'
 import { Input, Select, Space } from 'antd'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -29,9 +28,7 @@ export default function DiscGroupViewList() {
   const [findText, setFindText] = useLocal<string>(`viewlist-findtext-${localKey}`, '')
 
   const apiUrl = apiToGroups(`/key/${groupKey}/discs`)
-  const { data: group, ...state } = useOnceRequest(() =>
-    fetchResult<IGroupDiscs>(apiUrl).then((result) => result.data)
-  )
+  const { data: group, ...state } = useData<IGroupDiscs>(apiUrl)
   const lastRows = sortRows(group?.discs, findText.trim(), findMode)
 
   const hasBasic = useAppSelector((state) => state.session.hasBasic)

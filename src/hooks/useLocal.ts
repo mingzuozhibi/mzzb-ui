@@ -1,14 +1,32 @@
 import { useState } from 'react'
 
+const setLocal = localStorage.setItem.bind(localStorage)
+const getLocal = localStorage.getItem.bind(localStorage)
+
 export function useLocal<T>(key: string, initial: T) {
-  const localKey = `local-${key}`
+  return useStorage(`local-${key}`, initial, setLocal, getLocal)
+}
+
+const setSession = sessionStorage.setItem.bind(sessionStorage)
+const getSession = sessionStorage.getItem.bind(sessionStorage)
+
+export function useSession<T>(key: string, initial: T) {
+  return useStorage(`session-${key}`, initial, setSession, getSession)
+}
+
+export function useStorage<T>(
+  key: string,
+  initial: T,
+  setItem: (key: string, value: string) => void,
+  getItem: (key: string) => string | null
+) {
   const [state, setState] = useState<T>(() => {
-    const value = localStorage.getItem(localKey)
+    const value = getItem(key)
     return JSON.parse(value ?? 'null') ?? initial
   })
-  const setLocal = (value: T) => {
+  const setValue = (value: T) => {
     setState(value)
-    localStorage.setItem(localKey, JSON.stringify(value))
+    setItem(key, JSON.stringify(value))
   }
-  return [state, setLocal] as const
+  return [state, setValue] as const
 }
