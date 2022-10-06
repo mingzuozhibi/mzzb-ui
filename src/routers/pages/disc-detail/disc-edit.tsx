@@ -1,9 +1,11 @@
 import { useAjax } from '#CH/useAjax'
 import { Rules } from '#DT/antd'
-import { Button, Form, Input, Radio } from 'antd'
+import { Button, Form, Input, InputRef, Radio, Space } from 'antd'
 
 import { apiToDiscs } from '#RU/links'
 import { IDisc } from '#DT/disc'
+import { MutableRefObject, useRef } from 'react'
+import { TextAreaRef } from 'antd/lib/input/TextArea'
 
 interface FormEdit {
   titlePc: string
@@ -47,9 +49,19 @@ export function DiscEdit(props: Props) {
     })
   }
 
+  const [form] = Form.useForm()
+  const inputRef = useRef<TextAreaRef | null>(null)
+
+  function appendTo(text: string) {
+    const titlePc = form.getFieldValue('titlePc')
+    form.setFieldValue('titlePc', `${titlePc}${text}`)
+    inputRef.current?.focus()
+  }
+
   return (
     <div className="disc-edit">
       <Form
+        form={form}
         style={{ marginTop: 24 }}
         labelCol={{ span: 5 }}
         wrapperCol={{ span: 16 }}
@@ -60,7 +72,16 @@ export function DiscEdit(props: Props) {
           <Input.TextArea className="readonly" readOnly={true} autoSize={true} value={disc.title} />
         </Form.Item>
         <Form.Item label="中文标题" name="titlePc">
-          <Input.TextArea autoSize={true} />
+          <Input.TextArea ref={(ref) => (inputRef.current = ref)} autoSize={true} />
+        </Form.Item>
+        <Form.Item label="快捷操作">
+          <Space>
+            <Button onClick={() => appendTo('【尼限】')}>尼限</Button>
+            <Button onClick={() => appendTo('全卷')}>全卷</Button>
+            <Button onClick={() => appendTo('BD')}>BD</Button>
+            <Button onClick={() => appendTo('DVD')}>DVD</Button>
+            <Button onClick={() => appendTo('BOX')}>BOX</Button>
+          </Space>
         </Form.Item>
         <Form.Item label="发售日期" name="releaseDate" rules={rules.releaseDate}>
           <Input />
