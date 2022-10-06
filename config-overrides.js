@@ -3,12 +3,17 @@ const path = require('path')
 
 module.exports = override(
   addWebpackAlias({
-    ['#A']: path.resolve(__dirname, 'src/app'),
-    ['#C']: path.resolve(__dirname, 'src/comps'),
-    ['#F']: path.resolve(__dirname, 'src/feats'),
-    ['#H']: path.resolve(__dirname, 'src/hooks'),
-    ['#P']: path.resolve(__dirname, 'src/pages'),
-    ['#T']: path.resolve(__dirname, 'src/types'),
-    ['#U']: path.resolve(__dirname, 'src/utils'),
+    ['#CA']: path.resolve(__dirname, 'src/commons/app'),
+    ['#CC']: path.resolve(__dirname, 'src/commons/comps'),
+    ['#CH']: path.resolve(__dirname, 'src/commons/hooks'),
+    ['#CU']: path.resolve(__dirname, 'src/commons/utils'),
+
+    ['#DF']: path.resolve(__dirname, 'src/domains/feats'),
+    ['#DT']: path.resolve(__dirname, 'src/domains/types'),
+    ['#DU']: path.resolve(__dirname, 'src/domains/utils'),
+
+    ['#RC']: path.resolve(__dirname, 'src/routers/comps'),
+    ['#RP']: path.resolve(__dirname, 'src/routers/pages'),
+    ['#RU']: path.resolve(__dirname, 'src/routers/utils'),
   })
 )

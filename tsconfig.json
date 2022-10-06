@@ -18,13 +18,18 @@
     "jsx": "react-jsx",
     "baseUrl": "./",
     "paths": {
-      "#A/*": ["src/app/*"],
-      "#C/*": ["src/comps/*"],
-      "#F/*": ["src/feats/*"],
-      "#H/*": ["src/hooks/*"],
-      "#P/*": ["src/pages/*"],
-      "#T/*": ["src/types/*"],
-      "#U/*": ["src/utils/*"]
+      "#CA/*": ["src/commons/app/*"],
+      "#CC/*": ["src/commons/comps/*"],
+      "#CH/*": ["src/commons/hooks/*"],
+      "#CU/*": ["src/commons/utils/*"],
+
+      "#DF/*": ["src/domains/feats/*"],
+      "#DT/*": ["src/domains/types/*"],
+      "#DU/*": ["src/domains/utils/*"],
+
+      "#RC/*": ["src/routers/comps/*"],
+      "#RP/*": ["src/routers/pages/*"],
+      "#RU/*": ["src/routers/utils/*"]
     }
   },
   "include": ["src"]

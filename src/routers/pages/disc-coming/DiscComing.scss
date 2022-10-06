@@ -1,0 +1,40 @@
+@import '../../_function.scss';
+
+#root .DiscComing {
+  .just-update-in-1 {
+    color: red;
+  }
+
+  .just-update-in-2:not(.just-update-in-1) {
+    color: blue;
+  }
+
+  .table {
+    table-layout: fixed;
+
+    tr {
+      .asin {
+        @include columnCenter();
+        @include columnPcMo(120px, 75px);
+        padding-left: 5px;
+        padding-right: 5px;
+        word-break: break-all;
+      }
+
+      .createOn {
+        @include columnCenter();
+        @include columnPcHd(75px, 600px);
+      }
+
+      .type {
+        @include columnCenter();
+        @include columnPcMo(50px, 40px);
+      }
+
+      .date {
+        @include columnCenter();
+        @include columnPcHd(55px, 600px);
+      }
+    }
+  }
+}

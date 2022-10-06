@@ -1,0 +1,19 @@
+@import '../../_function.scss';
+
+#root .Messages {
+  .table {
+    table-layout: fixed;
+
+    th,
+    td {
+      &.time {
+        @include columnCenter();
+        @include columnPcMo(75px, 70px);
+      }
+    }
+
+    td.text {
+      word-break: break-all;
+    }
+  }
+}

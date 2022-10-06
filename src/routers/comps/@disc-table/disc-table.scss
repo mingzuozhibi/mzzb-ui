@@ -1,0 +1,59 @@
+@import '../../_function.scss';
+
+#root .disc-table table {
+  table-layout: fixed;
+
+  td,
+  th {
+    &.index {
+      @include columnCenter();
+      @include columnPcMo(40px, 35px);
+      @include columnHide(400px);
+    }
+
+    &.rank {
+      @include columnPcMo(130px, 115px);
+    }
+
+    &.today-pt {
+      @include columnPcHd(75px, 750px);
+    }
+
+    &.total-pt {
+      @include columnPcMo(75px, 68px);
+      @include columnHide(500px);
+    }
+
+    &.guess-pt {
+      @include columnPcHd(75px, 675px);
+    }
+
+    &.release {
+      @include columnPcMo(65px, 55px);
+      @include columnHide(550px);
+    }
+  }
+
+  td {
+    &.rank {
+      word-break: keep-all;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    &.today-pt,
+    &.total-pt,
+    &.guess-pt {
+      word-break: keep-all;
+      white-space: nowrap;
+      text-align: right;
+      padding-left: 0;
+    }
+
+    &.release {
+      text-align: center;
+    }
+  }
+}

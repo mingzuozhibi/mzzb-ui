@@ -1,0 +1,51 @@
+@import '../../_function.scss';
+
+#root .disc-table-compact table {
+  table-layout: fixed;
+
+  th {
+    vertical-align: middle;
+  }
+
+  tr .idx {
+    text-align: center;
+  }
+
+  td.rank {
+    word-break: keep-all;
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  td.point {
+    word-break: keep-all;
+    white-space: nowrap;
+    text-align: right;
+    padding-left: 0;
+  }
+
+  td.release {
+    word-break: keep-all;
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  tr {
+    .idx {
+      @include columnPcMo(40px, 35px);
+      @include columnHide(450px);
+    }
+
+    .rank {
+      @include columnPcMo(80px, 70px);
+    }
+
+    .point {
+      @include columnPcMo(80px, 70px);
+    }
+
+    .release {
+      @include columnPcMo(80px, 70px);
+    }
+  }
+}
