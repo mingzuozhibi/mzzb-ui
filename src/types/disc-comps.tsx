@@ -13,8 +13,8 @@ export function discTitle(disc: IDisc) {
 }
 
 export function discJapan(disc: IDisc) {
-  const regex = /^(【[^】]+】)(.+)$/
+  const regex = /^((【[^【】]+】)+)(.+)$/
   const exec = regex.exec(disc.title)
-  if (exec) return exec[2] + exec[1]
+  if (exec) return exec[3] + exec[1]
   return disc.title
 }
