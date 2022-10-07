@@ -13,10 +13,11 @@ import { linkToDiscs } from '#RU/links'
 interface Props {
   toAdds: IDisc[]
   column: MzColumn<IDisc>
+  showEmpty?: boolean
 }
 
 export function ToAddsList(props: Props) {
-  const { toAdds, column } = props
+  const { toAdds, column, showEmpty = true } = props
   const cols = buildColumns(column)
 
   const dispatch = useAppDispatch()
@@ -42,7 +43,14 @@ export function ToAddsList(props: Props) {
   )
   return (
     <div className="to-adds-list">
-      <MzTable tag="toadds" rows={toAdds} cols={cols} title="待选列表" extraCaption={extra} />
+      <MzTable
+        tag="toadds"
+        rows={toAdds}
+        cols={cols}
+        title="待选列表"
+        extraCaption={extra}
+        showEmptyImage={showEmpty}
+      />
     </div>
   )
 }
