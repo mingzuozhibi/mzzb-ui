@@ -1,0 +1,20 @@
+@import '../../_function.scss';
+
+.to-adds-list {
+  tr {
+    .asin {
+      @include columnCenter();
+      @include columnPcMo(100px, 95px);
+    }
+
+    .release {
+      @include columnCenter();
+      @include columnPcMo(65px, 60px);
+    }
+
+    .command {
+      @include columnCenter();
+      @include columnPcMo(45px, 40px);
+    }
+  }
+}

@@ -1,0 +1,20 @@
+@import '../../_function.scss';
+
+#root .Users {
+  .table {
+    tr {
+      td,
+      th {
+        text-align: center;
+      }
+
+      .id {
+        @include columnPcMo(40px, 35px);
+      }
+
+      .enabled {
+        @include columnPcMo(45px, 40px);
+      }
+    }
+  }
+}

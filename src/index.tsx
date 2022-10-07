@@ -4,9 +4,9 @@ import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 import './index.scss'
 
-import App from '#A/layout/App'
-import { setupDayjs, setupImmer } from '#A/setup'
-import { store } from '#A/store'
+import App from '#CA/layout/App'
+import { setupDayjs, setupImmer } from '#CA/setup'
+import { store } from '#CA/store'
 import reportWebVitals from './reportWebVitals'
 
 setupImmer()

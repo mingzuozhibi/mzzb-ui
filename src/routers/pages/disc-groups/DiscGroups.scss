@@ -1,0 +1,28 @@
+@import '../../_function.scss';
+
+#root .DiscGroups {
+  .table {
+    th,
+    td {
+      &.idx {
+        @include columnCenter();
+        @include columnPcMo(40px, 35px);
+      }
+
+      &.update {
+        @include columnCenter();
+        @include columnPcMo(95px, 90px);
+      }
+
+      &.edit {
+        @include columnCenter();
+        @include columnPcMo(70px, 65px);
+      }
+
+      &.item {
+        @include columnCenter();
+        @include columnPcMo(70px, 65px);
+      }
+    }
+  }
+}

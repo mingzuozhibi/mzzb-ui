@@ -1,0 +1,19 @@
+@import '../../_function.scss';
+
+#root .DiscRecords {
+  .table {
+    th,
+    td {
+      @include columnCenter();
+      &.idx {
+        @include columnPcMo(40px, 35px);
+      }
+    }
+  }
+  .tooltip-table {
+    tr td:nth-child(2) {
+      text-align: right;
+      padding-left: 8px;
+    }
+  }
+}
