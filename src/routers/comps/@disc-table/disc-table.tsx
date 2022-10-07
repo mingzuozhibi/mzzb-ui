@@ -1,20 +1,12 @@
 import { MzColumn, MzTable } from '#CC/table/MzTable'
-import { formatNumber } from '#RU/format'
 import { Link } from 'react-router-dom'
 import './disc-table.scss'
 
-import { linkToDiscs } from '#RU/links'
 import { IDisc } from '#DT/disc'
-import { discJapan, discTitle } from '#DU/disc-comps'
-import {
-  compareJapan,
-  comparePt,
-  compareRank,
-  compareRelease,
-  compareTitle,
-  formatPt,
-  tdClassRank,
-} from '#DU/disc-utils'
+import { discJapan, discTitle, formatPt, tdClassRank } from '#DU/disc-comps'
+import { compareRelease, compareJapan, comparePt, compareRank, compareTitle } from '#DU/disc-utils'
+import { formatNumber } from '#RU/format'
+import { linkToDiscs } from '#RU/links'
 
 interface Props {
   name: string

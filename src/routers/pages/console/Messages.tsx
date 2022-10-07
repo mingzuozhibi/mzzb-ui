@@ -3,15 +3,15 @@ import { MzCheckbox } from '#CC/checkbox/MzCheckbox'
 import { MzLink } from '#CC/link/MzLink'
 import { MzPagination } from '#CC/pagination/MzPagination'
 import { MzColumn, MzTable } from '#CC/table/MzTable'
+
 import { useResult } from '#CH/useOnce'
 import { UrlBuilder } from '#CU/urlBuilder'
 import { Alert, DatePicker, Input, Space } from 'antd'
-import { useEffect } from 'react'
-import { useImmer } from 'use-immer'
+import { useEffect, useState } from 'react'
 import './Messages.scss'
 
-import { apiToMsgs, linkToDiscs } from '#RU/links'
 import { msgLevels } from '#DT/metas'
+import { apiToMsgs, linkToDiscs } from '#RU/links'
 import dayjs from 'dayjs'
 
 interface IMsg {
@@ -41,7 +41,7 @@ const initTypes = msgLevels.map((e) => e.value)
 const cols = buildColumns()
 
 export default function Messages({ name, activeKey }: Props) {
-  const [params, setParams] = useImmer<Params>({
+  const [params, setParams] = useState<Params>({
     types: initTypes,
     page: 1,
     size: 20,
@@ -69,35 +69,22 @@ export default function Messages({ name, activeKey }: Props) {
   }, [activeKey])
 
   function onChangePage(page: number, size: number = 20) {
-    setParams((draft) => {
-      draft.page = page
-      draft.size = size
-    })
+    setParams({ ...params, page, size })
     window.scroll(0, 0)
   }
 
   function onChangeTypes(checked: any[]) {
-    setParams((draft) => {
-      draft.page = 1
-      draft.types = checked
-    })
+    setParams({ ...params, page: 1, types: checked })
     window.scroll(0, 0)
   }
 
   function onChangeRange(_moments: any, formats: [string, string]) {
-    setParams((draft) => {
-      draft.page = 1
-      draft.start = formats[0]
-      draft.end = formats[1]
-    })
+    setParams({ ...params, page: 1, start: formats[0], end: formats[1] })
     window.scroll(0, 0)
   }
 
   function onSearch(value: string) {
-    setParams((draft) => {
-      draft.page = 1
-      draft.query = value
-    })
+    setParams({ ...params, page: 1, query: value })
     window.scroll(0, 0)
   }
 

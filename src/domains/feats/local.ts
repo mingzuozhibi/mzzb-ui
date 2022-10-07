@@ -1,5 +1,5 @@
 import { IDisc } from '#DT/disc'
-import { AnyAction, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 interface LocalState {
   toAdds: IDisc[]

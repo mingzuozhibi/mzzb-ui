@@ -4,11 +4,11 @@ import { Button, Popconfirm, Space } from 'antd'
 import { Link } from 'react-router-dom'
 import './to-adds-list.scss'
 
-import { linkToDiscs } from '#RU/links'
 import { cleanToAdds, reoladToAdds } from '#DF/local'
 import { IDisc } from '#DT/disc'
 import { discTitle } from '#DU/disc-comps'
 import { compareRelease, compareTitle } from '#DU/disc-utils'
+import { linkToDiscs } from '#RU/links'
 
 interface Props {
   toAdds: IDisc[]

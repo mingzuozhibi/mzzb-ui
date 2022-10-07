@@ -1,6 +1,6 @@
-import { IPage } from '#DT/result'
 import { safeWarpper } from '#CU/empty'
 import { fetchResult } from '#CU/fetch'
+import { IPage } from '#DT/result'
 import { useCallback, useState } from 'react'
 
 interface Options<T> {

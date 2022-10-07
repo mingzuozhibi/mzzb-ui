@@ -1,9 +1,8 @@
-import { useRequest } from 'ahooks'
-import { useEffect, useRef } from 'react'
-
-import { Service, Options, Plugin, Result } from 'ahooks/lib/useRequest/src/types'
 import { fetchData, fetchResult } from '#CU/fetch'
 import { IResult } from '#DT/result'
+import { useRequest } from 'ahooks'
+import { Options, Plugin, Result, Service } from 'ahooks/lib/useRequest/src/types'
+import { useEffect, useRef } from 'react'
 
 export function useOnceService(service: () => void) {
   const ref = useRef(true)

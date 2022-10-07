@@ -8,12 +8,11 @@ import { SearchOutlined } from '@ant-design/icons'
 import { Input, Select, Space } from 'antd'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import { apiToGroups, linkToGroups } from '#RU/links'
 import { IDisc, IGroupDiscs } from '#DT/disc'
+import { DiscTable } from '#RC/@disc-table/disc-table'
+import { DiscTableCompact } from '#RC/@disc-table/disc-table-compact'
+import { apiToGroups, linkToGroups } from '#RU/links'
 import { formatTimeout } from '#RU/timeout'
-
-import { DiscTable } from '../../comps/@disc-table/disc-table'
-import { DiscTableCompact } from '../../comps/@disc-table/disc-table-compact'
 
 type ViewMode = 'all' | 'auto' | 'compact'
 

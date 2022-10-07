@@ -7,10 +7,10 @@ import { Button, Card, Form, Input, Popconfirm, Radio, Space, Switch } from 'ant
 import { useState } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
 
-import { apiToGroups } from '#RU/links'
-import { viewTypes } from '#DT/metas'
 import { Rules } from '#DT/antd'
 import { IGroup } from '#DT/disc'
+import { viewTypes } from '#DT/metas'
+import { apiToGroups } from '#RU/links'
 
 interface FormEdit {
   key: string

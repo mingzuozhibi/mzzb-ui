@@ -9,13 +9,12 @@ import { useCallback, useMemo } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import './DiscGroupEditList.scss'
 
-import { apiToGroups, linkToGroups } from '#RU/links'
 import { dropToAdds, pushToAdds } from '#DF/local'
 import { IDisc, IGroupDiscs } from '#DT/disc'
 import { compareRelease } from '#DU/disc-utils'
-
-import { buildColumns, ToAddsList } from '../../comps/@to-add-list/to-adds-list'
-import { ToAddsTabs } from '../../comps/@to-add-list/to-adds-tabs'
+import { buildColumns, ToAddsList } from '#RC/@to-add-list/to-adds-list'
+import { ToAddsTabs } from '#RC/@to-add-list/to-adds-tabs'
+import { apiToGroups, linkToGroups } from '#RU/links'
 
 export default function DiscGroupEditList() {
   const params = useParams<{ key: string }>()

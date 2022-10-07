@@ -10,11 +10,10 @@ import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import './DiscRecords.scss'
 
-import { apiToDiscs, apiToSpider } from '#RU/links'
 import { IDiscRecords, IRecord } from '#DT/disc'
-import { discTitle } from '#DU/disc-comps'
-import { formatPt } from '#DU/disc-utils'
+import { discTitle, formatPt } from '#DU/disc-comps'
 import { formatNumber } from '#RU/format'
+import { apiToDiscs, apiToSpider } from '#RU/links'
 import dayjs from 'dayjs'
 
 import { initEcharts } from './echarts'

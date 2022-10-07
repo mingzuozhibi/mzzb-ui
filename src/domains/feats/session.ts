@@ -1,6 +1,6 @@
-import { apiToSession } from '#RU/links'
-import { ISession } from '#DT/user'
 import { fetchResult } from '#CU/fetch'
+import { ISession } from '#DT/user'
+import { apiToSession } from '#RU/links'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 interface SessionState extends ISession {}

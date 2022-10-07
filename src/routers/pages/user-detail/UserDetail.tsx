@@ -5,10 +5,10 @@ import { safeWarpper } from '#CU/empty'
 import { Button, Card, Form, Input, Switch } from 'antd'
 import { useParams } from 'react-router-dom'
 
-import { apiToUsers } from '#RU/links'
 import { Rules } from '#DT/antd'
 import { IUser } from '#DT/user'
 import { encodePassword } from '#DU/user-utils'
+import { apiToUsers } from '#RU/links'
 
 interface FormEdit {
   username: string

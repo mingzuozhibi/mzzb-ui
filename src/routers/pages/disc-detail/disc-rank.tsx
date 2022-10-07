@@ -1,9 +1,8 @@
 import { useAjax } from '#CH/useAjax'
-import { Button, Form, Input } from 'antd'
-
-import { apiToDiscs } from '#RU/links'
 import { IDisc } from '#DT/disc'
 import { amazonLink } from '#DU/disc-comps'
+import { apiToDiscs } from '#RU/links'
+import { Button, Form, Input } from 'antd'
 
 interface FormEdit {
   rank: number

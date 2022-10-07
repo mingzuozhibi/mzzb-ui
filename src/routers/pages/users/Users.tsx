@@ -6,9 +6,9 @@ import { Button } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import './Users.scss'
 
-import { apiToUsers, linkToUsers } from '#RU/links'
 import { IUser } from '#DT/user'
 import { isJustUpdate } from '#RU/check'
+import { apiToUsers, linkToUsers } from '#RU/links'
 import dayjs from 'dayjs'
 
 const cols = buildColumns()

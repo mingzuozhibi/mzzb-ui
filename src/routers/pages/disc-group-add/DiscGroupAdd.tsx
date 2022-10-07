@@ -3,9 +3,9 @@ import { useAjax } from '#CH/useAjax'
 import { Button, Card, Form, Input, Radio, Space, Switch } from 'antd'
 import { useLocation, useNavigate } from 'react-router-dom'
 
-import { apiToGroups, linkToGroups } from '#RU/links'
-import { viewTypes } from '#DT/metas'
 import { Rules } from '#DT/antd'
+import { viewTypes } from '#DT/metas'
+import { apiToGroups, linkToGroups } from '#RU/links'
 
 interface FormCreate {
   key: string

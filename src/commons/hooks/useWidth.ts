@@ -1,4 +1,4 @@
-import debounce from 'lodash.debounce'
+import { debounce } from 'lodash'
 import { useEffect, useState } from 'react'
 
 export function useWidth(selector: string) {

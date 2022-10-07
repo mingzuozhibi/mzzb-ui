@@ -1,9 +1,9 @@
 import { useTitle } from '#CH/useTitle'
 import { Tabs } from 'antd'
 import { useLocation, useNavigate } from 'react-router-dom'
-import Messages from './Messages'
 
 import { msgModules } from '#DT/metas'
+import Messages from './Messages'
 
 export default function Console() {
   const location = useLocation()

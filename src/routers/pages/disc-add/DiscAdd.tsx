@@ -5,8 +5,8 @@ import { useLocation } from 'react-router-dom'
 
 import { dropToAdds } from '#DF/local'
 import { IComing, IDisc } from '#DT/disc'
-import { ToAddsList } from '../../comps/@to-add-list/to-adds-list'
-import { ToAddsTabs } from '../../comps/@to-add-list/to-adds-tabs'
+import { ToAddsList } from '#RC/@to-add-list/to-adds-list'
+import { ToAddsTabs } from '#RC/@to-add-list/to-adds-tabs'
 
 export default function DiscAdd() {
   const location = useLocation()
