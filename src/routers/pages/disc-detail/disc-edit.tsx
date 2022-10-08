@@ -7,6 +7,7 @@ import { useRef } from 'react'
 import { Rules } from '#DT/antd'
 import { IDisc } from '#DT/disc'
 import { apiToDiscs } from '#RU/links'
+import { amazonLink } from '#DU/disc-comps'
 
 interface FormEdit {
   titlePc: string
@@ -85,7 +86,7 @@ export function DiscEdit(props: Props) {
           </Space>
         </Form.Item>
         <Form.Item label="发售日期" name="releaseDate" rules={rules.releaseDate}>
-          <Input />
+          <Input addonAfter={amazonLink(disc.asin)} />
         </Form.Item>
         <Form.Item label="碟片类型" name="discType" rules={rules.discType}>
           <Radio.Group>
