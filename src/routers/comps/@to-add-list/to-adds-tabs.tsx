@@ -1,7 +1,8 @@
 import { useAppDispatch } from '#CA/hooks'
+import { SubmitItem } from '#CC/form/SubmitItem'
 import { useAjax } from '#CH/useAjax'
 import { safeWarpper } from '#CU/empty'
-import { Button, Form, Input, Modal, Radio, Space, Tabs } from 'antd'
+import { Button, Form, Input, Modal, Radio, Tabs } from 'antd'
 import { useState } from 'react'
 
 import { pushToAdds } from '#DF/local'
@@ -139,16 +140,14 @@ export function ToAddsTabs(props: Props) {
             <Input value={fetchCount} readOnly />
           </Form.Item>
         )}
-        <Form.Item wrapperCol={{ offset: 6 }}>
-          <Space size="large">
-            <Button type="primary" htmlType="submit" loading={isGet}>
-              查询碟片
-            </Button>
-            <Button loading={loadingFetchCount} onClick={onLoadFetchCount}>
-              查询抓取总数
-            </Button>
-          </Space>
-        </Form.Item>
+        <SubmitItem>
+          <Button type="primary" htmlType="submit" loading={isGet}>
+            查询碟片
+          </Button>
+          <Button loading={loadingFetchCount} onClick={onLoadFetchCount}>
+            查询抓取总数
+          </Button>
+        </SubmitItem>
       </Form>
     )
   }
@@ -181,14 +180,12 @@ export function ToAddsTabs(props: Props) {
             <Radio.Button value="Other">未知</Radio.Button>
           </Radio.Group>
         </Form.Item>
-        <Form.Item wrapperCol={{ offset: 6 }}>
-          <Space size="large">
-            <Button type="primary" htmlType="submit" loading={isPost}>
-              创建碟片
-            </Button>
-            <Button onClick={setDateNow}>填充日期</Button>
-          </Space>
-        </Form.Item>
+        <SubmitItem>
+          <Button type="primary" htmlType="submit" loading={isPost}>
+            创建碟片
+          </Button>
+          <Button onClick={setDateNow}>填充日期</Button>
+        </SubmitItem>
       </Form>
     )
   }

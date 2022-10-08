@@ -1,3 +1,4 @@
+import { SubmitItem } from '#CC/form/SubmitItem'
 import { MzHeader } from '#CC/header/MzHeader'
 import { useAjax } from '#CH/useAjax'
 import { useData } from '#CH/useOnce'
@@ -76,11 +77,11 @@ export default function UserDetail() {
             <Form.Item label="是否启用" name="enabled" valuePropName="checked">
               <Switch />
             </Form.Item>
-            <Form.Item wrapperCol={{ offset: 6 }}>
+            <SubmitItem>
               <Button type="primary" htmlType="submit" loading={isEdit}>
                 提交更新
               </Button>
-            </Form.Item>
+            </SubmitItem>
           </Form>
         </Card>
       ))}

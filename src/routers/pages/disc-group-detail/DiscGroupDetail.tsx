@@ -1,9 +1,10 @@
 import { useAppSelector } from '#CA/hooks'
+import { SubmitItem } from '#CC/form/SubmitItem'
 import { MzHeader } from '#CC/header/MzHeader'
 import { useAjax } from '#CH/useAjax'
 import { useData } from '#CH/useOnce'
 import { safeWarpper } from '#CU/empty'
-import { Button, Card, Form, Input, Popconfirm, Radio, Space, Switch } from 'antd'
+import { Button, Card, Form, Input, Popconfirm, Radio, Switch } from 'antd'
 import { useState } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
 
@@ -93,33 +94,35 @@ export default function DiscGroupDetail() {
             <Form.Item label="是否更新" name="enabled" valuePropName="checked">
               <Switch />
             </Form.Item>
-            <Form.Item wrapperCol={{ offset: 6 }}>
-              {deleted ? (
-                <Navigate to="/disc_groups/add" state={deleted} />
-              ) : (
-                <Space size="large">
-                  <Button type="primary" htmlType="submit" loading={isEdit}>
-                    提交更新
-                  </Button>
-                  {hasAdmin && (
-                    <Popconfirm
-                      title="你确定要删除这个列表吗？"
-                      placement="bottomRight"
-                      okText="Yes"
-                      cancelText="No"
-                      onConfirm={doDeleteGroup}
-                    >
-                      <Button danger={true} loading={isDrop}>
-                        删除列表
-                      </Button>
-                    </Popconfirm>
-                  )}
-                </Space>
-              )}
-            </Form.Item>
+            {deleted ? (
+              <Navigate to="/disc_groups/add" state={deleted} />
+            ) : (
+              <SubmitItem>
+                <Button type="primary" htmlType="submit" loading={isEdit}>
+                  提交更新
+                </Button>
+                {hasAdmin && deleteButton()}
+              </SubmitItem>
+            )}
           </Form>
         </Card>
       ))}
     </div>
   )
+
+  function deleteButton() {
+    return (
+      <Popconfirm
+        title="你确定要删除这个列表吗？"
+        placement="bottomRight"
+        okText="Yes"
+        cancelText="No"
+        onConfirm={doDeleteGroup}
+      >
+        <Button danger={true} loading={isDrop}>
+          删除列表
+        </Button>
+      </Popconfirm>
+    )
+  }
 }

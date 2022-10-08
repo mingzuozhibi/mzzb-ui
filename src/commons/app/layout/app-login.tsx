@@ -1,6 +1,7 @@
 import { useAppDispatch, useAppSelector } from '#CA/hooks'
+import { SubmitItem } from '#CC/form/SubmitItem'
 import { CloseOutlined } from '@ant-design/icons'
-import { Button, Drawer, Form, Input, Space } from 'antd'
+import { Button, Drawer, Form, Input } from 'antd'
 
 import { setViewLogin } from '#DF/layout'
 import { sessionLogin } from '#DF/session'
@@ -64,14 +65,12 @@ export function AppLogin() {
         <Form.Item label="用户密码" name="password" rules={rules.password}>
           <Input.Password />
         </Form.Item>
-        <Form.Item wrapperCol={{ offset: 6 }}>
-          <Space size="large">
-            <Button type="primary" htmlType="submit" loading={submiting}>
-              登入
-            </Button>
-            <Button onClick={onCancel}>取消</Button>
-          </Space>
-        </Form.Item>
+        <SubmitItem>
+          <Button type="primary" htmlType="submit" loading={submiting}>
+            登入
+          </Button>
+          <Button onClick={onCancel}>取消</Button>
+        </SubmitItem>
       </Form>
     </Drawer>
   )
