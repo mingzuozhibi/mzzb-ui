@@ -1,3 +1,4 @@
+import { SubmitItem } from '#CC/form/SubmitItem'
 import { MzHeader } from '#CC/header/MzHeader'
 import { useAjax } from '#CH/useAjax'
 import { Button, Card, Form, Input, Switch } from 'antd'
@@ -73,11 +74,11 @@ export default function UserAdd() {
           <Form.Item label="是否启用" name="enabled" valuePropName="checked">
             <Switch />
           </Form.Item>
-          <Form.Item wrapperCol={{ offset: 6 }}>
+          <SubmitItem>
             <Button type="primary" htmlType="submit" loading={isPost}>
               添加用户
             </Button>
-          </Form.Item>
+          </SubmitItem>
         </Form>
       </Card>
     </div>

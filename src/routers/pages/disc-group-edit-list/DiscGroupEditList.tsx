@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '#CA/hooks'
 import { MzHeader } from '#CC/header/MzHeader'
-import { MzTable } from '#CC/table/MzTable'
+import { MzColumn, MzTable } from '#CC/table/MzTable'
 import { useAjax } from '#CH/useAjax'
 import { useData } from '#CH/useOnce'
 import { DownCircleOutlined, UpCircleOutlined } from '@ant-design/icons'
@@ -41,10 +41,11 @@ export default function DiscGroupEditList() {
     })
   }
 
-  const pushColumn = {
+  const pushColumn: MzColumn<IDisc> = {
     key: 'command',
     title: '添加',
-    format: (row: IDisc) => <DownCircleOutlined onClick={() => doPushDiscs(group!.id, row.id)} />,
+    format: () => <DownCircleOutlined />,
+    tdClick: (row) => doPushDiscs(group!.id, row.id),
   }
 
   const [, doDrop] = useAjax<IDisc>('delete')
@@ -70,7 +71,8 @@ export default function DiscGroupEditList() {
       buildColumns({
         key: 'command',
         title: '移除',
-        format: (row: IDisc) => <UpCircleOutlined onClick={() => doDropDiscs(group!.id, row.id)} />,
+        format: () => <UpCircleOutlined />,
+        tdClick: (row: IDisc) => doDropDiscs(group!.id, row.id),
       }),
     [doDropDiscs, group]
   )
@@ -90,7 +92,7 @@ export default function DiscGroupEditList() {
     <div className="DiscGroupEditList" style={{ maxWidth: 650 }}>
       <MzHeader title={{ prefix: '管理碟片', suffix: group?.title }} state={state} />
       <ToAddsTabs toAdds={toAdds} />
-      <ToAddsList toAdds={toAdds} column={pushColumn} />
+      <ToAddsList toAdds={toAdds} column={pushColumn} showEmpty={false} />
       {group && (
         <MzTable
           tag="editlist"

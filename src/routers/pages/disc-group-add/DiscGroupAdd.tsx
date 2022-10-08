@@ -1,6 +1,7 @@
+import { SubmitItem } from '#CC/form/SubmitItem'
 import { MzHeader } from '#CC/header/MzHeader'
 import { useAjax } from '#CH/useAjax'
-import { Button, Card, Form, Input, Radio, Space, Switch } from 'antd'
+import { Button, Card, Form, Input, Radio, Switch } from 'antd'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 import { Rules } from '#DT/antd'
@@ -78,20 +79,20 @@ export default function DiscGroupAdd() {
           <Form.Item label="是否更新" name="enabled" valuePropName="checked">
             <Switch />
           </Form.Item>
-          <Form.Item wrapperCol={{ offset: 6 }}>
-            {location.state ? (
-              <Space size="large">
-                <Button type="primary" htmlType="submit" loading={isPost}>
-                  重新添加
-                </Button>
-                <Button onClick={() => navigate(linkToGroups())}>点击返回</Button>
-              </Space>
-            ) : (
+          {location.state ? (
+            <SubmitItem>
+              <Button type="primary" htmlType="submit" loading={isPost}>
+                重新添加
+              </Button>
+              <Button onClick={() => navigate(linkToGroups())}>点击返回</Button>
+            </SubmitItem>
+          ) : (
+            <SubmitItem>
               <Button type="primary" htmlType="submit" loading={isPost}>
                 添加列表
               </Button>
-            )}
-          </Form.Item>
+            </SubmitItem>
+          )}
         </Form>
       </Card>
     </div>

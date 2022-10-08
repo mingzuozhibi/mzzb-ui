@@ -1,8 +1,10 @@
+import { SubmitItem } from '#CC/form/SubmitItem'
 import { useAjax } from '#CH/useAjax'
+import { Button, Form, Input } from 'antd'
+
 import { IDisc } from '#DT/disc'
 import { amazonLink } from '#DU/disc-comps'
 import { apiToDiscs } from '#RU/links'
-import { Button, Form, Input } from 'antd'
 
 interface FormEdit {
   rank: number
@@ -46,11 +48,11 @@ export function DiscRank(props: Props) {
         <Form.Item label="前回排名">
           <Input readOnly={true} value={disc.prevRank} />
         </Form.Item>
-        <Form.Item wrapperCol={{ offset: 5 }}>
+        <SubmitItem>
           <Button type="primary" htmlType="submit" loading={isEdit}>
             提交修改
           </Button>
-        </Form.Item>
+        </SubmitItem>
       </Form>
     </div>
   )

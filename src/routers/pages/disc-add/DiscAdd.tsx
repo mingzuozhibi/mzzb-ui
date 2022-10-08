@@ -7,6 +7,7 @@ import { dropToAdds } from '#DF/local'
 import { IComing, IDisc } from '#DT/disc'
 import { ToAddsList } from '#RC/@to-add-list/to-adds-list'
 import { ToAddsTabs } from '#RC/@to-add-list/to-adds-tabs'
+import { MzColumn } from '#CC/table/MzTable'
 
 export default function DiscAdd() {
   const location = useLocation()
@@ -14,10 +15,11 @@ export default function DiscAdd() {
 
   const dispatch = useAppDispatch()
   const toAdds = useAppSelector((state) => state.local.toAdds)
-  const column = {
+  const column: MzColumn<IDisc> = {
     key: 'command',
     title: '移除',
-    format: (row: IDisc) => <DeleteOutlined onClick={() => dispatch(dropToAdds(row))} />,
+    format: () => <DeleteOutlined />,
+    tdClick: (row) => dispatch(dropToAdds(row)),
   }
 
   return (

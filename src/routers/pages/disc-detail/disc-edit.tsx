@@ -1,3 +1,4 @@
+import { SubmitItem } from '#CC/form/SubmitItem'
 import { useAjax } from '#CH/useAjax'
 import { Button, Form, Input, Radio, Space } from 'antd'
 import { TextAreaRef } from 'antd/lib/input/TextArea'
@@ -6,6 +7,7 @@ import { useRef } from 'react'
 import { Rules } from '#DT/antd'
 import { IDisc } from '#DT/disc'
 import { apiToDiscs } from '#RU/links'
+import { amazonLink } from '#DU/disc-comps'
 
 interface FormEdit {
   titlePc: string
@@ -84,7 +86,7 @@ export function DiscEdit(props: Props) {
           </Space>
         </Form.Item>
         <Form.Item label="发售日期" name="releaseDate" rules={rules.releaseDate}>
-          <Input />
+          <Input addonAfter={amazonLink(disc.asin)} />
         </Form.Item>
         <Form.Item label="碟片类型" name="discType" rules={rules.discType}>
           <Radio.Group>
@@ -95,11 +97,11 @@ export function DiscEdit(props: Props) {
             <Radio.Button value="Other">未知</Radio.Button>
           </Radio.Group>
         </Form.Item>
-        <Form.Item wrapperCol={{ offset: 5 }}>
+        <SubmitItem>
           <Button type="primary" htmlType="submit" loading={isEdit}>
             提交修改
           </Button>
-        </Form.Item>
+        </SubmitItem>
       </Form>
     </div>
   )

@@ -13,17 +13,19 @@ export interface MzColumn<T> {
   title: React.ReactNode
   format: (row: T, idx: number) => React.ReactNode
   tdClass?: (row: T) => Argument
+  tdClick?: (row: T) => void
   compare?: (a: T, b: T) => number
 }
 
 interface Props<T> {
   tag: string
-  rows: T[]
   cols: MzColumn<T>[]
+  rows?: T[]
   title?: React.ReactNode
   trClass?: (row: T) => Argument
   defaultSort?: (a: T, b: T) => number
   extraCaption?: React.ReactNode
+  showEmptyImage?: boolean
 }
 
 interface State {
@@ -32,11 +34,11 @@ interface State {
 }
 
 export function MzTable<T extends BaseRow>(props: Props<T>) {
-  const { tag, cols, title, defaultSort, extraCaption } = props
+  const { cols, title, defaultSort, extraCaption } = props
 
-  const [{ sortKey, sortAsc }, setState] = useLocal<State>(`table-state-${tag}`, {})
+  const [{ sortKey, sortAsc }, setSort] = useLocal<State>(`table-state-${props.tag}`, {})
 
-  const rows = sortRows()
+  const lastRows = sortRows()
 
   return (
     <div className="MzTable">
@@ -49,16 +51,16 @@ export function MzTable<T extends BaseRow>(props: Props<T>) {
                 key={col.key}
                 children={col.title}
                 className={thClass(col)}
-                onClick={col.compare ? () => thClick(col) : () => setState({})}
+                onClick={col.compare ? () => thClick(col) : () => setSort({})}
               />
             ))}
           </tr>
         </thead>
         <tbody>
-          {rows.map((row, idx) => (
+          {lastRows.map((row, idx) => (
             <tr key={row.id} id={`row-${row.id}`} className={trClass(row)}>
               {cols.map((col) => (
-                <td key={col.key} className={tdClass(col, row)}>
+                <td key={col.key} className={tdClass(col, row)} onClick={() => col.tdClick?.(row)}>
                   {col.format(row, idx)}
                 </td>
               ))}
@@ -66,7 +68,7 @@ export function MzTable<T extends BaseRow>(props: Props<T>) {
           ))}
         </tbody>
       </table>
-      {rows.length === 0 && (
+      {lastRows.length === 0 && props.showEmptyImage !== false && (
         <div className="empty-warpper">
           <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
         </div>
@@ -84,7 +86,7 @@ export function MzTable<T extends BaseRow>(props: Props<T>) {
   }
 
   function sortRows() {
-    const array = [...props.rows]
+    const array = [...(props.rows ?? [])]
     if (sortKey) {
       const findCol = cols.find((col) => col.key === sortKey)
       if (findCol && findCol.compare) {
@@ -101,11 +103,11 @@ export function MzTable<T extends BaseRow>(props: Props<T>) {
 
   function thClick(col: MzColumn<T>) {
     if (sortKey !== col.key) {
-      setState({ sortKey: col.key, sortAsc: true })
+      setSort({ sortKey: col.key, sortAsc: true })
     } else if (sortAsc === true) {
-      setState({ sortKey, sortAsc: false })
+      setSort({ sortKey, sortAsc: false })
     } else {
-      setState({})
+      setSort({})
     }
   }
 
