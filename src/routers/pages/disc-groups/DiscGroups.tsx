@@ -3,22 +3,19 @@ import { MzHeader } from '#CC/header/MzHeader'
 import { MzColumn, MzTable } from '#CC/table/MzTable'
 import { useLocal, useSession } from '#CH/useLocal'
 import { useData } from '#CH/useOnce'
-import { composeCompares } from '#CU/compare'
 import { EditOutlined, UnorderedListOutlined } from '@ant-design/icons'
 import { Button, Radio, Space } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import './DiscGroups.scss'
 
 import { IGroupCount } from '#DT/disc'
-import { viewTypes } from '#DT/metas'
+import { compareGroups, formatUpdate } from '#DU/group-utils'
 import { isJustUpdate } from '#RU/check'
 import { apiToGroups, linkToGroups } from '#RU/links'
 import { formatTimeout } from '#RU/timeout'
 
 const adminCols = buildColumns()
 const guestCols = adminCols.filter((col) => !['edit', 'item'].includes(col.key))
-
-const defaultSort = compareDiscGroups()
 
 export default function DiscGroups() {
   const navigate = useNavigate()
@@ -85,7 +82,7 @@ export default function DiscGroups() {
             rows={groups}
             cols={lastCols}
             trClass={trClass}
-            defaultSort={defaultSort}
+            defaultSort={compareGroups}
           />
           {filter === 'top' && isMore === false && (
             <Button type="link" onClick={() => setIsMore(true)}>
@@ -125,10 +122,7 @@ function buildColumns(): MzColumn<IGroupCount>[] {
     {
       key: 'update',
       title: '最后更新',
-      format: (row) => {
-        if (!row.enabled || !row.modifyTime) return '停止更新'
-        return formatTimeout(row.modifyTime)
-      },
+      format: formatUpdate,
     },
     {
       key: 'edit',
@@ -153,12 +147,4 @@ function buildColumns(): MzColumn<IGroupCount>[] {
       },
     },
   ]
-}
-
-function compareDiscGroups() {
-  const sorts = viewTypes.map((e) => e.value)
-  return composeCompares<IGroupCount>(
-    (a, b) => sorts.indexOf(a.viewType) - sorts.indexOf(b.viewType),
-    (a, b) => b.key.localeCompare(a.key)
-  )
 }
