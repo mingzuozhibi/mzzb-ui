@@ -13,7 +13,11 @@
     "size": "source-map-explorer 'build/static/js/*.js' --html >~/downs/size.html",
     "c1": "sed -i 's/http:/https:/g' yarn.lock",
     "c2": "sed -i 's/mirrors.cloud.tencent.com/mirrors.tencent.com/g' yarn.lock",
-    "ca": "yarn c1 && yarn c2"
+    "ca": "yarn c1 && yarn c2",
+    "t1": "sed -i '7,8s/#proxy/#temp/g' package.json",
+    "t2": "sed -i '7,8s/proxy/#proxy/g' package.json",
+    "t3": "sed -i '7,8s/#temp/proxy/g' package.json",
+    "ta": "yarn t1 && yarn t2 && yarn t3"
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
