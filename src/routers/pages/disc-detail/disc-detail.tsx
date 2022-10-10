@@ -1,15 +1,15 @@
 import { useAppSelector } from '#CA/hooks'
 import { MzHeader } from '#CC/header/MzHeader'
-import { useLocal } from '#CH/useLocal'
+import { useSession } from '#CH/useLocal'
 import { useData } from '#CH/useOnce'
 import { Tabs } from 'antd'
 
 import { IDisc } from '#DT/disc'
 import { discTitle } from '#DU/disc-comps'
 import { DiscEdit } from './disc-edit'
+import { DiscGroups } from './disc-groups'
 import { DiscRank } from './disc-rank'
 import { DiscView } from './disc-view'
-import { DiscGroups } from './disc-groups'
 
 interface Props {
   apiUrl: string
@@ -19,7 +19,7 @@ export function DiscDetail({ apiUrl }: Props) {
   const { data: disc, ...state } = useData<IDisc>(apiUrl)
 
   const hasBasic = useAppSelector((state) => state.session.hasBasic)
-  const [tabKey, setTabKey] = useLocal<string>('discdetail-tabkey', 'disc-view')
+  const [tabKey, setTabKey] = useSession<string>('discdetail-tabkey', 'disc-view')
 
   return (
     <div className="disc-detail" style={{ maxWidth: 650 }}>
