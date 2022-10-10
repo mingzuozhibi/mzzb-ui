@@ -1,0 +1,22 @@
+@import '../../_function.scss';
+
+#root .disc-groups {
+  .table {
+    tr {
+      .idx {
+        @include columnCenter();
+        @include columnPcMo(40px, 35px);
+      }
+
+      .update {
+        @include columnCenter();
+        @include columnPcMo(100px, 90px);
+      }
+
+      .command {
+        @include columnCenter();
+        @include columnPcMo(100px, 90px);
+      }
+    }
+  }
+}

@@ -7,6 +7,7 @@ import {
   BarChartOutlined,
   CloudOutlined,
   GithubOutlined,
+  SearchOutlined,
   UserOutlined,
 } from '@ant-design/icons'
 
@@ -20,6 +21,11 @@ export function buildItems(userRoles: string[]): ItemType[] {
       label: '推荐列表',
       icon: <MzIcon type="icon-yinghua" />,
       key: linkToGroups(),
+    },
+    {
+      label: '查找碟片',
+      icon: <SearchOutlined />,
+      key: linkToDiscs(`/search`),
     },
     {
       label: '上架追踪',

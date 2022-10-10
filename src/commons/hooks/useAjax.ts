@@ -17,8 +17,8 @@ export function useAjax<T>(method: 'get' | 'put' | 'post' | 'patch' | 'delete') 
       fetchResult<T>(url, {
         method: method.toLocaleUpperCase(),
         body: safeWarpper(body, JSON.stringify),
-        successText: `${title}成功`,
-        failureName: `${title}失败`,
+        successText: title ? `${title}成功` : undefined,
+        failureName: title ? `${title}失败` : undefined,
       })
         .then((result) => onSuccess(result.data!, result.page))
         .finally(() => setLoading(false))
