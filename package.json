@@ -20,6 +20,7 @@
     "ta": "yarn t1 && yarn t2 && yarn t3"
   },
   "dependencies": {
+    "@ahooksjs/use-url-state": "^3.5.0",
     "@ant-design/icons": "^4.7.0",
     "@reduxjs/toolkit": "^1.8.5",
     "ahooks": "^3.7.1",

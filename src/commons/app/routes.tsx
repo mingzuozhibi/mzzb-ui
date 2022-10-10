@@ -9,6 +9,7 @@ import DiscGroupDetail from '#RP/disc-group-detail/DiscGroupDetail'
 import DiscGroupViewList from '#RP/disc-group-view-list/DiscGroupViewList'
 import DiscGroupEditList from '#RP/disc-group-edit-list/DiscGroupEditList'
 import DiscAdd from '#RP/disc-add/DiscAdd'
+import DiscSearch from '#RP/disc-search/DiscSearch'
 import DiscDetailOfId from '#RP/disc-detail/DiscDetailOfId'
 import DiscDetailOfAsin from '#RP/disc-detail/DiscDetailOfAsin'
 import Users from '#RP/users/Users'
@@ -37,6 +38,7 @@ export const routes = (
       <Route path={linkToDiscs(`/:id`)} element={<DiscDetailOfId />} />
       <Route path={linkToDiscs(`/asin/:asin`)} element={<DiscDetailOfAsin />} />
       <Route path={linkToDiscs(`/add`)} element={<DiscAdd />} />
+      <Route path={linkToDiscs(`/search`)} element={<DiscSearch />} />
       <Route path={linkToDiscs(`/:id/records`)} element={<LazyDiscRecords />} />
       <Route path={linkToUsers()} element={<Users />} />
       <Route path={linkToUsers(`/add`)} element={<UserAdd />} />
