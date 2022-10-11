@@ -88,7 +88,11 @@ export default function DiscGroupViewList() {
         )}
         {safeWarpper(lastRows, (lastRows) =>
           viewMode === 'compact' ? (
-            <DiscTableCompact name={localKey} rows={lastRows!} showJapan={editMode} />
+            <DiscTableCompact
+              name={localKey}
+              rows={lastRows!}
+              hideCols={['id', editMode ? 'title' : 'japan']}
+            />
           ) : (
             <AllColumns viewMode={viewMode}>
               <DiscTable name={localKey} rows={lastRows!} showJapan={editMode} />
