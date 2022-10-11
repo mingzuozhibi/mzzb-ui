@@ -1,0 +1,11 @@
+#root .submit-row {
+  margin-bottom: 24px;
+  @media (max-width: 575px) {
+    .submit-col-1 {
+      display: none;
+    }
+    .submit-col-2 {
+      margin-left: 24px;
+    }
+  }
+}

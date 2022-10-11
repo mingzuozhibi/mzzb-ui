@@ -74,7 +74,7 @@ export default function UserAdd() {
           <Form.Item label="是否启用" name="enabled" valuePropName="checked">
             <Switch />
           </Form.Item>
-          <SubmitItem>
+          <SubmitItem span={[6, 12]}>
             <Button type="primary" htmlType="submit" loading={isPost}>
               添加用户
             </Button>

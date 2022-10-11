@@ -2,31 +2,37 @@ import { SubmitItem } from '#CC/form/SubmitItem'
 import { MzHeader } from '#CC/header/MzHeader'
 import { MzPagination } from '#CC/pagination/MzPagination'
 import { useResult } from '#CH/useOnce'
-import { IDisc } from '#DT/disc'
-import { DiscTable } from '#RC/@disc-table/disc-table'
-import { apiToDiscs } from '#RU/links'
 import useUrlState from '@ahooksjs/use-url-state'
-import { Button, Form, Input, Space, Tabs } from 'antd'
+import { Button, Form, Input, Space } from 'antd'
 import { useLocation } from 'react-router-dom'
+
+import { IDisc } from '#DT/disc'
+import { DiscTableCompact } from '#RC/@disc-table/disc-table-compact'
+import { apiToDiscs } from '#RU/links'
+
+interface FormSearch {
+  title?: string
+}
 
 export default function DiscSearch() {
   const location = useLocation()
-  const [urlState, setUrlState] = useUrlState<any>({ page: 1, size: 20 })
   const apiUrl = apiToDiscs(location.search)
+
   const { data: result, ...state } = useResult<IDisc[]>(apiUrl, {
-    manual: true,
     autoScroll: true,
+    refreshDeps: [apiUrl],
   })
   const { data: discs, page } = result ?? {}
 
-  const onFinish = ({ title }: { title: string }) => {
-    setUrlState({ title })
-    state.run()
+  const [urlState, setUrlState] = useUrlState<any>({ page: 1, size: 20 })
+  const initial: FormSearch = { title: urlState.title }
+
+  const onFinish = ({ title }: FormSearch) => {
+    setUrlState({ page: 1, title })
   }
 
   const onChangePage = (page: number, size: number = 20) => {
     setUrlState({ page, size })
-    state.run()
   }
 
   return (
@@ -36,13 +42,13 @@ export default function DiscSearch() {
         style={{ marginTop: 24 }}
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 12 }}
-        initialValues={urlState}
+        initialValues={initial}
         onFinish={onFinish}
       >
         <Form.Item name="title" label="标题">
-          <Input.TextArea autoSize={true} placeholder="请输入想查询的标题" />
+          <Input.TextArea autoSize={true} allowClear={true} placeholder="请输入想查询的标题" />
         </Form.Item>
-        <SubmitItem>
+        <SubmitItem span={[6, 12]}>
           <Button type="primary" htmlType="submit" loading={state.loading}>
             查询碟片
           </Button>
@@ -50,7 +56,7 @@ export default function DiscSearch() {
       </Form>
       <Space direction="vertical">
         {page && <MzPagination page={page} onChange={onChangePage} />}
-        <DiscTable name="bytitle" rows={discs ?? []} />
+        <DiscTableCompact name="bytitle" rows={discs ?? []} showJapan={false} />
         {page && <MzPagination page={page} onChange={onChangePage} />}
       </Space>
     </div>

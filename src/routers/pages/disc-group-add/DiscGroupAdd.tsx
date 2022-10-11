@@ -80,14 +80,14 @@ export default function DiscGroupAdd() {
             <Switch />
           </Form.Item>
           {location.state ? (
-            <SubmitItem>
+            <SubmitItem span={[6, 12]}>
               <Button type="primary" htmlType="submit" loading={isPost}>
                 重新添加
               </Button>
               <Button onClick={() => navigate(linkToGroups())}>点击返回</Button>
             </SubmitItem>
           ) : (
-            <SubmitItem>
+            <SubmitItem span={[6, 12]}>
               <Button type="primary" htmlType="submit" loading={isPost}>
                 添加列表
               </Button>

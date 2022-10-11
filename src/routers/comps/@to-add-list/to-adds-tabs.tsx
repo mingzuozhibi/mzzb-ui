@@ -140,7 +140,7 @@ export function ToAddsTabs(props: Props) {
             <Input value={fetchCount} readOnly />
           </Form.Item>
         )}
-        <SubmitItem>
+        <SubmitItem span={[6, 12]}>
           <Button type="primary" htmlType="submit" loading={isGet}>
             查询碟片
           </Button>
@@ -180,7 +180,7 @@ export function ToAddsTabs(props: Props) {
             <Radio.Button value="Other">未知</Radio.Button>
           </Radio.Group>
         </Form.Item>
-        <SubmitItem>
+        <SubmitItem span={[6, 12]}>
           <Button type="primary" htmlType="submit" loading={isPost}>
             创建碟片
           </Button>

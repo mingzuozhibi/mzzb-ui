@@ -11,7 +11,7 @@ import { linkToDiscs } from '#RU/links'
 interface Props {
   name: string
   rows: IDisc[]
-  showJapan: boolean
+  showJapan?: boolean
 }
 
 const cols = buildColumns()
@@ -19,7 +19,7 @@ const titleCols = cols.filter((c) => c.key !== 'japan')
 const japanCols = cols.filter((c) => c.key !== 'title')
 
 export function DiscTableCompact(props: Props) {
-  const { name, rows, showJapan } = props
+  const { name, rows, showJapan = false } = props
   const lastCols = showJapan ? japanCols : titleCols
   return (
     <div className="disc-table-compact">

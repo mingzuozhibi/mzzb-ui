@@ -48,7 +48,7 @@ export function DiscRank(props: Props) {
         <Form.Item label="前回排名">
           <Input readOnly={true} value={disc.prevRank} />
         </Form.Item>
-        <SubmitItem>
+        <SubmitItem span={[5, 16]}>
           <Button type="primary" htmlType="submit" loading={isEdit}>
             提交修改
           </Button>

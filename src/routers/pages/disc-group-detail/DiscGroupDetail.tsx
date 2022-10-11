@@ -97,7 +97,7 @@ export default function DiscGroupDetail() {
             {deleted ? (
               <Navigate to="/disc_groups/add" state={deleted} />
             ) : (
-              <SubmitItem>
+              <SubmitItem span={[6, 12]}>
                 <Button type="primary" htmlType="submit" loading={isEdit}>
                   提交更新
                 </Button>
