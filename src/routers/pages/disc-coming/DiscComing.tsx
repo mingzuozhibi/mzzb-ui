@@ -8,33 +8,34 @@ import './DiscComing.scss'
 import { useLocal } from '#CH/useLocal'
 import { useResult } from '#CH/useOnce'
 import { CheckCircleTwoTone, PlusSquareTwoTone } from '@ant-design/icons'
-import { Select, Space } from 'antd'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Input, Select, Space } from 'antd'
+import { Link, useLocation } from 'react-router-dom'
+
+import useUrlState from '@ahooksjs/use-url-state'
+import dayjs from 'dayjs'
 
 import { IComing } from '#DT/disc'
 import { isJustUpdate } from '#RU/check'
-import { apiToSpider, linkToAmazon, linkToComing, linkToDiscs } from '#RU/links'
-import dayjs from 'dayjs'
+import { apiToSpider, linkToAmazon, linkToDiscs } from '#RU/links'
 
 const cols = buildColumns()
 
 export default function DiscComing() {
   const location = useLocation()
-  const navigate = useNavigate()
+  const apiUrl = apiToSpider(`/historys${location.search}`)
 
-  const apiUrl = apiToSpider(`/discShelfs${location.search}`)
   const { data: result, ...state } = useResult<IComing[]>(apiUrl, {
     refreshDeps: [apiUrl],
     autoScroll: true,
   })
   const { data: rows, page } = result ?? {}
 
-  function onPaginationChange(page: number, size: number = 20) {
-    if (size === 20) {
-      navigate(linkToComing(`?page=${page}`))
-    } else {
-      navigate(linkToComing(`?page=${page}&size=${size}`))
-    }
+  const [urlState, setUrlState] = useUrlState<any>({ page: 1, size: 20 })
+  const initial: { title?: string } = { title: urlState.title }
+
+  const onSearch = (title: string) => setUrlState({ page: 1, title })
+  const onPageChange = (page: number, size: number = 20) => {
+    setUrlState({ page, size })
   }
 
   const [viewMode, setViewMode] = useLocal<'all' | 'auto'>('coming-viewmode', 'auto')
@@ -51,13 +52,21 @@ export default function DiscComing() {
     <div className="DiscComing" style={{ maxWidth }}>
       <MzHeader title="上架追踪" state={state} extra={[viewSelect]} />
       <Space direction="vertical">
-        {page && <MzPagination page={page} onChange={onPaginationChange} />}
+        <Input.Search
+          size="large"
+          defaultValue={initial.title}
+          placeholder="input search text"
+          allowClear={true}
+          enterButton="Search"
+          onSearch={onSearch}
+        />
+        {page && <MzPagination page={page} onChange={onPageChange} />}
         {rows && (
           <AllColumns viewMode={viewMode}>
             <MzTable tag="coming" rows={rows} cols={cols} />
           </AllColumns>
         )}
-        {page && <MzPagination page={page} onChange={onPaginationChange} />}
+        {page && <MzPagination page={page} onChange={onPageChange} />}
       </Space>
     </div>
   )
