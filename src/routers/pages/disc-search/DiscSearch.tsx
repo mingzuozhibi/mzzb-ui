@@ -40,7 +40,7 @@ export default function DiscSearch() {
         onFinish={onFinish}
       >
         <Form.Item name="title" label="标题">
-          <Input.TextArea autoSize={true} placeholder="请输入想查询的标题" />
+          <Input.TextArea autoSize={true} allowClear={true} placeholder="请输入想查询的标题" />
         </Form.Item>
         <SubmitItem span={[6, 12]}>
           <Button type="primary" htmlType="submit" loading={state.loading}>
