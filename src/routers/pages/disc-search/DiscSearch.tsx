@@ -20,7 +20,6 @@ export default function DiscSearch() {
 
   const { data: result, ...state } = useResult<IDisc[]>(apiUrl, {
     autoScroll: true,
-    refreshDeps: [apiUrl],
   })
   const { data: discs, page } = result ?? {}
 
@@ -29,10 +28,12 @@ export default function DiscSearch() {
 
   const onFinish = ({ title }: FormSearch) => {
     setUrlState({ page: 1, title })
+    state.run()
   }
 
   const onChangePage = (page: number, size: number = 20) => {
     setUrlState({ page, size })
+    state.run()
   }
 
   return (
