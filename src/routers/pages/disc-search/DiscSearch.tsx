@@ -42,7 +42,7 @@ export default function DiscSearch() {
         <Form.Item name="title" label="标题">
           <Input.TextArea autoSize={true} placeholder="请输入想查询的标题" />
         </Form.Item>
-        <SubmitItem>
+        <SubmitItem span={[6, 12]}>
           <Button type="primary" htmlType="submit" loading={state.loading}>
             查询碟片
           </Button>

@@ -77,7 +77,7 @@ export default function UserDetail() {
             <Form.Item label="是否启用" name="enabled" valuePropName="checked">
               <Switch />
             </Form.Item>
-            <SubmitItem>
+            <SubmitItem span={[6, 12]}>
               <Button type="primary" htmlType="submit" loading={isEdit}>
                 提交更新
               </Button>

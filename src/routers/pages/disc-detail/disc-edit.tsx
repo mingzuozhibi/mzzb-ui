@@ -97,7 +97,7 @@ export function DiscEdit(props: Props) {
             <Radio.Button value="Other">未知</Radio.Button>
           </Radio.Group>
         </Form.Item>
-        <SubmitItem>
+        <SubmitItem span={[5, 16]}>
           <Button type="primary" htmlType="submit" loading={isEdit}>
             提交修改
           </Button>

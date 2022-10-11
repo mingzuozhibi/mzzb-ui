@@ -65,7 +65,7 @@ export function AppLogin() {
         <Form.Item label="用户密码" name="password" rules={rules.password}>
           <Input.Password />
         </Form.Item>
-        <SubmitItem>
+        <SubmitItem span={[6, 12]}>
           <Button type="primary" htmlType="submit" loading={submiting}>
             登入
           </Button>
