@@ -37,7 +37,7 @@ export default function DiscSearch() {
 
   return (
     <div className="DiscSearch" style={{ maxWidth: 650 }}>
-      <MzHeader title="查找碟片" />
+      <MzHeader title="查询碟片" />
       <Form
         style={{ marginTop: 24 }}
         labelCol={{ span: 6 }}
@@ -50,7 +50,7 @@ export default function DiscSearch() {
         </Form.Item>
         <SubmitItem span={[6, 12]}>
           <Button type="primary" htmlType="submit" loading={state.loading}>
-            查询碟片
+            点击查询
           </Button>
         </SubmitItem>
       </Form>
