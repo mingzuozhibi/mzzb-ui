@@ -7,7 +7,7 @@ import { Button, Form, Input, Space } from 'antd'
 import { useLocation } from 'react-router-dom'
 
 import { IDisc } from '#DT/disc'
-import { DiscTable } from '#RC/@disc-table/disc-table'
+import { DiscTableCompact } from '#RC/@disc-table/disc-table-compact'
 import { apiToDiscs } from '#RU/links'
 
 interface FormSearch {
@@ -56,7 +56,7 @@ export default function DiscSearch() {
       </Form>
       <Space direction="vertical">
         {page && <MzPagination page={page} onChange={onChangePage} />}
-        <DiscTable name="bytitle" rows={discs ?? []} />
+        <DiscTableCompact name="bytitle" rows={discs ?? []} showJapan={false} />
         {page && <MzPagination page={page} onChange={onChangePage} />}
       </Space>
     </div>
