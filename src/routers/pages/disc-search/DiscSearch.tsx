@@ -2,31 +2,30 @@ import { SubmitItem } from '#CC/form/SubmitItem'
 import { MzHeader } from '#CC/header/MzHeader'
 import { MzPagination } from '#CC/pagination/MzPagination'
 import { useResult } from '#CH/useOnce'
+import useUrlState from '@ahooksjs/use-url-state'
+import { Button, Form, Input, Space } from 'antd'
+import { useLocation } from 'react-router-dom'
+
 import { IDisc } from '#DT/disc'
 import { DiscTable } from '#RC/@disc-table/disc-table'
 import { apiToDiscs } from '#RU/links'
-import useUrlState from '@ahooksjs/use-url-state'
-import { Button, Form, Input, Space, Tabs } from 'antd'
-import { useLocation } from 'react-router-dom'
 
 export default function DiscSearch() {
   const location = useLocation()
   const [urlState, setUrlState] = useUrlState<any>({ page: 1, size: 20 })
   const apiUrl = apiToDiscs(location.search)
   const { data: result, ...state } = useResult<IDisc[]>(apiUrl, {
-    manual: true,
     autoScroll: true,
+    refreshDeps: [apiUrl],
   })
   const { data: discs, page } = result ?? {}
 
   const onFinish = ({ title }: { title: string }) => {
     setUrlState({ title })
-    state.run()
   }
 
   const onChangePage = (page: number, size: number = 20) => {
     setUrlState({ page, size })
-    state.run()
   }
 
   return (
