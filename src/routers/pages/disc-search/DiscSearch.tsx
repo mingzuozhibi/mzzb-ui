@@ -10,18 +10,25 @@ import { IDisc } from '#DT/disc'
 import { DiscTable } from '#RC/@disc-table/disc-table'
 import { apiToDiscs } from '#RU/links'
 
+interface FormSearch {
+  title?: string
+}
+
 export default function DiscSearch() {
   const location = useLocation()
-  const [urlState, setUrlState] = useUrlState<any>({ page: 1, size: 20 })
   const apiUrl = apiToDiscs(location.search)
+
   const { data: result, ...state } = useResult<IDisc[]>(apiUrl, {
     autoScroll: true,
     refreshDeps: [apiUrl],
   })
   const { data: discs, page } = result ?? {}
 
-  const onFinish = ({ title }: { title: string }) => {
-    setUrlState({ title })
+  const [urlState, setUrlState] = useUrlState<any>({ page: 1, size: 20 })
+  const initial: FormSearch = { title: urlState.title }
+
+  const onFinish = ({ title }: FormSearch) => {
+    setUrlState({ page: 1, title })
   }
 
   const onChangePage = (page: number, size: number = 20) => {
@@ -35,7 +42,7 @@ export default function DiscSearch() {
         style={{ marginTop: 24 }}
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 12 }}
-        initialValues={urlState}
+        initialValues={initial}
         onFinish={onFinish}
       >
         <Form.Item name="title" label="标题">
