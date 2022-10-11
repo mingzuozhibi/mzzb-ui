@@ -2,23 +2,29 @@ import { MzHeader } from '#CC/header/MzHeader'
 import { MzLink } from '#CC/link/MzLink'
 import { MzPagination } from '#CC/pagination/MzPagination'
 import { MzColumn, MzTable } from '#CC/table/MzTable'
+import { MzTransfer, MzTransferItem } from '#CC/transfer/MzTransfer'
 import { AllColumns } from '#CC/warpper/AllColumns'
 import './DiscComing.scss'
 
-import { useLocal } from '#CH/useLocal'
+import { useSession } from '#CH/useLocal'
 import { useResult } from '#CH/useOnce'
+import { useSearch } from '#CH/useSearch'
 import { CheckCircleTwoTone, PlusSquareTwoTone } from '@ant-design/icons'
-import { Input, Select, Space } from 'antd'
+import { Checkbox, Input, Space } from 'antd'
 import { Link, useLocation } from 'react-router-dom'
-
-import useUrlState from '@ahooksjs/use-url-state'
-import dayjs from 'dayjs'
 
 import { IComing } from '#DT/disc'
 import { isJustUpdate } from '#RU/check'
 import { apiToSpider, linkToAmazon, linkToDiscs } from '#RU/links'
+import dayjs from 'dayjs'
+
+interface Initial {
+  title?: string
+  sortKeys?: string[]
+}
 
 const cols = buildColumns()
+const sortItems = buildSortItems()
 
 export default function DiscComing() {
   const location = useLocation()
@@ -30,39 +36,81 @@ export default function DiscComing() {
   })
   const { data: rows, page } = result ?? {}
 
-  const [urlState, setUrlState] = useUrlState<any>({ page: 1, size: 20 })
-  const initial: { title?: string } = { title: urlState.title }
+  const [urlState, setUrlState] = useSearch<any>({ page: 1, size: 20 }, { arrayNames: ['sort'] })
+
+  const initial: Initial = {
+    title: urlState.title,
+    sortKeys: urlState.sort,
+  }
 
   const onSearch = (title: string) => setUrlState({ page: 1, title })
   const onPageChange = (page: number, size: number = 20) => {
     setUrlState({ page, size })
   }
+  const onSortChange = (keys: string[]) => setUrlState({ page: 1, sort: keys })
 
-  const [viewMode, setViewMode] = useLocal<'all' | 'auto'>('coming-viewmode', 'auto')
-  const viewSelect = (
-    <Select key="K1" value={viewMode} onChange={setViewMode}>
-      <Select.Option value="all">所有列</Select.Option>
-      <Select.Option value="auto">智能列</Select.Option>
-    </Select>
-  )
-
-  const maxWidth = viewMode === 'all' ? '100%' : '800px'
+  const [options, setOptions] = useSession('coming-options', {
+    showSearch: true,
+    showSort: false,
+    allCols: false,
+  })
+  const maxWidth = options.allCols ? '100%' : '800px'
 
   return (
     <div className="DiscComing" style={{ maxWidth }}>
-      <MzHeader title="上架追踪" state={state} extra={[viewSelect]} />
+      <MzHeader
+        title="上架追踪"
+        state={state}
+        items={[
+          {
+            key: 'showSearch',
+            label: (
+              <Checkbox
+                children="显示搜索"
+                checked={options.showSearch}
+                onChange={(e) => setOptions({ ...options, showSearch: e.target.checked })}
+              />
+            ),
+          },
+          {
+            key: 'showSort',
+            label: (
+              <Checkbox
+                children="显示排序"
+                checked={options.showSort}
+                onChange={(e) => setOptions({ ...options, showSort: e.target.checked })}
+              />
+            ),
+          },
+          {
+            key: 'allCols',
+            label: (
+              <Checkbox
+                children="所有字段"
+                checked={options.allCols}
+                onChange={(e) => setOptions({ ...options, allCols: e.target.checked })}
+              />
+            ),
+          },
+        ]}
+      />
       <Space direction="vertical">
-        <Input.Search
-          size="large"
-          defaultValue={initial.title}
-          placeholder="input search text"
-          allowClear={true}
-          enterButton="Search"
-          onSearch={onSearch}
-        />
+        {options.showSearch && (
+          <Input.Search
+            size="large"
+            defaultValue={initial.title}
+            placeholder="input search text"
+            allowClear={true}
+            enterButton="Search"
+            onSearch={onSearch}
+          />
+        )}
+        {options.showSort && (
+          <MzTransfer items={sortItems} defaultKeys={initial.sortKeys} onChange={onSortChange} />
+        )}
         {page && <MzPagination page={page} onChange={onPageChange} />}
         {rows && (
-          <AllColumns viewMode={viewMode}>
+          <AllColumns viewMode={options.allCols ? 'all' : 'auto'}>
             <MzTable tag="coming" rows={rows} cols={cols} />
           </AllColumns>
         )}
@@ -172,4 +220,13 @@ function formatDate(row: IComing) {
 
 function formatTitle(row: IComing) {
   return <MzLink href={linkToAmazon(row.asin)} title={row.title} />
+}
+
+function buildSortItems(): MzTransferItem[] {
+  return [
+    { key: 'type', title: '碟片类型' },
+    { key: 'date,desc', title: '发售日期' },
+    { key: 'title', title: '碟片标题' },
+    { key: 'tracked', title: '已创建' },
+  ]
 }
