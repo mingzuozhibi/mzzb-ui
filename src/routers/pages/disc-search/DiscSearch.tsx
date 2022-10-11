@@ -20,7 +20,6 @@ export default function DiscSearch() {
 
   const { data: result, ...state } = useResult<IDisc[]>(apiUrl, {
     autoScroll: true,
-    refreshDeps: [apiUrl],
   })
   const { data: discs, page } = result ?? {}
 
@@ -29,15 +28,17 @@ export default function DiscSearch() {
 
   const onFinish = ({ title }: FormSearch) => {
     setUrlState({ page: 1, title })
+    state.run()
   }
 
   const onChangePage = (page: number, size: number = 20) => {
     setUrlState({ page, size })
+    state.run()
   }
 
   return (
     <div className="DiscSearch" style={{ maxWidth: 650 }}>
-      <MzHeader title="查找碟片" />
+      <MzHeader title="查询碟片" />
       <Form
         style={{ marginTop: 24 }}
         labelCol={{ span: 6 }}
@@ -50,13 +51,13 @@ export default function DiscSearch() {
         </Form.Item>
         <SubmitItem span={[6, 12]}>
           <Button type="primary" htmlType="submit" loading={state.loading}>
-            查询碟片
+            点击查询
           </Button>
         </SubmitItem>
       </Form>
       <Space direction="vertical">
         {page && <MzPagination page={page} onChange={onChangePage} />}
-        <DiscTableCompact name="bytitle" rows={discs ?? []} showJapan={false} />
+        <DiscTableCompact name="bytitle" rows={discs} sort="none" hideCols={['idx', 'title']} />
         {page && <MzPagination page={page} onChange={onChangePage} />}
       </Space>
     </div>

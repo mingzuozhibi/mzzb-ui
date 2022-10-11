@@ -10,20 +10,20 @@ import { linkToDiscs } from '#RU/links'
 
 interface Props {
   name: string
-  rows: IDisc[]
-  showJapan?: boolean
+  rows?: IDisc[]
+  sort?: 'rank' | 'none'
+  hideCols: Array<'id' | 'idx' | 'title' | 'japan'>
 }
 
 const cols = buildColumns()
-const titleCols = cols.filter((c) => c.key !== 'japan')
-const japanCols = cols.filter((c) => c.key !== 'title')
 
 export function DiscTableCompact(props: Props) {
-  const { name, rows, showJapan = false } = props
-  const lastCols = showJapan ? japanCols : titleCols
+  const { name, rows, sort = 'rank', hideCols } = props
+  const lastCols = cols.filter((col) => !hideCols.includes(col.key as any))
+  const lastSort = sort === 'rank' ? compareRank : undefined
   return (
     <div className="disc-table-compact">
-      <MzTable tag={`compact-${name}`} rows={rows} cols={lastCols} defaultSort={compareRank} />
+      <MzTable tag={`compact-${name}`} rows={rows} cols={lastCols} defaultSort={lastSort} />
     </div>
   )
 }
@@ -34,6 +34,11 @@ function buildColumns(): MzColumn<IDisc>[] {
       key: 'idx',
       title: '#',
       format: (row, idx) => idx + 1,
+    },
+    {
+      key: 'id',
+      title: 'ID',
+      format: (row) => row.id,
     },
     {
       key: 'rank',

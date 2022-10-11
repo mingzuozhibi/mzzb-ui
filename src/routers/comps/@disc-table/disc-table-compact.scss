@@ -11,6 +11,10 @@
     text-align: center;
   }
 
+  tr .id {
+    text-align: center;
+  }
+
   td.rank {
     word-break: keep-all;
     white-space: nowrap;
@@ -33,6 +37,11 @@
   tr {
     .idx {
       @include columnPcMo(40px, 35px);
+      @include columnHide(450px);
+    }
+
+    .id {
+      @include columnPcMo(60px, 50px);
       @include columnHide(450px);
     }
 

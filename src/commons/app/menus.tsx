@@ -23,7 +23,7 @@ export function buildItems(userRoles: string[]): ItemType[] {
       key: linkToGroups(),
     },
     {
-      label: '查找碟片',
+      label: '查询碟片',
       icon: <SearchOutlined />,
       key: linkToDiscs(`/search`),
     },
