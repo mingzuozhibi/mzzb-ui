@@ -6,6 +6,7 @@ import { Tabs } from 'antd'
 
 import { IDisc } from '#DT/disc'
 import { discTitle } from '#DU/disc-comps'
+
 import { DiscEdit } from '#RC/@disc-items/disc-edit'
 import { DiscOwns } from '#RC/@disc-items/disc-owns'
 import { DiscRank } from '#RC/@disc-items/disc-rank'
