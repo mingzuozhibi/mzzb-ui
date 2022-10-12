@@ -5,7 +5,7 @@ import { useData } from '#CH/useOnce'
 import { Button, Space } from 'antd'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import './disc-groups.scss'
+import './disc-owns.scss'
 
 import { dropToAdds, pushToAdds } from '#DF/local'
 import { IDisc, IGroup } from '#DT/disc'
@@ -16,7 +16,7 @@ interface Props {
   disc: IDisc
 }
 
-export function DiscGroups({ disc }: Props) {
+export function DiscOwns({ disc }: Props) {
   const apiUrl = apiToGroups(`/asin/${disc.asin}`)
   const { data: groups, ...state } = useData<IGroup[]>(apiUrl, {
     refreshDeps: [disc],
@@ -36,7 +36,7 @@ export function DiscGroups({ disc }: Props) {
 
   const [isGet, doGet] = useAjax<IGroup[]>('get')
   const openModal = () => {
-    doGet(apiToGroups(`?filter=pub&withCount=false`), '', {
+    doGet(apiToGroups(`?filter=top&withCount=false`), '', {
       onSuccess(data) {
         setList(data.filter((g) => groupIds?.includes(g.id) !== true))
       },
@@ -64,7 +64,7 @@ export function DiscGroups({ disc }: Props) {
   }
 
   return (
-    <div className="disc-groups">
+    <div className="disc-owns">
       <Space direction="vertical" style={{ width: '100%' }}>
         <Space>
           {toAddsButton}
@@ -73,7 +73,7 @@ export function DiscGroups({ disc }: Props) {
           </Button>
         </Space>
         <MzTable
-          tag="disc-groups"
+          tag="discowns"
           rows={groups}
           cols={buildColumns({
             key: 'command',
@@ -84,7 +84,7 @@ export function DiscGroups({ disc }: Props) {
         />
         {list && (
           <MzTable
-            tag="disc-groups"
+            tag="discowns"
             rows={list}
             cols={buildColumns({
               key: 'command',

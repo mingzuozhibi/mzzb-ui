@@ -99,7 +99,7 @@ export default function DiscComing() {
           <Input.Search
             size="large"
             defaultValue={initial.title}
-            placeholder="input search text"
+            placeholder="请输入碟片标题以查询"
             allowClear={true}
             enterButton="Search"
             onSearch={onSearch}
