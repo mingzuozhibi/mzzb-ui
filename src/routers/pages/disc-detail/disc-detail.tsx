@@ -6,10 +6,10 @@ import { Tabs } from 'antd'
 
 import { IDisc } from '#DT/disc'
 import { discTitle } from '#DU/disc-comps'
-import { DiscEdit } from './disc-edit'
-import { DiscGroups } from './disc-groups'
-import { DiscRank } from './disc-rank'
-import { DiscView } from './disc-view'
+import { DiscEdit } from '#RC/@disc-items/disc-edit'
+import { DiscOwns } from '#RC/@disc-items/disc-owns'
+import { DiscRank } from '#RC/@disc-items/disc-rank'
+import { DiscView } from '#RC/@disc-items/disc-view'
 
 interface Props {
   apiUrl: string
@@ -47,8 +47,8 @@ export function DiscDetail({ apiUrl }: Props) {
             },
             {
               label: '所属列表',
-              key: 'disc-groups',
-              children: <DiscGroups disc={disc} />,
+              key: 'disc-owns',
+              children: <DiscOwns disc={disc} />,
             },
           ].filter((e) => hasBasic || ['disc-view'].includes(e.key))}
         />
