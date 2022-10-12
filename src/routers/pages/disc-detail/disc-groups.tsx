@@ -36,7 +36,7 @@ export function DiscGroups({ disc }: Props) {
 
   const [isGet, doGet] = useAjax<IGroup[]>('get')
   const openModal = () => {
-    doGet(apiToGroups(`?filter=pub&withCount=false`), '', {
+    doGet(apiToGroups(`?filter=top&withCount=false`), '', {
       onSuccess(data) {
         setList(data.filter((g) => groupIds?.includes(g.id) !== true))
       },
