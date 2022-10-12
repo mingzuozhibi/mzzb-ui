@@ -1,9 +1,8 @@
-import { SubmitItem } from '#CC/form/SubmitItem'
 import { MzHeader } from '#CC/header/MzHeader'
 import { MzPagination } from '#CC/pagination/MzPagination'
 import { useResult } from '#CH/useOnce'
-import useUrlState from '@ahooksjs/use-url-state'
-import { Button, Form, Input, Space } from 'antd'
+import { useSearch } from '#CH/useSearch'
+import { Input, Space } from 'antd'
 import { useLocation } from 'react-router-dom'
 
 import { IDisc } from '#DT/disc'
@@ -23,10 +22,10 @@ export default function DiscSearch() {
   })
   const { data: discs, page } = result ?? {}
 
-  const [urlState, setUrlState] = useUrlState<any>({ page: 1, size: 20 })
+  const [urlState, setUrlState] = useSearch<any>({ page: 1, size: 20 })
   const initial: FormSearch = { title: urlState.title }
 
-  const onFinish = ({ title }: FormSearch) => {
+  const onSearch = (title: string) => {
     setUrlState({ page: 1, title })
     state.run()
   }
@@ -37,25 +36,17 @@ export default function DiscSearch() {
   }
 
   return (
-    <div className="DiscSearch" style={{ maxWidth: 650 }}>
+    <div className="DiscSearch" style={{ maxWidth: 800 }}>
       <MzHeader title="查询碟片" />
-      <Form
-        style={{ marginTop: 24 }}
-        labelCol={{ span: 6 }}
-        wrapperCol={{ span: 12 }}
-        initialValues={initial}
-        onFinish={onFinish}
-      >
-        <Form.Item name="title" label="标题">
-          <Input.TextArea autoSize={true} allowClear={true} placeholder="请输入想查询的标题" />
-        </Form.Item>
-        <SubmitItem span={[6, 12]}>
-          <Button type="primary" htmlType="submit" loading={state.loading}>
-            点击查询
-          </Button>
-        </SubmitItem>
-      </Form>
       <Space direction="vertical">
+        <Input.Search
+          size="large"
+          defaultValue={initial.title}
+          placeholder="请输入碟片标题以查询"
+          allowClear={true}
+          enterButton="Search"
+          onSearch={onSearch}
+        />
         {page && <MzPagination page={page} onChange={onChangePage} />}
         <DiscTableCompact name="bytitle" rows={discs} sort="none" hideCols={['idx', 'title']} />
         {page && <MzPagination page={page} onChange={onChangePage} />}
