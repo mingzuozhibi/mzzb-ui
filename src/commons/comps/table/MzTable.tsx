@@ -1,7 +1,9 @@
-import { useLocal } from '#CH/useLocal'
-import { Empty } from 'antd'
+import { MzPagination } from '#CC/pagination/MzPagination'
+import { useLocal, useSession } from '#CH/useLocal'
+import { useSearch } from '#CH/useSearch'
+import { Empty, Space } from 'antd'
 import classNames, { Argument } from 'classnames'
-import React from 'react'
+import React, { useState } from 'react'
 import './MzTable.scss'
 
 interface BaseRow {
@@ -23,6 +25,7 @@ interface Props<T> {
   rows?: T[]
   title?: React.ReactNode
   trClass?: (row: T) => Argument
+  usePage?: boolean | number
   defaultSort?: (a: T, b: T) => number
   extraCaption?: React.ReactNode
   showEmptyImage?: boolean
@@ -34,45 +37,84 @@ interface State {
 }
 
 export function MzTable<T extends BaseRow>(props: Props<T>) {
-  const { cols, title, defaultSort, extraCaption } = props
+  const { tag, cols, title, usePage, defaultSort, extraCaption } = props
 
-  const [{ sortKey, sortAsc }, setSort] = useLocal<State>(`table-state-${props.tag}`, {})
+  const [{ sortKey, sortAsc }, setSort] = useLocal<State>(`table-sort-${tag}`, {})
 
-  const lastRows = sortRows()
+  let lastRows = sortRows()
+
+  const [{ page, size }, setPage] = useSearch(
+    {
+      page: 1,
+      size: typeof usePage === 'number' ? usePage : 50,
+    },
+    { numberNames: ['page', 'size'] }
+  )
+
+  const onChangePage = (page: number, size: number = 50) => {
+    setPage({ page, size })
+  }
+
+  const showPage = typeof usePage === 'number' || usePage === true
+  const totalRow = lastRows.length
+
+  if (showPage) {
+    lastRows = lastRows.slice((page - 1) * size, page * size)
+  }
 
   return (
     <div className="MzTable">
       {(title || extraCaption) && renderCaption()}
-      <table className="table table-bordered table-hover">
-        <thead>
-          <tr>
-            {cols.map((col) => (
-              <th
-                key={col.key}
-                children={col.title}
-                className={thClass(col)}
-                onClick={col.compare ? () => thClick(col) : () => setSort({})}
-              />
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {lastRows.map((row, idx) => (
-            <tr key={row.id} id={`row-${row.id}`} className={trClass(row)}>
+      <Space direction="vertical" style={{ width: '100%' }}>
+        {showPage && (
+          <MzPagination
+            page={{ currentPage: page, pageSize: size, totalElements: totalRow }}
+            onChange={onChangePage}
+            pageSizeOptions={[10, 20, 50, 100]}
+          />
+        )}
+        <table className="table table-bordered table-hover">
+          <thead>
+            <tr>
               {cols.map((col) => (
-                <td key={col.key} className={tdClass(col, row)} onClick={() => col.tdClick?.(row)}>
-                  {col.format(row, idx)}
-                </td>
+                <th
+                  key={col.key}
+                  children={col.title}
+                  className={thClass(col)}
+                  onClick={col.compare ? () => thClick(col) : () => setSort({})}
+                />
               ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
-      {lastRows.length === 0 && props.showEmptyImage !== false && (
-        <div className="empty-warpper">
-          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-        </div>
-      )}
+          </thead>
+          <tbody>
+            {lastRows.map((row, idx) => (
+              <tr key={row.id} id={`row-${row.id}`} className={trClass(row)}>
+                {cols.map((col) => (
+                  <td
+                    key={col.key}
+                    className={tdClass(col, row)}
+                    onClick={() => col.tdClick?.(row)}
+                  >
+                    {col.format(row, idx)}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {lastRows.length === 0 && props.showEmptyImage !== false && (
+          <div className="empty-warpper">
+            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+          </div>
+        )}
+        {showPage && (
+          <MzPagination
+            page={{ currentPage: page, pageSize: size, totalElements: totalRow }}
+            onChange={onChangePage}
+            pageSizeOptions={[10, 20, 50, 100]}
+          />
+        )}
+      </Space>
     </div>
   )
 
