@@ -5,13 +5,17 @@ import { useCallback } from 'react'
 interface Props {
   page: IPage
   onChange: (page: number, size?: number) => void
+  pageSizeOptions?: number[]
 }
 
-export function MzPagination({ page, onChange }: Props) {
+export function MzPagination(props: Props) {
+  const { page, onChange, pageSizeOptions } = props
+
   const onChangePage = useCallback(
     (page: number, size?: number) => onChange(page, size),
     [onChange]
   )
+
   return (
     <Pagination
       showSizeChanger
@@ -21,7 +25,7 @@ export function MzPagination({ page, onChange }: Props) {
       total={page.totalElements}
       onChange={onChangePage}
       onShowSizeChange={onChangePage}
-      pageSizeOptions={[10, 20, 30, 40]}
+      pageSizeOptions={pageSizeOptions ?? [10, 20, 30, 40]}
     />
   )
 }

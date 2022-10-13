@@ -48,7 +48,13 @@ export default function DiscSearch() {
           onSearch={onSearch}
         />
         {page && <MzPagination page={page} onChange={onChangePage} />}
-        <DiscTableCompact name="bytitle" rows={discs} sort="none" hideCols={['idx', 'title']} />
+        <DiscTableCompact
+          name="bytitle"
+          rows={discs}
+          sort="none"
+          outPage={true}
+          hideCols={['idx', 'title']}
+        />
         {page && <MzPagination page={page} onChange={onChangePage} />}
       </Space>
     </div>

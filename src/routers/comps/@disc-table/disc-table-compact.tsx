@@ -12,18 +12,25 @@ interface Props {
   name: string
   rows?: IDisc[]
   sort?: 'rank' | 'none'
+  outPage?: boolean
   hideCols: Array<'id' | 'idx' | 'title' | 'japan'>
 }
 
 const cols = buildColumns()
 
 export function DiscTableCompact(props: Props) {
-  const { name, rows, sort = 'rank', hideCols } = props
+  const { name, rows, sort = 'rank', outPage, hideCols } = props
   const lastCols = cols.filter((col) => !hideCols.includes(col.key as any))
   const lastSort = sort === 'rank' ? compareRank : undefined
   return (
     <div className="disc-table-compact">
-      <MzTable tag={`compact-${name}`} rows={rows} cols={lastCols} defaultSort={lastSort} />
+      <MzTable
+        tag={`compact-${name}`}
+        rows={rows}
+        cols={lastCols}
+        usePage={outPage !== true}
+        defaultSort={lastSort}
+      />
     </div>
   )
 }

@@ -23,7 +23,7 @@ export function DiscTable(props: Props) {
   const lastCols = showJapan ? japanCols : titleCols
   return (
     <div className="disc-table">
-      <MzTable tag={name} rows={rows} cols={lastCols} defaultSort={compareRank} />
+      <MzTable tag={name} rows={rows} cols={lastCols} usePage={true} defaultSort={compareRank} />
     </div>
   )
 }

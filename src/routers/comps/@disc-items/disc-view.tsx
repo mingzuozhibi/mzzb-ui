@@ -13,7 +13,7 @@ interface Props {
 
 export function DiscView({ disc }: Props) {
   return (
-    <div className="disc-view" style={{ maxWidth: 650 }}>
+    <div className="disc-view" style={{ maxWidth: 450 }}>
       <div className="input-wrapper">
         <div className="input-label">
           <span>日文标题</span>
@@ -79,30 +79,6 @@ export function DiscView({ disc }: Props) {
         />
       </div>
       <div className="input-wrapper">
-        <Input
-          readOnly={true}
-          addonBefore="创建时间"
-          style={{ width: 270 }}
-          value={formatDate(disc.createTime)}
-        />
-      </div>
-      <div className="input-wrapper">
-        <Input
-          readOnly={true}
-          addonBefore="刷新时间"
-          style={{ width: 270 }}
-          value={formatDate(disc.updateTime)}
-        />
-      </div>
-      <div className="input-wrapper">
-        <Input
-          readOnly={true}
-          addonBefore="修改时间"
-          style={{ width: 270 }}
-          value={formatDate(disc.modifyTime)}
-        />
-      </div>
-      <div className="input-wrapper">
         <Radio.Group value={disc.discType}>
           <Radio.Button value="Cd">CD</Radio.Button>
           <Radio.Button value="Bluray">BD</Radio.Button>
@@ -111,12 +87,38 @@ export function DiscView({ disc }: Props) {
           <Radio.Button value="Other">未知</Radio.Button>
         </Radio.Group>
       </div>
+      <div className="input-wrapper">
+        <Input
+          readOnly={true}
+          addonBefore="创建"
+          style={{ width: 292 }}
+          value={formatDate(disc.createTime)}
+        />
+      </div>
+      <div className="input-wrapper">
+        <Input
+          readOnly={true}
+          addonBefore="刷新"
+          style={{ width: 292 }}
+          value={formatDate(disc.updateTime)}
+        />
+      </div>
+      <div className="input-wrapper">
+        <Input
+          readOnly={true}
+          addonBefore="修改"
+          style={{ width: 292 }}
+          value={formatDate(disc.modifyTime)}
+        />
+      </div>
     </div>
   )
 }
 
 function formatDate(time?: number) {
-  return time == null ? '无' : dayjs(time).format('YYYY-MM-DD HH:mm:ss')
+  return time == null
+    ? '无'
+    : `${dayjs(time).format('YYYY-MM-DD HH:mm:ss')}  ( ${dayjs(time).fromNow()} )`
 }
 
 function formatRank(rank?: number) {
