@@ -99,6 +99,7 @@ export default function DiscGroupEditList() {
           rows={group.discs}
           cols={editCols}
           title={group.title}
+          usePage={true}
           defaultSort={compareRelease}
           extraCaption={editExtra}
         />
