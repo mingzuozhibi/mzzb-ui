@@ -28,7 +28,7 @@
 
       .type {
         @include columnCenter();
-        @include columnPcMo(50px, 40px);
+        @include columnPcMo(55px, 50px);
       }
 
       .date {
