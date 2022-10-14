@@ -14,21 +14,21 @@ interface Props {
 export function DiscView({ disc }: Props) {
   return (
     <div className="disc-view" style={{ maxWidth: 450 }}>
-      <div className="input-wrapper">
+      <div className="input-warpper">
         <div className="input-label">
           <span>日文标题</span>
           <span style={{ marginLeft: 20 }}>{toAmazon(disc.asin)}</span>
         </div>
         <Input.TextArea readOnly={true} autoSize={true} value={disc.title} />
       </div>
-      <div className="input-wrapper">
+      <div className="input-warpper">
         <div className="input-label">
           <span>中文标题</span>
           <span style={{ marginLeft: 20 }}>{toRecords(disc.id)}</span>
         </div>
         <Input.TextArea autoSize={true} readOnly={true} value={disc.titlePc} />
       </div>
-      <div className="input-wrapper">
+      <div className="input-warpper">
         <Input readOnly={true} addonBefore="Id" style={{ width: 100 }} value={disc.id} />
         <Input
           readOnly={true}
@@ -37,7 +37,7 @@ export function DiscView({ disc }: Props) {
           value={disc.asin}
         />
       </div>
-      <div className="input-wrapper">
+      <div className="input-warpper">
         <Input
           readOnly={true}
           addonBefore="当前"
@@ -51,7 +51,7 @@ export function DiscView({ disc }: Props) {
           value={formatRank(disc.prevRank)}
         />
       </div>
-      <div className="input-wrapper">
+      <div className="input-warpper">
         <Input readOnly={true} addonBefore="累积PT" style={{ width: 140 }} value={disc.totalPt} />
         <Input
           readOnly={true}
@@ -60,7 +60,7 @@ export function DiscView({ disc }: Props) {
           value={disc.guessPt}
         />
       </div>
-      <div className="input-wrapper">
+      <div className="input-warpper">
         <Input readOnly={true} addonBefore="日增PT" style={{ width: 140 }} value={disc.todayPt} />
         <Input
           readOnly={true}
@@ -69,7 +69,7 @@ export function DiscView({ disc }: Props) {
           value={disc.nicoBook}
         />
       </div>
-      <div className="input-wrapper">
+      <div className="input-warpper">
         <Input readOnly={true} addonBefore="发售" style={{ width: 160 }} value={disc.releaseDate} />
         <Input
           readOnly
@@ -78,7 +78,7 @@ export function DiscView({ disc }: Props) {
           value={disc.surplusDays}
         />
       </div>
-      <div className="input-wrapper">
+      <div className="input-warpper">
         <Radio.Group value={disc.discType}>
           <Radio.Button value="Cd">CD</Radio.Button>
           <Radio.Button value="Bluray">BD</Radio.Button>
@@ -87,7 +87,7 @@ export function DiscView({ disc }: Props) {
           <Radio.Button value="Other">未知</Radio.Button>
         </Radio.Group>
       </div>
-      <div className="input-wrapper">
+      <div className="input-warpper">
         <Input
           readOnly={true}
           addonBefore="创建"
@@ -95,7 +95,7 @@ export function DiscView({ disc }: Props) {
           value={formatDate(disc.createTime)}
         />
       </div>
-      <div className="input-wrapper">
+      <div className="input-warpper">
         <Input
           readOnly={true}
           addonBefore="刷新"
@@ -103,7 +103,7 @@ export function DiscView({ disc }: Props) {
           value={formatDate(disc.updateTime)}
         />
       </div>
-      <div className="input-wrapper">
+      <div className="input-warpper">
         <Input
           readOnly={true}
           addonBefore="修改"
