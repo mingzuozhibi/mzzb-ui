@@ -27,7 +27,7 @@ export function useSearch<T>(initialState?: T, options?: Options & ExtOptions<T>
   booleanNames?.forEach((name) => {
     const value = state[name]
     if (value == null) return
-    state[name] = typeof value === 'string' ? Boolean(value) : value
+    state[name] = typeof value === 'string' ? value === 'true' : value
   })
 
   return [state, setUrlState] as const
