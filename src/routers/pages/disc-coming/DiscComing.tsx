@@ -65,8 +65,7 @@ export default function DiscComing() {
   const onSortChange = (keys: string[]) => setUrlState({ page: 1, sort: keys })
 
   const [options, setOptions] = useSession('coming-options', {
-    showSearch: true,
-    showSort: false,
+    showSearch: false,
     allCols: false,
   })
   const maxWidth = options.allCols ? '100%' : '800px'
@@ -81,19 +80,9 @@ export default function DiscComing() {
             key: 'showSearch',
             label: (
               <Checkbox
-                children="显示搜索"
+                children="高级搜索"
                 checked={options.showSearch}
                 onChange={(e) => setOptions({ ...options, showSearch: e.target.checked })}
-              />
-            ),
-          },
-          {
-            key: 'showSort',
-            label: (
-              <Checkbox
-                children="显示排序"
-                checked={options.showSort}
-                onChange={(e) => setOptions({ ...options, showSort: e.target.checked })}
               />
             ),
           },
@@ -110,17 +99,15 @@ export default function DiscComing() {
         ]}
       />
       <Space direction="vertical">
+        <Input.Search
+          size="large"
+          defaultValue={initial.title}
+          placeholder="请输入碟片标题以查询"
+          allowClear={true}
+          enterButton="Search"
+          onSearch={onSearch}
+        />
         {options.showSearch && (
-          <Input.Search
-            size="large"
-            defaultValue={initial.title}
-            placeholder="请输入碟片标题以查询"
-            allowClear={true}
-            enterButton="Search"
-            onSearch={onSearch}
-          />
-        )}
-        {options.showSort && (
           <Space wrap={true}>
             <MzTransfer items={sorts} defaultKeys={initial.sortKeys} onChange={onSortChange} />
             <Space direction="vertical">
@@ -131,7 +118,7 @@ export default function DiscComing() {
                   placeholder="输入碟片ASIN以查询"
                   allowClear={true}
                   value={initial.asin}
-                  onChange={(e) => setUrlState({ asin: e.target.value })}
+                  onChange={(e) => setUrlState({ page: 1, asin: e.target.value })}
                 />
               </div>
               <div className="input-warpper compact">
@@ -142,14 +129,14 @@ export default function DiscComing() {
                   placeholder="输入碟片类型以查询"
                   allowClear={true}
                   value={initial.type}
-                  onChange={(type) => setUrlState({ type })}
+                  onChange={(type) => setUrlState({ page: 1, type })}
                 />
               </div>
               <div className="input-warpper compact">
                 <div className="input-label">追踪情况</div>
                 <Radio.Group
                   value={initial.tracked}
-                  onChange={(e) => setUrlState({ tracked: e.target.value })}
+                  onChange={(e) => setUrlState({ page: 1, tracked: e.target.value })}
                 >
                   <Radio value={true}>已追踪</Radio>
                   <Radio value={false}>未追踪</Radio>
