@@ -12,7 +12,13 @@ export function MzPagination(props: Props) {
   const { page, onChange, pageSizeOptions } = props
 
   const onChangePage = useCallback(
-    (page: number, size?: number) => onChange(page, size),
+    (pageNumber: number, pageSize?: number) => {
+      if (page.pageSize !== pageSize) {
+        onChange(1, pageSize)
+      } else {
+        onChange(pageNumber, pageSize)
+      }
+    },
     [onChange]
   )
 
