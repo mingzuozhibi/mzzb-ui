@@ -33,8 +33,10 @@ input:read-only {
   background-color: rgba(0, 0, 0, 0.05);
 }
 
-.input-wrapper {
-  padding: 10px;
+.input-warpper {
+  &:not(.compact) {
+    padding: 10px;
+  }
 
   div.input-label {
     padding-left: 10px;

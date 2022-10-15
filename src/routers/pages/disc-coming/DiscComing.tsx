@@ -2,7 +2,7 @@ import { MzHeader } from '#CC/header/MzHeader'
 import { MzLink } from '#CC/link/MzLink'
 import { MzPagination } from '#CC/pagination/MzPagination'
 import { MzColumn, MzTable } from '#CC/table/MzTable'
-import { MzTransfer, MzTransferItem } from '#CC/transfer/MzTransfer'
+import { MzTransfer } from '#CC/transfer/MzTransfer'
 import { AllColumns } from '#CC/warpper/AllColumns'
 import './DiscComing.scss'
 
@@ -10,21 +10,30 @@ import { useSession } from '#CH/useLocal'
 import { useResult } from '#CH/useOnce'
 import { useSearch } from '#CH/useSearch'
 import { CheckCircleTwoTone, PlusSquareTwoTone } from '@ant-design/icons'
-import { Checkbox, Input, Space } from 'antd'
+import { AutoComplete, Checkbox, Input, Radio, Space } from 'antd'
 import { Link, useLocation } from 'react-router-dom'
 
 import { IComing } from '#DT/disc'
+import { comingTypes } from '#DT/metas'
 import { isJustUpdate } from '#RU/check'
 import { apiToSpider, linkToAmazon, linkToDiscs } from '#RU/links'
 import dayjs from 'dayjs'
 
 interface Initial {
+  asin?: string
+  type?: string
   title?: string
+  tracked?: boolean
   sortKeys?: string[]
 }
 
 const cols = buildColumns()
-const sortItems = buildSortItems()
+const sorts = [
+  { title: '抓取时间', key: 'id,desc' },
+  { title: '碟片类型', key: 'type' },
+  { title: '发售日期', key: 'date,desc' },
+  { title: '碟片标题', key: 'title' },
+]
 
 export default function DiscComing() {
   const location = useLocation()
@@ -36,10 +45,16 @@ export default function DiscComing() {
   })
   const { data: rows, page } = result ?? {}
 
-  const [urlState, setUrlState] = useSearch<any>({ page: 1, size: 20 }, { arrayNames: ['sort'] })
+  const [urlState, setUrlState] = useSearch<any>(
+    { page: 1, size: 20 },
+    { arrayNames: ['sort'], booleanNames: ['tracked'] }
+  )
 
   const initial: Initial = {
+    asin: urlState.asin,
+    type: urlState.type,
     title: urlState.title,
+    tracked: urlState.tracked,
     sortKeys: urlState.sort,
   }
 
@@ -50,8 +65,7 @@ export default function DiscComing() {
   const onSortChange = (keys: string[]) => setUrlState({ page: 1, sort: keys })
 
   const [options, setOptions] = useSession('coming-options', {
-    showSearch: true,
-    showSort: false,
+    showSearch: false,
     allCols: false,
   })
   const maxWidth = options.allCols ? '100%' : '800px'
@@ -66,19 +80,9 @@ export default function DiscComing() {
             key: 'showSearch',
             label: (
               <Checkbox
-                children="显示搜索"
+                children="高级搜索"
                 checked={options.showSearch}
                 onChange={(e) => setOptions({ ...options, showSearch: e.target.checked })}
-              />
-            ),
-          },
-          {
-            key: 'showSort',
-            label: (
-              <Checkbox
-                children="显示排序"
-                checked={options.showSort}
-                onChange={(e) => setOptions({ ...options, showSort: e.target.checked })}
               />
             ),
           },
@@ -95,18 +99,52 @@ export default function DiscComing() {
         ]}
       />
       <Space direction="vertical">
+        <Input.Search
+          size="large"
+          defaultValue={initial.title}
+          placeholder="请输入碟片标题以查询"
+          allowClear={true}
+          enterButton="Search"
+          onSearch={onSearch}
+        />
         {options.showSearch && (
-          <Input.Search
-            size="large"
-            defaultValue={initial.title}
-            placeholder="请输入碟片标题以查询"
-            allowClear={true}
-            enterButton="Search"
-            onSearch={onSearch}
-          />
-        )}
-        {options.showSort && (
-          <MzTransfer items={sortItems} defaultKeys={initial.sortKeys} onChange={onSortChange} />
+          <Space wrap={true}>
+            <MzTransfer items={sorts} defaultKeys={initial.sortKeys} onChange={onSortChange} />
+            <Space direction="vertical">
+              <div className="input-warpper compact">
+                <div className="input-label">碟片ASIN</div>
+                <Input
+                  style={{ width: 200 }}
+                  placeholder="输入碟片ASIN以查询"
+                  allowClear={true}
+                  value={initial.asin}
+                  onChange={(e) => setUrlState({ page: 1, asin: e.target.value })}
+                />
+              </div>
+              <div className="input-warpper compact">
+                <div className="input-label">碟片类型</div>
+                <AutoComplete
+                  style={{ width: 200 }}
+                  options={comingTypes.map((e) => ({ value: e }))}
+                  placeholder="输入碟片类型以查询"
+                  allowClear={true}
+                  value={initial.type}
+                  onChange={(type) => setUrlState({ page: 1, type })}
+                />
+              </div>
+              <div className="input-warpper compact">
+                <div className="input-label">追踪情况</div>
+                <Radio.Group
+                  value={initial.tracked}
+                  onChange={(e) => setUrlState({ page: 1, tracked: e.target.value })}
+                >
+                  <Radio value={true}>已追踪</Radio>
+                  <Radio value={false}>未追踪</Radio>
+                  <Radio value={undefined}>不过滤</Radio>
+                </Radio.Group>
+              </div>
+            </Space>
+          </Space>
         )}
         {page && <MzPagination page={page} onChange={onPageChange} />}
         {rows && (
@@ -183,7 +221,7 @@ function tdClassCreateOn(row: IComing) {
 function formatType(row: IComing) {
   return (
     <div>
-      <div>{row.type === 'Blu-ray' ? 'BD' : row.type}</div>
+      <div>{row.type}</div>
       <div>{formatFollowed(row)}</div>
     </div>
   )
@@ -220,13 +258,4 @@ function formatDate(row: IComing) {
 
 function formatTitle(row: IComing) {
   return <MzLink href={linkToAmazon(row.asin)} title={row.title} />
-}
-
-function buildSortItems(): MzTransferItem[] {
-  return [
-    { key: 'type', title: '碟片类型' },
-    { key: 'date,desc', title: '发售日期' },
-    { key: 'title', title: '碟片标题' },
-    { key: 'tracked', title: '已创建' },
-  ]
 }

@@ -1,9 +1,9 @@
 import { MzPagination } from '#CC/pagination/MzPagination'
-import { useLocal, useSession } from '#CH/useLocal'
+import { useLocal } from '#CH/useLocal'
 import { useSearch } from '#CH/useSearch'
 import { Empty, Space } from 'antd'
 import classNames, { Argument } from 'classnames'
-import React, { useState } from 'react'
+import { ReactNode } from 'react'
 import './MzTable.scss'
 
 interface BaseRow {
@@ -12,8 +12,8 @@ interface BaseRow {
 
 export interface MzColumn<T> {
   key: string
-  title: React.ReactNode
-  format: (row: T, idx: number) => React.ReactNode
+  title: ReactNode
+  format: (row: T, idx: number) => ReactNode
   tdClass?: (row: T) => Argument
   tdClick?: (row: T) => void
   compare?: (a: T, b: T) => number
@@ -23,11 +23,11 @@ interface Props<T> {
   tag: string
   cols: MzColumn<T>[]
   rows?: T[]
-  title?: React.ReactNode
+  title?: ReactNode
   trClass?: (row: T) => Argument
   usePage?: boolean | number
   defaultSort?: (a: T, b: T) => number
-  extraCaption?: React.ReactNode
+  extraCaption?: ReactNode
   showEmptyImage?: boolean
 }
 

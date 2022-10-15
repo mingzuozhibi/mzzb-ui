@@ -71,3 +71,24 @@ export const msgLevels: IOption[] = [
     value: 'ERROR',
   },
 ]
+
+export const comingTypes = [
+  'Blu-ray',
+  'DVD',
+  'セット買い',
+  'その他',
+  '4K',
+  'CD',
+  'コミック',
+  'DVD Audio',
+  '3D',
+  'Blu-ray Audio',
+  '単行本',
+  'HD DVD',
+  '楽譜',
+  'ホーム&キッチン',
+  '大型本',
+  'オフィス用品',
+  'おもちゃ＆ホビー',
+  'VHSテープ',
+]

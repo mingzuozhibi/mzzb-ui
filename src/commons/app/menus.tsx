@@ -23,11 +23,6 @@ export function buildItems(userRoles: string[]): ItemType[] {
       key: linkToGroups(),
     },
     {
-      label: '查询碟片',
-      icon: <SearchOutlined />,
-      key: linkToDiscs(`/search`),
-    },
-    {
       label: '上架追踪',
       icon: <AmazonOutlined />,
       key: linkToComing(),
@@ -37,6 +32,11 @@ export function buildItems(userRoles: string[]): ItemType[] {
       icon: <CloudOutlined />,
       key: linkToDiscs(`/add`),
       disabled: !hasBasic,
+    },
+    {
+      label: '查询碟片',
+      icon: <SearchOutlined />,
+      key: linkToDiscs(`/search`),
     },
     {
       label: '用户管理',
