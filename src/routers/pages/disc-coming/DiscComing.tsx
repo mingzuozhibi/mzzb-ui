@@ -230,13 +230,13 @@ function formatType(row: IComing) {
 function formatFollowed(row: IComing) {
   if (row.tracked) {
     return (
-      <Link to={linkToDiscs(`/asin/${row.asin}`)}>
+      <Link style={{ padding: '0 12px' }} to={linkToDiscs(`/asin/${row.asin}`)}>
         <CheckCircleTwoTone twoToneColor="#52c41a" />
       </Link>
     )
   } else {
     return (
-      <Link to={linkToDiscs(`/add`)} state={row}>
+      <Link style={{ padding: '0 12px' }} to={linkToDiscs(`/add`)} state={row}>
         <PlusSquareTwoTone twoToneColor="#eb2f96" />
       </Link>
     )
