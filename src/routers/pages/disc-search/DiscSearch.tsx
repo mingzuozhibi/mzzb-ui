@@ -43,7 +43,7 @@ export default function DiscSearch() {
       <MzHeader
         title="查询碟片"
         extra={[
-          <Checkbox checked={japanCls} onChange={(e) => setJapanCls(e.target.checked)}>
+          <Checkbox key="K1" checked={japanCls} onChange={(e) => setJapanCls(e.target.checked)}>
             日文标题
           </Checkbox>,
         ]}
