@@ -94,6 +94,7 @@ export function MzTable<T extends BaseRow>(props: Props<T>) {
                     key={col.key}
                     className={tdClass(col, row)}
                     onClick={() => col.tdClick?.(row)}
+                    style={{ cursor: col.tdClick ? 'pointer' : undefined }}
                   >
                     {col.format(row, idx)}
                   </td>

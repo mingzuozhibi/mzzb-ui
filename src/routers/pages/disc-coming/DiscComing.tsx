@@ -11,7 +11,8 @@ import { useResult } from '#CH/useOnce'
 import { useSearch } from '#CH/useSearch'
 import { CheckCircleTwoTone, PlusSquareTwoTone } from '@ant-design/icons'
 import { AutoComplete, Checkbox, Input, Radio, Space } from 'antd'
-import { Link, useLocation } from 'react-router-dom'
+import { useMemo } from 'react'
+import { NavigateFunction, useLocation, useNavigate } from 'react-router-dom'
 
 import { IComing } from '#DT/disc'
 import { comingTypes } from '#DT/metas'
@@ -27,7 +28,6 @@ interface Initial {
   sortKeys?: string[]
 }
 
-const cols = buildColumns()
 const sorts = [
   { title: '抓取时间', key: 'id,desc' },
   { title: '碟片类型', key: 'type' },
@@ -36,6 +36,9 @@ const sorts = [
 ]
 
 export default function DiscComing() {
+  const navigate = useNavigate()
+  const cols = useMemo(() => buildColumns(navigate), [navigate])
+
   const location = useLocation()
   const apiUrl = apiToSpider(`/historys${location.search}`)
 
@@ -158,7 +161,7 @@ export default function DiscComing() {
   )
 }
 
-function buildColumns(): MzColumn<IComing>[] {
+function buildColumns(navigate: NavigateFunction): MzColumn<IComing>[] {
   return [
     {
       key: 'asin',
@@ -176,6 +179,7 @@ function buildColumns(): MzColumn<IComing>[] {
       key: 'type',
       title: '类型',
       format: formatType,
+      tdClick: (row) => tdClassType(row, navigate),
     },
     {
       key: 'date',
@@ -222,24 +226,22 @@ function formatType(row: IComing) {
   return (
     <div>
       <div>{row.type}</div>
-      <div>{formatFollowed(row)}</div>
+      <div>
+        {row.tracked ? (
+          <CheckCircleTwoTone twoToneColor="#52c41a" />
+        ) : (
+          <PlusSquareTwoTone twoToneColor="#eb2f96" />
+        )}
+      </div>
     </div>
   )
 }
 
-function formatFollowed(row: IComing) {
+function tdClassType(row: IComing, navigate: NavigateFunction) {
   if (row.tracked) {
-    return (
-      <Link to={linkToDiscs(`/asin/${row.asin}`)}>
-        <CheckCircleTwoTone twoToneColor="#52c41a" />
-      </Link>
-    )
+    navigate(linkToDiscs(`/asin/${row.asin}`))
   } else {
-    return (
-      <Link to={linkToDiscs(`/add`)} state={row}>
-        <PlusSquareTwoTone twoToneColor="#eb2f96" />
-      </Link>
-    )
+    navigate(linkToDiscs(`/add`), { state: row })
   }
 }
 
