@@ -3,6 +3,7 @@ import { MzHeader } from '#CC/header/MzHeader'
 import { AllColumns } from '#CC/warpper/AllColumns'
 import { useLocal } from '#CH/useLocal'
 import { useData } from '#CH/useOnce'
+import { useSearch } from '#CH/useSearch'
 import { safeWarpper } from '#CU/empty'
 import { SearchOutlined } from '@ant-design/icons'
 import { Input, Select, Space } from 'antd'
@@ -25,6 +26,12 @@ export default function DiscGroupViewList() {
   const [editMode, setEditMode] = useLocal<boolean>(`viewlist-editmode`, false)
   const [findMode, setFindMode] = useLocal<boolean>(`viewlist-findmode-${localKey}`, false)
   const [findText, setFindText] = useLocal<string>(`viewlist-findtext-${localKey}`, '')
+
+  const [{}, setPage] = useSearch()
+  const onSearch = (value: string) => {
+    setFindText(value)
+    setPage({ page: 1 })
+  }
 
   const apiUrl = apiToGroups(`/key/${groupKey}/discs`)
   const { data: group, ...state } = useData<IGroupDiscs>(apiUrl)
@@ -82,7 +89,7 @@ export default function DiscGroupViewList() {
             enterButton="Search"
             prefix={<SearchOutlined />}
             size="large"
-            onSearch={setFindText}
+            onSearch={onSearch}
             defaultValue={findText}
           />
         )}
