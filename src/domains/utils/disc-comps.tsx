@@ -15,7 +15,7 @@ export function formatPt(pt?: number) {
 export function tdClassRank(row: IDisc) {
   return {
     success: isJustUpdate(row.updateTime, 1),
-    warning: isLazyUpdate(row.updateTime, 6),
+    warning: isLazyUpdate(row.updateTime, 6) && isJustUpdate(row.updateTime, 24),
   }
 }
 
