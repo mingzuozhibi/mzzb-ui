@@ -34,7 +34,7 @@ export default function DiscRecords() {
   const [isPost, doPost] = useAjax<string>('post')
 
   function reCompute() {
-    doPost(apiToSpider(`computePt/${discId}`), '重新计算PT', {
+    doPost(apiToSpider(`/computePt/${discId}`), '重新计算PT', {
       onSuccess(text) {
         Modal.success({ title: '重新计算PT成功', content: text })
         state.refresh()
