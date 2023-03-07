@@ -12,12 +12,10 @@ interface Props {
 export function MzDropdown(props: Props) {
   const { label, children } = props
   return (
-    <Dropdown trigger={['click']} overlay={<Menu items={removeDisabled(children)} />}>
+    <Dropdown trigger={['click']} menu={{ items: removeDisabled(children) }}>
       <Button>
-        <Space size={0}>
-          {label}
-          <DownOutlined style={{ fontSize: '12px', color: 'rgba(0, 0, 0, 0.25)' }} />
-        </Space>
+        {label}
+        <DownOutlined style={{ fontSize: '12px', color: 'rgba(0, 0, 0, 0.25)' }} />
       </Button>
     </Dropdown>
   )
