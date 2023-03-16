@@ -1,6 +1,6 @@
 import { useAppSelector } from '#CA/hooks'
 import { MzHeader } from '#CC/header/MzHeader'
-import { useSession } from '#CH/useLocal'
+import { useLocal } from '#CH/useLocal'
 import { useData } from '#CH/useOnce'
 import { Tabs } from 'antd'
 
@@ -20,7 +20,7 @@ export function DiscDetail({ apiUrl }: Props) {
   const { data: disc, ...state } = useData<IDisc>(apiUrl)
 
   const hasBasic = useAppSelector((state) => state.session.hasBasic)
-  const [tabKey, setTabKey] = useSession<string>('discdetail-tabkey', 'disc-view')
+  const [tabKey, setTabKey] = useLocal<string>('discdetail-tabkey', 'disc-view')
 
   return (
     <div className="disc-detail" style={{ maxWidth: 650 }}>
