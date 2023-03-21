@@ -22,7 +22,7 @@ export default function DiscGroupViewList() {
   const groupKey = params.key as string
   const localKey = groupKey.replaceAll('-', '').toLocaleLowerCase()
 
-  const [viewMode, setViewMode] = useLocal<ViewMode>(`viewlist-viewmode`, 'auto')
+  const [viewMode, setViewMode] = useLocal<ViewMode>(`viewlist-viewmode`, 'compact')
   const [editMode, setEditMode] = useLocal<boolean>(`viewlist-editmode`, false)
   const [findMode, setFindMode] = useLocal<boolean>(`viewlist-findmode-${localKey}`, false)
   const [findText, setFindText] = useLocal<string>(`viewlist-findtext-${localKey}`, '')
