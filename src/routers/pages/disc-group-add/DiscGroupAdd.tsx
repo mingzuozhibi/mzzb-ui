@@ -1,7 +1,9 @@
 import { SubmitItem } from '#CC/form/SubmitItem'
 import { MzHeader } from '#CC/header/MzHeader'
 import { useAjax } from '#CH/useAjax'
-import { Button, Card, Form, Input, Radio, Switch } from 'antd'
+import { useData } from '#CH/useOnce'
+import { AutoComplete, Button, Card, Form, Radio, Switch } from 'antd'
+import { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 import { Rules } from '#DT/antd'
@@ -13,6 +15,11 @@ interface FormCreate {
   title: string
   enabled: boolean
   viewType: string
+}
+
+interface MetaCreate {
+  keys: string[]
+  titles: string[]
 }
 
 const rules: Rules = {
@@ -43,8 +50,16 @@ export default function DiscGroupAdd() {
   const navigate = useNavigate()
   const location = useLocation()
 
-  const [isPost, doPost] = useAjax('post')
+  const { data: meta } = useData<MetaCreate>(`/api/discGroups/createMeta`, {
+    onSuccess(data) {
+      setKeys(data?.keys)
+      setTitles(data?.titles)
+    },
+  })
+  const [keys, setKeys] = useState(meta?.keys)
+  const [titles, setTitles] = useState(meta?.titles)
 
+  const [isPost, doPost] = useAjax('post')
   const onFinish = (form: FormCreate) => {
     doPost(apiToGroups(), '添加列表', {
       body: form,
@@ -68,10 +83,16 @@ export default function DiscGroupAdd() {
           onFinish={onFinish}
         >
           <Form.Item label="列表索引" name="key" rules={rules.key}>
-            <Input />
+            <AutoComplete
+              options={keys?.map((value) => ({ value }))}
+              onChange={(v) => setKeys(meta?.keys.filter((k) => k.includes(v)))}
+            />
           </Form.Item>
           <Form.Item label="列表标题" name="title" rules={rules.title}>
-            <Input />
+            <AutoComplete
+              options={titles?.map((value) => ({ value }))}
+              onChange={(v) => setTitles(meta?.titles.filter((k) => k.includes(v)))}
+            />
           </Form.Item>
           <Form.Item label="列表类型" name="viewType">
             <Radio.Group options={viewTypes} />
