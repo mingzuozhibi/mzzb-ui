@@ -19,15 +19,17 @@ export function tdClassRank(row: IDisc) {
   }
 }
 
-export function discTitle(disc: IDisc) {
+export function discTitle(disc: IDisc, useSwap?: boolean) {
   // use || check null undefined and empty
-  return disc.titlePc?.trim() || discJapan(disc)
+  return disc.titlePc?.trim() || discJapan(disc, useSwap)
 }
 
-export function discJapan(disc: IDisc) {
-  const regex = /^((【[^【】]+】)+)(.+)$/
-  const exec = regex.exec(disc.title)
-  if (exec) return exec[3] + exec[1]
+export function discJapan(disc: IDisc, useSwap: boolean = false) {
+  if (useSwap) {
+    const regex = /^((【[^【】]+】)+)(.+)$/
+    const exec = regex.exec(disc.title)
+    if (exec) return exec[3] + exec[1]
+  }
   return disc.title
 }
 
