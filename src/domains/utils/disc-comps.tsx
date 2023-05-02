@@ -24,13 +24,30 @@ export function discTitle(disc: IDisc, useSwap?: boolean) {
   return disc.titlePc?.trim() || discJapan(disc, useSwap)
 }
 
+const swapTexts = [
+  '【Amazon.co.jp限定】',
+  '【Amazon.co.jp限定】',
+  '【メーカー特典あり】',
+  '【早期予約特典】',
+  '【セット購入用】',
+  '【初回生産限定】',
+  '【通常版】',
+  '【DVD】',
+  '【BD】',
+]
+
 export function discJapan(disc: IDisc, useSwap: boolean = false) {
+  let title = disc.title
   if (useSwap) {
-    const regex = /^((【[^【】]+】)+)(.+)$/
-    const exec = regex.exec(disc.title)
-    if (exec) return exec[3] + exec[1]
+    for (const text of swapTexts) {
+      const start = title.indexOf(text)
+      const end = start + text.length
+      if (start >= 0) {
+        title = title.slice(0, start) + title.slice(end) + text
+      }
+    }
   }
-  return disc.title
+  return title
 }
 
 export function amazonLink(asin?: string) {
