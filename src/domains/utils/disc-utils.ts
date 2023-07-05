@@ -16,12 +16,12 @@ export function compareSurplus(a: IDisc, b: IDisc) {
 }
 
 export const compareTitle = safeCompare(
-  (row: IDisc) => discTitle(row),
+  (row: IDisc) => discTitle(row, true),
   (a, b) => a.localeCompare(b)
 )
 
 export const compareJapan = safeCompare(
-  (row: IDisc) => discJapan(row),
+  (row: IDisc) => discJapan(row, true),
   (a, b) => a.localeCompare(b)
 )
 
